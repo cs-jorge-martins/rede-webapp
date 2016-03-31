@@ -93,8 +93,8 @@ angular.module('Conciliador.dashboardController',[])
 		$scope.currentMonthPeridMovement.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDate());
 
 		$scope.lastMonthPerid = new Period();
-		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.subtractMonthsToDate(1, new Date()));
-		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDate());
+		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
+		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.subtractMonthsToDate(1, new Date()));
 
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
