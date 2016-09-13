@@ -1,0 +1,33 @@
+   <div class="cupom">
+	<div class="modal-header">
+    	<h3 class="modal-title">{{itemSelected.acquirerName}}</h3>
+		<button class="print" ng-click="imprimir()">Imprimir</button>
+		<button class="icon-close" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body">
+		{{itemSelected.date | date: 'dd/MM/yyyy'}}
+		<span class="cupomHour">HORA: {{itemSelected.hour | date: 'HH:mm:ss'}}</span>
+		<br/>
+       	NSU: {{itemSelected.nsu}}
+		<br/>
+		AUTORIZAÇÃO: {{itemSelected.authorization}}
+		<br/>
+		MAQUINETA: {{itemSelected.terminal.code}}
+		<br/>
+		BANDEIRA: {{itemSelected.cardProduct.brand.name}}
+		<br/>
+		PRODUTO: {{itemSelected.cardProduct.name}}
+		<br/>
+		LOJA: {{itemSelected.shop.name}}
+		<br/>
+		VALOR BRUTO: {{itemSelected.gross | currency: 'R$ '}}
+		<br/>
+		VALOR LÍQUIDO: {{itemSelected.net | currency: 'R$ '}}
+    	<div ng-repeat="parcela in itemSelected.parcelas">
+			PARCELA: {{parcela.number}}
+			VALOR: {{parcela.gross | currency: 'R$ '}}			
+		</div>
+		</div>
+    	<div class="modal-footer">          
+	</div>
+</div>

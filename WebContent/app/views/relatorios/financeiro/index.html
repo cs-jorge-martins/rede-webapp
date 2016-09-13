@@ -1,0 +1,177 @@
+<section class="relatorios relatorio">
+    <ol class="breadCrumb">
+        <li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+        <li><a href="#/relatorio/vendas">relatórios</a></li>
+        <li><a href="#/relatorio/financeiro">relatório financeiro</a></li>
+    </ol>
+
+    <div class="date">
+        <h2>relatório financeiro</h2>
+    </div>
+
+	<br />
+
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+
+    <ul class="indicators" id="reportIndicators">
+        <li ng-class="{'active': status == 'RECEIVED'}">
+            <a href="javascript:void(0);" ng-click="updateIndicator('RECEIVED')">
+                <div class="legend">
+                    <p>valores pagos</p>
+                </div>
+
+                <div class="value">
+                    <p ng-bind="payedValues | currency:'R$ '"></p>
+                </div>
+            </a>
+        </li>
+
+        <li ng-class="{'active': status == 'EXPECTED'}">
+            <a href="javascript:void(0);" ng-click="updateIndicator('EXPECTED')">
+                <div class="legend">
+                    <p>lançamentos futuros</p>
+                </div>
+
+                <div class="value">
+                    <p ng-bind="futureReleases | currency:'R$ '"></p>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+
+    <div id="primaryContent">
+            <div id="details" class="sales box">
+                <div id="relatorio_financeiro">
+
+                <div class="hiddenContentWrapper">
+                    <a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
+                    <div class="hiddenContentReport advancedFilterHiddenContent" style="display:block;">
+                        <article class="filter">
+                            <form>
+                            	<fieldset>
+                                    <div class="filterShiny">
+                                        <ul>
+                                            <li class="itauicon-itaufonts_calendario">
+                                                <input type="text" class="disabled input-date"
+                                                    datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirst"
+                                                    datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDate(initialDate)"
+                                                    close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true"/>
+
+                                                <label for="" class="at">Até</label>
+                                                <input type="text" class="disabled input-date"
+                                                    datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLast"
+                                                    datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
+                                            </li>
+                                            <li class="center itauicon-itaufonts_para_empresa">
+                                                <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+                                                    ng-model="settlement" typeahead-append-to-body="true"
+                                                    typeahead-on-select="addSettlementsSearch(settlement)"
+                                                    typeahead="item as item.code for item in getSettlements()"/>
+                                                <ul ng-repeat="item in settlementsSelected">
+                                                  <li>
+                                                    <h4>{{item.code}}</h4>
+                                                    <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="itauicon-itaufonts_cartao">
+                                                <input id="naturezaProduto" name="naturezaProduto" type="text"
+                                                placeholder="{{getPlaceholderFlag(productsSelected)}}"
+                                                    ng-model="product" typeahead-append-to-body="true"
+                                                    typeahead-on-select="addProductsSearch(product)"
+                                                    typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
+                                                <ul ng-repeat="item in productsSelected">
+                                                    <li>
+                                                        <h4>{{item.name}}</h4>
+                                                        <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="removeProductsSearch(item)">Fechar</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                                <div class="submitButtons">
+                                    <input type="submit" ng-click="clearFilter()" value="limpar">
+        							<input type="submit" ng-click="loadPage()" value="filtrar">
+        						</div>
+                                <br/>
+                              </form>
+                        </article>
+                    </div>
+                </div>
+
+        		<table cellpadding="0" cellspacing="0" class="nocursor">
+        			<thead>
+        				<tr class="taleft">
+        					<th width="120">data</th>
+        					<th width="180">conta corrente</th>
+                            <th width="180">adquirente</th>
+        					<th width="190">quantidade de RVs</th>
+                            <th width="130">vendas</th>
+                            <th width="130">valor (R$)</th>
+        				</tr>
+        			</thead>
+
+        			<tbody id="cupomVendasTour">
+        				<tr ng-repeat="item in items">
+        					<td>{{item.date | date:'dd/MM/yyyy'}}</td>
+                        	<td>{{item.bankAccount.bankNumber + ":" + item.bankAccount.agencyNumber + ":" + item.bankAccount.accountNumber}}</td>
+                        	<td>{{item.acquirer.name}}</td>
+                            <td>{{item.quantity}}</td>
+                        	<td>{{item.transactionQuantity}}</td>
+                        	<td ng-if="status[0] === 'EXPECTED'">{{item.expectedAmount | currency:''}}</td>
+                        	<td ng-if="status[0] === 'RECEIVED'">{{item.payedAmount | currency:''}}</td>
+        				</tr>
+        			</tbody>
+        		</table>
+				<span class="alert" ng-if="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+
+				<div class="footer">
+					<div class="optionsWrapper">
+						<div class="selectWrapper">
+							<label for="totalItensPage">resultados por página</label>
+							<div class="select">
+								<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="50">50</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="paginationWrapper">
+							<pagination
+                                total-items="totalItens"
+                                ng-model="currentPage"
+                                ng-change="pageChanged()"
+                                max-size="maxSize"
+                                items-per-page="totalItensPage"
+                                rotate="false"
+                                class="pagination-sm"
+                                boundary-links="true"
+                                previous-text="&lsaquo;"
+                                next-text="&rsaquo;"
+                                first-text="&laquo;"
+                                last-text="&raquo;">
+							</pagination>
+						</div>
+
+                        <!-- descomentar ao implantar funcao de exportar relatorio -->
+                        <!-- <div class="export-report-sales">
+                            <strong>Exportar como:</strong>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="exportReport()">
+                                        <img src="/app/img/ico-excel.png" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div> -->
+					</div>
+				</div>
+			</div>
+        </div>
+        <rc-disclaimer></rc-disclaimer>
+    </div>
+
+</section>

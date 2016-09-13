@@ -1,0 +1,121 @@
+<section class="relatorio ajustes">
+    <ol class="breadCrumb">
+        <li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+        <li><a href="#/relatorio/vendas">relatórios</a></li>
+        <li><a href="#/relatorio/ajustes">relatório de tarifas e ajustes</a></li>
+    </ol>
+
+    <div class="date">
+        <h2>relatório ajustes</h2>
+    </div>
+
+	<br />
+
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+
+    <div id="primaryContent">
+        <div id="details" class="sales box">
+            <div id="relatorio_financeiro">
+                <div class="hiddenContentWrapper">
+                    <a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
+                    <div class="hiddenContentReport advancedFilterHiddenContent" style="display:block;">
+                        <article class="filter">
+                            <form>
+                                <fieldset>
+                                    <ul class="filterList">
+                                        <li>
+                                            <ul>
+                                                <li>
+                                                    <input type="text" class="disabled input-date"
+                                                        datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirstFinanceiro"
+                                                        datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDate(initialDate)"
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstFinanceiro = true"/>
+                                                </li>
+                                                <li>
+                                                    <label for="" class="at">Até</label>
+                                                    <input type="text" class="disabled input-date"
+                                                        datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLastFinanceiro"
+                                                        datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(finalDate)"
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastFinanceiro = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
+                                                </li>
+                                  </ul>
+                                </li>
+                                <br />
+                              </ul>
+                                </fieldset>
+                                <div class="submitButtons">
+                                    <input type="submit" ng-click="clearFilter()" value="limpar">
+                                    <input type="submit" ng-click="search()" value="filtrar">
+                                </div>
+                                <br/>
+                              </form>
+                        </article>
+                    </div>
+                </div>
+
+        		<table cellpadding="0" cellspacing="0">
+        			<thead>
+        				<tr class="taleft">
+        					<th width="350">data</th>
+        					<th width="410">descrição</th>
+        					<th>valor (R$)</th>
+        				</tr>
+        			</thead>
+        			<tbody id="cupomVendasTour" ng-show="items">
+        				<tr ng-repeat="item in items" ng-class-odd="'odd'">
+        					<td>{{item.date | date: 'dd/MM/yyyy'}}</td>
+                        	<td>{{item.description}}</td>
+                        	<td>{{item.amount | currency:""}}</td>
+        				</tr>
+        			</tbody>
+        		</table>
+                <!--
+                <table class="parentTable summary" ng-show="items">
+                    <thead>
+                        <tr>
+                            <th width="765">total do relatório</th>
+                            <th></th>
+                            <th>{{total | currency:""}}</th>
+                        </tr>
+                    </thead>
+                </table>
+                -->
+                <span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+        	    <div class="footer">
+					<div class="optionsWrapper">
+						<div class="selectWrapper">
+							<label for="totalItensPage">resultados por página</label>
+							<div class="select">
+								<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="50">50</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="paginationWrapper">
+							<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+							</pagination>
+						</div>
+
+<!--
+                        <div class="export-report-sales">
+                            <strong>Exportar como:</strong>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0);" ng-click="exportReport()">
+                                        <img src="/app/img/ico-excel.png" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+-->
+					</div>
+				</div>
+        	</div>
+        </div>
+        <rc-disclaimer></rc-disclaimer>
+    </div>
+</section>

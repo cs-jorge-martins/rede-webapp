@@ -1,0 +1,31 @@
+<div id="selecaoEmpresa">
+	<div class="modal-header">
+    	<h3 class="modal-title">
+			Selecione a Empresa na qual deseja logar.
+		</h3>
+		<span>
+		<input type="text" placeholder="Filtrar" ng-model="search" />
+		</span>
+		<button class="icon-close" ng-click="cancel()">Fechar</button>
+    </div>
+    <div class="modal-body">
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Empresa</th>
+					<th>PV</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in companies | filter:search">
+					<td><input type="radio" name="selectedCompany" ng-click="activeButton(item)"></td>
+					<td>{{item.COMPANY_TRUNCATED}}</td>
+					<td>{{item.COMPANY_CODE}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<button class="" ng-click="selectedCompany()" ng-disabled="buttonActive">Entrar</button>
+		<br/>
+	</div>
+</div>

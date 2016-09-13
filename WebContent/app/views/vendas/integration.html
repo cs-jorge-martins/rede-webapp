@@ -1,0 +1,86 @@
+<div class="page-header">
+	<ol class="breadCrumb">
+        <li>você está em:</li>
+        <li><a href="#/dashboard">home</a></li>
+        <li><a href="#/integration">integração</a></li>
+    </ol>
+	<div class="page-title">
+		<div class="title">integração</div>
+		<ul>
+			<li><a href=""><span class="rules"></span>veja as regras para envio do seu arquivo</a><i>
+			<li><a href=""><span class="download"></span>download arquivo modelo</a></li>
+		</ul>
+
+	</div>
+</div>
+<section id="integration">
+	<article class="upload-file-wrapper">
+		<h2>selecione a opção desejada:</h2>
+		<ul>
+			<li>
+				<div class="bullet" ng-click="showSendFile(); sendFile = !sendFile;" ng-class="{clicked: sendFile}"></div><span class="title" ng-click="showSendFile(); sendFile = !sendFile;">enviar arquivos com minhas vendas</span>
+				<aside ng-show="sendFile">
+					<label class="findfile" for="sendfile" ng-show="labelFindFile">
+						localizar arquivo csv
+					</label>
+					<input type="file" accept=".csv" style="display: none;" id="sendfile" nv-file-select uploader="uploader" />
+
+					<span ng-repeat="item in uploader.queue" ng-show="inProgress">
+		                <label class="findfile" ng-bind="item.file.name"></label>
+		                <button ng-click="uploader.uploadAll()" class="submit">enviar</button>
+		            </span>
+				</aside>
+			</li>
+			<li>
+				<div class="bullet" ng-click="getUploadedFiles(); uploadedFiles = !uploadedFiles;" ng-class="{clicked: uploadedFiles}"></div><span class="title" ng-click="getUploadedFiles(); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
+				<aside ng-show="uploadedFiles">
+					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch">
+					<button class="submit">buscar</button>
+					<table class="filesTable">
+						<thead>
+							<tr>
+								<th>nome do arquivo <i class="orderby"></i></th>
+								<th>tamanho do arquivo <i class="orderby"></i></th>
+								<th>data e hora de envio <i class="orderby"></i></th>
+								<th>situação do arquivo <i class="orderby"></i></th>
+							</tr>
+						</thead>
+						<tbody ng-repeat="item in listUploadedFiles | filter:fileSearch">
+							<tr>
+								<td>{{ item.fileName }}</td>
+								<td>{{ item.size / 1024 | number: 3 }} MB</td>
+								<td>{{ item.createDate | date: "MM/dd/yyyy - h:mma" }}</td>
+								<td>{{ item.message }}</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="paginationWrapper">
+						<pagination total-items="totalItensDuplicate" ng-model="currentPageDuplicate" ng-change="pageChangedDuplicate()" max-size="maxSize" items-per-page="totalItensPageDuplicate" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+						</pagination>
+					</div>
+				</aside>
+			</li>
+			<li>
+				<div class="bullet" ng-click="showDownloadFiles(); downloadFiles = !downloadFiles" ng-class="{clicked: downloadFiles}"></div><span class="title" ng-click="showDownloadFiles(); downloadFiles = !downloadFiles">download do arquivo de recebimento</span>
+				<aside class="filters-download-file" ng-show="downloadFiles">
+					<div class="filter">
+						<rc-multiselect label="'tipo de relatório'" model="typeModel" data="typeData" single-selection="1" placeholder="' '"> </rc-multiselect>
+					</div>
+					<div class="filter">
+						<rc-datepicker class="halfSize" date="initialDate" label="'data inicial'"></rc-datepicker>
+					</div>
+					<div class="filter">
+						<rc-datepicker class="halfSize" date="finishDate" label="'data final'">
+						</rc-datepicker>
+					</div>
+					<div class="filter">
+						<span>	
+							<button class="submit" ng-click="downloadFile()">buscar</button>
+						</span>
+					</div>
+				</aside>
+			</li>
+		</ul>
+	</article>
+
+</section>

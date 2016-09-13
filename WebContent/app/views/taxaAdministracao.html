@@ -1,0 +1,106 @@
+<script type="text/ng-template" id="copiarTaxas.html">
+<div class="integrateModal">
+		<div class="modal-header">
+			<h3>Selecione a loja que deseja copiar:</h3>
+			<button class="icon-close" ng-click="cancel()"></button>
+		</div>
+        <div class="modal-body">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<ul class="filterList">
+				<li class="advancedFilterHiddenContent lojaFilter">
+					<label for="buscaParcelas">Loja</label>
+					<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" style="width: 250px!important"
+  								ng-model="settlement" typeahead-append-to-body="true"
+  							    typeahead-on-select="addSettlementsSearch(settlement)"
+						        typeahead="item as item.name for item in getSettlements() | filter:$viewValue"/>
+  					<ul ng-repeat="item in settlementsSelected">
+  						<li style="width: 280px!important" >
+  							<h4 style="width: 250px!important">{{item.name}}, {{item.cnpj}}</h4>
+  							<a href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a>
+						</li>
+  					</ul>
+				</li>
+		</ul>
+		<br />
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="copyToSettlements()">Copiar Cadastro</button>
+        </div>
+</div>
+</script>
+
+<section id="conciliacao" class="relatorio taxaAdminstracao cadastroTaxaAdmin">
+  <hgroup>
+  	<h2>Taxas de administração</h2>
+  </hgroup>
+  <br />
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+  <div id="primaryContent">
+    <article class="cadastroTaxas">
+    	<h3>Cadastro de Taxas</h3>
+    	<form class="settlementForm">
+    		<ul>
+    		<span>
+    		<legend>Escolha os campos correspondentes para cadastrar as taxas de administração:</legend>
+    			<li>
+    			<label for="operadoraCadastroTaxa">Operadora</label>
+				<div class="select">
+					<select id="operadoraCadastroTaxa" ng-model="acquirer" ng-options="acquirer.name for acquirer in getAcquirers()" >
+						<option value="">Selecione</option>
+					</select>
+				</div>
+    			</li>
+    			<li>
+    			<label for="lojasCadastroTaxa">Lojas</label>
+				<div class="select">
+					<select id="lojasCadastroTaxa" ng-model="settlement" ng-options="settlement.name for settlement in getSettlements()" >
+						<option value="">Selecione</option>
+					</select>
+				</div>
+    			</li>
+    			<li>
+    			<label for="parcelasCadastroTaxa">Parcelas</label>
+				<div class="select">
+					<select id="parcelasCadastroTaxa" ng-model="installment" ng-options="installment.name for installment in installments" >
+						<option value="">Selecione</option>
+					</select>
+				</div>
+    			</li>
+    			<br />
+    			</span>
+    		</ul>
+    		<button data-ng-click="searchProducts()">Cadastrar</button>
+    	</form>
+    	<br />
+    </article>
+    <br />
+    <article class="cadastroTaxas" ng-show="search">
+    	<h3>Operadora: {{acquirer.name}}</h3>
+    	<h4>Loja: {{settlement.name}}</h4>
+    	<table cellpadding="0" cellspacing="0">
+    		<thead>
+    			<tr>
+					<th>PRODUTOS</th>
+					<th ng-repeat="installmentColumn in installmentsColumns">{{installmentColumn}}</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr ng-repeat="product in productsTaxes">
+    				<td>{{product.productName}}</td>
+    				<td ng-repeat="productTax in product.listTaxes">
+	    				<span ng-show="checkEditDisable(product.productId, $index-1)" ng-click="editProduct(product.productId, productTax.valueTax, $index-1, false)">{{productTax.valueTax | number:2}} %</span>
+    					<input type="text" ng-show="checkEditActive(product.productId, $index-1)" ng-model="productTax.valueTax" ui-number-mask>
+    					<img ng-show="checkEditActive(product.productId, $index-1)" src="app/img/alterado_temp_movements.png" ng-click="editProduct(product.productId, productTax.valueTax, $index-1, true)"/>
+						<img ng-show="checkEditActive(product.productId, $index-1)" src="app/img/cancelar_alteracao_temp_movements.png" ng-click="editProduct(product.productId, productTax.valueTax, $index-1, false)"/>
+    				</td>
+    			</tr>
+    		</tbody>
+    	</table>
+    	<br />
+    	<button class="copy" data-ng-click="modalCopySettlement()">Copiar perfil da loja</button>
+    	<br />
+    </article>
+    <br />
+	<rc-disclaimer></rc-disclaimer>
+  </div>
+</section>

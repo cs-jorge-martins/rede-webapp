@@ -1,0 +1,50 @@
+<ul class="filterList">
+              <li>
+                <label for="periodoInicial">Período</label>
+                <ul>
+                  <li>
+                    <input type="text" class="disabled form-control" 
+							datepicker-popup="{{format}}" ng-model="dataInicial" is-open="openFirst"
+							datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDate(dataInicial)"
+							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true"/>
+                  </li>
+                  <li>
+                    <label for="">Até</label>
+                    <input type="text" class="disabled form-control" 
+							datepicker-popup="{{format}}" ng-model="dataFinal" is-open="openLast"
+							datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(dataFinal)"
+							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"/>
+                  </li>
+                  <li>
+                    <label for="diasSemana">Dias da semana</label>
+                    <div class="select">
+                      <select id="diasSemana" ng-model="weekDay" ng-options="item.name for item in weeksDay">
+                        <option value="">Todos</option>
+                      </select>
+                    </div>
+                  </li>
+                  <li>
+                    <label for="diasSemana2">Tipo de dado</label>
+                    <div class="select">
+                      <select id="diasSemana2" ng-model="dataType" ng-options="item.name for item in dataTypes" >
+                      </select>
+                    </div>
+                  </li>
+                  <li>
+                    <label for="opcoesRelatorios">Opções de Relatórios</label>
+                    <ul>
+                      <li>
+                        <input type="radio" ng-model="opcaoRelatorioVenda" value="1" />
+                        Sintéticas e Analíticas&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                      <li>
+                        <input type="radio" ng-model="opcaoRelatorioVenda" value="2" />
+                        Duplicadas</li>
+                      <li ng-show="false">
+                        <input type="radio" ng-model="opcaoRelatorioVenda" value="3" />
+                        Canceladas</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <br />
+            </ul>

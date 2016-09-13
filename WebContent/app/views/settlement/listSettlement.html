@@ -1,0 +1,54 @@
+<section id="conciliacao" class="relatorio listConfig">
+   <hgroup>
+      <h2>Lojas</h2>
+   </hgroup><br />
+   <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+   <div id="primaryContent">
+		<article class="filter firstConfigFilter">
+      <form class="settlementForm">
+         <ul>
+         <span>
+            <li>
+               <label>Nome:</label>
+               <input type="text" ng-model="name" ng-init="name = ''">
+            </li>
+            <li>
+               <label>CNPJ:</label>
+               <input type="text" ng-model="cnpj" ng-init="cnpj = ''">
+            </li>
+            <br />
+            </span>
+            <li class="configButtons">
+               <button ng-show="" ng-click="newSettlement()">Novo</button>
+               <button ng-click="search()">Pesquisar</button>
+               <button ng-click="clear()">Limpar</button>
+            </li>
+            <br />
+         </ul>
+      </form>
+      <br />
+      </article>
+      <article>
+      <table>
+         <thead>
+            <tr>
+               <th>NOME</th>
+               <th>CNPJ</th>
+               <th class="socialList">RAZÃO SOCIAL</th>
+               <th>&nbsp;</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="item in itens">
+               <td>{{item.name}}</td>
+               <td>{{item.cnpj}}</td>
+               <td class="socialList">{{item.corporateName}}</td>
+               <td class="editSettlementList">
+               	  <button ng-click="editSettlement(item.id)">Editar</button>                  
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      </article>
+      </div>
+</section>

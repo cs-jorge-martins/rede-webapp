@@ -1,0 +1,495 @@
+<script type="text/ng-template" id="upload.html">
+<div class="tabelaDetalhamentoModal detalhamentoModalVendas">
+	<div class="modal-header">
+    	<h3>UPLOAD DE ARQUIVOS</h3>
+		<span class="file-wrapper">
+			<input ng-file-select type="file" multiple name="archive" id="archive" />
+		</span>
+		<button class="icon-close" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th>DATA</th>
+					<th>NOME</th>
+					<th>PROGRESSO</th>
+					<th>STATUS</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show="uploader.queue.length > 0" ng-repeat="item in uploader.queue"
+							ng-class="{'confirmado': item.isSuccess, 'aguardando': item.isCancel, 'erro': item.isError}">
+					<td>{{todayDate}}</td>
+					<td>{{ item.file.name }}</td>
+					<td>
+						<div class="progress" style="margin-bottom: 0;">
+                        	<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }">{{item.progress}} %</div>
+                        </div>
+					</td>
+					<td><span></span></td>
+				</tr>
+				<tr ng-repeat="item in files" >
+					<td>{{item.createdDate | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+					<td>{{item.fileName}}</td>
+					<td>
+						<div class="progress" style="margin-bottom: 0;">
+                        	<div class="progress-bar" role="progressbar" ng-style="{ 'width': 100 + '%' }">100 %</div>
+                        </div>
+					</td>
+					<td><span></span></td>
+				</tr>
+				<tr ng-show="uploader.queue.length == 0 && files.length == 0">
+					<td colspan="4">Não existem dados/registros para o filtro selecionado</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<button type="button" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+    		Enviar arquivos
+    	</button>
+		<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()"
+					max-size="maxSize" items-per-page="totalItensPage" rotate="false"
+					class="pagination-sm" boundary-links="true"
+					previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+		</pagination>
+		<div class="select" ng-show="totalItens > 9">
+		<select class="selectPage" ng-model="totalItensPage" ng-change="alterTotalItensPage()">
+			<option value="10">10</option>
+			<option ng-show="totalItens > 19" value="20">20</option>
+			<option ng-show="totalItens > 49" value="50">50</option>
+        </select>
+		</div>
+	</div>
+</div>
+</script>
+<script type="text/ng-template" id="integracaoModal.html">
+<div class="integrateModal">
+		<div class="modal-header">
+			<h3>Exportar Arquivo</h3>
+			<button class="icon-close" ng-click="cancel()"></button>
+		</div>
+        <div class="modal-body">
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+		<ul class="filterList">
+              <li class="integrateFirstChild">
+                <label for="periodoInicial">Período</label>
+                <ul>
+                  <li>
+                    <input type="text" class="disabled form-control"
+							datepicker-popup="{{format}}" ng-model="dataInicial" is-open="openFirst"
+							datepicker-options="dateOptions" ng-required="true" show-weeks="false" ng-change="changeInitialDate(dataInicial)"
+							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true"/>
+                  </li>
+                  <li>
+                    <label for="">Até</label>
+                    <input type="text" class="disabled form-control"
+							datepicker-popup="{{format}}" ng-model="dataFinal" is-open="openLast"
+							datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(dataFinal)"
+							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"/>
+                  </li>
+				</ul>
+				</li>
+  				<li class="advancedFilterHiddenContent">
+					<label for="buscaParcelas">Operadora</label>
+					<input id="buscaParcelas" name="buscaParcelas" type="text" placeholder="{{getPlaceholder(acquirersSelected)}}" ng-model="acquirer" typeahead-append-to-body="true"
+					 		typeahead-on-select="addAcquirerSearch(acquirer)"
+					 		typeahead="item as item.name for item in getAcquirers() | filter:$viewValue"/>
+							<ul class="parcelaList" ng-repeat="item in acquirersSelected">
+								<li><h4>{{item.name}}</h4><a href="javascript:void(0);" ng-click="removeAcquirerSearch(item)">Fechar</a></li>
+							</ul>
+				</li>
+				<li class="advancedFilterHiddenContent lojaFilter">
+					<label for="buscaParcelas">Loja</label>
+					<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+  								ng-model="settlement" typeahead-append-to-body="true"
+  							    typeahead-on-select="addSettlementsSearch(settlement)"
+						        typeahead="item as item.name for item in getSettlements() | filter:$viewValue"/>
+  					<ul ng-repeat="item in settlementsSelected">
+  						<li>
+  							<h4>{{item.name}}, {{item.cnpj}}</h4>
+  							<a href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a>
+						</li>
+  					</ul>
+				</li>
+                </span>
+				</ul>
+			<br />
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+        </div>
+</div>
+    </script>
+<script type="text/ng-template" id="listagemVendas.html">
+    <div class="tabelaDetalhamentoModal gestaoModal conciliacaoVendasModal" id="detalheVendasTour">
+	<div class="modal-header">
+		<strong><b>{{dayOfActualDate}}</b> {{monthNameAbreviation}}</strong>
+    	<h3>DETALHE DAS VENDAS</h3>
+		<!--
+			<form id="inputSearch">
+			<input id="search" type="text" placeholder="BUSCAR" />
+			<input type="submit" />
+			</form>
+		-->
+		<h4>{{acquirerName}} / {{cardBrandName}} / <b>{{cardProductName}}</b></h4>
+		<a class="closeModalHelp" data-ng-click="helpModalConciliacao()">?</a>
+		<button class="icon-close" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body">
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th><input id="ordenacaoVendasTour" type="checkbox" ng-model="checkAll" ng-change="checkAllItensModal(checkAll)"
+						 ng-hide="statusItemAccordionSelected != 1"/>
+					</th>
+					<th>
+						NSU
+						<img id="nsu" src="app/img/default.png" data-ng-click="orderColumn('nsu')"/>
+					</th>
+					<th>
+						AUTORIZAÇÃO
+						<img id="authorization" src="app/img/default.png" data-ng-click="orderColumn('authorization')"/>
+					</th>
+					<th>
+						TID
+						<img id="tid" src="app/img/default.png" data-ng-click="orderColumn('tid')"/>
+					</th>
+					<th>
+						CARTÃO
+						<img id="cardNumber" src="app/img/default.png" data-ng-click="orderColumn('cardNumber')"/>
+					</th>
+					<th>
+						PLANO
+						<img id="installment" src="app/img/default.png" data-ng-click="orderColumn('installment')"/>
+					</th>
+					<th>
+						MAQUINETA
+						<img id="terminalName" src="app/img/default.png" data-ng-click="orderColumn('terminalName')"/>
+					</th>
+					<th>
+						CHAVE ERP
+						<img id="erpId" src="app/img/default.png" data-ng-click="orderColumn('erpId')"/>
+					</th>
+					<th>
+						VALOR BRUTO
+						<img id="gross" src="app/img/default.png" data-ng-click="orderColumn('gross')"/>
+					</th>
+				</tr>
+			</thead>
+			<tbody id="cupomVendasTour">
+				<tr ng-repeat="item in itensDetalheVenda">
+					<td><input type="checkbox" ng-model="item.checked" ng-change="checkItem(item)"
+							ng-hide="statusItemAccordionSelected != 1" id="checkboxVendasTour"/>
+					</td>
+					<td ng-click="comprovanteVenda(item)">{{item.nsu}}</td>
+                	<td ng-click="comprovanteVenda(item)">{{item.authorization}}</td>
+                	<td ng-click="comprovanteVenda(item)">{{item.tid}}</td>
+                	<td ng-click="comprovanteVenda(item)">{{item.cardNumber}}</td>
+                	<td ng-click="comprovanteVenda(item)">{{item.installment}}</td>
+                	<td ng-click="comprovanteVenda(item)">{{item.terminalName}}</td>
+                	<td ng-click="comprovanteVenda(item)">{{item.erpId}}</td>
+                	<td ng-click="comprovanteVenda(item)"><i ng-bind-html='currencySymbol'></i> {{item.gross | currency:""}}</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="8">TOTAL</td>
+					<td><i ng-bind-html='currencySymbol'></i> {{totalAmountDetalheVenda | currency:""}}</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+    <div class="modal-footer">
+		<ul class="archives">
+			<li class="pdf" id="exportarArquivosModalTour"><a data-ng-click="gerarRelatorioModal('PDF')"></a></li>
+			<li class="xls"><a data-ng-click="gerarRelatorioModal('XLS')"></a></li>
+			<li class="csv"><a data-ng-click="gerarRelatorioModal('CSV')"></a></li>
+		</ul>
+		<button class="conciliacaoButton" data-ng-click="conciliarVendas()" ng-hide="statusItemAccordionSelected != 1"
+				ng-class="{'active': button}"
+				ng-disabled="buttonConcilied">Conciliar Vendas</button>
+
+		<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()"
+					max-size="maxSize"  items-per-page="totalItensPage" rotate="false"
+					class="pagination-sm" boundary-links="true"
+					previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+		</pagination>
+		<div class="select">
+		<select ng-model="totalItensPage" ng-change="alterTotalItensPage()">
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="50">50</option>
+        </select>
+		</div>
+	</div>
+	</div>
+</script>
+
+
+<a href="javascript:sidebar();" class="botaoAside"><span>consulta de vendas</span></a>
+
+
+<!-- ********************************************************************************************************************************************  -->
+<!-- ********************************************************************************************************************************************  -->
+<!--                                                               MAIN                                                                            -->
+<!-- ********************************************************************************************************************************************  -->
+<!-- ********************************************************************************************************************************************  -->
+
+<section id="conciliacao" class="vendas">
+	<ol class="breadCrumb">
+		<li><a href="#/dashboard">home</a></li>
+		<li><a href="#/resumoConciliacao">vendas</a></li>
+	</ol>
+    <div class="date">
+      <h2>
+        <time datetime="nov/2013">{{actualDateSelected}}</time>
+      </h2>
+    </div>
+    <br />
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+
+	<div id="calendarioVendasTour" class="selectCalendar">
+	    <div class="selectCalendarWrapper">
+			<a class="prev" href="javascript:void(0);" ng-click="prevYear()">{{yearSelected - 1}}</a>
+			<a class="next" href="javascript:void(0);" ng-click="nextYear()">{{yearSelected + 1}}</a>
+			<!--<h3><b>{{dayOfActualDate}}</b>{{monthNameAbreviation}}<a ng-click="returnToActualMonth()">Selecione o mês</a></h3>-->
+			    <div class="slider">
+			      <div>
+			      	<!-- h3>{{slide.year}}</h3 -->
+			          <tabset>
+					    <tab ng-repeat="month in months" active="month.active" data-ng-click="filterByMonth($index, month.year); tabs[0].active = true">
+					    	<tab-heading>
+					    		<span ng-class="{'oneItem': month.oneItem, 'conciliar': month.toReconcile, 'naoConciliado': month.toProcess,
+					    						'conciliado': month.concilied && !month.toReconcile && !month.toProcess}">
+					    						{{month.month}}</span>
+					    	</tab-heading>
+					    	<ul>
+					    		<li ng-class="{'oneItem': day.oneItem, 'conciliar': day.toReconcile, 'naoConciliado':day.toProcess,
+					    					   'conciliado': day.concilied && !day.toReconcile && !day.toProcess, 'ativo': day.isActive}"
+					    					   ng-repeat="day in itens">
+					    			<a ng-if="day.isActiveButton" data-ng-click="changeDay(day); tabs[1].active = true">{{day.date | date:'dd'}}</a>
+					    			<label ng-if="!day.isActiveButton" ng-class="{'disabled': !day.concilied && !day.toReconcile && !day.toProcess}">
+					    				{{day.date | date:'dd'}}
+					    			</label>
+					    		</li>
+					    	</ul>
+					   	</tab>
+						</tabset>
+			      </div>
+			    </div>
+	  	</div>
+	</div>
+
+	<ul class="conciliationIndicators">
+		<li class="toConciliate" ng-class="{'active': statusItensAccordionSelected == 1}">
+			<a href="javascript:void(0);" ng-click="updateItensAccordion(1)">
+				<!--<li ng-class="{'conciliar': true, 'active': statusItensAccordionSelected == 1}">-->
+				<div class="legend">
+					<p>vendas a conciliar</p>
+				</div>
+				<div class="value">
+					<p>{{totalToReconcileForDay}}</p>
+				</div>
+			</a>
+		</li>
+		<li class="conciliated" ng-class="{'active': statusItensAccordionSelected == 2}">
+			<a href="javascript:void(0);" ng-click="updateItensAccordion(2)">
+				<div class="legend">
+					<p>vendas conciliadas</p>
+				</div>
+				<div class="value">
+					<p>{{totalConciliedForDay}}</p>
+				</div>
+			</a>
+		</li>
+		<li class="toProcess" ng-class="{'active': statusItensAccordionSelected == 3}">
+			<a href="javascript:void(0);" ng-click="updateItensAccordion(3)">
+				<div class="legend">
+					<p>vendas não processadas</p>
+				</div>
+				<div class="value">
+					<p>{{totalToProcessForDay}}</p>
+				</div>
+			</a>
+		</li>
+	</ul>
+
+
+
+  <div id="primaryContent">
+  <tabset>
+
+    <tab heading="Rede" active=0 select="loadingConciliacaoDia()" id="botaoConciliacaoDiaTour">
+      <article id="resumoMes" ng-class="{'conciliadas': statusItensAccordionSelected == 2, 'aConciliar': statusItensAccordionSelected == 1, 'naoProcessadas': statusItensAccordionSelected == 3}">
+
+		<div class="hiddenContentWrapper">
+			<a id="advancedButton" href="javascript:void(0);" onclick="javascript:toggle();">filtrar</a>
+			<div class="hiddenContent advancedFilterHiddenContent">
+		    	<form>
+		    		<fieldset>
+						<div class="">
+						</div>
+		    			<ul>
+		    				<span>
+		    				<!-- loja -->
+		    					<li class="full">
+									<div class="">
+		    							<label for="natureza">tipo de transação</label>
+			    						<ul class="child" id="transactionType">
+				    						<li>
+				    							<label for="naturezaTodas">Todas</label>
+				    							<input id="naturezaTodas" name="natureza" type="radio"
+				    								value="0" ng-model="natureza"/>
+				    						</li>
+				    						<li>
+				    							<label for="naturezaDebito">Vendas a débito</label>
+				    							<input id="naturezaDebito" name="natureza" type="radio"
+				    								value="2" ng-model="natureza"/>
+				    						</li>
+				    						<li>
+				    							<label for="naturezaCredito">Vendas a crédito</label>
+				    							<input id="naturezaCredito" name="natureza" type="radio"
+				    								value="1" ng-model="natureza"/>
+				    						</li>
+			    							<br />
+			    						</ul>
+									</div>
+			    					<ul class="grandChild halfWidthList left half">
+			    						<li>
+			    							<label for="buscaTerminal">Loja</label>
+			    							<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+			    								ng-model="settlement" typeahead-append-to-body="true"
+			    							    typeahead-on-select="addSettlementsSearch(settlement)"
+			  						        typeahead="item as item.name for item in getSettlements() | filter:$viewValue"/>
+			    							<ul class="selectecWrapper">
+			    								<li ng-repeat="item in settlementsSelected">
+			    								<h4>{{item.name}}, {{item.cnpj}}</h4>
+			    								<a href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a></li>
+			    							</ul>
+			    							<span ng-show="additionalInformations == false">
+			    								O FILTRO DE LOJA NÃO PODE SER APLICADO ÀS VENDAS NÃO PROCESSADAS, DEVIDO A LIMITAÇÃO DE SUA INTEGRAÇÃO.
+			    							</span>
+			    						</li>
+			    					</ul>
+									<ul class="grandChild halfWidthList">
+										<li>
+											<label for="naturezaProduto">Produto</label>
+											<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{getPlaceholder(productsSelected)}}"
+				  								ng-model="product" typeahead-append-to-body="true"
+				  								typeahead-on-select="addProductsSearch(product)"
+				  								typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
+				  							<ul class="selectecWrapper">
+				  								<li ng-repeat="item in productsSelected"><h4>{{item.name}}</h4><a href="javascript:void(0);" ng-click="removeProductsSearch(item)">Excluir</a></li>
+				  							</ul>
+										</li>
+									</ul>
+		    					</li>
+		    					<br />
+		    				</span>
+		    				<br />
+		    			</ul>
+
+						<div class="submitButtons">
+							<input type="submit" ng-click="filterAdvancedVendas()"/>
+			    			<input type="submit" ng-click="clearAdvancedFilterVendas()" value="Limpar"/>
+						</div>
+		    		</fieldset>
+		    	</form>
+		    </div>
+		</div>
+		<hgroup>
+			<h3>bandeira / tipo de venda</h3>
+			<h3>valor da venda (R$)</h3>
+			<h3>total de vendas (R$)</h3>
+		</hgroup>
+		<span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+
+		<div id="details">
+			<table ng-show="cardProductData">
+				<tbody id="cupomVendasTour">
+					<tr ng-repeat="item in cardProductData" ng-class-odd="'odd'">
+						<td ng-click="comprovanteVenda(item)">x</td>
+						<td ng-click="comprovanteVenda(item)">{{item.cardProduct.name}}</td>
+						<td ng-click="comprovanteVenda(item)">{{item.amount}}</td>
+						<td ng-click="comprovanteVenda(item)">{{item.quantuty}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+			<table cellpading="0" cellspacing="0">
+				<tr ng-repeat="cardProduct in itensAccordion.cardBrandDTOs.cardProductDTOs">
+					<td><input type="checkbox" ng-model="cardProduct.itemCheck" required ng-change="checkcardProduct(cardProduct, item)" ng-show="isVisibleCheckbox()"/></td>
+					<td ng-click="openTransactionsList(cardProduct, cardBrand, item)">{{cardProduct.name}}</td>
+					<td ng-click="openTransactionsList(cardProduct, cardBrand, item)">{{cardProduct.quantity}}</td>
+					<td ng-click="openTransactionsList(cardProduct, cardBrand, item)"><i ng-bind-html='currencySymbol'></i> {{cardProduct.totalAmount | currency:""}}</td>
+				</tr>
+			</table>
+
+			<accordion ng-repeat="item in itensAccordion" id="accordionVendasTour">
+				<accordion-group>
+					<accordion-heading>
+						<strong><input type="checkbox" ng-model="item.checkAll" ng-change="checkAllAcquirer(item.checkAll, item)" ng-show="isVisibleCheckbox()"/>
+			            {{item.name}}</strong>
+						<b>{{item.quantity}}</b>
+						<em><i ng-bind-html='currencySymbol'></i> {{item.totalAmount | currency:''}}</em>
+					</accordion-heading>
+					<accordion ng-repeat="cardBrand in item.cardBrandDTOs">
+						<accordion-group class="aberto">
+							<accordion-heading>
+								<strong>
+									<input type="checkbox" ng-model="cardBrand.itemCheck" ng-change="checkCardBrand(cardBrand, item)" ng-show="isVisibleCheckbox()"/>
+							    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{cardBrand.name}}
+							    </strong>
+							    <b>
+							    	<!-- <a data-ng-click="detailTransactions(actualDate, statusIdConciliacao, item.id, cardBrand.id, 0)"> -->
+							    	{{cardBrand.quantity}}
+							    </b>
+							    <em><i ng-bind-html='currencySymbol'></i> {{cardBrand.totalAmount | currency:""}}</em>
+							</accordion-heading>
+							<table cellpading="0" cellspacing="0">
+								<tr ng-repeat="cardProduct in cardBrand.cardProductDTOs">
+									<td><input type="checkbox" ng-model="cardProduct.itemCheck" required ng-change="checkcardProduct(cardProduct, item)" ng-show="isVisibleCheckbox()"/></td>
+									<td ng-click="openTransactionsList(cardProduct, cardBrand, item)">{{cardProduct.name}}</td>
+									<td ng-click="openTransactionsList(cardProduct, cardBrand, item)">{{cardProduct.quantity}}</td>
+									<td ng-click="openTransactionsList(cardProduct, cardBrand, item)"><i ng-bind-html='currencySymbol'></i> {{cardProduct.totalAmount | currency:""}}</td>
+								</tr>
+							</table>
+						</accordion-group>
+					</accordion>
+				</accordion-group>
+				</accordion>
+				<!--
+				<table class="totalAccordion" cellpadding="0" cellspacing="0">
+    				<tr>
+    					<td>Total</td>
+    					<td>{{totalAccordionQuantity}}</td>
+    					<td><i ng-bind-html='currencySymbol'></i> {{totalAccordionAmount | currency:""}}</td>
+    				</tr>
+    			</table>
+				-->
+		<button class="conciliacaoButton" data-ng-click="conciliarVendas()" ng-show="statusItensAccordionSelected == 1"
+				ng-class="{'active': !buttonConcilied}" ng-disabled="buttonConcilied" >conciliar vendas selecionadas</button>
+		</form>
+		<br />
+    </article>
+  </tab>
+  </tabset>
+  </div>
+</section>
+  </div>
+</section>

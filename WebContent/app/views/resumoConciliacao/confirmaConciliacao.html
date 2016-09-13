@@ -1,0 +1,12 @@
+<div class="modal-header header-confirm-conciliacao">
+	<div class="close" ng-click="cancel()">x</div>
+</div>
+<div class="modal-body modal-confirm-conciliacao">
+	<p>
+		Você deseja conciliar as <strong> {{concilieItems.length}} </strong> vendas selecionadas ?	
+	</p>
+</div>
+<div class="modal-footer footer-confirm-conciliacao">
+	<button class="btn btn-cancel" ng-click="cancel()">Cancelar</button>
+	<button class="btn" ng-click="ok()">Conciliar vendas</button>
+</div>

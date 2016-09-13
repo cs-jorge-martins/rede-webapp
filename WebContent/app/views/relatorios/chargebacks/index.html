@@ -1,0 +1,151 @@
+<section class="relatorio" id="relatorio">
+    <ol class="breadCrumb">
+        <li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+        <li><a href="#/relatorio/vendas">relatórios</a></li>
+        <li><a href="#/relatorio/chargebacks">cancelamentos e chargebacks</a></li>
+    </ol>
+
+    <div class="date">
+        <h2>cancelamentos e chargebacks</h2>
+    </div>
+
+	<br />
+
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+    <ul class="indicators" id="reportIndicators">
+        <li ng-class="{'active': adjustType[0] == 'CANCELLATION'}">
+            <a href="javascript:void(0);" ng-click="updateIndicator('CANCELLATION')">
+                <div class="legend">
+                    <p>cancelamentos</p>
+                </div>
+                <div class="value">
+                    <p>{{cancelled}}</p>
+                </div>
+            </a>
+        </li>
+
+        <li ng-class="{'active': adjustType[0] == 'CHARGEBACK'}">
+            <a href="javascript:void(0);" ng-click="updateIndicator('CHARGEBACK')">
+                <div class="legend">
+                    <p>chargebacks</p>
+                </div>
+                <div class="value">
+                    <p>{{chargebacks}}</p>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+    <div id="primaryContent">
+        <div class="tabsWrapper">
+			<ul class="tabsList">
+				<li><a href="">Rede</a></li>
+			</ul>
+
+			<div class="tabsContainer">
+				<div class="tabItem" id="relatorio_chargeback">
+                    <div class="hiddenContentWrapper">
+                        <a id="advancedButton" href="javascript:void(0);" class="advancedButton active" onclick="javascript:toggleReport();">filtrar</a>
+                        <div class="hiddenContentReport advancedFilterHiddenContent" style="display: block;">
+                            <article class="filter">
+                                <form>
+                                    <fieldset>
+                                        <div class="filterShiny">
+                                            <ul>
+                                                <li class="itauicon-itaufonts_calendario">
+                                                    <input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirst" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDate(initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true"/>
+                                                    <label for="" class="at">Até</label>
+                                                    <input type="text" class="disabled input-date"
+                                                        datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLast"
+                                                        datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(finalDate)"
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"  style="background:transparent;margin-left:-35px;padding-left:40px!important;"/>
+                                                </li>
+                                                <li class="itauicon-itaufonts_para_empresa">
+                                                    <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+                                                        ng-model="settlement" typeahead-append-to-body="true"
+                                                        typeahead-on-select="addSettlementsSearch(settlement)"
+                                                        typeahead="item as item.code for item in getSettlements()"/>
+                                                    <ul ng-repeat="item in settlementsSelected">
+                                                      <li>
+                                                        <h4>{{item.code}}</h4>
+                                                        <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </fieldset>
+                                    <div class="submitButtons">
+                                        <input type="submit" ng-click="clearFilter()" value="limpar">
+                                        <input type="submit" ng-click="getReport()" value="filtrar">
+                                    </div>
+                                    <br />
+                                </form>
+                            </article>
+                        </div>
+                    </div>
+
+
+                    <div id="details" class="sales">
+                        <table cellpadding="0" cellspacing="0">
+                			<thead>
+                				<tr class="taleft">
+                                    <th>
+                                        data do {{tableName}}
+                					</th>
+                					<th>
+                						bandeira / tipo de venda
+                					</th>
+                                  <th>
+                						valor da venda (R$)
+                					</th>
+                                  <th>
+                						total de vendas
+				                   </th>
+                				</tr>
+                			</thead>
+                			<tbody id="cupomVendasTour">
+                				<tr ng-repeat="item in items" ng-class-odd="'odd'">
+                                    <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{item.cardProduct.brand.name}}</td>
+                                	<td>{{item.amount | currency:""}}</td>
+                                	<td>{{item.quantity}}</td>
+                				</tr>
+                			</tbody>
+                		</table>
+
+						<span class="alert" ng-if="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+
+                      <div class="footer" ng-show="items">
+							<div class="optionsWrapper">
+								<div class="selectWrapper">
+									<label for="totalItensPage">resultados por página</label>
+									<div class="select">
+										<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
+											<option value="10">10</option>
+											<option value="20">20</option>
+											<option value="50">50</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="paginationWrapper">
+									<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+									</pagination>
+								</div>
+
+                                <!-- <div class="export-report-sales">
+                                    <strong>Exportar como:</strong>
+                                    <ul>
+                                        <li><a href="#"><img src="/app/img/ico-excel.png" alt=""></a></li>
+                                    </ul>
+                                </div> -->
+							</div>
+						</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <rc-disclaimer></rc-disclaimer>
+    </div>
+</section>

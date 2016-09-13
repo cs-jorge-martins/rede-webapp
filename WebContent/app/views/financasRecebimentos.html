@@ -1,0 +1,116 @@
+<section id="vendas" class="financas financasDetalhe">
+    <ol class="breadCrumb">
+		<li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+		<li><a href="#/movements">financeiro</a></li>
+        <li><a href="#/sales/receipt">recebimentos</a></li>
+	</ol>
+	<br class="clearfix" />
+	<div id="detailsHeader">
+        <div class="cardBrand brand_{{cardProduct.id}}">
+			{{cardProduct.name}}
+		</div>
+		<div class="details">
+            <p>{{acquirer.name | lowercase}}: <strong>{{cardProduct.name | lowercase}}</strong></p>
+			<p>{{startDate}}</p>
+		</div>
+	</div>
+
+	<div id="details" class="sales box">
+
+		<table cellpadding="0" cellspacing="0" ng-show="items">
+			<thead class="taleft">
+				<tr>
+					<th width="180">
+						NSU
+						<!--<img id="nsu" src="app/img/default.png" data-ng-click="orderColumn('nsu')"/>-->
+					</th>
+					<th width="150">
+						autorização
+						<!--<img id="authorization" src="app/img/default.png" data-ng-click="orderColumn('authorization')"/>-->
+					</th>
+					<th width="210">
+						cartão
+						<!--<img id="cardNumber" src="app/img/default.png" data-ng-click="orderColumn('cardNumber')"/>-->
+					</th>
+					<th width="90">
+						plano
+						<!--<img id="installment" src="app/img/default.png" data-ng-click="orderColumn('installment')"/>-->
+					</th>
+					<th width="130">
+						maquineta
+						<!--<img id="terminalName" src="app/img/default.png" data-ng-click="orderColumn('terminalName')"/>-->
+					</th>
+					<th>
+						valor líquido (R$)
+						<!--<img id="gross" src="app/img/default.png" data-ng-click="orderColumn('gross')"/>-->
+					</th>
+				</tr>
+			</thead>
+			<tbody id="cupomVendasTour">
+				<tr ng-repeat="item in items" ng-class-odd="'odd'">
+					<td>{{item.transaction.nsu}}</td>
+                	<td>{{item.transaction.authorization}}</td>
+                	<td>{{item.transaction.cardNumber}}</td>
+                	<td>{{item.transaction.installment}}</td>
+                	<td>{{item.transaction.terminal.code}}</td>
+                	<td>{{item.net | currency:""}}</td>
+				</tr>
+			</tbody>
+            <!--
+			<tfoot>
+				<tr>
+					<td colspan="6">total</td>
+					<td>{{total | currency:""}}</td>
+				</tr>
+			</tfoot>
+            -->
+		</table>
+	    <div class="footer">
+			<div class="buttonWrapper">
+				<button class="conciliacaoButton active back" ng-click="back()" ng-show="items">financeiro</button>
+				<button class="conciliacaoButton" data-ng-click="conciliarVendas()"
+						ng-class="{'active': button}"
+						ng-disabled="buttonConcilied" ng-hide="statusItemAccordionSelected != 1">conciliar vendas selecionadas</button>
+			</div>
+
+			<div class="optionsWrapper">
+				<div class="selectWrapper">
+					<label for="totalItensPage">resultados por página</label>
+					<div class="select">
+						<select ng-model="totalItensPage" ng-change="alterTotalItensPage()" id="totalItensPage">
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+						</select>
+					</div>
+				</div>
+                <div class="paginationWrapper">
+					<pagination
+						total-items="totalItens"
+						ng-model="currentPage"
+						ng-change="pageChanged()"
+						max-size="maxSize"
+						items-per-page="totalItensPage"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="true"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text="&laquo;"
+						last-text="&raquo;">
+					</pagination>
+				</div>
+                <!--
+				<ul class="archives">
+					<li class="label">exportar como:</li>
+					<li class="pdf" id="exportarArquivosModalTour"><a data-ng-click="gerarRelatorioModal('PDF')"></a></li>
+					<li class="xls"><a data-ng-click="gerarRelatorioModal('XLS')"></a></li>
+				</ul>
+                -->
+			</div>
+		</div>
+        <rc-disclaimer></rc-disclaimer>
+	</div>
+	<br class="clearfix" />
+</section>

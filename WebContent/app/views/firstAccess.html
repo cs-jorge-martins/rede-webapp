@@ -1,0 +1,19 @@
+<div id="login">
+    <div id="firstAccess">
+        <h1><a>KaplenCard</a></h1>
+
+        <p class="description">Este é seu primeiro acesso, por favor troque a senha.</p>
+        <form id="loginForm">
+         	<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+        	<label for="emailLogin">E-mail</label>
+            <input id="emailLogin" type="text" ng-model="user.login" required/>
+            <label for="newPassword">Nova senha</label>
+            <input id="newPassword" type="password" ng-model="user.newPassword" type="password" required/>
+            <label for="confirmPassword">Confirme a  nova senha</label>
+            <input id="confirmPassword" type="password" ng-model="user.confirmPassword" type="password" required/>
+            <div class="buttonWrapper">
+                <button ng-click="changePassword()" ng-disabled="loginForm.$invalid" class="loginButton">entrar</button>
+            </div>
+        </form>
+    </div>
+</div>

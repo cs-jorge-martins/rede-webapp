@@ -1,0 +1,35 @@
+<div class="cupom" style="z-index:10000000000000000000000000000000000000000000000000000000">
+	<button class="print" ng-click="imprimir()"></button>
+	<button class="icon-close" ng-click="cancel()"></button>
+	<div class="modal-header">
+    	<h3 class="modal-title">
+			{{item.acquirerName}}
+		</h3>
+		<h3>{{item.cardNumber}}</h3>
+    </div>
+    <div class="modal-body">
+		{{item.date | date: 'dd/MM/yyyy'}}
+		<span class="cupomHour" ng-show="item.hour">HORA: {{item.hour | date: 'HH:mm:ss'}}</span>
+		<br/>
+       	<span ng-show="item.nsu">NSU: {{item.nsu}}</span>
+		<br/>
+		<span ng-show="item.authorization">AUTORIZAÇÃO: {{item.authorization}}</span>
+		<br/>
+		<span ng-show="item.terminal.code">MAQUINETA: {{item.terminal.code}}</span>
+		<br/>
+		<span ng-show="item.cardProduct.brand.name">BANDEIRA: {{item.cardProduct.brand.name}}</span>
+		<br/>
+		<span ng-show="item.cardProduct.name">PRODUTO: {{item.cardProduct.name}}</span>
+		<br/>
+		<span ng-show="item.shop.name">LOJA: {{item.shop.name}}</span>
+		<br/>
+		<span ng-show="item.gross">VALOR BRUTO: <i ng-bind-html='currencySymbol'></i> {{item.gross | currency: ''}}</span>
+		<br/>
+		<span ng-show="item.net">VALOR LÍQUIDO: <i ng-bind-html='currencySymbol'></i> {{item.net | currency: ''}}</span>
+    	<br/><br/>
+		<label ng-show="installments.length > 0">PARCELAS:</label>
+    	<div ng-repeat="parcela in installments">
+			<span>{{parcela.number}}</span><span>{{parcela.expectedDate | date: 'dd/MM/yyyy'}}</span> <i ng-bind-html='currencySymbol'></i> {{parcela.gross | currency: ''}}
+		</div>
+	</div>
+</div>

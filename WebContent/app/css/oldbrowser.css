@@ -1,0 +1,49 @@
+@font-face {
+	font-family: 'open_sansregular';
+	src: url('../fonts/opensans-regular-webfont.eot');
+	src: url('../fonts/opensans-regular-webfont.eot?#iefix')  format('embedded-opentype'),  url('../fonts/opensans-regular-webfont.woff') format('woff'),  url('../fonts/opensans-regular-webfont.ttf') format('truetype'),  url('../fonts/opensans-regular-webfont.svg#open_sansregular')  format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html {
+	height:100%;
+	width:100%;
+}
+body {
+	background:#f0f0f0;
+	float: left;
+	height:100%;
+	font-family: 'open_sansregular';
+}
+.ico-warning {
+	float: left;
+	margin-right: 15px;
+}
+.description {
+	line-height: 30px;
+}
+.container {
+	width:700px;
+	height:320px;
+	position: absolute;
+	left:50%;
+	top:50%;
+	margin-left:-350px;
+	margin-top:-160px;
+	color:#4d4d4d;
+}
+ul {
+	width:100%;
+	float: left;
+	padding:0;
+	margin-top: 40px;
+}
+ul li {
+	float:left;
+	list-style: none;
+	display: inline-block;
+	width:115px;
+	margin:0 30px;
+	text-align: center;
+}

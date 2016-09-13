@@ -1,0 +1,193 @@
+<section id="dashboard">
+    <ol class="breadCrumb">
+        <li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+    </ol>
+
+	<div class="date">
+		<h2>
+			<time datetime="{{actualMonth}}">{{actualMonth}}</time>
+		</h2>
+	</div>
+
+  	<br />
+	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert> 
+  <ul id="valuesTour">
+      <li>
+        <em>Transações</em>
+      	<b ng-bind="transactionSummaryBoxCurrentMonth.quantity ? transactionSummaryBoxCurrentMonth.quantity : 0"></b>
+      	<div class="valuesFooter" ng-class="{'negative': percentOfQuantityTransactionsBetweenMonths <= 0,
+       			 'positive': percentOfQuantityTransactionsBetweenMonths > 0}">
+            <strong><span>Mês anterior:</span>{{transactionSummaryBoxPrevMonth.quantity}}</strong>
+       		<p>({{ percentOfQuantityTransactionsBetweenMonths | number:1}}%)</p>
+      	</div>
+      </li>
+      <li class="vendasDashboard">
+        <em>Vendas</em>
+      	<b><i ng-bind-html="currencySymbol"></i> {{transactionSummaryBoxCurrentMonth.amount | currency:''}}</b>
+
+      	<div class="valuesFooter" ng-class="{'negative': percentOfTotalsAmountTransactionsBetweenMonths <= 0,
+       					'positive': percentOfTotalsAmountTransactionsBetweenMonths > 0}">
+            <strong><span>Mês anterior:</span><i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : 0"></span></strong>
+       		<p>({{ percentOfTotalsAmountTransactionsBetweenMonths | number:1}}%)</p>
+       	</div>
+      </li>
+      <li class="recebimentoDashboard">
+        <em>Recebimentos</em>
+      	<b><i ng-bind-html='currencySymbol'></i> {{ movementSummaryBoxCurrentMonth.payedAmount| currency:""}}</b>
+      	<div class="valuesFooter" ng-class="{'negative': percentOfTotalPayedBetweenMonths<= 0,
+       					'positive': percentOfTotalPayedBetweenMonths > 0}">
+			<strong><span>Mês anterior:</span><i ng-bind-html="currencySymbol"></i> <span ng-bind="movementionSummaryBoxPrevMonth.payedAmount ? (movementionSummaryBoxPrevMonth.payedAmount | currency:'') : '0,00'"></span></strong>
+            <p>(<span ng-bind="percentOfTotalPayedBetweenMonths ? (percentOfTotalPayedBetweenMonths | number:1) : '0,0'"></span>%)</p>
+       	</div>
+      </li>
+      <li class="ticketDashboard">
+        <em>Ticket Médio</em>
+      	<b><i ng-bind-html="currencySymbol"></i> <span ng-bind="ticketAverageCurrentMonth ? (ticketAverageCurrentMonth | currency:'') : '0,00'"></span></b>
+
+      	<div class="valuesFooter" ng-class="{'negative': percentOfTicketAverageBetweenMonths <= 0, 'positive': percentOfTicketAverageBetweenMonths > 0}">
+            <strong><span>Mês anterior:</span><i ng-bind-html='currencySymbol'></i> {{ticketAveragePrevMonth | currency:""}}</strong>
+			<p>(<span ng-bind="percentOfTicketAverageBetweenMonths ? (percentOfTicketAverageBetweenMonths | number:1) : '0,0'"></span>%)</p>
+       	</div>
+      </li>
+    </ul>
+    <div>
+        <main>
+          <article>
+            <h2>Vendas</h2>
+            <!--<highchart config="chartVendas" id="graficoVendasTour"></highchart>-->
+            <canvas id="line" class="chart chart-line chartVendas" chart-data="chartjs.data"
+                chart-labels="chartjs.labels" chart-legend="true" chart-series="chartjs.series"
+                chart-options="chartOptions">
+            </canvas>
+          </article>
+        <br />
+        <!--
+        <article>
+          <h2>Cancelamentos e Chargebacks</h2>
+          <div id="cancelamentos">
+            <highchart class="chart" config="charTiposVendas"></highchart>
+          </div>
+          <dl>
+            <dt>Cancelamentos</dt>
+            <dd><i ng-bind-html='currencySymbol'></i> {{cancellationValues.totalAmountCancellations | currency:""}}</dd>
+            <dt>Chargebacks</dt>
+            <dd><i ng-bind-html='currencySymbol'></i> {{cancellationValues.totalAmountChargeback | currency:""}}</dd>
+          </dl>
+          <br />
+        </article>
+        -->
+      </main>
+      <aside>
+        <h2>Conciliação de vendas</h2>
+        <table class="chargebacks" cellpadding="0" cellspacing="0" id="calendarioTour">
+          <thead>
+            <tr class="calendarMonth">
+              <td colspan="7">{{calendarMonth}}</td>
+            </tr>
+            <tr class="weekCalendar">
+              <th class="weekend">Dom</th>
+              <th>Seg</th>
+              <th>Ter</th>
+              <th>Qua</th>
+              <th>Qui</th>
+              <th>Sex</th>
+              <th class="weekend">Sab</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="week in weeks">
+              <td ng-repeat="day in week" ng-click="sales(day.date)"
+              	ng-class="{'naoConciliado': day.toProcess, 'divergencias': day.toReconcile,
+              			   'conciliado': day.concilied && !day.toReconcile && !day.toProcess, 'weekend': day.weekend }" class="oneItem">
+                        {{ day.date }}
+                </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="7">
+              <table cellpadding="0" cellspacing="0" class="calendarTotals">
+                  <thead>
+                    <tr class="legendTableHead">
+                      <th colspan="3">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="aConciliar">
+                        <h3>Vendas a conciliar</h3>
+                        <em>{{transactionConciliationBox.transctionToConcilieQuantity}}</em>
+                      </td>
+                      <td class="conciliados">
+                      	<h3>Vendas conciliadas</h3>
+                        <em>{{transactionConciliationBox.transctionConciliedQuantity}}</em>
+                      </td>
+                      <td class="naoConciliado">
+                        <h3>Vendas não processadas</h3>
+                        <em>{{transactionConciliationBox.transctionUnprocessedQuantity}}</em>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+               </td>
+            </tr>
+          </tfoot>
+        </table>
+      </aside>
+      <rc-disclaimer></rc-disclaimer>
+  </div>
+
+  <!--
+	<ul id="taxas">
+		<li>
+			<em><i ng-bind-html="currencySymbol"></i> <span ng-bind="totalTaxaAdm ? (totalTaxaAdm | currency:'') : '0,00'"></span></em>
+			<h2>Taxa de Administração</h2>
+		</li>
+
+		<li>
+			<em><i ng-bind-html="currencySymbol"></i> <span ng-bind="totalDuplicate ? (totalDuplicate | currency:'') : '0,00'"></span></em>
+			<h2>Vendas Duplicadas</h2>
+		</li>
+
+		<li>
+			<em><i ng-bind-html="currencySymbol"></i> <span ng-bind="totalConectivityTaxes.amount ? (totalConectivityTaxes.amount | currency:'') : '0,00'"></span></em>
+			<h2>Taxa Conectividade</h2>
+		</li>
+	</ul>
+-->
+	<br />
+</section>
+
+<script type="text/ng-template" id="video.html">
+    <div class="tabelaDetalhamentoModal gestaoModal">
+	<div class="modal-header">
+        <h3>Vídeo tutorial</h3>
+		<button class="icon-close" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body">
+        <videogular vg-theme="video.theme">
+            <vg-media vg-src="video.sources"
+                vg-tracks="video.tracks">
+            </vg-media>
+            <vg-controls
+                vg-autohide="video.plugins.controls.autoHide"
+                vg-autohide-time="video.plugins.controls.autoHideTime">
+                <vg-play-pause-button></vg-play-pause-button>
+                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                </vg-scrub-bar>
+                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                <vg-volume>
+                    <vg-mute-button></vg-mute-button>
+                    <vg-volume-bar></vg-volume-bar>
+                </vg-volume>
+                <vg-fullscreen-button></vg-fullscreen-button>
+            </vg-controls>
+            <vg-overlay-play></vg-overlay-play>
+            <vg-poster vg-url='video.plugins.poster'></vg-poster>
+        </videogular>
+	</div>
+	</div>
+</script>

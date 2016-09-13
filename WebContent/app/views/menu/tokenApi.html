@@ -1,0 +1,20 @@
+<div id="selecaoEmpresa">
+	<div class="modal-header">
+    	<h3 class="modal-title">
+			Token de Identificação para API Kaplen
+		</h3>
+		<button class="icon-close" ng-click="cancel()">Fechar</button>		
+    </div>
+    <div class="modal-body">
+    	O Token de Identificação é um sequencial necessário para acessar os serviços disponíveis pela Kaplen via API.
+    	<br/>
+    	Para garantir a autenticidade do cliente, a API de serviços exige que seja informado um Token de identificação, no Header da requisição Http que o sistema do cliente está montando e que será repassada para a URL dos serviços. 
+		<br/>
+    	Para maiores informações, consultar a <a href="">Documentação de Integração da Kaplen</a>.
+    	<br/>
+    	<br/>
+		<span>{{msg}} {{token}}</span>
+		<button class="" ng-click="updateToken()" ng-disabled="buttonActive">Gerar Novo Token</button>
+		<br/>
+	</div>
+</div>

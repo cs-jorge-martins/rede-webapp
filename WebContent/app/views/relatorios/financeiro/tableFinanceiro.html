@@ -1,0 +1,36 @@
+<h2>Resultado da Pesquisa</h2>
+<div id="conciliacaoGraph">
+  <div>
+	<highchart config="graphPrevisaoRecebimentos"></highchart>
+  </div>
+</div>
+<br/>
+<br/>
+<table class="previsaoTable" cellpadding="0" cellspacing="0">
+  <thead>
+	<tr>
+	  <th>Operadora</th>
+	  <th>Quantidade de Parcelas</th>
+	  <th colspan="2">Valor Líquido</th>
+	</tr>
+  </thead>
+  <tbody>
+	<tr ng-repeat="item in itensFinanceiro">
+	  <td ng-click="detalharParcelas(item)">{{item.acquirerName}}</td>
+	  <td ng-click="detalharParcelas(item)">{{item.quantityInstallments}}</td>
+	  <td ng-click="detalharParcelas(item)"><i ng-bind-html='currencySymbol'></i> {{item.totalNetInstallments | currency: ''}}</td>
+	  <td></td>
+	</tr>            
+	<tr class="totais">
+	  <td>Totais</td>
+	  <td>{{totalQuantity}}</td>
+	  <td><i ng-bind-html='currencySymbol'></i> {{totalAmount | currency: ''}}</td>
+	  <td></td>
+	</tr>
+  </tbody>
+</table>
+<ul class="archives">
+  <li class="pdf"><a href="javascript:void(0);" data-ng-click="gerarPrevisaoRecebimentos('PDF')">PDF</a></li>
+  <li class="xls"><a href="javascript:void(0);" data-ng-click="gerarPrevisaoRecebimentos('XLS')">XLS</a></li>
+</ul>
+<br />

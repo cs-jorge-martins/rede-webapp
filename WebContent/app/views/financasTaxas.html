@@ -1,0 +1,101 @@
+<section id="vendas" class="financas financasTaxa">
+    <ol class="breadCrumb">
+		<li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+		<li><a href="#/movements">financeiro</a></li>
+        <li><a href="#/movements/fee">taxas</a></li>
+	</ol>
+
+	<div class="date">
+		<h2>
+			<time datetime="nov/2013">{{monthSelected}} {{yearSelected}}</time>
+		</h2>
+	</div>
+
+	<br class="clearfix" />
+	<div id="detailsHeader">
+		<div class="details">
+            <p>{{acquirer.name | lowercase}}: <strong>{{description | lowercase}}</strong></p>
+			<p>{{startDate}}</p>
+		</div>
+	</div>
+
+	<div id="details" class="sales box" ng-show="items">
+
+		<table cellpadding="0" cellspacing="0">
+			<thead class="taleft">
+				<tr>
+					<th width="790">
+						descrição
+						<!--<img id="nsu" src="app/img/default.png" data-ng-click="orderColumn('description')"/>-->
+					</th>
+					<th>
+						valor (R$)
+						<!--<img id="gross" src="app/img/default.png" data-ng-click="orderColumn('value')"/>-->
+					</th>
+				</tr>
+			</thead>
+			<tbody id="cupomVendasTour">
+				<tr ng-repeat="item in items" ng-class-odd="'odd'">
+					<td>{{item.description}}</td>
+                	<td>{{item.amount | currency:""}}</td>
+				</tr>
+			</tbody>
+            <!--
+			<tfoot>
+				<tr>
+					<td>total</td>
+					<td>{{total | currency:""}}</td>
+				</tr>
+			</tfoot>
+            -->
+		</table>
+	    <div class="footer">
+			<div class="buttonWrapper">
+				<button class="conciliacaoButton active back" ng-click="back()" ng-show="items">financeiro</button>
+				<!--
+				<button class="conciliacaoButton" data-ng-click="conciliarVendas()"
+						ng-class="{'active': button}"
+						ng-disabled="buttonConcilied" ng-hide="statusItemAccordionSelected != 1">conciliar vendas selecionadas</button>
+				-->
+			</div>
+            <div class="optionsWrapper">
+				<div class="selectWrapper">
+					<label for="totalItensPage">resultados por página</label>
+					<div class="select">
+						<select ng-model="totalItensPage" ng-change="alterTotalItensPage()" id="totalItensPage">
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+						</select>
+					</div>
+				</div>
+                <div class="paginationWrapper">
+					<pagination
+						total-items="totalItens"
+						ng-model="currentPage"
+						ng-change="pageChanged()"
+						max-size="maxSize"
+						items-per-page="totalItensPage"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="true"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text="&laquo;"
+						last-text="&raquo;">
+					</pagination>
+				</div>
+                <!--
+				<ul class="archives">
+					<li class="label">exportar como:</li>
+					<li class="pdf" id="exportarArquivosModalTour"><a data-ng-click="gerarRelatorioModal('PDF')"></a></li>
+					<li class="xls"><a data-ng-click="gerarRelatorioModal('XLS')"></a></li>
+				</ul>
+                -->
+			</div>
+		</div>
+        <rc-disclaimer></rc-disclaimer>
+	</div>
+	<br class="clearfix" />
+</section>

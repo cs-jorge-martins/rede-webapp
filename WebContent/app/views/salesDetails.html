@@ -1,0 +1,115 @@
+<section id="conciliacao" class="vendas vendasDetalhe">
+	<ol class="breadCrumb">
+		<li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+		<li><a href="#/sales">vendas</a></li>
+        <li><a href="#/sales/details">detalhe</a></li>
+	</ol>
+	<br class="clearfix" />
+	<div id="detailsHeader">
+		<div class="cardBrand brand_{{cardProduct.id}}">
+			{{cardProduct.Name}}
+		</div>
+		<div class="details">
+			<p>{{acquirer.name | lowercase}}: <strong>{{cardProduct.name | lowercase}}</strong></p>
+			<p>{{startDate | date: 'dd/MM/yyyy'}}</p>
+		</div>
+<!--        <button class="conciliacaoButton active back" ng-click="back()" style="float:right !important;">vendas</button>-->
+	</div>
+
+	<div id="details" class="sales box">
+
+		<table cellpadding="0" cellspacing="0">
+			<thead>
+				<tr class="taleft">
+					<th>NSU</th>
+					<th>autorização</th>
+					<th>cartão</th>
+					<th>plano</th>
+					<th>maquineta</th>
+					<th>valor bruto (R$)</th>
+				</tr>
+			</thead>
+			<tbody id="detailsBody">
+				<tr ng-repeat="item in items" ng-class-odd="'odd'">
+					<td ng-hide="item.isConciliated">
+						<div class="checkbox card-favourite">
+						  <div class="checkbox-left" ng-if="item.conciliationStatus == 'TO_CONCILIE'">
+							  <input type="checkbox" id="checkbox-favourite-{{$index + 1}}" class="checkbox"
+							  ng-model="concilieItems" name="selectedItems[]" value="{{item}}"
+							  ng-checked="selection.indexOf(item) > -1;" ng-click="selectItemToConcilie(item)" />
+							  <label for="checkbox-favourite-{{$index + 1}}" ng-click="count(1)"></label>
+						  </div>
+						  <span class="checkbox-right" ng-click="comprovanteVenda(item)">{{item.nsu}}</span>
+						</div>
+					</td>
+                	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.authorization}}</td>
+                	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.cardNumber}}</td>
+                	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.installment}}</td>
+                	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.terminal.code}}</td>
+                	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.gross | currency:""}}</td>
+				</tr>
+			</tbody>
+			<!--
+			<tfoot id="detailsFooter">
+				<tr>
+					<td colspan="5">total</td>
+					<td>{{total | currency:""}}</td>
+				</tr>
+			</tfoot>
+			-->
+		</table>
+		<span class="alert" ng-show="duplicate.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+	    <div class="footer">
+			<div class="buttonWrapper" >
+				<button class="conciliacaoButton active back" ng-click="back()">vendas</button>
+
+                <div ng-show="items">
+
+				<!-- <button class="conciliacaoButton" data-ng-click="concilie()" ng-show="conciliationStatus == 'TO_CONCILIE'"
+						ng-class="isConcilieButtonActive ? 'active' : 'disabled'"
+						ng-disabled="!isConcilieButtonActive">conciliar {{ concilieItems.length }} vendas selecionadas</button> -->
+				<button class="conciliacaoButton" data-ng-click="concilie()"
+						ng-show="conciliationStatus == 'TO_CONCILIE'"
+						ng-class="isConcilieButtonActive ? 'active' : 'disabled'"
+						ng-disabled="!isConcilieButtonActive">conciliar {{ concilieItems.length }} vendas selecionadas</button>
+
+                </div>
+
+
+			</div>
+
+			<div class="optionsWrapper">
+				<div class="selectWrapper">
+					<label for="totalItensPage">resultados por página</label>
+					<div class="select">
+						<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="paginationWrapper">
+					<pagination
+						total-items="totalItens"
+						ng-model="currentPage"
+						ng-change="pageChanged()"
+						max-size="maxSize"
+						items-per-page="totalItensPage"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="true"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text="&laquo;"
+						last-text="&raquo;">
+					</pagination>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br class="clearfix" />
+</section>
+<rc-disclaimer></rc-disclaimer>

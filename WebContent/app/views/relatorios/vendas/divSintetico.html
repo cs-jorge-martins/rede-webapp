@@ -1,0 +1,49 @@
+<!-- sinteticos -->
+<ul>
+	<li ng-class="{'active': exibitionMode == 1}"><a data-ng-click="setExibitionMode(1)">Operadora</a></li>
+	<li ng-class="{'active': exibitionMode == 2}"><a data-ng-click="setExibitionMode(2)">Bandeira</a></li>
+	<li ng-class="{'active': exibitionMode == 3}"><a data-ng-click="setExibitionMode(3)">Produto</a></li>
+	<li ng-class="{'active': exibitionMode == 4}"><a data-ng-click="setExibitionMode(4)">Loja</a></li>
+	<li ng-class="{'active': exibitionMode == 5}"><a data-ng-click="setExibitionMode(5)">Parcelamento</a></li>
+	<li ng-class="{'active': exibitionMode == 6}"><a data-ng-click="setExibitionMode(6)">Maquineta</a></li>
+</ul>
+<div>
+  <highchart config="graphVisoes"></highchart>
+</div>
+<table cellpadding="0" callspacing="0">
+    <thead>
+      <tr>
+        <th ng-show="exibitionMode == 1">Operadoras</th>
+        <th ng-show="exibitionMode == 2">Bandeiras</th>
+        <th ng-show="exibitionMode == 3">Produtos</th>
+        <th ng-show="exibitionMode == 4">Lojas</th>
+        <th ng-show="exibitionMode == 5">Parcelamentos</th>
+        <th ng-show="exibitionMode == 6">Maquinetas</th>
+        <th>Cupons</th>
+        <th>Faturamento</th>
+        <th>Percentual</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in itensSintetic">
+        <td>{{item.name}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.totalAmount | currency:'R$ '}}</td>
+        <td>{{item.percentual | number: 2}} %</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Total:</td>
+        <td>{{totalQuantitySintetic}}</td>
+        <td>{{totalAmountSintetic | currency:'R$ '}}</td>
+        <td>&nbsp;</td>
+      </tr>
+    </tfoot>
+</table>
+<ul class="archives">
+  <li class="pdf"><a href="javascript:void(0);" data-ng-click="gerarSintetico('PDF')">PDF</a></li>
+  <li class="xls"><a href="javascript:void(0);" data-ng-click="gerarSintetico('XLS')">XLS</a></li>
+  <!-- <li class="csv"><a href="javascript:void(0);">CSV</a></li>-->
+</ul>     
+<br />

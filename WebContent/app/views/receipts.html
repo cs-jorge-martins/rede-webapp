@@ -1,0 +1,313 @@
+<section class="financas" id="financeiro">
+    <ol class="breadCrumb">
+        <li>você está em:</li>
+        <li><a href="#/home">home</a></li>
+        <li><a href="#/receipts">recebimentos</a></li>
+    </ol>
+
+    <div class="date">
+        <h2>
+        <time datetime="nov/2013">{{monthSelected}} {{yearSelected}}</time>
+      </h2> </div>
+    <div class="page-title">recebimentos</div>
+    <div id="receipts">
+        <div id="headerTabs" class="filter-depth container">
+            <tabset>
+                <tab heading="últimos lançamentos" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+
+                        <h3>utilize os campos abaixo para filtrar sua busca:</h3>
+                        <div class="filtersWrapper">
+                            <div class="filter">
+                                <rc-datepicker date="actualReleases.date" label="'período'"> </rc-datepicker>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+                            </div>
+                        </div>
+
+
+
+                        <!-- LANCAMENTOS ATUAIS INIT -->
+                        <article class="data-cards">
+                            <div class="header-datas">
+                                <div class="date">
+                                    <span class="number">{{actualReleases.day}}</span>
+                                    <br>{{actualReleases.month}} </div>
+                                <div class="chip-wrapper">
+                                    <div class="chip" ng-show="accountsLabel">
+                                        {{ accountsLabel | limitTo: 28 }} {{ accountsLabel.length > 28 ? '...' : '' }}
+                                    </div>
+                                    <div class="chip" ng-show="shopsLabel" ng-class="shopsLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        {{ shopsLabel }}
+                                        <div class="clear-filter" ng-click="clearShopFilter()">x</div>
+                                    </div>
+                                    <div class="chip" ng-show="cardProductsLabel" ng-class="cardProductsLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        {{ cardProductsLabel }}
+                                        <div class="clear-filter" ng-click="clearCardProductsFilter()">x</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="numbers-data">
+                                <ul>
+                                    <li id="toReceive">
+                                        <strong>total a receber</strong>
+                                        <span class="big-number"><span>R$</span> {{ totalToReceive | currency: "" }}</span>
+                                    </li>
+                                    <li class="math-symbol"><strong>-</strong></li>
+                                    <li class="discount">
+                                        <strong>total descontado</strong>
+                                        <span class="big-number"><span>R$</span> {{ discountedTotal | currency: ""}}</span>
+                                    </li>
+                                    <li class="math-symbol"><strong>+</strong></li>
+                                    <li class="addition">
+                                        <strong>total antecipado</strong>
+                                        <span class="big-number"><span>R$</span> {{ antecipatedTotal | currency: ""}}</span>
+                                    </li>
+                                    <li class="math-symbol"><strong>=</strong></li>
+                                    <li>
+                                        <strong>total recebido</strong>
+                                        <span class="big-number"><span>R$</span> {{ totalReceived | currency: ""}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <table ng-repeat="item in actualReleasesData" id="receipts_table">
+                                <thead>
+                                    <tr>
+                                        <th class="except">
+                                        <th>{{ item.acquirer.name | uppercase }}</th>
+                                        <th></th>
+                                        <th>valor total: {{ item.payedAmount | currency }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-if="item.cardProducts.length">
+                                    <tr class="group">
+                                        <th></th>
+                                        <th>lançamentos</th>
+                                        <th>valor líquido (R$)</th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-repeat="cardProduct in item.cardProducts">
+                                    <tr>
+                                        <th class="except"></th>
+                                        <th>
+                                        <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
+                                        <th>{{ cardProduct.total | currency }}</th>
+                                        <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a></th>
+                                    </tr>
+                                    <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type }}">
+                                        <th></th>
+                                        <th class="inset-1">{{ release.type }}</th>
+                                        <th>{{ release.payedAmount | currency}} </th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                                <tr class="group" ng-show="item.otherReleases">
+                                    <th></th>
+                                    <th>outros lançamentos</th>
+                                    <th>valor (R$)</th>
+                                    <th>
+                                        <!--<a ng-click="showDetails(item.acquirer, item.otherReleases)" href="#/receipts/details">detalhes</a>-->
+                                    </th>
+                                </tr>
+                                 <tbody ng-show="item.otherReleases">
+                                    <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
+                                        <th></th>
+                                        <th class="inset-1">{{ otherRelease.description }}</th>
+                                        <th>{{ otherRelease.amount | currency}} </th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+
+                                <tr class="group" ng-show="item.expectedReleases.length">
+                                    <th></th>
+                                    <th id="pagamentosNaoRecebidosTitleColumn">pagamentos não recebidos</th>
+                                    <th>valor (R$)</th>
+                                    <th>
+                                        <!--<a ng-click="showDetails(item.acquirer, item.expectedReleases)" href="#/receipts/details">detalhes</a>-->
+                                    </th>
+                                </tr>
+                                 <tbody ng-show="item.expectedReleases">
+                                    <tr ng-repeat="expectedRelease in item.expectedReleases">
+                                        <th class="except"></th>
+                                        <th><div class="cardFlag brand_{{ expectedRelease.cardProduct.id }}"></div>{{ expectedRelease.cardProduct.name | capitalize }}</th>
+                                        <th> {{ expectedRelease.expectedAmount | currency }} </th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+
+
+                                <!--
+                                <tbody ng-repeat="cardProduct in acquirer.cardProducts">
+                                    <tr>
+                                        <th class="except"></th>
+                                        <th>
+                                        <div class="cardFlag brand_{{cardProduct.id}}"></div> {{ cardProduct.name }} </th>
+                                        <th> {{ cardProduct.balanceAmount | currency }} </th>
+                                        <th><a ng-click="showDetails(acquirer, cardProduct)">detalhes</a></th>
+                                    </tr>
+                                    <tr class="inset" ng-class="e.type == 'cancelamentos' || e.type == 'ajustes' ? 'discount' : '' " ng-repeat="e in cardProduct.releases track by $index">
+                                        <th></th>
+                                        <th class="inset-1">{{ e.type }}</th>
+                                        <th>{{e.payedAmount | currency}} </th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                                <tr class="group" ng-show="chipOtherPaiments">
+                                    <th></th>
+                                    <th>outros lançamentos</th>
+                                    <th>{{receipts.otherPayments.value | currency}}</th>
+                                    <th><a href="#/receipts/details">detalhes</a></th>
+                                </tr>
+                                <tbody ng-repeat="op in receipts.otherPayments" ng-show="chipOtherPaiments">
+                                    <tr class="discount">
+                                        <th class="except"></th>
+                                        <th> {{ op.otherDescription }} </th>
+                                        <th> {{op.otherAmount | currency}} </th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                                <tr class="group">
+                                    <th></th>
+                                    <th>pagamentos não recebidos</th>
+                                    <th>{{receipts.expectedPayments.value | currency}}</th>
+                                    <th><a href="#/receipts/details">detalhes</a></th>
+                                </tr>
+                                <tbody ng-repeat="ep in receipts.expectedPayments">
+                                    <tr>
+                                        <th class="except"></th>
+                                        <th>
+                                            <div class="cardFlag brand_{{ep.cardProductId}}"></div> {{ ep.cardProductName }} </th>
+                                        <th> {{ep.expectedAmount | currency}} </th>
+                                        <th></th>
+                                    </tr>
+                                </tbody>
+                                -->
+                            </table>
+                            <span class="alert" ng-show="!actualReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                            <!--
+                		<div class="conclusion">
+                			<div class="page-title">
+                				conciliação financeira
+                			</div>
+                			<ul>
+                				<li>
+                					<input type="checkbox">
+                					Confirmo o recebimento de <strong>R$ 40.000,00 </strong> na conta corrente de número <strong>9898 98989-2</strong> banco <strong>itaú</strong> no dia 24/08/2016
+                				</li>
+                				<li>
+                					<input type="checkbox">
+                					Reportar erro no recebimento do valor informado.
+                				</li>
+                			</ul>
+                		</div>
+                		-->
+                    </article>
+                        <!-- LANCAMENTOS ATUAIS: END -->
+                </tab>
+                <tab heading="lançamentos futuros" active="" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+                		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
+                		<div class="filtersWrapper">
+                			<div class="filter firstFilter">
+                			    <rc-datepicker class="halfSize" date="futureReleases.startDate" label="'data inicial'">
+                			    </rc-datepicker>
+
+                			    <rc-datepicker class="halfSize" date="futureReleases.endDate" label="'data final'">
+                			    </rc-datepicker>
+                			</div>
+                			<div class="filter">
+                			    <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+                			</div>
+                			<div class="filter">
+                			    <rc-multiselect label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
+                			</div>
+                            <br>
+                			<div class="filter">
+                			    <rc-multiselect label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                			</div>
+                			<div class="filter">
+                			    <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                			</div>
+                			<div class="filter">
+                			    <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
+                			</div>
+                		</div>
+
+                        <!-- LANCAMENTOS FUTUROS INIT -->
+                        <article class="data-cards">
+                            <div class="header-datas">
+                                <div class="date-wrapper">
+                                    <p>Período</p>
+                                    <div class="date future">
+                                        {{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} à {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}}
+                                    </div>
+                                </div>
+                                <div class="chip-wrapper">
+                                    <div class="chip" ng-show="accountsFutureLabel">
+                                        {{ accountsFutureLabel }}
+                                    </div>
+                                    <div class="chip" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        {{ shopsFutureLabel }}
+                                        <div class="clear-filter" ng-click="clearShopFilter(true)">x</div>
+                                    </div>
+                                    <div class="chip" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        {{ cardProductsFutureLabel }}
+                                        <div class="clear-filter" ng-click="clearCardProductsFilter(true)">x</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <table ng-repeat="item in futureReleasesData" id="receipts_table">
+                                <thead>
+                                    <tr>
+                                        <th class="except">
+                                        <th>{{ item.acquirer.name | uppercase }}</th>
+                                        <th></th>
+                                        <!-- /* Todo: alterar por adquirente */ -->
+                                        <th>valor total: {{ item.expectedAmount | currency }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="group">
+                                        <th></th>
+                                        <th>lançamentos</th>
+                                        <th></th>
+                                        <th>valor líquido (R$)</th>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-repeat="cardProduct in item.cardProducts">
+                                    <tr>
+                                        <th class="except"></th>
+                                        <th>
+                                        <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
+                                        <th></th>
+                                        <th>{{ cardProduct.releases[0].expectedAmount | currency }}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <span class="alert" ng-show="!futureReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                        </article>
+
+                        <!-- LANCAMENTOS FUTUROS: END -->
+
+
+
+
+
+                </tab>
+            </tabset>
+        </div>
+    </div>
+    <rc-disclaimer></rc-disclaimer>
+</section>
