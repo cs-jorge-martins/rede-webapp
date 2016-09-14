@@ -10741,6 +10741,12 @@ div.checkbox-toggle-right {
     font-size: 23px;
     color:#00b9b5;
 }
+.footer-integration .pagination {
+    display: flex;
+    justify-content:center;
+    width:100%;
+    margin:0;
+}
 .rcDatepicker {
     position: relative;
     top: 2px;
