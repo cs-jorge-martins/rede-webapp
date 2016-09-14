@@ -473,7 +473,7 @@ angular.module('Conciliador.salesController',[])
 								}
 							}
 							if(!flag){
-								//acquirers.push($scope.concilieItems[item].acquirer.id);
+								acquirers.push($scope.concilieItems[item].acquirer.id);
 							}
 						}
 

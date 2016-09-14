@@ -11098,3 +11098,7 @@ div.checkbox-toggle-right {
     background: url(../img/icons/rsz_2exclamation.png) no-repeat;
     background-position: 210px 6px;
 }
+
+.cursor_pointer{
+    cursor: pointer;
+}

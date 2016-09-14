@@ -309,7 +309,8 @@ angular.module('KaplenWeb.dashboardController',[])
 			currency: 'BRL',
 			startDate: calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(date)),
 			endDate: calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(date)),
-			groupBy: 'DAY'
+			groupBy: 'DAY',
+			size: 31
 		};
 
 		// actual month data
