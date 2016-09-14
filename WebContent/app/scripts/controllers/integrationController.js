@@ -36,6 +36,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.showSendFile = showSendFile;
 		$scope.downloadFile = downloadFile;
 		$scope.showDownloadFiles = showDownloadFiles;
+		$scope.searchFileByName = searchFileByName;
 
 		$scope.fileSearch = '';
 		$scope.listUploadedFiles = [];
@@ -57,6 +58,20 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.inProgress = true;
 			$scope.fileName = fileItem.file.name;
 			fileItem.url += "?fileName=" + $scope.fileName;
+		}
+
+		$scope.uploader.onBeforeUploadItem = function(item){
+			var $modalInstance = $modal.open({
+				templateUrl: "app/views/vendas/uploadInProgress.html",
+				scope: $scope,
+				size: 'lg',
+				windowClass: "integrationModalWrapper",
+				controller: function($scope, $modalInstance){
+					$scope.cancel = function() {
+						$modalInstance.dismiss("cancel");
+					}
+				}
+			})
 		}
 
 		$scope.uploader.onSuccessItem = function(item, response, status, headers) {
@@ -84,6 +99,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		}
 
 		function getUploadedFiles() {
+			$scope.fileSearch = '';
 			if ($scope.uploadedFiles === false) {
 				$scope.sendFile = false;
 				integrationService.getUploadedFiles().then(function(response){
@@ -99,6 +115,21 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				})	
 			}
 		}
+
+		function searchFileByName () {
+			$scope.listUploadedFiles = [];
+			var filter = {
+				name: $scope.fileSearch
+			}
+			integrationService.getUploadedFiles(filter).then(function(response){
+				var data = response.data.content;
+				for (var i in data) {
+					$scope.listUploadedFiles.push(data[i]);
+					console.log($scope.listUploadedFiles);
+				}
+			})
+		}
+
 		function showDownloadFiles() {
 			$scope.uploadedFiles = false;
 			$scope.sendFile = false;

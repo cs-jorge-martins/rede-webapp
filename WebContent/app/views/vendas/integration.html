@@ -24,7 +24,7 @@
 						localizar arquivo csv
 					</label>
 					<input type="file" accept=".csv" style="display: none;" id="sendfile" nv-file-select uploader="uploader" />
-
+					
 					<span ng-repeat="item in uploader.queue" ng-show="inProgress">
 		                <label class="findfile" ng-bind="item.file.name"></label>
 		                <button ng-click="uploader.uploadAll()" class="submit">enviar</button>
@@ -35,7 +35,7 @@
 				<div class="bullet" ng-click="getUploadedFiles(); uploadedFiles = !uploadedFiles;" ng-class="{clicked: uploadedFiles}"></div><span class="title" ng-click="getUploadedFiles(); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
 				<aside ng-show="uploadedFiles">
 					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch">
-					<button class="submit">buscar</button>
+					<button class="submit" ng-click="searchFileByName()">buscar</button>
 					<table class="filesTable">
 						<thead>
 							<tr>
@@ -45,7 +45,7 @@
 								<th>situação do arquivo <i class="orderby"></i></th>
 							</tr>
 						</thead>
-						<tbody ng-repeat="item in listUploadedFiles | filter:fileSearch">
+						<tbody ng-repeat="item in listUploadedFiles">
 							<tr>
 								<td>{{ item.fileName }}</td>
 								<td>{{ item.size / 1024 | number: 3 }} MB</td>

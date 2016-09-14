@@ -10490,7 +10490,7 @@ div.checkbox-toggle-right {
     display: block;
     background-position: -40px -5px;
 }
-.upload-ico-success {
+.upload-ico-success, .upload-ico-inProgress {
     font-size: 96px;
     color:#00b9b5;
 }
@@ -10721,7 +10721,9 @@ div.checkbox-toggle-right {
 }
 .integrationModalWrapper .modal-dialog .modal-content .modal-body p {
     font-size: 17px;
-    color:#00b9b5;
+}
+.integrationModalWrapper .modal-dialog .modal-content .modal-body p.exception {
+    color:black;
 }
 .integrationModalWrapper .modal-dialog .modal-content .modal-header {
     border:0;
@@ -10733,6 +10735,11 @@ div.checkbox-toggle-right {
     opacity:1;
     font-size: 24px;
     z-index: 9999;
+}
+
+.integrationModalWrapper .modal-dialog .modal-content .modal-body .label-inProgress {
+    font-size: 23px;
+    color:#00b9b5;
 }
 .rcDatepicker {
     position: relative;
