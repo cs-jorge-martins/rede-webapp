@@ -7737,9 +7737,6 @@ label[for="opcoesRelatorios"] + ul li {
 .relatorio .bandeiraFilter input[type=text] {
 	width: 300px!important;
 }
-.relatorio tr:hover td {
-	background: #dadada;
-}
 tr.totais td {
 	background: #e6e5e5!important;
 }
