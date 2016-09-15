@@ -63,7 +63,8 @@
 				status: 'CANCELLED',
 				adjustTypes: $scope.adjustType,
 				page: $scope.currentPage,
-				size: $scope.totalItensPage
+				size: $scope.totalItensPage,
+				sort: 'date,ASC'
 			};
 
 			$scope.noItensMsg = false;
