@@ -11,9 +11,9 @@ angular.module('Conciliador.helpController',[])
 
     $scope.video = {
         sources: [
-            {src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.mp4"), type: "video/mp4"},
-            {src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.webm"), type: "video/webm"},
-            {src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.ogg"), type: "video/ogg"}
+            {src: $sce.trustAsResourceUrl("/app/videos/video-treinamento.mp4"), type: "video/mp4"},
+            {src: $sce.trustAsResourceUrl("/app/videos/video-treinamento.webm"), type: "video/webm"},
+            {src: $sce.trustAsResourceUrl("/app/videos/video-treinamento.ogg"), type: "video/ogg"}
         ],
         theme: "app/css/videogular.min.css",
         plugins: {
