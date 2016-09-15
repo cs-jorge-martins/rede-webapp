@@ -53,7 +53,8 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 				endDate: calendarFactory.formatDateTimeForService($scope.finalDate),
 				groupBy: 'PAYED_DATE,DESCRIPTION',
                 page: curPage,
-				size: $scope.totalItensPage
+				size: $scope.totalItensPage,
+				sort: 'date,ASC'
 			}).then(function(response){
 				var data = response.data.content;
                 var pagination = response.data.page;
