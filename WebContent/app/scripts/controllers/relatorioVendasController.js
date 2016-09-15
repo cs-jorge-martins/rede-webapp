@@ -132,7 +132,7 @@
 				currency: 'BRL',
 				page: $scope.currentPageAnalytical,
 				size: $scope.totalItensPageAnalytical,
-                sort: 'date,DESC'
+                sort: 'date,ASC'
 			};
 
 			TransactionService.getTransactionByFilter(handleAnalyticalFilter(filter)).then(function(response){
@@ -170,7 +170,8 @@
 				cardProductIds: cardProductIds,
 				currency: 'BRL',
 				page: $scope.currentPageDuplicate,
-				size: $scope.totalItensPageDuplicate
+				size: $scope.totalItensPageDuplicate,
+				sort: 'date,ASC'
 
 			};
 
