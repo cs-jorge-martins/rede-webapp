@@ -1,0 +1,12 @@
+<div class="modal-header">
+	<div class="close" ng-click="cancel()">x</div>
+</div>
+<div class="modal-body modal-success">
+	<p class="exception">
+		Envio de arquivo<br>
+		<span ng-repeat="item in uploader.queue">
+        	<label class="label-inProgress findfile" ng-bind="item.file.name"></label>
+       	</span>	<br>
+		<span class="upload-ico-inProgress itauicon-itaufonts_relatorios_financeiros"></span>
+	</p>
+</div>

@@ -7737,9 +7737,6 @@ label[for="opcoesRelatorios"] + ul li {
 .relatorio .bandeiraFilter input[type=text] {
 	width: 300px!important;
 }
-.relatorio tr:hover td {
-	background: #dadada;
-}
 tr.totais td {
 	background: #e6e5e5!important;
 }
@@ -10493,7 +10490,7 @@ div.checkbox-toggle-right {
     display: block;
     background-position: -40px -5px;
 }
-.upload-ico-success {
+.upload-ico-success, .upload-ico-inProgress {
     font-size: 96px;
     color:#00b9b5;
 }
@@ -10724,7 +10721,9 @@ div.checkbox-toggle-right {
 }
 .integrationModalWrapper .modal-dialog .modal-content .modal-body p {
     font-size: 17px;
-    color:#00b9b5;
+}
+.integrationModalWrapper .modal-dialog .modal-content .modal-body p.exception {
+    color:black;
 }
 .integrationModalWrapper .modal-dialog .modal-content .modal-header {
     border:0;
@@ -10736,6 +10735,17 @@ div.checkbox-toggle-right {
     opacity:1;
     font-size: 24px;
     z-index: 9999;
+}
+
+.integrationModalWrapper .modal-dialog .modal-content .modal-body .label-inProgress {
+    font-size: 23px;
+    color:#00b9b5;
+}
+.footer-integration .pagination {
+    display: flex;
+    justify-content:center;
+    width:100%;
+    margin:0;
 }
 .rcDatepicker {
     position: relative;
@@ -11093,4 +11103,8 @@ div.checkbox-toggle-right {
 #pagamentosNaoRecebidosTitleColumn{
     background: url(../img/icons/rsz_2exclamation.png) no-repeat;
     background-position: 210px 6px;
+}
+
+.cursor_pointer{
+    cursor: pointer;
 }

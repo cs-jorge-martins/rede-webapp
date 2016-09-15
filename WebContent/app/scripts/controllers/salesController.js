@@ -185,7 +185,8 @@ angular.module('Conciliador.salesController',[])
 			endDate: lastDayOfYear,
 			cardProductIds: $scope.productsSelected.join(','),
 			shopIds: $scope.settlementsSelected.join(','),
-			groupBy: 'MONTH'
+			groupBy: 'MONTH',
+			size: 31
 		}).then(function(data){
 
 			var data = data.data;
@@ -259,7 +260,8 @@ angular.module('Conciliador.salesController',[])
 			endDate: calendarFactory.formatDateForService(lastDayOfMonth),
 			cardProductIds: cardProductIds.join(','),
 			shopIds: shopIds.join(','),
-			groupBy: 'DAY'
+			groupBy: 'DAY',
+			size: 31
 		}).then(function(data){
 			var data = data.data.content;
 			var days = [];
@@ -473,7 +475,7 @@ angular.module('Conciliador.salesController',[])
 								}
 							}
 							if(!flag){
-								//acquirers.push($scope.concilieItems[item].acquirer.id);
+								acquirers.push($scope.concilieItems[item].acquirer.id);
 							}
 						}
 

@@ -10,7 +10,8 @@ angular.module('KaplenWeb.Request',[])
 
 	function setHeaders() {
 		return {
-			'Authorization': $window.sessionStorage.token
+			'Authorization': $window.sessionStorage.token,
+			'Content-Type': 'application/json'
 		}
 	}
 
