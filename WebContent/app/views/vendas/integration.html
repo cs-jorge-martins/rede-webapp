@@ -32,7 +32,11 @@
 				</aside>
 			</li>
 			<li>
-				<div class="bullet" ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;" ng-class="{clicked: uploadedFiles}"></div><span class="title" ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
+				<div class="bullet" 
+					 ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;" 
+					 ng-class="{clicked: uploadedFiles}">
+				</div>
+				<span class="title" ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
 				<aside ng-show="uploadedFiles">
 					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch">
 					<button class="submit" ng-click="getUploadedFiles(true)">buscar</button>
