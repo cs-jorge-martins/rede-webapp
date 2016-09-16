@@ -40,9 +40,18 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'ngFileSaver'
 							])
 
-	.constant('app', {
-		'endpoint': 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp'
-	})
+	.constant('app', (function(){	
+		var host = window.location.hostname;
+		var endpoint = 'endpoint = https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';
+
+		if(host === '127.0.0.1' || host === 'localhost' || host.match('dev')) {
+			endpoint = 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp';
+		}
+
+		return {
+			'endpoint': endpoint
+		};
+	})())
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (datepickerConfig) {
