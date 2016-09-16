@@ -85,7 +85,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.yearSelected = parseInt(calendarFactory.getYear($scope.dateSelected));
 
 		//getPeriod($scope.dateSelected);
-		getCalendarMonths();
+		//getCalendarMonths();
 		getCalendarDays();
 		getFinancials();
 	};
@@ -166,7 +166,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.sumOfPayed = 0;
 		$scope.sumOfBank = 0;
 
-		getCalendarMonths();
+		//getCalendarMonths();
 		getCalendarDays();
 	}
 

@@ -199,18 +199,23 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 				var items = [];
 				var total = 0;
-				for(var item in response){
-					if($scope.conciliationStatus === 'TO_CONCILIE'){
-						response[item].isConciliated = false;
+
+				if(response.length) {
+					for(var item in response){
+						if($scope.conciliationStatus === 'TO_CONCILIE'){
+							response[item].isConciliated = false;
+						}
+
+						items.push(response[item]);
+						total += response[item].gross;
 					}
 
-					items.push(response[item]);
-					total += response[item].gross;
+					$scope.items = items;
+					$scope.noItensMsg = $scope.items.length === 0 ? true : false;
+					$scope.totalItens = pagination.totalElements;
+				} else {
+					back();
 				}
-
-				$scope.items = items;
-				$scope.noItensMsg = $scope.items.length === 0 ? true : false;
-				$scope.totalItens = pagination.totalElements;
 			});
 		}
 
