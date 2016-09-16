@@ -13,7 +13,16 @@ angular.module('Conciliador.salesController',[])
 
 	menuFactory.setActiveResumoConciliacao();
 
-	init();
+
+	$scope.$on('$routeChangeSuccess', function(next, current,previous) {
+		if(previous) {
+			if(!previous.$$route.originalPath.match('details')) {
+				cacheService.clearFilter();
+			}
+		}
+
+		init();
+	});
 
 	function init(){
 
@@ -75,9 +84,9 @@ angular.module('Conciliador.salesController',[])
 		$scope.yearSelected = parseInt(calendarFactory.getYear($scope.dateSelected));
 
 		//getPeriod($scope.dateSelected);
-		getCalendarMonths();
+		//getCalendarMonths();
 		getCalendarDays();
-		getFinancials();
+		getFinancials(true);
 	};
 
 	$scope.changeMonth = function(month) {
@@ -86,7 +95,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.dateSelected = calendarFactory.getFirstDayOfSpecificMonth(month, year);
 
 		getCalendarDays();
-		getFinancials();
+		getFinancials(true);
 	}
 
 	$scope.changeDay = function(day) {
@@ -105,7 +114,7 @@ angular.module('Conciliador.salesController',[])
 
 			if(selectedDayIndex != $scope.lastDaySelectedIndex) {
 				$scope.days[$scope.lastDaySelectedIndex].isActive = false;
-				getFinancials();
+				getFinancials(true);
 			}
 
 			$scope.lastDaySelectedIndex = selectedDay - 1;
@@ -156,7 +165,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.sumOfPayed = 0;
 		$scope.sumOfBank = 0;
 
-		getCalendarMonths();
+		//getCalendarMonths();
 		getCalendarDays();
 	}
 
@@ -331,7 +340,7 @@ angular.module('Conciliador.salesController',[])
 
 	}
 
-	function getFinancials() {
+	function getFinancials(cache) {
 		
 		var date = $scope.dateSelected;
 		var startDate = calendarFactory.formatDateForService(date);
@@ -374,15 +383,16 @@ angular.module('Conciliador.salesController',[])
 			filter.types = types;
 		}
 
-		cacheService.saveFilter({
-			startDate: date,
-			endDate: date,
-			conciliationStatus: $scope.statusSelected,
-			types: filter.types || false,
-			settlementsSelected: $scope.settlementsSelected,
-			productsSelected: $scope.productsSelected
-		}, 'sales');
-
+		if(cache) {
+			cacheService.saveFilter({
+				startDate: date,
+				endDate: date,
+				conciliationStatus: $scope.statusSelected,
+				types: filter.types || false,
+				settlementsSelected: $scope.settlementsSelected,
+				productsSelected: $scope.productsSelected
+			}, 'sales');
+		}
 
 		$scope.items = [];
 
@@ -558,7 +568,7 @@ angular.module('Conciliador.salesController',[])
 
 	function search() {
         document.getElementById("naturezaProduto").value = "";
-		this.getFinancials();
+		this.getFinancials(true);
 	}
 
 	function clearFilter() {
