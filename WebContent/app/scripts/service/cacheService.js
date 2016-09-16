@@ -139,9 +139,10 @@ angular.module('KaplenWeb.cacheService',[])
 
 	this.clearFilter = function() {
 		var enabledKeys = this.enabledFilterKeys;
-
 		for(var item in enabledKeys){
-		//	cache.destroy(enabledKeys[item]);
+			if(this.loadFilter(enabledKeys[item])){
+				cache.destroy(enabledKeys[item]);
+			}
 		}
 	};
 

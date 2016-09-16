@@ -19,6 +19,16 @@ angular.module('Conciliador.salesController',[])
 
 		getCachedData();
 
+		$scope.$on('$routeChangeSuccess', function(next, current,previous) {
+			if(previous) {
+				console.log(previous.$$route.originalPath)
+				if(!previous.$$route.originalPath.match('details')) {
+					console.log('limpando cache')
+					cacheService.clearFilter();
+				}
+			}
+		});
+
 		if($rootScope.salesFromDashDate) {
 			$scope.dateSelected = $rootScope.salesFromDashDate;
 			$rootScope.salesFromDashDate = null;
@@ -331,7 +341,7 @@ angular.module('Conciliador.salesController',[])
 
 	}
 
-	function getFinancials() {
+	function getFinancials(cache) {
 		
 		var date = $scope.dateSelected;
 		var startDate = calendarFactory.formatDateForService(date);
@@ -374,15 +384,17 @@ angular.module('Conciliador.salesController',[])
 			filter.types = types;
 		}
 
-		cacheService.saveFilter({
-			startDate: date,
-			endDate: date,
-			conciliationStatus: $scope.statusSelected,
-			types: filter.types || false,
-			settlementsSelected: $scope.settlementsSelected,
-			productsSelected: $scope.productsSelected
-		}, 'sales');
-
+		if(cache) {
+			console.log('salvando')
+			cacheService.saveFilter({
+				startDate: date,
+				endDate: date,
+				conciliationStatus: $scope.statusSelected,
+				types: filter.types || false,
+				settlementsSelected: $scope.settlementsSelected,
+				productsSelected: $scope.productsSelected
+			}, 'sales');
+		}
 
 		$scope.items = [];
 
@@ -558,7 +570,7 @@ angular.module('Conciliador.salesController',[])
 
 	function search() {
         document.getElementById("naturezaProduto").value = "";
-		this.getFinancials();
+		this.getFinancials(true);
 	}
 
 	function clearFilter() {
