@@ -35,11 +35,22 @@ angular.module('Conciliador.FinancialService',[])
 		return Restangular.all('adjustsummaries').getList(adjustSummaryFilter);
 	}
 
+	// this.getReceipt = function(filter){
+	// 	var request = filter;
+
+	// 	return $http({
+ //            url: app.endpoint + '/financials/installments',
+	// 		method: "GET",
+	// 		params: request,
+	// 		headers: Request.setHeaders()
+	// 	});
+	// }
+
 	this.getReceipt = function(filter){
 		var request = filter;
 
 		return $http({
-            url: app.endpoint + '/financials/installments',
+            url: app.endpoint + '/financials/details',
 			method: "GET",
 			params: request,
 			headers: Request.setHeaders()
