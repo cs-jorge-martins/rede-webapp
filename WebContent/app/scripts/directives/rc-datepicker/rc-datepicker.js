@@ -27,11 +27,9 @@
 			link: function(scope, element, attrs) {
 
 				var calendarIcon = element[0].querySelector('.icon_calendario');
-				var input = element[0].querySelector('input');
-
 
 				calendarIcon.addEventListener('click', function(){
-					//input.click();
+					scope.status.opened = true;
 				});
 
 				/*
