@@ -60,12 +60,11 @@ chartUtils.tooltip = function(tooltip) {
 chartUtils.formatters = {
 	currency: function( value ) {
 		var formatted = value.toFixed(2);
+		var tmp;
 
-		while (/(\d+)(\d{3})/.test(formatted)){
-			formatted = formatted.replace(/(\d+)(\d{3})/, '$1'+','+'$2');
-		}
-
-		formatted = formatted.split(",");
+		tmp = formatted.split('.');
+		tmp[0] = tmp[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		formatted = tmp.join(',');
 		formatted = "R$ " + formatted;
 
 		return formatted;

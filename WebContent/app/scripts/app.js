@@ -40,9 +40,18 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'ngFileSaver'
 							])
 
-	.constant('app', {
-		'endpoint': 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp'
-	})
+	.constant('app', (function(){	
+		var host = window.location.hostname;
+		var endpoint = 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';
+
+		if(host === '127.0.0.1' || host === 'localhost' || host.match('dev') || host === '0.0.0.0' ) {
+			endpoint = 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp';
+		}
+
+		return {
+			'endpoint': endpoint
+		};
+	})())
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (datepickerConfig) {
@@ -364,6 +373,14 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	function getTomorrowFromToday() {
 		return moment().add(1, 'day').tz(timezone).format(format);
 	}
+
+	/**
+	 * retorna o dia de ontem em date
+	 * @returns date
+	 */
+	function getTomorrowFromTodayToDate() {
+		return moment().add(1, 'day').tz(timezone).toDate();
+	}
 	function getActualDateUploadModal() {
 		return moment().tz(timezone).format("DD/MM/YYYY HH:mm:ss");
 	}
@@ -400,6 +417,29 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
             return finalDateMoment.date();
         }
 		return finalDateMoment.tz(timezone).format(format);
+	}
+
+	/**
+	 * Pega o ultimo dia de um date e retorna o proximo mês em Date
+	 * @param date
+	 * @returns date
+	 */
+	function getLastDayOfMonthToDate(date) {
+        if( date ) {
+            var finalDateMoment = moment(date).endOf('month');
+        }
+		return finalDateMoment.toDate();
+	}
+
+
+	/**
+	 * faz o somatorio: ultimo_dia_do_mes(startDate + x mês)
+	 * @param date
+	 * @param plusMonths
+	 * @returns {*}
+	 */
+	function getLastDayOfPlusMonthToDate(date, plusMonths) {
+		return getLastDayOfMonthToDate(addMonthsOnDate(date, plusMonths));
 	}
 
     function getDayOfWeek(date) {
@@ -454,6 +494,17 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		 var resultAddMoment = resultMoment.add(qtd, 'month');
 
 		 return resultAddMoment.tz(timezone);
+	}
+
+	/**
+	 * função para somar meses em uma data sem formato
+	 * @param date
+	 * @param qtd
+	 * @returns date
+	 */
+    function addMonthsOnDate(date, qtd){
+		 var resultMoment = moment(date).add(qtd, 'month');
+		 return resultMoment.toDate();
 	}
 
     function addYearsToDate(date, qtd){
@@ -615,7 +666,9 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         getMonthNameOfDate:getMonthNameOfDate,
         getLastDayOfCurrentMonth: getLastDayOfCurrentMonth,
         getTomorrowFromToday: getTomorrowFromToday,
-		transformBrDateIntoDate: transformBrDateIntoDate
+		transformBrDateIntoDate: transformBrDateIntoDate,
+		getTomorrowFromTodayToDate: getTomorrowFromTodayToDate,
+		getLastDayOfPlusMonthToDate: getLastDayOfPlusMonthToDate
 	};
 })
 
