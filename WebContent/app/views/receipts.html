@@ -14,30 +14,27 @@
         <div id="headerTabs" class="filter-depth container">
             <tabset>
                 <tab heading="últimos lançamentos" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
-
                         <h3>utilize os campos abaixo para filtrar sua busca:</h3>
                         <div class="filtersWrapper">
                             <div class="filter">
-                                <rc-datepicker date="actualReleases.date" label="'período'"> </rc-datepicker>
+                                <rc-datepicker date="actualReleases.date" label="'período'"></rc-datepicker>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+                                <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
+                                <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                                <rc-multiselect label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                                <rc-multiselect label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"></rc-multiselect>
                             </div>
                             <div class="filter">
                                 <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
                             </div>
                         </div>
-
-
 
                         <!-- LANCAMENTOS ATUAIS INIT -->
                         <article class="data-cards">

@@ -340,7 +340,8 @@ angular.module('KaplenWeb.movementsModule',[])
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			status: 'EXPECTED,RECEIVED,PENDING',
+			// status: 'EXPECTED,RECEIVED,PENDING',
+			status: 'EXPECTED,RECEIVED',
 			bankAccountIds: getAccountsFilter(),
 			shopIds: getShopsFilter(),
 			acquirerIds: getAcquirersFilter(),
