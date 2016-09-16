@@ -13,21 +13,20 @@ angular.module('Conciliador.salesController',[])
 
 	menuFactory.setActiveResumoConciliacao();
 
-	init();
+
+	$scope.$on('$routeChangeSuccess', function(next, current,previous) {
+		if(previous) {
+			if(!previous.$$route.originalPath.match('details')) {
+				cacheService.clearFilter();
+			}
+		}
+
+		init();
+	});
 
 	function init(){
 
 		getCachedData();
-
-		$scope.$on('$routeChangeSuccess', function(next, current,previous) {
-			if(previous) {
-				console.log(previous.$$route.originalPath)
-				if(!previous.$$route.originalPath.match('details')) {
-					console.log('limpando cache')
-					cacheService.clearFilter();
-				}
-			}
-		});
 
 		if($rootScope.salesFromDashDate) {
 			$scope.dateSelected = $rootScope.salesFromDashDate;
@@ -87,7 +86,7 @@ angular.module('Conciliador.salesController',[])
 		//getPeriod($scope.dateSelected);
 		//getCalendarMonths();
 		getCalendarDays();
-		getFinancials();
+		getFinancials(true);
 	};
 
 	$scope.changeMonth = function(month) {
@@ -96,7 +95,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.dateSelected = calendarFactory.getFirstDayOfSpecificMonth(month, year);
 
 		getCalendarDays();
-		getFinancials();
+		getFinancials(true);
 	}
 
 	$scope.changeDay = function(day) {
@@ -115,7 +114,7 @@ angular.module('Conciliador.salesController',[])
 
 			if(selectedDayIndex != $scope.lastDaySelectedIndex) {
 				$scope.days[$scope.lastDaySelectedIndex].isActive = false;
-				getFinancials();
+				getFinancials(true);
 			}
 
 			$scope.lastDaySelectedIndex = selectedDay - 1;
@@ -385,7 +384,6 @@ angular.module('Conciliador.salesController',[])
 		}
 
 		if(cache) {
-			console.log('salvando')
 			cacheService.saveFilter({
 				startDate: date,
 				endDate: date,
