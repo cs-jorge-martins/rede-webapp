@@ -8914,12 +8914,7 @@ footer nav.fixed {
 .modal-success {
 	text-align: center;
 }
-.check-success {
-	width:62px;
-	height:45px;
-	background:url(../img/check.jpg) no-repeat center center;
-	display: inline-block;
-}
+
 .modal-confirm-conciliacao > p {
 	text-align: center;
 	font-size: 18px;
