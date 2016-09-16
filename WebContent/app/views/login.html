@@ -1,5 +1,5 @@
 <div id="login">
-	<form id="loginForm">
+	<form id="loginForm" novalidate>
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<label for="emailLogin">E-mail</label>
 		<input id="emailLogin" type="text" ng-model="usuario.login" required/>
