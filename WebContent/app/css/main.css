@@ -8884,7 +8884,7 @@ footer nav.fixed {
 #details thead th {
 	color: #333;
 	padding: 10px 0 !important;
-	text-indent: 10px;
+	// text-indent: 10px;
 }
 
 #details tbody tr {
@@ -10306,7 +10306,7 @@ div.checkbox-toggle-right {
     text-align: center;
     padding-right: 30px;
 }
-#receipts .brand_2{
+#receipts .brand_2, #receiptsDetails .brand_2{
     width: 44px;
     background-position-x: -94px;
 }
@@ -10375,6 +10375,11 @@ div.checkbox-toggle-right {
 }
 /* cabal */
  .data-cards table tbody .brand_8, #receiptsDetails .brand_8 {
+    width: 45px;
+    background-position: -46px 0 ;
+}
+
+.data-cards table tbody .brand_8, #receiptsDetails .brand_8 {
     width: 45px;
     background-position: -46px 0 ;
 }
