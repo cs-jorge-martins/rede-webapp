@@ -299,7 +299,7 @@
 							<tbody>
 								<tr ng-repeat="item in adjustsData">
 									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
-									<td>{{ item.adjustAmount }}</td>
+									<td>R$ {{ item.adjustAmount | currency: '' }}</td>
 									<td>{{ item.adjustDescription }}</td>
 									<td>{{ item.adjustRoNumber }}</td>
 								</tr>
