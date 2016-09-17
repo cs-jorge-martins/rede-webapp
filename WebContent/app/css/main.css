@@ -10323,7 +10323,7 @@ div.checkbox-toggle-right {
     width: 45px;
     background-position-x: -139px;
 }
-#receipts .brand_6{
+#receipts .brand_6, #receiptsDetails .brand_6{
     width: 43px;
     background-position-x: -231px;
 }
