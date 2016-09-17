@@ -243,12 +243,12 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in salesData">
-									<td>{{ item.transaction.date | date: 'dd/MM/yyyy' }} às {{ item.transaction.hour | date: 'HH:mm:ss' }}</td>
-									<td>{{ item.transaction.nsu }}</td>
-									<td>R$ {{ item.transaction.gross | currency:'' }}</td>
-									<td>R$ {{ item.transaction.net | currency:'' }}</td>
-									<td>parcela {{ item.number }}/{{ item.transaction.installment }}</td>
-									<td>{{ item.transaction.pv.code }}</td>
+									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
+									<td>{{ item.transactionNsu }}</td>
+									<td>R$ {{ item.transactionGross | currency:'' }}</td>
+									<td>R$ {{ item.transactionNet | currency:'' }}</td>
+									<td>parcela {{ item.installmentNumber }}</td>
+									<td>{{ item.transactionPvCode }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -290,22 +290,18 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>data/hora venda</th>
-									<th>nsu</th>
-									<th>valor total transação</th>
-									<th>valor líquido pago</th>
-									<th>nº parcela</th>
-									<th>nº estabelecimento<!--<span class="orderby"></span>--></th>
+									<th>data do ajuste</th>
+									<th>valor do ajuste</th>
+									<th>descricao do ajuste</th>
+									<th>número do lote (rv)</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in adjustsData">
-									<td>{{ item.transaction.date | date: 'dd/MM/yyyy' }} às {{ item.transaction.hour | date: 'HH:mm:ss' }}</td>
-									<td>{{ item.transaction.nsu }}</td>
-									<td>R$ {{ item.transaction.gross | currency:'' }}</td>
-									<td>R$ {{ item.transaction.net | currency:'' }}</td>
-									<td>parcela {{ item.transaction.installment }}</td>
-									<td>{{ item.transaction.pv.code }}</td>
+									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
+									<td>R$ {{ item.adjustAmount | currency: '' }}</td>
+									<td>{{ item.adjustDescription }}</td>
+									<td>{{ item.adjustRoNumber }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -346,22 +342,24 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>data/hora venda</th>
+									<th>data da venda</th>
+									<th>valor total da transação</th>
+									<th>valor total do cancelamento</th>
+									<th>valor do débito</th>
 									<th>nsu</th>
-									<th>valor total transação</th>
-									<th>valor líquido pago</th>
-									<th>nº parcela</th>
-									<th>nº estabelecimento<!--<span class="orderby"></span>--></th>
+									<th>nº do cartão<!--<span class="orderby"></span>--></th>
+									<th>código de autorização</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in cancellationsData">
-									<td>{{ item.transaction.date | date: 'dd/MM/yyyy' }} às {{ item.transaction.hour | date: 'HH:mm:ss' }}</td>
-									<td>{{ item.transaction.nsu }}</td>
-									<td>R$ {{ item.transaction.gross | currency:'' }}</td>
-									<td>R$ {{ item.transaction.net | currency:'' }}</td>
-									<td>parcela {{ item.transaction.installment }}</td>
-									<td>{{ item.transaction.pv.code }}</td>
+									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
+									<td>R$ {{ item.transactionGross | currency:'' }}</td>
+									<td>R$ {{ item.adjustCancellationAmount | currency:'' }}</td>
+									<td>R$ {{ item.adjustAmount | currency:'' }}</td>
+									<td>{{ item.adjustNsu }}</td>
+									<td>{{ item.adjustCardNumber}}</td>
+									<td>{{ item.adjustAuthorization }}</td>
 								</tr>
 							</tbody>
 						</table>
