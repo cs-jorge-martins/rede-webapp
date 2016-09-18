@@ -130,6 +130,10 @@
     vertical-align: middle;
 }
 
+.btn-group-top2px {
+    margin-top: 2px;
+}
+
 .btn-group>.btn {
     position: relative;
     float: left;

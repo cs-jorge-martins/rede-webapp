@@ -584,6 +584,8 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	function getCachedData() {
+		cacheService.getSettlements();
+		cacheService.getProducts();
 
 		$scope.dateSelected = calendarFactory.getYesterdayDate();
 		$scope.statusSelected = 0;

@@ -3,7 +3,8 @@
 </div>
 <div class="modal-body modal-confirm-conciliacao">
 	<p>
-		Você deseja conciliar as <strong> {{concilieQuantity}} </strong> vendas selecionadas ?
+		Você deseja conciliar <strong> {{concilieQuantity}} </strong> venda<span ng-if="concilieQuantity > 1">s</span> selecionada<span ng-if="concilieQuantity > 1">s</span>
+		?	
 	</p>
 </div>
 <div class="modal-footer footer-confirm-conciliacao">
