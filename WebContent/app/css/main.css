@@ -10548,7 +10548,7 @@ div.checkbox-toggle-right {
     width: 100%;
     text-align: left;
     border: 1px solid #ddd;
-    padding: 0.5em 0 0.78em 1.1em;
+    padding: 9px 0 9px 1.1em;
     position: relative;
     color: #626262;
 }
@@ -10772,6 +10772,20 @@ div.checkbox-toggle-right {
 }
 .halfSize:nth-last-child(1) {
     float: right;
+}
+.receipts_future_filters .halfSize:nth-last-child(1) {
+    float: left;
+    padding-left: 20px;
+}
+
+.receipts_future_filters .halfSize {
+    float: left;
+    width: 46%;
+}
+
+.receipts_future_filters .halfSize .rcDatepicker,
+.receipts_future_filters .halfSize .rcDatepicker .input-group input {
+    width: 135px;
 }
 
 .halfSize .rcDatepicker, .halfSize .rcDatepicker .input-group input  {
