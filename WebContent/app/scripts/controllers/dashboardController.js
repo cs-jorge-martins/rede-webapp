@@ -155,7 +155,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		transactionSummaryFilterCurrentMonth.endDate = $scope.currentMonthPerid.lastDate;
 
 		// Consulta do mês corrente
-		
+
 		dashboardService.getTransactionSummaryBox(transactionSummaryFilterCurrentMonth).then(function(item){
 			item = item.data.content;
 			$scope.transactionSummaryBoxCurrentMonth = new TransactionSummary();
@@ -325,6 +325,7 @@ angular.module('KaplenWeb.dashboardController',[])
 				}
 			}
 
+
 			var lastMonthDate = calendarFactory.addMonthsToDate(date, -1);
 			filter.startDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(lastMonthDate));
 			filter.endDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(lastMonthDate));
@@ -353,9 +354,7 @@ angular.module('KaplenWeb.dashboardController',[])
 				}
 
 				chartData.series.push(calendarFactory.getNameOfMonth(lastMonthDate));
-				if (lastMonthData.length) {
-					chartData.data.push(proccessChartDays(lastMonthData));
-				}
+				chartData.data.push(proccessChartDays(lastMonthData));
 
 				$scope.chartjs = chartData;
 				$scope.chartOptions = chartUtils.options.vendas;
@@ -384,7 +383,6 @@ angular.module('KaplenWeb.dashboardController',[])
 			}
 
 		}
-
 		return chartDays;
 	}
 

@@ -59,6 +59,7 @@ chartUtils.tooltip = function(tooltip) {
 
 chartUtils.formatters = {
 	currency: function( value ) {
+
 		var formatted = value.toFixed(2);
 		var tmp;
 
