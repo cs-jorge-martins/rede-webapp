@@ -217,29 +217,31 @@
                 <tab heading="lançamentos futuros" active="" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
                 		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
                 		<div class="filtersWrapper">
-                			<div class="filter firstFilter">
-                			    <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
-                			    </rc-datepicker>
+                            <div class="receipts_future_filters">
+                                <div class="filter firstFilter">
+                                    <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
+                                    </rc-datepicker>
 
-                			    <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
-                			    </rc-datepicker>
-                			</div>
-                			<div class="filter">
-                			    <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
-                			</div>
-                			<div class="filter">
-                			    <rc-multiselect label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
-                			</div>
-                            <br>
-                			<div class="filter">
-                			    <rc-multiselect label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
-                			</div>
-                			<div class="filter">
-                			    <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
-                			</div>
-                			<div class="filter">
-                			    <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
-                			</div>
+                                    <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
+                                    </rc-datepicker>
+                                </div>
+                                <div class="filter">
+                                    <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+                                </div>
+                                <div class="filter">
+                                    <rc-multiselect label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
+                                </div>
+                                <br>
+                                <div class="filter">
+                                    <rc-multiselect label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                                </div>
+                                <div class="filter">
+                                    <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                                </div>
+                                <div class="filter">
+                                    <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
+                                </div>
+                            </div>
                 		</div>
 
                         <!-- LANCAMENTOS FUTUROS INIT -->
