@@ -76,12 +76,9 @@ angular.module('KaplenWeb.cacheService',[])
 	this.getSettlements = function(){
 		var key = 'settlements';
 		if (cache.get(key) === undefined) {
-			var result = kaplenAdminService.getSettlementsAutoComplete().$object;
-			cache.put(key, result);
-			return result;
-		}else{
-			return cache.get(key);
+			initializeSettlements();
 		}
+		return cache.get(key);
 	};
 
 	this.getTerminals = function(){
