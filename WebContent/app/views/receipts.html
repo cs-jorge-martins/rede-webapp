@@ -111,7 +111,7 @@
                                         <th></th>
                                         <th class="inset-1">{{ release.type }}</th>
                                         <th>
-                                            <ng-show ng-show="{{ release.type === 'cancelamentos'}}"> - </ng-show> 
+                                            <ng-show ng-show="{{ release.type === 'cancelamentos' || release.type === 'ajustes'}}"> - </ng-show>
                                             {{ release.payedAmount | number: 02}} </th>
                                         <th></th>
                                     </tr>
