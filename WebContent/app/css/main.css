@@ -10637,6 +10637,16 @@ div.checkbox-toggle-right {
     height: 40px;
 }
 
+.receipts_future_filters input[type=submit] {
+    margin-top: 4px;
+    height: 40px;
+    border: 1px solid #f8de00;
+}
+
+.receipts_present_filters input[type=submit] {
+    margin-top: 2px;
+}
+
 .filter-depth input[type=submit]:active {
     top: 3px;
     box-shadow: none !important;
