@@ -795,10 +795,10 @@ angular.module('KaplenWeb.movementsModule',[])
 		var label = (isFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
 
 		if( model.length ) {
-			if( model.length === $scope.shopsData.length ) {
-				label = 'todos os estabelecimentos';
-			} else if ( model.length === 1) {
+			if( model.length == 1 ) {
 				label = model[0].label;
+			} else if ( model.length === $scope.shopsData.length) {
+				label = 'todos os estabelecimentos';
 			} else {
 				var over = model.length - 1;
 				label = model[0].label + ' + ' +  over + ' estabelecimento';
