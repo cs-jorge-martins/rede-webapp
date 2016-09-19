@@ -298,6 +298,13 @@ angular.module('KaplenWeb.movementsModule',[])
 
 			receiptsService.getAdjusts(filter).then(function(response){
 					var data = response.data.content;
+					var total = 0;
+
+					for(var item in data) {
+						total += data[item].amount;
+					}
+
+					actualReleasesData[index].otherReleasesTotal = total
 					actualReleasesData[index].otherReleases = data;
 			}).catch(function(){
 				console.log('[receiptsController:getOtherReleases] error');
