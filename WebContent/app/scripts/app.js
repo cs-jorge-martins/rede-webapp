@@ -182,6 +182,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 
 	$rootScope.destroyVariablesSession = function(){
+
 		delete $window.sessionStorage.user;
 		delete $window.sessionStorage.token;
 		delete $window.sessionStorage.userName;
@@ -211,6 +212,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 
 		delete $rootScope.currency;
 		delete $rootScope.currencies;
+
+		cacheService.clearFilter();
 
 
 		$rootScope.login = 'login';
