@@ -116,6 +116,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				var filter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
+					orderBy: 'date'
 				};
 
 				if($scope.fileSearch !== "") {
