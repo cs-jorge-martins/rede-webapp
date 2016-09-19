@@ -102,14 +102,17 @@
                                     <tr>
                                         <th class="except"></th>
                                         <th>
-                                        <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
-                                        <th>{{ cardProduct.total | currency }}</th>
+                                            <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} 
+                                        </th>
+                                        <th>{{ cardProduct.total | number: 02 }}</th>
                                         <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a></th>
                                     </tr>
                                     <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type }}">
                                         <th></th>
                                         <th class="inset-1">{{ release.type }}</th>
-                                        <th>{{ release.payedAmount | currency}} </th>
+                                        <th>
+                                            <ng-show ng-show="{{ release.type === 'cancelamentos' || release.type === 'ajustes'}}"> - </ng-show>
+                                            {{ release.payedAmount | number: 02}} </th>
                                         <th></th>
                                     </tr>
                                 </tbody>
@@ -125,7 +128,7 @@
                                     <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
                                         <th></th>
                                         <th class="inset-1">{{ otherRelease.description }}</th>
-                                        <th>{{ otherRelease.amount | currency}} </th>
+                                        <th>- {{ otherRelease.amount | number: 02}} </th>
                                         <th></th>
                                     </tr>
                                 </tbody>
@@ -142,7 +145,7 @@
                                     <tr ng-repeat="expectedRelease in item.expectedReleases">
                                         <th class="except"></th>
                                         <th><div class="cardFlag brand_{{ expectedRelease.cardProduct.id }}"></div>{{ expectedRelease.cardProduct.name | capitalize }}</th>
-                                        <th> {{ expectedRelease.expectedAmount | currency }} </th>
+                                        <th> {{ expectedRelease.expectedAmount | number: 02 }} </th>
                                         <th></th>
                                     </tr>
                                 </tbody>
@@ -293,7 +296,7 @@
                                         <th>
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
                                         <th></th>
-                                        <th>{{ cardProduct.releases[0].expectedAmount | currency }}</th>
+                                        <th>{{ cardProduct.releases[0].expectedAmount }}</th>
                                     </tr>
                                 </tbody>
                             </table>
@@ -301,10 +304,6 @@
                         </article>
 
                         <!-- LANCAMENTOS FUTUROS: END -->
-
-
-
-
 
                 </tab>
             </tabset>
