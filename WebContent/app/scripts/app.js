@@ -319,6 +319,10 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	var firstDayOfLastMonthDashboard = moment((momentForDashboard.month()) + "/"+ "01/" + + moment().year());
 	var lastDayOfLastMonthDashboard = moment((momentForDashboard)).tz(timezone).subtract(1, 'months').endOf('month');
 
+	function getToday() {
+		return moment().toDate();
+	}
+
 	function getDateFromString(value, format){
 		return moment = moment(value,format);
 	}
@@ -671,7 +675,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         getTomorrowFromToday: getTomorrowFromToday,
 		transformBrDateIntoDate: transformBrDateIntoDate,
 		getTomorrowFromTodayToDate: getTomorrowFromTodayToDate,
-		getLastDayOfPlusMonthToDate: getLastDayOfPlusMonthToDate
+		getLastDayOfPlusMonthToDate: getLastDayOfPlusMonthToDate,
+		getToday: getToday
 	};
 })
 
