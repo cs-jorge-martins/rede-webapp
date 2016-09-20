@@ -27,8 +27,8 @@
 					
 					<span ng-repeat="item in uploader.queue" ng-show="inProgress">
 		                <label class="findfile" ng-bind="item.file.name"></label>
-		                <button ng-click="uploader.uploadAll()" class="submit">enviar</button>
 		            </span>
+		            <button ng-click="uploader.uploadAll()" class="submit" ng-class="{disabled: !inProgress}">enviar</button>
 				</aside>
 			</li>
 			<li>
