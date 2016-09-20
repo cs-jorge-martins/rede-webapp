@@ -111,7 +111,7 @@
                                         <th></th>
                                         <th class="inset-1">{{ release.type }}</th>
                                         <th>
-                                            <ng-show ng-show="{{ release.type === 'cancelamentos'}}"> - </ng-show> 
+                                            <ng-show ng-show="{{ release.type === 'cancelamentos' || release.type === 'ajustes'}}"> - </ng-show>
                                             {{ release.payedAmount | number: 02}} </th>
                                         <th></th>
                                     </tr>
@@ -119,7 +119,7 @@
                                 <tr class="group" ng-show="item.otherReleases">
                                     <th></th>
                                     <th>outros lançamentos</th>
-                                    <th>valor (R$)</th>
+                                    <th>{{ item.otherReleasesTotal | currency}}</th>
                                     <th>
                                         <!--<a ng-click="showDetails(item.acquirer, item.otherReleases)" href="#/receipts/details">detalhes</a>-->
                                     </th>
@@ -136,7 +136,7 @@
                                 <tr class="group" ng-show="item.expectedReleases.length">
                                     <th></th>
                                     <th id="pagamentosNaoRecebidosTitleColumn">pagamentos não recebidos</th>
-                                    <th>valor (R$)</th>
+                                    <th>{{ item.expectedReleasesTotal | currency}}</th>
                                     <th>
                                         <!--<a ng-click="showDetails(item.acquirer, item.expectedReleases)" href="#/receipts/details">detalhes</a>-->
                                     </th>
