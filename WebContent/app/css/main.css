@@ -10328,6 +10328,13 @@ div.checkbox-toggle-right {
     width: 54px;
     background-position-x: -413px;
 }
+
+/* union pay */
+#receipts .brand_97, #receiptsDetails .brand_97{
+    width: 47px;
+    background-position-x: -466px;
+}
+
 /* sicredi */
 #receipts .brand_24{
     width: 44px;
