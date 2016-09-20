@@ -10452,6 +10452,10 @@ div.checkbox-toggle-right {
     border-radius: 50%;
 
 }
+#integration .upload-file-wrapper ul li .disabled {
+    background:#ddd;
+    cursor:not-allowed;
+}
 #integration .upload-file-wrapper ul li > span.title {
     font-size: 16px;
     color:#353230;
