@@ -104,6 +104,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	function init() {
 		$scope.todayDate = calendarFactory.getToday();
+		$scope.actualReleases.date = calendarFactory.getToday();
         getFilters();
 	}
 
