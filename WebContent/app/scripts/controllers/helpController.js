@@ -11,13 +11,13 @@ angular.module('Conciliador.helpController',[])
 
     $scope.video = {
         sources: [
-            {src: $sce.trustAsResourceUrl("/app/videos/video-treinamento.mp4"), type: "video/mp4"},
-            {src: $sce.trustAsResourceUrl("/app/videos/video-treinamento.webm"), type: "video/webm"},
-            {src: $sce.trustAsResourceUrl("/app/videos/video-treinamento.ogg"), type: "video/ogg"}
+            {src: $sce.trustAsResourceUrl("app/videos/video-treinamento.mp4"), type: "video/mp4"},
+            {src: $sce.trustAsResourceUrl("app/videos/video-treinamento.webm"), type: "video/webm"},
+            {src: $sce.trustAsResourceUrl("app/videos/video-treinamento.ogg"), type: "video/ogg"}
         ],
         theme: "app/css/videogular.min.css",
         plugins: {
-            poster: "/app/img/videoPoster.jpg",
+            poster: "app/img/videoPoster.jpg",
             controls: {
                 autoHide: true,
                 autoHideTime: 1000
