@@ -10426,6 +10426,9 @@ div.checkbox-toggle-right {
     margin-bottom: 30px;
     line-height: 15px;
 }
+#integration .upload-file-wrapper ul.dropdown-menu-form > li {
+    margin-bottom: 0;
+}
 #integration .upload-file-wrapper ul li .bullet {
     width:15px;
     height:15px;
@@ -10551,6 +10554,10 @@ div.checkbox-toggle-right {
 .rcMultiselect label{
     padding-left: 12px;
     font-size: 15px;
+}
+
+.filters-download-file .rcMultiselect label {
+    padding-left: 0;
 }
 
 .dropdown-multiselect {
