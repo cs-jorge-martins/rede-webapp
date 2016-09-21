@@ -10455,7 +10455,7 @@ div.checkbox-toggle-right {
     border-radius: 50%;
 
 }
-#integration .upload-file-wrapper ul li .disabled {
+#integration .upload-file-wrapper ul li button.disabled {
     background:#ddd;
     cursor:not-allowed;
 }
