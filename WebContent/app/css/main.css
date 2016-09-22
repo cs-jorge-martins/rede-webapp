@@ -10777,6 +10777,9 @@ div.checkbox-toggle-right {
     width:100%;
     margin:0;
 }
+.footer-integration{
+    clear: both;
+}
 .rcDatepicker {
     position: relative;
     top: 2px;
