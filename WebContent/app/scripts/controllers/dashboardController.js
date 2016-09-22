@@ -217,13 +217,11 @@ angular.module('KaplenWeb.dashboardController',[])
 		movementSummaryBoxCurrentMonthFilter.status = ['FORETHOUGHT','RECEIVED'];
 
 		dashboardService.getMovementSummary(movementSummaryBoxCurrentMonthFilter).then(function(item){
-			item = item.data;
+			item = item.data.content;
 			$scope.movementSummaryBoxCurrentMonth = new MovementSummary();
 
-			if (item !== undefined ){
-				if(item.length > 0){
-					$scope.movementSummaryBoxCurrentMonth = item[0];
-				}
+			if(item.length > 0){
+				$scope.movementSummaryBoxCurrentMonth = item[0];
 			}
 
 			var movementSummaryBoxCurrentPrevFilter = new MovementSummaryFilter();
@@ -237,10 +235,8 @@ angular.module('KaplenWeb.dashboardController',[])
 				item = item.data.content;
 				$scope.movementionSummaryBoxPrevMonth = new MovementSummary();
 
-				if (item !== undefined ){
-					if(item.length > 0){
-						$scope.movementionSummaryBoxPrevMonth = item[0];
-					}
+				if(item.length > 0){
+					$scope.movementionSummaryBoxPrevMonth = item[0];
 				}
 
 				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100]/ $scope.movementionSummaryBoxPrevMonth.payedAmount) | 0;
