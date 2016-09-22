@@ -71,6 +71,7 @@
 						closeOnSelect: true,
 						showCheckAll: false,
 						showUncheckAll: false,
+						displayProp: 'label',
 						externalIdProp: ""
 					}
 				}

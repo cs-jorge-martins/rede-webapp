@@ -83,7 +83,7 @@
 				<div class="bullet" ng-click="showDownloadFiles(); downloadFiles = !downloadFiles" ng-class="{clicked: downloadFiles}"></div><span class="title" ng-click="showDownloadFiles(); downloadFiles = !downloadFiles">download do arquivo de recebimento</span>
 				<aside class="filters-download-file" ng-show="downloadFiles">
 					<div class="filter">
-						<rc-multiselect label="'tipo de relatório'" model="typeModel" data="typeData" single-selection="1" placeholder="' '"> </rc-multiselect>
+						<rc-multiselect label="'tipo de relatório'" model="typeModel" data="typeData" single-selection="1"> </rc-multiselect>
 					</div>
 					<div class="filter">
 						<rc-datepicker class="halfSize" date="initialDate" label="'data inicial'" max-date="initialMaxDate" min-date="initialMinDate"></rc-datepicker>
