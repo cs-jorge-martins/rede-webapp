@@ -68,7 +68,8 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 					cardProductIds: $scope.cardProduct.cardProductId,
 					acquirerIds: $scope.acquirer.id,
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
-					endDate: calendarFactory.formatDateTimeForService($scope.endDate)
+					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
+					bankAccountIds: $scope.bankAccount.id
 				};
 
 				if($scope.status === 'forethought'){
@@ -130,6 +131,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			filter.type = 'CREDIT';
 			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
 			filter.size =  $scope.salesTotalItensPage;
+			
 
 			console.log('sales filter', filter);
 
@@ -141,6 +143,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 				$scope.salesData = data;
 				$scope.salesTotalItens = pagination.totalElements;
+
 				console.log('sales result', data);
 			}).catch(function(response) {
 				$scope.salesData = [];
