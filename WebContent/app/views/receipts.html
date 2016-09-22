@@ -296,7 +296,7 @@
                                         <th>
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
                                         <th></th>
-                                        <th>{{ cardProduct.releases[0].expectedAmount }}</th>
+                                        <th>{{ cardProduct.releases[0].expectedAmount | number: 02 }}</th>
                                     </tr>
                                 </tbody>
                             </table>
