@@ -105,8 +105,9 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		$scope.$watch('typeModel.type', function(response) {
 			if(response != 'FUTURE') {
-				$scope.initialMaxDate = calendarFactory.getToday();
-				$scope.finishMaxDate = calendarFactory.getToday();
+				setCalendarLastReleases();
+			} else {
+				setCalendarFutureReleases();
 			}
 		});
 
@@ -120,6 +121,26 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		function init() {
 			$scope.initialDate = calendarFactory.getToday();
+		}
+		
+		function setCalendarLastReleases() {
+			var today = calendarFactory.getToday();
+			$scope.initialDate = today;
+			$scope.finishDate = today;
+			$scope.initialMinDate = null;
+			$scope.finishMinDate = null;
+			$scope.initialMaxDate = today;
+			$scope.finishMaxDate = today;
+		}
+
+		function setCalendarFutureReleases() {
+			var tomorrow = calendarFactory.getTomorrowFromTodayToDate();
+			$scope.initialDate = tomorrow;
+			$scope.finishDate = tomorrow;
+			$scope.initialMinDate = tomorrow;
+			$scope.finishMinDate = tomorrow;
+			$scope.initialMaxDate = null;
+			$scope.finishMaxDate = null;
 		}
 
 		function showSendFile() {
@@ -137,7 +158,6 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				var filter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
-					//orderBy: 'date'
 					sort: 'date,DESC'
 				};
 
