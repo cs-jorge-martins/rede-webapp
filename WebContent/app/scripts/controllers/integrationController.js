@@ -116,6 +116,12 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			}
 		});
 
+		init();
+
+		function init() {
+			$scope.initialDate = calendarFactory.getToday();
+		}
+
 		function showSendFile() {
 			if ($scope.sendFile === false) {
 				$scope.uploadedFiles = false;	
