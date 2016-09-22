@@ -10426,6 +10426,9 @@ div.checkbox-toggle-right {
     margin-bottom: 30px;
     line-height: 15px;
 }
+#integration .upload-file-wrapper ul.dropdown-menu-form > li {
+    margin-bottom: 0;
+}
 #integration .upload-file-wrapper ul li .bullet {
     width:15px;
     height:15px;
@@ -10452,7 +10455,7 @@ div.checkbox-toggle-right {
     border-radius: 50%;
 
 }
-#integration .upload-file-wrapper ul li .disabled {
+#integration .upload-file-wrapper ul li button.disabled {
     background:#ddd;
     cursor:not-allowed;
 }
@@ -10551,6 +10554,10 @@ div.checkbox-toggle-right {
 .rcMultiselect label{
     padding-left: 12px;
     font-size: 15px;
+}
+
+.filters-download-file .rcMultiselect label {
+    padding-left: 0;
 }
 
 .dropdown-multiselect {
@@ -10855,7 +10862,9 @@ div.checkbox-toggle-right {
     /*padding-bottom: 150px !important;*/
     height: 470px;
 }
-
+#integration .rcDatepicker .dropdown-menu {
+    height: 315px;
+}
 .rcDatepicker .dropdown-menu:focus,
 .rcDatepicker .dropdown-menu:active {
     outline: none;
@@ -10978,6 +10987,7 @@ div.checkbox-toggle-right {
     margin-left: 0 !important;
 }
 #integration .rcDatepicker .datepickerInfo {
+    display: none;
     top:385px;
     left:0;
 }

@@ -104,6 +104,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	function init() {
 		$scope.todayDate = calendarFactory.getToday();
+		$scope.actualReleases.date = calendarFactory.getToday();
         getFilters();
 	}
 
@@ -771,6 +772,11 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	function getCardProductsFilter(isFuture) {
 		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
+
+		if(model.length == $scope.cardProductsData.length) {
+			return [];
+		}
+
 		return model.map(function(item){
 			return item.id;
 		}).join(",");
