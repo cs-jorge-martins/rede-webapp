@@ -101,6 +101,48 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.labelFindFile = true;
 		}
 
+
+
+		$scope.$watch('typeModel.type', function(response) {
+			if(response != 'FUTURE') {
+				setCalendarLastReleases();
+			} else {
+				setCalendarFutureReleases();
+			}
+		});
+
+		$scope.$watch('initialDate', function(response) {
+			if(moment($scope.finishDate).isBefore(response)) {
+				$scope.finishDate = moment(response).toDate();
+			}
+		});
+
+		init();
+
+		function init() {
+			$scope.initialDate = calendarFactory.getToday();
+		}
+		
+		function setCalendarLastReleases() {
+			var today = calendarFactory.getToday();
+			$scope.initialDate = today;
+			$scope.finishDate = today;
+			$scope.initialMinDate = null;
+			$scope.finishMinDate = null;
+			$scope.initialMaxDate = today;
+			$scope.finishMaxDate = today;
+		}
+
+		function setCalendarFutureReleases() {
+			var tomorrow = calendarFactory.getTomorrowFromTodayToDate();
+			$scope.initialDate = tomorrow;
+			$scope.finishDate = tomorrow;
+			$scope.initialMinDate = tomorrow;
+			$scope.finishMinDate = tomorrow;
+			$scope.initialMaxDate = null;
+			$scope.finishMaxDate = null;
+		}
+
 		function showSendFile() {
 			if ($scope.sendFile === false) {
 				$scope.uploadedFiles = false;	
@@ -116,7 +158,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				var filter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
-					orderBy: 'date'
+					sort: 'date,DESC'
 				};
 
 				if($scope.fileSearch !== "") {
