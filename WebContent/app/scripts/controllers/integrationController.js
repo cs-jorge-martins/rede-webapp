@@ -101,6 +101,27 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.labelFindFile = true;
 		}
 
+
+
+		$scope.$watch('typeModel.type', function(response) {
+			if(response != 'FUTURE') {
+				$scope.initialMaxDate = calendarFactory.getToday();
+				$scope.finishMaxDate = calendarFactory.getToday();
+			}
+		});
+
+		$scope.$watch('initialDate', function(response) {
+			if(moment($scope.finishDate).isBefore(response)) {
+				$scope.finishDate = moment(response).toDate();
+			}
+		});
+
+		init();
+
+		function init() {
+			$scope.initialDate = calendarFactory.getToday();
+		}
+
 		function showSendFile() {
 			if ($scope.sendFile === false) {
 				$scope.uploadedFiles = false;	
