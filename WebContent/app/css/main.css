@@ -7265,6 +7265,9 @@ td.editSettlementList {
     position: relative;
     // padding-left:15px;
 }
+#naturezaProduto {
+    position: relative;
+}
 
 .advancedFilter ul {
 	position: relative;
