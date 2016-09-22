@@ -8857,7 +8857,7 @@ footer nav.fixed {
 	width: 70px;
 	background-position: -503px 0;
 }
-#detailsHeader .brand_24{
+#detailsHeader .brand_24, #detailsHeader .brand_79{
     width: 90px;
     background-position: -572px 0px;
 }
@@ -10336,7 +10336,7 @@ div.checkbox-toggle-right {
 }
 
 /* sicredi */
-#receipts .brand_24{
+#receipts .brand_24, #receipts .brand_79{
     width: 44px;
     background-position-x: -277px;
 }
