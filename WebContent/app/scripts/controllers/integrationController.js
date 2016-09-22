@@ -26,7 +26,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				type: 'FUTURE'
 			}
 		];
-		$scope.typeModel = {"id": 1}
+		$scope.typeModel = {"id": 1, type: 'CURRENT'}
 		
 		
 		$scope.initialDate = [];
