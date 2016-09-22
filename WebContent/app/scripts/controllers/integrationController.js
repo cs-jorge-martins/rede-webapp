@@ -6,7 +6,6 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal, 
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService, filtersService){
-
 		menuFactory.setActiveIntegration();
 		$scope.labelFindFile = true;
 		$scope.uploadedFiles = false;
@@ -14,8 +13,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.sendFile = false;
 		$scope.inProgress = false;
 		$scope.fileName = [];
-
-		$scope.typeModel = [];
+		
 		$scope.typeData = [
 			{
 				id:1, 
@@ -27,8 +25,10 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				label: 'lançamentos futuros',
 				type: 'FUTURE'
 			}
-		]
-
+		];
+		$scope.typeModel = {"id": 1}
+		
+		
 		$scope.initialDate = [];
 		$scope.finishDate = [];
 
@@ -101,6 +101,27 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.labelFindFile = true;
 		}
 
+
+
+		$scope.$watch('typeModel.type', function(response) {
+			if(response != 'FUTURE') {
+				$scope.initialMaxDate = calendarFactory.getToday();
+				$scope.finishMaxDate = calendarFactory.getToday();
+			}
+		});
+
+		$scope.$watch('initialDate', function(response) {
+			if(moment($scope.finishDate).isBefore(response)) {
+				$scope.finishDate = moment(response).toDate();
+			}
+		});
+
+		init();
+
+		function init() {
+			$scope.initialDate = calendarFactory.getToday();
+		}
+
 		function showSendFile() {
 			if ($scope.sendFile === false) {
 				$scope.uploadedFiles = false;	
@@ -116,7 +137,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				var filter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
-					orderBy: 'date'
+					//orderBy: 'date'
+					sort: 'date,DESC'
 				};
 
 				if($scope.fileSearch !== "") {
@@ -153,6 +175,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.sendFile = false;
 		}
 		function downloadFile () {
+			console.log($scope.typeModel);
 			var filter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finishDate),
