@@ -105,8 +105,21 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		$scope.$watch('typeModel.type', function(response) {
 			if(response != 'FUTURE') {
-				$scope.initialMaxDate = calendarFactory.getToday();
-				$scope.finishMaxDate = calendarFactory.getToday();
+				var today = calendarFactory.getToday();
+				$scope.initialDate = today;
+				$scope.finishDate = today;
+				$scope.initialMinDate = null;
+				$scope.finishMinDate = null;
+				$scope.initialMaxDate = today;
+				$scope.finishMaxDate = today;
+			} else {
+				var tomorrow = calendarFactory.getTomorrowFromTodayToDate();
+				$scope.initialDate = tomorrow;
+				$scope.finishDate = tomorrow;
+				$scope.initialMinDate = tomorrow;
+				$scope.finishMinDate = tomorrow;
+				$scope.initialMaxDate = null;
+				$scope.finishMaxDate = null;
 			}
 		});
 
