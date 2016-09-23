@@ -36,7 +36,7 @@
 													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.finalDate" is-open="openLastsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateSynthetic(synthetic.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastsynthetic = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" />
 												</li>
 												<li class="itauicon-itaufonts_para_empresa">
-													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-append-to-body="true" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
+													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
 
 													<ul ng-repeat="item in settlementsSelected">
 														<li>
@@ -148,7 +148,7 @@
 													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.finalDate" is-open="openLastAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateAnalitical(analytical.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastAnalitical = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
-													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-append-to-body="true" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
+													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
 													<ul ng-repeat="item in settlementsSelected">
 														<li>
 															<h4>{{item.code}}</h4>
@@ -157,7 +157,7 @@
 													</ul>
 												</li>
 												<li class="itauicon-itaufonts_cartao">
-													<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{getPlaceholderFlag(productsSelected)}}" ng-model="product" typeahead-append-to-body="true" typeahead-on-select="addProductsSearch(product)" typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
+													<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{getPlaceholderFlag(productsSelected)}}" ng-model="product" typeahead-on-select="addProductsSearch(product)" typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
 													<ul ng-repeat="item in productsSelected">
 														<li>
 															<h4>{{item.name}}</h4>
@@ -257,7 +257,7 @@
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
 													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
-														ng-model="settlement" typeahead-append-to-body="true"
+														ng-model="settlement"
 														typeahead-on-select="addSettlementsSearch(settlement)"
 														typeahead="item as item.code for item in getSettlements()"/>
 													<ul ng-repeat="item in settlementsSelected">
@@ -269,7 +269,7 @@
 												</li>
 												<li class="itauicon-itaufonts_cartao">
 													<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{getPlaceholderFlag(productsSelected)}}"
-														ng-model="product" typeahead-append-to-body="true"
+														ng-model="product"
 														typeahead-on-select="addProductsSearch(product)"
 														typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
 													<ul ng-repeat="item in productsSelected">
