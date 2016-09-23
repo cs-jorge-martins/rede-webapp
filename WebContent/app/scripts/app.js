@@ -102,21 +102,21 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                 }
         		return config || $q.when(config);
         	},
-            'responseError': function(config, status) {
+            'responseError': function(config) {
 
-        		console.log("responseError",config)
-        		console.log("responseError status",status)
+        		console.log("responseError",config.status)
+        		console.log("responseError",config.data.message)
 
 				switch (config.status) {
-					case '400' :
+					case 400 :
 						break;
-					case '401' :
-					case '403' :
+					case 401 :
+					case 403 :
 						$rootScope.alerts =  [ { type: "danger", msg: config.data.message} ];
 						$rootScope.logout();
 						break;
-					case '500' :
-					case '504' :
+					case 500 :
+					case 504 :
 						$rootScope.alerts =  [ { type: "danger", msg: "Erro Interno do Servidor. Por favor, tente mais tarde."} ];
 						break;
 				}
@@ -173,7 +173,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	$rootScope.logout = function() {
 		$rootScope.destroyVariablesSession();
 		$rootScope.login = 'login';
-		$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
+		if(!$rootScope.alerts.length)
+			$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
 		$location.path("/login");
 	};
 
