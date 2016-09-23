@@ -147,7 +147,6 @@
 															ng-model="product" typeahead-on-select="addProductsSearch(product)"
 															typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
 															<label for="naturezaProduto" class="ico-after-input itauicon-itaufonts_busca_consulta"></label>
-
 														<ul class="selectecWrapper">
 															<li ng-repeat="item in productsSelected"><h4>{{item.name}}</h4><a href="javascript:void(0);" ng-click="removeProductsSearch(item)">Excluir</a></li>
 														</ul>
