@@ -375,8 +375,9 @@ angular.module('Conciliador.salesController',[])
 			shopIds: shopIds.join(','),
 			cardProductIds: cardProductIds.join(','),
 			conciliationStatus: $scope.conciliationStatus[$scope.statusSelected],
-            groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER'
+            groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
 			//groupBy: 'CARD_PRODUCT'
+			status: "PROCESSED"
 		};
 
 		if(types != 0) {

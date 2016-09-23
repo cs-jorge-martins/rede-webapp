@@ -190,7 +190,8 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 				cardProductIds: cardProductIds,
 				conciliationStatus: $scope.conciliationStatus,
 				page: ($scope.currentPage - 1),
-				size: $scope.totalItensPage
+				size: $scope.totalItensPage,
+				status: "PROCESSED"
 
 			}).then(function(response){
 				

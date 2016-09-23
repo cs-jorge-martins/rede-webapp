@@ -7266,6 +7266,9 @@ td.editSettlementList {
     position: relative;
     // padding-left:15px;
 }
+#naturezaProduto {
+    position: relative;
+}
 
 .advancedFilter ul {
 	position: relative;
@@ -9738,9 +9741,7 @@ div.checkbox-toggle-right {
     display: flex;
     justify-content:space-between;
 }
-.filterShiny ul.dropdown-menu {
-    padding-bottom: 50px!important;
-}
+
 .filterShiny ul.dropdown-menu li.ng-scope {
     width:100%!important;
     position: absolute;
@@ -10789,6 +10790,9 @@ div.checkbox-toggle-right {
     justify-content:center;
     width:100%;
     margin:0;
+}
+.footer-integration{
+    clear: both;
 }
 .rcDatepicker {
     position: relative;
