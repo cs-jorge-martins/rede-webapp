@@ -497,7 +497,8 @@ angular.module('Conciliador.salesController',[])
 							types: $scope.natureza,
 							shopIds: shopIds,
 							cardProductIds: cardProductIds,
-							acquirerIds: acquirers
+							acquirerIds: acquirers,
+							status: "PROCESSED"
 						}
 
 						if(!filter.types){
