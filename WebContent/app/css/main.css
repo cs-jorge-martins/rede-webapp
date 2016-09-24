@@ -1569,7 +1569,7 @@ header .dropdown-menu li {
 }
 header .dropdown-menu a {
 	padding: 20px 0 20px 5px;
-    font-size: 13px;    
+    font-size: 13px;
 }
 
 header .dropdown-menu a.active {
@@ -9803,7 +9803,7 @@ div.checkbox-toggle-right {
    color:#00b9b5;
    font-size: 17px;
    font-weight: bolder;
-   float: left; 
+   float: left;
    width:100%;
    margin-bottom: 20px;
    display: inline-block;
@@ -9865,7 +9865,7 @@ div.checkbox-toggle-right {
 
 .data-cards .header-datas .date {
     width:100px;
-    margin-right: 40px; 
+    margin-right: 40px;
     color:#ff7800;
     font-weight: bolder;
     text-align: center;
@@ -9951,7 +9951,7 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .numbers-data ul span {
-    
+
 }
 
 .data-cards .numbers-data span span {
@@ -9993,7 +9993,7 @@ div.checkbox-toggle-right {
     position: fixed;
     right: 0;
     top: 50%;
-    z-index: 2000;   
+    z-index: 2000;
 }
 
 #receiptsDetails .actionButtons .hiddenExplanationDiv button{
@@ -10049,7 +10049,7 @@ div.checkbox-toggle-right {
     float: left;
     margin-left: 15px;
     text-decoration: underline;
-    font-size: 14px;    
+    font-size: 14px;
     font-weight: normal;
 }
 
@@ -10082,7 +10082,7 @@ div.checkbox-toggle-right {
     background: #dddddd !important;
 }
 
-.xpecial_table.table th, 
+.xpecial_table.table th,
 .xpecial_table.table td {
     padding: 20px;
 }
@@ -10264,7 +10264,7 @@ div.checkbox-toggle-right {
     float:left;
 }
 .data-cards .discount {
-    color:#e84438; 
+    color:#e84438;
 }
 .data-cards .addition {
     color:#00b9b5;
@@ -10272,7 +10272,7 @@ div.checkbox-toggle-right {
 .data-cards .numbers-data ul li.math-symbol {
     font-size: 25px;
     font-weight: bolder;
-    
+
 }
 .data-cards .numbers-data ul > li:nth-last-child(1){
     color:#4d4d4d;
@@ -10520,6 +10520,11 @@ div.checkbox-toggle-right {
     display: block;
     background-position: -40px -5px;
 }
+
+#integration #sendfile {
+	display: none;
+}
+
 .upload-ico-success, .upload-ico-inProgress {
     font-size: 96px;
     color:#00b9b5;
@@ -10730,7 +10735,7 @@ div.checkbox-toggle-right {
 #integration article ul li aside table.filesTable tr {
     height: 50px;
 }
-#integration article ul li aside table.filesTable th, 
+#integration article ul li aside table.filesTable th,
 #integration article ul li aside table.filesTable td {
     text-align: left;
     padding-left: 15px!important;
@@ -10838,7 +10843,7 @@ div.checkbox-toggle-right {
     width: 125px;
 }
 
-#integration .halfSize .rcDatepicker, 
+#integration .halfSize .rcDatepicker,
 #integration .halfSize .rcDatepicker .input-group input {
     width: 175px;
 }
@@ -10885,7 +10890,7 @@ div.checkbox-toggle-right {
 .rcDatepicker .dropdown-menu:focus,
 .rcDatepicker .dropdown-menu:active {
     outline: none;
-    
+
 }
 
 .rcDatepicker .btn {
@@ -10895,7 +10900,7 @@ div.checkbox-toggle-right {
 .rcDatepicker .btn:active {
     top: 0;
     box-shadow: none;
-    
+
     border-color: transparent;
     box-shadow: none;
 }
@@ -10956,7 +10961,7 @@ div.checkbox-toggle-right {
     content: '';
     display: block;
     position: absolute;
-    z-index: 10;    
+    z-index: 10;
 }
 
 .rcDatepicker tbody .btn.unprocessed span:before {
@@ -10992,7 +10997,7 @@ div.checkbox-toggle-right {
     border-radius: 150px 0 0 150px;
     transform: rotate(-90deg);
 }
- 
+
 .rcDatepicker thead,
 .rcDatepicker thead button {
     text-transform: lowercase;
@@ -11032,7 +11037,7 @@ div.checkbox-toggle-right {
 
 .rcDatepicker .datepickerInfo li {
     width: 193px;
-    display: inline-block;   
+    display: inline-block;
     text-indent: 46px;
     padding: 12px 0;
     position: relative;
@@ -11069,7 +11074,7 @@ div.checkbox-toggle-right {
     content: '';
     display: block;
     position: absolute;
-    z-index: 10;    
+    z-index: 10;
 }
 
 .rcDatepicker .datepickerInfo .unprocessed span:before {
