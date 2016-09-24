@@ -90,7 +90,7 @@ angular.module('Conciliador.salesController',[])
 	};
 
 	$scope.changeMonth = function(month) {
-		
+
 		var year = calendarFactory.getYear($scope.dateSelected);
 		$scope.dateSelected = calendarFactory.getFirstDayOfSpecificMonth(month, year);
 
@@ -99,7 +99,7 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	$scope.changeDay = function(day) {
-		
+
 		if(day.isActiveButton) {
 			//var selectedDay = day.date.getDate();
 			var selectedDay = parseInt(day.day);
@@ -279,7 +279,7 @@ angular.module('Conciliador.salesController',[])
 
 				if(typeof data[item] === 'object') {
 					days.push(data[item]);
-					
+
 				} else {
 					break;
 				}
@@ -341,7 +341,7 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	function getFinancials(cache) {
-		
+
 		var date = $scope.dateSelected;
 		var startDate = calendarFactory.formatDateForService(date);
 		var endDate = calendarFactory.formatDateForService(date);
@@ -375,9 +375,9 @@ angular.module('Conciliador.salesController',[])
 			shopIds: shopIds.join(','),
 			cardProductIds: cardProductIds.join(','),
 			conciliationStatus: $scope.conciliationStatus[$scope.statusSelected],
-            groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
+            groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER'
 			//groupBy: 'CARD_PRODUCT'
-			status: "PROCESSED"
+			//status: "PROCESSED"
 		};
 
 		if(types != 0) {
@@ -442,10 +442,12 @@ angular.module('Conciliador.salesController',[])
 	function concilie() {
 
 		if($scope.concilieItems.length) {
+			console.log('modal open');
 			var $modalInstance = $modal.open ({
 				templateUrl: "app/views/resumoConciliacao/confirmaConciliacaoResumo.html",
 				scope: $scope,
 				controller: function($scope, $modalInstance) {
+					console.log('modal opened');
 					$scope.ok = function(data) {
 						var ids = [];
 
@@ -497,37 +499,45 @@ angular.module('Conciliador.salesController',[])
 							types: $scope.natureza,
 							shopIds: shopIds,
 							cardProductIds: cardProductIds,
-							acquirerIds: acquirers,
-							status: "PROCESSED"
+							acquirerIds: acquirers
+							//status: "PROCESSED"
 						}
 
 						if(!filter.types){
 							delete filter.types;
 						}
-						
+
+						console.log('conciliando...');
 						TransactionService.concilieTransactions(filter).then(function(data){
+							console.log('conciliado')
+							console.log(data);
 							data = data.data.content;
 							$scope.concilieItems = [];
 							$scope.items = [];
-							calendarInit();
-							getFinancials();
-							init();		
-						});
-						$modalInstance.dismiss("cancel");
-						$modal.open({
-							templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
-							scope: $scope,
-							size: 'sm',
-							controller: function($scope, $modalInstance){
-								$scope.cancel = function() {
-									$modalInstance.dismiss("cancel");
+
+							console.log('cancelando modal anteriro..')
+							$modalInstance.dismiss("cancel");
+							console.log('abrindo modal de sucesso')
+							$modal.open({
+								templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
+								scope: $scope,
+								size: 'sm',
+								controller: function($scope, $modalInstance){
+									console.log('modal de sucesso aberto')
+									$scope.cancel = function() {
+										console.log('fechando modal de sucesso')
+										$modalInstance.dismiss("cancel");
+									}
 								}
-							}
-						});						
+							});
+							init();
+						}).catch(function(response) {
+							console.log('error..')
+			            });
 					}
-					$scope.cancel = function() {
-						$modalInstance.dismiss("cancel");
-					};
+					//$scope.cancel = function() {
+					//	$modalInstance.dismiss("cancel");
+					//};
 				},
 				size: 'md',
 				resolve: {
