@@ -4,7 +4,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 	$routeProvider.when('/integration', {templateUrl: 'app/views/vendas/integration.html', controller: 'integrationController'});
 }])
 
-.controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal, 
+.controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService, filtersService){
 		menuFactory.setActiveIntegration();
 		$scope.labelFindFile = true;
@@ -13,22 +13,22 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.sendFile = false;
 		$scope.inProgress = false;
 		$scope.fileName = [];
-		
+
 		$scope.typeData = [
 			{
-				id:1, 
+				id:1,
 				label: 'ultimos lançamentos',
 				type: 'CURRENT'
 			},
 			{
-				id: 2, 
+				id: 2,
 				label: 'lançamentos futuros',
 				type: 'FUTURE'
 			}
 		];
 		$scope.typeModel = {"id": 1, type: 'CURRENT'}
-		
-		
+
+
 		$scope.initialDate = [];
 		$scope.finishDate = [];
 
@@ -36,10 +36,11 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.showSendFile = showSendFile;
 		$scope.downloadFile = downloadFile;
 		$scope.showDownloadFiles = showDownloadFiles;
+		$scope.addOther = addOther;
 
 		$scope.fileSearch = '';
 		$scope.listUploadedFiles = [];
-		
+
 		$scope.shopsData = [];
 		$scope.shopIds = [];
 		$scope.shopsFutureModel = [];
@@ -57,9 +58,9 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.uploader = new FileUploader({
 			disableMultipart: true,
 			url: app.endpoint + "/integration/files",
-			headers: Request.setHeaders(),
+			headers: Request.setHeaders()
 		});
-		
+
 		$scope.uploader.onAfterAddingFile = function (fileItem) {
 			console.log(fileItem);
 			$scope.labelFindFile = false;
@@ -122,7 +123,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		function init() {
 			$scope.initialDate = calendarFactory.getToday();
 		}
-		
+
 		function setCalendarLastReleases() {
 			var today = calendarFactory.getToday();
 			$scope.initialDate = today;
@@ -145,7 +146,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		function showSendFile() {
 			if ($scope.sendFile === false) {
-				$scope.uploadedFiles = false;	
+				$scope.uploadedFiles = false;
 				$scope.downloadFiles = false;
 			}
 		}
@@ -171,7 +172,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					$scope.currentPage = $scope.currentPage + 1;
 				}
 
-			
+
 				integrationService.getUploadedFiles(filter).then(function(response){
 					$scope.listUploadedFiles = [];
 					var data = response.data.content;
@@ -221,6 +222,11 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				};
 				vm.download(vm.val.text);
 			})
+		}
+
+		function addOther() {
+			$scope.uploader.clearQueue();
+			$scope.labelFindFile = true;
 		}
 
 		function pageChanged() {
