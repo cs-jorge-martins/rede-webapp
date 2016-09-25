@@ -136,6 +136,10 @@ angular.module('KaplenWeb.dashboardController',[])
 		$scope.currentMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonthForDashboard());
 		$scope.currentMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDayOfCurrentMonthForDashboard());
 
+		$scope.currentMonthPeridMovement = new Period();
+		$scope.currentMonthPeridMovement.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonthForDashboard());
+		$scope.currentMonthPeridMovement.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDayOfCurrentMonthForDashboardMovement());
+
 		$scope.lastMonthPerid = new Period();
 		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
 		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfLastMonthForDashboard());
@@ -212,8 +216,8 @@ angular.module('KaplenWeb.dashboardController',[])
 
 		var movementSummaryBoxCurrentMonthFilter = new MovementSummaryFilter();
 		movementSummaryBoxCurrentMonthFilter.currency = $rootScope.currency;
-		movementSummaryBoxCurrentMonthFilter.payedStartDate = $scope.currentMonthPerid.firstDate;
-		movementSummaryBoxCurrentMonthFilter.payedEndDate = $scope.currentMonthPerid.lastDate;
+		movementSummaryBoxCurrentMonthFilter.payedStartDate = $scope.currentMonthPeridMovement.firstDate;
+		movementSummaryBoxCurrentMonthFilter.payedEndDate = $scope.currentMonthPeridMovement.lastDate;
 		movementSummaryBoxCurrentMonthFilter.status = ['FORETHOUGHT','RECEIVED'];
 
 		dashboardService.getMovementSummary(movementSummaryBoxCurrentMonthFilter).then(function(item){
