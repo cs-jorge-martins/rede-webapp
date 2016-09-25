@@ -375,9 +375,7 @@ angular.module('Conciliador.salesController',[])
 			shopIds: shopIds.join(','),
 			cardProductIds: cardProductIds.join(','),
 			conciliationStatus: $scope.conciliationStatus[$scope.statusSelected],
-            groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
-			//groupBy: 'CARD_PRODUCT'
-			status: "PROCESSED"
+            groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER'
 		};
 
 		if(types != 0) {
@@ -497,8 +495,7 @@ angular.module('Conciliador.salesController',[])
 							types: $scope.natureza,
 							shopIds: shopIds,
 							cardProductIds: cardProductIds,
-							acquirerIds: acquirers,
-							status: "PROCESSED"
+							acquirerIds: acquirers
 						}
 
 						if(!filter.types){
