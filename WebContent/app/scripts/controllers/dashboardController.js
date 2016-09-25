@@ -138,7 +138,7 @@ angular.module('KaplenWeb.dashboardController',[])
 
 		$scope.currentMonthPeridMovement = new Period();
 		$scope.currentMonthPeridMovement.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonthForDashboard());
-		$scope.currentMonthPeridMovement.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDayOfCurrentMonthForDashboardMovement());
+		$scope.currentMonthPeridMovement.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDate());
 
 		$scope.lastMonthPerid = new Period();
 		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
