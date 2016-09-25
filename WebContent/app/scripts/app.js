@@ -45,7 +45,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		var endpoint = 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';
 
 		if(host === '127.0.0.1' || host === 'localhost' || host.match('dev') || host === '0.0.0.0' ) {
-			endpoint = 'http://devmvpconciliationapi.us-east-1.elasticbeanstalk.com/';
+			endpoint = 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp';
 		}
 
 		return {
@@ -307,7 +307,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	var momentjs = moment();
 	var momentForDashboard = moment();
 	var nowFormattedDashboard = momentForDashboard.tz(timezone).subtract(1, 'days');
-	var nowFormattedDashboardMovement = momentForDashboard.tz(timezone);
 	var firstDayOfMonth = moment("01/" + (momentjs.month()+1) + "/" + momentjs.year(), format);
 	var firstDayOfMonthFormatted = firstDayOfMonth.tz(timezone).format(format);
 
@@ -338,10 +337,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 
 	function getActualDayOfCurrentMonthForDashboard(){
 		return nowFormattedDashboard;
-	}
-
-	function getActualDayOfCurrentMonthForDashboardMovement() {
-		return nowFormattedDashboardMovement;
 	}
 
 	function getFirstDayOfLastMonth(){
