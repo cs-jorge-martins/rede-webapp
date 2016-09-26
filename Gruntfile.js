@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
         'http-server': {
             server: {
@@ -46,8 +48,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-http-server');
-    grunt.loadNpmTasks('grunt-ng-constant');
     grunt.registerTask('serve', ['http-server:server']);
     grunt.registerTask('local', ['ngconstant:local', 'serve']);
     grunt.registerTask('dev', ['ngconstant:development', 'serve']);
