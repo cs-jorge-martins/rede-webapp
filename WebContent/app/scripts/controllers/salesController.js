@@ -90,7 +90,7 @@ angular.module('Conciliador.salesController',[])
 	};
 
 	$scope.changeMonth = function(month) {
-		
+
 		var year = calendarFactory.getYear($scope.dateSelected);
 		$scope.dateSelected = calendarFactory.getFirstDayOfSpecificMonth(month, year);
 
@@ -99,7 +99,7 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	$scope.changeDay = function(day) {
-		
+
 		if(day.isActiveButton) {
 			//var selectedDay = day.date.getDate();
 			var selectedDay = parseInt(day.day);
@@ -281,7 +281,7 @@ angular.module('Conciliador.salesController',[])
 
 				if(typeof data[item] === 'object') {
 					days.push(data[item]);
-					
+
 				} else {
 					break;
 				}
@@ -343,7 +343,7 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	function getFinancials(cache) {
-		
+
 		var date = $scope.dateSelected;
 		var startDate = calendarFactory.formatDateForService(date);
 		var endDate = calendarFactory.formatDateForService(date);
@@ -503,30 +503,31 @@ angular.module('Conciliador.salesController',[])
 						if(!filter.types){
 							delete filter.types;
 						}
-						
+
 						TransactionService.concilieTransactions(filter).then(function(data){
 							data = data.data.content;
 							$scope.concilieItems = [];
 							$scope.items = [];
-							calendarInit();
-							getFinancials();
-							init();		
-						});
-						$modalInstance.dismiss("cancel");
-						$modal.open({
-							templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
-							scope: $scope,
-							size: 'sm',
-							controller: function($scope, $modalInstance){
-								$scope.cancel = function() {
-									$modalInstance.dismiss("cancel");
+
+							$modalInstance.dismiss("cancel");
+							$modal.open({
+								templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
+								scope: $scope,
+								size: 'sm',
+								controller: function($scope, $modalInstance){
+									$scope.cancel = function() {
+										$modalInstance.dismiss("cancel");
+									}
 								}
-							}
-						});						
+							});
+							init();
+						}).catch(function(response) {
+							console.log('error..')
+			            });
 					}
-					$scope.cancel = function() {
-						$modalInstance.dismiss("cancel");
-					};
+					//$scope.cancel = function() {
+					//	$modalInstance.dismiss("cancel");
+					//};
 				},
 				size: 'md',
 				resolve: {
