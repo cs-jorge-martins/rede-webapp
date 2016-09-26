@@ -63,7 +63,7 @@
                                                 </li>
                                                 <li class="itauicon-itaufonts_para_empresa">
                                                     <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
-                                                        ng-model="settlement" typeahead-append-to-body="true"
+                                                        ng-model="settlement" 
                                                         typeahead-on-select="addSettlementsSearch(settlement)"
                                                         typeahead="item as item.code for item in getSettlements()"/>
                                                     <ul ng-repeat="item in settlementsSelected">

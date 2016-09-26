@@ -246,8 +246,8 @@
 									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
 									<td>{{ item.transactionNsu }}</td>
 									<td>R$ {{ item.transactionGross | currency:'' }}</td>
-									<td>R$ {{ item.transactionNet | currency:'' }}</td>
-									<td>parcela {{ item.installmentNumber }}</td>
+									<td>R$ {{ item.installmentPayedAmount | currency:'' }}</td>
+									<td>parcela {{ item.installmentNumber }}/{{ item.installment }}</td>
 									<td>{{ item.transactionPvCode }}</td>
 								</tr>
 							</tbody>
