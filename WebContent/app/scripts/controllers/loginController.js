@@ -6,7 +6,7 @@ angular.module('KaplenWeb.loginController',[])
 
 .controller('loginController', function($scope, $modal, $rootScope, $window, $location,
 		Restangular, loginService, userService, optionsService, selectEmpresaService){
-    
+
 	$rootScope.destroyVariablesSession();
 
 	var userFirstAccess = "";
@@ -15,10 +15,10 @@ angular.module('KaplenWeb.loginController',[])
 		loginService.validarLogin($scope.usuario).then(function(data) {
 			var data = data.data;
 			var user = data.user;
-		
+
 			//$rootScope.companies = user.companyDTOs;
 			$rootScope.pvList = user.pvList;
-			
+
 			//userFirstAccess = user;
 			//flag de primeiro acesso não vem na resposta do pn (deixando hardcoded pra false)
 			userFirstAccess = false;
@@ -42,7 +42,7 @@ angular.module('KaplenWeb.loginController',[])
 				//$rootScope.initialized = true;
 				$location.path("/dashboard");
 			}
-			
+
 			/*
 			if(user.companyDTOs.length > 1){
 				if(userFirstAccess.firstAccess){
