@@ -103,10 +103,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         		return config || $q.when(config);
         	},
             'responseError': function(config) {
-
-        		console.log("responseError",config.status)
-        		console.log("responseError",config.data.message)
-
 				switch (config.status) {
 					case 400 :
 						break;
