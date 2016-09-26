@@ -2,9 +2,9 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         'http-server': {
-            'server': {
+            server: {
         		root: './WebContent',
-        		port: 90,
+        		port: 8100,
         		host: "0.0.0.0",
                 openBrowser: true,
                 headers: {
@@ -13,10 +13,43 @@ module.exports = function(grunt) {
                     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
                 }
         	}
-        }
+        },
 
+        ngconstant: {
+            options: {
+                dest: 'WebContent/app/scripts/config.js',
+                space: ' ',
+                wrap: '"use strict";\n\n {\%= __ngModule %}',
+                name: 'Conciliador.appConfig'
+            },
+            local: {
+                constants: {
+                    app: {
+                        endpoint: 'http://localhost:8080/conciliation-api'
+                    }
+                }
+            },
+            development: {
+                constants: {
+                    app: {
+                        endpoint: 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp'
+                    }
+                }
+            },
+            production: {
+                constants: {
+                    app: {
+                      endpoint: 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml'
+                    }
+                }
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-http-server');
-    grunt.registerTask('default', ['http-server:server']);
+    grunt.loadNpmTasks('grunt-ng-constant');
+    grunt.registerTask('serve', ['http-server:server']);
+    grunt.registerTask('local', ['ngconstant:local', 'serve']);
+    grunt.registerTask('dev', ['ngconstant:development', 'serve']);
+    grunt.registerTask('prod', ['ngconstant:production', 'serve']);
 };
