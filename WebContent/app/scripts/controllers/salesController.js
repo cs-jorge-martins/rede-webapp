@@ -376,8 +376,6 @@ angular.module('Conciliador.salesController',[])
 			cardProductIds: cardProductIds.join(','),
 			conciliationStatus: $scope.conciliationStatus[$scope.statusSelected],
             groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER'
-			//groupBy: 'CARD_PRODUCT'
-			//status: "PROCESSED"
 		};
 
 		if(types != 0) {
@@ -500,7 +498,6 @@ angular.module('Conciliador.salesController',[])
 							shopIds: shopIds,
 							cardProductIds: cardProductIds,
 							acquirerIds: acquirers
-							//status: "PROCESSED"
 						}
 
 						if(!filter.types){
