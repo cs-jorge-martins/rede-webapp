@@ -1569,7 +1569,7 @@ header .dropdown-menu li {
 }
 header .dropdown-menu a {
 	padding: 20px 0 20px 5px;
-    font-size: 13px;    
+    font-size: 13px;
 }
 
 header .dropdown-menu a.active {
@@ -6221,9 +6221,7 @@ label[for="ate"] {
 .hiddenContent.advancedFilterHiddenContent .grandChild:nth-child(1) {
 	padding-top: 0;
 }
-.hiddenContent.advancedFilterHiddenContent .grandChild ul {
-	width: 163px;
-}
+
 .hiddenContent.advancedFilterHiddenContent .grandChild input[type=text] {
 	color: #212e3b;
 	font-size: 12px;
@@ -6264,13 +6262,7 @@ label[for="ate"] {
 	padding-left: 0 !important;
 }
 
-.advancedFilterHiddenContent .selectecWrapper {
-	margin: 0 0 7px 0 !important;
-	padding: 0 !important;
-}
-.advancedFilterHiddenContent .selectecWrapper li{
-	margin: 0 !important;
-}
+
 #transactionType {
 	margin-top: 4px;
 }
@@ -6298,30 +6290,66 @@ label[for="ate"] {
  color: #514f55;
  font-style: italic;
 }
-.hiddenContent.advancedFilterHiddenContent .dropdown-menu.focus-list ul, .hiddenContent.advancedFilterHiddenContent .grandChild ul, .hiddenContent.advancedFilterHiddenContent .dropdown-menu, .integrateModal .advancedFilterHiddenContent .dropdown-menu, .integrateModal .advancedFilterHiddenContent .dropdown-menu.focus-list ul {
-	max-height: 150px!important;
-	overflow-x: hidden!important;
-	overflow-y: auto;
-	display: block;
+.dropdown-menu.focus-list {
+    max-height: 155px;
+    overflow-x: hidden;
+    width: 247px;
+    background: #c6e6e0;
 }
-.advancedFilterHiddenContent .focus-list {
-	background: #232323;
+.focus-list li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li{
+    width: 247px;
+    margin-left: 0 !important;
+    text-indent: 15px;
 }
-.focus-list li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li {
-	color: #212e3b;
-	font-size: 12px;
-	text-transform: uppercase;
-	height: 30px;
-	margin-top: 1px;
-	padding: 7px 10px 0;
-	background: #c6e6e0;
-	float: none;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	position: relative;
-	clear: both;
+
+.focus-list li a {
+    color: #565658;
+    font-size: 12px;
+    text-transform: uppercase;
+    display: block;
+    padding: 7px 0;
+    font-weight: normal;
+    line-height: 1;
 }
+
+.focus-list li {
+    border-top: 1px solid #fff!important;
+}
+.focus-list li:first-child {
+    border-top: none;
+}
+
+.selectecWrapper {
+    margin-left: 29px;
+}
+
+.selectecWrapper li {
+    background: #c6e6e0;
+    padding: 5px 0;
+    position: relative;
+}
+
+.selectecWrapper li h4 {
+    font-size: 12px;
+    color: #212e3b;
+    text-indent: 0;
+    text-transform: uppercase;
+}
+
+.selectecWrapper li a {
+    text-indent: -1000px;
+    height: 17px;
+    width: 17px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    background: #9ccec4 url(../img/closeAdvancedFilter.png) 3px 3px no-repeat;
+    position: absolute;
+    right: 10px;
+    right: 8px;
+    top: 8px;
+}
+
 .focus-list ::-webkit-scrollbar, .hiddenContent.advancedFilterHiddenContent ::-webkit-scrollbar, .integrateModal .advancedFilterHiddenContent ul li ::-webkit-scrollbar {
  width: 4px;
  height: 10px;
@@ -6341,18 +6369,16 @@ label[for="ate"] {
  background: #97b1b1;
  cursor:pointer;
 }
-.focus-list {
-	z-index: 100000000000000000000000!important;
-}
+
 .focus-list a {
-	background: none!important;
+	background: none !important;
 }
 .hiddenContent.advancedFilterHiddenContent .grandChild ul li:first-child {
 	margin: 0;
 }
 label.ico-pre-input, label.ico-after-input {
     color:#ccc;
-    float: left!important;
+    float: left !important;
     font-size: 19px;
     margin-top: 8px;
     margin-right: 10px;
@@ -6373,12 +6399,7 @@ label.ico-after-input {
 	width: 220px;
 	display: inline-block;
 }
-.hiddenContent.advancedFilterHiddenContent .grandChild ul li {
-	border-top: 1px solid #fff!important;
-}
-.hiddenContent.advancedFilterHiddenContent .grandChild ul li:first-child {
-	border-top: none;
-}
+
 .hiddenContent.advancedFilterHiddenContent .grandChild ul li b {
 	color: #16a085;
 	font-weight: normal;
@@ -6398,22 +6419,7 @@ label.ico-after-input {
 	top: 7px;
 	right: 10px;
 }
-.hiddenContent.advancedFilterHiddenContent .grandChild ul li a, .integrateModal .advancedFilterHiddenContent ul li a {
-	text-indent: -10000px;
-	height: 17px;
-	width: 17px;
-	-webkit-border-radius: 50px;
-	-moz-border-radius: 50px;
-	border-radius: 50px;
-	background: #9ccec4 url(../img/closeAdvancedFilter.png) 3px 3px no-repeat;
-	-webkit-transition: background .2s ease-in-out;
-	-moz-transition: background .2s ease-in-out;
-	-ms-transition: background .2s ease-in-out;
-	-o-transition: background .2s ease-in-out;
-	transition: background .2s ease-in-out;
-	float: right;
-	display: block;
-}
+
 .hiddenContent.advancedFilterHiddenContent .grandChild ul li a:hover, .integrateModal .advancedFilterHiddenContent ul li a:hover {
 	background-color: #77b5a8;
 }
@@ -6434,12 +6440,7 @@ label.ico-after-input {
 	width: 200px;
 	display: inline-block;
 }
-.hiddenContent.advancedFilterHiddenContent .grandChild.halfWidthList ul {
-	width: 345px;
-}
-.hiddenContent.advancedFilterHiddenContent .grandChild.halfWidthList ul li {
-	width: 345px;
-}
+
 .hiddenContent.advancedFilterHiddenContent fieldset > ul > li:nth-child(1), .hiddenContent.advancedFilterHiddenContent fieldset > ul > li:nth-child(2) {
 	float: left;
 	clear: none;
@@ -9740,9 +9741,7 @@ div.checkbox-toggle-right {
     display: flex;
     justify-content:space-between;
 }
-.filterShiny ul.dropdown-menu {
-    padding-bottom: 50px!important;
-}
+
 .filterShiny ul.dropdown-menu li.ng-scope {
     width:100%!important;
     position: absolute;
@@ -9765,8 +9764,11 @@ div.checkbox-toggle-right {
     color:#ccc;
 }
 
+.filterShiny h4 {
+    font-weight: normal;
+}
+
 .filterShiny ul #buscaTerminal ~ ul li, .filterShiny ul #naturezaProduto ~ ul li  {
-    color:#212e3b;
     height: 30px;
     background: #c6e6e0;
     position: relative;
@@ -9774,6 +9776,15 @@ div.checkbox-toggle-right {
     line-height: 0;
     padding-left: 5px;
     margin-left: 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #212e3b;
+    font-weight: normal;
+    text-indent: 10px;
+}
+
+.filterShiny input {
+    margin-bottom: 7px;
 }
 
 .removeSettlementsSearch {
@@ -9785,14 +9796,14 @@ div.checkbox-toggle-right {
     float: right;
     display: block;
     position: absolute;
-    top:9px;
-    right: 5px;
+    top: 6px;
+    right: 8px;
 }
 .page-title {
    color:#00b9b5;
    font-size: 17px;
    font-weight: bolder;
-   float: left; 
+   float: left;
    width:100%;
    margin-bottom: 20px;
    display: inline-block;
@@ -9854,7 +9865,7 @@ div.checkbox-toggle-right {
 
 .data-cards .header-datas .date {
     width:100px;
-    margin-right: 40px; 
+    margin-right: 40px;
     color:#ff7800;
     font-weight: bolder;
     text-align: center;
@@ -9940,7 +9951,7 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .numbers-data ul span {
-    
+
 }
 
 .data-cards .numbers-data span span {
@@ -9982,7 +9993,7 @@ div.checkbox-toggle-right {
     position: fixed;
     right: 0;
     top: 50%;
-    z-index: 2000;   
+    z-index: 2000;
 }
 
 #receiptsDetails .actionButtons .hiddenExplanationDiv button{
@@ -10038,7 +10049,7 @@ div.checkbox-toggle-right {
     float: left;
     margin-left: 15px;
     text-decoration: underline;
-    font-size: 14px;    
+    font-size: 14px;
     font-weight: normal;
 }
 
@@ -10071,7 +10082,7 @@ div.checkbox-toggle-right {
     background: #dddddd !important;
 }
 
-.xpecial_table.table th, 
+.xpecial_table.table th,
 .xpecial_table.table td {
     padding: 20px;
 }
@@ -10253,7 +10264,7 @@ div.checkbox-toggle-right {
     float:left;
 }
 .data-cards .discount {
-    color:#e84438; 
+    color:#e84438;
 }
 .data-cards .addition {
     color:#00b9b5;
@@ -10261,7 +10272,7 @@ div.checkbox-toggle-right {
 .data-cards .numbers-data ul li.math-symbol {
     font-size: 25px;
     font-weight: bolder;
-    
+
 }
 .data-cards .numbers-data ul > li:nth-last-child(1){
     color:#4d4d4d;
@@ -10509,6 +10520,11 @@ div.checkbox-toggle-right {
     display: block;
     background-position: -40px -5px;
 }
+
+#integration #sendfile {
+	display: none;
+}
+
 .upload-ico-success, .upload-ico-inProgress {
     font-size: 96px;
     color:#00b9b5;
@@ -10719,7 +10735,7 @@ div.checkbox-toggle-right {
 #integration article ul li aside table.filesTable tr {
     height: 50px;
 }
-#integration article ul li aside table.filesTable th, 
+#integration article ul li aside table.filesTable th,
 #integration article ul li aside table.filesTable td {
     text-align: left;
     padding-left: 15px!important;
@@ -10827,7 +10843,7 @@ div.checkbox-toggle-right {
     width: 125px;
 }
 
-#integration .halfSize .rcDatepicker, 
+#integration .halfSize .rcDatepicker,
 #integration .halfSize .rcDatepicker .input-group input {
     width: 175px;
 }
@@ -10874,7 +10890,7 @@ div.checkbox-toggle-right {
 .rcDatepicker .dropdown-menu:focus,
 .rcDatepicker .dropdown-menu:active {
     outline: none;
-    
+
 }
 
 .rcDatepicker .btn {
@@ -10884,7 +10900,7 @@ div.checkbox-toggle-right {
 .rcDatepicker .btn:active {
     top: 0;
     box-shadow: none;
-    
+
     border-color: transparent;
     box-shadow: none;
 }
@@ -10945,7 +10961,7 @@ div.checkbox-toggle-right {
     content: '';
     display: block;
     position: absolute;
-    z-index: 10;    
+    z-index: 10;
 }
 
 .rcDatepicker tbody .btn.unprocessed span:before {
@@ -10981,7 +10997,7 @@ div.checkbox-toggle-right {
     border-radius: 150px 0 0 150px;
     transform: rotate(-90deg);
 }
- 
+
 .rcDatepicker thead,
 .rcDatepicker thead button {
     text-transform: lowercase;
@@ -11021,7 +11037,7 @@ div.checkbox-toggle-right {
 
 .rcDatepicker .datepickerInfo li {
     width: 193px;
-    display: inline-block;   
+    display: inline-block;
     text-indent: 46px;
     padding: 12px 0;
     position: relative;
@@ -11058,7 +11074,7 @@ div.checkbox-toggle-right {
     content: '';
     display: block;
     position: absolute;
-    z-index: 10;    
+    z-index: 10;
 }
 
 .rcDatepicker .datepickerInfo .unprocessed span:before {
@@ -11134,15 +11150,6 @@ div.checkbox-toggle-right {
     background: transparent;
 }
 
-.dropdown-menu.focus-list{
-    max-height: 155px;
-    overflow-x: hidden;
-    z-index: 0 !important;    
-}
-.focus-list li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li{
-    
-    width: 247px;
-}
 
 #receipts .rcDatepicker .datepickerInfo{
     display: none;

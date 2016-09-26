@@ -23,17 +23,17 @@
 					<label class="findfile" for="sendfile" ng-show="labelFindFile">
 						localizar arquivo csv
 					</label>
-					<input type="file" accept=".csv" style="display: none;" id="sendfile" nv-file-select uploader="uploader" />
-					
+					<input type="file" accept=".csv" id="sendfile" nv-file-select uploader="uploader" />
+
 					<span ng-repeat="item in uploader.queue" ng-show="inProgress">
-		                <label class="findfile" ng-bind="item.file.name"></label>
+		                <label class="findfile" ng-bind="item.file.name" for="sendfile" ng-click="addOther()"></label>
 		            </span>
 		            <button ng-click="uploader.uploadAll()" class="submit" ng-class="{disabled: !inProgress}">enviar</button>
 				</aside>
 			</li>
 			<li>
-				<div class="bullet" 
-					 ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;" 
+				<div class="bullet"
+					 ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;"
 					 ng-class="{clicked: uploadedFiles}">
 				</div>
 				<span class="title" ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
@@ -93,7 +93,7 @@
 						</rc-datepicker>
 					</div>
 					<div class="filter">
-						<span>	
+						<span>
 							<button class="submit" ng-click="downloadFile()">download</button>
 						</span>
 					</div>

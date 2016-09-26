@@ -40,7 +40,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'ngFileSaver'
 							])
 
-	.constant('app', (function(){	
+	.constant('app', (function(){
 		var host = window.location.hostname;
 		var endpoint = 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';
 

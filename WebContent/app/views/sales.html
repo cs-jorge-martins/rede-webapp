@@ -12,7 +12,7 @@
 	</div>
 
 	<br />
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert> 
+	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 
 	<!-- calendar init -->
 	<div id="calendarioVendasTour" class="selectCalendar">
@@ -124,8 +124,7 @@
 													<li>
 														<label for="buscaTerminal" class="ico-pre-input itauicon-itaufonts_para_empresa"></label>
 														<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
-															ng-model="settlement" typeahead-append-to-body="true"
-															typeahead-on-select="addSettlementsSearch(settlement)"
+															ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)"
 														typeahead="item as item.code for item in getSettlements() | filter:$viewValue" />
 														<label for="buscaTerminal" class="ico-after-input itauicon-itaufonts_busca_consulta"></label>
 
@@ -144,10 +143,8 @@
 												<ul class="grandChild halfWidthList">
 													<li>
 														<label for="naturezaProduto" class="ico-pre-input itauicon-itaufonts_cartao"></label>
-														<input id="naturezaProduto" name="naturezaProduto" type="text"
-														placeholder="{{getPlaceholderFlag(productsSelected)}}"
-															ng-model="product" typeahead-append-to-body="true"
-															typeahead-on-select="addProductsSearch(product)"
+														<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{getPlaceholderFlag(productsSelected)}}"
+															ng-model="product" typeahead-on-select="addProductsSearch(product)"
 															typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
 															<label for="naturezaProduto" class="ico-after-input itauicon-itaufonts_busca_consulta"></label>
 														<ul class="selectecWrapper">
