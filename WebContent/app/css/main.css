@@ -10885,8 +10885,21 @@ div.checkbox-toggle-right {
     height: 470px;
 }
 #integration .rcDatepicker .dropdown-menu {
-    height: 315px;
+    height: auto;
 }
+#integration .rcDatepicker .dropdown-menu li{
+    margin-bottom: 0px;
+}
+
+section#integration{
+    min-height:700px;
+}
+
+section#integration .rcDatepicker tbody td {
+    border: none !important;
+    padding: 0px 7px !important;
+}
+
 .rcDatepicker .dropdown-menu:focus,
 .rcDatepicker .dropdown-menu:active {
     outline: none;
