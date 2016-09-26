@@ -440,12 +440,10 @@ angular.module('Conciliador.salesController',[])
 	function concilie() {
 
 		if($scope.concilieItems.length) {
-			console.log('modal open');
 			var $modalInstance = $modal.open ({
 				templateUrl: "app/views/resumoConciliacao/confirmaConciliacaoResumo.html",
 				scope: $scope,
 				controller: function($scope, $modalInstance) {
-					console.log('modal opened');
 					$scope.ok = function(data) {
 						var ids = [];
 
@@ -504,25 +502,18 @@ angular.module('Conciliador.salesController',[])
 							delete filter.types;
 						}
 
-						console.log('conciliando...');
 						TransactionService.concilieTransactions(filter).then(function(data){
-							console.log('conciliado')
-							console.log(data);
 							data = data.data.content;
 							$scope.concilieItems = [];
 							$scope.items = [];
 
-							console.log('cancelando modal anteriro..')
 							$modalInstance.dismiss("cancel");
-							console.log('abrindo modal de sucesso')
 							$modal.open({
 								templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
 								scope: $scope,
 								size: 'sm',
 								controller: function($scope, $modalInstance){
-									console.log('modal de sucesso aberto')
 									$scope.cancel = function() {
-										console.log('fechando modal de sucesso')
 										$modalInstance.dismiss("cancel");
 									}
 								}
