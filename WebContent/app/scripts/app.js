@@ -37,25 +37,9 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.receiptsDetailsController',
-                            'ngFileSaver'
+                            'ngFileSaver',
+                            'Conciliador.appConfig'
 							])
-
-	.constant('app', (function(){
-		var host = window.location.hostname;
-		var endpoint = 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD';
-
-		if(host === '127.0.0.1' || host === 'localhost' || host.match('dev') || host === '0.0.0.0' ) {
-			endpoint = 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp';
-		}
-
-		if(host.match('hom.userede.com.br')) {
-			endpoint = 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';			
-		}
-
-		return {
-			'endpoint': endpoint
-		};
-	})())
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (datepickerConfig) {
