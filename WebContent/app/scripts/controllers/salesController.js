@@ -118,6 +118,8 @@ angular.module('Conciliador.salesController',[])
 			}
 
 			$scope.lastDaySelectedIndex = selectedDay - 1;
+
+			$scope.concilieQuantity = 0;
 		}
 	}
 
