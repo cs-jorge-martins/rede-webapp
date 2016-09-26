@@ -147,7 +147,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		setTransactionSummaryBox();
 		setMovementSummaryBox();
 		setNplicateTransactionBox();
-		setConectivityFeeBox();
+		//setConectivityFeeBox();
 		setTransactionConciliationBox();
 	}
 
@@ -218,7 +218,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		movementSummaryBoxCurrentMonthFilter.currency = $rootScope.currency;
 		movementSummaryBoxCurrentMonthFilter.payedStartDate = $scope.currentMonthPeridMovement.firstDate;
 		movementSummaryBoxCurrentMonthFilter.payedEndDate = $scope.currentMonthPeridMovement.lastDate;
-		movementSummaryBoxCurrentMonthFilter.status = ['FORETHOUGHT','RECEIVED'];
+		movementSummaryBoxCurrentMonthFilter.status = 'FORETHOUGHT,RECEIVED';
 
 		dashboardService.getMovementSummary(movementSummaryBoxCurrentMonthFilter).then(function(item){
 			item = item.data.content;
@@ -232,7 +232,7 @@ angular.module('KaplenWeb.dashboardController',[])
 			movementSummaryBoxCurrentPrevFilter.currency = $rootScope.currency;
 			movementSummaryBoxCurrentPrevFilter.payedStartDate = $scope.lastMonthPerid.firstDate;
 			movementSummaryBoxCurrentPrevFilter.payedEndDate = $scope.lastMonthPerid.lastDate;
-			movementSummaryBoxCurrentPrevFilter.status = ['FORETHOUGHT','RECEIVED'];
+			movementSummaryBoxCurrentPrevFilter.status = 'FORETHOUGHT,RECEIVED';
 
 
 			dashboardService.getMovementSummary(movementSummaryBoxCurrentPrevFilter).then(function(item){
@@ -272,8 +272,8 @@ angular.module('KaplenWeb.dashboardController',[])
 		adjustSummaryFilter.currency =  $rootScope.currency;
 		adjustSummaryFilter.startDate = $scope.currentMonthPerid.firstDate;
 		adjustSummaryFilter.endDate = $scope.currentMonthPerid.lastDate;
-		adjustSummaryFilter.status = ['POS_CONECTIVITY'];
-		adjustSummaryFilter.status = ['RECEIVED'];
+		adjustSummaryFilter.status = 'POS_CONECTIVITY';
+		adjustSummaryFilter.status = 'RECEIVED';
 
 		dashboardService.getAdjustSummary(adjustSummaryFilter).then(function(item){
 			item = item.data.content;

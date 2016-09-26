@@ -146,19 +146,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         return response.data;
     });
 
-    Restangular.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
-      for (param in params) {
-      	if (params[param] instanceof Array) {
-      		params[param] = params[param].join();
-      	}
-      }
-      return {
-        element: element,
-        headers: headers,
-        httpConfig: httpConfig
-      };
-    });
-
 
 	// ********************************************************************************************
 
