@@ -103,27 +103,19 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         		return config || $q.when(config);
         	},
             'responseError': function(config) {
-
-                console.log(config.status)
-
-                if(config.status == '401'){
-        	    	$rootScope.logout();
-        	        $location.path('/login');
-        	        $rootScope.alerts =  [ { type: "danger", msg: "E-mail informado não existe ou a senha está incorreta"} ];
-        	    }
-        	    else if(config.status == '400' || config.status == '403'){//400 e 403 = Acesso negado/Usuário não autorizado
-        	    	$location.path('/login');
-        	    	$rootScope.logout();
-        	    	$rootScope.alerts =  [ { type: "danger", msg: "Acesso negado/Usuário não autorizado"} ];
-        	    }
-        	    else if(config.status == '405'){//405 = Usuário bloqueado
-        	    	$rootScope.logout();
-        	        $location.path('/login');
-        	    	$rootScope.alerts =  [ { type: "danger", msg: "Usuário bloqueado. Por favor, tente mais tarde."}];
-        	    }
-        	    else if(config.status == '500'){//500 = Internal Server Error
-        	    	$rootScope.alerts =  [ { type: "danger", msg: "Erro Interno do Servidor. Por favor, tente mais tarde."}];
-        	    }
+				switch (config.status) {
+					case 400 :
+						break;
+					case 401 :
+					case 403 :
+						$rootScope.alerts =  [ { type: "danger", msg: config.data.message} ];
+						$rootScope.logout();
+						break;
+					case 500 :
+					case 504 :
+						$rootScope.alerts =  [ { type: "danger", msg: "Erro Interno do Servidor. Por favor, tente mais tarde."} ];
+						break;
+				}
 
                 return config;
             }
@@ -146,19 +138,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         return response.data;
     });
 
-    Restangular.setFullRequestInterceptor(function(element, operation, route, url, headers, params, httpConfig) {
-      for (param in params) {
-      	if (params[param] instanceof Array) {
-      		params[param] = params[param].join();
-      	}
-      }
-      return {
-        element: element,
-        headers: headers,
-        httpConfig: httpConfig
-      };
-    });
-
 
 	// ********************************************************************************************
 
@@ -177,7 +156,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	$rootScope.logout = function() {
 		$rootScope.destroyVariablesSession();
 		$rootScope.login = 'login';
-		$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
+		if(!$rootScope.alerts.length)
+			$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
 		$location.path("/login");
 	};
 
