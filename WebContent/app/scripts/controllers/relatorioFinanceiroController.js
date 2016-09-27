@@ -217,8 +217,7 @@
 
 		function getPayedAmount(){
 			var filter = {
-					creditedShopIds: $scope.settlementsSelected,
-					sourceShopIds: $scope.settlementsSelected,
+					shopIds: $scope.settlementsSelected,
 					acquirers: $scope.acquirersSelected,
 					cardProductIds: $scope.productsSelected,
 					installments: $scope.installmentsSelected,
