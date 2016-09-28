@@ -97,7 +97,6 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 							TransactionService.concilieTransaction({
 								ids: toConcilie
 							}).then(function(data){
-								//console.log(data);
 								data = data.data.content;
 								var items = [];
 

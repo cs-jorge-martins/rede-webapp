@@ -11185,3 +11185,15 @@ section#integration .rcDatepicker tbody td {
 .icon_calendario{
     cursor: pointer;
 }
+
+.filterShiny ul.dropdown-menu li.ng-scope{
+    position: relative;
+}
+
+.header-datas .chip label {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}

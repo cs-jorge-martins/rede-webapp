@@ -92,8 +92,8 @@
 						creditedShopIds: shopIds,
 						sourceShopIds: shopIds,
 						cardProductIds: cardProductIds,
-						payedStartDate: handleDate($scope.initialDate),
-						payedEndDate: handleDate($scope.finalDate),
+						startDate: handleDate($scope.initialDate),
+						endDate: handleDate($scope.finalDate),
 						status: $scope.status,
                         groupBy: 'BANK_ACCOUNT,PAYED_DATE,ACQUIRER',
 						currency: 'BRL',
@@ -187,8 +187,8 @@
 					acquirers: $scope.acquirersSelected,
 					cardProductIds: $scope.productsSelected,
 					installments: $scope.installmentsSelected,
-					expectedStartDate: handleDate($scope.initialDate),
-					expectedEndDate: handleDate($scope.finalDate),
+					startDate: handleDate($scope.initialDate),
+					endDate: handleDate($scope.finalDate),
 					status: ['EXPECTED'],
 					currency: 'BRL'
 			}
@@ -217,13 +217,12 @@
 
 		function getPayedAmount(){
 			var filter = {
-					creditedShopIds: $scope.settlementsSelected,
-					sourceShopIds: $scope.settlementsSelected,
+					shopIds: $scope.settlementsSelected,
 					acquirers: $scope.acquirersSelected,
 					cardProductIds: $scope.productsSelected,
 					installments: $scope.installmentsSelected,
-					payedStartDate: handleDate($scope.initialDate),
-					payedEndDate: handleDate($scope.finalDate),
+					startDate: handleDate($scope.initialDate),
+					endDate: handleDate($scope.finalDate),
 					status: ['FORETHOUGHT','RECEIVED'],
 					currency: 'BRL'
 			}
