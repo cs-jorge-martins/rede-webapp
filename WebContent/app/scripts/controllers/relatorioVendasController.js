@@ -325,10 +325,8 @@
                 labels: [],
                 data: []
             };
-            console.log(response);
             for(var index in response) {
 				if(response[index].amount) {
-					console.log("response[index].cardProduct.name", response[index].cardProduct.name);
                 	chartData.labels.push(response[index].cardProduct.name);
 				}
 				else {

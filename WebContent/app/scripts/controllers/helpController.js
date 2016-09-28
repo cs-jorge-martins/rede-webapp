@@ -25,11 +25,4 @@ angular.module('Conciliador.helpController',[])
         }
     };
 
-
-	init();
-
-	function init(){
-        console.log('');
-    }
-
 });

@@ -21,7 +21,6 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			} else {
 				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
 				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
-				console.log("$scope.cardProduct", $scope.cardProduct)
 				$scope.currency = $rootScope.receiptsDetails.currency;
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
 				$scope.endDate = $rootScope.receiptsDetails.endDate;
@@ -133,18 +132,13 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			filter.size =  $scope.salesTotalItensPage;
 			
 
-			console.log('sales filter', filter);
-
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 
-				console.log("data",data)
-
 				$scope.salesData = data;
 				$scope.salesTotalItens = pagination.totalElements;
 
-				console.log('sales result', data);
 			}).catch(function(response) {
 				$scope.salesData = [];
 				console.log('[receiptsDetailsController:getSales] error');
@@ -156,15 +150,12 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			filter.size =  $scope.adjustsTotalItensPage;
 
-			console.log('adjusts filter', filter);
-
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 
 				$scope.adjustsData = data;
 				$scope.adjustsTotalItens = pagination.totalElements;
-				console.log('adjusts result', data);
 			}).catch(function(response) {
 				$scope.adjustsData = [];
 				console.log('[receiptsDetailsController:getAdjusts] error');
@@ -176,15 +167,12 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    	filter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
 			filter.size =  $scope.cancellationsTotalItensPage;
 
-			console.log('cancellation filter', filter);
-
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 
 				$scope.cancellationsData = data;
 				$scope.cancellationsTotalItens = pagination.totalElements;
-				console.log('cancellments result', data);
 			}).catch(function(response) {
 				$scope.cancellationsData = [];
 				console.log('[receiptsDetailsController:getAdjusts] error');
