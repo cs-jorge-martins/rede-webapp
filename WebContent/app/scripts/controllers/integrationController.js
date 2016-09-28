@@ -62,7 +62,6 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		});
 
 		$scope.uploader.onAfterAddingFile = function (fileItem) {
-			console.log(fileItem);
 			$scope.labelFindFile = false;
 			$scope.inProgress = true;
 			$scope.fileName = fileItem.file.name;
@@ -196,7 +195,6 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.sendFile = false;
 		}
 		function downloadFile () {
-			console.log($scope.typeModel);
 			var filter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finishDate),
@@ -206,11 +204,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				}).join(","),
 				type: $scope.typeModel.type
 			}
-			console.log(filter);
 
 			integrationService.downloadFiles(filter).then(function(response){
-				console.log("response", response.data);
-
 				var vm = this;
 
 				vm.val = {

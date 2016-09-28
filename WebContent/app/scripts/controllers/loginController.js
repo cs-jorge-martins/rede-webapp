@@ -13,13 +13,10 @@ angular.module('KaplenWeb.loginController',[])
 	$scope.validarLogin = function(){
 
 		loginService.validarLogin($scope.usuario).then(function(data) {
-			console.log('login')
-
 			var data = data.data;
 			var user = data.user;
 		
 			//$rootScope.companies = user.companyDTOs;
-			console.log(user)
 			$rootScope.pvList = user.pvList;
 			
 			//userFirstAccess = user;

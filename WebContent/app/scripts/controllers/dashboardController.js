@@ -339,7 +339,7 @@ angular.module('KaplenWeb.dashboardController',[])
 			}
 
 			chartData.series.push(calendarFactory.getNameOfMonth(date));
-			chartData.data.push(proccessChartDays(actualMonthData));
+			chartData.data.push(proccessChartDays(actualMonthData, true));
 
 			// last month data
 			TransactionSummaryService.listTransactionSummaryByFilter(filter).then(function(response){
@@ -367,7 +367,7 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	}
 
-	function proccessChartDays(data){
+	function proccessChartDays(data, isCurrentMonth){
 		var chartDays = [];
 
 		if(data.length){
@@ -383,6 +383,18 @@ angular.module('KaplenWeb.dashboardController',[])
 			}
 
 		}
+
+		if(isCurrentMonth) {
+			var currentDay = (new Date()).getDate();
+
+			if(chartDays.length < currentDay) {
+				var index = chartDays.length;
+				for (index; index < currentDay; index++) {
+					chartDays.push(0);
+				}
+			}
+		}
+
 		return chartDays;
 	}
 
