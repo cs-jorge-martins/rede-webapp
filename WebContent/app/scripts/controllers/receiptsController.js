@@ -531,7 +531,7 @@ angular.module('KaplenWeb.movementsModule',[])
 					if(releases.length) {
 						for(var indexb in releases){
 							if((releases[indexb].cardProductId === data[index].cardProduct.id) && (releases[indexb].status === status)){
-								console.log('tem cardproduct e status:tratar');
+
 							} else {
 								var item = {
 									cardProductName: cardProduct.name,

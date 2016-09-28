@@ -58,7 +58,6 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 			}).then(function(response){
 				var data = response.data.content;
                 var pagination = response.data.page;
-                console.log(response);
 
 				$scope.items = data;
 				$scope.noItensMsg = data.length ? false : true;
