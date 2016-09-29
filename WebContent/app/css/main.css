@@ -11198,16 +11198,34 @@ section#integration .rcDatepicker tbody td {
     text-overflow: ellipsis;
 }
 
-#login form#loginForm button:hover,
-#conciliacao button:hover,
-#primaryContent button:hover,
-.modal-footer button:hover,
-.loginButton:hover,
-#vendas button:hover,
-#integration article ul li aside button.submit:hover{
-    background-color: #ffe507;
-    color: #4d4d4d;
+#login form#loginForm button,
+#conciliacao button,
+#primaryContent button,
+.modal-footer button,
+.loginButton,
+#vendas button,
+#integration article ul li aside button.submit{
+    background: #F8DEOO !important;
+    border: 0 !important;
+    font-style: bold !important;
+    shadow-color: #000000;
+    shadow-opacity: 24%;
+    shadow-distance: 1px;
+    shadow-expansion: 0%;
+    shadow-size: 2px;
+    shadow-angle:90;
 }
+
+/*#login form#loginForm button:hover,*/
+/*#conciliacao button:hover,*/
+/*#primaryContent button:hover,*/
+/*.modal-footer button:hover,*/
+/*.loginButton:hover,*/
+/*#vendas button:hover,*/
+/*#integration article ul li aside button.submit:hover{*/
+    /*background-color: #ffe507;*/
+    /*color: #4d4d4d;*/
+/*}*/
 
 #login form#loginForm button:active,
 #conciliacao button:active,
@@ -11216,8 +11234,11 @@ section#integration .rcDatepicker tbody td {
 .loginButton:active,
 #vendas button:active,
 #integration article ul li aside button.submit:active{
-    outline: 0;
-    background-image: none;
-    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    color: #ad9c2a !important;
+     -webkit-box-shadow: none !important;
+     box-shadow: none !important;
+}
+
+body.newHeaderAndFooter #login button{
+    padding-top:0;
 }
