@@ -11197,3 +11197,27 @@ section#integration .rcDatepicker tbody td {
     display: block;
     text-overflow: ellipsis;
 }
+
+#login form#loginForm button:hover,
+#conciliacao button:hover,
+#primaryContent button:hover,
+.modal-footer button:hover,
+.loginButton:hover,
+#vendas button:hover,
+#integration article ul li aside button.submit:hover{
+    background-color: #ffe507;
+    color: #4d4d4d;
+}
+
+#login form#loginForm button:active,
+#conciliacao button:active,
+#primaryContent button:active,
+.modal-footer button:active,
+.loginButton:active,
+#vendas button:active,
+#integration article ul li aside button.submit:active{
+    outline: 0;
+    background-image: none;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
