@@ -11204,7 +11204,9 @@ section#integration .rcDatepicker tbody td {
 .modal-footer button,
 .loginButton,
 #vendas button,
-#integration article ul li aside button.submit{
+#integration article ul li aside button.submit,
+.receipts_present_filters input[type=submit],
+.receipts_future_filters input[type=submit]{
     background: #F8DEOO !important;
     border: 0 !important;
     font-style: bold !important;
@@ -11233,10 +11235,20 @@ section#integration .rcDatepicker tbody td {
 .modal-footer button:active,
 .loginButton:active,
 #vendas button:active,
-#integration article ul li aside button.submit:active{
+#integration article ul li aside button.submit:active,
+.receipts_present_filters input[type=submit]:active,
+.receipts_future_filters input[type=submit]:active{
     color: #ad9c2a !important;
      -webkit-box-shadow: none !important;
      box-shadow: none !important;
+}
+
+.filter-depth input[type=submit]:active {
+    top: 0;
+}
+
+.filter-depth input[type=submit]{
+    top: 0;
 }
 
 body.newHeaderAndFooter #login button{
