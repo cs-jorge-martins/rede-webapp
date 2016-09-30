@@ -11231,6 +11231,7 @@ section#integration .rcDatepicker tbody td {
 
 #login form#loginForm button:active,
 #conciliacao button:active,
+#conciliacao button.back:active:before,
 #primaryContent button:active,
 .modal-footer button:active,
 .loginButton:active,
