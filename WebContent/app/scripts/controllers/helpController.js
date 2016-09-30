@@ -17,7 +17,7 @@ angular.module('Conciliador.helpController',[])
         ],
         theme: "app/css/videogular.min.css",
         plugins: {
-            poster: "app/img/videoPoster.jpg",
+            poster: "app/img/videoPoster2.png",
             controls: {
                 autoHide: true,
                 autoHideTime: 1000
