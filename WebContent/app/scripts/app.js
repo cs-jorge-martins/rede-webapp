@@ -40,6 +40,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'ngFileSaver',
                             'Conciliador.appConfig'
 							])
+<<<<<<< HEAD
 	.constant('app', (function(){
 		var host = window.location.hostname;
 		var endpoint = 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD';
@@ -56,6 +57,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 			'endpoint': endpoint
 		};
 	})())
+=======
+>>>>>>> 20d5da458dea81b9fc41c5f1fe96e0f951f72900
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (datepickerConfig) {
