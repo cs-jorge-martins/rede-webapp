@@ -40,6 +40,22 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'ngFileSaver',
                             'Conciliador.appConfig'
 							])
+	.constant('app', (function(){
+		var host = window.location.hostname;
+		var endpoint = 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD';
+
+		if(host === '127.0.0.1' || host === 'localhost' || host.match('dev') || host === '0.0.0.0' ) {
+			endpoint = 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp';
+		}
+
+		if(host.match('hom.userede.com.br')) {
+			endpoint = 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';			
+		}
+
+		return {
+			'endpoint': endpoint
+		};
+	})())
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (datepickerConfig) {
@@ -97,7 +113,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 					case 401 :
 					case 403 :
 						$rootScope.alerts =  [ { type: "danger", msg: config.data.message} ];
-						$rootScope.logout();
+						$rootScope.destroyVariablesSession();
+						$location.path("/login");
 						break;
 					case 500 :
 					case 504 :
@@ -144,8 +161,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	$rootScope.logout = function() {
 		$rootScope.destroyVariablesSession();
 		$rootScope.login = 'login';
-		if(!$rootScope.alerts.length)
-			$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
+		$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
 		$location.path("/login");
 	};
 

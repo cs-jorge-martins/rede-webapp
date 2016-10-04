@@ -11197,3 +11197,61 @@ section#integration .rcDatepicker tbody td {
     display: block;
     text-overflow: ellipsis;
 }
+
+#login form#loginForm button,
+#conciliacao button,
+#primaryContent button,
+.modal-footer button,
+.loginButton,
+#vendas button,
+#integration article ul li aside button.submit,
+.receipts_present_filters input[type=submit],
+.receipts_future_filters input[type=submit]{
+    background: #F8DEOO !important;
+    border: 0 !important;
+    font-style: bold !important;
+    shadow-color: #000000;
+    shadow-opacity: 24%;
+    shadow-distance: 1px;
+    shadow-expansion: 0%;
+    shadow-size: 2px;
+    shadow-angle:90;
+}
+
+/*#login form#loginForm button:hover,*/
+/*#conciliacao button:hover,*/
+/*#primaryContent button:hover,*/
+/*.modal-footer button:hover,*/
+/*.loginButton:hover,*/
+/*#vendas button:hover,*/
+/*#integration article ul li aside button.submit:hover{*/
+    /*background-color: #ffe507;*/
+    /*color: #4d4d4d;*/
+/*}*/
+
+#login form#loginForm button:active,
+#conciliacao button:active,
+#conciliacao button.back:active:before,
+#primaryContent button:active,
+.modal-footer button:active,
+.loginButton:active,
+#vendas button:active,
+#integration article ul li aside button.submit:active,
+.receipts_present_filters input[type=submit]:active,
+.receipts_future_filters input[type=submit]:active{
+    color: #ad9c2a !important;
+     -webkit-box-shadow: none !important;
+     box-shadow: none !important;
+}
+
+.filter-depth input[type=submit]:active {
+    top: 0;
+}
+
+.filter-depth input[type=submit]{
+    top: 0;
+}
+
+body.newHeaderAndFooter #login button{
+    padding-top:0;
+}
