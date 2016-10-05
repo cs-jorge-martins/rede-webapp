@@ -58,5 +58,16 @@
 				headers: Request.setHeaders()
 			});
 		};
+
+        this.exportTransactions = function(filter) {
+			var request = filter;
+
+			return $http({
+				url: app.endpoint + '/transactions/export',
+				method: "GET",
+				params: request,
+				headers: Request.setHeaders()
+			});
+		};
     }
 })();
