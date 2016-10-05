@@ -141,7 +141,7 @@
                 sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
 
-			TransactionService.getTransactionByFilter(handleAnalyticalFilter(filter)).then(function(response){
+			TransactionService.exportTransactions(handleAnalyticalFilter(filter)).then(function(response){
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
 
