@@ -38,10 +38,17 @@ module.exports = function(grunt) {
                     }
                 }
             },
+            homologation: {
+                constants: {
+                    app: {
+                        endpoint: 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml'
+                    }
+                }
+            },
             production: {
                 constants: {
                     app: {
-                      endpoint: 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml'
+                      endpoint: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
                     }
                 }
             }
@@ -51,5 +58,6 @@ module.exports = function(grunt) {
     grunt.registerTask('serve', ['http-server:server']);
     grunt.registerTask('local', ['ngconstant:local', 'serve']);
     grunt.registerTask('dev', ['ngconstant:development', 'serve']);
+    grunt.registerTask('hml', ['ngconstant:homologation', 'serve']);
     grunt.registerTask('prod', ['ngconstant:production', 'serve']);
 };
