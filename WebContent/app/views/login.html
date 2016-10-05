@@ -7,42 +7,10 @@
 		<input id="senha" type="password" ng-model="usuario.password" type="password" required/>
 		
 		<a href="https://www.userede.com.br/pt-br/novoacesso/Paginas/RecuperacaoSenhaIdentificacao.aspx" target="_blank">esqueci minha senha</a>
-        <a href="https://www.userede.com.br/nossos-produtos/controlrede" class="inscricao" target="_blank">cadastre-se agora!</a>
+        <!--<a href="https://www.userede.com.br/nossos-produtos/controlrede" target="_blank">cadastre-se agora!</a>-->
 	
 		<div class="buttonWrapper">
             <button ng-click="validarLogin()" ng-disabled="loginForm.$invalid" class="btn btn-primary scrollfade-md animated fadeInUp">entrar</button>
 		</div>
-	</form>
-	<form id="redefinirSenha">
-
-	<legend ng-show="!sendEmail">
-		<h2>Problemas ao fazer login?</h2>
-		<ul>
-			<li>Verifique se vocã está digitando o e-mail corretamente (seunome@suaempresa.com.br);</li>
-			<li>Cuidado ao acionar a tecla Caps Lock. As senhas distinguem entre minúsculas e maiúsculas;</li>
-		</ul>
-		<p>Se mesmo assim não for possível efetuar o login, digite o seu e-mail abaixo para redefinir a sua senha.</p>
-		<alert ng-repeat="alert in alertsPassword" type="{{alert.type}}">{{alert.msg}}</alert>
-	</legend>
-
-	<legend ng-show="sendEmail">
-		<h2>E-mail enviado</h2>
-		<ul>
-			<li>Uma mensagem foi enviada para o seu e-mail com as informações para alteração da sua senha de acesso à Kaplen. </li>
-			<br />
-			<li>Ainda não recebeu o e-mail? Verifique as suas pastas de <b>Spam</b> ou de <b>lixo eletrônico</b>.
-				Se mesmo assim você não tiver recebido a mensagem, entre em contato com o nosso suporte, no e-mail
-				<a class="email" href="mailto:suporte@kaplen.com.br">suporte@kaplen.com.br</a></li>
-		</ul>
-		<br />
-	</legend>
-
-		<span ng-show="!sendEmail">
-			<label for="emailRedefinirSenha">E-mail</label>
-			<input id="emailRedefinirSenha" type="text" ng-model="email"/>
-		</span>
-		<button ng-show="!sendEmail" ng-click="renewPassword()">Enviar</button>
-		<button onclick="javascript:retornarLogin();" ng-click="clear()">Voltar</button>
-		<br />
 	</form>
 </div>
