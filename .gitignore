@@ -1,2 +1,6 @@
 node_modules
 .idea
+build
+.settings
+.project
+WebContent/app/scripts/config.js
