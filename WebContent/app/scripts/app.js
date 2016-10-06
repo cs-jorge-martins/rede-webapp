@@ -246,6 +246,21 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		$rootScope.alerts.splice(index, 1);
 	};
 
+	$rootScope.sortResults = function orderResults(elem, kind) {
+		var order, order_string, order_class;
+
+		if(!elem.target.getAttribute("class")) {
+			elem.target.setAttribute("class","sortAsc");
+		}
+
+		order = elem.target.getAttribute("class") == "sortAsc" ? "DESC" : "ASC";
+		order_string = kind + "," + order;
+
+		order_class = order == "DESC" ? "sortDesc" : "sortAsc";
+		elem.target.setAttribute("class",order_class);
+		return order_string;
+	};
+
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
@@ -873,3 +888,5 @@ function getDominio(extension) {
 	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
 	return url[0]+ '/'+extension+'/'; // retorna a parte www.endereco.com.br
 };
+
+
