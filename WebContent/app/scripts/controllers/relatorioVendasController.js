@@ -20,7 +20,7 @@
     	angular.extend($scope, advancedFilterService);
     	$scope.loadParamsByFilter();
 
-    	//Extensao do serviÃ§o para calendario
+    	//Extensao do servico para calendario
     	angular.extend($scope, calendarService);
     	$scope.resetCalendarService();
 
@@ -28,23 +28,6 @@
 		$scope.tabs = [{},{},{}];
 
 		$scope.sort = "";
-
-		$scope.clearSyntheticFilter = clearSyntheticFilter;
-		$scope.getSynthetic = getSynthetic;
-		$scope.clearAnalyticalFilter = clearAnalyticalFilter;
-		$scope.getAnalytical = getAnalytical;
-        $scope.exportAnalytical = exportAnalytical;
-		$scope.clearDuplicateFilter = clearDuplicateFilter;
-		$scope.getDuplicate = getDuplicate;
-		$scope.changeTab = changeTab;
-		$scope.clearFilter = clearFilter;
-
-		$scope.pageChangedSynthetic = pageChangedSynthetic;
-		$scope.totalItensPageChangedSynthetic = totalItensPageChangedSynthetic;
-		$scope.pageChangedAnalytical = pageChangedAnalytical;
-		$scope.totalItensPageChangedAnalytical = totalItensPageChangedAnalytical;
-		$scope.pageChangedDuplicate = pageChangedDuplicate;
-		$scope.totalItensPageChangedDuplicate = totalItensPageChangedDuplicate;
 
 		/* pagination */
 		$scope.maxSize = 4;
@@ -61,13 +44,44 @@
         $scope.currentPageDuplicate = 0;
 		$scope.totalItensDuplicate = 0;
 
-		clearFilter();
+        function handleResponse(response) {
+			var items = [];
+
+			for(var item in response){
+				if(typeof response[item] === 'object') {
+					items.push(response[item]);
+				}
+				else {
+					break;
+				}
+			}
+			return items;
+		};
+
+        function loadChart(response) {
+            var chartData = {
+                labels: [],
+                data: []
+            };
+            for(var index in response) {
+				if(response[index].amount) {
+                	chartData.labels.push(response[index].cardProduct.name);
+				}
+				else {
+					chartData.labels.push('');
+				}
+                chartData.data.push(response[index].percentage);
+            }
+
+            $scope.chartjs = chartData;
+            $scope.chartOptions = chartUtils.options.relatorioSintetico;
+        };
 
         function getFilterOptions(reportScope, extraOptions){
             var extraOptions = extraOptions || {};
             var filter = {
 				startDate: calendarFactory.formatDateTimeForService(reportScope.initialDate),
-				endDate: calendarFactory.formatDateTimeForService((reportScope.finalDate),
+				endDate: calendarFactory.formatDateTimeForService(reportScope.finalDate),
 				shopIds: $scope.settlementsSelected.map(function(item){
                     return item.id;
                 }),
@@ -80,7 +94,7 @@
             return angular.extend(filter, extraOptions);
         };
 
-		function getSynthetic() {
+		$scope.getSynthetic = function() {
 			var filter = getFilterOptions($scope.synthetic, {
 				groupBy: ['CARD_PRODUCT'],
 				page: $scope.currentPageSynthetic,
@@ -108,7 +122,7 @@
 			});
         };
 
-        function getAnalytical() {
+        $scope.getAnalytical = function () {
             var filter = getFilterOptions($scope.analytical, {
                 page: $scope.currentPageAnalytical,
                 size: $scope.totalItensPageAnalytical
@@ -124,7 +138,7 @@
 			}).catch(function(response) { });
 		};
 
-        function exportAnalytical() {
+        $scope.exportAnalytical = function() {
 			var filter = getFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
@@ -135,7 +149,7 @@
 			}).catch(function(response) { });
 		};
 
-		function getDuplicate() {
+		$scope.getDuplicate = function() {
             var filter = getFilterOptions($scope.duplicate, {
                 page: $scope.currentPageDuplicate,
                 size: $scope.totalItensPageDuplicate
@@ -149,23 +163,9 @@
 				$scope.duplicate.noItensMsg = data.length === 0 ? true : false;
 				$scope.totalItensDuplicate = pagination.totalElements;
 			}).catch(function(response) { });
-		}
+		};
 
-		function handleResponse(response) {
-			var items = [];
-
-			for(var item in response){
-				if(typeof response[item] === 'object') {
-					items.push(response[item]);
-				}
-				else {
-					break;
-				}
-			}
-			return items;
-		}
-
-		function changeTab(tab) {
+		$scope.changeTab = function(tab) {
 			$scope.currentPage = 0;
 			$scope.sort = "";
 
@@ -173,7 +173,7 @@
 				case 1:
 					if($scope.synthetic.items) {
 						if(!$scope.synthetic.items.length) {
-							getSynthetic();
+							$scope.getSynthetic();
 						}
 					}
 					break;
@@ -181,7 +181,7 @@
 				case 2:
 					if($scope.analytical.items) {
 						if(!$scope.analytical.items.length) {
-							getAnalytical();
+							$scope.getAnalytical();
 						}
 					}
 					break;
@@ -189,14 +189,14 @@
 				case 3:
 					if($scope.duplicate.items) {
 						if(!$scope.duplicate.items.length) {
-							getDuplicate();
+							$scope.getDuplicate();
 						}
 					}
 					break;
 			}
-		}
+		};
 
-		function clearFilter() {
+		$scope.clearFilter = function() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 
 			$scope.synthetic = {};
@@ -213,17 +213,17 @@
 			$scope.duplicate.items = [];
 			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
-		}
+		};
 
-		function clearSyntheticFilter() {
+		$scope.clearSyntheticFilter = function() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
-		}
+		};
 
-		function clearAnalyticalFilter() {
+		$scope.clearAnalyticalFilter = function() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -231,9 +231,9 @@
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
-		}
+		};
 
-		function clearDuplicateFilter() {
+		$scope.clearDuplicateFilter = function() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -241,59 +241,40 @@
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
-		}
-
-        function loadChart(response) {
-            var chartData = {
-                labels: [],
-                data: []
-            };
-            for(var index in response) {
-				if(response[index].amount) {
-                	chartData.labels.push(response[index].cardProduct.name);
-				}
-				else {
-					chartData.labels.push('');
-				}
-                chartData.data.push(response[index].percentage);
-            }
-
-            $scope.chartjs = chartData;
-            $scope.chartOptions = chartUtils.options.relatorioSintetico;
-        }
+		};
 
 		/* pagination */
-		function pageChangedSynthetic() {
+		$scope.pageChangedSynthetic = function() {
 			$scope.currentPageSynthetic = this.currentPageSynthetic - 1;
-			getSynthetic();
+			$scope.getSynthetic();
 		};
 
-		function totalItensPageChangedSynthetic() {
+		$scope.totalItensPageChangedSynthetic = function() {
 			this.currentPageSynthetic = $scope.currentPageSynthetic = 0;
 			$scope.totalItensPageSynthetic = this.totalItensPageSynthetic;
-			getSynthetic();
+			$scope.getSynthetic();
 		};
 
-		function pageChangedAnalytical() {
+		$scope.pageChangedAnalytical = function() {
 			$scope.currentPageAnalytical = this.currentPageAnalytical - 1;
-			getAnalytical();
+			$scope.getAnalytical();
 		};
 
-		function totalItensPageChangedAnalytical() {
+		$scope.totalItensPageChangedAnalytical = function() {
 			this.currentPageAnalytical = $scope.currentPageAnalytical = 0;
 			$scope.totalItensPageAnalytical = this.totalItensPageAnalytical;
-			getAnalytical();
+			$scope.getAnalytical();
 		};
 
-		function pageChangedDuplicate() {
+		$scope.pageChangedDuplicate = function() {
 			$scope.currentPageDuplicate = this.currentPageDuplicate - 1;
-			getDuplicate();
+			$scope.getDuplicate();
 		};
 
-		function totalItensPageChangedDuplicate() {
+		$scope.totalItensPageChangedDuplicate = function() {
 			this.currentPageDuplicate = $scope.currentPageDuplicate = 0;
 			$scope.totalItensPageDuplicate = this.totalItensPageDuplicate;
-			getDuplicate();
+			$scope.getDuplicate();
 		};
 
 		$scope.sortResults = function (elem,kind,tipo_relatorio) {
@@ -308,5 +289,6 @@
 				this.getDuplicate();
 			}
 		};
+        $scope.clearFilter();
     }
 })();
