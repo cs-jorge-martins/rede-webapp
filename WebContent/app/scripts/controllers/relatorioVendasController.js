@@ -33,6 +33,7 @@
 		$scope.getSynthetic = getSynthetic;
 		$scope.clearAnalyticalFilter = clearAnalyticalFilter;
 		$scope.getAnalytical = getAnalytical;
+        $scope.exportAnalytical = exportAnalytical;
 		$scope.clearDuplicateFilter = clearDuplicateFilter;
 		$scope.getDuplicate = getDuplicate;
 		$scope.changeTab = changeTab;
@@ -60,11 +61,7 @@
         $scope.currentPageDuplicate = 0;
 		$scope.totalItensDuplicate = 0;
 
-		init();
-
-		function init(){
-			clearFilter();
-		}
+		clearFilter();
 
 		function getSynthetic() {
 
@@ -88,7 +85,7 @@
 				sort: $scope.sort
 			};
 
-			TransactionSummaryService.listTransactionSummaryByFilter(handleSyntheticFilter(filter)).then(function(response) {
+			TransactionSummaryService.listTransactionSummaryByFilter(handleFilter(filter)).then(function(response) {
 				var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
 
@@ -110,6 +107,36 @@
 		}
 
 		function getAnalytical() {
+
+            $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
+
+			var filter = handleFilter({
+				startDate: handleDate($scope.analytical.initialDate),
+				endDate: handleDate($scope.analytical.finalDate),
+				shopIds: $scope.settlementsSelected.map(function(item){
+                    return item.id;
+                }),
+				cardProductIds: $scope.productsSelected.map(function(item){
+                    return item.id;
+                }),
+				currency: 'BRL',
+				page: $scope.currentPageAnalytical,
+				size: $scope.totalItensPageAnalytical,
+                sort: 'date,ASC'
+			});
+
+			TransactionService.getTransactionByFilter(filter).then(function(response){
+                var data = handleResponse(response.data.content);
+                var pagination = response.data.page;
+
+				$scope.analytical.items = data;
+				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
+				$scope.totalItensAnalytical = pagination.totalElements;
+			}).catch(function(response) {
+            });
+		};
+
+        function exportAnalytical() {
 
             var shopIds = [];
             var cardProductIds = [];
@@ -141,16 +168,15 @@
                 sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
 
-			TransactionService.exportTransactions(handleAnalyticalFilter(filter)).then(function(response){
+			TransactionService.exportTransactions(handleFilter(filter)).then(function(response){
                 var data = handleResponse(response.data.content);
-                var pagination = response.data.page;
 
 				$scope.analytical.items = data;
 				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
-				$scope.totalItensAnalytical = pagination.totalElements;
+
 			}).catch(function(response) {
             });
-		}
+		};
 
 		function getDuplicate() {
 
@@ -183,7 +209,7 @@
 
 			};
 
-			TransactionService.getDuplicateTransaction(handleDuplicateFilter(filter)).then(function(response){
+			TransactionService.getDuplicateTransaction(handleFilter(filter)).then(function(response){
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
 
@@ -212,41 +238,13 @@
 			return calendarFactory.formatDateTimeForService(date);
 		}
 
-		function handleSyntheticFilter(filter) {
-			if(filter.shopIds) {
-				if(filter.shopIds.length === 0) {
-					delete filter.shopIds;
-				}
-			}
-			return filter;
-		}
-
-		function handleAnalyticalFilter(filter) {
-			if(filter.shopIds) {
-				if(filter.shopIds.length === 0) {
-					delete filter.shopIds;
-				}
+		function handleFilter(filter) {
+			if(filter.shopIds && filter.shopIds.length === 0) {
+				delete filter.shopIds;
 			}
 
-			if(filter.cardProductIds) {
-				if(filter.cardProductIds.length === 0) {
-					delete filter.cardProductIds;
-				}
-			}
-			return filter;
-		}
-
-		function handleDuplicateFilter(filter) {
-			if(filter.shopIds) {
-				if(filter.shopIds.length === 0) {
-					delete filter.shopIds;
-				}
-			}
-
-			if(filter.cardProductIds) {
-				if(filter.cardProductIds.length === 0) {
-					delete filter.cardProductIds;
-				}
+			if(filter.cardProductIds && filter.cardProductIds.length === 0) {
+				delete filter.cardProductIds;
 			}
 			return filter;
 		}
