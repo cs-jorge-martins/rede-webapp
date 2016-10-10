@@ -63,29 +63,31 @@
 
 		clearFilter();
 
-		function getSynthetic() {
-
-            var shopIds = [];
-
-    		if($scope.settlementsSelected) {
-    			for(var item in $scope.settlementsSelected) {
-    				shopIds.push($scope.settlementsSelected[item].id);
-    			}
-				shopIds = shopIds.join(",");
-    		}
-
-			var filter = {
-				startDate: handleDate($scope.synthetic.initialDate),
-				endDate: handleDate($scope.synthetic.finalDate),
-				shopIds: shopIds,
+        function getFilterOptions(reportScope, extraOptions){
+            var extraOptions = extraOptions || {};
+            var filter = {
+				startDate: handleDate(reportScope.initialDate),
+				endDate: handleDate(reportScope.finalDate),
+				shopIds: $scope.settlementsSelected.map(function(item){
+                    return item.id;
+                }),
+				cardProductIds: $scope.productsSelected.map(function(item){
+                    return item.id;
+                }),
 				currency: 'BRL',
+				sort: $scope.sort ? $scope.sort : 'date,ASC'
+			};
+            return angular.extend(filter, extraOptions);
+        };
+
+		function getSynthetic() {
+			var filter = getFilterOptions($scope.synthetic, {
 				groupBy: ['CARD_PRODUCT'],
 				page: $scope.currentPageSynthetic,
-				size: $scope.totalItensPageSynthetic,
-				sort: $scope.sort
+				size: $scope.totalItensPageSynthetic
 			};
 
-			TransactionSummaryService.listTransactionSummaryByFilter(handleFilter(filter)).then(function(response) {
+			TransactionSummaryService.listTransactionSummaryByFilter(filter).then(function(response) {
 				var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
 
@@ -104,27 +106,13 @@
 				$scope.totalItensSynthetic = pagination.totalElements;
 				loadChart(data);
 			});
-		}
-
-        function getAnalyticalFilter(){
-            return handleFilter({
-				startDate: handleDate($scope.analytical.initialDate),
-				endDate: handleDate($scope.analytical.finalDate),
-				shopIds: $scope.settlementsSelected.map(function(item){
-                    return item.id;
-                }),
-				cardProductIds: $scope.productsSelected.map(function(item){
-                    return item.id;
-                }),
-				currency: 'BRL',
-				page: $scope.currentPageAnalytical,
-				size: $scope.totalItensPageAnalytical,
-                sort: $scope.sort ? $scope.sort : 'date,ASC'
-			});
         };
 
         function getAnalytical() {
-            var filter = getAnalyticalFilter();
+            var filter = getFilterOptions($scope.analytical, {
+                page: $scope.currentPageAnalytical,
+                size: $scope.totalItensPageAnalytical
+            });
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 			TransactionService.getTransactionByFilter(filter).then(function(response){
@@ -134,63 +122,34 @@
 				$scope.analytical.items = data;
 				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
 				$scope.totalItensAnalytical = pagination.totalElements;
-			}).catch(function(response) {
-            });
+			}).catch(function(response) { });
 		};
 
         function exportAnalytical() {
-			var filter = getAnalyticalFilter();
+			var filter = getFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 			TransactionService.exportTransactions(filter).then(function(response){
                 var data = handleResponse(response.data.content);
 				$scope.analytical.items = data;
 				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
-
-			}).catch(function(response) {
-            });
+			}).catch(function(response) { });
 		};
 
 		function getDuplicate() {
+            var filter = getFilterOptions($scope.duplicate, {
+                page: $scope.currentPageDuplicate,
+                size: $scope.totalItensPageDuplicate
+            });
 
-            var shopIds = [];
-            var cardProductIds = [];
-
-    		if($scope.settlementsSelected) {
-    			for(var item in $scope.settlementsSelected) {
-    				shopIds.push($scope.settlementsSelected[item].id);
-    			}
-				shopIds = shopIds.join(",");
-    		}
-
-            if($scope.productsSelected) {
-    			for(item in $scope.productsSelected) {
-    				cardProductIds.push($scope.productsSelected[item].id);
-    			}
-				cardProductIds = cardProductIds.join(",");
-    		}
-
-			var filter = {
-				startDate: handleDate($scope.duplicate.initialDate),
-				endDate: handleDate($scope.duplicate.finalDate),
-				shopIds: shopIds,
-				cardProductIds: cardProductIds,
-				currency: 'BRL',
-				page: $scope.currentPageDuplicate,
-				size: $scope.totalItensPageDuplicate,
-				sort: $scope.sort ?  $scope.sort :'date,ASC'
-
-			};
-
-			TransactionService.getDuplicateTransaction(handleFilter(filter)).then(function(response){
+			TransactionService.getDuplicateTransaction(filter).then(function(response){
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
 
 				$scope.duplicate.items = data;
 				$scope.duplicate.noItensMsg = data.length === 0 ? true : false;
 				$scope.totalItensDuplicate = pagination.totalElements;
-			}).catch(function(response) {
-            });
+			}).catch(function(response) { });
 		}
 
 		function handleResponse(response) {
@@ -209,17 +168,6 @@
 
 		function handleDate(date) {
 			return calendarFactory.formatDateTimeForService(date);
-		}
-
-		function handleFilter(filter) {
-			if(filter.shopIds && filter.shopIds.length === 0) {
-				delete filter.shopIds;
-			}
-
-			if(filter.cardProductIds && filter.cardProductIds.length === 0) {
-				delete filter.cardProductIds;
-			}
-			return filter;
 		}
 
 		function changeTab(tab) {
