@@ -189,7 +189,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 
 	/************************************************Botão e logica para pegar ids para pesquisa************************************/
 
-	advancedFilterService.loadParansByFilter = function(){
+	advancedFilterService.loadParamsByFilter = function(){
 		advancedFilterService.natureza = this.natureza = 0;
 		advancedFilterService.tipoTerminal = this.tipoTerminal = 0;
 

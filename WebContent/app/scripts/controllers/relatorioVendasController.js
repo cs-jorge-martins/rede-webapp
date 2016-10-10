@@ -16,9 +16,9 @@
     function RelatorioVendas(menuFactory, $scope, $modal, calendarFactory, $rootScope,
     relatorioService, installmentsService, $window, advancedFilterService, calendarService, TransactionSummaryService,
 	TransactionService) {
-    	//Extensao do serviÃ§o para filtro avanÃ§ado
+    	//Extensao do servico para filtro avancado
     	angular.extend($scope, advancedFilterService);
-    	$scope.loadParansByFilter();
+    	$scope.loadParamsByFilter();
 
     	//Extensao do serviÃ§o para calendario
     	angular.extend($scope, calendarService);
