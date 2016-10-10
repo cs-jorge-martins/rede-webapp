@@ -106,11 +106,8 @@
 			});
 		}
 
-		function getAnalytical() {
-
-            $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-
-			var filter = handleFilter({
+        function getAnalyticalFilter(){
+            return handleFilter({
 				startDate: handleDate($scope.analytical.initialDate),
 				endDate: handleDate($scope.analytical.finalDate),
 				shopIds: $scope.settlementsSelected.map(function(item){
@@ -122,9 +119,14 @@
 				currency: 'BRL',
 				page: $scope.currentPageAnalytical,
 				size: $scope.totalItensPageAnalytical,
-                sort: 'date,ASC'
+                sort: $scope.sort ? $scope.sort : 'date,ASC'
 			});
+        };
 
+        function getAnalytical() {
+            var filter = getAnalyticalFilter();
+
+            $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 			TransactionService.getTransactionByFilter(filter).then(function(response){
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
@@ -137,40 +139,11 @@
 		};
 
         function exportAnalytical() {
-
-            var shopIds = [];
-            var cardProductIds = [];
-
-    		if($scope.settlementsSelected) {
-    			for(var item in $scope.settlementsSelected) {
-    				shopIds.push($scope.settlementsSelected[item].id);
-    			}
-				shopIds = shopIds.join(",");
-    		}
-
-            if($scope.productsSelected) {
-    			for(var item in $scope.productsSelected) {
-    				cardProductIds.push($scope.productsSelected[item].id);
-    			}
-				cardProductIds = cardProductIds.join(",");
-    		}
+			var filter = getAnalyticalFilter();
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-
-			var filter = {
-				startDate: handleDate($scope.analytical.initialDate),
-				endDate: handleDate($scope.analytical.finalDate),
-				shopIds: shopIds,
-				cardProductIds: cardProductIds,
-				currency: 'BRL',
-				page: $scope.currentPageAnalytical,
-				size: $scope.totalItensPageAnalytical,
-                sort: $scope.sort ? $scope.sort : 'date,ASC'
-			};
-
-			TransactionService.exportTransactions(handleFilter(filter)).then(function(response){
+			TransactionService.exportTransactions(filter).then(function(response){
                 var data = handleResponse(response.data.content);
-
 				$scope.analytical.items = data;
 				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
 
