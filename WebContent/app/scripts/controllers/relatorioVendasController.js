@@ -66,8 +66,8 @@
         function getFilterOptions(reportScope, extraOptions){
             var extraOptions = extraOptions || {};
             var filter = {
-				startDate: handleDate(reportScope.initialDate),
-				endDate: handleDate(reportScope.finalDate),
+				startDate: calendarFactory.formatDateTimeForService(reportScope.initialDate),
+				endDate: calendarFactory.formatDateTimeForService((reportScope.finalDate),
 				shopIds: $scope.settlementsSelected.map(function(item){
                     return item.id;
                 }),
@@ -118,8 +118,7 @@
 			TransactionService.getTransactionByFilter(filter).then(function(response){
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
-
-				$scope.analytical.items = data;
+                $scope.analytical.items = data;
 				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
 				$scope.totalItensAnalytical = pagination.totalElements;
 			}).catch(function(response) { });
@@ -131,7 +130,7 @@
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 			TransactionService.exportTransactions(filter).then(function(response){
                 var data = handleResponse(response.data.content);
-				$scope.analytical.items = data;
+                $scope.analytical.items = data;
 				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
 			}).catch(function(response) { });
 		};
@@ -164,10 +163,6 @@
 				}
 			}
 			return items;
-		}
-
-		function handleDate(date) {
-			return calendarFactory.formatDateTimeForService(date);
 		}
 
 		function changeTab(tab) {
