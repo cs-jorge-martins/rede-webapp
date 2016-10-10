@@ -4,7 +4,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 	$routeProvider.when('/integration', {templateUrl: 'app/views/vendas/integration.html', controller: 'integrationController'});
 }])
 
-.controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal,
+.controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService, filtersService){
 		menuFactory.setActiveIntegration();
 		$scope.labelFindFile = true;
@@ -75,15 +75,19 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				scope: $scope,
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
-				controller: function($scope, $modalInstance){
+				controller: function($modalInstance, $timeout){
 					$scope.cancel = function() {
-						$modalInstance.dismiss("cancel");
+						$scope.uploader.clearQueue();
+						modal.close();
+						$scope.inProgress = false;
+						$scope.labelFindFile = true;
+						$scope.sendFile = true;
 					}
 				}
 			})
 		}
 
-		$scope.uploader.onSuccessItem = function(item, response, status, headers) {
+		$scope.uploader.onSuccessItem = function(item, response, status, headers, $timeout) {
 			modal.close();
 			$scope.uploader.clearQueue();
 			var $modalInstance = $modal.open({
