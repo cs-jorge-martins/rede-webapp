@@ -148,10 +148,14 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			});
 	    }
 
-	    function getAdjusts() {
+	    function getAdjusts(cache, order) {
 			filter.type = 'ADJUST';
 			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			filter.size =  $scope.adjustsTotalItensPage;
+
+			if(order) {
+				filter.sort = order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -165,10 +169,14 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			});
 	    }
 
-	    function getCancellations() {
+	    function getCancellations(cache, order) {
 	    	filter.type = 'CANCELLATION';
 	    	filter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
 			filter.size =  $scope.cancellationsTotalItensPage;
+
+			if (order) {
+				filter.sort =  order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -198,6 +206,20 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    	} else if(index === 0) {
 	    		getCommerce();
 	    	}
+	    }
+
+	    $scope.sortResultsAdjusts = function(elem, kind) {
+	    	var order_string;
+	    	order_string = $rootScope.sortResults(elem, kind);
+
+	    	getAdjusts(false, order_string)
+	    }
+
+	    $scope.sortResultsCancellations = function (elem, kind) {
+	    	var order_string;
+	    	order_string = $rootScope.sortResults(elem, kind);
+
+	    	getCancellations(false, order_string)
 	    }
 
 	    $scope.sortResults = function(elem, kind) {

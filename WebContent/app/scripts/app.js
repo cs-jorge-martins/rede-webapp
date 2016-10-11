@@ -246,6 +246,22 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		$rootScope.alerts.splice(index, 1);
 	};
 
+	$rootScope.sortResults = function orderResults(elem, kind) {
+ 		var order, order_string, order_class;
+ 
+ 		if(!elem.target.getAttribute("class")) {
+ 			elem.target.setAttribute("class","sortAsc");
+ 		}
+ 
+ 		order = elem.target.getAttribute("class") == "sortAsc" ? "DESC" : "ASC";
+ 		order_string = kind + "," + order;
+ 
+ 		order_class = order == "DESC" ? "sortDesc" : "sortAsc";
+	
+ 		elem.target.setAttribute("class",order_class);
+ 		return order_string;
+ 	};
+	
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
@@ -867,7 +883,19 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 })
 
+app.filter('utc', function(){
 
+  return function(val){
+    var date = new Date(val);
+     return new Date(date.getUTCFullYear(), 
+                     date.getUTCMonth(), 
+                     date.getUTCDate(),  
+                     date.getUTCHours(), 
+                     date.getUTCMinutes(), 
+                     date.getUTCSeconds());
+  };    
+
+});
 function getDominio(extension) {
 	var url = location.href; //pega endereço que esta no navegador
 	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
