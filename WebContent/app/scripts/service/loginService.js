@@ -10,16 +10,9 @@ angular.module('KaplenWeb.loginService',[])
 			login: user.login,
 			password: user.password
 		};
-		var url = app.endpoint + '/login';
 
-		console.log(Request.setHeaders())
-
-		return $http({
-			url: url,
-			method: "POST",
-			data: request,
-			headers: Request.setHeaders()
-		});
+		var url = app.login.endpoint + '/login';
+		return $http.post(url, request);
 	}
 
 	this.resetPassword = function(user) {

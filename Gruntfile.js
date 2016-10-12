@@ -2,6 +2,13 @@ module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
+    var API_URLS = {
+        local: 'http://localhost:8080/conciliation-api',
+        dev: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev',
+        hml: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml',
+        prod: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
+    };
+
     grunt.initConfig({
         'http-server': {
             server: {
@@ -27,33 +34,54 @@ module.exports = function(grunt) {
             local: {
                 constants: {
                     app: {
-                        endpoint: 'http://localhost:8080/conciliation-api'
+                        endpoint: API_URLS.local,
+                        login: {
+                            endpoint: 'http://localhost:8030'
+                        }
                     }
                 }
             },
             development: {
                 constants: {
                     app: {
-                        endpoint: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev'
+
+                        endpoint: API_URLS.dev,
+                        login: {
+                            endpoint: API_URLS.dev
+                        }
                     }
                 }
             },
             homologation: {
                 constants: {
                     app: {
-                        endpoint: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml'
+                        endpoint: API_URLS.hml,
+                        login: {
+                            endpoint: API_URLS.hml
+                        }
                     }
                 }
             },
             production: {
                 constants: {
                     app: {
-                      endpoint: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
+                      endpoint: API_URLS.prod,
+                      login: {
+                          endpoint: API_URLS.prod
+                      }
                     }
                 }
             }
+        },
+
+        execute: {
+            target: {
+                src: ['WebContent/app/tests/scripts/mock-login.js']
+            }
         }
     });
+
+    grunt.registerTask('local:login', ['execute']);
 
     grunt.registerTask('serve', ['http-server:server']);
     grunt.registerTask('local', ['ngconstant:local', 'serve']);
