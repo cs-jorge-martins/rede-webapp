@@ -59,7 +59,7 @@
 			});
 		};
 
-        this.exportTransactions = function(filter) {
+        this.exportTransactions = function(filter, success, error) {
 			var request = filter;
 
 			return $http({
@@ -67,7 +67,7 @@
 				method: "GET",
 				params: request,
 				headers: Request.setHeaders()
-			});
+			}).then(success, error);
 		};
     }
 })();

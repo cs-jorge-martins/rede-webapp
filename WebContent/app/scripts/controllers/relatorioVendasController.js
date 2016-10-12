@@ -142,11 +142,11 @@
 			var filter = getFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-			TransactionService.exportTransactions(filter).then(function(response){
-                var data = handleResponse(response.data.content);
-                $scope.analytical.items = data;
-				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
-			}).catch(function(response) { });
+			TransactionService.exportTransactions(filter, function ok(response){
+                window.location = response.data;
+            }, function error(response){
+                $rootScope.alerts =  [ { type: "danger", msg: response.data} ];
+            });
 		};
 
 		$scope.getDuplicate = function() {
@@ -245,7 +245,7 @@
 
 		/* pagination */
 		$scope.pageChangedSynthetic = function() {
-			$scope.currentPageSynthetic = this.currentPageSynthetic - 1;
+            $scope.currentPageSynthetic = this.currentPageSynthetic - 1;
 			$scope.getSynthetic();
 		};
 
@@ -256,7 +256,7 @@
 		};
 
 		$scope.pageChangedAnalytical = function() {
-			$scope.currentPageAnalytical = this.currentPageAnalytical - 1;
+            $scope.currentPageAnalytical = this.currentPageAnalytical - 1;
 			$scope.getAnalytical();
 		};
 
