@@ -249,7 +249,11 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	$rootScope.sortResults = function orderResults(elem, kind) {
 		var order, order_string, order_class;
 
-		if(!elem.target.getAttribute("class")) {
+		// TODO: arrumar that shit
+		if(
+			!elem.target.getAttribute("class") //||
+			// (elem.target.getAttribute("class") != "sortAsc" && elem.target.getAttribute("class") != "sortAsc")
+		) {
 			elem.target.setAttribute("class","sortAsc");
 		}
 

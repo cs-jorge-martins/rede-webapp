@@ -64,7 +64,7 @@
 			clearFilter();
 		}
 
-		function getSynthetic() {
+		function getSynthetic(sort) {
 
             var shopIds = [];
 
@@ -83,6 +83,10 @@
 				page: $scope.currentPageSynthetic,
 				size: $scope.totalItensPageSynthetic
 			};
+
+			if(sort) {
+				filter.sort = $scope.sortResults;
+			}
 
 			TransactionSummaryService.listTransactionSummaryByFilter(handleSyntheticFilter(filter)).then(function(response) {
 				var data = handleResponse(response.data.content);
@@ -371,6 +375,14 @@
 			this.currentPageDuplicate = $scope.currentPageDuplicate = 0;
 			$scope.totalItensPageDuplicate = this.totalItensPageDuplicate;
 			getDuplicate();
+		};
+
+		$scope.sortResults = function (elem,kind) {
+			var order_string;
+			order_string = $rootScope.sortResults(elem,kind);
+
+			this.getSynthetic(order_string);
+
 		};
     }
 })();

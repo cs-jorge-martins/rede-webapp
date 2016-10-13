@@ -10746,7 +10746,8 @@ div.checkbox-toggle-right {
     color:#4d4d4d;
 }
 
-#integration article ul li aside table.filesTable th i {
+#integration article ul li aside table.filesTable th i,
+.sortTable th i.orderby{
     background: url("../img/order_by.png") no-repeat;
     display: inline-block;
     width: 7px;
@@ -10755,6 +10756,11 @@ div.checkbox-toggle-right {
     margin-left: 7px;
     top: 2px;
 }
+
+.sortTable th{
+    cursor:pointer;
+}
+
 .integrationModalWrapper {
     width:100%;
     background:rgba(255,255,255,0.9);

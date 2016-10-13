@@ -168,18 +168,20 @@
 					</div>
 
 					<div id="details" class="sales salesTable">
-						<table cellpadding="0" cellspacing="0">
+						<table cellpadding="0" cellspacing="0" class="sortTable">
 						  <thead>
 							  <tr class="taleft">
-								  <th width="380" ng-click="sortResults($event,'cardProduct.name')">
+								  <th width="380" class="something abcd" ng-click="sortResults($event,'cardProduct.name')">
 									  bandeira / tipo de venda
 									  <i class="orderby"></i>
 								  </th>
 								  <th width="300" ng-click="sortResults($event,'id')">
 									  quantidade de vendas
+									  <i class="orderby"></i>
 								  </th>
 								  <th ng-click="sortResults($event,'gross')">
 									  total (R$)
+									  <i class="orderby"></i>
 								  </th>
 							  </tr>
 						  </thead>
