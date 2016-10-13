@@ -13,6 +13,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.sendFile = false;
 		$scope.inProgress = false;
 		$scope.fileName = [];
+		$scope.sort = "createDate,DESC";
 
 		$scope.typeData = [
 			{
@@ -162,7 +163,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				var filter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
-					sort: 'createDate,DESC'
+					sort: $scope.sort
 				};
 
 				if($scope.fileSearch !== "") {
@@ -237,6 +238,15 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			getUploadedFiles(true);
+		};
+
+		$scope.sortResults = function (elem,kind) {
+			var order_string;
+			order_string = $rootScope.sortResults(elem,kind);
+
+			$scope.sort = order_string;
+			getUploadedFiles(true);
+
 		};
 
     });

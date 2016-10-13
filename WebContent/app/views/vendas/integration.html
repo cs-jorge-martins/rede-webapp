@@ -43,10 +43,10 @@
 					<table class="filesTable">
 						<thead>
 							<tr>
-								<th>nome do arquivo <!--<i class="orderby"></i>--></th>
-								<th>tamanho do arquivo <!--<i class="orderby"></i>--></th>
-								<th>data e hora de envio <!--<i class="orderby"></i>--></th>
-								<th>situação do arquivo <!--<i class="orderby"></i>--></th>
+								<th ng-click="sortResults($event,'fileName')">nome do arquivo <!--<i class="orderby"></i>--></th>
+								<th ng-click="sortResults($event,'size')">tamanho do arquivo <!--<i class="orderby"></i>--></th>
+								<th ng-click="sortResults($event,'createDate')">data e hora de envio <!--<i class="orderby"></i>--></th>
+								<th ng-click="sortResults($event,'message')">situação do arquivo <!--<i class="orderby"></i>--></th>
 							</tr>
 						</thead>
 						<tbody ng-repeat="item in listUploadedFiles">
