@@ -13,64 +13,14 @@ angular.module('KaplenWeb.loginController',[])
 	$scope.validarLogin = function(){
 
 		loginService.validarLogin($scope.usuario).then(function(data) {
+
 			var data = data.data;
 			var user = data.user;
+			var token = user.token;
 
-			//$rootScope.companies = user.companyDTOs;
-			$rootScope.pvList = user.pvList;
-
-			//userFirstAccess = user;
-			//flag de primeiro acesso não vem na resposta do pn (deixando hardcoded pra false)
-			userFirstAccess = false;
-			if(userFirstAccess){
-				$window.sessionStorage.firstAccess = true;
-				$window.sessionStorage.tour = true;
+			if(token && user) {
+				$rootScope.signIn(token,user);
 			}
-
-			$window.sessionStorage.user = JSON.stringify(user);
-			$window.sessionStorage.token = user.token;
-			$window.sessionStorage.pvList = JSON.stringify(user.pvList);
-
-			//$window.sessionStorage.company = $rootScope.company = user.companyDTOs[0].ID;
-			//$window.sessionStorage.currencies  = JSON.stringify(user.companyDTOs[0].companyCurrencyDTOs);
-
-            $rootScope.alerts = [];
-
-			if(userFirstAccess.firstAccess){
-				$location.path("/firstAccess");
-			}else{
-				//$rootScope.initialized = true;
-				$location.path("/dashboard");
-			}
-
-			/*
-			if(user.companyDTOs.length > 1){
-				if(userFirstAccess.firstAccess){
-					selectEmpresaService.select(true);
-				}
-				else{
-					$rootScope.initialized = false;
-					selectEmpresaService.select();
-				}
-			}
-			else{
-				angular.forEach(user.companyDTOs[0].companyCurrencyDTOs, function(companyCurrency, index){
-					if(companyCurrency.currencyDefault){
-						$window.sessionStorage.currency = companyCurrency.value;
-						$window.sessionStorage.currencySymbol = $rootScope.currencySymbol = companyCurrency.symbol;
-					}
-				});
-
-				$window.sessionStorage.company = $rootScope.company = user.companyDTOs[0].ID;
-				$window.sessionStorage.currencies  = JSON.stringify(user.companyDTOs[0].companyCurrencyDTOs);
-
-				if(userFirstAccess.firstAccess){
-					$location.path("/firstAccess");
-				}else{
-					$location.path("/dashboard");
-				}
-			}
-			*/
 
 		}).catch(function(response) {
 			console.log('error');
