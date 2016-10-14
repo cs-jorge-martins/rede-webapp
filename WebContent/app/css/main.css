@@ -10151,7 +10151,10 @@ div.checkbox-toggle-right {
     background: #f7f7f7;
 }
 
-#receiptsDetailsPage header, #receiptsDetailsPage footer{
+#receiptsDetailsPage header,
+#receiptsDetailsPage footer,
+#redirectPage
+{
     display: none;
 }
 
