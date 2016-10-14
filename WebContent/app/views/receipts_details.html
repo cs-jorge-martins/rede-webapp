@@ -233,12 +233,12 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th ng-click="sortResults($event,'transaction.date')">data/hora venda</th>
-									<th>nsu</th>
-									<th>valor total transação</th>
-									<th>valor líquido pago</th>
-									<th>nº parcela</th>
-									<th>nº estabelecimento<!--<span class="orderby"></span>--></th>
+									<th ng-click="sortResults($event,'transaction.date', 'sales')">data/hora venda</th>
+									<th ng-click="sortResults($event,'transaction.nsu', 'sales')">nsu</th>
+									<th ng-click="sortResults($event,'transaction.gross', 'sales')">valor total transação</th>
+									<th ng-click="sortResults($event,'transaction.net', 'sales')">valor líquido pago</th>
+									<th ng-click="sortResults($event,'number', 'sales')">nº parcela</th>
+									<th ng-click="sortResults($event,'transaction.pvCode', 'sales')">nº estabelecimento<!--<span class="orderby"></span>--></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -291,10 +291,10 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>data do ajuste</th>
-									<th>valor do ajuste</th>
-									<th>descrição do ajuste</th>
-									<th>número do lote (rv)</th>
+									<th ng-click="sortResults($event,'payedDate', 'adjusts')">data do ajuste</th>
+									<th ng-click="sortResults($event,'amount', 'adjusts')">valor do ajuste</th>
+									<th ng-click="sortResults($event,'description', 'adjusts')">descrição do ajuste</th>
+									<th ng-click="sortResults($event,'roNumber', 'adjusts')">número do lote (rv)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -344,13 +344,13 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>data da venda</th>
-									<th>valor total da transação</th>
-									<th>valor total do cancelamento</th>
-									<th>valor do débito</th>
-									<th>nsu</th>
-									<th>nº do cartão<!--<span class="orderby"></span>--></th>
-									<th>código de autorização</th>
+									<th ng-click="sortResults($event,'transactionDate', 'cancellation')">data da venda</th>
+									<th ng-click="sortResults($event,'transactionGross', 'cancellation')">valor total da transação</th>
+									<th ng-click="sortResults($event,'transactionCancellationAmount', 'cancellation')">valor total do cancelamento</th>
+									<th ng-click="sortResults($event,'amount', 'cancellation')">valor do débito</th>
+									<th ng-click="sortResults($event,'transactionNsu', 'cancellation')">nsu</th>
+									<th ng-click="sortResults($event,'transactionCardNumber', 'cancellation')">nº do cartão<!--<span class="orderby"></span>--></th>
+									<th ng-click="sortResults($event,'transactionAuthorization', 'cancellation')">código de autorização</th>
 								</tr>
 							</thead>
 							<tbody>
