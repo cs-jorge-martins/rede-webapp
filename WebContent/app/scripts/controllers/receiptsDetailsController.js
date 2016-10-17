@@ -125,12 +125,15 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	        $location.path('/receipts');
 	    }
 
-	    function getSales() {
+	    function getSales(cache, order) {
 
 			filter.type = 'CREDIT';
 			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
 			filter.size =  $scope.salesTotalItensPage;
 			
+			if(order) {
+				filter.sort = order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -180,6 +183,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    }
 
 	    function getEcommerce() {
+	    
 	    }
 
 	    function changeTab(index) {
@@ -194,6 +198,13 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    	} else if(index === 0) {
 	    		getCommerce();
 	    	}
+	    }
+
+	    $scope.sortResults = function(elem, kind) {
+	    	var order_string;
+			order_string = $rootScope.sortResults(elem, kind);
+
+			getSales(false, order_string)
 	    }
 
 	    /* pagination */
