@@ -72,6 +72,7 @@
     			for(var item in $scope.settlementsSelected) {
     				shopIds.push($scope.settlementsSelected[item].id);
     			}
+				shopIds = shopIds.join(",");
     		}
 
 			var filter = {
@@ -114,12 +115,14 @@
     			for(var item in $scope.settlementsSelected) {
     				shopIds.push($scope.settlementsSelected[item].id);
     			}
+				shopIds = shopIds.join(",");
     		}
 
             if($scope.productsSelected) {
     			for(var item in $scope.productsSelected) {
     				cardProductIds.push($scope.productsSelected[item].id);
     			}
+				cardProductIds = cardProductIds.join(",");
     		}
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
@@ -155,12 +158,14 @@
     			for(var item in $scope.settlementsSelected) {
     				shopIds.push($scope.settlementsSelected[item].id);
     			}
+				shopIds = shopIds.join(",");
     		}
 
             if($scope.productsSelected) {
     			for(item in $scope.productsSelected) {
     				cardProductIds.push($scope.productsSelected[item].id);
     			}
+				cardProductIds = cardProductIds.join(",");
     		}
 
 			var filter = {
