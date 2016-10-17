@@ -265,23 +265,44 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 
 	$rootScope.sortResults = function orderResults(elem, kind) {
-		var order, order_string, order_class;
+		var order, order_string;
 
-		// TODO: arrumar that shit
+		var resetSortClasses = function (elem) {
+			var elementsAsc = elem.getElementsByClassName("sortAsc");
+			var elementsDesc = elem.getElementsByClassName("sortDesc");
+
+			var resetClass = function (element, element_class) {
+				[].forEach.call(element, function(el) {
+					el.classList.remove(element_class);
+				});
+			};
+
+			resetClass(elementsAsc, "sortAsc");
+			resetClass(elementsDesc, "sortDesc");
+		};
+
 		if(
-			!elem.target.getAttribute("class") //||
-			// (elem.target.getAttribute("class") != "sortAsc" && elem.target.getAttribute("class") != "sortAsc")
+			!elem.target.classList.contains("sortAsc") &&
+			!elem.target.classList.contains("sortDesc")
 		) {
-			elem.target.setAttribute("class","sortAsc");
+			resetSortClasses(elem.target.parentElement.parentElement.parentElement);
 		}
 
-		order = elem.target.getAttribute("class") == "sortAsc" ? "DESC" : "ASC";
+		if(!elem.target.classList.contains("sortDesc")) {
+			elem.target.classList.add("sortDesc");
+			elem.target.classList.remove("sortAsc");
+		} else {
+			elem.target.classList.add("sortAsc");
+			elem.target.classList.remove("sortDesc");
+		}
+
+		order = elem.target.classList.contains("sortAsc") ? "ASC" : "DESC";
 		order_string = kind + "," + order;
 
-		order_class = order == "DESC" ? "sortDesc" : "sortAsc";
-		elem.target.setAttribute("class",order_class);
 		return order_string;
 	};
+
+
 
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {

@@ -40,7 +40,7 @@
 				<aside ng-show="uploadedFiles">
 					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch">
 					<button class="submit" ng-click="getUploadedFiles(true)">buscar</button>
-					<table class="filesTable">
+					<table class="filesTable sortTable">
 						<thead>
 							<tr>
 								<th ng-click="sortResults($event,'fileName')">nome do arquivo <!--<i class="orderby"></i>--></th>

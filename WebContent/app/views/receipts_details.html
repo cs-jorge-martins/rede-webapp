@@ -230,7 +230,7 @@
 			<tabset>
 				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
 					<article>
-						<table class="table">
+						<table class="table sortTable">
 							<thead>
 								<tr>
 									<th ng-click="sortResults($event,'transaction.date', 'sales')">data/hora venda</th>
@@ -288,7 +288,7 @@
 
 				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
 					<article>
-						<table class="table">
+						<table class="table sortTable">
 							<thead>
 								<tr>
 									<th ng-click="sortResults($event,'payedDate', 'adjusts')">data do ajuste</th>
@@ -341,7 +341,7 @@
 
 				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
 					<article>
-						<table class="table">
+						<table class="table sortTable">
 							<thead>
 								<tr>
 									<th ng-click="sortResults($event,'transactionDate', 'cancellation')">data da venda</th>
