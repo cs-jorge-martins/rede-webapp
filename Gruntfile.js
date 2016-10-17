@@ -10,14 +10,14 @@ module.exports = function(grunt) {
     };
 
     grunt.initConfig({
-         pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'),
 
-				// Karma configuration
-				karma: {
-					unit: {
-						configFile: 'karma.conf.js'
-					}
-				},
+        // Karma configuration
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js'
+            }
+        },
 
         'http-server': {
             server: {
