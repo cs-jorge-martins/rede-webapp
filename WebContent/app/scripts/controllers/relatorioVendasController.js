@@ -99,7 +99,7 @@
 				groupBy: ['CARD_PRODUCT'],
 				page: $scope.currentPageSynthetic,
 				size: $scope.totalItensPageSynthetic
-			};
+			});
 
 			TransactionSummaryService.listTransactionSummaryByFilter(filter).then(function(response) {
 				var data = handleResponse(response.data.content);
