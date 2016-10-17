@@ -4,14 +4,15 @@
   "main": "Gruntfile.js",
   "author": "Rede",
   "devDependencies": {
-    "bower": "^1.3.12",
     "grunt": "~0.4.5",
+    "grunt-contrib-concat": "^1.0.1",
     "grunt-execute": "^0.2.2",
     "grunt-http-server": "^2.0.0",
     "grunt-ng-constant": "^2.0.1",
     "http-server": "^0.7.4",
     "jasmine": "^2.5.2",
     "karma": "^1.3.0",
+    "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.0.2",
     "load-grunt-tasks": "^3.5.2",
     "redis": "^2.6.2"
