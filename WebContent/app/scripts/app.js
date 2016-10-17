@@ -37,6 +37,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.receiptsDetailsController',
+							'Conciliador.redirectController',
                             'ngFileSaver',
                             'Conciliador.appConfig'
 							])
@@ -141,6 +142,23 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 
 
 
+	$rootScope.signIn = function (token, user) {
+
+		$rootScope.pvList = user.pvList;
+
+		$window.sessionStorage.token = token;
+		$window.sessionStorage.pvList = JSON.stringify(user.pvList);
+		if(user) {
+			$window.sessionStorage.user = JSON.stringify(user);
+		}
+
+		$rootScope.alerts = [];
+		$rootScope.bodyId = "";
+
+		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
+			$location.path("/dashboard");
+		}
+	};
 
 	$rootScope.logout = function() {
 		$rootScope.destroyVariablesSession();
