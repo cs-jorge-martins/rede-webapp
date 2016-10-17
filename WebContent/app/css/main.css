@@ -10153,9 +10153,19 @@ div.checkbox-toggle-right {
 
 #receiptsDetailsPage header,
 #receiptsDetailsPage footer,
-#redirectPage
+#redirectPage header,
+#redirectPage footer
 {
     display: none;
+}
+
+#redirectPage
+{
+    background:none !important;
+}
+
+#redirectPage #redirectBlock{
+    display: block;
 }
 
 #receiptsDetailsPage #detailsClose {
