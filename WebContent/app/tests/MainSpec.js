@@ -1,5 +1,10 @@
-describe('example test', function() {
-  it('should be true', function() {
-    expect('foo').toBe('foo');
-  });
+describe('RelatorioVendasController', function() {
+    var $controller;
+
+    beforeEach(module('KaplenWeb'));
+
+    beforeEach(inject(function(_$controller_) {
+        $controller = _$controller_;
+    }));
+
 });
