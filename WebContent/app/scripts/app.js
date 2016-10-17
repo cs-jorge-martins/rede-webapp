@@ -264,6 +264,46 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		$rootScope.alerts.splice(index, 1);
 	};
 
+	$rootScope.sortResults = function orderResults(elem, kind) {
+		var order, order_string;
+
+		var resetSortClasses = function (elem) {
+			var elementsAsc = elem.getElementsByClassName("sortAsc");
+			var elementsDesc = elem.getElementsByClassName("sortDesc");
+
+			var resetClass = function (element, element_class) {
+				[].forEach.call(element, function(el) {
+					el.classList.remove(element_class);
+				});
+			};
+
+			resetClass(elementsAsc, "sortAsc");
+			resetClass(elementsDesc, "sortDesc");
+		};
+
+		if(
+			!elem.target.classList.contains("sortAsc") &&
+			!elem.target.classList.contains("sortDesc")
+		) {
+			resetSortClasses(elem.target.parentElement.parentElement.parentElement);
+		}
+
+		if(!elem.target.classList.contains("sortDesc")) {
+			elem.target.classList.add("sortDesc");
+			elem.target.classList.remove("sortAsc");
+		} else {
+			elem.target.classList.add("sortAsc");
+			elem.target.classList.remove("sortDesc");
+		}
+
+		order = elem.target.classList.contains("sortAsc") ? "ASC" : "DESC";
+		order_string = kind + "," + order;
+
+		return order_string;
+	};
+
+
+
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
@@ -891,3 +931,5 @@ function getDominio(extension) {
 	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
 	return url[0]+ '/'+extension+'/'; // retorna a parte www.endereco.com.br
 };
+
+

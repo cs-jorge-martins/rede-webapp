@@ -27,6 +27,8 @@
     	menuFactory.setActiveReportsSales();
 		$scope.tabs = [{},{},{}];
 
+		$scope.sort = "";
+
 		$scope.clearSyntheticFilter = clearSyntheticFilter;
 		$scope.getSynthetic = getSynthetic;
 		$scope.clearAnalyticalFilter = clearAnalyticalFilter;
@@ -81,7 +83,8 @@
 				currency: 'BRL',
 				groupBy: ['CARD_PRODUCT'],
 				page: $scope.currentPageSynthetic,
-				size: $scope.totalItensPageSynthetic
+				size: $scope.totalItensPageSynthetic,
+				sort: $scope.sort
 			};
 
 			TransactionSummaryService.listTransactionSummaryByFilter(handleSyntheticFilter(filter)).then(function(response) {
@@ -132,7 +135,7 @@
 				currency: 'BRL',
 				page: $scope.currentPageAnalytical,
 				size: $scope.totalItensPageAnalytical,
-                sort: 'date,ASC'
+                sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
 
 			TransactionService.getTransactionByFilter(handleAnalyticalFilter(filter)).then(function(response){
@@ -171,7 +174,7 @@
 				currency: 'BRL',
 				page: $scope.currentPageDuplicate,
 				size: $scope.totalItensPageDuplicate,
-				sort: 'date,ASC'
+				sort: $scope.sort ?  $scope.sort :'date,ASC'
 
 			};
 
@@ -245,6 +248,7 @@
 
 		function changeTab(tab) {
 			$scope.currentPage = 0;
+			$scope.sort = "";
 
 			switch(tab) {
 				case 1:
@@ -371,6 +375,19 @@
 			this.currentPageDuplicate = $scope.currentPageDuplicate = 0;
 			$scope.totalItensPageDuplicate = this.totalItensPageDuplicate;
 			getDuplicate();
+		};
+
+		$scope.sortResults = function (elem,kind,tipo_relatorio) {
+			var order_string;
+			$scope.sort = $rootScope.sortResults(elem,kind);
+
+			if(tipo_relatorio == "sintetico") {
+				this.getSynthetic();
+			} else if (tipo_relatorio == "analitico") {
+				this.getAnalytical();
+			} else if(tipo_relatorio == "duplicadas") {
+				this.getDuplicate();
+			}
 		};
     }
 })();

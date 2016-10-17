@@ -51,6 +51,8 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 		$scope.currentPage = 0;
 		$scope.totalItens = 0;
 
+		$scope.sort = "";
+
 		init();
 
 		function init() {
@@ -189,7 +191,8 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 				cardProductIds: cardProductIds,
 				conciliationStatus: $scope.conciliationStatus,
 				page: ($scope.currentPage - 1),
-				size: $scope.totalItensPage
+				size: $scope.totalItensPage,
+				sort: $scope.sort
 
 			}).then(function(response){
 				
@@ -410,6 +413,15 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			getTransactionDetails();
+		};
+
+		$scope.sortResults = function (elem,kind) {
+			var order_string;
+			order_string = $rootScope.sortResults(elem,kind);
+
+			$scope.sort = order_string;
+			getTransactionDetails();
+
 		};
 
 	});
