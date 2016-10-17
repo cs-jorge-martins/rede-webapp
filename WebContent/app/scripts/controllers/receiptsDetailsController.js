@@ -40,6 +40,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				$scope.shopsFullLabel = $rootScope.receiptsDetails.shopsFullLabel;
 				$scope.cardProductsLabel = $rootScope.receiptsDetails.cardProductsLabel;
 				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
+				$scope.sort = "";
 
 
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
@@ -125,15 +126,12 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	        $location.path('/receipts');
 	    }
 
-	    function getSales(cache, order) {
+	    function getSales(cache) {
 
 			filter.type = 'CREDIT';
 			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
 			filter.size =  $scope.salesTotalItensPage;
-			
-			if(order) {
-				filter.sort = order;
-			}
+			filter.sort = $scope.sort;
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -152,6 +150,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			filter.type = 'ADJUST';
 			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			filter.size =  $scope.adjustsTotalItensPage;
+			filter.sort = $scope.sort;
 
 			if(order) {
 				filter.sort = order;
@@ -173,6 +172,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    	filter.type = 'CANCELLATION';
 	    	filter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
 			filter.size =  $scope.cancellationsTotalItensPage;
+			filter.sort = $scope.sort;
 
 			if (order) {
 				filter.sort =  order;
@@ -196,6 +196,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 	    function changeTab(index) {
 	    	$scope.tabs[index].active = true;
+			$scope.sort = "";
 
 	    	if(index === 0) {
 	    		getSales();
@@ -208,25 +209,15 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    	}
 	    }
 
-	    $scope.sortResultsAdjusts = function(elem, kind) {
-	    	var order_string;
-	    	order_string = $rootScope.sortResults(elem, kind);
-
-	    	getAdjusts(false, order_string)
-	    }
-
-	    $scope.sortResultsCancellations = function (elem, kind) {
-	    	var order_string;
-	    	order_string = $rootScope.sortResults(elem, kind);
-
-	    	getCancellations(false, order_string)
-	    }
-
-	    $scope.sortResults = function(elem, kind) {
-	    	var order_string;
-			order_string = $rootScope.sortResults(elem, kind);
-
-			getSales(false, order_string)
+	    $scope.sortResults = function(elem, kind, tipo_relatorio) {
+			$scope.sort = $rootScope.sortResults(elem, kind);
+			if(tipo_relatorio == "sales") {
+				getSales(false);
+			} else if(tipo_relatorio == "adjusts") {
+				getAdjusts();
+			} else if(tipo_relatorio == "cancellation") {
+				getCancellations();
+			}
 	    }
 
 	    /* pagination */

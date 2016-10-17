@@ -54,12 +54,12 @@
                     </div>
                 </div>
 
-        		<table cellpadding="0" cellspacing="0">
+        		<table cellpadding="0" cellspacing="0" class="sortTable">
         			<thead>
         				<tr class="taleft">
-        					<th width="350">data</th>
-        					<th width="410">descrição</th>
-        					<th>valor (R$)</th>
+        					<th width="350" ng-click="sortResults($event,'payedDate')">data</th>
+        					<th width="410" ng-click="sortResults($event,'description')">descrição</th>
+        					<th ng-click="sortResults($event,'amount')">valor (R$)</th>
         				</tr>
         			</thead>
         			<tbody id="cupomVendasTour" ng-show="items">
