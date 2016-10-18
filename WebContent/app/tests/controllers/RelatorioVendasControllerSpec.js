@@ -3,15 +3,17 @@ describe('RelatorioVendasController', function() {
 
     beforeEach(module('KaplenWeb'));
 
-    beforeEach(inject(function($injector) {
-        $controller = $injector.get('$controller');
-        $httpBackend = $injector.get('$httpBackend');
-        $rootScope = $injector.get('$rootScope');
+    beforeEach(inject(function(_$controller_, _$httpBackend_, _$rootScope_) {
+        $controller = _$controller_;
+        $httpBackend = _$httpBackend_;
+        $rootScope = _$rootScope_;
 
-        $httpBackend.when('GET', /\/transactions\/export/).respond({'status': 200});
+        $httpBackend.when('GET', /\/transactions\/export/).respond({
+            'data': 'http://excel.file'
+        });
     }));
 
-    it('downloads an Excel file', function() {
+    it('calls the TransactionService', function() {
         var $scope = {},
             controller = $controller('relatorioVendasController', {$scope: $scope});
 
@@ -19,5 +21,4 @@ describe('RelatorioVendasController', function() {
         $scope.exportAnalytical();
         $httpBackend.flush();
     });
-
 });
