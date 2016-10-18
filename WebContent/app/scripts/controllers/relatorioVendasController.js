@@ -11,9 +11,9 @@
 		}])
         .controller('relatorioVendasController', RelatorioVendas);
 
-    RelatorioVendas.$inject = ['menuFactory', '$scope', '$modal', 'calendarFactory', '$rootScope', 'relatorioService', 'installmentsService', '$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
+    RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', '$modal', 'calendarFactory', '$rootScope', 'relatorioService', 'installmentsService', '$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
 
-    function RelatorioVendas(menuFactory, $scope, $modal, calendarFactory, $rootScope,
+    function RelatorioVendas(menuFactory, $scope, $window, $modal, calendarFactory, $rootScope,
     relatorioService, installmentsService, $window, advancedFilterService, calendarService, TransactionSummaryService,
 	TransactionService) {
     	//Extensao do servico para filtro avancado
@@ -143,7 +143,7 @@
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 			TransactionService.exportTransactions(filter, function ok(response){
-                window.location = response.data;
+                $window.location = response.data;
             }, function error(response){
                 $rootScope.alerts =  [ { type: "danger", msg: response.data} ];
             });
