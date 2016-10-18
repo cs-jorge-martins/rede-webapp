@@ -24,4 +24,21 @@ angular.module('KaplenWeb.loginService',[])
 		return Restangular.all('resetpassword').post(user);
 	}
 
+	this.singleSignon = function(token) {
+		var request = {
+			Authorization: token
+		};
+
+		var url = "https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev" + '/singlesignon';
+
+		return $http({
+			method: "POST",
+			url: url,
+			headers: {
+				'Content-type': 'application/json'
+			},
+			data: request
+		});
+	};
+
 });

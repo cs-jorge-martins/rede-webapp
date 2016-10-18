@@ -98,6 +98,7 @@
     <script type="text/javascript" src="app/scripts/controllers/integrationController.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/receiptsController.js"></script>
     <script type="text/javascript" src="app/scripts/controllers/receiptsDetailsController.js"></script>
+    <script type="text/javascript" src="app/scripts/controllers/redirectController.js"></script>
     <!-- services -->
     <script type="text/javascript" src="app/scripts/service/dashboardService.js"></script>
     <script type="text/javascript" src="app/scripts/service/loginService.js"></script>
@@ -148,6 +149,7 @@
     <script src="app/libs/vg-overlay-play.min.js"></script>
     <script src="app/libs/vg-poster.min.js"></script>
     <script src="app/libs/vg-buffering.min.js"></script>
+    <script src="app/scripts/config.js"></script>
 </head>
 
 <body id="{{bodyId}}" ng-class="{'newHeaderAndFooter': !initialized}" ng-cloak>
@@ -176,16 +178,16 @@
                     <div class="collapse navbar-collapse" id="app-navbar" ng-show="initialized && !firstAccess">
                         <ul class="nav navbar-nav navbar-right">
                             <li> <a href="#/home" ng-class="{'active': activeDashboard}">home</a> </li>
-                            <li class="dropdown"> 
+                            <li class="dropdown">
                                 <a href="#/sales" ng-class="{'active': activeResumoConciliacao}">
 									vendas
 								</a>
                             </li>
-                            
-                            <li> 
+
+                            <li>
                                 <a href="#/integration" ng-class="{'active': activeIntegration}" role="button" aria-haspopup="true" aria-expanded="false">
                                     integração
-                                </a> 
+                                </a>
                             </li>
                             <li> <a href="#/receipts" ng-class="{'active': activeMovements}">recebimentos</a> </li>
                             <li class="dropdown"> <a href="#/relatorio/vendas" ng-class="{'active': activeReports}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -244,7 +246,7 @@
                                                 </div>
                                                 <li><a href="https://www.userede.com.br/nossos-produtos/leitor-de-cartao-pin-pad/">Leitor Pin Pad</a></li>
                                             </ul>
-                                            
+
                                             <ul>
                                                 <div class="ul-title">
                                                     <a href="https://www.userede.com.br/nossos-produtos/"><span>Todos os produtos</span></a>

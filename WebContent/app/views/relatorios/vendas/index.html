@@ -30,10 +30,10 @@
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
 													<label for="" class="itauicon-itaufonts_calendario"></label>
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.initialDate" is-open="openFirstsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateSynthetic(synthetic.initialDate)" accept=""close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstsynthetic = true" placeholder="Período de vendas"/>
+													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.initialDate" is-open="openFirstsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateSynthetic(synthetic.initialDate)" accept=""close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstsynthetic = true" placeholder="Período de vendas" readonly="true"/>
 
 													<label for="" class="at">Até</label>
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.finalDate" is-open="openLastsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateSynthetic(synthetic.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastsynthetic = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" />
+													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.finalDate" is-open="openLastsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateSynthetic(synthetic.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastsynthetic = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="itauicon-itaufonts_para_empresa">
 													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
@@ -67,13 +67,13 @@
 					</div>
 
 					<div id="details" class="sales">
-						<table cellpadding="0" cellspacing="0">
+						<table cellpadding="0" cellspacing="0" class="sortTable">
 							<thead>
 								<tr class="taleft">
-									<th width="270">produto</th>
-									<th width="270">cupons</th>
-									<th width="260">faturamento (R$)</th>
-									<th>percentual</th>
+									<th width="270" ng-click="sortResults($event,'cardProduct.name', 'sintetico')">produto</th>
+									<th width="270" ng-click="sortResults($event,'id', 'sintetico')">cupons</th>
+									<th width="260" ng-click="sortResults($event,'gross', 'sintetico')">faturamento (R$)</th>
+									<th ng-click="sortResults($event,'gross', 'sintetico')">percentual</th>
 								</tr>
 							</thead>
 
@@ -143,9 +143,9 @@
 										<div class="filterShiny">
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.initialDate" is-open="openFirstAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateAnalitical(analytical.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstAnalitical = true"/>
+													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.initialDate" is-open="openFirstAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateAnalitical(analytical.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstAnalitical = true" readonly="true" />
 													<label for="" class="at">Até</label>
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.finalDate" is-open="openLastAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateAnalitical(analytical.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastAnalitical = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
+													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.finalDate" is-open="openLastAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateAnalitical(analytical.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastAnalitical = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
 													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
@@ -178,16 +178,16 @@
 					</div>
 
 					<div id="details" class="sales">
-						<table cellpadding="0" cellspacing="0">
+						<table cellpadding="0" cellspacing="0" class="sortTable">
 							<thead>
 								<tr class="taleft">
-									<th>data</th>
-									<th>NSU</th>
-									<th>autorização</th>
-									<th>cartão</th>
-									<th>plano</th>
-									<th>maquineta</th>
-									<th>valor bruto (R$)</th>
+									<th ng-click="sortResults($event,'date', 'analitico')">data</th>
+									<th ng-click="sortResults($event,'nsu', 'analitico')">NSU</th>
+									<th ng-click="sortResults($event,'authorization', 'analitico')">autorização</th>
+									<th ng-click="sortResults($event,'cardNumber', 'analitico')">cartão</th>
+									<th ng-click="sortResults($event,'installment', 'analitico')">plano</th>
+									<th ng-click="sortResults($event,'terminal.code', 'analitico')">maquineta</th>
+									<th ng-click="sortResults($event,'gross', 'analitico')">valor bruto (R$)</th>
 								</tr>
 							</thead>
 
@@ -249,11 +249,11 @@
 										<div class="filterShiny">
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.initialDate" is-open="openFirstduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateDuplicate(duplicate.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstduplicate = true" />
+													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.initialDate" is-open="openFirstduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateDuplicate(duplicate.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstduplicate = true" readonly="true" />
 
 													<label for="" class="at">Até</label>
 
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.finalDate" is-open="openLastduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateDuplicate(duplicate.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastduplicate = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
+													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.finalDate" is-open="openLastduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateDuplicate(duplicate.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastduplicate = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
 													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
@@ -292,16 +292,16 @@
 					</div>
 
 					<div id="details" class="sales">
-						<table cellpadding="0" cellspacing="0">
+						<table cellpadding="0" cellspacing="0" class="sortTable">
 							<thead>
 								<tr class="taleft">
-									<th>data</th>
-									<th>NSU</th>
-									<th>autorização</th>
-									<th>cartão</th>
-									<th>plano</th>
-									<th>maquineta</th>
-									<th>valor bruto (R$)</th>
+									<th ng-click="sortResults($event,'date', 'duplicadas')">data</th>
+									<th ng-click="sortResults($event,'nsu', 'duplicadas')">NSU</th>
+									<th ng-click="sortResults($event,'authorization', 'duplicadas')">autorização</th>
+									<th ng-click="sortResults($event,'cardNumber', 'duplicadas')">cartão</th>
+									<th ng-click="sortResults($event,'installment', 'duplicadas')">plano</th>
+									<th ng-click="sortResults($event,'terminal.code', 'duplicadas')">maquineta</th>
+									<th ng-click="sortResults($event,'gross', 'duplicadas')">valor bruto (R$)</th>
 								</tr>
 							</thead>
 

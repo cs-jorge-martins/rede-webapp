@@ -37,25 +37,10 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.receiptsDetailsController',
-                            'ngFileSaver'
+							'Conciliador.redirectController',
+                            'ngFileSaver',
+                            'Conciliador.appConfig'
 							])
-
-	.constant('app', (function(){
-		var host = window.location.hostname;
-		var endpoint = 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD';
-
-		if(host === '127.0.0.1' || host === 'localhost' || host.match('dev') || host === '0.0.0.0' ) {
-			endpoint = 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp';
-		}
-
-		if(host.match('hom.userede.com.br')) {
-			endpoint = 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml';			
-		}
-
-		return {
-			'endpoint': endpoint
-		};
-	})())
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (datepickerConfig) {
@@ -157,6 +142,23 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 
 
 
+	$rootScope.signIn = function (token, user) {
+
+		$rootScope.pvList = user.pvList;
+
+		$window.sessionStorage.token = token;
+		$window.sessionStorage.pvList = JSON.stringify(user.pvList);
+		if(user) {
+			$window.sessionStorage.user = JSON.stringify(user);
+		}
+
+		$rootScope.alerts = [];
+		$rootScope.bodyId = "";
+
+		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
+			$location.path("/dashboard");
+		}
+	};
 
 	$rootScope.logout = function() {
 		$rootScope.destroyVariablesSession();
@@ -261,6 +263,46 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	$rootScope.closeAlert = function(index) {
 		$rootScope.alerts.splice(index, 1);
 	};
+
+	$rootScope.sortResults = function orderResults(elem, kind) {
+		var order, order_string;
+
+		var resetSortClasses = function (elem) {
+			var elementsAsc = elem.getElementsByClassName("sortAsc");
+			var elementsDesc = elem.getElementsByClassName("sortDesc");
+
+			var resetClass = function (element, element_class) {
+				[].forEach.call(element, function(el) {
+					el.classList.remove(element_class);
+				});
+			};
+
+			resetClass(elementsAsc, "sortAsc");
+			resetClass(elementsDesc, "sortDesc");
+		};
+
+		if(
+			!elem.target.classList.contains("sortAsc") &&
+			!elem.target.classList.contains("sortDesc")
+		) {
+			resetSortClasses(elem.target.parentElement.parentElement.parentElement);
+		}
+
+		if(!elem.target.classList.contains("sortDesc")) {
+			elem.target.classList.add("sortDesc");
+			elem.target.classList.remove("sortAsc");
+		} else {
+			elem.target.classList.add("sortAsc");
+			elem.target.classList.remove("sortDesc");
+		}
+
+		order = elem.target.classList.contains("sortAsc") ? "ASC" : "DESC";
+		order_string = kind + "," + order;
+
+		return order_string;
+	};
+
+
 
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
@@ -889,3 +931,5 @@ function getDominio(extension) {
 	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
 	return url[0]+ '/'+extension+'/'; // retorna a parte www.endereco.com.br
 };
+
+

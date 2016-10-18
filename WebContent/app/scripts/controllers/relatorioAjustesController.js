@@ -21,6 +21,8 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.total = 0;
 		$scope.noItensMsg = false;
 
+		$scope.sort = 'date,ASC';
+
 		$scope.exportReport = exportReport;
 
 		var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
@@ -54,7 +56,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 				groupBy: 'PAYED_DATE,DESCRIPTION',
                 page: curPage,
 				size: $scope.totalItensPage,
-				sort: 'date,ASC'
+				sort: $scope.sort
 			}).then(function(response){
 				var data = response.data.content;
                 var pagination = response.data.page;
@@ -105,4 +107,10 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 			$scope.totalItensPage = this.totalItensPage;
 			getReport();
 		};
+
+		$scope.sortResults = function (elem,kind) {
+			$scope.sort = $rootScope.sortResults(elem,kind);
+			getReport();
+		};
+
     });
