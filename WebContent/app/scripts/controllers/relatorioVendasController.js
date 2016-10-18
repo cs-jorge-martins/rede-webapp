@@ -143,7 +143,8 @@
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 			TransactionService.exportTransactions(filter, function ok(response){
-                $window.location = response.data;
+                $scope.downloadLink = response.data;
+                $window.location = $scope.downloadLink;
             }, function error(response){
                 $rootScope.alerts =  [ { type: "danger", msg: response.data} ];
             });
