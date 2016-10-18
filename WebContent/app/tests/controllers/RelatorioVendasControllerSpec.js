@@ -42,7 +42,5 @@ describe('Conciliador', function() {
                 sort: 'date,ASC'
             }, jasmine.any(Function), jasmine.any(Function));
         });
-
-
     });
 });
