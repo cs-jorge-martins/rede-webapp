@@ -10162,10 +10162,37 @@ div.checkbox-toggle-right {
 #redirectPage
 {
     background:none !important;
+    background-color: #f0f0f0 !important;
+    text-align: center;
+}
+
+#redirectPage section#heading img{
+    margin: 0 auto 90px;
+    display: block;
+}
+
+#redirectPage h1{
+    font-size: 21px;
+    font-weight: normal;
+    margin: 30px 0 0px;
+}
+
+#redirectPage #validandoAcesso h1{
+    color: #00B9B5;
+}
+
+#redirectPage #erro h1{
+    color: #E84438;
+}
+
+#redirectPage #erro p{
+    width: 175px;
+    margin: 20px auto 0;
 }
 
 #redirectPage #redirectBlock{
     display: block;
+    padding-top: 80px;
 }
 
 #receiptsDetailsPage #detailsClose {
