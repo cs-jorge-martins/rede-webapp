@@ -87,7 +87,9 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         			config.headers['Authorization'] = $window.sessionStorage.token;
                     //config.headers['X-Api-Key'] = $window.sessionStorage.pvList;
         		} else {
-                    $location.path("/login");
+					if(!window.location.hash.match(/#\/redirect/g)) {
+                    	$location.path("/login");
+					}
                 }
         		return config || $q.when(config);
         	},

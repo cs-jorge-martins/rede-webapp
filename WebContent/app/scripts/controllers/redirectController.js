@@ -20,22 +20,34 @@ angular.module('Conciliador.redirectController',[])
 	function init() {
 
 		var authorization = getParameterByName("data");
+		$scope.redirectMessage = "Você está sendo redirecionado";
 
-		if(authorization) {
+		var errorMessage = function () {
+			$scope.redirectMessage = "Houve algum erro na solicitação";
+		};
 
-			loginService.singleSignon(authorization).then(function (data) {
-
-				var user = data.data.user;
-
-				if (user.pvList.length > 0) {
-					$rootScope.signIn(authorization, user);
-				}
-
-			}).catch(function (response) {
-				console.log('error');
-			});
-
+		if(!authorization) {
+			return errorMessage();
 		}
+
+		loginService.singleSignon(authorization).then(function (data) {
+
+			if(data.status != 200) {
+				return errorMessage();
+			}
+
+			var user = data.data.user;
+
+			if(!user || user.pvList.length > 0) {
+				return errorMessage();
+			}
+
+			$rootScope.signIn(authorization, user);
+
+		}).catch(function (response) {
+			console.log('error');
+		});
+
 	}
 
 	function getParameterByName(name, url) {
@@ -46,6 +58,6 @@ angular.module('Conciliador.redirectController',[])
 		if (!results) return null;
 		if (!results[2]) return "";
 		return decodeURIComponent(results[2].replace(/\+/g, " "));
-	};
+	}
 
 });

@@ -10156,7 +10156,7 @@ div.checkbox-toggle-right {
 #redirectPage header,
 #redirectPage footer
 {
-    display: none;
+    display: none !important;
 }
 
 #redirectPage
