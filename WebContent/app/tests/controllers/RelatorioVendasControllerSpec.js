@@ -20,11 +20,29 @@ describe('Conciliador', function() {
             controller = $controller;
         }));
 
-        it('receives an Excel file link', function() {
+        it('calls TransactionService with filter params', function() {
             spyOn(service, 'exportTransactions');
-            controller('relatorioVendasController', {$scope: scope, TransactionService: service});
+            controller('relatorioVendasController', {
+                $scope: scope,
+                TransactionService: service
+            });
+            scope.analytical.initialDate = '01/03/2016';
+            scope.analytical.finalDate = '30/10/2016';
+            scope.settlementsSelected = [{id: 1}, {id: 2}, {id: 3}];
+            scope.productsSelected = [{id: 4}, {id: 5}, {id: 6}];
+
             scope.exportAnalytical();
-            expect(service.exportTransactions).toHaveBeenCalled();
+
+            expect(service.exportTransactions).toHaveBeenCalledWith({
+                startDate: '20160301',
+                endDate: '20161030',
+                shopIds: [1, 2, 3],
+                cardProductIds: [4, 5, 6],
+                currency: 'BRL',
+                sort: 'date,ASC'
+            }, jasmine.any(Function), jasmine.any(Function));
         });
+
+
     });
 });
