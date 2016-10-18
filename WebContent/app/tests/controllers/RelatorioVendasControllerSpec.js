@@ -1,24 +1,37 @@
-describe('RelatorioVendasController', function() {
-    var $rootScope, $controller, $httpBackend;
+describe('Conciliador', function() {
 
     beforeEach(module('KaplenWeb'));
 
-    beforeEach(inject(function(_$controller_, _$httpBackend_, _$rootScope_) {
-        $controller = _$controller_;
-        $httpBackend = _$httpBackend_;
-        $rootScope = _$rootScope_;
+    describe('RelatorioVendasController', function() {
+        var scope, httpBackend, http, controller, service;
 
-        $httpBackend.when('GET', /\/transactions\/export/).respond({
-            'data': 'http://excel.file'
+        beforeEach(module(function($provide) {
+            service = {
+                exportTransactions: function () {
+                   return true;
+                }
+            };
+
+            $provide.value('TransactionService', service);
+        }));
+
+        beforeEach(inject(function ($rootScope, $controller, $httpBackend, $http) {
+            scope = $rootScope.$new();
+            httpBackend = $httpBackend;
+            controller = $controller;
+            http = $http;
+
+            httpBackend.when("GET", /\/transactions\/export/).respond({
+                'status': 200,
+                'data': 'http://excel.file'
+            });
+        }));
+
+        it('receives an Excel file link', function() {
+            spyOn(service, 'exportTransactions').and.returnValue({data: 'http://excel.file'});
+            controller('relatorioVendasController', {$scope: scope, $http: http, TransactionService: service});
+            scope.exportAnalytical();
+            expect(service.exportTransactions).toHaveBeenCalled();
         });
-    }));
-
-    it('calls the TransactionService', function() {
-        var $scope = {},
-            controller = $controller('relatorioVendasController', {$scope: $scope});
-
-        $httpBackend.expectGET(/\/transactions\/export/);
-        $scope.exportAnalytical();
-        $httpBackend.flush();
     });
 });
