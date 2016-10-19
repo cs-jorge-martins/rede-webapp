@@ -10,6 +10,15 @@ module.exports = function(grunt) {
     };
 
     grunt.initConfig({
+         pkg: grunt.file.readJSON('package.json'),
+
+				// Karma configuration
+				karma: {
+					unit: {
+						configFile: 'karma.conf.js'
+					}
+				},
+
         'http-server': {
             server: {
         		root: './WebContent',
@@ -228,8 +237,9 @@ module.exports = function(grunt) {
         },
     });
 
-    grunt.registerTask('local:login', ['execute']);
 
+		grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
+    grunt.registerTask('local:login', ['execute']);
     grunt.registerTask('serve', ['http-server:server']);
     grunt.registerTask('local', ['ngconstant:local', 'serve']);
     grunt.registerTask('dev', ['ngconstant:development', 'serve']);

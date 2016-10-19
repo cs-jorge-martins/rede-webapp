@@ -8,6 +8,7 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-execute": "^0.2.2",
     "grunt-http-server": "^2.0.0",
+    "grunt-karma": "^2.0.0",
     "grunt-ng-constant": "^2.0.1",
     "http-server": "^0.7.4",
     "jasmine": "^2.5.2",
