@@ -21,19 +21,15 @@ angular.module('KaplenWeb.loginService',[])
 	}
 
 	this.singleSignOn = function(token) {
-		var request = {
-			Authorization: token
-		};
-
 		var url = app.endpoint + '/singlesignon';
 
 		return $http({
 			method: "POST",
 			url: url,
 			headers: {
-				'Content-type': 'application/json'
-			},
-			data: request
+				'Content-type': 'application/json',
+				'authorization': token
+			}
 		});
 	};
 
