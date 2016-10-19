@@ -29,7 +29,7 @@ angular.module('KaplenWeb.loginService',[])
 			Authorization: token
 		};
 
-		var url = "https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev" + '/singlesignon';
+		var url = app.endpoint + '/singlesignon';
 
 		return $http({
 			method: "POST",
