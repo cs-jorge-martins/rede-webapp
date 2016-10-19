@@ -5,21 +5,26 @@ describe('Conciliador', function() {
     describe('TransactionService', function() {
         var scope, service, httpBackend;
 
-        beforeEach(inject(function ($rootScope, $httpBackend) {
+        beforeEach(inject(function ($rootScope, $httpBackend, TransactionService) {
             scope = $rootScope.$new();
             httpBackend = $httpBackend;
-            
+            service = TransactionService;
         }));
 
         it('calls the service', function(){
-            httpBackend
-            .expect('GET', /\transactions\/export/)
-            .respond(200, { data: 'foobar' });
+            fakeSuccessCallback = jasmine.createSpy();
+            fakeErrorCallback = jasmine.createSpy();
 
-            service.exportTransactions(jasmine.any(Object), jasmine.any(Function));
+            httpBackend
+            .expect('GET', /http:\/\/.*\/transactions\/export\?.*/)
+            .respond(200, { data: 'http://s3-bucket/path/xls' });
+
+            service.exportTransactions(jasmine.any(Object), fakeSuccessCallback, fakeErrorCallback);
             httpBackend.flush();
 
-            expect().toBe
+            expect(fakeSuccessCallback).toHaveBeenCalled();
+            expect(fakeErrorCallback.calls.any()).toBe(false);
+
         });
     });
 });
