@@ -5,10 +5,6 @@ angular.module('KaplenWeb.loginService',[])
 
 .service('loginService', function(app, Restangular, $http) {
 
-	//this.validarLogin = function(user) {
-		//return Restangular.all('login').post(user);
-	//};
-
 	this.validarLogin = function(user) {
 		var request = {
 			login: user.login,
@@ -24,7 +20,7 @@ angular.module('KaplenWeb.loginService',[])
 		return Restangular.all('resetpassword').post(user);
 	}
 
-	this.singleSignon = function(token) {
+	this.singleSignOn = function(token) {
 		var request = {
 			Authorization: token
 		};
