@@ -74,21 +74,12 @@ module.exports = function(grunt) {
             }
         },
 
-<<<<<<< 05ffc422148fd6d1bbfd31ff2fe9cfbd6d9f1c75
-=======
-<<<<<<< c10ba777a2e91df85ac41e87c1d895963e3fff08
+
         // Execute a fake login server
-=======
->>>>>>> Setup a mock login service
->>>>>>> Setup a mock login service
         execute: {
             target: {
                 src: ['WebContent/app/tests/scripts/mock-login.js']
             }
-<<<<<<< 05ffc422148fd6d1bbfd31ff2fe9cfbd6d9f1c75
-        }
-=======
-<<<<<<< c10ba777a2e91df85ac41e87c1d895963e3fff08
         },
 
         concat: {
@@ -235,7 +226,6 @@ module.exports = function(grunt) {
                 dest: "WebContent/app/build.js",
             },
         },
->>>>>>> Setup a mock login service
     });
 
     grunt.registerTask('local:login', ['execute']);
