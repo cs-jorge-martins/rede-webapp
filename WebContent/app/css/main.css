@@ -10185,6 +10185,10 @@ div.checkbox-toggle-right {
     color: #E84438;
 }
 
+#redirectPage .hidden{
+    display: none;
+}
+
 #redirectPage #erro p{
     width: 175px;
     margin: 20px auto 0;

@@ -20,10 +20,18 @@ angular.module('Conciliador.redirectController',[])
 	function init() {
 
 		var authorization = getParameterByName("data");
-		$scope.redirectMessage = "Você está sendo redirecionado";
 
 		var errorMessage = function () {
-			$scope.redirectMessage = "Houve algum erro na solicitação";
+			var validandoAcessoDiv = document.querySelector("#validandoAcesso");
+			var erroDiv = document.querySelector("#erro");
+			var urlRedirectError = "http://userede.com.br";
+
+			validandoAcessoDiv.classList.add("hidden");
+			erroDiv.classList.remove("hidden");
+
+			setTimeout(function () {
+				window.location.href = urlRedirectError;
+			}, 5000);
 		};
 
 		if(!authorization) {
@@ -38,7 +46,7 @@ angular.module('Conciliador.redirectController',[])
 
 			var user = data.data.user;
 
-			if(!user || user.pvList.length > 0) {
+			if(!user || user.pvList.length <= 0) {
 				return errorMessage();
 			}
 
