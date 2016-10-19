@@ -42,6 +42,7 @@
         $scope.chargebacks = 0;
         
         $scope.tableName = 'cancelamento';
+		$scope.sort = 'adjustDate,ASC';
 
 		init();
 
@@ -64,7 +65,7 @@
 				adjustTypes: $scope.adjustType,
 				page: $scope.currentPage,
 				size: $scope.totalItensPage,
-				sort: 'date,ASC'
+				sort: $scope.sort
 			};
 
 			$scope.noItensMsg = false;
@@ -198,6 +199,11 @@
 		function totalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
+			getReport();
+		};
+
+		$scope.sortResults = function (elem,kind) {
+			$scope.sort = $rootScope.sortResults(elem,kind);
 			getReport();
 		};
 	}

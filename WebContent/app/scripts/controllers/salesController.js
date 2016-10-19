@@ -342,7 +342,7 @@ angular.module('Conciliador.salesController',[])
 
 	}
 
-	function getFinancials(cache) {
+	function getFinancials(cache, order) {
 
 		var date = $scope.dateSelected;
 		var startDate = calendarFactory.formatDateForService(date);
@@ -379,6 +379,10 @@ angular.module('Conciliador.salesController',[])
 			conciliationStatus: $scope.conciliationStatus[$scope.statusSelected],
             groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER'
 		};
+
+		if(order) {
+			filter.sort = order;
+		}
 
 		if(types != 0) {
 			filter.types = types;
@@ -621,6 +625,14 @@ angular.module('Conciliador.salesController',[])
 		}
 
 	}
+	
+	$scope.sortResults = function (elem,kind) {
+		var order_string;
+		order_string = $rootScope.sortResults(elem,kind);
+
+		this.getFinancials(false,order_string);
+
+	};
 
 
 });
