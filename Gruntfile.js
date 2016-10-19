@@ -241,8 +241,12 @@ module.exports = function(grunt) {
 		grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
     grunt.registerTask('local:login', ['execute']);
     grunt.registerTask('serve', ['http-server:server']);
-    grunt.registerTask('local', ['ngconstant:local', 'serve']);
-    grunt.registerTask('dev', ['ngconstant:development', 'serve']);
-    grunt.registerTask('hml', ['ngconstant:homologation', 'serve']);
-    grunt.registerTask('prod', ['ngconstant:production', 'serve']);
+    grunt.registerTask('build:local', ['ngconstant:local', 'concat']);
+    grunt.registerTask('build:dev', ['ngconstant:development', 'concat']);
+    grunt.registerTask('build:hml', ['ngconstant:homologation', 'concat']);
+    grunt.registerTask('build:prod', ['ngconstant:production', 'concat']);
+    grunt.registerTask('local', ['build:local', 'serve']);
+    grunt.registerTask('dev', ['build:dev', 'serve']);
+    grunt.registerTask('hml', ['build:hml', 'serve']);
+    grunt.registerTask('prod', ['build:prod', 'serve']);
 };
