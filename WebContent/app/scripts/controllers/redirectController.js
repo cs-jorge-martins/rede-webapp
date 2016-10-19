@@ -1,6 +1,6 @@
 angular.module('Conciliador.redirectController',[])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider' ,function ($routeProvider) {
 	$routeProvider
 		.when('/redirect', {
 			templateUrl: "app/views/redirect.html",
@@ -8,8 +8,7 @@ angular.module('Conciliador.redirectController',[])
 		});
 }])
 
-.controller('redirectController', function($scope, $modal, $rootScope, $window, $location,
-		Restangular, loginService, userService, optionsService, selectEmpresaService) {
+.controller('redirectController', function($rootScope, loginService, $routeParams) {
 
 	$rootScope.bodyId = "redirectPage";
 
@@ -17,7 +16,7 @@ angular.module('Conciliador.redirectController',[])
 
 	function init() {
 
-		var authorization = getParameterByName("data");
+		var authorization = $routeParams.data;
 
 		var errorMessage = function () {
 			var accessValidatingDiv = document.querySelector("#accessValidating");
@@ -54,16 +53,6 @@ angular.module('Conciliador.redirectController',[])
 			console.log('error');
 		});
 
-	}
-
-	function getParameterByName(name, url) {
-		if (!url) url = window.location.href;
-		name = name.replace(/[\[\]]/g, "\\$&");
-		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-			results = regex.exec(url);
-		if (!results) return null;
-		if (!results[2]) return "";
-		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
 
 });
