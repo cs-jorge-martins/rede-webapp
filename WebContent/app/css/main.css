@@ -10165,9 +10165,50 @@ div.checkbox-toggle-right {
 
 #receiptsDetailsPage header,
 #receiptsDetailsPage footer,
+#redirectPage header,
+#redirectPage footer
+{
+    display: none !important;
+}
+
 #redirectPage
 {
+    background:none !important;
+    background-color: #f0f0f0 !important;
+    text-align: center;
+}
+
+#redirectPage section#heading img{
+    margin: 0 auto 90px;
+    display: block;
+}
+
+#redirectPage h1{
+    font-size: 21px;
+    font-weight: normal;
+    margin: 30px 0 0px;
+}
+
+#redirectPage #accessValidating h1{
+    color: #00B9B5;
+}
+
+#redirectPage #error h1{
+    color: #E84438;
+}
+
+#redirectPage .hidden{
     display: none;
+}
+
+#redirectPage #erro p{
+    width: 175px;
+    margin: 20px auto 0;
+}
+
+#redirectPage #redirectBlock{
+    display: block;
+    padding-top: 80px;
 }
 
 #receiptsDetailsPage #detailsClose {
@@ -11278,26 +11319,20 @@ body.newHeaderAndFooter #login button{
 }
 
 .sortTable th:after {
-    background: url(../img/order_by.png) no-repeat;
+    background: url(../img/icons/order_arrows.png) no-repeat -5px -26px;
     display: inline-block;
-    width: 7px;
-    height: 15px;
+    width: 11px;
+    height: 11px;
     padding: 0;
     margin-left: 7px;
     top: 2px;
     content: "";
 }
 
-th.sortDesc:after,
-th.sortAsc:after{
-    color: #FF9900;
-    background: none;
-}
-
 th.sortDesc:after{
-    content: "▼";
+    background-position: -26px -5px;
 }
 
 th.sortAsc:after{
-    content: "▲";
+    background-position: -5px -5px;
 }

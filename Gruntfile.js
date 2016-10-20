@@ -34,14 +34,14 @@ module.exports = function(grunt) {
             development: {
                 constants: {
                     app: {
-                        endpoint: 'https://3m3b6fs155.execute-api.us-east-1.amazonaws.com/dev/mvp'
+                        endpoint: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev'
                     }
                 }
             },
             homologation: {
                 constants: {
                     app: {
-                        endpoint: 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml'
+                        endpoint: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml'
                     }
                 }
             },
