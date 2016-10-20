@@ -11307,9 +11307,7 @@ body.newHeaderAndFooter #login button{
 }
 
 .sortTable th:after {
-    background: url(../img/icons/order_arrows.png) no-repeat;
-    background-repeat: no-repeat;
-    background-position: -5px -26px;
+    background: url(../img/icons/order_arrows.png) no-repeat -5px -26px;
     display: inline-block;
     width: 11px;
     height: 11px;
