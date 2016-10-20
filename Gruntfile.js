@@ -41,7 +41,7 @@ module.exports = function(grunt) {
             homologation: {
                 constants: {
                     app: {
-                        endpoint: 'https://sdfx3e6zv2.execute-api.us-east-1.amazonaws.com/hml'
+                        endpoint: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml'
                     }
                 }
             },
