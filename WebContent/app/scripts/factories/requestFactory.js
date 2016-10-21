@@ -9,10 +9,16 @@ angular.module('KaplenWeb.Request',[])
 	};
 
 	function setHeaders() {
-		return {
-			'Authorization': $window.sessionStorage.token,
+
+		var defaultHeaders = {
 			'Content-Type': 'application/json'
+		};
+
+		if($window.sessionStorage.token) {
+			defaultHeaders['Authorization'] = $window.sessionStorage.token;
 		}
+
+		return defaultHeaders;
 	}
 
 });
