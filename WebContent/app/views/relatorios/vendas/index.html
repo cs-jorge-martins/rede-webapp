@@ -9,13 +9,11 @@
 	<div class="date">
 		<h2>relatório de vendas</h2>
 	</div>
-
 	<br />
 
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 
 	<div id="primaryContent">
-
 		<!-- relatorio sintetico -->
 		<tabset>
 			<tab heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">

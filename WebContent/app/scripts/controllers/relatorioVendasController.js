@@ -169,6 +169,7 @@
 		$scope.changeTab = function(tab) {
 			$scope.currentPage = 0;
 			$scope.sort = "";
+            $rootScope.alerts = [];
 
 			switch(tab) {
 				case 1:
