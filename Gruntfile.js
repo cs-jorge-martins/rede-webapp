@@ -237,7 +237,6 @@ module.exports = function(grunt) {
         },
     });
 
-
 	grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
     grunt.registerTask('local:login', ['execute']);
     grunt.registerTask('serve', ['http-server:server']);
