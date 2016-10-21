@@ -22,12 +22,15 @@
 		<table cellpadding="0" cellspacing="0" class="sortTable">
 			<thead>
 				<tr class="taleft">
-					<th ng-click="sortResults($event,'nsu')">NSU</th>
-					<th ng-click="sortResults($event,'authorization')">autorização</th>
-					<th ng-click="sortResults($event,'cardNumber')">cartão</th>
-					<th ng-click="sortResults($event,'installment')">plano</th>
-					<th ng-click="sortResults($event,'terminal.code')">maquineta</th>
-					<th ng-click="sortResults($event,'gross')">valor bruto (R$)</th>
+					<th ng-click="sortResults($event, 'nsu')">NSU</th>
+					<th ng-click="sortResults($event, 'tid')">loja física / e-commerce</th>
+					<th ng-click="sortResults($event, 'tid')">tid</th>
+					<th ng-click="sortResults($event, 'authorization')">cod. autor.</th>
+					<th ng-click="sortResults($event, 'cardNumber')">nº cartão (final)</th>
+					<th ng-click="sortResults($event, 'mdr')">mdr</th>
+					<th ng-click="sortResults($event, 'installment')">nº parcelas</th>
+					<th ng-click="sortResults($event, 'terminal.code')">terminal</th>
+					<th ng-click="sortResults($event, 'gross')">valor bruto (R$)</th>
 				</tr>
 			</thead>
 			<tbody id="detailsBody" class="cursor_pointer">
@@ -43,8 +46,15 @@
 						  <span class="checkbox-right" ng-click="comprovanteVenda(item)">{{item.nsu}}</span>
 						</div>
 					</td>
+					<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">
+						<span>{{ !item.tid ? 'loja física' : 'e-commerce' }}</span>
+					</td>
+					<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.tid ? item.tid : '-'}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.authorization}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.cardNumber}}</td>
+                	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">
+                		{{item.percentFee}} {{ item.percentFee ? '%' : ' ' }}
+                	</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.installment}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.terminal.code}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.gross | currency:""}}</td>
