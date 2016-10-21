@@ -3,17 +3,23 @@ angular.module('KaplenWeb.loginService',[])
 
 }])
 
-.service('loginService', function(app, Restangular, $http) {
+.service('loginService', function(app, $http, Request) {
 
 	this.validarLogin = function(user) {
 		var request = {
 			login: user.login,
 			password: user.password
 		};
-
 		var url = app.endpoint + '/login';
 
-		return $http.post(url, request);
+		console.log(Request.setHeaders())
+
+		return $http({
+			url: url,
+			method: "POST",
+			data: request,
+			headers: Request.setHeaders()
+		});
 	}
 
 	this.resetPassword = function(user) {
