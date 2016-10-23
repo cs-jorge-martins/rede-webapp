@@ -526,7 +526,7 @@ angular.module('KaplenWeb.dashboardController',[])
 			if (item !== undefined ){
 				$scope.transactionConciliationBox.transctionToConcilieQuantity = item[0].transctionToConcilieQuantity;
 				$scope.transactionConciliationBox.transctionConciliedQuantity = item[0].transctionConciliedQuantity;
-				$scope.transactionConciliationBox.transctionToConcilieQuantity = item[0].transctionUnprocessedQuantity;
+				$scope.transactionConciliationBox.transctionUnprocessedQuantity = item[0].transctionUnprocessedQuantity;
 			}
 		});
 	}
