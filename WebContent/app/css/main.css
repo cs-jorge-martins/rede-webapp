@@ -11307,26 +11307,20 @@ body.newHeaderAndFooter #login button{
 }
 
 .sortTable th:after {
-    background: url(../img/order_by.png) no-repeat;
+    background: url(../img/icons/order_arrows.png) no-repeat -5px -26px;
     display: inline-block;
-    width: 7px;
-    height: 15px;
+    width: 11px;
+    height: 11px;
     padding: 0;
     margin-left: 7px;
     top: 2px;
     content: "";
 }
 
-th.sortDesc:after,
-th.sortAsc:after{
-    color: #FF9900;
-    background: none;
-}
-
 th.sortDesc:after{
-    content: "▼";
+    background-position: -26px -5px;
 }
 
 th.sortAsc:after{
-    content: "▲";
+    background-position: -5px -5px;
 }
