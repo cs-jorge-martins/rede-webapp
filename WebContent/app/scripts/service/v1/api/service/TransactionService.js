@@ -64,7 +64,7 @@
 
 			return $http({
 				url: app.endpoint + '/transactions/export',
-				method: "GET",
+				method: "POST",
 				params: request,
 				headers: Request.setHeaders()
 			}).then(success, error);
