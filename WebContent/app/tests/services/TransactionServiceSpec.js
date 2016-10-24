@@ -16,7 +16,7 @@ describe('Conciliador', function() {
             fakeErrorCallback = jasmine.createSpy();
 
             httpBackend
-            .expect('GET', /http:\/\/.*\/transactions\/export\?.*/)
+            .expect('POST', /http(s)?:\/\/.*\/transactions\/export\?.*/)
             .respond(200, { data: 'http://s3-bucket/path/xls' });
 
             service.exportTransactions(jasmine.any(Object), fakeSuccessCallback, fakeErrorCallback);
@@ -32,7 +32,7 @@ describe('Conciliador', function() {
             fakeErrorCallback = jasmine.createSpy();
 
             httpBackend
-            .expect('GET', /http:\/\/.*\/transactions\/export\?.*/)
+            .expect('POST', /http(s)?:\/\/.*\/transactions\/export\?.*/)
             .respond(400);
 
             service.exportTransactions(jasmine.any(Object), fakeSuccessCallback, fakeErrorCallback);

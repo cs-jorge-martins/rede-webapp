@@ -142,9 +142,8 @@
 			var filter = getFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-			TransactionService.exportTransactions(filter, function ok(response){
-                $scope.downloadLink = response.data;
-                $window.location = $scope.downloadLink;
+            TransactionService.exportTransactions(filter, function ok(response){
+              $window.location = response.data;
             }, function error(response){
                 $rootScope.alerts =  [ { type: "danger", msg: response.data} ];
             });
