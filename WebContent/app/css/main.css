@@ -3885,6 +3885,11 @@ article {
 .export-report-sales ul li a {
     float: left;
 }
+
+.export-report-sales #export-report-sales-excel {
+	cursor: pointer;
+}
+
 /** detalhes */
 #detalhes table {
 	width: 100%;

@@ -13,7 +13,6 @@ angular.module('KaplenWeb.loginController',[])
 	$scope.validarLogin = function(){
 
 		loginService.validarLogin($scope.usuario).then(function(data) {
-
 			var data = data.data;
 			var user = data.user;
 			var token = user.token;
@@ -21,7 +20,6 @@ angular.module('KaplenWeb.loginController',[])
 			if(token && user) {
 				$rootScope.signIn(token,user);
 			}
-
 		}).catch(function(response) {
 			console.log('error');
 		});
