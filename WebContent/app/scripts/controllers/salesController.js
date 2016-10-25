@@ -3,7 +3,7 @@ angular.module('Conciliador.salesController',[])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 	$routeProvider.when('/sales', {templateUrl: 'app/views/sales.html', controller: 'salesController'});
-}]).controller('salesController', function($scope, $modal, $rootScope, menuFactory, calendarFactory, $location,
+}]).controller('salesController', function($scope, $modal,  $rootScope, menuFactory, calendarFactory, $location,
 	FinancialService, userService, cacheService, advancedFilterService, movementsService, resumoConciliacaoService, TransactionService){
 
 
@@ -64,7 +64,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.clearFilter = clearFilter;
 		$scope.updateFilterByStatus = updateFilterByStatus;
 		$scope.showDetails = showDetails;
-		$scope.concilie = concilie;
+		// $scope.concilie = concilie;
 		$scope.selectItemToConcilie = selectItemToConcilie;
 	}
 
@@ -443,13 +443,15 @@ angular.module('Conciliador.salesController',[])
 		$location.path('sales/details');
 	}
 
-	function concilie() {
-
+	$scope.concilie = function () {
+		$scope.confirm = true;
+		$scope.success = false;
 		if($scope.concilieItems.length) {
-			var $modalInstance = $modal.open ({
+			$modal.open ({
 				templateUrl: "app/views/resumoConciliacao/confirmaConciliacaoResumo.html",
 				scope: $scope,
-				controller: function($scope, $modalInstance) {
+				animation: false,
+				controller: function($scope, $modalInstance, $timeout) {
 					$scope.ok = function(data) {
 						var ids = [];
 
@@ -509,29 +511,21 @@ angular.module('Conciliador.salesController',[])
 						}
 
 						TransactionService.concilieTransactions(filter).then(function(data){
-							data = data.data.content;
+							// data = data.data.content;
 							$scope.concilieItems = [];
 							$scope.items = [];
 
-							$modalInstance.dismiss("cancel");
-							$modal.open({
-								templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
-								scope: $scope,
-								size: 'sm',
-								controller: function($scope, $modalInstance){
-									$scope.cancel = function() {
-										$modalInstance.dismiss("cancel");
-									}
-								}
-							});
 							init();
+							$scope.confirm = false;
+							$scope.success = true;
+				
 						}).catch(function(response) {
-							console.log('error..')
-			            });
+							console.log('error.. ' + response)
+			            }); 
 					}
-					//$scope.cancel = function() {
-					//	$modalInstance.dismiss("cancel");
-					//};
+					$scope.cancel = function(data) {
+						$modalInstance.close();
+					}
 				},
 				size: 'md',
 				resolve: {
@@ -540,6 +534,7 @@ angular.module('Conciliador.salesController',[])
 					}
 				}
 			})
+
 		}
 	}
 
