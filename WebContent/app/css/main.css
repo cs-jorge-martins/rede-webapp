@@ -9239,6 +9239,10 @@ footer nav.fixed {
     color:#ff7800;
 }
 
+#receipts #headerTabs .nav-tabs li.active a{
+    color: #ff7800;
+}
+
 #relatorio_financeiro #cupomVendasTour td {
 	text-indent: 5px;
 }
@@ -9830,7 +9834,6 @@ div.checkbox-toggle-right {
     height: auto;
     box-sizing: border-box;
     padding: 0;
-    overflow: hidden;
     box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.1);
 }
 .data-cards .header-datas {
@@ -9880,6 +9883,7 @@ div.checkbox-toggle-right {
     font-size: 60px;
     font-weight: lighter;
 }
+
 .data-cards .header-datas .chip-wrapper {
     float: left;
     width: 81%;
@@ -9887,23 +9891,49 @@ div.checkbox-toggle-right {
     justify-content:flex-start;
 }
 
+.rc-tooltip {
+    position: absolute !important;
+    line-height: 21px;
+    text-align: left;
+    left: 0;
+    padding: 6px 11px;
+    top: 51px;
+    margin-top: 5px;
+    background-color: rgba(249, 249, 249, 1);
+    border: 1px solid rgba(221, 221, 221, 0.4);
+    box-shadow: 0px 4px 4px 0px rgba(183, 179, 179, 0.36);
+}
+
+.chip .rc-tooltip {
+    display: none;
+}
+
+.chip:hover .rc-tooltip {
+    display: block;
+}
+
 .data-cards .header-datas .chip-wrapper .chip {
-    background: #ddd;
+    background: #f0f0f0;
     font-weight: bolder;
     color: #575758;
     float: left;
-    width: 220px;
     height:40px;
     padding:0 15px;
     text-align: center;
-    border-radius: 25px;
     line-height: 40px;
     font-size: 12px;
     margin-top: 6px;
     position: relative;
     margin-right: 10px;
 }
+
+.data-cards .header-datas .chip-wrapper .chip.can-close {
+    padding:0 30px 0 15px;
+}
+
+
 .data-cards .header-datas .chip-wrapper .chip .clear-filter {
+    color:#ff7800;
     padding:5px;
     width:10px;
     height:10px;
@@ -10142,7 +10172,7 @@ div.checkbox-toggle-right {
     text-align: left;
 }
 
-#receiptsDetails .nav-tabs li.active a, #receipts .nav-tabs li.active a {
+#receiptsDetails .nav-tabs li.active a {
     border-top: 0;
     color: #333 !important;
 }

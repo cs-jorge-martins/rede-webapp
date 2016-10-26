@@ -645,7 +645,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			for(var x in data){
 				var obj = {};
 				obj.id = data[x].id;
-				obj.label = data[x].bankName + ' ' + data[x].agencyNumber + ' ' +  data[x].accountNumber;
+				obj.label = data[x].bankName + ' | ' + data[x].agencyNumber + ' | ' +  data[x].accountNumber;
 				obj.bankName = data[x].bankName;
 				obj.agencyNumber = data[x].agencyNumber;
 				obj.accountNumber = data[x].accountNumber;
@@ -674,6 +674,9 @@ angular.module('KaplenWeb.movementsModule',[])
 		// bandeira
 		filtersService.getCardProducts().then(function(response){
 			var filterConfig = [];
+			// var addPipe(fullCardProductName) {
+			// 	fullCardProductName
+			// };
 			for(var x in response.data){
 				var obj = {};
 				obj.id = response.data[x].id;
@@ -842,6 +845,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 
 	function getCardProductsLabel(isFuture) {
+
 		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 		var label = (isFuture ? $scope.cardProductsFutureLabel : $scope.cardProductsLabel);
 
@@ -859,7 +863,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			}
 			label = label.toLowerCase();
 		} else {
-			label = null
+			label = null;
 		}
 
 		if(isFuture) {
@@ -875,6 +879,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				return item.label;
 			}).join(", ");
 		}
+
 	}
 
 	function getLabels(isFuture) {

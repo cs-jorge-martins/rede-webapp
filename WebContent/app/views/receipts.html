@@ -18,13 +18,13 @@
                         <div class="filtersWrapper">
                             <div class="receipts_present_filters">
                                 <div class="filter">
-                                    <rc-datepicker date="actualReleases.date" max-date="todayDate" label="'período'"></rc-datepicker>
+                                    <rc-datepicker date="actualReleases.date" max-date="todayDate" label="'data'"></rc-datepicker>
                                 </div>
                                 <div class="filter">
                                     <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
                                 </div>
                                 <div class="filter">
-                                    <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"></rc-multiselect>
+                                    <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2" ></rc-multiselect>
                                 </div>
                                 <div class="filter">
                                     <rc-multiselect label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"></rc-multiselect>
@@ -46,21 +46,27 @@
                                     <br>{{actualReleases.month}} </div>
                                 <div class="chip-wrapper">
                                     <div class="chip" ng-show="accountsLabel">
-                                        <label>
+                                        <span>
                                             {{ accountsLabel | limitTo: 28 }} {{ accountsLabel.length > 28 ? '...' : '' }}
-                                        </label>
+                                        </span>
                                     </div>
-                                    <div class="chip" ng-show="shopsLabel" ng-class="shopsLabel.length < 1 ? 'hidden-chip' : '' ">
-                                        <label>
+                                    <div class="chip can-close" ng-show="shopsLabel" ng-class="shopsLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        <span>
                                             {{ shopsLabel }}
-                                        </label>
+                                        </span>
                                         <div class="clear-filter" ng-click="clearShopFilter()">x</div>
+                                        <span class="rc-tooltip">
+                                            {{ shopsFullLabel }}
+                                        </span>
                                     </div>
-                                    <div class="chip" ng-show="cardProductsLabel" ng-class="cardProductsLabel.length < 1 ? 'hidden-chip' : '' ">
-                                        <label>
+                                    <div class="chip can-close" ng-show="cardProductsLabel" ng-class="cardProductsLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        <span>
                                             {{ cardProductsLabel }}
-                                        </label>
+                                        </span>
                                         <div class="clear-filter" ng-click="clearCardProductsFilter()">x</div>
+                                        <span class="rc-tooltip">
+                                            {{ cardProductsFullLabel }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -270,13 +276,13 @@
                                             {{ accountsFutureLabel }}
                                         </label>
                                     </div>
-                                    <div class="chip" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                    <div class="chip can-close" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                         <label>
                                             {{ shopsFutureLabel }}
                                         </label>
                                         <div class="clear-filter" ng-click="clearShopFilter(true)">x</div>
                                     </div>
-                                    <div class="chip" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                    <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                         <label>
                                             {{ cardProductsFutureLabel }}
                                         </label>
