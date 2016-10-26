@@ -304,8 +304,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		return order_string;
 	};
 
-
-
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
@@ -927,7 +925,19 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 })
 
+app.filter('utc', function(){
 
+  return function(val){
+    var date = new Date(val);
+     return new Date(date.getUTCFullYear(), 
+                     date.getUTCMonth(), 
+                     date.getUTCDate(),  
+                     date.getUTCHours(), 
+                     date.getUTCMinutes(), 
+                     date.getUTCSeconds());
+  };    
+
+});
 function getDominio(extension) {
 	var url = location.href; //pega endereço que esta no navegador
 	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
