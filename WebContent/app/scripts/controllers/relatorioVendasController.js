@@ -147,7 +147,7 @@
                 $window.location = response.data;
             }, function error(response){
                 if(response.status === 408){
-                    msg = "O período escolhido não pode ser processado devido ao grande número de transações. Por favor escolha um período com menos transações.";
+                    msg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
                 }
                 $rootScope.alerts =  [ { type: "danger", msg: msg} ];
             });

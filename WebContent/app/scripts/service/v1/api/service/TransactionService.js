@@ -61,7 +61,7 @@
 
         this.exportTransactions = function(filter, success, error) {
             var startTime = new Date().getTime();
-            var timeout = 10 * 1000;  // milisseconds
+            var timeout = 30 * 1000;  // milisseconds
 
             return $http({
 				url: app.endpoint + '/transactions/export',
