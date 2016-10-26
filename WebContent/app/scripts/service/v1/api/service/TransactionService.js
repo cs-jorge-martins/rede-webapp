@@ -60,14 +60,22 @@
 		};
 
         this.exportTransactions = function(filter, success, error) {
-			var request = filter;
+            var startTime = new Date().getTime();
+            var timeout = 10 * 1000;  // milisseconds
 
-			return $http({
+            return $http({
 				url: app.endpoint + '/transactions/export',
 				method: "POST",
-				params: request,
+				params: filter,
+                timeout: timeout,
 				headers: Request.setHeaders()
-			}).then(success, error);
+			}).then(success, function(response){
+                var respTime = new Date().getTime() - startTime;
+                if (respTime >= timeout){  //timeout status must be explicitly set
+                    response.status = 408;
+                }
+                error(response);
+            });
 		};
     }
 })();

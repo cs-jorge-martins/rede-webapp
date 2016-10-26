@@ -142,10 +142,14 @@
 			var filter = getFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
+
             TransactionService.exportTransactions(filter, function ok(response){
-              $window.location = response.data;
+                $window.location = response.data;
             }, function error(response){
-                $rootScope.alerts =  [ { type: "danger", msg: response.data} ];
+                if(response.status === 408){
+                    msg = "O período escolhido não pode ser processado devido ao grande número de transações. Por favor escolha um período com menos transações.";
+                }
+                $rootScope.alerts =  [ { type: "danger", msg: msg} ];
             });
 		};
 
