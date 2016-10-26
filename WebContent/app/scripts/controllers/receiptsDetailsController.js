@@ -146,11 +146,15 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			});
 	    }
 
-	    function getAdjusts() {
+	    function getAdjusts(cache, order) {
 			filter.type = 'ADJUST';
 			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			filter.size =  $scope.adjustsTotalItensPage;
 			filter.sort = $scope.sort;
+
+			if(order) {
+				filter.sort = order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -164,11 +168,15 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			});
 	    }
 
-	    function getCancellations() {
+	    function getCancellations(cache, order) {
 	    	filter.type = 'CANCELLATION';
 	    	filter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
 			filter.size =  $scope.cancellationsTotalItensPage;
 			filter.sort = $scope.sort;
+
+			if (order) {
+				filter.sort =  order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;

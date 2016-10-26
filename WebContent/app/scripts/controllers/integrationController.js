@@ -18,7 +18,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.typeData = [
 			{
 				id:1,
-				label: 'ultimos lançamentos',
+				label: 'últimos lançamentos',
 				type: 'CURRENT'
 			},
 			{
