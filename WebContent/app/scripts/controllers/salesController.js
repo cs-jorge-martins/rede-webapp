@@ -64,7 +64,6 @@ angular.module('Conciliador.salesController',[])
 		$scope.clearFilter = clearFilter;
 		$scope.updateFilterByStatus = updateFilterByStatus;
 		$scope.showDetails = showDetails;
-		// $scope.concilie = concilie;
 		$scope.selectItemToConcilie = selectItemToConcilie;
 	}
 
@@ -511,7 +510,6 @@ angular.module('Conciliador.salesController',[])
 						}
 
 						TransactionService.concilieTransactions(filter).then(function(data){
-							// data = data.data.content;
 							$scope.concilieItems = [];
 							$scope.items = [];
 
