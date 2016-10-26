@@ -11321,7 +11321,12 @@ body.newHeaderAndFooter #login button{
     top: 2px;
     content: "";
 }
-
+.sortTable .nop th {
+    cursor: auto;
+}
+.sortTable .nop th:after {
+    background:none;
+}
 th.sortDesc:after{
     background-position: -26px -5px;
 }
