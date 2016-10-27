@@ -9841,9 +9841,9 @@ div.checkbox-toggle-right {
     width:100%;
     height:100px;
     padding: 45px 20px 84px;
-    -webkit-box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.3);
-    -moz-box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.3);
-    box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0px 6px 13px 0px #b7b3b3;
+    -moz-box-shadow: 0px 6px 13px 0px #b7b3b3;
+    box-shadow: 0px 6px 13px 0px #b7b3b3;
     box-sizing: border-box;
 }
 .data-cards .header-datas .date-wrapper  {
@@ -11229,9 +11229,27 @@ section#integration .rcDatepicker tbody td {
 }
 
 #pagamentosNaoRecebidosTitleColumn{
-    background: url(../img/icons/rsz_2exclamation.png) no-repeat;
-    background-position: 210px 6px;
+    background: url(../img/icons/exclamation.png) no-repeat;
+    background-position: 24px center;
 }
+
+.data-cards .expectedReleases table tr {
+    background: #ff7800;
+    color: #fff;
+}
+
+.data-cards .expectedReleases table tr th:first-child{
+    text-align: left !important;
+    padding: 3px 0 3px 75px !important;
+}
+.data-cards .expectedReleases table tr th:last-child{
+    text-align: right !important;
+    padding: 3px 75px 3px 0 !important;
+}
+.data-cards .expectedReleases table tr th:last-child a{
+    color:#fff;
+}
+
 
 .cursor_pointer{
     cursor: pointer;
