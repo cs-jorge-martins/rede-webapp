@@ -108,7 +108,7 @@
                 				<tr ng-repeat="item in items" ng-class-odd="'odd'">
                                     <td>{{item.date | date: 'dd/MM/yyyy'}}</td>
                                     <td>{{item.cardProduct.brand.name}}</td>
-                                	<td>{{item.amount | currency:""}}</td>
+                                	<td>{{item.cancelledAmount | currency:""}}</td>
                                 	<td>{{item.quantity}}</td>
                 				</tr>
                 			</tbody>
