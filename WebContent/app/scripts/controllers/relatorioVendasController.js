@@ -144,7 +144,13 @@
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 
             TransactionService.exportTransactions(filter, function ok(response){
-                $window.location = response.data;
+                var url = response.data;
+                if (url.indexOf("http") === 0){
+                    $window.location = response.data;
+                } else {
+                    $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
+                }
+
             }, function error(response){
                 if(response.status === 408){
                     msg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";

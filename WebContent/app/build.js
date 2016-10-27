@@ -1,4 +1,4 @@
-/*! conciliador-webapp - v0.0.0 - 2016-10-26 */// Source: WebContent/app/libs/angular.js
+/*! conciliador-webapp - v0.0.0 - 2016-10-27 */// Source: WebContent/app/libs/angular.js
 /**
  * @license AngularJS v1.2.8
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -45591,7 +45591,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		return order_string;
 	};
 
-
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
@@ -48677,7 +48676,6 @@ angular.module('Conciliador.salesController',[])
 		$scope.clearFilter = clearFilter;
 		$scope.updateFilterByStatus = updateFilterByStatus;
 		$scope.showDetails = showDetails;
-		// $scope.concilie = concilie;
 		$scope.selectItemToConcilie = selectItemToConcilie;
 	}
 
@@ -49124,7 +49122,6 @@ angular.module('Conciliador.salesController',[])
 						}
 
 						TransactionService.concilieTransactions(filter).then(function(data){
-							// data = data.data.content;
 							$scope.concilieItems = [];
 							$scope.items = [];
 
@@ -50839,7 +50836,7 @@ angular
                 $window.location = response.data;
             }, function error(response){
                 if(response.status === 408){
-                    msg = "O período escolhido não pode ser processado devido ao grande número de transações. Por favor escolha um período com menos transações.";
+                    msg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
                 }
                 $rootScope.alerts =  [ { type: "danger", msg: msg} ];
             });
@@ -51519,6 +51516,15 @@ angular
 
 		function getReport(){
 
+            var shopIds = [];
+
+    		if($scope.settlementsSelected) {
+    			for(var item in $scope.settlementsSelected) {
+    				shopIds.push($scope.settlementsSelected[item].id);
+    			}
+				shopIds = shopIds.join(",");
+    		}
+			
             getIndicator();
 
 			var filter = {
@@ -51527,6 +51533,7 @@ angular
 				cancellationEndDate: handleDate($scope.finalDate),
                 groupBy: 'CANCELLATION_DAY,CARD_PRODUCT,ADJUST_TYPE',
 				cardProductIds: $scope.productsSelected,
+				shopIds: shopIds,
 				status: 'CANCELLED',
 				adjustTypes: $scope.adjustType,
 				page: $scope.currentPage,
@@ -51554,10 +51561,20 @@ angular
 
 		function getIndicator() {
 
+            var shopIds = [];
+
+    		if($scope.settlementsSelected) {
+    			for(var item in $scope.settlementsSelected) {
+    				shopIds.push($scope.settlementsSelected[item].id);
+    			}
+				shopIds = shopIds.join(",");
+    		}
+			
 			var filter = {
 				currency: 'BRL',
 				cancellationStartDate: handleDate($scope.initialDate),
 				cancellationEndDate: handleDate($scope.finalDate),
+				shopIds: shopIds,
 				groupBy: ['ADJUST_TYPE'],
 				cardProductIds: $scope.productsSelected,
 				status: 'CANCELLED',
@@ -52394,7 +52411,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.typeData = [
 			{
 				id:1,
-				label: 'ultimos lançamentos',
+				label: 'últimos lançamentos',
 				type: 'CURRENT'
 			},
 			{
@@ -55712,7 +55729,7 @@ angular
 
         this.exportTransactions = function(filter, success, error) {
             var startTime = new Date().getTime();
-            var timeout = 1 * 1000;  // milisseconds
+            var timeout = 30 * 1000;  // milisseconds
 
             return $http({
 				url: app.endpoint + '/transactions/export',
@@ -57387,6 +57404,6 @@ angular.module("com.2fdevs.videogular.plugins.buffering",[]).run(["$templateCach
 // Source: WebContent/app/scripts/config.js
 angular.module('Conciliador.appConfig', [])
 
-.constant('app', {endpoint:'http://localhost:8080/conciliation-api',login:{endpoint:'http://localhost:8030'}})
+.constant('app', {endpoint:'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev',login:{endpoint:'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev'}})
 
 ;
