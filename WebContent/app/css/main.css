@@ -9772,7 +9772,10 @@ div.checkbox-toggle-right {
 .filterShiny ul li.center {
     margin:0 15px!important;
 }
-.filterShiny ul li.center input, .filterShiny ul li #naturezaProduto, .filterShiny ul #buscaTerminal {
+.filterShiny ul li.center input, 
+.filterShiny ul li #naturezaProduto, 
+.filterShiny ul li #naturezaProduto2,  
+.filterShiny ul #buscaTerminal {
     width:89%;
     background: transparent;
     color:#ccc;

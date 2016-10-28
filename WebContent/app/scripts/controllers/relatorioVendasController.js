@@ -44,6 +44,10 @@
         $scope.currentPageDuplicate = 0;
 		$scope.totalItensDuplicate = 0;
 
+		$scope.clearSyntheticFilter = clearSyntheticFilter;
+		$scope.clearAnalyticalFilter = clearAnalyticalFilter;
+		$scope.clearDuplicateFilter = clearDuplicateFilter;
+
         function handleResponse(response) {
 			var items = [];
 
@@ -226,15 +230,16 @@
 			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 		};
 
-		$scope.clearSyntheticFilter = function() {
+		function clearSyntheticFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
+			document.getElementById('buscaTerminal').value = '';
 		};
 
-		$scope.clearAnalyticalFilter = function() {
+		function clearAnalyticalFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -242,9 +247,11 @@
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
+			document.getElementById('buscaTerminal2').value = '';
+			document.getElementById('naturezaProduto').value = '';
 		};
 
-		$scope.clearDuplicateFilter = function() {
+		function clearDuplicateFilter () {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -252,6 +259,8 @@
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
+			document.getElementById('buscaTerminal3').value = '';
+			document.getElementById('naturezaProduto2').value = '';
 		};
 
 		/* pagination */
