@@ -146,11 +146,15 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			});
 	    }
 
-	    function getAdjusts() {
+	    function getAdjusts(cache, order) {
 			filter.type = 'ADJUST';
 			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			filter.size =  $scope.adjustsTotalItensPage;
 			filter.sort = $scope.sort;
+
+			if(order) {
+				filter.sort = order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -164,11 +168,15 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			});
 	    }
 
-	    function getCancellations() {
+	    function getCancellations(cache, order) {
 	    	filter.type = 'CANCELLATION';
 	    	filter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
 			filter.size =  $scope.cancellationsTotalItensPage;
 			filter.sort = $scope.sort;
+
+			if (order) {
+				filter.sort =  order;
+			}
 
 			FinancialService.getReceipt(filter).then(function(response) {
 				var data = response.data.content;
@@ -183,7 +191,6 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    }
 
 	    function getEcommerce() {
-	    
 	    }
 
 	    function changeTab(index) {
@@ -203,13 +210,13 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 	    $scope.sortResults = function(elem, kind, tipo_relatorio) {
 			$scope.sort = $rootScope.sortResults(elem, kind);
-			if(tipo_relatorio == "sales") {
-				getSales(false);
-			} else if(tipo_relatorio == "adjusts") {
-				getAdjusts();
-			} else if(tipo_relatorio == "cancellation") {
-				getCancellations();
-			}
+        if(tipo_relatorio == "sales") {
+          getSales(false);
+        } else if(tipo_relatorio == "adjusts") {
+          getAdjusts();
+        } else if(tipo_relatorio == "cancellation") {
+          getCancellations();
+        }
 	    }
 
 	    /* pagination */

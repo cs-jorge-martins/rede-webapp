@@ -12,7 +12,12 @@ angular.module('KaplenWeb.loginService',[])
 		};
 
 		var url = app.login.endpoint + '/login';
-		return $http.post(url, request);
+		return $http({
+            url: url,
+            method: "POST",
+            data: request,
+            headers: Request.setHeaders()
+        });
 	}
 
 	this.resetPassword = function(user) {
@@ -20,7 +25,7 @@ angular.module('KaplenWeb.loginService',[])
 	}
 
 	this.singleSignOn = function(token) {
-		var url = app.endpoint + '/singlesignon';
+		var url = app.login.endpoint + '/singlesignon';
 
 		return $http({
 			method: "POST",

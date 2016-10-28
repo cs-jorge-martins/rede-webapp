@@ -53,6 +53,15 @@
 
 		function getReport(){
 
+            var shopIds = [];
+
+    		if($scope.settlementsSelected) {
+    			for(var item in $scope.settlementsSelected) {
+    				shopIds.push($scope.settlementsSelected[item].id);
+    			}
+				shopIds = shopIds.join(",");
+    		}
+			
             getIndicator();
 
 			var filter = {
@@ -61,6 +70,7 @@
 				cancellationEndDate: handleDate($scope.finalDate),
                 groupBy: 'CANCELLATION_DAY,CARD_PRODUCT,ADJUST_TYPE',
 				cardProductIds: $scope.productsSelected,
+				shopIds: shopIds,
 				status: 'CANCELLED',
 				adjustTypes: $scope.adjustType,
 				page: $scope.currentPage,
@@ -88,10 +98,20 @@
 
 		function getIndicator() {
 
+            var shopIds = [];
+
+    		if($scope.settlementsSelected) {
+    			for(var item in $scope.settlementsSelected) {
+    				shopIds.push($scope.settlementsSelected[item].id);
+    			}
+				shopIds = shopIds.join(",");
+    		}
+			
 			var filter = {
 				currency: 'BRL',
 				cancellationStartDate: handleDate($scope.initialDate),
 				cancellationEndDate: handleDate($scope.finalDate),
+				shopIds: shopIds,
 				groupBy: ['ADJUST_TYPE'],
 				cardProductIds: $scope.productsSelected,
 				status: 'CANCELLED',

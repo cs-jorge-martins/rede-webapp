@@ -3885,6 +3885,11 @@ article {
 .export-report-sales ul li a {
     float: left;
 }
+
+.export-report-sales #export-report-sales-excel {
+	cursor: pointer;
+}
+
 /** detalhes */
 #detalhes table {
 	width: 100%;
@@ -8885,6 +8890,9 @@ footer nav.fixed {
 #details {
 	min-height: 100px;
 }
+#details thead {
+    text-indent: 10px;
+}
 #details thead th {
 	color: #333;
 	padding: 10px 0 !important;
@@ -8896,7 +8904,7 @@ footer nav.fixed {
 	background: #f6f3f1;
 }
 #details td, #details th {
-	padding: 10px 0 10px 5px;
+	padding: 10px 0;
 }
 #details tbody .odd {
 	background: #f0ebe8;
@@ -8904,6 +8912,12 @@ footer nav.fixed {
 #details table {
 	margin: 25px auto 0;
     width: 930px;
+    font-size: 12px;
+}
+
+#details table.sortTable {
+    margin:15px auto 0!important;
+    width:970px!important;
 }
 #details tfoot {
 	font-weight: bold;
@@ -9270,12 +9284,12 @@ footer nav.fixed {
 }
 
 .vendas .footer {
-	/*width: 885px !important;*/
-	/*border: none !important;*/
+	/* width: 885px !important; */
+	/* border: none !important; */
 }
 
-.vendas #details td {
-	text-indent: 10px;
+.vendas #details #cupomVendasTour td {
+	 text-indent: 10px; 
 }
 
 .vendas span.checkbox-right {
@@ -10096,6 +10110,18 @@ div.checkbox-toggle-right {
     position: relative;
     padding: 20px 0;
     border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
+    content: "\2039";
+    top:0;
+    right:0;
+    position: absolute;
+    transform: rotate(90deg);
+    font-size:24px;
+}
+#receiptsDetails table.table th::before {
+    transform: rotate(180deg);
 }
 
 #receiptsDetails .table th span.orderby,
@@ -11316,7 +11342,12 @@ body.newHeaderAndFooter #login button{
     top: 2px;
     content: "";
 }
-
+.sortTable .nop th {
+    cursor: auto;
+}
+.sortTable .nop th:after {
+    background:none;
+}
 th.sortDesc:after{
     background-position: -26px -5px;
 }
