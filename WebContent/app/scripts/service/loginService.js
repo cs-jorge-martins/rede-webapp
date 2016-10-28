@@ -12,8 +12,6 @@ angular.module('KaplenWeb.loginService',[])
 		};
 		var url = app.endpoint + '/login';
 
-		console.log(Request.setHeaders())
-
 		return $http({
 			url: url,
 			method: "POST",
