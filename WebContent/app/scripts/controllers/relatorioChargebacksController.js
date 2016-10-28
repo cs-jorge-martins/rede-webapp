@@ -19,7 +19,7 @@
 
 		//Extensao do serviço para filtro avançado
     	angular.extend($scope, advancedFilterService);
-    	$scope.loadParansByFilter();
+    	$scope.loadParamsByFilter();
 
     	//Extensao do serviço para calendario
     	angular.extend($scope, calendarService);
@@ -155,6 +155,7 @@
 			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.settlementsSelected = [];
 			$scope.adjustType = ['CANCELLATION'];
+			document.getElementById("buscaTerminal").value = '';
 		}
 
 		function handleResponse(response) {

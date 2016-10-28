@@ -191,7 +191,6 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    }
 
 	    function getEcommerce() {
-	    
 	    }
 
 	    function changeTab(index) {
@@ -211,13 +210,13 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 	    $scope.sortResults = function(elem, kind, tipo_relatorio) {
 			$scope.sort = $rootScope.sortResults(elem, kind);
-			if(tipo_relatorio == "sales") {
-				getSales(false);
-			} else if(tipo_relatorio == "adjusts") {
-				getAdjusts();
-			} else if(tipo_relatorio == "cancellation") {
-				getCancellations();
-			}
+        if(tipo_relatorio == "sales") {
+          getSales(false);
+        } else if(tipo_relatorio == "adjusts") {
+          getAdjusts();
+        } else if(tipo_relatorio == "cancellation") {
+          getCancellations();
+        }
 	    }
 
 	    /* pagination */

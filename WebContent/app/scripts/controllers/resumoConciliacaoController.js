@@ -8,7 +8,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 
 	$scope.getAdditionalInformations($rootScope.company).then(function(result){
 		if(result == "true"){
@@ -49,7 +49,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 		$scope.dateSelected = calendarFactory.getSpecificDateOfYear(year);
 		$scope.yearSelected = parseInt(calendarFactory.getYear($scope.dateSelected));
 		loadDayResume($scope.dateSelected);
-		$scope.loadParansByFilter();
+		$scope.loadParamsByFilter();
 
 		getTransactionConciliation();
 	};
@@ -247,7 +247,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 
 	function getTransactionsResumed(dateSelected){
 		if(!$scope.filterClick){
-			$scope.loadParansByFilter();
+			$scope.loadParamsByFilter();
 		}
 
 		transactionsService.getTransactionsResumed(dateSelected, $scope.settlementsSearch, $scope.acquirersSearch,
@@ -408,7 +408,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 
 	function getItensAccordion(dateSelected, statusConciliacao){
 		if(!$scope.filterClick){
-			$scope.loadParansByFilter();
+			$scope.loadParamsByFilter();
 		}
 		transactionsService.getAcquirer(dateSelected, statusConciliacao, false, 0, $scope.acquirersSearch, $scope.brandsSearch,
 				$scope.productsSearch, $scope.settlementsSearch, $scope.terminalsSearch, $scope.natureza, $scope.tipoTerminal).then(function(itens) {
@@ -641,7 +641,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 		$scope.resetCalendarService();
 
 		$scope.cancel = function () {
-			$scope.loadParansByFilter();
+			$scope.loadParamsByFilter();
 			$modalInstance.dismiss('cancel');
 		};
 
@@ -1043,7 +1043,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 
 	$scope.returnToActualMonth = function(){
 		loadDayResume(calendarFactory.getYesterdayDate());
-		$scope.loadParansByFilter();
+		$scope.loadParamsByFilter();
 		atualizarAccordion = true;
 		getTransactionsResumed(calendarFactory.getYesterdayDate());
 		//getTransactionConciliation();
@@ -1112,7 +1112,7 @@ angular.module('KaplenWeb.resumoConciliacaoController',['ui.bootstrap'])
 	};
 
 	$scope.clearAdvancedFilterVendas = function() {
-		$scope.loadParansByFilter();
+		$scope.loadParamsByFilter();
 		loadDayResume($scope.dateSelected);
 	};
 
