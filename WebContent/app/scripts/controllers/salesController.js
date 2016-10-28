@@ -576,9 +576,6 @@ angular.module('Conciliador.salesController',[])
 		$scope.natureza = 0;
 		document.getElementById("buscaTerminal").value = '';
 		document.getElementById("naturezaProduto").value = '';
-
-
-		this.getFinancials();
 	}
 
 	function downloadReport() {
