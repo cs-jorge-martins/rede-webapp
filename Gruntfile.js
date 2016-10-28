@@ -25,6 +25,7 @@ module.exports = function(grunt) {
         		port: 8100,
         		host: "0.0.0.0",
                 openBrowser: true,
+                runInBackground: true,
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "*",
@@ -235,6 +236,12 @@ module.exports = function(grunt) {
                 dest: "WebContent/app/build.js",
             },
         },
+
+        watch: {
+            files: '<%= concat.dist.src %>',
+            tasks: ['concat']
+        }
+
     });
 
 	grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
@@ -244,8 +251,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build:dev', ['ngconstant:development', 'concat']);
     grunt.registerTask('build:hml', ['ngconstant:homologation', 'concat']);
     grunt.registerTask('build:prod', ['ngconstant:production', 'concat']);
-    grunt.registerTask('local', ['build:local', 'serve']);
-    grunt.registerTask('dev', ['build:dev', 'serve']);
+    grunt.registerTask('local', ['build:local', 'serve', 'watch']);
+    grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
     grunt.registerTask('hml', ['build:hml', 'serve']);
     grunt.registerTask('prod', ['build:prod', 'serve']);
 };
