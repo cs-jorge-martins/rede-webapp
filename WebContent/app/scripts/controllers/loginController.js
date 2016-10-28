@@ -12,6 +12,13 @@ angular.module('KaplenWeb.loginController',[])
 	var userFirstAccess = "";
 	$scope.validarLogin = function(){
 
+		$scope.alerts = [];
+		
+		if (!$scope.usuario.login || !$scope.usuario.password) {
+			$scope.alerts = [{msg:"Os campos E-mail e Senha devem ser preenchidos."}];
+			return;
+		}
+		
 		loginService.validarLogin($scope.usuario).then(function(data) {
 
 			var data = data.data;
