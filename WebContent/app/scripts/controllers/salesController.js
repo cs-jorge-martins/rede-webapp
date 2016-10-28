@@ -9,7 +9,7 @@ angular.module('Conciliador.salesController',[])
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 
 	menuFactory.setActiveResumoConciliacao();
 

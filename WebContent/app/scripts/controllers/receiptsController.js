@@ -15,7 +15,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 
 	menuFactory.setActiveMovements();
 

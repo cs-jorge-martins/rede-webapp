@@ -8,7 +8,7 @@ angular.module('KaplenWeb.taxaAdministracaoController',['ui.bootstrap'])
 	
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 		
 	var company = '';
 	if (angular.isDefined($rootScope.company)) {
@@ -162,7 +162,7 @@ angular.module('KaplenWeb.taxaAdministracaoController',['ui.bootstrap'])
 	var taxCopyController = function ($scope, $http, $modalInstance, Restangular, advancedFilterService) {
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
-		$scope.loadParansByFilter();
+		$scope.loadParamsByFilter();
 		
 		$scope.finish = false;
 

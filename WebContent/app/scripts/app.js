@@ -73,7 +73,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
         			if(angular.isDefined($window.sessionStorage.user)){
         				$rootScope.user = angular.fromJson($window.sessionStorage.user);
             			$rootScope.pvList = $window.sessionStorage.pvList;
-            			$rootScope.companies = $rootScope.user.companyDTOs;
             			$rootScope.currencySymbol = "R$";
                         $rootScope.currency = 'BRL';
                         if($window.sessionStorage.firstAccess) {
@@ -86,7 +85,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 
         			}
         			config.headers['Authorization'] = $window.sessionStorage.token;
-                    //config.headers['X-Api-Key'] = $window.sessionStorage.pvList;
         		} else {
 					if(!window.location.hash.match(/#\/redirect/g)) {
                     	$location.path("/login");
@@ -97,7 +95,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
             'responseError': function(config) {
 				switch (config.status) {
 					case 400 :
-						break;
+                        break;
 					case 401 :
 					case 403 :
 						$rootScope.alerts =  [ { type: "danger", msg: config.data.message} ];
@@ -110,7 +108,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 						break;
 				}
 
-                return config;
+                return $q.reject(config);
             }
         };
     });

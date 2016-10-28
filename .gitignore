@@ -4,3 +4,4 @@ build
 .settings
 .project
 WebContent/app/scripts/config.js
+WebContent/app/build.js
