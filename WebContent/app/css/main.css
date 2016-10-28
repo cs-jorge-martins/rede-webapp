@@ -3885,6 +3885,11 @@ article {
 .export-report-sales ul li a {
     float: left;
 }
+
+.export-report-sales #export-report-sales-excel {
+	cursor: pointer;
+}
+
 /** detalhes */
 #detalhes table {
 	width: 100%;
@@ -10106,6 +10111,17 @@ div.checkbox-toggle-right {
     padding: 20px 0;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
+}
+#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
+    content: "\2039";
+    top:0;
+    right:0;
+    position: absolute;
+    transform: rotate(90deg);
+    font-size:24px;
+}
+#receiptsDetails table.table th::before {
+    transform: rotate(180deg);
 }
 
 #receiptsDetails .table th span.orderby,

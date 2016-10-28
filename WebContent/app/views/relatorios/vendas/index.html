@@ -9,13 +9,11 @@
 	<div class="date">
 		<h2>relatório de vendas</h2>
 	</div>
-
 	<br />
 
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 
 	<div id="primaryContent">
-
 		<!-- relatorio sintetico -->
 		<tabset>
 			<tab heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
@@ -225,12 +223,14 @@
 								</div>
 
 								<!-- descomentar ao inserir exportação de relatórios -->
-								<!-- <div class="export-report-sales">
+								<div class="export-report-sales">
 								    <strong>Exportar como:</strong>
 								    <ul>
-								        <li><a href="#"><img src="/app/img/ico-excel.png" alt=""></a></li>
+										<li><div id="export-report-sales-excel" title="Exportar como Excel" ng-click="exportAnalytical()">
+											<img src="/app/img/ico-excel.png" alt="" />
+										</div></li>
 								    </ul>
-								</div> -->
+								</div>
 							</div>
 						</div>
 					</div>

@@ -18,7 +18,7 @@
 			relatorioService, installmentsService, $window, advancedFilterService, calendarService, MovementSummaryService) {
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
-		$scope.loadParansByFilter();
+		$scope.loadParamsByFilter();
 
 		//Extensao do serviço para calendario
 		angular.extend($scope, calendarService);
