@@ -8915,7 +8915,7 @@ footer nav.fixed {
     font-size: 12px;
 }
 
-#details table.sortTable {
+.vendasDetalhe #details table.sortTable {
     margin:15px auto 0!important;
     width:970px!important;
 }
