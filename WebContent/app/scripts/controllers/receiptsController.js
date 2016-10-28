@@ -883,7 +883,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		getCardProductsLabel(isFuture);
 	}
 
-    function showDetails(acquirer, cardProduct, total, status) {
+    function showDetails(acquirer, cardProduct, total, status, detailPage) {
         $rootScope.receiptsDetails = {};
 
         var dateSelected = $scope.actualReleases.date;
@@ -904,7 +904,18 @@ angular.module('KaplenWeb.movementsModule',[])
 		$rootScope.receiptsDetails.total = total;
 		$rootScope.receiptsDetails.type = status
 
-        $location.path('receipts/details');
+		var redirect_url;
+		switch (detailPage) {
+			case "expected_details":
+				redirect_url = "receipts/expected_details";
+				break;
+			default:
+				redirect_url = "receipts/details";
+				break;
+		}
+		if(redirect_url) {
+			$location.path(redirect_url);
+		}
     }
 
     function saveFilters() {

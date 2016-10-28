@@ -44,7 +44,9 @@
                                 <table ng-repeat="item in actualReleasesData" id="receipts_table">
                                     <tr class="group" ng-show="item.expectedReleases.length">
                                         <th id="pagamentosNaoRecebidosTitleColumn">existem pagamentos não recebidos nesta data</th>
-                                        <th><a href="#">detalhes</a></th>
+                                        <th>
+                                            <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'expected_details')">detalhes</a>
+                                        </th>
                                     </tr>
                                 </table>
                             </div>
