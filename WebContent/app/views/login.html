@@ -2,9 +2,9 @@
 	<form id="loginForm" novalidate>
 		<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 		<label for="emailLogin">E-mail</label>
-		<input id="emailLogin" type="text" ng-model="usuario.login" required/>
+		<input id="emailLogin" type="text" ng-model="usuario.login" ng-required />
 		<label for="senha">Senha</label>
-		<input id="senha" type="password" ng-model="usuario.password" type="password" required/>
+		<input id="senha" type="password" ng-model="usuario.password" type="password" ng-required />
 		
 		<a href="https://www.userede.com.br/pt-br/novoacesso/Paginas/RecuperacaoSenhaIdentificacao.aspx" target="_blank">esqueci minha senha</a>
         <!--<a href="https://www.userede.com.br/nossos-produtos/controlrede" target="_blank">cadastre-se agora!</a>-->
