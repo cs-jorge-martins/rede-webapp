@@ -9982,6 +9982,28 @@ div.checkbox-toggle-right {
     color: #00b9b5;
 }
 
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas {
+    height: 200px;
+    padding: 26px 32px 0;
+}
+
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date {
+    line-height: normal;
+    margin-top: 20px;
+}
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
+    font-size: 72px;
+}
+
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper {
+    display: block;
+}
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:first-child {
+    width: 100%;
+    font-size: 12px;
+    display: inline-table;
+}
+
 #receiptsDetails .data-cards .numbers-data {
     padding: 38px 35px 30px;
 }

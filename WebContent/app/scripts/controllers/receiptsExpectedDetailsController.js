@@ -22,6 +22,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
 				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
 				$scope.currency = $rootScope.receiptsDetails.currency;
+
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
 				$scope.endDate = $rootScope.receiptsDetails.endDate;
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
@@ -48,14 +49,14 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 				$scope.tabs = [
 					{
-						title: 'vendas',
+						title: 'Rede',
 						active: true
 					},
 					{
-						title: 'ajustes'
+						title: 'Cielo'
 					},
 					{
-						title: 'cancelamentos'
+						title: 'GetNet'
 					}
 					/*,
 					{
@@ -64,19 +65,19 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 					*/
 				];
 
-				filter = {
-					cardProductIds: $scope.cardProduct.cardProductId,
-					acquirerIds: $scope.acquirer.id,
-					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
-					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
-					bankAccountIds: $scope.bankAccount.id
-				};
-
-				if($scope.status === 'forethought'){
-					filter.status = 'FORETHOUGHT'
-				} else {
-					filter.status = 'RECEIVED'
-				}
+				// filter = {
+				// 	cardProductIds: $scope.cardProduct.cardProductId,
+				// 	acquirerIds: $scope.acquirer.id,
+				// 	startDate: calendarFactory.formatDateTimeForService($scope.startDate),
+				// 	endDate: calendarFactory.formatDateTimeForService($scope.endDate),
+				// 	bankAccountIds: $scope.bankAccount.id
+				// };
+                //
+				// if($scope.status === 'forethought'){
+				// 	filter.status = 'FORETHOUGHT'
+				// } else {
+				// 	filter.status = 'RECEIVED'
+				// }
 
 				$scope.maxSize = 4;
 
