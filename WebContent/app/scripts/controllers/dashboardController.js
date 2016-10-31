@@ -157,7 +157,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		transactionSummaryFilterCurrentMonth.currency =  $rootScope.currency;
 		transactionSummaryFilterCurrentMonth.startDate = $scope.currentMonthPerid.firstDate;
 		transactionSummaryFilterCurrentMonth.endDate = $scope.currentMonthPerid.lastDate;
-
+		transactionSummaryFilterCurrentMonth.conciliationStatus = 'TO_CONCILIE,CONCILIED';
 		// Consulta do mês corrente
 
 		dashboardService.getTransactionSummaryBox(transactionSummaryFilterCurrentMonth).then(function(item){
