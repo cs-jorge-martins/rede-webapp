@@ -310,7 +310,8 @@ angular.module('KaplenWeb.dashboardController',[])
 			startDate: calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(date)),
 			endDate: calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(date)),
 			groupBy: 'DAY',
-			size: 31
+			size: 31,
+			conciliationStatus: 'TO_CONCILIE,CONCILIED'
 		};
 
 		// actual month data
