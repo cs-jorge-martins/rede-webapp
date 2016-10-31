@@ -10134,17 +10134,6 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
-#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
-    content: "\2039";
-    top:0;
-    right:0;
-    position: absolute;
-    transform: rotate(90deg);
-    font-size:24px;
-}
-#receiptsDetails table.table th::before {
-    transform: rotate(180deg);
-}
 
 #receiptsDetails .table th span.orderby,
 .xpecial_table.table th span.orderby {
