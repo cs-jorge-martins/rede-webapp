@@ -5748,6 +5748,7 @@ input[type=reset]:hover, input[type=submit]:hover, input[type="button"]:hover,  
 	background-image: none;
 	-webkit-appearance: none;
 	cursor: pointer;
+    -moz-appearance: inherit;
 }
 select:focus {
 	outline: none;
