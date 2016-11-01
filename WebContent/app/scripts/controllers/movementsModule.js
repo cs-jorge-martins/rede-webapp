@@ -10,7 +10,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 
 	menuFactory.setActiveMovements();
 
@@ -474,7 +474,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.resetCalendarService();
 
 		$scope.cancel = function () {
-			$scope.loadParansByFilter();
+			$scope.loadParamsByFilter();
 			$modalInstance.dismiss('cancel');
 		};
 
@@ -775,7 +775,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	};
 
 	$scope.clearAdvancedFilterMovements = function() {
-		$scope.loadParansByFilter();
+		$scope.loadParamsByFilter();
 		getPeriod($scope.dateSelected);
 		getValuesByDay($scope.dateSelected);
 	};

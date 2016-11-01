@@ -10,7 +10,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 
 	/*
 	$scope.getAdditionalInformations($rootScope.company).then(function(result){

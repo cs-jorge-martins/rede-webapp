@@ -3,7 +3,7 @@ angular.module('KaplenWeb.loginService',[])
 
 }])
 
-.service('loginService', function(app, Restangular, $http) {
+.service('loginService', function(app, $http, Request) {
 
 	this.validarLogin = function(user) {
 		var request = {
@@ -11,9 +11,13 @@ angular.module('KaplenWeb.loginService',[])
 			password: user.password
 		};
 
-		var url = app.endpoint + '/login';
-
-		return $http.post(url, request);
+		var url = app.login.endpoint + '/login';
+		return $http({
+            url: url,
+            method: "POST",
+            data: request,
+            headers: Request.setHeaders()
+        });
 	}
 
 	this.resetPassword = function(user) {
@@ -21,7 +25,7 @@ angular.module('KaplenWeb.loginService',[])
 	}
 
 	this.singleSignOn = function(token) {
-		var url = app.endpoint + '/singlesignon';
+		var url = app.login.endpoint + '/singlesignon';
 
 		return $http({
 			method: "POST",

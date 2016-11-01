@@ -445,7 +445,9 @@ angular.module('KaplenWeb.dashboardController',[])
 			endDate: calendarFactory.formatDateForService(lastDayOfMonth),
 			cardProductIds: $scope.productsSelected,
 			shopIds: $scope.settlementsSelected,
-			groupBy: 'DAY'
+			groupBy: 'DAY',
+			size: 31,
+			page: 0
 		}).then(function(data){
 			data = data.data.content;
 
@@ -483,31 +485,7 @@ angular.module('KaplenWeb.dashboardController',[])
 					}
 				}
 			}
-			/*
-			for(day in days) {
-				var item = days[day]
-
-				var oneItemFlag = Boolean(item.transctionToConcilieQuantity) + Boolean(item.transctionUnprocessedQuantity) + Boolean(item.transctionConciliedQuantity);
-
-				$scope.days[index].isActiveButton = true;
-				$scope.days[index].isActive = false;
-				$scope.days[index].toReconcile = item.transctionToConcilieQuantity;
-				$scope.days[index].toProcess = item.transctionUnprocessedQuantity;
-				$scope.days[index].concilied = item.transctionConciliedQuantity;
-
-				if(oneItemFlag > 1) {
-					$scope.days[index].oneItem = false;
-				}
-			}
-			*/
 		});
-		//var transactionConciliationCalendarFilter = new TransactionConciliationFilter();
-		//transactionConciliationCalendarFilter.currency = $rootScope.currency;
-		//transactionConciliationCalendarFilter.startDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonthForDashboard());
-		//transactionConciliationCalendarFilter.endDate = calendarFactory.formatDateForService(calendarFactory.getActualDateForDashboard());
-		//transactionConciliationCalendarFilter.groupBy = ['DAY'];
-		//var transactionConciliationDay = dashboardService.getTransactionConciliationCalendar(transactionConciliationCalendarFilter);
-		//$scope.TransactionConciliationDayCalendar = transactionConciliationDay;
 	}
 
 	/***************************************** TRANSACTION CONCILIATION BOX *******************************************/
@@ -526,7 +504,7 @@ angular.module('KaplenWeb.dashboardController',[])
 			if (item !== undefined ){
 				$scope.transactionConciliationBox.transctionToConcilieQuantity = item[0].transctionToConcilieQuantity;
 				$scope.transactionConciliationBox.transctionConciliedQuantity = item[0].transctionConciliedQuantity;
-				$scope.transactionConciliationBox.transctionToConcilieQuantity = item[0].transctionUnprocessedQuantity;
+				$scope.transactionConciliationBox.transctionUnprocessedQuantity = item[0].transctionUnprocessedQuantity;
 			}
 		});
 	}

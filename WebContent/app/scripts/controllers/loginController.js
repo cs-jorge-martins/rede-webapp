@@ -12,8 +12,14 @@ angular.module('KaplenWeb.loginController',[])
 	var userFirstAccess = "";
 	$scope.validarLogin = function(){
 
+		$rootScope.alerts = [];
+		
+		if (!$scope.usuario.login || !$scope.usuario.password) {
+			$rootScope.alerts = [{msg:"Os campos E-mail e Senha devem ser preenchidos."}];
+			return;
+		}
+		
 		loginService.validarLogin($scope.usuario).then(function(data) {
-
 			var data = data.data;
 			var user = data.user;
 			var token = user.token;
@@ -21,7 +27,6 @@ angular.module('KaplenWeb.loginController',[])
 			if(token && user) {
 				$rootScope.signIn(token,user);
 			}
-
 		}).catch(function(response) {
 			console.log('error');
 		});
