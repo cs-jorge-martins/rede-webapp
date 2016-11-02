@@ -8919,6 +8919,12 @@ footer nav.fixed {
 .vendasDetalhe #details table.sortTable {
     margin:15px auto 0!important;
 }
+.vendasDetalhe #details table.sortTable .firstThCheckbox{
+    padding-left: 32px !important;
+}
+#details .firstThCheckbox{
+    padding-left: 28px !important;
+}
 #details tfoot {
 	font-weight: bold;
 }
