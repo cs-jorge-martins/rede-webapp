@@ -4,11 +4,21 @@ angular.module('KaplenWeb.movementsModule',[])
 	$routeProvider.when('/receipts', {templateUrl: 'app/views/receipts.html', controller: 'receiptsController'});
 }])
 
+.filter('customCurrency', ['$filter', function($filter){
+	return function (amount, currencySymbol) {
+		var currency = $filter('currency');
+
+		if(amount < 0) {
+			return currency(amount, currencySymbol).replace("(", "-").replace(")", "");
+		}
+	}
+}])
 .filter('capitalize', function() {
 	return function(input) {
 		return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
 	}
 })
+
 
 .controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, transactionsService, $window, userService, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService){
@@ -432,7 +442,8 @@ angular.module('KaplenWeb.movementsModule',[])
 						$scope.totalToReceive = totalToReceive;
 						$scope.discountedTotal = discount;
 						$scope.antecipatedTotal = antecipatedTotal;
-						$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
+						// $scope.totalReceived = totalToReceive - discount + antecipatedTotal;
+						$scope.totalReceived = -500;
 
 
 
