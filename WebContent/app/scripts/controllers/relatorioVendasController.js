@@ -88,10 +88,10 @@
 				endDate: calendarFactory.formatDateTimeForService(reportScope.finalDate),
 				shopIds: $scope.settlementsSelected.map(function(item){
                     return item.id;
-                }),
+                }).join(','),
 				cardProductIds: $scope.productsSelected.map(function(item){
                     return item.id;
-                }),
+                }).join(','),
 				currency: 'BRL',
 				sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
