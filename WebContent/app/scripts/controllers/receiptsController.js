@@ -13,6 +13,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	}
 }])
+
 .filter('capitalize', function() {
 	return function(input) {
 		return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
@@ -442,10 +443,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						$scope.totalToReceive = totalToReceive;
 						$scope.discountedTotal = discount;
 						$scope.antecipatedTotal = antecipatedTotal;
-						// $scope.totalReceived = totalToReceive - discount + antecipatedTotal;
-						$scope.totalReceived = -500;
-
-
+						$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
 
 					}).catch(function(response) {
 						console.log('[receiptsController:getSummaries] error');
