@@ -32,7 +32,7 @@
 		/* pagination */
 		$scope.maxSize = 4;
 
-		$scope.totalItensPageSynthetic = 10;
+		$scope.totalItensPageSynthetic = 50;
         $scope.currentPageSynthetic = 0;
 		$scope.totalItensSynthetic = 0;
 
