@@ -39,7 +39,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'Conciliador.receiptsDetailsController',
 							'Conciliador.redirectController',
                             'ngFileSaver',
-                            'Conciliador.appConfig'
+                            'Conciliador.appConfig',
+                            'Conciliador.customCurrency'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
