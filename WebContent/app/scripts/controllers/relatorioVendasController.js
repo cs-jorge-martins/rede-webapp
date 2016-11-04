@@ -48,6 +48,8 @@
 		$scope.clearAnalyticalFilter = clearAnalyticalFilter;
 		$scope.clearDuplicateFilter = clearDuplicateFilter;
 
+        $scope.chartOptions = chartUtils.options.relatorioSintetico;
+
         function handleResponse(response) {
 			var items = [];
 
@@ -78,7 +80,6 @@
             }
 
             $scope.chartjs = chartData;
-            $scope.chartOptions = chartUtils.options.relatorioSintetico;
         };
 
         function getFilterOptions(reportScope, extraOptions){
@@ -190,6 +191,7 @@
 				case 1:
 					if($scope.synthetic.items) {
 						if(!$scope.synthetic.items.length) {
+                            $scope.sort = 'id,DESC';
 							$scope.getSynthetic();
 						}
 					}
