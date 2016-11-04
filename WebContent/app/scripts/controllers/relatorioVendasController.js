@@ -32,7 +32,7 @@
 		/* pagination */
 		$scope.maxSize = 4;
 
-		$scope.totalItensPageSynthetic = 10;
+		$scope.totalItensPageSynthetic = 50;
         $scope.currentPageSynthetic = 0;
 		$scope.totalItensSynthetic = 0;
 
@@ -43,6 +43,12 @@
 		$scope.totalItensPageDuplicate = 10;
         $scope.currentPageDuplicate = 0;
 		$scope.totalItensDuplicate = 0;
+
+		$scope.clearSyntheticFilter = clearSyntheticFilter;
+		$scope.clearAnalyticalFilter = clearAnalyticalFilter;
+		$scope.clearDuplicateFilter = clearDuplicateFilter;
+
+        $scope.chartOptions = chartUtils.options.relatorioSintetico;
 
         function handleResponse(response) {
 			var items = [];
@@ -74,7 +80,6 @@
             }
 
             $scope.chartjs = chartData;
-            $scope.chartOptions = chartUtils.options.relatorioSintetico;
         };
 
         function getFilterOptions(reportScope, extraOptions){
@@ -84,10 +89,10 @@
 				endDate: calendarFactory.formatDateTimeForService(reportScope.finalDate),
 				shopIds: $scope.settlementsSelected.map(function(item){
                     return item.id;
-                }),
+                }).join(','),
 				cardProductIds: $scope.productsSelected.map(function(item){
                     return item.id;
-                }),
+                }).join(','),
 				currency: 'BRL',
 				sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
@@ -129,7 +134,7 @@
             });
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-			TransactionService.getTransactionByFilter(filter).then(function(response){
+			TransactionService.getTransactionByFilter(filter).then(function(response) {
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
                 $scope.analytical.items = data;
@@ -179,11 +184,14 @@
 			$scope.currentPage = 0;
 			$scope.sort = "";
             $rootScope.alerts = [];
+			$scope.productsSelected = this.productsSelected = [];
+			$scope.settlementsSelected = this.settlementsSelected = [];
 
 			switch(tab) {
 				case 1:
 					if($scope.synthetic.items) {
 						if(!$scope.synthetic.items.length) {
+                            $scope.sort = 'id,DESC';
 							$scope.getSynthetic();
 						}
 					}
@@ -226,15 +234,16 @@
 			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 		};
 
-		$scope.clearSyntheticFilter = function() {
+		function clearSyntheticFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
+			document.getElementById('buscaTerminal').value = '';
 		};
 
-		$scope.clearAnalyticalFilter = function() {
+		function clearAnalyticalFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -242,9 +251,11 @@
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
+			document.getElementById('buscaTerminal2').value = '';
+			document.getElementById('naturezaProduto').value = '';
 		};
 
-		$scope.clearDuplicateFilter = function() {
+		function clearDuplicateFilter () {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -252,6 +263,8 @@
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
+			document.getElementById('buscaTerminal3').value = '';
+			document.getElementById('naturezaProduto2').value = '';
 		};
 
 		/* pagination */

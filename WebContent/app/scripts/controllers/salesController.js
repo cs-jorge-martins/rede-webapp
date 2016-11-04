@@ -574,8 +574,8 @@ angular.module('Conciliador.salesController',[])
 		$scope.settlementsSelected = [];
 		$scope.productsSelected = [];
 		$scope.natureza = 0;
-
-		this.getFinancials();
+		document.getElementById("buscaTerminal").value = '';
+		document.getElementById("naturezaProduto").value = '';
 	}
 
 	function downloadReport() {

@@ -40,7 +40,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 							'Conciliador.redirectController',
 							'Conciliador.receiptsExpectedDetailsController',
                             'ngFileSaver',
-                            'Conciliador.appConfig'
+                            'Conciliador.appConfig',
+                            'Conciliador.customCurrency'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
@@ -112,8 +113,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
             }
         };
     });
-
-
 }]).run(function(Restangular, $location, $rootScope, $window, $modal, userService, cacheService) {
 
 	Restangular.setResponseInterceptor(function (data, operation, what, url, response, deferred) {

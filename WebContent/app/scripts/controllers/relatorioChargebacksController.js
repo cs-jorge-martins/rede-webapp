@@ -155,6 +155,7 @@
 			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.settlementsSelected = [];
 			$scope.adjustType = ['CANCELLATION'];
+			document.getElementById("buscaTerminal").value = '';
 		}
 
 		function handleResponse(response) {

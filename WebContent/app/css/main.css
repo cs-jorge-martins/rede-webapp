@@ -5748,6 +5748,7 @@ input[type=reset]:hover, input[type=submit]:hover, input[type="button"]:hover,  
 	background-image: none;
 	-webkit-appearance: none;
 	cursor: pointer;
+    -moz-appearance: inherit;
 }
 select:focus {
 	outline: none;
@@ -8915,7 +8916,7 @@ footer nav.fixed {
     font-size: 12px;
 }
 
-#details table.sortTable {
+.vendasDetalhe #details table.sortTable {
     margin:15px auto 0!important;
     width:970px!important;
 }
@@ -9772,7 +9773,11 @@ div.checkbox-toggle-right {
 .filterShiny ul li.center {
     margin:0 15px!important;
 }
-.filterShiny ul li.center input, .filterShiny ul li #naturezaProduto, .filterShiny ul #buscaTerminal {
+.filterShiny ul li.center input, 
+.filterShiny ul li #naturezaProduto, 
+.filterShiny ul li #naturezaProduto2,  
+.filterShiny ul #buscaTerminal,
+.filterShiny ul #buscaTerminal2 {
     width:89%;
     background: transparent;
     color:#ccc;
@@ -9782,7 +9787,11 @@ div.checkbox-toggle-right {
     font-weight: normal;
 }
 
-.filterShiny ul #buscaTerminal ~ ul li, .filterShiny ul #naturezaProduto ~ ul li  {
+.filterShiny ul #buscaTerminal ~ ul li, 
+.filterShiny ul #naturezaProduto ~ ul li,
+.filterShiny ul #buscaTerminal2 ~ ul li, 
+.filterShiny ul #naturezaProduto2 ~ ul li,
+.filterShiny ul #buscaTerminal3 ~ ul li {
     height: 30px;
     background: #c6e6e0;
     position: relative;

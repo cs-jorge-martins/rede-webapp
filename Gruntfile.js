@@ -218,6 +218,8 @@ module.exports = function(grunt) {
 
                     "WebContent/app/scripts/factories/requestFactory.js",
 
+                    "WebContent/app/scripts/filters/currencyFilter.js",
+
                     "WebContent/app/tours/dashboard/dashboardTour.js",
                     "WebContent/app/tours/resumoConciliacao/resumoConciliacaoTour.js",
                     "WebContent/app/tours/resumoConciliacao/resumoConciliacaoAnaliticoTour.js",

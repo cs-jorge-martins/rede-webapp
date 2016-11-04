@@ -10,6 +10,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 })
 
+
 .controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, transactionsService, $window, userService, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService){
 
@@ -433,9 +434,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						$scope.discountedTotal = discount;
 						$scope.antecipatedTotal = antecipatedTotal;
 						$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
-
-
-
+					
 					}).catch(function(response) {
 						console.log('[receiptsController:getSummaries] error');
 					});
