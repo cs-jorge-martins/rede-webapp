@@ -9,13 +9,11 @@
 	<div class="date">
 		<h2>relatório de vendas</h2>
 	</div>
-
 	<br />
 
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
 
 	<div id="primaryContent">
-
 		<!-- relatorio sintetico -->
 		<tabset>
 			<tab heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
@@ -73,7 +71,7 @@
 									<th width="270" ng-click="sortResults($event,'cardProduct.name', 'sintetico')">produto</th>
 									<th width="270" ng-click="sortResults($event,'id', 'sintetico')">cupons</th>
 									<th width="260" ng-click="sortResults($event,'gross', 'sintetico')">faturamento (R$)</th>
-									<th ng-click="sortResults($event,'gross', 'sintetico')">percentual</th>
+									<th ng-click="sortResults($event,'id', 'sintetico')">percentual</th>
 								</tr>
 							</thead>
 
@@ -87,45 +85,6 @@
 							</tbody>
 						</table>
 						<span class="alert" ng-show="synthetic.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
-						<div class="footer">
-							<div class="optionsWrapper">
-								<div class="selectWrapper">
-									<label for="totalItensPageSynthetic">resultados por página</label>
-									<div class="select">
-										<select ng-model="totalItensPageSynthetic" ng-change="totalItensPageChangedSynthetic()" id="totalItensPage">
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="50">50</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="paginationWrapper">
-									<pagination
-										total-items="totalItensSynthetic"
-										ng-model="currentPageSynthetic"
-										ng-change="pageChangedSynthetic()"
-										max-size="maxSize"
-										items-per-page="totalItensPageSynthetic"
-										rotate="false"
-										class="pagination-sm"
-										boundary-links="true"
-										previous-text="&lsaquo;"
-										next-text="&rsaquo;"
-										first-text="&laquo;"
-										last-text="&raquo;">
-									</pagination>
-								</div>
-
-								<!-- descomentar ao inserir exportação de relatórios -->
-								<!-- <div class="export-report-sales">
-								    <strong>Exportar como:</strong>
-								    <ul>
-								        <li><a href="#"><img src="/app/img/ico-excel.png" alt=""></a></li>
-								    </ul>
-								</div> -->
-							</div>
-						</div>
 					</div>
 				</article>
 			</tab>
@@ -148,7 +107,7 @@
 													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.finalDate" is-open="openLastAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateAnalitical(analytical.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastAnalitical = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
-													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
+													<input id="buscaTerminal2" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="addSettlementsSearch(settlement)" typeahead="item as item.code for item in getSettlements()"/>
 													<ul ng-repeat="item in settlementsSelected">
 														<li>
 															<h4>{{item.code}}</h4>
@@ -225,12 +184,14 @@
 								</div>
 
 								<!-- descomentar ao inserir exportação de relatórios -->
-								<!-- <div class="export-report-sales">
+								<div class="export-report-sales">
 								    <strong>Exportar como:</strong>
 								    <ul>
-								        <li><a href="#"><img src="/app/img/ico-excel.png" alt=""></a></li>
+										<li><div id="export-report-sales-excel" title="Exportar como Excel" ng-click="exportAnalytical()">
+											<img src="/app/img/ico-excel.png" alt="" />
+										</div></li>
 								    </ul>
-								</div> -->
+								</div>
 							</div>
 						</div>
 					</div>
@@ -256,7 +217,7 @@
 													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.finalDate" is-open="openLastduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateDuplicate(duplicate.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastduplicate = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
-													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+													<input id="buscaTerminal3" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
 														ng-model="settlement"
 														typeahead-on-select="addSettlementsSearch(settlement)"
 														typeahead="item as item.code for item in getSettlements()"/>
@@ -268,7 +229,7 @@
 													</ul>
 												</li>
 												<li class="itauicon-itaufonts_cartao">
-													<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{getPlaceholderFlag(productsSelected)}}"
+													<input id="naturezaProduto2" name="naturezaProduto" type="text" placeholder="{{getPlaceholderFlag(productsSelected)}}"
 														ng-model="product"
 														typeahead-on-select="addProductsSearch(product)"
 														typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>

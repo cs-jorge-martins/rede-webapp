@@ -9,7 +9,7 @@ angular.module('KaplenWeb.gestaoController',['ui.bootstrap'])
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParansByFilter();
+	$scope.loadParamsByFilter();
 
 	menuFactory.setActiveGestao();
 
@@ -523,7 +523,7 @@ angular.module('KaplenWeb.gestaoController',['ui.bootstrap'])
 		};
 
 		$scope.clearAdvancedFilterGestao = function() {
-			$scope.loadParansByFilter();
+			$scope.loadParamsByFilter();
 		};
 
 });

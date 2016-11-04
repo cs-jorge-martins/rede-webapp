@@ -3885,6 +3885,11 @@ article {
 .export-report-sales ul li a {
     float: left;
 }
+
+.export-report-sales #export-report-sales-excel {
+	cursor: pointer;
+}
+
 /** detalhes */
 #detalhes table {
 	width: 100%;
@@ -5743,6 +5748,7 @@ input[type=reset]:hover, input[type=submit]:hover, input[type="button"]:hover,  
 	background-image: none;
 	-webkit-appearance: none;
 	cursor: pointer;
+    -moz-appearance: inherit;
 }
 select:focus {
 	outline: none;
@@ -8909,6 +8915,11 @@ footer nav.fixed {
     width: 930px;
     font-size: 12px;
 }
+
+.vendasDetalhe #details table.sortTable {
+    margin:15px auto 0!important;
+    width:970px!important;
+}
 #details tfoot {
 	font-weight: bold;
 }
@@ -9766,7 +9777,11 @@ div.checkbox-toggle-right {
 .filterShiny ul li.center {
     margin:0 15px!important;
 }
-.filterShiny ul li.center input, .filterShiny ul li #naturezaProduto, .filterShiny ul #buscaTerminal {
+.filterShiny ul li.center input, 
+.filterShiny ul li #naturezaProduto, 
+.filterShiny ul li #naturezaProduto2,  
+.filterShiny ul #buscaTerminal,
+.filterShiny ul #buscaTerminal2 {
     width:89%;
     background: transparent;
     color:#ccc;
@@ -9776,7 +9791,11 @@ div.checkbox-toggle-right {
     font-weight: normal;
 }
 
-.filterShiny ul #buscaTerminal ~ ul li, .filterShiny ul #naturezaProduto ~ ul li  {
+.filterShiny ul #buscaTerminal ~ ul li, 
+.filterShiny ul #naturezaProduto ~ ul li,
+.filterShiny ul #buscaTerminal2 ~ ul li, 
+.filterShiny ul #naturezaProduto2 ~ ul li,
+.filterShiny ul #buscaTerminal3 ~ ul li {
     height: 30px;
     background: #c6e6e0;
     position: relative;
@@ -10164,6 +10183,17 @@ div.checkbox-toggle-right {
     padding: 20px 0;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
+}
+#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
+    content: "\2039";
+    top:0;
+    right:0;
+    position: absolute;
+    transform: rotate(90deg);
+    font-size:24px;
+}
+#receiptsDetails table.table th::before {
+    transform: rotate(180deg);
 }
 
 #receiptsDetails .table th span.orderby,
