@@ -32,7 +32,7 @@
 		/* pagination */
 		$scope.maxSize = 4;
 
-		$scope.totalItensPageSynthetic = 10;
+		$scope.totalItensPageSynthetic = 50;
         $scope.currentPageSynthetic = 0;
 		$scope.totalItensSynthetic = 0;
 
@@ -133,7 +133,7 @@
             });
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-			TransactionService.getTransactionByFilter(filter).then(function(response){
+			TransactionService.getTransactionByFilter(filter).then(function(response) {
                 var data = handleResponse(response.data.content);
                 var pagination = response.data.page;
                 $scope.analytical.items = data;
@@ -183,6 +183,8 @@
 			$scope.currentPage = 0;
 			$scope.sort = "";
             $rootScope.alerts = [];
+			$scope.productsSelected = this.productsSelected = [];
+			$scope.settlementsSelected = this.settlementsSelected = [];
 
 			switch(tab) {
 				case 1:

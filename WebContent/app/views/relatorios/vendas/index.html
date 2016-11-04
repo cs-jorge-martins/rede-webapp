@@ -85,45 +85,6 @@
 							</tbody>
 						</table>
 						<span class="alert" ng-show="synthetic.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
-						<div class="footer">
-							<div class="optionsWrapper">
-								<div class="selectWrapper">
-									<label for="totalItensPageSynthetic">resultados por página</label>
-									<div class="select">
-										<select ng-model="totalItensPageSynthetic" ng-change="totalItensPageChangedSynthetic()" id="totalItensPage">
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="50">50</option>
-										</select>
-									</div>
-								</div>
-
-								<div class="paginationWrapper">
-									<pagination
-										total-items="totalItensSynthetic"
-										ng-model="currentPageSynthetic"
-										ng-change="pageChangedSynthetic()"
-										max-size="maxSize"
-										items-per-page="totalItensPageSynthetic"
-										rotate="false"
-										class="pagination-sm"
-										boundary-links="true"
-										previous-text="&lsaquo;"
-										next-text="&rsaquo;"
-										first-text="&laquo;"
-										last-text="&raquo;">
-									</pagination>
-								</div>
-
-								<!-- descomentar ao inserir exportação de relatórios -->
-								<!-- <div class="export-report-sales">
-								    <strong>Exportar como:</strong>
-								    <ul>
-								        <li><a href="#"><img src="/app/img/ico-excel.png" alt=""></a></li>
-								    </ul>
-								</div> -->
-							</div>
-						</div>
 					</div>
 				</article>
 			</tab>
