@@ -243,7 +243,6 @@ module.exports = function(grunt) {
             files: '<%= concat.dist.src %>',
             tasks: ['concat']
         }
-
     });
 
 	grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
