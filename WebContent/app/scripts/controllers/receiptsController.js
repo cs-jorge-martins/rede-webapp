@@ -4,17 +4,6 @@ angular.module('KaplenWeb.movementsModule',[])
 	$routeProvider.when('/receipts', {templateUrl: 'app/views/receipts.html', controller: 'receiptsController'});
 }])
 
-// .filter('customCurrency', ['$filter', function($filter){
-// 	return function (amount, currencySymbol) {
-// 		var currency = $filter('currency');
-// 		console.log(amount)
-// 		if(amount < 0) {
-// 			return currency(amount, currencySymbol).replace("(", "-").replace(")", "");
-// 		} 
-// 		return amount;
-// 	}
-// }])
-
 .filter('capitalize', function() {
 	return function(input) {
 		return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
