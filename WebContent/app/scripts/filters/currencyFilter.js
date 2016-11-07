@@ -5,7 +5,8 @@ angular.module('Conciliador.customCurrency',[])
 		var currency = $filter('currency');
 		if(amount < 0) {
 			return currency(amount, currencySymbol).replace("(", "-").replace(")", "");
-		} 
-		return amount;
+		} else {
+			return currency(amount, currencySymbol);
+		}
 	}
 }])
