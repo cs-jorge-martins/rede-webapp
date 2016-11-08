@@ -10825,6 +10825,7 @@ div.checkbox-toggle-right {
     text-align: left;
     padding-left: 15px!important;
     cursor: auto;
+    min-width: 145px;
 }
 #integration article ul li aside table.filesTable thead tr {
     background:#ddd;
