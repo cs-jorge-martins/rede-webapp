@@ -6,7 +6,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 .controller('receiptsDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService){
-
+		
 		var filter = {};
 		init();
 

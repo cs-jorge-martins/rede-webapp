@@ -44,6 +44,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 		$scope.items = [];
 		$scope.total = 0;
 		$scope.concilieItems = [];
+		$scope.concilieItemsId = [];
 
 		$scope.maxSize = 4;
 
@@ -153,6 +154,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 				$scope.concilieItems.splice(index, 1);
 			} else {
 				$scope.concilieItems.push(item);
+				$scope.concilieItemsId.push(item.id);
 			}
 
 			if($scope.concilieItems.length) {
@@ -215,6 +217,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 					$scope.items = items;
 					$scope.noItensMsg = $scope.items.length === 0 ? true : false;
 					$scope.totalItens = pagination.totalElements;
+
 				} else {
 					back();
 				}

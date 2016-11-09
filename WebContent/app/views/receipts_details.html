@@ -243,7 +243,7 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in salesData">
-									<td>{{ item.date | utc | date: 'dd/MM/yyyy h:mma' }}</td>
+									<td>{{ item.date | utc | date: 'dd/MM/yyyy HH:mm' }}</td>
 									<td>{{ item.transactionNsu }}</td>
 									<td>R$ {{ item.transactionGross | currency:'' }}</td>
 									<td>R$ {{ item.installmentPayedAmount | currency:'' }}</td>

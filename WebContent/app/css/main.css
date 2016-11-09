@@ -8918,7 +8918,6 @@ footer nav.fixed {
 
 .vendasDetalhe #details table.sortTable {
     margin:15px auto 0!important;
-    width:970px!important;
 }
 #details tfoot {
 	font-weight: bold;
@@ -10121,17 +10120,6 @@ div.checkbox-toggle-right {
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
-#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
-    content: "\2039";
-    top:0;
-    right:0;
-    position: absolute;
-    transform: rotate(90deg);
-    font-size:24px;
-}
-#receiptsDetails table.table th::before {
-    transform: rotate(180deg);
-}
 
 #receiptsDetails .table th span.orderby,
 .xpecial_table.table th span.orderby {
@@ -10399,45 +10387,7 @@ div.checkbox-toggle-right {
     text-align: center;
     padding-right: 30px;
 }
-#receipts .brand_2, #receiptsDetails .brand_2{
-    width: 44px;
-    background-position-x: -94px;
-}
 
-#receipts .brand_3, #receipts .brand_21{
-    width: 44px;
-    background-position-x: -368px;
-}
-#receipts .brand_4, #receipts .brand_8{
-    width: 34px;
-    background-position-x: -52px;
-}
-#receipts .brand_5{
-    width: 45px;
-    background-position-x: -139px;
-}
-/* maestro */
-#receipts .brand_6, #receiptsDetails .brand_6{
-    width: 54px;
-    background-position-x: -413px;
-}
-
-/* union pay */
-#receipts .brand_97, #receiptsDetails .brand_97{
-    width: 47px;
-    background-position-x: -466px;
-}
-
-/* sicredi */
-#receipts .brand_24, #receipts .brand_79{
-    width: 44px;
-    background-position-x: -277px;
-}
-/* a vista */
-#receipts .brand_104{
-    width: 46px;
-    background-position-x: 0px;
-}
 .data-cards table tbody .cardFlag, #receiptsDetails .cardFlag {
     float:left;
     text-indent: 100%;
@@ -10445,44 +10395,99 @@ div.checkbox-toggle-right {
     overflow: hidden;
     height: 40px;
     margin-right: 10px;
-    background-image: url(../img/receipts-brands.png);
+    background-image: url(../img/flags.png);
     background-repeat: no-repeat;
     margin-top: 5px;
-}
-/* mastercard */
-.data-cards table tbody .brand_1, #receiptsDetails .brand_1 {
     width: 45px;
-    background-position: -230px 0;
-}
-/* visa e visa credito */
-/*.data-cards table tbody .brand_2, #receiptsDetails .brand_2,*/
-.data-cards table tbody .brand_3, #receiptsDetails .brand_3
-/*.data-cards table tbody .brand_6, #receiptsDetails .brand_6,*/
-/*.data-cards table tbody .brand_20, #receiptsDetails .brand_20,*/
-/*.data-cards table tbody .brand_28, #receiptsDetails .brand_28*/
-{
-    width: 45px;
-    background-position: -370px 0;
-}
-/* hipercard  */
- .data-cards table tbody .brand_5, #receiptsDetails .brand_5 {
-    width: 45px;
-    background-position: -138px 0;
-}
-/* visa electron */
- .data-cards table tbody .brand_7, #receiptsDetails .brand_7 {
-    width: 45px;
-    background-position: -323px 0;
-}
-/* cabal */
- .data-cards table tbody .brand_8, #receiptsDetails .brand_8 {
-    width: 45px;
-    background-position: -46px 0 ;
 }
 
+/* mastercard */
+.data-cards table tbody .brand_1, #receiptsDetails .brand_1 {
+    background-position: -720px 0;
+}
+
+/* diners */
+.data-cards table tbody .brand_2, #receiptsDetails .brand_2 {
+    background-position: -250px;
+}
+
+/* visa e visa credito */
+.data-cards table tbody .brand_3, #receiptsDetails .brand_3,
+.data-cards table tbody .brand_21, #receiptsDetails .brand_21 {
+    background-position: -1060px 0;
+}
+
+/* cabal débito e cabal crédito */
+.data-cards table tbody .brand_4, #receiptsDetails .brand_4,
 .data-cards table tbody .brand_8, #receiptsDetails .brand_8 {
-    width: 45px;
-    background-position: -46px 0 ;
+    background-position: -104px 0 ;
+}
+
+/* hipercard  */
+.data-cards table tbody .brand_5, #receiptsDetails .brand_5 {
+    background-position: -533px 0;
+}
+
+ /* maestro */
+.data-cards table tbody .brand_6, #receiptsDetails .brand_6 {
+    background-position: -622px 0;
+ } 
+
+/* visa electron */
+.data-cards table tbody .brand_7, #receiptsDetails .brand_7 {
+    background-position: -340px 0;
+}
+
+/* sorocred */
+.data-cards table tbody .brand_19, #receiptsDetails .brand_19 {
+    background-position: -870px 0;
+}
+
+/* sicredi debito e credito - nao tem imagem ainda */
+.data-cards table tbody .brand_24, #receiptsDetails .brand_24,
+.data-cards table tbody .brand_79, #receiptsDetails .brand_79 {
+    visibility: hidden;
+}
+
+/* credsystem - nao tem img ainda */
+.data-cards table tbody .brand_28, #receiptsDetails .brand_28 {
+    visibility: hidden;
+}
+
+/* banescard débito */
+.data-cards table tbody .brand_59, #receiptsDetails .brand_59,
+.data-cards table tbody .brand_96, #receiptsDetails .brand_96 {
+    background-position: -54px 0;
+}
+
+/* outras bandeiras - o que colocar ? */
+.data-cards table tbody .brand_80, #receiptsDetails .brand_80 {
+    visibility: hidden;
+}
+
+/* union pay */
+.data-cards table tbody .brand_97, #receiptsDetails .brand_97 {
+    background-position: -963px 0;
+}
+
+/* avista - nao tem img ainda */ 
+.data-cards table tbody .brand_104, #receiptsDetails .brand_104 {
+    visibility: hidden;
+}
+
+/* jcb */
+.data-cards table tbody .brand_106, #receiptsDetails .brand_106 {
+    background-position: -580px 0;
+}
+
+/* credz */
+.data-cards table tbody .brand_108, #receiptsDetails .brand_108 {
+    background-position: -195px 0;
+}
+
+/* hiper */
+.data-cards table tbody .brand_109, #receiptsDetails .brand_109 {
+    background-position: -485px 0;
 }
 
 .data-cards table tbody .inset-1 {
@@ -10819,6 +10824,7 @@ div.checkbox-toggle-right {
     text-align: left;
     padding-left: 15px!important;
     cursor: auto;
+    min-width: 145px;
 }
 #integration article ul li aside table.filesTable thead tr {
     background:#ddd;
