@@ -10054,6 +10054,28 @@ div.checkbox-toggle-right {
     color: #575758;
 }
 
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas {
+    height: 200px;
+    padding: 26px 32px 0;
+}
+
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date {
+    line-height: normal;
+    margin-top: 20px;
+}
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
+    font-size: 72px;
+}
+
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper {
+    display: block;
+}
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:first-child {
+    width: 100%;
+    font-size: 12px;
+    display: inline-table;
+}
+
 #receiptsDetails .data-cards .numbers-data {
     padding: 38px 35px 30px;
 }
@@ -10183,17 +10205,6 @@ div.checkbox-toggle-right {
     padding: 20px 0;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
-}
-#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
-    content: "\2039";
-    top:0;
-    right:0;
-    position: absolute;
-    transform: rotate(90deg);
-    font-size:24px;
-}
-#receiptsDetails table.table th::before {
-    transform: rotate(180deg);
 }
 
 #receiptsDetails .table th span.orderby,
@@ -11344,9 +11355,27 @@ section#integration .rcDatepicker tbody td {
 }
 
 #pagamentosNaoRecebidosTitleColumn{
-    background: url(../img/icons/rsz_2exclamation.png) no-repeat;
-    background-position: 210px 6px;
+    background: url(../img/icons/exclamation.png) no-repeat;
+    background-position: 24px center;
 }
+
+.data-cards .expectedReleases table tr {
+    background: #ff7800;
+    color: #fff;
+}
+
+.data-cards .expectedReleases table tr th:first-child{
+    text-align: left !important;
+    padding: 3px 0 3px 75px !important;
+}
+.data-cards .expectedReleases table tr th:last-child{
+    text-align: right !important;
+    padding: 3px 75px 3px 0 !important;
+}
+.data-cards .expectedReleases table tr th:last-child a{
+    color:#fff;
+}
+
 
 .cursor_pointer{
     cursor: pointer;

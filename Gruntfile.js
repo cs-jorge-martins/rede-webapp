@@ -180,6 +180,7 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/controllers/integrationController.js",
                     "WebContent/app/scripts/controllers/receiptsController.js",
                     "WebContent/app/scripts/controllers/receiptsDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsExpectedDetailsController.js",
                     "WebContent/app/scripts/controllers/redirectController.js",
 
                     "WebContent/app/scripts/service/dashboardService.js",

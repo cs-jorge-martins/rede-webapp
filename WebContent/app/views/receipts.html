@@ -40,6 +40,16 @@
 
                         <!-- LANCAMENTOS ATUAIS INIT -->
                         <article class="data-cards">
+                            <div class="expectedReleases">
+                                <table ng-repeat="item in actualReleasesData" id="receipts_table">
+                                    <tr class="group" ng-show="item.expectedReleases.length">
+                                        <th id="pagamentosNaoRecebidosTitleColumn">existem pagamentos não recebidos nesta data</th>
+                                        <th>
+                                            <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'expected_details')">detalhes</a>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
                             <div class="header-datas">
                                 <div class="date">
                                     <span class="number">{{actualReleases.day}}</span>
@@ -149,24 +159,6 @@
                                         <th></th>
                                     </tr>
                                 </tbody>
-
-                                <tr class="group" ng-show="item.expectedReleases.length">
-                                    <th></th>
-                                    <th id="pagamentosNaoRecebidosTitleColumn">pagamentos não recebidos</th>
-                                    <th>{{ item.expectedReleasesTotal | currency}}</th>
-                                    <th>
-                                        <!--<a ng-click="showDetails(item.acquirer, item.expectedReleases)" href="#/receipts/details">detalhes</a>-->
-                                    </th>
-                                </tr>
-                                 <tbody ng-show="item.expectedReleases">
-                                    <tr ng-repeat="expectedRelease in item.expectedReleases" class="card-product-line">
-                                        <th class="except"></th>
-                                        <th><div class="cardFlag brand_{{ expectedRelease.cardProduct.id }}"></div>{{ expectedRelease.cardProduct.name | capitalize }}</th>
-                                        <th> {{ expectedRelease.expectedAmount | number: 02 }} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-
 
                                 <!--
                                 <tbody ng-repeat="cardProduct in acquirer.cardProducts">
