@@ -8918,7 +8918,6 @@ footer nav.fixed {
 
 .vendasDetalhe #details table.sortTable {
     margin:15px auto 0!important;
-    width:970px!important;
 }
 #details tfoot {
 	font-weight: bold;
@@ -10121,17 +10120,6 @@ div.checkbox-toggle-right {
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
-#receiptsDetails table.table th::after, #receiptsDetails table.table th::before {
-    content: "\2039";
-    top:0;
-    right:0;
-    position: absolute;
-    transform: rotate(90deg);
-    font-size:24px;
-}
-#receiptsDetails table.table th::before {
-    transform: rotate(180deg);
-}
 
 #receiptsDetails .table th span.orderby,
 .xpecial_table.table th span.orderby {
@@ -10836,6 +10824,7 @@ div.checkbox-toggle-right {
     text-align: left;
     padding-left: 15px!important;
     cursor: auto;
+    min-width: 145px;
 }
 #integration article ul li aside table.filesTable thead tr {
     background:#ddd;
