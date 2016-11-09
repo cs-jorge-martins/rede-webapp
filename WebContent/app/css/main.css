@@ -11484,3 +11484,7 @@ th.sortDesc:after{
 th.sortAsc:after{
     background-position: -5px -5px;
 }
+
+.toLowerCase{
+    text-transform: lowercase;
+}

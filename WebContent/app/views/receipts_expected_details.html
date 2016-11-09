@@ -35,7 +35,7 @@
 	<div id="primaryContent">
 		<div id="details">
 			<tabset>
-				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0, tabs[0].id)" id="botaoConciliacaoDiaTour">
+				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
 					<article>
 						<table class="table sortTable">
 							<thead>
@@ -50,11 +50,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>bandeira..</td>
-									<td>débito</td>
+								<tr ng-repeat="details in detailsData">
+									<td>
+										<div class="cardFlag brand_{{details.cardProductCode}}"></div>
+									</td>
+									<td class="toLowerCase">{{details.cardProductType}}</td>
 									<td>cancelado</td>
-									<td>11/09</td>
+									<td>{{details.roDate | date:'dd/MM'}}</td>
 									<td>9898989898989898</td>
 									<td>R$ 1000.000.000,00</td>
 									<td>13131231312313</td>
@@ -93,17 +95,6 @@
 						</div>
 					</article>
 				</tab>
-
-
-				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1, tabs[1].id)" id="botaoConciliacaoDiaTour">
-
-				</tab>
-
-				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2, tabs[2].id)" id="botaoConciliacaoDiaTour">
-
-				</tab>
-
-
 			</tabset>
 		</div>
 	</div>

@@ -5,7 +5,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 }])
 
 .controller('receiptsExpectedDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
-     advancedFilterService, $location, FinancialService){
+     advancedFilterService, $location, FinancialService, MovementSummaryService){
 
 		var filter = {};
 		init();
@@ -25,37 +25,52 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-				$scope.tabs = [
-					{
-						title: 'Rede',
-						id: 1,
-						active: true
-					},
-					{
-						title: 'Cielo',
-						id: 2
-					},
-					{
-						title: 'GetNet',
-						id: 3
-					}
-				];
-
 				$scope.maxSize = 4;
 
-				$scope.salesData = [];
+				$scope.detailsData = [];
 				$scope.salesTotalItensPage = 10;
 				$scope.salesTotalItens = 0;
 				$scope.salesCurrentPage = 0;
 
 				$scope.back = back;
 				$scope.changeTab = changeTab;
+				$scope.tabs = [];
+
+				getExpectedAcquirers();
 			}
 		}
 
 	    function back(){
 	        $location.path('/receipts');
 	    }
+
+	    function getExpectedAcquirers() {
+
+			var date = calendarFactory.formatDateTimeForService($scope.startDate);
+			var expectedAcquirersFilter = {
+				groupBy: "ACQUIRER",
+				status: "EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED",
+				startDate: date,
+				endDate: date
+			};
+
+			MovementSummaryService.listMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
+
+				var obj;
+				var content = response.data.content;
+				for (var i=0; i<content.length; i++) {
+					obj = {
+						id: content[i].acquirer.id,
+						title: content[i].acquirer.name
+					};
+					$scope.tabs.push(obj);
+				}
+
+			}).catch(function (response) {
+
+			});
+
+		}
 
 	    function getExpectedDetails(acquirer_id) {
 
@@ -70,11 +85,11 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				var data = response.data.content;
 				var pagination = response.data.page;
 
-				$scope.salesData = data;
+				$scope.detailsData = data;
 				$scope.salesTotalItens = pagination.totalElements;
 
 			}).catch(function(response) {
-				$scope.salesData = [];
+				$scope.detailsData = [];
 				console.log('[receiptsDetailsController:getSales] error');
 			});
 	    }
