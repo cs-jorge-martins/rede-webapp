@@ -127,14 +127,14 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 	        $location.path('/receipts');
 	    }
 
-	    function getSales(cache) {
+	    function getExpectedDetails(cache) {
 
-			filter.type = 'CREDIT';
 			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
 			filter.size =  $scope.salesTotalItensPage;
 			filter.sort = $scope.sort;
+			filter.acquirer = "1"
 
-			FinancialService.getReceipt(filter).then(function(response) {
+			FinancialService.getExpectedDetails(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 
