@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 describe('Conciliador', function() {
 
     beforeEach(module('KaplenWeb'));

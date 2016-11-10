@@ -1,4 +1,8 @@
-/*! HTML5 Boilerplate v5.0 | MIT License | http://h5bp.com/ */
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
 
 @font-face {
     font-family: 'open_sansitalic';
@@ -420,7 +424,7 @@ body.newHeaderAndFooter #login form#loginForm{
     margin-top: 0;
 }
 body.newHeaderAndFooter .container{
-    width: 1126px;    
+    width: 1126px;
     padding-left: 50px;
     padding-right: 50px;
 }
@@ -492,7 +496,7 @@ body.newHeaderAndFooter #login form {
     border: 1px solid #ddd;
 }
 
-body.newHeaderAndFooter #login form label, 
+body.newHeaderAndFooter #login form label,
 body.newHeaderAndFooter #login form h2 {
     color: #FD7822;
     font-size: 16px;
@@ -705,19 +709,19 @@ body.newHeaderAndFooter .dropdown-menu.dropdown-menu-produtos{
     top: 77px;
 }
 
-body.newHeaderAndFooter .navbar-nav li.dropdown>a, 
-body.newHeaderAndFooter .navbar-nav li.dropdown>a:hover, 
+body.newHeaderAndFooter .navbar-nav li.dropdown>a,
+body.newHeaderAndFooter .navbar-nav li.dropdown>a:hover,
 body.newHeaderAndFooter .navbar-nav li.dropdown>a:active {
     float: left;
     color: #4D4D4D;
     padding: 30px 12px;
 }
 
-body.newHeaderAndFooter .input-group, 
-body.newHeaderAndFooter .input-group-btn, 
-body.newHeaderAndFooter .input-group-btn>.btn, 
-body.newHeaderAndFooter .nav>li, 
-body.newHeaderAndFooter .nav>li>a, 
+body.newHeaderAndFooter .input-group,
+body.newHeaderAndFooter .input-group-btn,
+body.newHeaderAndFooter .input-group-btn>.btn,
+body.newHeaderAndFooter .nav>li,
+body.newHeaderAndFooter .nav>li>a,
 body.newHeaderAndFooter .navbar {
     position: relative;
 }
@@ -741,7 +745,7 @@ body.newHeaderAndFooter header .navbar-nav {
     margin: 0 -15px 0 0;
 }
 
-body.newHeaderAndFooter header.home .navbar-nav li.dropdown.open>a, 
+body.newHeaderAndFooter header.home .navbar-nav li.dropdown.open>a,
 body.newHeaderAndFooter header.home .navbar-nav li.dropdown.open>a:hover {
     color: #4d4d4d;
 }
@@ -749,8 +753,8 @@ body.newHeaderAndFooter header.home .navbar-nav li.dropdown>a {
     color: #4d4d4d;
     float: left;
 }
-body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a, 
-body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a:hover, 
+body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a,
+body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a:hover,
 body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a:focus {
     float: left;
     margin: 0px 12px 0 0;
@@ -833,8 +837,8 @@ body.newHeaderAndFooter *, :after, :before {
 body.newHeaderAndFooter .dropdown-menu .col-links > ul {
     margin-bottom: 20px;
 }
-body.newHeaderAndFooter .dropdown-menu .col-links > ul, 
-body.newHeaderAndFooter .dropdown-menu .col-links > ul > .ul-title > a, 
+body.newHeaderAndFooter .dropdown-menu .col-links > ul,
+body.newHeaderAndFooter .dropdown-menu .col-links > ul > .ul-title > a,
 body.newHeaderAndFooter .dropdown-menu .col-links > ul > .ul-title > a:visited {
     font-family: 'open_sansbold', sans-serif;
     color: #ff7800;
@@ -849,7 +853,7 @@ body.newHeaderAndFooter header li a{
     color: rgb(77, 77, 77);
 }
 
-body.newHeaderAndFooter header li a.active, 
+body.newHeaderAndFooter header li a.active,
 body.newHeaderAndFooter header li a:hover{
     text-decoration: underline;
 }
@@ -868,7 +872,7 @@ body.newHeaderAndFooter .dropdown-menu .col-links > ul > li {
     padding: 0 0 0 9px;
 }
 
-body.newHeaderAndFooter .dropdown-menu .col-links > ul > li > a:before, 
+body.newHeaderAndFooter .dropdown-menu .col-links > ul > li > a:before,
 body.newHeaderAndFooter .dropdown-menu .col-links > ul > li > a > div {
     content: "";
     float: left;
@@ -881,8 +885,8 @@ body.newHeaderAndFooter .dropdown-menu .col-links > ul > li > a > div {
 
 body.newHeaderAndFooter header ul {
      position: inherit;
-     margin-top: 0; 
-     height: auto; 
+     margin-top: 0;
+     height: auto;
 }
 
 body.newHeaderAndFooter #ourProductsButton:hover {

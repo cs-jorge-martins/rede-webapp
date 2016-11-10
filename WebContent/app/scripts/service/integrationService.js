@@ -1,15 +1,21 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.integrationService',[])
 	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
-	
+
 }])
 
 .service('integrationService', function(app, $http, Restangular, Request) {
-	/* usados no resumoConciliacaoController */	
+	/* usados no resumoConciliacaoController */
 	this.checkIntegration = function(type, dataInicial, dataFinal, acquirers, settlements, scope, company, currency){
 		return Restangular.one('integration/check/').get({type:type, initialDate:dataInicial, finalDate:dataFinal, acquirers:acquirers, settlements:settlements, scope:scope,
 			companyId:company, currency:currency});
 	};
-	
+
 	this.checkIntegrationConfigured = function(type, scope, companyId){
 		return Restangular.one('integration/checkConfigured/').get({type:type, scope:scope, companyId:companyId});
 	};
@@ -40,10 +46,10 @@ angular.module('KaplenWeb.integrationService',[])
 
 		return $http({
 			url: app.endpoint + '/integration/financials',
-			method: "GET", 
+			method: "GET",
 			params: params,
 			headers: Request.setHeaders()
 		})
 	}
-		
+
 });

@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate',
                             'ui.utils.masks', 'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
@@ -8,28 +14,24 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'KaplenWeb.resumoConciliacaoService',
                             'KaplenWeb.transactionsService',
                             'KaplenWeb.loginController', 'KaplenWeb.loginService',
-                            'KaplenWeb.filtersService', 'KaplenWeb.gestaoController',
+                            'KaplenWeb.filtersService',
                             'KaplenWeb.relatorioVendasController',
                             'KaplenWeb.relatorioFinanceiroController',
                             'KaplenWeb.relatorioAjustesController',
                             'KaplenWeb.relatorioChargebacksController',
-                            'KaplenWeb.relatorioController', 'KaplenWeb.relatorioService',
-                            'KaplenWeb.taxaAdministracaoController', 'KaplenWeb.taxaAdministracaoService',
-							'KaplenWeb.cartaCancelamentoService',
-                            'KaplenWeb.movementsTaxController',
-                            'KaplenWeb.movementsReceiptController',
+                            'KaplenWeb.relatorioService',
+                            'KaplenWeb.taxaAdministracaoService',
 							'KaplenWeb.movementsModule', 'KaplenWeb.movementsService',
 							'KaplenWeb.kaplenAdminService','KaplenWeb.cacheService',
 							'KaplenWeb.installmentsService', 'chieffancypants.loadingBar',
-							'KaplenWeb.userManager','KaplenWeb.userService',
+							'KaplenWeb.userService',
 							'KaplenWeb.settlementManager','KaplenWeb.settlementService',
 							'KaplenWeb.terminalsManager','KaplenWeb.terminalService',
 							'KaplenWeb.integrationService', 'KaplenWeb.advancedFilterService',
-							'KaplenWeb.envioEmailController', 'KaplenWeb.calendarService',
-							'KaplenWeb.optionsManager', 'KaplenWeb.optionsService',
+							'KaplenWeb.calendarService',
 							'KaplenWeb.Request', 'KaplenWeb.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
-                            'Conciliador.FinancialService', 'Conciliador.FinancialFilter',
+                            'Conciliador.FinancialService',
                             'Conciliador.MovementSummaryService', 'Conciliador.MovementSummaryFilter',
                             'Conciliador.AdjustSummaryService', 'Conciliador.TransactionService',
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
@@ -229,17 +231,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 
 	$rootScope.help = function(){
-		if($rootScope.activeDashboard){
-			restartDashboardTour(userService);
-		}else if($rootScope.activeResumoConciliacao){
-			restartResumoConciliacaoTour(userService);
-		}else if($rootScope.activeMovements){
-			restartFinanceiroTour(userService);
-		}else if($rootScope.activeGestao){
-			restartGestaoTour(userService);
-		}else if($rootScope.activeReports){
-			alert("Em construção");
-		}
 	};
 
 	$rootScope.restartAlerts = function(){
@@ -926,13 +917,13 @@ app.filter('utc', function(){
 
   return function(val){
     var date = new Date(val);
-     return new Date(date.getUTCFullYear(), 
-                     date.getUTCMonth(), 
-                     date.getUTCDate(),  
-                     date.getUTCHours(), 
-                     date.getUTCMinutes(), 
+     return new Date(date.getUTCFullYear(),
+                     date.getUTCMonth(),
+                     date.getUTCDate(),
+                     date.getUTCHours(),
+                     date.getUTCMinutes(),
                      date.getUTCSeconds());
-  };    
+  };
 
 });
 function getDominio(extension) {
@@ -940,5 +931,3 @@ function getDominio(extension) {
 	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
 	return url[0]+ '/'+extension+'/'; // retorna a parte www.endereco.com.br
 };
-
-

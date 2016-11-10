@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 (function() {
 	'use strict';
 
@@ -198,7 +204,7 @@
 				response = handleResponse(response.data);
 
 				if(response.length > 0) {
-                    
+
 					if(response[1][0].expectedAmount !== undefined) {
                         $scope.futureReleases = response[1][0].expectedAmount;
 					}
@@ -226,7 +232,7 @@
 					status: ['FORETHOUGHT','RECEIVED'],
 					currency: 'BRL'
 			}
-            
+
 			MovementSummaryService.listMovementSummaryByFilter(handleFilter(filter)).then(function(response) {
 				response = handleResponse(response.data);
 

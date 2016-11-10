@@ -1,4 +1,8 @@
-/*! normalize.css v1.1.2 | MIT License | git.io/normalize */article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+/*!
+	normalize.css v1.1.2 | MIT License | git.io/normalize
+*/
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
 	display: block
 }
 audio, canvas, video {
