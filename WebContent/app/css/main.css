@@ -8918,7 +8918,12 @@ footer nav.fixed {
 
 .vendasDetalhe #details table.sortTable {
     margin:15px auto 0!important;
-    width:970px!important;
+}
+.vendasDetalhe #details table.sortTable .firstThCheckbox{
+    padding-left: 32px !important;
+}
+#details .firstThCheckbox{
+    padding-left: 28px !important;
 }
 #details tfoot {
 	font-weight: bold;
@@ -10915,6 +10920,7 @@ tr.card-product-line {
     text-align: left;
     padding-left: 15px!important;
     cursor: auto;
+    min-width: 145px;
 }
 #integration article ul li aside table.filesTable thead tr {
     background:#ddd;
