@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
 angular.module('KaplenWeb.loginController',[])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -5,7 +11,7 @@ angular.module('KaplenWeb.loginController',[])
 }])
 
 .controller('loginController', function($scope, $modal, $rootScope, $window, $location,
-		Restangular, loginService, userService, optionsService, selectEmpresaService){
+		Restangular, loginService, userService){
 
 	$rootScope.destroyVariablesSession();
 
@@ -13,12 +19,12 @@ angular.module('KaplenWeb.loginController',[])
 	$scope.validarLogin = function(){
 
 		$rootScope.alerts = [];
-		
+
 		if (!$scope.usuario.login || !$scope.usuario.password) {
 			$rootScope.alerts = [{msg:"Os campos E-mail e Senha devem ser preenchidos."}];
 			return;
 		}
-		
+
 		loginService.validarLogin($scope.usuario).then(function(data) {
 			var data = data.data;
 			var user = data.user;
@@ -93,19 +99,6 @@ angular.module('KaplenWeb.loginController',[])
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
-	};
-
-	$scope.renewPassword = function() {
-		if($scope.email !== undefined || $scope.email !== ''){
-			optionsService.renewPassword($scope.email)
-			.then(function(data) {
-				if(data.error){
-					$scope.alertsRenewPassword = [{type:'danger', msg:data.message}];
-				}else{
-					$scope.sendEmail = true;
-				}
-			});
-		}
 	};
 
 	$scope.clear = function() {

@@ -1,5 +1,7 @@
-/**
- *
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
  */
 
 angular.module('Conciliador.AdjustSummaryService',[])

@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -197,7 +203,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 				sort: $scope.sort
 
 			}).then(function(response){
-				
+
 				var pagination = response.data.page;
 				var response = response.data.content;
 

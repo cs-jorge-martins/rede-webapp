@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.movementsModule',[])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -26,7 +32,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.receipts = [];
     $scope.getReceipt = getReceipt;
 
-  
+
     $scope.getFutureReceipt = getFutureReceipt;
 
     $scope.actualReleases = {};
@@ -434,7 +440,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						$scope.discountedTotal = discount;
 						$scope.antecipatedTotal = antecipatedTotal;
 						$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
-					
+
 					}).catch(function(response) {
 						console.log('[receiptsController:getSummaries] error');
 					});
@@ -924,7 +930,7 @@ angular.module('KaplenWeb.movementsModule',[])
     }
 
     function getCachedData() {
-		
+
 		if(cacheService.loadFilter('context') == 'receipts') {
 			$scope.actualReleases.date = moment(cacheService.loadFilter('startDate'), "YYYYMMDD").toDate();
 			$scope.accountsModel = cacheService.loadFilter('bankAccountIds');
@@ -937,11 +943,10 @@ angular.module('KaplenWeb.movementsModule',[])
 			$scope.shopsFutureModel = cacheService.loadFilter('futureShopIds');
 			$scope.acquirersFutureModel = cacheService.loadFilter('futureAcquirerIds');
 			$scope.cardProductsFutureModel = cacheService.loadFilter('futureCardProductIds');
-			
+
 		} else {
 			//cacheService.clearFilter();
 		}
     }
 
 });
-

@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.advancedFilterService',[])
 	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
@@ -256,7 +262,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 		}
 	};
 
-	
+
 
 	advancedFilterService.getPlaceholderFlag = function(listSelected) {
 		if (listSelected.length > 0) {
@@ -265,6 +271,6 @@ angular.module('KaplenWeb.advancedFilterService',[])
 			return "Bandeira"
 		}
 	}
-	
-	return advancedFilterService; 
+
+	return advancedFilterService;
 });

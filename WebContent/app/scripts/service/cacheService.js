@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.cacheService',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, $angularCacheFactoryProvider) {
 

@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.settlementService',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
@@ -37,7 +43,7 @@ angular.module('KaplenWeb.settlementService',[])
 		else if(name != '' && cnpj != ''){
 			param = {companyId:company.id,  name:name, cnpj:cnpj};
 			return Restangular.all('settlements').getList(param);
-		}		
+		}
 	};
 
 });

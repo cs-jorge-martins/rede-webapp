@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
@@ -135,22 +141,7 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/bootstrap-tour-standalone.min.js",
                     "WebContent/app/libs/angularjs-dropdown-multiselect.min.js",
                     "WebContent/app/js/componente/convertCurrency.js",
-                    "WebContent/app/js/componente/calculateSizeChart.js",
                     "WebContent/app/js/componente/maxSizePagination.js",
-                    "WebContent/app/js/componente/pieChartVendasMes.js",
-                    "WebContent/app/js/componente/pieChartTiposVendas.js",
-                    "WebContent/app/js/componente/pieChartOperadora.js",
-                    "WebContent/app/js/componente/pieChartComparativoVendasMes.js",
-                    "WebContent/app/js/componente/pieChartRelatorio.js",
-                    "WebContent/app/js/componente/pieChartGestao.js",
-                    "WebContent/app/js/componente/pieChartTipoVendaConciliacao.js",
-                    "WebContent/app/js/componente/pieChartRecebimentosVisaoReport.js",
-                    "WebContent/app/js/componente/pieChartSettlementRanking.js",
-                    "WebContent/app/js/componente/pieChartVendasReport.js",
-                    "WebContent/app/js/componente/pieChartVendasVisoes.js",
-                    "WebContent/app/js/componente/pieChartVendasAnaliticasReport.js",
-                    "WebContent/app/js/componente/pieChartVendasAnaliticasDiasReport.js",
-                    "WebContent/app/js/componente/pieChartVendasAnaliticasSemanasReport.js",
                     "WebContent/app/js/componente/chartUtils.js",
 
                     "WebContent/app/scripts/app.js",
@@ -159,23 +150,13 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/controllers/loginController.js",
                     "WebContent/app/scripts/controllers/firstAccessController.js",
                     "WebContent/app/scripts/controllers/salesDetailsController.js",
-                    "WebContent/app/scripts/controllers/movementsModule.js",
                     "WebContent/app/scripts/controllers/salesController.js",
-                    "WebContent/app/scripts/controllers/movementsTaxController.js",
-                    "WebContent/app/scripts/controllers/movementsReceiptController.js",
-                    "WebContent/app/scripts/controllers/gestaoController.js",
-                    "WebContent/app/scripts/controllers/relatorioController.js",
                     "WebContent/app/scripts/controllers/relatorioVendasController.js",
                     "WebContent/app/scripts/controllers/relatorioFinanceiroController.js",
                     "WebContent/app/scripts/controllers/relatorioAjustesController.js",
                     "WebContent/app/scripts/controllers/relatorioChargebacksController.js",
-                    "WebContent/app/scripts/controllers/taxaAdministracaoController.js",
-                    "WebContent/app/scripts/controllers/userManager.js",
                     "WebContent/app/scripts/controllers/settlementManager.js",
                     "WebContent/app/scripts/controllers/terminalsManager.js",
-                    "WebContent/app/scripts/controllers/envioEmailController.js",
-                    "WebContent/app/scripts/controllers/optionsManager.js",
-                    "WebContent/app/scripts/controllers/menuManager.js",
                     "WebContent/app/scripts/controllers/helpController.js",
                     "WebContent/app/scripts/controllers/integrationController.js",
                     "WebContent/app/scripts/controllers/receiptsController.js",
@@ -186,7 +167,6 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/service/loginService.js",
                     "WebContent/app/scripts/service/resumoConciliacaoService.js",
                     "WebContent/app/scripts/service/transactionsService.js",
-                    "WebContent/app/scripts/service/cartaCancelamentoService.js",
                     "WebContent/app/scripts/service/movementsService.js",
                     "WebContent/app/scripts/service/relatorioService.js",
                     "WebContent/app/scripts/service/kaplenAdminService.js",
@@ -198,7 +178,6 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/service/taxaAdministracaoService.js",
                     "WebContent/app/scripts/service/integrationService.js",
                     "WebContent/app/scripts/service/advancedFilterService.js",
-                    "WebContent/app/scripts/service/optionsService.js",
                     "WebContent/app/scripts/service/utilities/calendarService.js",
                     "WebContent/app/scripts/service/filtersService.js",
                     "WebContent/app/scripts/service/receiptsService.js",
@@ -218,15 +197,6 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/factories/requestFactory.js",
 
                     "WebContent/app/scripts/filters/currencyFilter.js",
-
-                    "WebContent/app/tours/dashboard/dashboardTour.js",
-                    "WebContent/app/tours/resumoConciliacao/resumoConciliacaoTour.js",
-                    "WebContent/app/tours/resumoConciliacao/resumoConciliacaoAnaliticoTour.js",
-                    "WebContent/app/tours/resumoConciliacao/modalResumoConciliacaoTour.js",
-                    "WebContent/app/tours/financeiro/financeiroTour.js",
-                    "WebContent/app/tours/gestao/gestaoTour.js",
-                    "WebContent/app/tours/financeiro/financeiroAnaliticoTour.js",
-                    "WebContent/app/tours/financeiro/modalFinanceiroTour.js",
 
                     "WebContent/app/libs/videogular.min.js",
                     "WebContent/app/libs/vg-controls.min.js",
