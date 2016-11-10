@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 (function() {
     'use strict';
 
@@ -218,6 +218,8 @@
 						}
 					}
 					break;
+                default:
+                    console.log("error");
 			}
 		};
 

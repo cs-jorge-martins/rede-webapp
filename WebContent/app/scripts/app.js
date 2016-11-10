@@ -1,9 +1,3 @@
-/*
-	Projeto: conciliation-webapp
-	Author/Empresa: Rede
-	Copyright (C) 2016 Redecard S.A.
- */
- 
 var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate',
                             'ui.utils.masks', 'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
@@ -14,24 +8,28 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'KaplenWeb.resumoConciliacaoService',
                             'KaplenWeb.transactionsService',
                             'KaplenWeb.loginController', 'KaplenWeb.loginService',
-                            'KaplenWeb.filtersService',
+                            'KaplenWeb.filtersService', 'KaplenWeb.gestaoController',
                             'KaplenWeb.relatorioVendasController',
                             'KaplenWeb.relatorioFinanceiroController',
                             'KaplenWeb.relatorioAjustesController',
                             'KaplenWeb.relatorioChargebacksController',
-                            'KaplenWeb.relatorioService',
-                            'KaplenWeb.taxaAdministracaoService',
+                            'KaplenWeb.relatorioController', 'KaplenWeb.relatorioService',
+                            'KaplenWeb.taxaAdministracaoController', 'KaplenWeb.taxaAdministracaoService',
+							'KaplenWeb.cartaCancelamentoService',
+                            'KaplenWeb.movementsTaxController',
+                            'KaplenWeb.movementsReceiptController',
 							'KaplenWeb.movementsModule', 'KaplenWeb.movementsService',
 							'KaplenWeb.kaplenAdminService','KaplenWeb.cacheService',
 							'KaplenWeb.installmentsService', 'chieffancypants.loadingBar',
-							'KaplenWeb.userService',
+							'KaplenWeb.userManager','KaplenWeb.userService',
 							'KaplenWeb.settlementManager','KaplenWeb.settlementService',
 							'KaplenWeb.terminalsManager','KaplenWeb.terminalService',
 							'KaplenWeb.integrationService', 'KaplenWeb.advancedFilterService',
-							'KaplenWeb.calendarService',
+							'KaplenWeb.envioEmailController', 'KaplenWeb.calendarService',
+							'KaplenWeb.optionsManager', 'KaplenWeb.optionsService',
 							'KaplenWeb.Request', 'KaplenWeb.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
-                            'Conciliador.FinancialService',
+                            'Conciliador.FinancialService', 'Conciliador.FinancialFilter',
                             'Conciliador.MovementSummaryService', 'Conciliador.MovementSummaryFilter',
                             'Conciliador.AdjustSummaryService', 'Conciliador.TransactionService',
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
@@ -108,6 +106,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 					case 504 :
 						$rootScope.alerts =  [ { type: "danger", msg: "Erro Interno do Servidor. Por favor, tente mais tarde."} ];
 						break;
+                    default:
+                        console.log("error");
 				}
 
                 return $q.reject(config);
@@ -231,6 +231,17 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 
 	$rootScope.help = function(){
+		if($rootScope.activeDashboard){
+			restartDashboardTour(userService);
+		}else if($rootScope.activeResumoConciliacao){
+			restartResumoConciliacaoTour(userService);
+		}else if($rootScope.activeMovements){
+			restartFinanceiroTour(userService);
+		}else if($rootScope.activeGestao){
+			restartGestaoTour(userService);
+		}else if($rootScope.activeReports){
+			alert("Em construção");
+		}
 	};
 
 	$rootScope.restartAlerts = function(){
