@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 (function() {
     'use strict';
 
@@ -40,7 +46,7 @@
 
         $scope.cancelled = 0;
         $scope.chargebacks = 0;
-        
+
         $scope.tableName = 'cancelamento';
 		$scope.sort = 'adjustDate,ASC';
 
@@ -61,7 +67,7 @@
     			}
 				shopIds = shopIds.join(",");
     		}
-			
+
             getIndicator();
 
 			var filter = {
@@ -106,7 +112,7 @@
     			}
 				shopIds = shopIds.join(",");
     		}
-			
+
 			var filter = {
 				currency: 'BRL',
 				cancellationStartDate: handleDate($scope.initialDate),

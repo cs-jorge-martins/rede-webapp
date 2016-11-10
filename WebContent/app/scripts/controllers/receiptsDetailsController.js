@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -6,7 +12,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 .controller('receiptsDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService){
-		
+
 		var filter = {};
 		init();
 

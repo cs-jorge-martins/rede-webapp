@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
 angular.module('KaplenWeb.dashboardController',[])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -68,12 +74,6 @@ angular.module('KaplenWeb.dashboardController',[])
 			showVideoModal();
 			delete $window.sessionStorage.tour;
 		}
-
-		var data = [];
-		data.push(0);
-
-		$scope.chartVendas = pieChart(data);
-		$scope.charTiposVendas = pieChartTiposVendas(data);
 
 		setTransactionConciliationCaledar();
 		setTransactionSummaryLineChart();
@@ -147,7 +147,6 @@ angular.module('KaplenWeb.dashboardController',[])
 		setTransactionSummaryBox();
 		setMovementSummaryBox();
 		setNplicateTransactionBox();
-		//setConectivityFeeBox();
 		setTransactionConciliationBox();
 	}
 
@@ -263,30 +262,6 @@ angular.module('KaplenWeb.dashboardController',[])
 
 		//var summaryNplicateTransaction = dashboardService.getNplicateTransactionSummary(transactionSummaryNplicate);
 		//$scope.totalDuplicate = summaryNplicateTransaction.amount;
-	}
-
-	/********************************* CONNECTIVITY FEE  BOX *************************************/
-	function setConectivityFeeBox(){
-
-		var adjustSummaryFilter = new AdjustSummaryFilter();
-		adjustSummaryFilter.currency =  $rootScope.currency;
-		adjustSummaryFilter.startDate = $scope.currentMonthPerid.firstDate;
-		adjustSummaryFilter.endDate = $scope.currentMonthPerid.lastDate;
-		adjustSummaryFilter.status = 'POS_CONECTIVITY';
-		adjustSummaryFilter.status = 'RECEIVED';
-
-		dashboardService.getAdjustSummary(adjustSummaryFilter).then(function(item){
-			item = item.data.content;
-
-			$scope.totalConectivityTaxes = new AdjustSummary();
-
-			if (item !== undefined ){
-				if(item.lenth > 0){
-					//alert(item.lenth + " - "+ item[0] );
-					$scope.totalConectivityTaxes = item[0];
-				}
-			}
-		});
 	}
 
 	/***************************************** TRANSACTION SUMMARY LINE CHART ******************************************/

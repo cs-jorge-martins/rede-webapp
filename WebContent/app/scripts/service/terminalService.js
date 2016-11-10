@@ -1,10 +1,16 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.terminalService',[])
 	.config(['$routeProvider','RestangularProvider', function ($routeProvider, RestangularProvider) {
-	
+
 }])
 
 .service('terminalService', function(Restangular, $window) {
-	
+
 	var company = {id: $window.sessionStorage.company};
 
 	this.saveTerminal = function(terminal){
@@ -37,6 +43,6 @@ angular.module('KaplenWeb.terminalService',[])
 		else if(name != '' && terminalCode != ''){
 			param = {companyId:company.id,  name:name, terminalCode:terminalCode};
 			return Restangular.all('terminals').getList(param);
-		}		
+		}
 	};
 });

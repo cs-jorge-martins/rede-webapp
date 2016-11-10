@@ -1,8 +1,10 @@
-/**
- *
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
  */
-
-angular.module('Conciliador.MovementSummaryFilter',[])
+ 
+ angular.module('Conciliador.MovementSummaryFilter',[])
 	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 }])
 

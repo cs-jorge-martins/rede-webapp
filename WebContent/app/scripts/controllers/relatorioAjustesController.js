@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -46,7 +52,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		}
 
 		function getReport() {
-            
+
             var curPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
 
 			AdjustSummaryService.listAdjustSummary({
