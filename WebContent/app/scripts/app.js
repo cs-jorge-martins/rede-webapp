@@ -233,17 +233,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 
 	$rootScope.help = function(){
-		if($rootScope.activeDashboard){
-			restartDashboardTour(userService);
-		}else if($rootScope.activeResumoConciliacao){
-			restartResumoConciliacaoTour(userService);
-		}else if($rootScope.activeMovements){
-			restartFinanceiroTour(userService);
-		}else if($rootScope.activeGestao){
-			restartGestaoTour(userService);
-		}else if($rootScope.activeReports){
-			alert("Em construção");
-		}
 	};
 
 	$rootScope.restartAlerts = function(){
