@@ -205,18 +205,18 @@
 	<div id="primaryContent">
 		<div id="details">
 			<tabset>
-				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0, tabs[0].id)" id="botaoConciliacaoDiaTour">
 					<article>
 						<table class="table sortTable">
 							<thead>
 								<tr>
-									<th ng-click="sortResults($event,'payedDate', 'adjusts')">bandeira</th>
-									<th ng-click="sortResults($event,'amount', 'adjusts')">tipo de venda</th>
-									<th ng-click="sortResults($event,'description', 'adjusts')">status do crédito</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">data do lote (RV)</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">n do lote (RV)</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">valor líquido não pago</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">n do estabelecimento</th>
+									<th ng-click="sortResults($event,'payedDate')">bandeira</th>
+									<th ng-click="sortResults($event,'amount')">tipo de venda</th>
+									<th ng-click="sortResults($event,'description')">status do crédito</th>
+									<th ng-click="sortResults($event,'roNumber')">data do lote (RV)</th>
+									<th ng-click="sortResults($event,'roNumber')">n do lote (RV)</th>
+									<th ng-click="sortResults($event,'roNumber')">valor líquido não pago</th>
+									<th ng-click="sortResults($event,'roNumber')">n do estabelecimento</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -265,11 +265,11 @@
 				</tab>
 
 
-				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1, tabs[1].id)" id="botaoConciliacaoDiaTour">
 
 				</tab>
 
-				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
+				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2, tabs[2].id)" id="botaoConciliacaoDiaTour">
 
 				</tab>
 
