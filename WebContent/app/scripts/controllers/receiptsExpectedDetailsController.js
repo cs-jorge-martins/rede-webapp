@@ -19,30 +19,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			if(!$rootScope.receiptsDetails) {
 				$location.path('/receipts');
 			} else {
-				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
-				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
-				$scope.currency = $rootScope.receiptsDetails.currency;
 
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
-				$scope.endDate = $rootScope.receiptsDetails.endDate;
-				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
-				$scope.shops = $rootScope.receiptsDetails.shops;
-				$scope.products = $rootScope.receiptsDetails.products;
-				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
-
-				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
-				$scope.payedAmount = $rootScope.receiptsDetails.payedAmount;
-				$scope.total = $rootScope.receiptsDetails.total;
-				$scope.status = $rootScope.receiptsDetails.status;
-
-				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
-				$scope.shopsLabel = $rootScope.receiptsDetails.shopsLabel;
-				$scope.shopsFullLabel = $rootScope.receiptsDetails.shopsFullLabel;
-				$scope.cardProductsLabel = $rootScope.receiptsDetails.cardProductsLabel;
-				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
 				$scope.sort = "";
-
-
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
@@ -101,13 +80,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 	    }
 
 	    function changeTab(index, acquirer_id) {
-
 	    	$scope.tabs[index].active = true;
 			$scope.sort = "";
-			console.log(acquirer_id)
-
 			getExpectedDetails(acquirer_id);
-
 	    }
 
 	    $scope.sortResults = function(elem, kind) {
