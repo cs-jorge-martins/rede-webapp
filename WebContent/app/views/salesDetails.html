@@ -22,7 +22,7 @@
 		<table cellpadding="0" cellspacing="0" class="sortTable">
 			<thead>
 				<tr class="taleft nop">
-					<th>NSU</th>
+					<th class="firstThCheckbox">NSU</th>
 					<th>tipo loja</th>
 					<th>tid</th>
 					<th>cod. autor.</th>
@@ -40,7 +40,7 @@
 						  <div class="checkbox-left" ng-if="item.conciliationStatus == 'TO_CONCILIE'">
 							  <input type="checkbox" id="checkbox-favourite-{{$index + 1}}" class="checkbox"
 							  ng-model="concilieItems" name="selectedItems[]" value="{{item}}"
-							  ng-checked="selection.indexOf(item) > -1;" ng-click="selectItemToConcilie(item)" />
+							  ng-checked="concilieItemsId.indexOf(item.id) > -1;" ng-click="selectItemToConcilie(item)" />
 							  <label for="checkbox-favourite-{{$index + 1}}" ng-click="count(1)"></label>
 						  </div>
 						  <span class="checkbox-right" ng-click="comprovanteVenda(item)">{{item.nsu}}</span>
@@ -82,7 +82,7 @@
 				<button class="conciliacaoButton" data-ng-click="concilie()"
 						ng-show="conciliationStatus == 'TO_CONCILIE'"
 						ng-class="isConcilieButtonActive ? 'active' : 'disabled'"
-						ng-disabled="!isConcilieButtonActive">conciliar {{ concilieItems.length }} venda<span ng-if="concilieItems.length > 1">s</span> selecionada<span ng-if="concilieItems.length > 1">s</span></button>
+						ng-disabled="!isConcilieButtonActive">conciliar {{ concilieItems.length }} venda<span ng-if="concilieItems.length > 1">s</span><span ng-if="concilieItems.length > 1">s</span></button>
 
                 </div>
 
