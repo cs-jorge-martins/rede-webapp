@@ -16,95 +16,95 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$rootScope.bodyId = null;
 			});
 
-			if(!$rootScope.receiptsDetails) {
-				$location.path('/receipts');
-			} else {
-				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
-				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
-				$scope.currency = $rootScope.receiptsDetails.currency;
+		// 	if(!$rootScope.receiptsDetails) {
+		// 		$location.path('/receipts');
+		// 	} else {
+		// 		$scope.acquirer = $rootScope.receiptsDetails.acquirer;
+		// 		$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
+		// 		$scope.currency = $rootScope.receiptsDetails.currency;
 
-				$scope.startDate = $rootScope.receiptsDetails.startDate;
-				$scope.endDate = $rootScope.receiptsDetails.endDate;
-				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
-				$scope.shops = $rootScope.receiptsDetails.shops;
-				$scope.products = $rootScope.receiptsDetails.products;
-				//$scope.type = $rootScope.receiptsDetails.type;
-				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
+		// 		$scope.startDate = $rootScope.receiptsDetails.startDate;
+		// 		$scope.endDate = $rootScope.receiptsDetails.endDate;
+		// 		$scope.shopIds = $rootScope.receiptsDetails.shopIds;
+		// 		$scope.shops = $rootScope.receiptsDetails.shops;
+		// 		$scope.products = $rootScope.receiptsDetails.products;
+		// 		//$scope.type = $rootScope.receiptsDetails.type;
+		// 		$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
 
-				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
-				$scope.payedAmount = $rootScope.receiptsDetails.payedAmount;
-				$scope.total = $rootScope.receiptsDetails.total;
-				$scope.status = $rootScope.receiptsDetails.status;
+		// 		$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
+		// 		$scope.payedAmount = $rootScope.receiptsDetails.payedAmount;
+		// 		$scope.total = $rootScope.receiptsDetails.total;
+		// 		$scope.status = $rootScope.receiptsDetails.status;
 
-				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
-				$scope.shopsLabel = $rootScope.receiptsDetails.shopsLabel;
-				$scope.shopsFullLabel = $rootScope.receiptsDetails.shopsFullLabel;
-				$scope.cardProductsLabel = $rootScope.receiptsDetails.cardProductsLabel;
-				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
-				$scope.sort = "";
+		// 		$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
+		// 		$scope.shopsLabel = $rootScope.receiptsDetails.shopsLabel;
+		// 		$scope.shopsFullLabel = $rootScope.receiptsDetails.shopsFullLabel;
+		// 		$scope.cardProductsLabel = $rootScope.receiptsDetails.cardProductsLabel;
+		// 		$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
+		// 		$scope.sort = "";
 
 
-				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
-        		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
+		// 		$scope.day = calendarFactory.getDayOfDate($scope.startDate);
+  //       		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-				$scope.tabs = [
-					{
-						title: 'Rede',
-						active: true
-					},
-					{
-						title: 'Cielo'
-					},
-					{
-						title: 'GetNet'
-					}
-					/*,
-					{
-						title: 'ecommerce'
-					}
-					*/
-				];
+		// 		$scope.tabs = [
+		// 			{
+		// 				title: 'Rede',
+		// 				active: true
+		// 			},
+		// 			{
+		// 				title: 'Cielo'
+		// 			},
+		// 			{
+		// 				title: 'GetNet'
+		// 			}
+		// 			/*,
+		// 			{
+		// 				title: 'ecommerce'
+		// 			}
+		// 			*/
+		// 		];
 
-				// filter = {
-				// 	cardProductIds: $scope.cardProduct.cardProductId,
-				// 	acquirerIds: $scope.acquirer.id,
-				// 	startDate: calendarFactory.formatDateTimeForService($scope.startDate),
-				// 	endDate: calendarFactory.formatDateTimeForService($scope.endDate),
-				// 	bankAccountIds: $scope.bankAccount.id
-				// };
-                //
-				// if($scope.status === 'forethought'){
-				// 	filter.status = 'FORETHOUGHT'
-				// } else {
-				// 	filter.status = 'RECEIVED'
-				// }
+		// 		// filter = {
+		// 		// 	cardProductIds: $scope.cardProduct.cardProductId,
+		// 		// 	acquirerIds: $scope.acquirer.id,
+		// 		// 	startDate: calendarFactory.formatDateTimeForService($scope.startDate),
+		// 		// 	endDate: calendarFactory.formatDateTimeForService($scope.endDate),
+		// 		// 	bankAccountIds: $scope.bankAccount.id
+		// 		// };
+  //               //
+		// 		// if($scope.status === 'forethought'){
+		// 		// 	filter.status = 'FORETHOUGHT'
+		// 		// } else {
+		// 		// 	filter.status = 'RECEIVED'
+		// 		// }
 
-				$scope.maxSize = 4;
+		// 		$scope.maxSize = 4;
 
-				$scope.salesData = [];
-				$scope.salesTotalItensPage = 10;
-				$scope.salesTotalItens = 0;
-				$scope.salesCurrentPage = 0;
+		// 		$scope.salesData = [];
+		// 		$scope.salesTotalItensPage = 10;
+		// 		$scope.salesTotalItens = 0;
+		// 		$scope.salesCurrentPage = 0;
 
-        		$scope.adjustsData = [];
-        		$scope.adjustsTotalItensPage = 10;
-        		$scope.adjustsTotalItens = 0;
-				$scope.adjustsCurrentPage = 0;
+  //       		$scope.adjustsData = [];
+  //       		$scope.adjustsTotalItensPage = 10;
+  //       		$scope.adjustsTotalItens = 0;
+		// 		$scope.adjustsCurrentPage = 0;
 
-        		$scope.cancellationsData = [];
-        		$scope.cancellationsTotalItensPage = 10;
-        		$scope.cancellationsTotalItens = 0;
-				$scope.cancellationsCurrentPage = 0;
+  //       		$scope.cancellationsData = [];
+  //       		$scope.cancellationsTotalItensPage = 10;
+  //       		$scope.cancellationsTotalItens = 0;
+		// 		$scope.cancellationsCurrentPage = 0;
 
-        		$scope.ecommerceData = [];
-        		$scope.ecommerceTotalItensPage = 10;
-        		$scope.ecommerceTotalItens = 0;
-				$scope.ecommerceCurrentPage = 0;
+  //       		$scope.ecommerceData = [];
+  //       		$scope.ecommerceTotalItensPage = 10;
+  //       		$scope.ecommerceTotalItens = 0;
+		// 		$scope.ecommerceCurrentPage = 0;
 
-				$scope.back = back;
-				$scope.getShopsLabel = getShopsLabel;
-				$scope.changeTab = changeTab;
-			}
+		// 		$scope.back = back;
+		// 		$scope.getShopsLabel = getShopsLabel;
+		// 		$scope.changeTab = changeTab;
+		// 	}
 		}
 
 		function getShopsLabel() {
