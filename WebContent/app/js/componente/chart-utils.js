@@ -3,6 +3,8 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+
  
 var chartUtils = window.chartUtil || {};
 
