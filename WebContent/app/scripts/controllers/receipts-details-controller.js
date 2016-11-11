@@ -7,7 +7,7 @@
 angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
-	$routeProvider.when('/receipts/details', {templateUrl: 'app/views/receipts_details.html', controller: 'receiptsDetailsController'});
+	$routeProvider.when('/receipts/details', {templateUrl: 'app/views/receipts-details.html', controller: 'receiptsDetailsController'});
 }])
 
 .controller('receiptsDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,

@@ -7,7 +7,7 @@
 angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
-	$routeProvider.when('/sales/details', {templateUrl: 'app/views/salesDetails.html', controller: 'salesDetailsController'});
+	$routeProvider.when('/sales/details', {templateUrl: 'app/views/sales-details.html', controller: 'salesDetailsController'});
 }])
 
 .controller('salesDetailsController', function(menuFactory, $rootScope, $scope, $modal, calendarFactory, $timeout, cacheService,
@@ -99,7 +99,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 			if(toConcilie.length) {
 
 				var	modalInstance = $modal.open ({
-					templateUrl: 'app/views/resumoConciliacao/confirmaConciliacao.html',
+					templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
 					scope: $scope,
 					controller: function($scope, $modalInstance){
 						$scope.ok = function() {
@@ -125,7 +125,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 							});
 							$modalInstance.dismiss("cancel");
 							$modal.open({
-								templateUrl: "app/views/resumoConciliacao/successConciliacao.html",
+								templateUrl: "app/views/resumo-conciliacao/success-conciliacao.html",
 								scope: $scope,
 								size: 'sm',
 								controller: function($scope, $modalInstance){
@@ -388,7 +388,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 		$scope.comprovanteVenda = function(item) {
 			var modalInstance = $modal.open({
-				templateUrl: 'app/views/resumoConciliacao/comprovanteVenda.html',
+				templateUrl: 'app/views/resumo-conciliacao/comprovante-venda.html',
 				controller: ModalComprovanteVendas,
 				size:'sm',
 				resolve: {

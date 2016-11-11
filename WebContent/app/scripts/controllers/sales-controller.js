@@ -452,7 +452,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.success = false;
 		if($scope.concilieItems.length) {
 			$modal.open ({
-				templateUrl: "app/views/resumoConciliacao/confirmaConciliacaoResumo.html",
+				templateUrl: "app/views/resumo-conciliacao/confirma-conciliacao-resumo.html",
 				scope: $scope,
 				animation: false,
 				controller: function($scope, $modalInstance, $timeout) {
