@@ -89,6 +89,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.discountedTotal = 0;
 	$scope.antecipatedTotal = 0;
 	$scope.totalReceived = 0;
+	$scope.existsForethought = false;
 
     $scope.showDetails = showDetails;
     $scope.changeTab = changeTab;
@@ -113,6 +114,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
         getFilters();
+		getForethought();
 	}
 
     function getReceipt() {
@@ -124,6 +126,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		getLabels();
 		getSummaries();
 		getReceiptAcquirers();
+		getForethought();
     }
 
 	function getReceiptAcquirers() {
@@ -154,6 +157,35 @@ angular.module('KaplenWeb.movementsModule',[])
 				getExpectedReleases();
 			} else {
 				$scope.actualReleasesData = [];
+			}
+
+		}).catch(function(response) {
+			console.log('[receiptsController:getSummaries] error');
+		})
+	}
+
+	function getForethought() {
+
+
+
+		var filter = {
+			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			bankAccountIds: getAccountsFilter(),
+			status: 'EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED'
+		};
+
+
+		receiptsService.getFinancials(filter).then(function(response) {
+			var data = response.data;
+
+			if( data.length ) {
+
+				$scope.existsForethought = true;
+
+			} else {
+				$scope.actualReleasesData = [];
+				$scope.existsForethought = false;
 			}
 
 		}).catch(function(response) {

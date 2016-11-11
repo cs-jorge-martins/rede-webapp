@@ -9014,6 +9014,10 @@ footer nav.fixed {
 	float: left;
 	clear: none;
 }
+
+.paginationWrapper.center{
+    text-align: center;
+}
 #details .optionsWrapper .selectWrapper {
 	width: 230px;
 }
@@ -9042,9 +9046,16 @@ footer nav.fixed {
 	text-align: center;
 }
 
-#details .optionsWrapper .pagination {
-	float: none;
-	margin: 10px 0 10px 36px;
+.receiptsExpectedDetails #details .pagination li a{
+    background: transparent !important;
+    border: 0;
+    font-size: 16px;
+    padding: 0 16px !important;
+}
+
+#details .pagination {
+    margin: 28px 0 10px 36px;
+    float: initial;
 }
 
 .selectWrapper label {
@@ -10181,7 +10192,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue span:last-child {
-    font-size: 25px;
+    font-size: 29px;
     font-weight: lighter;
 }
 
@@ -10189,6 +10200,18 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
     font-size: 18px;
     font-weight: bolder;
+}
+
+#receiptsDetails .mainContent {
+    float: left;
+    width: 100%;
+    padding:0 30px;
+    box-sizing: border-box;
+    background: white;
+}
+
+#receiptsDetails .mainContent .table tr > td {
+    text-indent: 10px;
 }
 
 .sprite {
