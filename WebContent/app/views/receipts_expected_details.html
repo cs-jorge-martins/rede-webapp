@@ -41,13 +41,13 @@
 						<table class="table sortTable">
 							<thead>
 							<tr>
-								<th ng-click="sortResults($event,'payedDate')">bandeira</th>
-								<th ng-click="sortResults($event,'amount')">tipo de venda</th>
-								<th ng-click="sortResults($event,'description')">status do crédito</th>
-								<th ng-click="sortResults($event,'roNumber')">data do lote (RV)</th>
-								<th ng-click="sortResults($event,'roNumber')">n do lote (RV)</th>
-								<th ng-click="sortResults($event,'roNumber')">valor líquido não pago</th>
-								<th ng-click="sortResults($event,'roNumber')">n do estabelecimento</th>
+								<th ng-click="sortResults($event,'cardProductCode', tab.id)">bandeira</th>
+								<th ng-click="sortResults($event,'cardProductType', tab.id)">tipo de venda</th>
+								<th ng-click="sortResults($event,'status', tab.id)">status do crédito</th>
+								<th ng-click="sortResults($event,'roDate', tab.id)">data do lote (RV)</th>
+								<th ng-click="sortResults($event,'roNumber', tab.id)">n do lote (RV)</th>
+								<th ng-click="sortResults($event,'expectedAmount', tab.id)">valor líquido não pago</th>
+								<th ng-click="sortResults($event,'sourcePv.code', tab.id)">n do estabelecimento</th>
 							</tr>
 							</thead>
 							<tbody>

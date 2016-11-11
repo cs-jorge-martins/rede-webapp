@@ -137,8 +137,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			return status;
 		}
 
-	    $scope.sortResults = function(elem, kind) {
-
+	    $scope.sortResults = function(elem, kind, acquirer_id) {
+			$scope.sort = $rootScope.sortResults(elem,kind);
+			getExpectedDetails(acquirer_id);
 	    }
 
 	    /* pagination */
