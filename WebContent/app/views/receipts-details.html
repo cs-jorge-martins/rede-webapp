@@ -1,0 +1,412 @@
+<script type="text/ng-template" id="financasModal.html">
+    <div class="tabelaDetalhamentoModal gestaoModal financasModal gestaoFinanceiroModal">
+	<div class="modal-header">
+		<strong><b>{{dayOfActualDate}}</b> {{monthNameAbreviation}}</strong>
+    	<h3>{{movementDetailModal.accountDescription}}</h3>
+		<h3></h3>
+		<h4>{{movementDetailModal.acquirerName}} / {{movementDetailModal.brandName}} / <b>{{movementDetailModal.productName}}</b></h4>
+		<a class="closeModalHelp" data-ng-click="helpModalFinanceiro()">?</a>
+		<button class="icon-close" ng-click="cancel()"></button>
+    </div>
+    <div class="modal-body">
+		<table class="headerFinancasModal" cellpadding="0" cellspacing="0" id="detalheFinancasTour">
+			<thead>
+				<tr>
+					<th id="movementsPrevistosTour"><b>Previsto</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountExpected | currency:''}}</em></th>
+					<th id="movementsPagosTour"><b>PGTO Operadora</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountPayed | currency:''}}</em></th>
+					<th id="movementsBankTour"><b>Banco</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountBank | currency:''}}</em></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td id="submenusFinanceiroModalTour" ng-class="{'active': statusId == 2 && statusKind == 0}" ng-click="getListByStatus(2)"><b>Pago</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valuePayed | currency:''}}</em></td>
+					<td ng-class="{'active': statusKind == 1}" ng-click="getListByStatus(2, 1)"><b>Crédito</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueCredit | currency:''}}</em></td>
+					<td><b>Banco</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountBank | currency:''}}</em></td>
+				</tr>
+				<tr>
+					<td ng-class="{'active': statusId == 1 && statusKind == 0}" ng-click="getListByStatus(1)"><b>Em aberto</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueOpen | currency:''}}</em></td>
+					<td ng-class="{'active': statusKind == 3}" ng-click="getListByStatus(3, 3)"><b>Antecipado</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valuePayedForethought | currency:''}}</em></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td ng-class="{'active': statusId == 3 && statusKind == 0}" ng-click="getListByStatus(3)"><b>Antecipado</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueExpectedForethought | currency:''}}</em></td>
+					<td ng-class="{'active': statusKind == 2}" ng-click="getListByStatus(2,2)"><b>Ajustes</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueAdjustment | currency:''}}</em></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<table class="resumoFinancas" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr ng-show="statusKind != 2">
+					<th>
+						NSU
+						<img id="nsu" alt="nsu" src="app/img/default.png" data-ng-click="orderColumn('nsu')"/>
+					</th>
+					<th>
+						AUTORIZAÇÃO
+						<img id="authorization" alt="autorização" src="app/img/default.png" data-ng-click="orderColumn('authorization')"/>
+					</th>
+					<th>
+						TID
+						<img id="tid" alt="tid" src="app/img/default.png" data-ng-click="orderColumn('tid')"/>
+					</th>
+					<th>
+						CARTÃO
+						<img id="cardNumber" alt="cartão" src="app/img/default.png" data-ng-click="orderColumn('cardNumber')"/>
+					</th>
+					<th>
+						PARCELA
+						<img id="installment" alt="parcela" src="app/img/default.png" data-ng-click="orderColumn('installment')"/>
+					</th>
+					<th>
+						CHAVE ERP
+						<img id="erpId" alt="chave erp" src="app/img/default.png" data-ng-click="orderColumn('erpId')"/>
+					</th>
+					<th>
+						VALOR LIQUIDO
+						<img id="net" alt="valor liquido" src="app/img/default.png" data-ng-click="orderColumn('net')"/>
+					</th>
+					<th>
+						VALOR BRUTO
+						<img id="amount" alt="valor bruto" src="app/img/default.png" data-ng-click="orderColumn('amount')"/>
+					</th>
+				</tr>
+				<tr ng-show="statusKind == 2">
+					<th>
+						DESCRIÇÃO
+						<img id="description" alt="descrição" src="app/img/default.png" data-ng-click="orderColumn('description')"/>
+					</th>
+					<th>
+						NATUREZA
+						<img id="nature" alt="natureza" src="app/img/default.png" data-ng-click="orderColumn('nature')"/>
+					</th>
+					<th>
+						TIPO
+						<img id="kindName" alt="tipo" src="app/img/default.png" data-ng-click="orderColumn('kindName')"/>
+					</th>
+					<th>
+						VALOR
+						<img id="amount" alt="valor" src="app/img/default.png" data-ng-click="orderColumn('amount')"/>
+					</th>
+				</tr>
+			</thead>
+			<tbody id="parcelasFinanceiroModalTour">
+				<tr ng-show="noItensMsgModal && !noHistoryMsg">
+					<td colspan="8">
+						Não existem dados/registros para o filtro selecionado
+					</td>
+				</tr>
+				<tr ng-show="noHistoryMsg">
+					<td colspan="8">
+						Do valor total recebido, <i ng-bind-html='currencySymbol'></i> {{valueHistory | currency: ''}} é referente às vendas anteriores à contratação da Kaplen.
+					</td>
+				</tr>
+				<tr ng-show="statusKind != 2" ng-repeat="installment in movementDetailModal.installmentList" ng-click="comprovanteVenda(installment)">
+					<td>{{installment.nsu}}</td>
+					<td>{{installment.authorization}}</td>
+					<td>{{installment.tid}}</td>
+					<td>{{installment.cardNumber}}</td>
+					<td>{{installment.installment}}</td>
+					<td>{{installment.erpId}}</td>
+					<td><i ng-bind-html='currencySymbol'></i> {{installment.net | currency:''}}</td>
+					<td><i ng-bind-html='currencySymbol'></i> {{installment.amount | currency:''}}</td>
+				</tr>
+				<tr ng-show="statusKind == 2" ng-repeat="installment in movementDetailModal.installmentList">
+					<td>{{installment.description}}</td>
+					<td ng-show="installment.movementNature == 1">Crédito</td>
+					<td ng-show="installment.movementNature == 2">Débito</td>
+					<td>{{installment.kindName}}</td>
+					<td><i ng-bind-html='currencySymbol'></i> {{installment.amount | currency:''}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+    <div class="modal-footer">
+		<ul class="archives" style="margin-bottom:-18px;" ng-show="!noItensMsgModal">
+			<li class="pdf" id="exportarFinanceiroModalTour"><a data-ng-click="gerarRelatorioModal('PDF')"></a></li>
+			<li class="xls"><a data-ng-click="gerarRelatorioModal('XLS')"></a></li>
+			<li class="csv"><a data-ng-click="gerarRelatorioModal('CSV')"></a></li>
+		</ul>
+		<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()"
+					max-size="maxSize"  items-per-page="totalItensPage" rotate="false"
+					class="pagination-sm" boundary-links="true"
+					previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+		</pagination>
+		<div class="select" ng-show="totalItens > 9">
+		<select class="selectPage" ng-model="totalItensPage" ng-change="alterTotalItensPage()">
+			<option value="10">10</option>
+			<option ng-show="totalItens > 19" value="20">20</option>
+			<option ng-show="totalItens > 49" value="50">50</option>
+        </select>
+		</div>
+	</div>
+	</div>
+</script>
+<script type="text/ng-template" id="comprovanteVenda.html"></script>
+
+<section class="" id="receiptsDetails">
+
+	<div id="detailsClose">
+		<div class="container">
+			<h3>detalhes</h3>
+			<button ng-click="back()">x</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="receiptsTopSeparator"></div>
+
+	<article class="data-cards">
+		<div class="header-datas">
+			<div class="date">
+				<span class="number">{{ day }}</span><br> {{ month }}
+			</div>
+			<div class="chip-wrapper">
+
+				<div class="chip" ng-if="accountsLabel">
+					{{ accountsLabel }}
+				</div>
+				<div class="chip" ng-if="shopsLabel">
+					{{ shopsLabel }}
+				</div>
+				<!--
+				<div class="chip" ng-if="cardProductsLabel">
+					{{ cardProductsLabel }}
+				</div>
+				-->
+			</div>
+		</div>
+		<div class="numbers-data">
+			<div class="width50">
+				<h3>{{ acquirer.name }}</h3>
+				<div class="cardFlag brand_{{cardProduct.cardProductId}}"></div> <h5 class="brandName"> {{cardProduct.cardProductName}} </h5>
+			</div>
+			<div class="width50">
+				<ul class="list-inline">
+					<!--
+					<li>
+						<strong>total vendido</strong>
+						<br> R$ <span class="big-number"> {{ expectedAmount }}</span>
+					</li>
+					-->
+					<li>
+						<strong>total recebido</strong>
+						<br> R$ <span class="big-number"> {{ total | currency : '' }} </span>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</article>
+
+	<!-- action buttons -->
+    <!--
+	<div class="actionButtons">
+		<div id="printDivButton" class="hiddenExplanationDiv upButton"
+				ng-class="{closed: !printhover}"
+				ng-mouseenter="printhover = true"
+				ng-mouseleave="printhover = false"
+			>
+			<button>
+				<i class="sprite sprite-doc"></i>
+			</button>
+			<h4>imprimir página(s)</h4>
+		</div>
+		<div id="exportDivButton" class="hiddenExplanationDiv"
+				ng-class="{closed: !exporthover}"
+				ng-mouseenter="exporthover = true"
+				ng-mouseleave="exporthover = false">
+			<button>
+				<i class="sprite sprite-doc_close"></i>
+			</button>
+			<h4>exportar arquivo excel</h4>
+		</div>
+	</div>
+    -->
+
+	<div id="primaryContent">
+		<div id="details">
+			<tabset>
+				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+					<article>
+						<table class="table sortTable">
+							<thead>
+								<tr>
+									<th ng-click="sortResults($event,'date', 'sales')">data/hora venda</th>
+									<th ng-click="sortResults($event,'transaction.nsu', 'sales')">nsu</th>
+									<th ng-click="sortResults($event,'transaction.gross', 'sales')">valor total transação</th>
+									<th ng-click="sortResults($event,'transaction.net', 'sales')">valor líquido pago</th>
+									<th ng-click="sortResults($event,'number', 'sales')">nº parcela</th>
+									<th ng-click="sortResults($event,'transaction.pvCode', 'sales')">nº estabelecimento<!--<span class="orderby"></span>--></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in salesData">
+									<td>{{ item.date | utc | date: 'dd/MM/yyyy HH:mm' }}</td>
+									<td>{{ item.transactionNsu }}</td>
+									<td>R$ {{ item.transactionGross | currency:'' }}</td>
+									<td>R$ {{ item.installmentPayedAmount | currency:'' }}</td>
+									<td>parcela {{ item.installmentNumber }}/{{ item.installment }}</td>
+									<td>{{ item.transactionPvCode }}</td>
+								</tr>
+							</tbody>
+						</table>
+						<span class="alert" ng-show="!salesData.length">Não existem dados/registros para o filtro selecionado</span>
+						<div class="optionsWrapper">
+							<div class="selectWrapper">
+								<label for="totalItensPage">resultados por página</label>
+								<div class="select">
+									<select ng-model="salesTotalItensPage" ng-change="totalItensPageChangedSales()" id="totalItensPage">
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="paginationWrapper">
+								<pagination
+									total-items="salesTotalItens"
+									ng-model="salesCurrentPage"
+									ng-change="pageChangedSales()"
+									max-size="maxSize"
+									items-per-page="salesTotalItensPage"
+									rotate="false"
+									class="pagination-sm"
+									boundary-links="true"
+									previous-text="&lsaquo;"
+									next-text="&rsaquo;"
+									first-text="&laquo;"
+									last-text="&raquo;">
+								</pagination>
+							</div>
+						</div>
+					</article>
+				</tab>
+
+
+				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+					<article>
+						<table class="table sortTable">
+							<thead>
+								<tr>
+									<th ng-click="sortResults($event,'payedDate', 'adjusts')">data do ajuste</th>
+									<th ng-click="sortResults($event,'amount', 'adjusts')">valor do ajuste</th>
+									<th ng-click="sortResults($event,'description', 'adjusts')">descrição do ajuste</th>
+									<th ng-click="sortResults($event,'roNumber', 'adjusts')">número do lote (rv)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in adjustsData">
+									<td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+									<td>R$ {{ item.adjustAmount | currency: '' }}</td>
+									<td>{{ item.adjustDescription }}</td>
+									<td>{{ item.adjustRoNumber }}</td>
+								</tr>
+							</tbody>
+						</table>
+						<span class="alert" ng-show="!adjustsData.length">Não existem dados/registros para o filtro selecionado</span>
+						<div class="optionsWrapper">
+							<div class="selectWrapper">
+								<label for="totalItensPage">resultados por página</label>
+								<div class="select">
+									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="paginationWrapper">
+								<pagination
+									total-items="adjustsTotalItens"
+									ng-model="adjustsCurrentPage"
+									ng-change="pageChangedAdjusts()"
+									max-size="maxSize"
+									items-per-page="adjustsTotalItensPage"
+									rotate="false"
+									class="pagination-sm"
+									boundary-links="true"
+									previous-text="&lsaquo;"
+									next-text="&rsaquo;"
+									first-text="&laquo;"
+									last-text="&raquo;">
+								</pagination>
+							</div>
+						</div>
+					</article>
+				</tab>
+
+				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
+					<article>
+						<table class="table sortTable">
+							<thead>
+								<tr>
+									<th ng-click="sortResults($event,'transactionDate', 'cancellation')">data da venda</th>
+									<th ng-click="sortResults($event,'transactionGross', 'cancellation')">valor total da transação</th>
+									<th ng-click="sortResults($event,'transactionCancellationAmount', 'cancellation')">valor total do cancelamento</th>
+									<th ng-click="sortResults($event,'amount', 'cancellation')">valor do débito</th>
+									<th ng-click="sortResults($event,'transactionNsu', 'cancellation')">nsu</th>
+									<th ng-click="sortResults($event,'transactionCardNumber', 'cancellation')">nº do cartão<!--<span class="orderby"></span>--></th>
+									<th ng-click="sortResults($event,'transactionAuthorization', 'cancellation')">código de autorização</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in cancellationsData">
+									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
+									<td>R$ {{ item.transactionGross | currency:'' }}</td>
+									<td>R$ {{ item.adjustCancellationAmount | currency:'' }}</td>
+									<td>R$ {{ item.adjustAmount | currency:'' }}</td>
+									<td>{{ item.adjustNsu }}</td>
+									<td>{{ item.adjustCardNumber}}</td>
+									<td>{{ item.adjustAuthorization }}</td>
+								</tr>
+							</tbody>
+						</table>
+						<span class="alert" ng-show="!cancellationsData.length">Não existem dados/registros para o filtro selecionado</span>
+						<div class="optionsWrapper">
+							<div class="selectWrapper">
+								<label for="totalItensPage">resultados por página</label>
+								<div class="select">
+									<select ng-model="cancellationsTotalItensPage" ng-change="totalItensPageChangedCancellations()" id="totalItensPage">
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="paginationWrapper">
+								<pagination
+									total-items="cancellationsTotalItens"
+									ng-model="cancellationsCurrentPage"
+									ng-change="pageChangedCancellations()"
+									max-size="maxSize"
+									items-per-page="cancellationsTotalItensPage"
+									rotate="false"
+									class="pagination-sm"
+									boundary-links="true"
+									previous-text="&lsaquo;"
+									next-text="&rsaquo;"
+									first-text="&laquo;"
+									last-text="&raquo;">
+								</pagination>
+							</div>
+						</div>
+					</article>
+				</tab>
+
+				<!--
+				<tab heading="{{tabs[3].title}}" active="tabs[3].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
+					<article>
+						Ecommerce
+					</article>
+				</tab>
+				-->
+			</tabset>
+		</div>
+	</div>
+  	<rc-disclaimer></rc-disclaimer>
+</section>

@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 @charset "utf-8";
 /******************************************
 Sistema desenvolvido por
@@ -9307,7 +9313,7 @@ footer nav.fixed {
 }
 
 .vendas #details #cupomVendasTour td {
-	 text-indent: 10px; 
+	 text-indent: 10px;
 }
 
 .vendas span.checkbox-right {
@@ -9790,9 +9796,9 @@ div.checkbox-toggle-right {
 .filterShiny ul li.center {
     margin:0 15px!important;
 }
-.filterShiny ul li.center input, 
-.filterShiny ul li #naturezaProduto, 
-.filterShiny ul li #naturezaProduto2,  
+.filterShiny ul li.center input,
+.filterShiny ul li #naturezaProduto,
+.filterShiny ul li #naturezaProduto2,
 .filterShiny ul #buscaTerminal,
 .filterShiny ul #buscaTerminal2 {
     width:89%;
@@ -9804,9 +9810,9 @@ div.checkbox-toggle-right {
     font-weight: normal;
 }
 
-.filterShiny ul #buscaTerminal ~ ul li, 
+.filterShiny ul #buscaTerminal ~ ul li,
 .filterShiny ul #naturezaProduto ~ ul li,
-.filterShiny ul #buscaTerminal2 ~ ul li, 
+.filterShiny ul #buscaTerminal2 ~ ul li,
 .filterShiny ul #naturezaProduto2 ~ ul li,
 .filterShiny ul #buscaTerminal3 ~ ul li {
     height: 30px;
@@ -10594,7 +10600,7 @@ tr.card-product-line {
  /* maestro */
 .data-cards table tbody .brand_6, #receiptsDetails .brand_6 {
     background-position: -622px 0;
- } 
+ }
 
 /* visa electron */
 .data-cards table tbody .brand_7, #receiptsDetails .brand_7 {
@@ -10633,7 +10639,7 @@ tr.card-product-line {
     background-position: -963px 0;
 }
 
-/* avista - nao tem img ainda */ 
+/* avista - nao tem img ainda */
 .data-cards table tbody .brand_104, #receiptsDetails .brand_104 {
     visibility: hidden;
 }
