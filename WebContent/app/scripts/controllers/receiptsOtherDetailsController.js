@@ -43,7 +43,8 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
 
 				$scope.otherReleasesTotal = $rootScope.receiptsDetails.otherReleasesTotal;
-				$scope.sort = "";
+				
+				$scope.sort = "payedDate,ASC";
 
 
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
@@ -56,14 +57,13 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 					bankAccountIds: $scope.bankAccount.id,
 					status: "RECEIVED",
-					sort: "payedDate,ASC"
 				};
                 
-				$scope.maxSize = 4;
+				$scope.maxSize = 10;
 
 				$scope.otherDetailsData = [];
-				$scope.salesTotalItensPage = 10;
-				$scope.salesTotalItens = 0;
+				$scope.totalItensPage = 10;
+				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
 				$scope.back = back;
@@ -93,11 +93,13 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 	        $location.path('/receipts');
 	    }
 
-	    function getOtherDetails(cache) {
-
+	    function getOtherDetails() {
+	    	$scope.otherDetailsData = [];
+			filter.sort = $scope.sort; 
 			AdjustService.getOtherDetails(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
+
 
 				console.log(response);
 
@@ -118,48 +120,30 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 		    }, 0);	
 	    }
 
-	    $scope.sortResults = function(elem, kind, tipo_relatorio) {
-			$scope.sort = $rootScope.sortResults(elem, kind);
-			if(tipo_relatorio == "sales") {
-				getSales(false);
-			} else if(tipo_relatorio == "adjusts") {
-				getAdjusts();
-			} else if(tipo_relatorio == "cancellation") {
-				getCancellations();
-			}
+	    $scope.sortResults = function(elem, kind) {
+			var order_string;
+			order_string = $rootScope.sortResults(elem,kind);
+
+			$scope.sort = order_string;
+			
+			getOtherDetails();
+			 
 	    }
 
 	    /* pagination */
 		$scope.pageChangedSales = function () {
 			$scope.salesCurrentPage = this.salesCurrentPage;
-			getSales();
+			getOtherDetails();
 		};
 
 		$scope.totalItensPageChangedSales = function () {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			getSales();
+			getOtherDetails();
 		};
 
 		$scope.pageChangedAdjusts = function () {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			getAdjusts();
-		};
-
-		$scope.totalItensPageChangedAdjusts = function () {
-			this.adjustsCurrentPage = $scope.adjustsCurrentPage = 0;
-			$scope.adjustsTotalItensPage = this.adjustsTotalItensPage;
-			getAdjusts();
-		};
-
-		$scope.pageChangedCancellations = function () {
-			$scope.cancellationsCurrentPage = this.cancellationsCurrentPage;
-			getCancellations();
-		};
-
-		$scope.totalItensPageChangedCancellations = function () {
-			this.cancellationsCurrentPage = $scope.cancellationsCurrentPage = 0;
-			$scope.cancellationsTotalItensPage = this.cancellationsTotalItensPage;
-			getCancellations();
+			getOtherDetails();
 		};
 	});
