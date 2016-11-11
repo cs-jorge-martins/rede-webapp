@@ -914,6 +914,9 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		var redirect_url;
 		switch (detailPage) {
+			case "other_details":
+				redirect_url = "receipts/other_details";
+				break;
 			case "expected_details":
 				redirect_url = "receipts/expected_details";
 				break;

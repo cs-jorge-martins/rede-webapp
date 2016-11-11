@@ -182,6 +182,7 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/controllers/receiptsDetailsController.js",
                     "WebContent/app/scripts/controllers/receiptsExpectedDetailsController.js",
                     "WebContent/app/scripts/controllers/receiptsForethoughtDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsOtherDetailsController.js",
                     "WebContent/app/scripts/controllers/redirectController.js",
 
                     "WebContent/app/scripts/service/dashboardService.js",
@@ -212,6 +213,7 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/service/v1/api/service/TransactionSummaryService.js",
                     "WebContent/app/scripts/service/v1/api/service/TransactionService.js",
                     "WebContent/app/scripts/service/v1/api/service/TransactionConciliationService.js",
+                    "WebContent/app/scripts/service/v1/api/service/AdjustService.js",
 
                     "WebContent/app/scripts/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/scripts/directives/rc-multiselect/rc-multiselect.js",

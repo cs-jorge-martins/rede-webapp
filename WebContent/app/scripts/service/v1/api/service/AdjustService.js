@@ -5,7 +5,18 @@
 angular.module('Conciliador.AdjustService',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
-}]).service('AdjustService', function(Restangular, $location) {
+}]).service('AdjustService', function(app, Restangular, $location, $http, Request) {
+
+	this.getOtherDetails = function(filter) {
+		var request = filter;
+
+		return $http({
+			url: app.endpoint + "/adjusts",
+			method: "GET",
+			params: request,
+			headers: Request.setHeaders()
+		})
+	}
 
 	//GET Adjust by id
 	this.getAdjustByFilter = function(adjustId) {

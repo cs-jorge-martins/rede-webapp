@@ -1,0 +1,100 @@
+<section class="receiptsExpectedDetails" id="receiptsDetails">
+
+	<div id="detailsClose">
+		<div class="container">
+			<h3>outros lançamentos | detalhes</h3>
+			<button ng-click="back()">x</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="receiptsTopSeparator"></div>
+
+	<article class="data-cards">
+		<div class="header-datas">
+			<div class="date">
+				<span class="number">{{ day }}</span><br> {{ month }}
+			</div>
+			<div class="chip-wrapper">
+				<div class="chip" ng-if="accountsLabel">
+					{{ accountsLabel }}
+				</div>
+				<div class="chip" ng-if="shops">
+					{{ shopsLabel }}
+				</div>
+			</div>
+		</div>
+
+	</article>
+	<ul class="wrapperAcquirerSummary">
+		<li class="acquirer">{{ acquirer.name }}</li>
+		<li class="totalValue">valor total do ajuste <br><span class="totalDiscounted">{{ totalOfSumAmount() }}</span></li> 	
+	</ul>
+	
+	<div id="primaryContent">
+		<div id="details">
+			<tabset>
+				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+					<article>
+						<table class="table sortTable">
+							<thead>
+								<tr>
+									<th ng-click="sortResults($event,'payedDate', 'adjusts')">data do ajuste</th>
+									<th ng-click="sortResults($event,'amount', 'adjusts')">valor</th>
+									<th ng-click="sortResults($event,'description', 'adjusts')">descrição</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in otherDetailsData">
+									<td>{{ item.payedDate | date }}</td>
+									<td>{{ item.amount | currency }}</td>
+									<td>{{ item.description | lowercase }}</td>
+								</tr>
+							</tbody>
+						</table>
+						<span class="alert" ng-show="!adjustsData.length">Não existem dados/registros para o filtro selecionado</span>
+						<div class="optionsWrapper">
+							<div class="selectWrapper">
+								<label for="totalItensPage">resultados por página</label>
+								<div class="select">
+									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="paginationWrapper">
+								<pagination
+										total-items="adjustsTotalItens"
+										ng-model="adjustsCurrentPage"
+										ng-change="pageChangedAdjusts()"
+										max-size="maxSize"
+										items-per-page="adjustsTotalItensPage"
+										rotate="false"
+										class="pagination-sm"
+										boundary-links="true"
+										previous-text="&lsaquo;"
+										next-text="&rsaquo;"
+										first-text="&laquo;"
+										last-text="&raquo;">
+								</pagination>
+							</div>
+						</div>
+					</article>
+				</tab>
+
+
+				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+
+				</tab>
+
+				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
+
+				</tab>
+			</tabset>
+		</div>
+	</div>
+  	<rc-disclaimer></rc-disclaimer>
+</section>

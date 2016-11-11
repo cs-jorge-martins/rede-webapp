@@ -151,84 +151,20 @@
                                     <th>outros lançamentos</th>
                                     <th>{{ item.otherReleasesTotal | currency}}</th>
                                     <th>
-                                        <!--<a ng-click="showDetails(item.acquirer, item.otherReleases)" href="#/receipts/details">detalhes</a>-->
+                                        <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'other_details')">detalhes</a>
                                     </th>
                                 </tr>
                                  <tbody ng-show="item.otherReleases">
                                     <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos card-product-line">
                                         <th></th>
-                                        <th class="inset-1">{{ otherRelease.description }}</th>
+                                        <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
                                         <th>- {{ otherRelease.amount | number: 02}} </th>
                                         <th></th>
                                     </tr>
                                 </tbody>
-
-                                <!--
-                                <tbody ng-repeat="cardProduct in acquirer.cardProducts">
-                                    <tr>
-                                        <th class="except"></th>
-                                        <th>
-                                        <div class="cardFlag brand_{{cardProduct.id}}"></div> {{ cardProduct.name }} </th>
-                                        <th> {{ cardProduct.balanceAmount | currency }} </th>
-                                        <th><a ng-click="showDetails(acquirer, cardProduct)">detalhes</a></th>
-                                    </tr>
-                                    <tr class="inset" ng-class="e.type == 'cancelamentos' || e.type == 'ajustes' ? 'discount' : '' " ng-repeat="e in cardProduct.releases track by $index">
-                                        <th></th>
-                                        <th class="inset-1">{{ e.type }}</th>
-                                        <th>{{e.payedAmount | currency}} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                <tr class="group" ng-show="chipOtherPaiments">
-                                    <th></th>
-                                    <th>outros lançamentos</th>
-                                    <th>{{receipts.otherPayments.value | currency}}</th>
-                                    <th><a href="#/receipts/details">detalhes</a></th>
-                                </tr>
-                                <tbody ng-repeat="op in receipts.otherPayments" ng-show="chipOtherPaiments">
-                                    <tr class="discount">
-                                        <th class="except"></th>
-                                        <th> {{ op.otherDescription }} </th>
-                                        <th> {{op.otherAmount | currency}} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                <tr class="group">
-                                    <th></th>
-                                    <th>pagamentos não recebidos</th>
-                                    <th>{{receipts.expectedPayments.value | currency}}</th>
-                                    <th><a href="#/receipts/details">detalhes</a></th>
-                                </tr>
-                                <tbody ng-repeat="ep in receipts.expectedPayments">
-                                    <tr>
-                                        <th class="except"></th>
-                                        <th>
-                                            <div class="cardFlag brand_{{ep.cardProductId}}"></div> {{ ep.cardProductName }} </th>
-                                        <th> {{ep.expectedAmount | currency}} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                -->
                             </table>
                             <span class="alert" ng-show="!actualReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
-                            <!--
-                		<div class="conclusion">
-                			<div class="page-title">
-                				conciliação financeira
-                			</div>
-                			<ul>
-                				<li>
-                					<input type="checkbox">
-                					Confirmo o recebimento de <strong>R$ 40.000,00 </strong> na conta corrente de número <strong>9898 98989-2</strong> banco <strong>itaú</strong> no dia 24/08/2016
-                				</li>
-                				<li>
-                					<input type="checkbox">
-                					Reportar erro no recebimento do valor informado.
-                				</li>
-                			</ul>
-                		</div>
-                		-->
-                    </article>
+                        </article>
                         <!-- LANCAMENTOS ATUAIS: END -->
                 </tab>
                 <tab heading="lançamentos futuros" active="" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
