@@ -10116,7 +10116,7 @@ section.receiptsExpectedDetails #details .receipts-details-wrapper table td{
     cursor: auto;
 }
 
-section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper.only-chip-on-header {
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .only-chip-on-header {
     margin-top: 63px;
     margin-left: 33px;
 }
@@ -10180,6 +10180,15 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     margin-right: 135px;
 }
 
+#receiptsDetails .wrapperAcquirerSummary .cardProduct {
+    display: flex;
+    align-items:center;
+}
+
+#receiptsDetails .wrapperAcquirerSummary .totalValue .value {
+    color:rgba(0, 185, 181, 1);
+}
+
 #receiptsDetails .wrapperAcquirerSummary .totalValue span:last-child {
     font-size: 29px;
     font-weight: lighter;
@@ -10199,7 +10208,8 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     background: white;
 }
 
-#receiptsDetails .mainContent .table tr > td {
+#receiptsDetails .mainContent .table tr > td,
+#receiptsDetails .tableAntecipated {
     text-indent: 10px;
 }
 

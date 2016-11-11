@@ -916,7 +916,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		$rootScope.receiptsDetails.cardProductsLabel = $scope.cardProductsLabel;
 		$rootScope.receiptsDetails.cardProductsFullLabel = $scope.cardProductsFullLabel;
 		$rootScope.receiptsDetails.total = total;
-		$rootScope.receiptsDetails.type = status
+		$rootScope.receiptsDetails.type = status;
 
 		var redirect_url;
 		switch (detailPage) {
@@ -926,8 +926,8 @@ angular.module('KaplenWeb.movementsModule',[])
 			case "expected_details":
 				redirect_url = "receipts/expected_details";
 				break;
-			case "forethought":
-				redirect_url = "receipts/forethought";
+			case "forethought_details":
+				redirect_url = "receipts/forethought_details";
 				break;
 			default:
 				redirect_url = "receipts/details";
