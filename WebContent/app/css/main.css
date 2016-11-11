@@ -10060,8 +10060,8 @@ div.checkbox-toggle-right {
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas {
-    height: 200px;
-    padding: 26px 32px 0;
+    height: 152px;
+    padding: 0px 32px 0;
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date {
@@ -10071,9 +10071,19 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
     font-size: 72px;
 }
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .month {
+    font-weight: bold;
+    display: block;
+    margin-top: -11px;
+}
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper {
     display: block;
+}
+
+section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper.only-chip-on-header {
+    margin-top: 63px;
+    margin-left: 33px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:first-child {
     width: 100%;
@@ -10121,14 +10131,22 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails .wrapperAcquirerSummary {
     width: 100%;
-    height:140px;
     float: left;
-    background:white;
-    padding:20px;
+    background: white;
+    padding: 70px 30px 10px;
     box-sizing: border-box;
     display: flex;
-    justify-content:space-between;
-    align-items:center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#receiptsDetails .wrapperAcquirerSummary .totalValue {
+    margin-right: 135px;
+}
+
+#receiptsDetails .wrapperAcquirerSummary .totalValue span:last-child {
+    font-size: 25px;
+    font-weight: lighter;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .acquirer {
@@ -10439,7 +10457,8 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     width: 50%;
     float:left;
 }
-.data-cards .discount {
+.data-cards .discount,
+.wrapperAcquirerSummary .discount{
     color:#e84438;
 }
 .data-cards .addition {

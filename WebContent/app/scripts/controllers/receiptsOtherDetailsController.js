@@ -49,19 +49,6 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-				$scope.tabs = [
-					{
-						title: 'Rede',
-						active: true
-					},
-					{
-						title: 'Cielo'
-					},
-					{
-						title: 'GetNet'
-					}
-				];
-
 				filter = {
 					adjustTypes: "OTHER",
 					acquirerIds: $scope.acquirer.id,
@@ -81,8 +68,8 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 				$scope.back = back;
 				$scope.getShopsLabel = getShopsLabel;
-				$scope.changeTab = changeTab;
 				$scope.getOtherDetails = getOtherDetails;
+				getOtherDetails();
 			}
 		}
 
@@ -123,37 +110,12 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 			});
 	    }
 
-	    // console.log("$scope.otherDetailsData", $scope.otherDetailsData);
-
-	    // $scope.getTotalOfSumAmount = function () {
-	    //     var runningTotal = 0;
-	    //     for (var i = 0; i < $scope.otherDetailsData.length; i++) {
-	    //         runningTotal += $scope.otherDetailsData[i].amount;
-	    //     }
-	    //     return runningTotal;
-	    // }
-
 	    $scope.totalOfSumAmount = totalOfSumAmount;
 
 	    function totalOfSumAmount() {
 	    	return $scope.otherDetailsData.reduce(function(prev, curr) {
-		    	return prev.amount + curr.amount;
+		    	return prev + curr.amount;
 		    }, 0);	
-	    }
-
-	    function changeTab(index) {
-	    	$scope.tabs[index].active = true;
-			$scope.sort = "";
-
-	    	if(index === 0) {
-	    		getOtherDetails();
-	    	} else if(index === 1) {
-	    		getAdjusts();
-	    	} else if(index === 2) {
-	    		getCancellations();
-	    	} else if(index === 0) {
-	    		getCommerce();
-	    	}
 	    }
 
 	    $scope.sortResults = function(elem, kind, tipo_relatorio) {
