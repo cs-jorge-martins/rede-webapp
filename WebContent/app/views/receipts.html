@@ -132,7 +132,10 @@
                                             <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} 
                                         </th>
                                         <th>{{ cardProduct.total | number: 02 }}</th>
-                                        <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a></th>
+                                        <th>
+                                            <a ng-hide="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a>
+                                            <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought')">detalhes Antecipados</a>
+                                        </th>
                                     </tr>
                                     <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type }}">
                                         <th></th>

@@ -39,6 +39,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'Conciliador.receiptsDetailsController',
 							'Conciliador.redirectController',
 							'Conciliador.receiptsExpectedDetailsController',
+							'Conciliador.receiptsForethoughtDetailsController',
                             'ngFileSaver',
                             'Conciliador.appConfig',
                             'Conciliador.customCurrency'

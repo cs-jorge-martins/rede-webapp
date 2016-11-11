@@ -180,9 +180,11 @@ angular.module('KaplenWeb.movementsModule',[])
 						description = data[index].description.toLowerCase(),
 						cardProduct = data[index].cardProduct;
 						amount = data[index].payedAmount;
+						cardProduct.forethought = false;
 
 					if (status == "forethought") {
 						cardProduct.name = "ANTECIPAÇÃO " + cardProduct.name;
+						cardProduct.forethought = true;
 					}
 
 					if(releases.length) {
@@ -201,6 +203,7 @@ angular.module('KaplenWeb.movementsModule',[])
 								var item = {
 									cardProductName: cardProduct.name,
 									cardProductId: cardProduct.id,
+									forethought: cardProduct.forethought,
 									status: status,
 									description: description,
 									sales: 0,
@@ -237,6 +240,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						var item = {
 							cardProductName: cardProduct.name,
 							cardProductId: cardProduct.id,
+							forethought: cardProduct.forethought,
 							status: status,
 							description: description,
 							sales: 0,
@@ -912,6 +916,9 @@ angular.module('KaplenWeb.movementsModule',[])
 		switch (detailPage) {
 			case "expected_details":
 				redirect_url = "receipts/expected_details";
+				break;
+			case "forethought":
+				redirect_url = "receipts/forethought";
 				break;
 			default:
 				redirect_url = "receipts/details";
