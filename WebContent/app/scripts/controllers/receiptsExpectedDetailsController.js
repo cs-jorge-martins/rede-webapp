@@ -8,6 +8,8 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
      advancedFilterService, $location, FinancialService, MovementSummaryService){
 
 		var filter = {};
+		$scope.totalItensPage = 10;
+
 		init();
 
 		function init(){
@@ -35,12 +37,16 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.salesTotalItens = 0;
 				$scope.salesCurrentPage = 0;
 
+				$scope.adjustsTotalItensPage = 10;
+				$scope.adjustsTotalItens = 0;
+
 				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
 
 				$scope.back = back;
 				$scope.changeTab = changeTab;
 				$scope.tabs = [];
 				$scope.translateStatus = TranslateStatus;
+				$scope.adjustsCurrentPage = 0;
 
 				getExpectedAcquirers();
 			}
@@ -77,10 +83,16 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 		}
 
+		$scope.totalItensPageChangedSales = function (acquirer_id) {
+			this.salesCurrentPage = $scope.salesCurrentPage = 0;
+			$scope.salesTotalItensPage = this.salesTotalItensPage;
+			getExpectedDetails(acquirer_id);
+		};
+
 	    function getExpectedDetails(acquirer_id) {
 
-			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
-			filter.size =  $scope.salesTotalItensPage;
+			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
+			filter.size =  $scope.adjustsTotalItensPage;
 			filter.status = $scope.filterStatus;
 			filter.startDate = $scope.date;
 			filter.endDate = $scope.date;
@@ -94,7 +106,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				var pagination = response.data.page;
 
 				$scope.detailsData = data;
-				$scope.salesTotalItens = pagination.totalElements;
+				$scope.adjustsTotalItens = pagination.totalElements;
 
 			}).catch(function(response) {
 				$scope.detailsData = [];
@@ -147,20 +159,21 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			$scope.salesCurrentPage = this.salesCurrentPage;
 		};
 
-		$scope.totalItensPageChangedSales = function () {
+		$scope.totalItensPageChangedSales = function (acquirer_id) {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
+			getExpectedDetails(acquirer_id);
 		};
 
 		$scope.pageChangedAdjusts = function () {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			getAdjusts();
+			getExpectedDetails(1);
 		};
 
 		$scope.totalItensPageChangedAdjusts = function () {
 			this.adjustsCurrentPage = $scope.adjustsCurrentPage = 0;
 			$scope.adjustsTotalItensPage = this.adjustsTotalItensPage;
-			getAdjusts();
+			getExpectedDetails(1);
 		};
 
 		$scope.pageChangedCancellations = function () {

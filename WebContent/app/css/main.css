@@ -9014,6 +9014,10 @@ footer nav.fixed {
 	float: left;
 	clear: none;
 }
+
+.paginationWrapper.center{
+    text-align: center;
+}
 #details .optionsWrapper .selectWrapper {
 	width: 230px;
 }
@@ -9042,9 +9046,16 @@ footer nav.fixed {
 	text-align: center;
 }
 
-#details .optionsWrapper .pagination {
-	float: none;
-	margin: 10px 0 10px 36px;
+.receiptsExpectedDetails #details .pagination li a{
+    background: transparent !important;
+    border: 0;
+    font-size: 16px;
+    padding: 0 16px !important;
+}
+
+#details .pagination {
+    margin: 28px 0 10px 36px;
+    float: initial;
 }
 
 .selectWrapper label {

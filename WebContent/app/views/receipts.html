@@ -41,11 +41,11 @@
                         <!-- LANCAMENTOS ATUAIS INIT -->
                         <article class="data-cards">
                             <div class="expectedReleases">
-                                <table ng-repeat="item in actualReleasesData" id="receipts_table">
-                                    <tr class="group" ng-show="item.expectedReleases.length">
+                                <table ng-if="existsForethought" id="receipts_table">
+                                    <tr class="group" ng-show="existsForethought">
                                         <th id="pagamentosNaoRecebidosTitleColumn">existem pagamentos não recebidos nesta data</th>
                                         <th>
-                                            <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'expected_details')">detalhes</a>
+                                            <a ng-click="showDetails(1, cardProduct, cardProduct.total, cardProduct.status, 'expected_details')">detalhes</a>
                                         </th>
                                     </tr>
                                 </table>
