@@ -22,6 +22,8 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$location.path('/receipts');
 			} else {
 
+				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
+				
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
 				$scope.date = calendarFactory.formatDateTimeForService($scope.startDate);
 				$scope.sort = "";
@@ -60,6 +62,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 			var expectedAcquirersFilter = {
 				groupBy: "ACQUIRER",
+				// bankAccountIds: $scope.bankAccount.id,
 				status: $scope.filterStatus,
 				startDate: $scope.date,
 				endDate: $scope.date
@@ -97,6 +100,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			filter.startDate = $scope.date;
 			filter.endDate = $scope.date;
 			filter.sort = $scope.sort;
+			filter.bankAccountIds = $scope.bankAccount.id;
 			filter.acquirer = acquirer_id;
 
 			// https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev/financials/details?acquirerIds=1&bankAccountIds=5&cardProductIds=1&endDate=20161004&page=0&size=10&sort=transaction.date,DESC&sort=transaction.hour,DESC&startDate=20161004&status=RECEIVED&type=CREDIT
