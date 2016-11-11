@@ -21,9 +21,12 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			} else {
 
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
+				$scope.date = calendarFactory.formatDateTimeForService($scope.startDate);
 				$scope.sort = "";
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
+
+				$scope.filterStatus = "EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED";
 
 				$scope.maxSize = 4;
 
@@ -32,9 +35,12 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.salesTotalItens = 0;
 				$scope.salesCurrentPage = 0;
 
+				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
+
 				$scope.back = back;
 				$scope.changeTab = changeTab;
 				$scope.tabs = [];
+				$scope.translateStatus = TranslateStatus;
 
 				getExpectedAcquirers();
 			}
@@ -46,12 +52,11 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 	    function getExpectedAcquirers() {
 
-			var date = calendarFactory.formatDateTimeForService($scope.startDate);
 			var expectedAcquirersFilter = {
 				groupBy: "ACQUIRER",
-				status: "EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED",
-				startDate: date,
-				endDate: date
+				status: $scope.filterStatus,
+				startDate: $scope.date,
+				endDate: $scope.date
 			};
 
 			MovementSummaryService.listMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
@@ -76,6 +81,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
 			filter.size =  $scope.salesTotalItensPage;
+			filter.status = $scope.filterStatus;
+			filter.startDate = $scope.date;
+			filter.endDate = $scope.date;
 			filter.sort = $scope.sort;
 			filter.acquirer = acquirer_id;
 
@@ -92,6 +100,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.detailsData = [];
 				console.log('[receiptsDetailsController:getSales] error');
 			});
+
 	    }
 
 	    function changeTab(index, acquirer_id) {
@@ -99,6 +108,34 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			$scope.sort = "";
 			getExpectedDetails(acquirer_id);
 	    }
+
+	    function TranslateStatus(status, date) {
+			if(status && date) {
+				status = status.toLowerCase();
+				switch (status) {
+					case "expected":
+					case "pending":
+					 	status = "pendente";
+						break;
+					case "suspended":
+						status = "suspenso";
+						break;
+					case "pawned":
+						status = "penhorado";
+						break;
+					case "blocked":
+						status = "bloqueado";
+						break;
+					case "pawned_blocked":
+						status = "penhorado/bloqueado";
+						break;
+					case "forethought":
+						status = "antecipado em: " + date;
+						break;
+				}
+			}
+			return status;
+		}
 
 	    $scope.sortResults = function(elem, kind) {
 

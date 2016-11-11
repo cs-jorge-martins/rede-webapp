@@ -8904,6 +8904,11 @@ footer nav.fixed {
 	border-top: 1px solid #e5e5e5;
 	background: #f6f3f1;
 }
+
+#details tbody tr:last-child td {
+    border: 0;
+}
+
 #details td, #details th {
 	padding: 10px 0;
 }
@@ -8993,6 +8998,9 @@ footer nav.fixed {
 #details .optionsWrapper {
 	height: 50px;
 	margin: 20px 0 10px 0;
+}
+.receiptsExpectedDetails #details .optionsWrapper {
+    margin: 35px 0 10px 20px;
 }
 #details .optionsWrapper .selectWrapper,
 #details .optionsWrapper .archives,
@@ -9873,6 +9881,9 @@ div.checkbox-toggle-right {
     box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     box-sizing: border-box;
 }
+.receiptsExpectedDetails .data-cards .header-datas {
+    height: auto;
+}
 .data-cards .header-datas .date-wrapper  {
     margin-right: 15px;
     float: left;
@@ -10060,7 +10071,7 @@ div.checkbox-toggle-right {
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas {
-    height: 152px;
+    min-height: 152px;
     padding: 0px 32px 0;
 }
 
@@ -10079,6 +10090,24 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper {
     display: block;
+    padding-bottom: 40px;
+}
+
+section.receiptsExpectedDetails .receipts-details-wrapper {
+    padding: 6px 0 !important;
+    display: block;
+    background: #fff;
+}
+section.receiptsExpectedDetails #details .receipts-details-wrapper table td:first-child,
+section.receiptsExpectedDetails #details .receipts-details-wrapper table th:first-child{
+    padding: 5px 0 5px 30px !important;
+}
+section.receiptsExpectedDetails #details .receipts-details-wrapper table th:first-child{
+    font-size: 12px;
+}
+section.receiptsExpectedDetails #details .receipts-details-wrapper table td{
+    padding: 5px 8px !important;
+    cursor: auto;
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper.only-chip-on-header {
@@ -10089,6 +10118,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     width: 100%;
     font-size: 12px;
     display: inline-table;
+    padding-top: 23px;
 }
 
 #receiptsDetails .data-cards .numbers-data {
