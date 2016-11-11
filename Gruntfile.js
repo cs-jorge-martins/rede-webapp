@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
@@ -183,7 +183,7 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/service/receipts-service.js",
                     "WebContent/app/scripts/service/v1/api/service/financial-service.js",
                     "WebContent/app/scripts/service/v1/api/filter/financial-filter.js",
-                    "WebContent/app/scripts/service/v1/api/service/movement-Summary-service.js",
+                    "WebContent/app/scripts/service/v1/api/service/movement-summary-service.js",
                     "WebContent/app/scripts/service/v1/api/filter/movement-summary-filter.js",
                     "WebContent/app/scripts/service/v1/api/service/adjust-summary-service.js",
                     "WebContent/app/scripts/service/v1/api/service/transaction-summary-service.js",
