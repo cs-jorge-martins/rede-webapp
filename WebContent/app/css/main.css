@@ -1,3 +1,9 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 @charset "utf-8";
 /******************************************
 Sistema desenvolvido por
@@ -8904,6 +8910,11 @@ footer nav.fixed {
 	border-top: 1px solid #e5e5e5;
 	background: #f6f3f1;
 }
+
+#details tbody tr:last-child td {
+    border: 0;
+}
+
 #details td, #details th {
 	padding: 10px 0;
 }
@@ -8993,6 +9004,9 @@ footer nav.fixed {
 #details .optionsWrapper {
 	height: 50px;
 	margin: 20px 0 10px 0;
+}
+.receiptsExpectedDetails #details .optionsWrapper {
+    margin: 35px 0 10px 20px;
 }
 #details .optionsWrapper .selectWrapper,
 #details .optionsWrapper .archives,
@@ -9299,7 +9313,7 @@ footer nav.fixed {
 }
 
 .vendas #details #cupomVendasTour td {
-	 text-indent: 10px; 
+	 text-indent: 10px;
 }
 
 .vendas span.checkbox-right {
@@ -9782,9 +9796,9 @@ div.checkbox-toggle-right {
 .filterShiny ul li.center {
     margin:0 15px!important;
 }
-.filterShiny ul li.center input, 
-.filterShiny ul li #naturezaProduto, 
-.filterShiny ul li #naturezaProduto2,  
+.filterShiny ul li.center input,
+.filterShiny ul li #naturezaProduto,
+.filterShiny ul li #naturezaProduto2,
 .filterShiny ul #buscaTerminal,
 .filterShiny ul #buscaTerminal2 {
     width:89%;
@@ -9796,9 +9810,9 @@ div.checkbox-toggle-right {
     font-weight: normal;
 }
 
-.filterShiny ul #buscaTerminal ~ ul li, 
+.filterShiny ul #buscaTerminal ~ ul li,
 .filterShiny ul #naturezaProduto ~ ul li,
-.filterShiny ul #buscaTerminal2 ~ ul li, 
+.filterShiny ul #buscaTerminal2 ~ ul li,
 .filterShiny ul #naturezaProduto2 ~ ul li,
 .filterShiny ul #buscaTerminal3 ~ ul li {
     height: 30px;
@@ -9872,6 +9886,9 @@ div.checkbox-toggle-right {
     -moz-box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     box-sizing: border-box;
+}
+.receiptsExpectedDetails .data-cards .header-datas {
+    height: auto;
 }
 .data-cards .header-datas .date-wrapper  {
     margin-right: 15px;
@@ -10060,7 +10077,7 @@ div.checkbox-toggle-right {
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas {
-    height: 152px;
+    min-height: 152px;
     padding: 0px 32px 0;
 }
 
@@ -10079,6 +10096,24 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper {
     display: block;
+    padding-bottom: 40px;
+}
+
+section.receiptsExpectedDetails .receipts-details-wrapper {
+    padding: 6px 0 !important;
+    display: block;
+    background: #fff;
+}
+section.receiptsExpectedDetails #details .receipts-details-wrapper table td:first-child,
+section.receiptsExpectedDetails #details .receipts-details-wrapper table th:first-child{
+    padding: 5px 0 5px 30px !important;
+}
+section.receiptsExpectedDetails #details .receipts-details-wrapper table th:first-child{
+    font-size: 12px;
+}
+section.receiptsExpectedDetails #details .receipts-details-wrapper table td{
+    padding: 5px 8px !important;
+    cursor: auto;
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .chip-wrapper.only-chip-on-header {
@@ -10089,6 +10124,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     width: 100%;
     font-size: 12px;
     display: inline-table;
+    padding-top: 23px;
 }
 
 #receiptsDetails .data-cards .numbers-data {
@@ -10576,7 +10612,7 @@ tr.card-product-line {
  /* maestro */
 .data-cards table tbody .brand_6, #receiptsDetails .brand_6 {
     background-position: -622px 0;
- } 
+ }
 
 /* visa electron */
 .data-cards table tbody .brand_7, #receiptsDetails .brand_7 {
@@ -10615,7 +10651,7 @@ tr.card-product-line {
     background-position: -963px 0;
 }
 
-/* avista - nao tem img ainda */ 
+/* avista - nao tem img ainda */
 .data-cards table tbody .brand_104, #receiptsDetails .brand_104 {
     visibility: hidden;
 }

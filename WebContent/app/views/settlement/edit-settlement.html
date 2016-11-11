@@ -1,0 +1,55 @@
+<section id="conciliacao" class="relatorio listConfig editSettlement">
+  <hgroup>
+    <h2>{{name}}</h2>
+  </hgroup>
+  <br />
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+  <div id="primaryContent">
+  <article class="filter">
+  <form name="newSettlement" novalidate>
+	<ul class="editSettlementConfigList">
+	  	<li>
+		  	<label>Loja:</label>
+		  	<p class="editImg" ng-init="edit = !edit" ng-show="edit" >{{settlement.name}}
+		  		<img src="app/img/editEditarLoja.png" alt="editar" ng-click="edit = false"/>
+		  	</p>
+		  	<p class="closeImg" ng-show="!edit">
+		  		<input type="text" required ng-model="settlement.name">
+		  		<img src="app/img/closeEditarLoja.png" alt="fechar" ng-click="edit = true"/>
+		  	</p>
+		</li>
+		<li>
+		  	<label>CNPJ:</label>
+		  	<p>{{settlement.cnpj}}</p>
+		</li>
+		<li>
+		  	<label>Razão Social:</label>
+		  	<p class="corporateName">{{settlement.corporateName}}</p>
+		</li>
+		<br />
+		</ul>
+		 <table>
+         <thead>
+            <tr>
+               <th>CÓDIGO</th>
+               <th>OPERADORA</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr ng-repeat="settlementIntegrator in settlement.settlementIntegrators">
+               <td>{{settlementIntegrator.settlementCode}}</td>
+               <td>{{settlementIntegrator.integrator.name}}</td>
+            </tr>
+         </tbody>
+      </table>
+		<ul>
+		<li class="configButtons">
+			<button ng-click="returnList()">Voltar</button>
+		  	<button ng-click="save()" ng-disabled="newSettlement.$invalid">Salvar</button>
+		</li>
+	 	<br />
+	 </ul>
+	 </form>
+	</article>
+	</div>
+</section>

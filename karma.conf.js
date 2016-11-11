@@ -1,6 +1,9 @@
-// Karma configuration
-// Generated on Thu Oct 13 2016 17:18:22 GMT-0300 (BRT)
-
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+ 
 module.exports = function(config) {
   config.set({
 
