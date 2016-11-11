@@ -1,11 +1,11 @@
 angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
-	$routeProvider.when('/receipts/forethought', {templateUrl: 'app/views/receipts_forethought_details.html', controller: 'receiptsForethoughtDetailsController'});
+	$routeProvider.when('/receipts/forethought_details', {templateUrl: 'app/views/receipts_forethought_details.html', controller: 'receiptsForethoughtDetailsController'});
 }])
 
 .controller('receiptsForethoughtDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
-     advancedFilterService, $location, FinancialService, MovementSummaryService){
+     advancedFilterService, $location, MovementService){
 
 		var filter = {};
 		init();
@@ -17,27 +17,60 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 			});
 
 			if(!$rootScope.receiptsDetails) {
-				console.log("NAO TEM RECEIPTS DETAILS")
 				$location.path('/receipts');
 			} else {
 
+				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
+				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
+				$scope.currency = $rootScope.receiptsDetails.currency;
+
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
-				$scope.sort = "";
+				$scope.endDate = $rootScope.receiptsDetails.endDate;
+				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
+				$scope.shops = $rootScope.receiptsDetails.shops;
+				$scope.products = $rootScope.receiptsDetails.products;
+				//$scope.type = $rootScope.receiptsDetails.type;
+				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
+
+				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
+				$scope.payedAmount = $rootScope.receiptsDetails.payedAmount;
+				$scope.total = $rootScope.receiptsDetails.total;
+				$scope.status = $rootScope.receiptsDetails.status;
+
+				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
+				$scope.shopsLabel = $rootScope.receiptsDetails.shopsLabel;
+				$scope.shopsFullLabel = $rootScope.receiptsDetails.shopsFullLabel;
+				$scope.cardProductsLabel = $rootScope.receiptsDetails.cardProductsLabel;
+				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
+
+				$scope.otherReleasesTotal = $rootScope.receiptsDetails.otherReleasesTotal;
+				
+				$scope.sort = "payedDate,ASC";
+
+				$scope.forethought = [];
+
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-				$scope.maxSize = 4;
 
-				$scope.detailsData = [];
-				$scope.salesTotalItensPage = 10;
-				$scope.salesTotalItens = 0;
+				filter = {
+					shopIds: $scope.shopIds,
+					acquirerIds: $scope.acquirer.id,
+					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
+					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
+					bankAccountIds: $scope.bankAccount.id,
+					status: "FORETHOUGHT",
+				};
+
+				$scope.maxSize = 10;
+
+				$scope.totalItensPage = 10;
+				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
 				$scope.back = back;
-				$scope.changeTab = changeTab;
-				$scope.tabs = [];
 
-				getExpectedAcquirers();
+				getForethought();
 			}
 		}
 
@@ -45,96 +78,48 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 	        $location.path('/receipts');
 	    }
 
-	    function getExpectedAcquirers() {
+	    function getForethought () {
+	    	$scope.forethought = [];
+	    	filter.sort = $scope.sort;
+	    	MovementService.getForethoughts(filter).then(function(response) {
+	    		var data = response.data.content;
+	    		var pagination = response.data.page;
 
-			var date = calendarFactory.formatDateTimeForService($scope.startDate);
-			var expectedAcquirersFilter = {
-				groupBy: "ACQUIRER",
-				status: "EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED",
-				startDate: date,
-				endDate: date
-			};
+	    		console.log(response);
 
-			MovementSummaryService.listMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
+	    		for (var i in data ) {
+	    			$scope.forethought.push(data[i]);
+	    		}
 
-				var obj;
-				var content = response.data.content;
-				for (var i=0; i<content.length; i++) {
-					obj = {
-						id: content[i].acquirer.id,
-						title: content[i].acquirer.name
-					};
-					$scope.tabs.push(obj);
-				}
-
-			}).catch(function (response) {
-
-			});
-
-		}
-
-	    function getExpectedDetails(acquirer_id) {
-
-			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
-			filter.size =  $scope.salesTotalItensPage;
-			filter.sort = $scope.sort;
-			filter.acquirer = acquirer_id;
-
-			// https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev/financials/details?acquirerIds=1&bankAccountIds=5&cardProductIds=1&endDate=20161004&page=0&size=10&sort=transaction.date,DESC&sort=transaction.hour,DESC&startDate=20161004&status=RECEIVED&type=CREDIT
-
-			FinancialService.getExpectedDetails(filter).then(function(response) {
-				var data = response.data.content;
-				var pagination = response.data.page;
-
-				$scope.detailsData = data;
-				$scope.salesTotalItens = pagination.totalElements;
-
-			}).catch(function(response) {
-				$scope.detailsData = [];
-				console.log('[receiptsDetailsController:getSales] error');
-			});
-	    }
-
-	    function changeTab(index, acquirer_id) {
-	    	$scope.tabs[index].active = true;
-			$scope.sort = "";
-			getExpectedDetails(acquirer_id);
+	    	}).catch(function(response) {
+	    		
+	    	})
 	    }
 
 	    $scope.sortResults = function(elem, kind) {
+	    	var order_string;
+	    	order_string = $rootScope.sortResults(elem,kind);
 
+	    	$scope.sort = order_string;
+	    	
+	    	getForethought();
 	    }
 
 	    /* pagination */
 		$scope.pageChangedSales = function () {
 			$scope.salesCurrentPage = this.salesCurrentPage;
+			getForethought();
 		};
 
 		$scope.totalItensPageChangedSales = function () {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
+			getForethought();
 		};
 
 		$scope.pageChangedAdjusts = function () {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			getAdjusts();
-		};
-
-		$scope.totalItensPageChangedAdjusts = function () {
-			this.adjustsCurrentPage = $scope.adjustsCurrentPage = 0;
-			$scope.adjustsTotalItensPage = this.adjustsTotalItensPage;
-			getAdjusts();
-		};
-
-		$scope.pageChangedCancellations = function () {
-			$scope.cancellationsCurrentPage = this.cancellationsCurrentPage;
-			getCancellations();
-		};
-
-		$scope.totalItensPageChangedCancellations = function () {
-			this.cancellationsCurrentPage = $scope.cancellationsCurrentPage = 0;
-			$scope.cancellationsTotalItensPage = this.cancellationsTotalItensPage;
-			getCancellations();
+			getForethought();
 		};
 
 	});

@@ -17,85 +17,83 @@
 			<div class="date">
 				<span class="number">{{ day }}</span><br> {{ month }}
 			</div>
-			<div class="chip-wrapper">
-
-				<p>
-					São considerados recebimentos não efetuados, lançamentos que possuíam a data agendada de pagamento para hoje e não ocorreram devido as possíveis causas: créditos que foram suspensos, penhoradas, antecipados, cancelados ou que simplesmente não foram pagos por alguma outra razão. (1) Para casos de créditos suspensos entre no Portal da Rede e verifique as suas informações bancárias. (2) Para mais informações sobre créditos penhorados ou não pagos entre em contato com a Central de Atendimento no telefone <strong>4001-4433</strong> (capitais e regiões metropolitanas) ou <strong>0800-728-4433</strong> (demais regiões).
-				</p>
-				<div>
-					<div class="chip" ng-if="accountsLabel">
-						{{ accountsLabel }}
-					</div>
+			<div class="chip-wrapper only-chip-on-header">
+				<div class="chip" ng-if="accountsLabel">
+					{{ accountsLabel }}
+				</div>
+				<div class="chip" ng-if="shops">
+					{{ shopsLabel }}
 				</div>
 			</div>
 		</div>
 
 	</article>
+	
+	<ul class="wrapperAcquirerSummary">
+		<li class="acquirer">{{ acquirer.name }}</li>
+		<li class="cardProduct"><div class="cardFlag brand_{{cardProduct.cardProductId}}"></div> {{ cardProduct.cardProductName | capitalize }}</li>
+		<li class="totalValue">
+			<span>total liquido antecipado</span>
+			<div class="value">
+				R$ <span class="big">{{ cardProduct.total | currency: "" }}</span> 
+			</div>
+		</li>
+	</ul>
 
 	<div id="primaryContent">
 		<div id="details">
-			<tabset>
-				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
-					<article>
-						<table class="table sortTable">
-							<thead>
-								<tr>
-									<th ng-click="sortResults($event,'payedDate')">bandeira</th>
-									<th ng-click="sortResults($event,'amount')">tipo de venda</th>
-									<th ng-click="sortResults($event,'description')">status do crédito</th>
-									<th ng-click="sortResults($event,'roNumber')">data do lote (RV)</th>
-									<th ng-click="sortResults($event,'roNumber')">n do lote (RV)</th>
-									<th ng-click="sortResults($event,'roNumber')">valor líquido não pago</th>
-									<th ng-click="sortResults($event,'roNumber')">n do estabelecimento</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="details in detailsData">
-									<td>
-										<div class="cardFlag brand_{{details.cardProductCode}}"></div>
-									</td>
-									<td class="toLowerCase">{{details.cardProductType}}</td>
-									<td>cancelado</td>
-									<td>{{details.roDate | date:'dd/MM'}}</td>
-									<td>9898989898989898</td>
-									<td>R$ 1000.000.000,00</td>
-									<td>13131231312313</td>
-								</tr>
-							</tbody>
-						</table>
-						<span class="alert" ng-show="!adjustsData.length">Não existem dados/registros para o filtro selecionado</span>
-						<div class="optionsWrapper">
-							<div class="selectWrapper">
-								<label for="totalItensPage">resultados por página</label>
-								<div class="select">
-									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="paginationWrapper">
-								<pagination
-										total-items="adjustsTotalItens"
-										ng-model="adjustsCurrentPage"
-										ng-change="pageChangedAdjusts()"
-										max-size="maxSize"
-										items-per-page="adjustsTotalItensPage"
-										rotate="false"
-										class="pagination-sm"
-										boundary-links="true"
-										previous-text="&lsaquo;"
-										next-text="&rsaquo;"
-										first-text="&laquo;"
-										last-text="&raquo;">
-								</pagination>
-							</div>
+			<article>
+				<table class="table sortTable">
+					<thead>
+						<tr>
+							<th ng-click="sortResults($event,'roDate')">data do lote (RV)</th>
+							<th ng-click="sortResults($event,'expectedAmount')">total bruto antecipado</th>
+							<th ng-click="sortResults($event,'forethoughtFee')">custo de antecipação</th>
+							<th ng-click="sortResults($event,'payedAmount')">total liquido antecipado</th>
+							<th ng-click="sortResults($event,'roNumber')">número do lote (RV)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="tableAntecipated" ng-repeat="item in forethought">
+							<td>{{ item.roDate | date }}</td>
+							<td>{{ item.expectedAmount | currency }}</td>
+							<td>{{ item.forethoughtFee | currency }}</td>
+							<td>{{ item.payedAmount | currency }}</td>
+							<td>{{ item.roNumber }}</td>
+						</tr>
+					</tbody>
+				</table>
+				<span class="alert" ng-show="!forethought.length">Não existem dados/registros para o filtro selecionado</span>
+				<div class="optionsWrapper">
+					<div class="selectWrapper">
+						<label for="totalItensPage">resultados por página</label>
+						<div class="select">
+							<select ng-model="totalItensPage" ng-change="pageChangedSales()" id="totalItensPage">
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="50">50</option>
+							</select>
 						</div>
-					</article>
-				</tab>
-			</tabset>
+					</div>
+
+					<div class="paginationWrapper">
+						<pagination
+								total-items="adjustsTotalItens"
+								ng-model="adjustsCurrentPage"
+								ng-change="pageChangedAdjusts()"
+								max-size="maxSize"
+								items-per-page="adjustsTotalItensPage"
+								rotate="false"
+								class="pagination-sm"
+								boundary-links="true"
+								previous-text="&lsaquo;"
+								next-text="&rsaquo;"
+								first-text="&laquo;"
+								last-text="&raquo;">
+						</pagination>
+					</div>
+				</div>
+			</article>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>

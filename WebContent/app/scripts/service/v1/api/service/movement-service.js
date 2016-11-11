@@ -7,7 +7,18 @@
 angular.module('Conciliador.MovementService',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
-}]).service('MovementService', function(Restangular, $location) {
+}]).service('MovementService', function(app, Restangular, $location, $window, $http, Request) {
+
+	this.getForethoughts = function (filter) {
+		var request = filter;
+
+		return $http({
+			url: app.endpoint + "/movements",
+			method: "GET",
+			params: request,
+			headers: Request.setHeaders()
+		})
+	}
 
 	//GET Movement by Id
 	this.getMovementById = function(movementId) {
