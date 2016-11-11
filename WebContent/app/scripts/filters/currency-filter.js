@@ -3,8 +3,8 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
-angular.module('Conciliador.customCurrency',[])
+
+angular.module('Conciliador.currencyFilter',[])
 
 .filter('customCurrency', ['$filter', function($filter){
 	return function (amount, currencySymbol) {
