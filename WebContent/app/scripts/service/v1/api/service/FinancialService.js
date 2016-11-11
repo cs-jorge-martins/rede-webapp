@@ -44,17 +44,6 @@ angular.module('Conciliador.FinancialService',[])
 		});
 	}
 
-	// this.getReceipt = function(filter){
-	// 	var request = filter;
-
-	// 	return $http({
- //            url: app.endpoint + '/financials/installments',
-	// 		method: "GET",
-	// 		params: request,
-	// 		headers: Request.setHeaders()
-	// 	});
-	// }
-
 	this.getReceipt = function(filter){
 		var request = filter;
 

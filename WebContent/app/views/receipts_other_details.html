@@ -1,150 +1,3 @@
-<script type="text/ng-template" id="financasModal.html">
-    <div class="tabelaDetalhamentoModal gestaoModal financasModal gestaoFinanceiroModal">
-	<div class="modal-header">
-		<strong><b>{{dayOfActualDate}}</b> {{monthNameAbreviation}}</strong>
-    	<h3>{{movementDetailModal.accountDescription}}</h3>
-		<h3></h3>
-		<h4>{{movementDetailModal.acquirerName}} / {{movementDetailModal.brandName}} / <b>{{movementDetailModal.productName}}</b></h4>
-		<a class="closeModalHelp" data-ng-click="helpModalFinanceiro()">?</a>
-		<button class="icon-close" ng-click="cancel()"></button>
-    </div>
-    <div class="modal-body">
-		<table class="headerFinancasModal" cellpadding="0" cellspacing="0" id="detalheFinancasTour">
-			<thead>
-				<tr>
-					<th id="movementsPrevistosTour"><b>Previsto</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountExpected | currency:''}}</em></th>
-					<th id="movementsPagosTour"><b>PGTO Operadora</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountPayed | currency:''}}</em></th>
-					<th id="movementsBankTour"><b>Banco</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountBank | currency:''}}</em></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td id="submenusFinanceiroModalTour" ng-class="{'active': statusId == 2 && statusKind == 0}" ng-click="getListByStatus(2)"><b>Pago</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valuePayed | currency:''}}</em></td>
-					<td ng-class="{'active': statusKind == 1}" ng-click="getListByStatus(2, 1)"><b>Crédito</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueCredit | currency:''}}</em></td>
-					<td><b>Banco</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.totalAmountBank | currency:''}}</em></td>
-				</tr>
-				<tr>
-					<td ng-class="{'active': statusId == 1 && statusKind == 0}" ng-click="getListByStatus(1)"><b>Em aberto</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueOpen | currency:''}}</em></td>
-					<td ng-class="{'active': statusKind == 3}" ng-click="getListByStatus(3, 3)"><b>Antecipado</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valuePayedForethought | currency:''}}</em></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td ng-class="{'active': statusId == 3 && statusKind == 0}" ng-click="getListByStatus(3)"><b>Antecipado</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueExpectedForethought | currency:''}}</em></td>
-					<td ng-class="{'active': statusKind == 2}" ng-click="getListByStatus(2,2)"><b>Ajustes</b><em><i ng-bind-html='currencySymbol'></i> {{movementDetailModal.valueAdjustment | currency:''}}</em></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<br />
-		<table class="resumoFinancas" cellpadding="0" cellspacing="0">
-			<thead>
-				<tr ng-show="statusKind != 2">
-					<th>
-						NSU
-						<img id="nsu" src="app/img/default.png" data-ng-click="orderColumn('nsu')"/>
-					</th>
-					<th>
-						AUTORIZAÇÃO
-						<img id="authorization" src="app/img/default.png" data-ng-click="orderColumn('authorization')"/>
-					</th>
-					<th>
-						TID
-						<img id="tid" src="app/img/default.png" data-ng-click="orderColumn('tid')"/>
-					</th>
-					<th>
-						CARTÃO
-						<img id="cardNumber" src="app/img/default.png" data-ng-click="orderColumn('cardNumber')"/>
-					</th>
-					<th>
-						PARCELA
-						<img id="installment" src="app/img/default.png" data-ng-click="orderColumn('installment')"/>
-					</th>
-					<th>
-						CHAVE ERP
-						<img id="erpId" src="app/img/default.png" data-ng-click="orderColumn('erpId')"/>
-					</th>
-					<th>
-						VALOR LIQUIDO
-						<img id="net" src="app/img/default.png" data-ng-click="orderColumn('net')"/>
-					</th>
-					<th>
-						VALOR BRUTO
-						<img id="amount" src="app/img/default.png" data-ng-click="orderColumn('amount')"/>
-					</th>
-				</tr>
-				<tr ng-show="statusKind == 2">
-					<th>
-						DESCRIÇÃO
-						<img id="description" src="app/img/default.png" data-ng-click="orderColumn('description')"/>
-					</th>
-					<th>
-						NATUREZA
-						<img id="nature" src="app/img/default.png" data-ng-click="orderColumn('nature')"/>
-					</th>
-					<th>
-						TIPO
-						<img id="kindName" src="app/img/default.png" data-ng-click="orderColumn('kindName')"/>
-					</th>
-					<th>
-						VALOR
-						<img id="amount" src="app/img/default.png" data-ng-click="orderColumn('amount')"/>
-					</th>
-				</tr>
-			</thead>
-			<tbody id="parcelasFinanceiroModalTour">
-				<tr ng-show="noItensMsgModal && !noHistoryMsg">
-					<td colspan="8">
-						Não existem dados/registros para o filtro selecionado
-					</td>
-				</tr>
-				<tr ng-show="noHistoryMsg">
-					<td colspan="8">
-						Do valor total recebido, <i ng-bind-html='currencySymbol'></i> {{valueHistory | currency: ''}} é referente às vendas anteriores à contratação da Kaplen.
-					</td>
-				</tr>
-				<tr ng-show="statusKind != 2" ng-repeat="installment in movementDetailModal.installmentList" ng-click="comprovanteVenda(installment)">
-					<td>{{installment.nsu}}</td>
-					<td>{{installment.authorization}}</td>
-					<td>{{installment.tid}}</td>
-					<td>{{installment.cardNumber}}</td>
-					<td>{{installment.installment}}</td>
-					<td>{{installment.erpId}}</td>
-					<td><i ng-bind-html='currencySymbol'></i> {{installment.net | currency:''}}</td>
-					<td><i ng-bind-html='currencySymbol'></i> {{installment.amount | currency:''}}</td>
-				</tr>
-				<tr ng-show="statusKind == 2" ng-repeat="installment in movementDetailModal.installmentList">
-					<td>{{installment.description}}</td>
-					<td ng-show="installment.movementNature == 1">Crédito</td>
-					<td ng-show="installment.movementNature == 2">Débito</td>
-					<td>{{installment.kindName}}</td>
-					<td><i ng-bind-html='currencySymbol'></i> {{installment.amount | currency:''}}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-    <div class="modal-footer">
-		<ul class="archives" style="margin-bottom:-18px;" ng-show="!noItensMsgModal">
-			<li class="pdf" id="exportarFinanceiroModalTour"><a data-ng-click="gerarRelatorioModal('PDF')"></a></li>
-			<li class="xls"><a data-ng-click="gerarRelatorioModal('XLS')"></a></li>
-			<li class="csv"><a data-ng-click="gerarRelatorioModal('CSV')"></a></li>
-		</ul>
-		<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()"
-					max-size="maxSize"  items-per-page="totalItensPage" rotate="false"
-					class="pagination-sm" boundary-links="true"
-					previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-		</pagination>
-		<div class="select" ng-show="totalItens > 9">
-		<select class="selectPage" ng-model="totalItensPage" ng-change="alterTotalItensPage()">
-			<option value="10">10</option>
-			<option ng-show="totalItens > 19" value="20">20</option>
-			<option ng-show="totalItens > 49" value="50">50</option>
-        </select>
-		</div>
-	</div>
-	</div>
-</script>
-<script type="text/ng-template" id="comprovanteVenda.html"></script>
-
 <section class="receiptsExpectedDetails" id="receiptsDetails">
 
 	<div id="detailsClose">
@@ -163,45 +16,21 @@
 				<span class="number">{{ day }}</span><br> {{ month }}
 			</div>
 			<div class="chip-wrapper">
-
-				<p>
-					São considerados recebimentos não efetuados, lançamentos que possuíam a data agendada de pagamento para hoje e não ocorreram devido as possíveis causas: créditos que foram suspensos, penhoradas, antecipados, cancelados ou que simplesmente não foram pagos por alguma outra razão. (1) Para casos de créditos suspensos entre no Portal da Rede e verifique as suas informações bancárias. (2) Para mais informações sobre créditos penhorados ou não pagos entre em contato com a Central de Atendimento no telefone <strong>4001-4433</strong> (capitais e regiões metropolitanas) ou <strong>0800-728-4433</strong> (demais regiões).
-				</p>
-				<div>
-					<div class="chip" ng-if="accountsLabel">
-						{{ accountsLabel }}
-					</div>
+				<div class="chip" ng-if="accountsLabel">
+					{{ accountsLabel }}
+				</div>
+				<div class="chip" ng-if="shops">
+					{{ shopsLabel }}
 				</div>
 			</div>
 		</div>
 
 	</article>
-
-	<!-- action buttons -->
-    <!--
-	<div class="actionButtons">
-		<div id="printDivButton" class="hiddenExplanationDiv upButton"
-				ng-class="{closed: !printhover}"
-				ng-mouseenter="printhover = true"
-				ng-mouseleave="printhover = false"
-			>
-			<button>
-				<i class="sprite sprite-doc"></i>
-			</button>
-			<h4>imprimir página(s)</h4>
-		</div>
-		<div id="exportDivButton" class="hiddenExplanationDiv"
-				ng-class="{closed: !exporthover}"
-				ng-mouseenter="exporthover = true"
-				ng-mouseleave="exporthover = false">
-			<button>
-				<i class="sprite sprite-doc_close"></i>
-			</button>
-			<h4>exportar arquivo excel</h4>
-		</div>
-	</div>
-    -->
-
+	<ul class="wrapperAcquirerSummary">
+		<li class="acquirer">{{ acquirer.name }}</li>
+		<li class="totalValue">valor total do ajuste <br><span class="totalDiscounted">{{ totalOfSumAmount() }}</span></li> 	
+	</ul>
+	
 	<div id="primaryContent">
 		<div id="details">
 			<tabset>
@@ -210,24 +39,16 @@
 						<table class="table sortTable">
 							<thead>
 								<tr>
-									<th ng-click="sortResults($event,'payedDate', 'adjusts')">bandeira</th>
-									<th ng-click="sortResults($event,'amount', 'adjusts')">tipo de venda</th>
-									<th ng-click="sortResults($event,'description', 'adjusts')">status do crédito</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">data do lote (RV)</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">n do lote (RV)</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">valor líquido não pago</th>
-									<th ng-click="sortResults($event,'roNumber', 'adjusts')">n do estabelecimento</th>
+									<th ng-click="sortResults($event,'payedDate', 'adjusts')">data do ajuste</th>
+									<th ng-click="sortResults($event,'amount', 'adjusts')">valor</th>
+									<th ng-click="sortResults($event,'description', 'adjusts')">descrição</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>bandeira..</td>
-									<td>débito</td>
-									<td>cancelado</td>
-									<td>11/09</td>
-									<td>9898989898989898</td>
-									<td>R$ 1000.000.000,00</td>
-									<td>13131231312313</td>
+								<tr ng-repeat="item in otherDetailsData">
+									<td>{{ item.payedDate | date }}</td>
+									<td>{{ item.amount | currency }}</td>
+									<td>{{ item.description | lowercase }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -272,14 +93,6 @@
 				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
 
 				</tab>
-
-				<!--
-				<tab heading="{{tabs[3].title}}" active="tabs[3].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
-					<article>
-						Ecommerce
-					</article>
-				</tab>
-				-->
 			</tabset>
 		</div>
 	</div>
