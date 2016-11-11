@@ -240,7 +240,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			getUploadedFiles(true);
 		};
 
-		$scope.sortResults = function (elem,kind) {
+		$scope.sortResults = function (elem, kind) {
 			var order_string;
 			order_string = $rootScope.sortResults(elem,kind);
 

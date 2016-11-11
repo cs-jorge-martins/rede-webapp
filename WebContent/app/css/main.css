@@ -10145,7 +10145,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue span:last-child {
-    font-size: 25px;
+    font-size: 29px;
     font-weight: lighter;
 }
 
@@ -10153,6 +10153,18 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
     font-size: 18px;
     font-weight: bolder;
+}
+
+#receiptsDetails .mainContent {
+    float: left;
+    width: 100%;
+    padding:0 30px;
+    box-sizing: border-box;
+    background: white;
+}
+
+#receiptsDetails .mainContent .table tr > td {
+    text-indent: 10px;
 }
 
 .sprite {
