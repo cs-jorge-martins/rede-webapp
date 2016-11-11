@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 (function() {
     'use strict';
 
@@ -24,16 +24,16 @@
     $window, advancedFilterService, $location, loginService) {
 
     	$rootScope.login = 'login';
-        $scope.changePassword = changePassword;
+        $scope.changePassword = ChangePassword;
 
-		init();
+		Init();
         $scope.user = $scope.user;
 
-		function init() {
-            handleFirstAccess();
+		function Init() {
+            HandleFirstAccess();
 		}
 
-        function handleFirstAccess() {
+        function HandleFirstAccess() {
             if($rootScope.firstAccess) {
                 //delete $window.sessionStorage.firstAccess
             } else {
@@ -41,7 +41,7 @@
             }
         }
 
-        function changePassword() {
+        function ChangePassword() {
             $scope.user = $scope.user;
 
             loginService.resetPassword($scope.user).then(function(response){

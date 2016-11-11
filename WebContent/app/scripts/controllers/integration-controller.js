@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFileUpload'])
 
 .config(['$routeProvider','RestangularProvider', function ($routeProvider, RestangularProvider) {
@@ -11,7 +11,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 }])
 
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal, $timeout,
-	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService, filtersService){
+	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
 		menuFactory.setActiveIntegration();
 		$scope.labelFindFile = true;
 		$scope.uploadedFiles = false;
@@ -19,6 +19,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.sendFile = false;
 		$scope.inProgress = false;
 		$scope.fileName = [];
+        $scope.sortResults = SortResults;
 		$scope.sort = "createDate,DESC";
 
 		$scope.typeData = [
@@ -39,11 +40,11 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.initialDate = [];
 		$scope.finishDate = [];
 
-		$scope.getUploadedFiles = getUploadedFiles;
-		$scope.showSendFile = showSendFile;
-		$scope.downloadFile = downloadFile;
-		$scope.showDownloadFiles = showDownloadFiles;
-		$scope.addOther = addOther;
+		$scope.getUploadedFiles = GetUploadedFiles;
+		$scope.showSendFile = ShowSendFile;
+		$scope.downloadFile = DownloadFile;
+		$scope.showDownloadFiles = ShowDownloadFiles;
+		$scope.addOther = AddOther;
 
 		$scope.fileSearch = '';
 		$scope.listUploadedFiles = [];
@@ -59,8 +60,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
 
-		$scope.pageChanged = pageChanged;
-		$scope.totalItensPageChanged = totalItensPageChanged;
+		$scope.pageChanged = PageChanged;
+		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.uploader = new FileUploader({
 			disableMultipart: true,
@@ -83,7 +84,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
 				controller: function($modalInstance, $timeout){
-					$scope.cancel = function() {
+                    $scope.cancel = Cancel;
+					function Cancel() {
 						$scope.uploader.clearQueue();
 						modal.close();
 						$scope.inProgress = false;
@@ -103,9 +105,10 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				size: 'lg',
 				windowClass: 'integrationModalWrapper',
 				controller: function($scope, $modalInstance){
-					$scope.cancel = function (){
-						$modalInstance.dismiss("cancel");
-					}
+                    $scope.cancel = Cancel;
+                    function Cancel() {
+                        $modalInstance.dismiss("cancel");
+                    }
 				}
 			})
 			$scope.inProgress = false;
@@ -116,9 +119,9 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		$scope.$watch('typeModel.type', function(response) {
 			if(response != 'FUTURE') {
-				setCalendarLastReleases();
+				SetCalendarLastReleases();
 			} else {
-				setCalendarFutureReleases();
+				SetCalendarFutureReleases();
 			}
 		});
 
@@ -128,13 +131,13 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			}
 		});
 
-		init();
+		Init();
 
-		function init() {
+		function Init() {
 			$scope.initialDate = calendarFactory.getToday();
 		}
 
-		function setCalendarLastReleases() {
+		function SetCalendarLastReleases() {
 			var today = calendarFactory.getToday();
 			$scope.initialDate = today;
 			$scope.finishDate = today;
@@ -144,7 +147,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.finishMaxDate = today;
 		}
 
-		function setCalendarFutureReleases() {
+		function SetCalendarFutureReleases() {
 			var tomorrow = calendarFactory.getTomorrowFromTodayToDate();
 			$scope.initialDate = tomorrow;
 			$scope.finishDate = tomorrow;
@@ -154,14 +157,14 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.finishMaxDate = null;
 		}
 
-		function showSendFile() {
+		function ShowSendFile() {
 			if ($scope.sendFile === false) {
 				$scope.uploadedFiles = false;
 				$scope.downloadFiles = false;
 			}
 		}
 
-		function getUploadedFiles(byName) {
+		function GetUploadedFiles(byName) {
 			$scope.sendFile = false;
 			$scope.downloadFiles = false;
 
@@ -182,7 +185,6 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					$scope.currentPage = $scope.currentPage + 1;
 				}
 
-
 				integrationService.getUploadedFiles(filter).then(function(response){
 					$scope.listUploadedFiles = [];
 					var data = response.data.content;
@@ -201,15 +203,14 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			}
 		}
 
-		function showDownloadFiles() {
+		function ShowDownloadFiles() {
 			$scope.uploadedFiles = false;
 			$scope.sendFile = false;
 		}
-		function downloadFile () {
+		function DownloadFile () {
 			var filter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finishDate),
-				// shopIds: JSON.parse($window.sessionStorage.user).pvList[0].id,
 				shopIds: JSON.parse($window.sessionStorage.user).pvList.map(function(item){
 					return item.id;
 				}).join(","),
@@ -230,28 +231,28 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			})
 		}
 
-		function addOther() {
+		function AddOther() {
 			$scope.uploader.clearQueue();
 			$scope.labelFindFile = true;
 		}
 
-		function pageChanged() {
+		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
-			getUploadedFiles(true);
+			GetUploadedFiles(true);
 		};
 
-		function totalItensPageChanged() {
+		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
-			getUploadedFiles(true);
+			GetUploadedFiles(true);
 		};
 
-		$scope.sortResults = function (elem,kind) {
+        function SortResults(elem,kind) {
 			var order_string;
 			order_string = $rootScope.sortResults(elem,kind);
 
 			$scope.sort = order_string;
-			getUploadedFiles(true);
+			GetUploadedFiles(true);
 
 		};
 

@@ -6,18 +6,21 @@
 
 angular.module('KaplenWeb.loginController',[])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/login', {templateUrl: 'app/views/login.html', controller: 'loginController'});
 }])
 
-.controller('loginController', function($scope, $modal, $rootScope, $window, $location,
-		Restangular, loginService, userService){
+.controller('loginController', function($scope, $modal, $rootScope, $window, $location, loginService, userService){
 
 	$rootScope.destroyVariablesSession();
 
 	var userFirstAccess = "";
-	$scope.validarLogin = function(){
 
+	$scope.validarLogin = ValidarLogin;
+	$scope.modalChangePassword = ModalChangePassword;
+	$scope.clear = Clear;
+
+	function ValidarLogin() {
 		$rootScope.alerts = [];
 
 		if (!$scope.usuario.login || !$scope.usuario.password) {
@@ -36,10 +39,9 @@ angular.module('KaplenWeb.loginController',[])
 		}).catch(function(response) {
 			console.log('error');
 		});
-
 	};
 
-	$scope.modalChangePassword = function(user, isManyCompanies) {
+	function ModalChangePassword(user, isManyCompanies) {
 		var modalInstance = $modal.open({
 			templateUrl: 'modalTrocarSenha.html',
 			controller: ModalTrocarSenha,
@@ -63,13 +65,15 @@ angular.module('KaplenWeb.loginController',[])
 		});
 	};
 
-	var ModalTrocarSenha = function ($scope, $window, $rootScope, user1, $modalInstance, $timeout, isManyCompanies) {
+	function ModalTrocarSenha($scope, $window, $rootScope, user1, $modalInstance, $timeout, isManyCompanies) {
 		$scope.password = "";
 		$scope.rewritePassword = "";
+		$scope.changePassword = ChangePassword;
+		$scope.cancel = Cancel;
 
 		var user = user1;
 
-		$scope.changePassword = function(){
+		function ChangePassword() {
 			if(this.password != this.rewritePassword){
 				$scope.alertsValidate =  [{type:"danger", msg:"A sessão expirou. Por favor, atualize sua página."}];
 			     $timeout(function(index) {
@@ -96,14 +100,14 @@ angular.module('KaplenWeb.loginController',[])
 			}
 		};
 
-		$scope.cancel = function () {
+		function Cancel() {
 			$modalInstance.dismiss('cancel');
 		};
 	};
 
-	$scope.clear = function() {
+	function Clear() {
 		$scope.alertsRenewPassword = undefined;
 		$scope.sendEmail = false;
-	};
+	}
 
 });

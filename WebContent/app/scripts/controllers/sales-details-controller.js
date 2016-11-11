@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -18,419 +18,374 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	angular.extend($scope, advancedFilterService);
 	$scope.loadParamsByFilter();
 
-	/*
-	$scope.getAdditionalInformations($rootScope.company).then(function(result){
-		if(result == "true"){
-			$scope.additionalInformations = true;
-		}else{
-			$scope.additionalInformations = false;
-		}
-	});
-	*/
+	menuFactory.setActiveResumoConciliacao();
 
-	/***************************************************************** Ativando o menu de Vendas *****************************************************************/
-		menuFactory.setActiveResumoConciliacao();
+	var acquirerSelected = $rootScope._acquirer;
+	var cardBrandSelected = $rootScope._cardBrand;
+	var cardProductSelected = $rootScope._cardProduct;
 
-		if(!$rootScope._acquirer) {
-			//$location.path('/sales');
-		}
+	var dateItensAccordion = $rootScope._dateItemAccordionSelected;
+	var settlementsSelected = $rootScope._settlements;
+	$scope.statusItemAccordionSelected = $rootScope._statusItemAccordionSelected ;
+	resumoConciliacaoService.setConcilied(false);
 
-		var acquirerSelected = $rootScope._acquirer;
-		var cardBrandSelected = $rootScope._cardBrand;
-		var cardProductSelected = $rootScope._cardProduct;
+	$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation(dateItensAccordion);
+	$scope.dayOfActualDate = calendarFactory.getDayOfMonth(dateItensAccordion);
+	$scope.date = calendarFactory.formatDate(dateItensAccordion);
+	$scope.items = [];
+	$scope.total = 0;
+	$scope.concilieItems = [];
+	$scope.concilieItemsId = [];
 
-		var dateItensAccordion = $rootScope._dateItemAccordionSelected;
-		var settlementsSelected = $rootScope._settlements;
-		$scope.statusItemAccordionSelected = $rootScope._statusItemAccordionSelected ;
-		resumoConciliacaoService.setConcilied(false);
+	$scope.maxSize = 4;
 
-		$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation(dateItensAccordion);
-		$scope.dayOfActualDate = calendarFactory.getDayOfMonth(dateItensAccordion);
-		$scope.date = calendarFactory.formatDate(dateItensAccordion);
-		$scope.items = [];
-		$scope.total = 0;
-		$scope.concilieItems = [];
-		$scope.concilieItemsId = [];
+	$scope.totalItensPage = 10;
+	$scope.currentPage = 0;
+	$scope.totalItens = 0;
 
-		$scope.maxSize = 4;
+	$scope.sort = "";
 
-		$scope.totalItensPage = 10;
-		$scope.currentPage = 0;
-		$scope.totalItens = 0;
+	$scope.activeButtonConcilied = ActiveButtonConcilied;
+	$scope.checkItem = CheckItem;
+	$scope.checkAllItensModal = CheckAllItensModal;
+	$scope.conciliarVendas = ConciliarVendas;
+	$scope.orderColumn = OrderColumn;
+	$scope.alterTotalItensPage = AlterTotalItensPage;
+	$scope.cancel = Cancel;
+	$scope.comprovanteVenda = ComprovanteVenda;
 
-		$scope.sort = "";
+	$scope.pageChanged = PageChanged;
+	$scope.totalItensPageChanged = TotalItensPageChanged;
+	$scope.sortResults = SortResults;
 
-		init();
+	Init();
+	function Init() {
 
-		function init() {
+		var types = ["CREDIT","DEBIT"];
 
-			var types = ["CREDIT","DEBIT"];
-
-			if(!$rootScope.salesDetails) {
-				$location.path('/sales');
-			} else {
-				$scope.currency = $rootScope.salesDetails.currency;
-				$scope.startDate = $rootScope.salesDetails.startDate;
-				$scope.endDate = $rootScope.salesDetails.endDate;
-				$scope.shopIds = $rootScope.salesDetails.shopIds;
-				$scope.cardProductIds = $rootScope.salesDetails.cardProductIds;
-				$scope.types = types[$rootScope.salesDetails.natureza];
-				$scope.acquirer = $rootScope.salesDetails.acquirer;
-				$scope.cardProduct = $rootScope.salesDetails.cardProduct;
-				$scope.conciliationStatus = $rootScope.salesDetails.conciliationStatus;
-
-				getTransactionDetails();
-			}
-
-			$scope.selectItemToConcilie = selectItemToConcilie;
-			$scope.concilie = concilie;
-			$scope.back = back;
-			$scope.isConcilieButtonActive = false;
-			$scope.concilieItems = [];
-
-		}
-
-		function concilie() {
-			var toConcilie = [];
-			for(item in $scope.concilieItems) {
-				toConcilie.push($scope.concilieItems[item].id);
-			}
-
-			if(toConcilie.length) {
-
-				var	modalInstance = $modal.open ({
-					templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
-					scope: $scope,
-					controller: function($scope, $modalInstance){
-						$scope.ok = function() {
-							TransactionService.concilieTransaction({
-								ids: toConcilie
-							}).then(function(data){
-								data = data.data.content;
-								var items = [];
-
-								for(var item in data){
-									items.push(data[item]);
-								}
-
-								for(item in $scope.items){
-									for(subItem in $scope.concilieItems) {
-										if( $scope.items[item].id ==  $scope.concilieItems[subItem].id) {
-											$scope.items[item].isConciliated = true;
-										}
-									}
-								}
-								//$scope.$apply();
-								init();
-							});
-							$modalInstance.dismiss("cancel");
-							$modal.open({
-								templateUrl: "app/views/resumo-conciliacao/success-conciliacao.html",
-								scope: $scope,
-								size: 'sm',
-								controller: function($scope, $modalInstance){
-									$scope.cancel = function() {
-										$modalInstance.dismiss("cancel");
-									}
-								}
-							})
-						};
-						$scope.cancel = function() {
-							$modalInstance.dismiss("cancel");
-						};
-					},
-					size: 'md',
-					resolve: {
-						item: function() {
-							return
-						}
-					}
-				});
-			}
-		}
-
-		function back(){
+		if(!$rootScope.salesDetails) {
 			$location.path('/sales');
+		} else {
+			$scope.currency = $rootScope.salesDetails.currency;
+			$scope.startDate = $rootScope.salesDetails.startDate;
+			$scope.endDate = $rootScope.salesDetails.endDate;
+			$scope.shopIds = $rootScope.salesDetails.shopIds;
+			$scope.cardProductIds = $rootScope.salesDetails.cardProductIds;
+			$scope.types = types[$rootScope.salesDetails.natureza];
+			$scope.acquirer = $rootScope.salesDetails.acquirer;
+			$scope.cardProduct = $rootScope.salesDetails.cardProduct;
+			$scope.conciliationStatus = $rootScope.salesDetails.conciliationStatus;
+
+			GetTransactionDetails();
 		}
 
-		function selectItemToConcilie(item) {
-			var index = $scope.concilieItems.indexOf(item);
+		$scope.selectItemToConcilie = SelectItemToConcilie;
+		$scope.concilie = Concilie;
+		$scope.back = Back;
+		$scope.isConcilieButtonActive = false;
+		$scope.concilieItems = [];
 
-			if (index > -1) {
-				$scope.concilieItems.splice(index, 1);
-			} else {
-				$scope.concilieItems.push(item);
-				$scope.concilieItemsId.push(item.id);
-			}
+	}
 
-			if($scope.concilieItems.length) {
-				$scope.isConcilieButtonActive = true;
-			} else {
-				$scope.isConcilieButtonActive = false;
-			}
+	function Concilie() {
+		var toConcilie = [];
+		for(item in $scope.concilieItems) {
+			toConcilie.push($scope.concilieItems[item].id);
 		}
 
-		function getTransactionDetails() {
+		if(toConcilie.length) {
 
-			var shopIds = [];
-			var cardProductIds = [];
+			var	modalInstance = $modal.open ({
+				templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
+				scope: $scope,
+				controller: function($scope, $modalInstance){
+					$scope.ok = Ok;
+					$scope.cancel = Cancel;
 
-			if($scope.shopIds) {
-				for(item in $scope.shopIds) {
-					shopIds.push($scope.shopIds[item].id);
-				}
-			}
+					function Ok() {
+						TransactionService.ConcilieTransaction({
+							ids: toConcilie
+						}).then(function(data){
+							data = data.data.content;
+							var items = [];
 
-			if($scope.cardProductIds) {
-				for(item in $scope.cardProductIds) {
-					cardProductIds.push($scope.cardProductIds[item].id);
-				}
-			}
+							for(var item in data){
+								items.push(data[item]);
+							}
 
-			if (cardProductIds.length == 0) {
-				cardProductIds.push($scope.cardProduct.id);
-			}
+							for(item in $scope.items){
+								for(subItem in $scope.concilieItems) {
+									if( $scope.items[item].id ==  $scope.concilieItems[subItem].id) {
+										$scope.items[item].isConciliated = true;
+									}
+								}
+							}
 
-			TransactionService.getTransactionByFilter({
-				currency: $scope.currency,
-				startDate: calendarFactory.formatDateForService($scope.startDate),
-				endDate: calendarFactory.formatDateForService($scope.endDate),
-				shopIds: shopIds,
-				cardProductIds: cardProductIds,
-				conciliationStatus: $scope.conciliationStatus,
-				page: ($scope.currentPage - 1),
-				size: $scope.totalItensPage,
-				sort: $scope.sort
+							Init();
+						});
+						$modalInstance.dismiss("cancel");
+						$modal.open({
+							templateUrl: "app/views/resumo-conciliacao/success-conciliacao.html",
+							scope: $scope,
+							size: 'sm',
+							controller: function($scope, $modalInstance){
+								$scope.cancel = Cancel;
+								function Cancel() {
+									$modalInstance.dismiss("cancel");
+								}
+							}
+						})
+					};
 
-			}).then(function(response){
-
-				var pagination = response.data.page;
-				var response = response.data.content;
-
-				var items = [];
-				var total = 0;
-
-				if(response.length) {
-					for(var item in response){
-						if($scope.conciliationStatus === 'TO_CONCILIE'){
-							response[item].isConciliated = false;
-						}
-
-						items.push(response[item]);
-						total += response[item].gross;
+					function Cancel() {
+						$modalInstance.dismiss("cancel");
+					};
+				},
+				size: 'md',
+				resolve: {
+					item: function() {
+						return
 					}
-
-					$scope.items = items;
-					$scope.noItensMsg = $scope.items.length === 0 ? true : false;
-					$scope.totalItens = pagination.totalElements;
-
-				} else {
-					back();
 				}
 			});
 		}
+	}
 
+	function Back(){
+		$location.path('/sales');
+	}
 
+	function SelectItemToConcilie(item) {
+		var index = $scope.concilieItems.indexOf(item);
 
-		$scope.helpModalConciliacao = function(){
-			restartModalResumoConcilicaoTour(userService, $rootScope.user);
-		};
+		if (index > -1) {
+			$scope.concilieItems.splice(index, 1);
+		} else {
+			$scope.concilieItems.push(item);
+			$scope.concilieItemsId.push(item.id);
+		}
 
-		$scope.totalItensPage = "10";
+		if($scope.concilieItems.length) {
+			$scope.isConcilieButtonActive = true;
+		} else {
+			$scope.isConcilieButtonActive = false;
+		}
+	}
 
-		$scope.order = 1; // asc
-		$scope.column = "gross"; // default
+	function GetTransactionDetails() {
 
-		var itensSelected = [];
-		$scope.checkAll = false;
-		$scope.currentPage = 0;
+		var shopIds = [];
+		var cardProductIds = [];
 
-		var modalUpdated = false;
-		var transactionStatus = [];
-
-		//loadItens();
-
-		var checkedItem = false;
-		var checkedAll = false;
-
-		$scope.button = false;
-		$scope.activeButtonConcilied = function() {
-			if(checkedAll || checkedItem){
-				$scope.buttonConcilied = false;
-				$scope.button = true;
-			}else{
-				$scope.buttonConcilied = true;
-				$scope.button = false;
+		if($scope.shopIds) {
+			for(item in $scope.shopIds) {
+				shopIds.push($scope.shopIds[item].id);
 			}
-		};
+		}
 
-		$scope.checkItem = function(item){
-			if(item.checked){
-				checkedItem = true;
-				itensSelected.push(item);
+		if($scope.cardProductIds) {
+			for(item in $scope.cardProductIds) {
+				cardProductIds.push($scope.cardProductIds[item].id);
 			}
-			else{
-				itensSelected.splice(itensSelected.indexOf(item), 1);
-				if(itensSelected.length > 0){
-					checkedItem = true;
-				}else{
-					checkedItem = false;
+		}
+
+		if (cardProductIds.length == 0) {
+			cardProductIds.push($scope.cardProduct.id);
+		}
+
+		TransactionService.GetTransactionByFilter({
+			currency: $scope.currency,
+			startDate: calendarFactory.formatDateForService($scope.startDate),
+			endDate: calendarFactory.formatDateForService($scope.endDate),
+			shopIds: shopIds,
+			cardProductIds: cardProductIds,
+			conciliationStatus: $scope.conciliationStatus,
+			page: ($scope.currentPage - 1),
+			size: $scope.totalItensPage,
+			sort: $scope.sort
+
+		}).then(function(response){
+
+			var pagination = response.data.page;
+			var response = response.data.content;
+
+			var items = [];
+			var total = 0;
+
+			if(response.length) {
+				for(var item in response){
+					if($scope.conciliationStatus === 'TO_CONCILIE'){
+						response[item].isConciliated = false;
+					}
+
+					items.push(response[item]);
+					total += response[item].gross;
 				}
 
-			}
-			$scope.activeButtonConcilied();
-		};
+				$scope.items = items;
+				$scope.noItensMsg = $scope.items.length === 0 ? true : false;
+				$scope.totalItens = pagination.totalElements;
 
-		$scope.checkAllItensModal = function(checkAll, item) {
-			checkedAll = checkAll;
-			if(checkAll){
-				angular.forEach($scope.itensDetalheVenda, function(item){
-					item.checked = true;
-					itensSelected.push(item);
-				});
+			} else {
+				Back();
 			}
-			else if(!checkAll){
-				angular.forEach($scope.itensDetalheVenda, function(item){
-					item.checked = false;
-					itensSelected.splice(itensSelected.indexOf(item), 1);
-				});
-			}
-			$scope.activeButtonConcilied();
-		};
+		});
+	}
 
-		$scope.conciliarVendas = function(){
 
+	$scope.totalItensPage = "10";
+
+	$scope.order = 1; // asc
+	$scope.column = "gross"; // default
+
+	var itensSelected = [];
+	$scope.checkAll = false;
+	$scope.currentPage = 0;
+
+	var modalUpdated = false;
+	var transactionStatus = [];
+
+	var checkedItem = false;
+	var checkedAll = false;
+
+	$scope.button = false;
+
+	function ActiveButtonConcilied() {
+		if(checkedAll || checkedItem){
+			$scope.buttonConcilied = false;
+			$scope.button = true;
+		}else{
+			$scope.buttonConcilied = true;
+			$scope.button = false;
+		}
+	};
+
+	function CheckItem(item){
+		if(item.checked){
+			checkedItem = true;
+			itensSelected.push(item);
+		}
+		else{
+			itensSelected.splice(itensSelected.indexOf(item), 1);
 			if(itensSelected.length > 0){
-				this.checkAll = false;
-				$scope.button = false;
-				$scope.buttonConcilied = true;
-
-				resumoConciliacaoService.reconciliateTransactionModal(itensSelected).then(function() {
-					//loadItens();
-					modalUpdated = true;
-					resumoConciliacaoService.setConcilied(true);
-				});
+				checkedItem = true;
+			}else{
+				checkedItem = false;
 			}
-		};
 
-		$scope.gerarRelatorioModal = function (type) {
-			window.open($rootScope.baseUrl + 'reports?report=resumoConciliacaoModal&type=' + type + '&dataSelecionada='+ dateItensAccordion
-					+ '&token=' + $window.sessionStorage.token
-					+ '&fromSchema=' + $window.sessionStorage.schemaName
-					+ '&acquirers=' + acquirerSelected.id + '&settlements=' + settlementsSelected
-					+ '&cardBrandId=' + cardBrandSelected.id + '&cardProductId=' + cardProductSelected.id
-					//+ '&status=' + getStatusItemAccordionSelected
-					+ '&status=' + $scope.statusItemAccordionSelected
-					+ '&currency=' + $rootScope.currency
-					+ '&orderColumn=' + $scope.column + '&order=' + $scope.order);
-		};
+		}
+		ActiveButtonConcilied();
+	};
 
-		$scope.orderColumn = function(column) {
+	function CheckAllItensModal(checkAll, item) {
+		checkedAll = checkAll;
+		if(checkAll){
+			angular.forEach($scope.itensDetalheVenda, function(item){
+				item.checked = true;
+				itensSelected.push(item);
+			});
+		}
+		else if(!checkAll){
+			angular.forEach($scope.itensDetalheVenda, function(item){
+				item.checked = false;
+				itensSelected.splice(itensSelected.indexOf(item), 1);
+			});
+		}
+		ActiveButtonConcilied();
+	};
 
-			var columns = ["nsu", "authorization", "tid", "cardNumber", "installment", "terminalName", "erpId", "gross"];
+	function ConciliarVendas(){
+		if(itensSelected.length > 0){
+			this.checkAll = false;
+			$scope.button = false;
+			$scope.buttonConcilied = true;
 
-			angular.forEach(columns, function(item, index){
+			resumoConciliacaoService.reconciliateTransactionModal(itensSelected).then(function() {
+				modalUpdated = true;
+				resumoConciliacaoService.setConcilied(true);
+			});
+		}
+	};
 
-				var element = document.getElementById(item);
+	function OrderColumn(column) {
 
-				if(item == column){
-					 if($scope.order == 1){
-						$scope.order = 2;
-						element.src = "app/img/cresc.png";
-					}else{
-						$scope.order = 1;
-						element.src = "app/img/dec.png";
-					}
+		var columns = ["nsu", "authorization", "tid", "cardNumber", "installment", "terminalName", "erpId", "gross"];
+
+		angular.forEach(columns, function(item, index){
+
+			var element = document.getElementById(item);
+
+			if(item == column){
+				 if($scope.order == 1){
+					$scope.order = 2;
+					element.src = "app/img/cresc.png";
 				}else{
-					element.src = "app/img/default.png";
+					$scope.order = 1;
+					element.src = "app/img/dec.png";
 				}
-			});
+			}else{
+				element.src = "app/img/default.png";
+			}
+		});
 
-			$scope.column = column;
-			//loadItens();
-		};
+		$scope.column = column;
+	};
 
-		$scope.selectAction = function() {
-		};
+	function AlterTotalItensPage() {
+		this.currentPage = $scope.currentPage = 0;
+		$scope.totalItensPage = this.totalItensPage;
+	};
 
+	function Cancel() {
+		$modalInstance.dismiss('cancel');
+	};
 
-		function loadItens(){
-			//Processadas e canceladas
-			transactionStatus = [1,2];
+	function ComprovanteVenda(item) {
+		var modalInstance = $modal.open({
+			templateUrl: 'app/views/resumo-conciliacao/comprovante-venda.html',
+			controller: ModalComprovanteVendas,
+			size:'sm',
+			resolve: {
+				item: function(){
+					return item;
+				}
+			}
+		});
+	};
 
-			transactionsService.countTotalItens(dateItensAccordion, dateItensAccordion, $scope.statusItemAccordionSelected, transactionStatus, 0, settlementsSelected,
-					acquirerSelected.id, cardBrandSelected.id, cardProductSelected.id, 1, $scope.natureza ,$scope.terminalsSearch).then(function(countSum) {
+	function ModalComprovanteVendas($scope, $modalInstance, item) {
+		$scope.item = item;
+		$scope.cancel = Cancel;
+		$scope.imprimir = Imprimir;
 
-				$scope.countSum = countSum;
-
-				$scope.totalItens = countSum.qtd;
-				//$scope.maxSize = maxSizePagination(countSum.qtd, $scope.totalItensPage);
-
-				transactionsService.getTransactionsByFiltersOrdened(dateItensAccordion, dateItensAccordion, $scope.statusItemAccordionSelected, transactionStatus, 0, settlementsSelected,
-						acquirerSelected.id, cardBrandSelected.id, cardProductSelected.id, 1, $scope.currentPage, $scope.totalItensPage, $scope.column, $scope.order,
-						$scope.natureza ,$scope.terminalsSearch).then(function(itensDetalheVenda) {
-
-					$scope.itensDetalheVenda = itensDetalheVenda;
-					$scope.totalAmountDetalheVenda = $scope.countSum.totalValue;
-				});
-			});
-		};
-
-		$scope.alterTotalItensPage = function() {
-			this.currentPage = $scope.currentPage = 0;
-			$scope.totalItensPage = this.totalItensPage;
-			//loadItens();
-		};
-
-		$scope.cancel = function () {
+		function Cancel() {
 			$modalInstance.dismiss('cancel');
 		};
 
-		$scope.comprovanteVenda = function(item) {
-			var modalInstance = $modal.open({
-				templateUrl: 'app/views/resumo-conciliacao/comprovante-venda.html',
-				controller: ModalComprovanteVendas,
-				size:'sm',
-				resolve: {
-					item: function(){
-						return item;
-					}
-				}
-			});
+		function Imprimir() {
+			window.print();
 		};
 
-		var ModalComprovanteVendas = function ($scope, $modalInstance, Restangular, item) {
-			$scope.item = item;
+	};
 
-			$scope.cancel = function () {
-				$modalInstance.dismiss('cancel');
-			};
+	/* pagination */
+	function PageChanged() {
+		$scope.currentPage = this.currentPage;
+		GetTransactionDetails();
+	};
 
-			$scope.imprimir = function () {
-				window.print();
-			};
+	function TotalItensPageChanged() {
+		this.currentPage = $scope.currentPage = 0;
+		$scope.totalItensPage = this.totalItensPage;
+		GetTransactionDetails();
+	};
 
-		};
+	function SortResults(elem,kind) {
+		var order_string;
+		order_string = $rootScope.sortResults(elem,kind);
 
-		/* pagination */
-		$scope.pageChanged = function () {
-			$scope.currentPage = this.currentPage;
-			getTransactionDetails();
-		};
+		$scope.sort = order_string;
+		GetTransactionDetails();
+	};
 
-		$scope.totalItensPageChanged = function () {
-			this.currentPage = $scope.currentPage = 0;
-			$scope.totalItensPage = this.totalItensPage;
-			getTransactionDetails();
-		};
-
-		$scope.sortResults = function (elem,kind) {
-			var order_string;
-			order_string = $rootScope.sortResults(elem,kind);
-
-			$scope.sort = order_string;
-			getTransactionDetails();
-
-		};
-
-	});
+});

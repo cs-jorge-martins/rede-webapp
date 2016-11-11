@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.redirectController',[])
 
 .config(['$routeProvider' ,function ($routeProvider) {
@@ -18,13 +18,13 @@ angular.module('Conciliador.redirectController',[])
 
 	$rootScope.bodyId = "redirectPage";
 
-	init();
+	Init();
 
-	function init() {
+	function Init() {
 
 		var authorization = $routeParams.data;
 
-		var errorMessage = function () {
+        function ErrorMessage() {
 			var accessValidatingDiv = document.querySelector("#accessValidating");
 			var errorDiv = document.querySelector("#error");
 			var urlRedirectError = "http://userede.com.br";
@@ -38,19 +38,19 @@ angular.module('Conciliador.redirectController',[])
 		};
 
 		if(!authorization) {
-			return errorMessage();
+			return ErrorMessage();
 		}
 
 		loginService.singleSignOn(authorization).then(function (data) {
 
 			if(data.status != 200) {
-				return errorMessage();
+				return ErrorMessage();
 			}
 
 			var user = data.data.user;
 
 			if(!user || user.pvList.length <= 0) {
-				return errorMessage();
+				return ErrorMessage();
 			}
 
 			$rootScope.signIn(authorization, user);

@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.salesController',[])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -11,13 +11,10 @@ angular.module('Conciliador.salesController',[])
 }]).controller('salesController', function($scope, $modal,  $rootScope, menuFactory, calendarFactory, $location,
 	FinancialService, userService, cacheService, advancedFilterService, movementsService, resumoConciliacaoService, TransactionService){
 
-
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
 	$scope.loadParamsByFilter();
-
 	menuFactory.setActiveResumoConciliacao();
-
 
 	$scope.$on('$routeChangeSuccess', function(next, current,previous) {
 		if(previous) {
@@ -26,18 +23,17 @@ angular.module('Conciliador.salesController',[])
 			}
 		}
 
-		init();
+		Init();
 	});
 
-	function init(){
+	function Init(){
 
-		getCachedData();
+		GetCachedData();
 
 		if($rootScope.salesFromDashDate) {
 			$scope.dateSelected = $rootScope.salesFromDashDate;
 			$rootScope.salesFromDashDate = null;
 		}
-
 
 		$scope.actualDateSelected = calendarFactory.getNameOfMonthAndYear($scope.dateSelected);
 		$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation($scope.dateSelected);
@@ -61,51 +57,52 @@ angular.module('Conciliador.salesController',[])
 		$scope.totalConciliedForDay = 0;
 		$scope.totalToProcessForDay = 0;
 
-		calendarInit();
-		getFinancials();
+		CalendarInit();
+		GetFinancials();
 
-		$scope.getFinancials = getFinancials;
-		$scope.search = search;
-		$scope.clearFilter = clearFilter;
-		$scope.updateFilterByStatus = updateFilterByStatus;
-		$scope.showDetails = showDetails;
-		$scope.selectItemToConcilie = selectItemToConcilie;
+		$scope.getFinancials = GetFinancials;
+		$scope.search = Search;
+		$scope.clearFilter = ClearFilter;
+		$scope.updateFilterByStatus = UpdateFilterByStatus;
+		$scope.showDetails = ShowDetails;
+		$scope.selectItemToConcilie = SelectItemToConcilie;
+        $scope.nextYear = NextYear;
+        $scope.prevYear = PrevYear;
+        $scope.changeYear = ChangeYear;
+        $scope.changeMonth = ChangeMonth;
+        $scope.changeDay = ChangeDay;
+        $scope.concilie = Concilie;
+        $scope.sortResults = SortResults;
 	}
 
-	// calendar functions init
-	$scope.nextYear = function() {
+	function NextYear() {
 		var newDate = calendarFactory.formatDate(calendarFactory.addYearsToDate($scope.dateSelected, 1));
 		$scope.changeYear(newDate);
 	};
 
-	$scope.prevYear = function() {
+	function PrevYear() {
 		var newDate = calendarFactory.formatDate(calendarFactory.addYearsToDate($scope.dateSelected, -1));
 		$scope.changeYear(newDate);
 	};
 
-	$scope.changeYear = function(date) {
+	function ChangeYear(date) {
 		$scope.dateSelected = date;
 		$scope.yearSelected = parseInt(calendarFactory.getYear($scope.dateSelected));
 
-		//getPeriod($scope.dateSelected);
-		//getCalendarMonths();
-		getCalendarDays();
-		getFinancials(true);
+		GetCalendarDays();
+		GetFinancials(true);
 	};
 
-	$scope.changeMonth = function(month) {
-
+	function ChangeMonth(month) {
 		var year = calendarFactory.getYear($scope.dateSelected);
 		$scope.dateSelected = calendarFactory.getFirstDayOfSpecificMonth(month, year);
 
-		getCalendarDays();
-		getFinancials(true);
+		GetCalendarDays();
+		GetFinancials(true);
 	}
 
-	$scope.changeDay = function(day) {
-
+	function ChangeDay(day) {
 		if(day.isActiveButton) {
-			//var selectedDay = day.date.getDate();
 			var selectedDay = parseInt(day.day);
 			var selectedDayIndex = selectedDay - 1;
 
@@ -118,16 +115,15 @@ angular.module('Conciliador.salesController',[])
 
 			if(selectedDayIndex != $scope.lastDaySelectedIndex) {
 				$scope.days[$scope.lastDaySelectedIndex].isActive = false;
-				getFinancials(true);
+				GetFinancials(true);
 			}
 
 			$scope.lastDaySelectedIndex = selectedDay - 1;
-
 			$scope.concilieQuantity = 0;
 		}
 	}
 
-	function calendarInit(){
+	function CalendarInit(){
 		$scope.months = [];
 		$scope.days = [];
 		$scope.lastDaySelectedIndex = 0;
@@ -145,7 +141,6 @@ angular.module('Conciliador.salesController',[])
 				$scope.months.push({month: months[i], active: (i + 1) == (momentjs.month()+1)});
 		}
 
-		//for(initialDayOfMonth; initialDayOfMonth <= lastDayOfMonth; initialDayOfMonth++){
 		for(initialDayOfMonth; initialDayOfMonth <= 31; initialDayOfMonth++){
 			if(initialDayOfMonth == calendarFactory.getDayOfMonth(calendarFactory.getYesterdayDate())){
 				isActive = true;
@@ -171,81 +166,12 @@ angular.module('Conciliador.salesController',[])
 		$scope.sumOfPayed = 0;
 		$scope.sumOfBank = 0;
 
-		//getCalendarMonths();
-		getCalendarDays();
+		GetCalendarDays();
 	}
 
-	function getCalendarMonths() {
-		var year = calendarFactory.getYear($scope.dateSelected);
-		var firstDayOfYear = calendarFactory.getFirstDayOfYear(year);
-		var lastDayOfYear = calendarFactory.getLastDayOfYear(year);
-		var shopIds = [];
-		var cardProductIds = [];
 
-		if($scope.settlementsSelected) {
-			for(item in $scope.settlementsSelected) {
-				shopIds.push($scope.settlementsSelected[item].id);
-			}
-		}
-
-		if($scope.productsSelected) {
-			for(item in $scope.productsSelected) {
-				cardProductIds.push($scope.productsSelected[item].id);
-			}
-		}
-
-		resumoConciliacaoService.listTransactionConciliationCalendarMonth({
-			currency: 'BRL',
-			startDate: firstDayOfYear,
-			endDate: lastDayOfYear,
-			cardProductIds: $scope.productsSelected.join(','),
-			shopIds: $scope.settlementsSelected.join(','),
-			groupBy: 'MONTH',
-			size: 31
-		}).then(function(data){
-
-			var data = data.data;
-			var months = [];
-
-			for(var item in data){
-				if(typeof data[item] === 'object') {
-					months.push(data[item]);
-				} else {
-					break;
-				}
-			}
-
-			// limpa meses atuais
-			for(index in $scope.months){
-				$scope.months[index].oneItem = true;
-				$scope.months[index].toReconcile = false;
-				$scope.months[index].toProcess = false;
-				$scope.months[index].concilied = false;
-			}
-
-			for(month in months) {
-
-				var index = parseInt(months[month].date.split("-")[1]) - 1;
-				var item = months[month];
-
-				var oneItemFlag = Boolean(item.transctionToConcilieQuantity) + Boolean(item.transctionUnprocessedQuantity) + Boolean(item.transctionConciliedQuantity);
-				$scope.months[index].toReconcile = item.transctionToConcilieQuantity;
-				$scope.months[index].toProcess = item.transctionUnprocessedQuantity;
-				$scope.months[index].concilied = item.transctionConciliedQuantity;
-
-				if(oneItemFlag > 1) {
-					$scope.months[index].oneItem = false;
-				}
-			}
-
-		});
-	}
-
-	/**************************************************************************************************************************/
-
-	function getCalendarDays() {
+	function GetCalendarDays() {
 		var date = $scope.dateSelected;
-
 		var firstDayOfMonth = calendarFactory.getFirstDayOfMonth(date);
 		var lastDayOfMonth = calendarFactory.getLastDayOfMonth(date);
 		var lastDay = calendarFactory.getDayOfMonth(lastDayOfMonth) - 1;
@@ -310,7 +236,6 @@ angular.module('Conciliador.salesController',[])
 			}
 
 			for(day in days) {
-
 				var index = days[day].date.split("-")[2] - 1;
 				var item = days[day];
 				var oneItemFlag = Boolean(item.transctionToConcilieQuantity) + Boolean(item.transctionUnprocessedQuantity) + Boolean(item.transctionConciliedQuantity);
@@ -338,15 +263,14 @@ angular.module('Conciliador.salesController',[])
 
 		});
 	}
-	// calendar functions end
 
-	function updateFilterByStatus(status) {
+	function UpdateFilterByStatus(status) {
 		$scope.statusSelected = status;
-		getFinancials();
+		GetFinancials();
 
 	}
 
-	function getFinancials(cache, order) {
+	function GetFinancials(cache, order) {
 
 		var date = $scope.dateSelected;
 		var startDate = calendarFactory.formatDateForService(date);
@@ -358,7 +282,6 @@ angular.module('Conciliador.salesController',[])
 
 		$scope.concilieItems = [];
 		$scope.isConcilieButtonActive = false;
-
 		$scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 
 		if($scope.settlementsSelected) {
@@ -372,7 +295,6 @@ angular.module('Conciliador.salesController',[])
 				cardProductIds.push($scope.productsSelected[item].id);
 			}
 		}
-
 
 		filter = {
 			currency: 'BRL',
@@ -427,13 +349,10 @@ angular.module('Conciliador.salesController',[])
 		});
 	}
 
-	// $scope.showDetails = function(acquirer, type,  cardProductIds) {
-	function showDetails(acquirer, cardProduct) {
-
-		$rootScope.salesDetails = {};
-
+	function ShowDetails(acquirer, cardProduct) {
 		var dateSelected = $scope.dateSelected;
 
+        $rootScope.salesDetails = {};
 		$rootScope.salesDetails.currency = "BRL";
 		$rootScope.salesDetails.startDate = dateSelected;
 		$rootScope.salesDetails.endDate = dateSelected;
@@ -447,7 +366,7 @@ angular.module('Conciliador.salesController',[])
 		$location.path('sales/details');
 	}
 
-	$scope.concilie = function () {
+	function Concilie() {
 		$scope.confirm = true;
 		$scope.success = false;
 		if($scope.concilieItems.length) {
@@ -514,11 +433,11 @@ angular.module('Conciliador.salesController',[])
 							delete filter.types;
 						}
 
-						TransactionService.concilieTransactions(filter).then(function(data){
+						TransactionService.ConcilieTransactions(filter).then(function(data){
 							$scope.concilieItems = [];
 							$scope.items = [];
 
-							init();
+							Init();
 							$scope.confirm = false;
 							$scope.success = true;
 
@@ -541,7 +460,7 @@ angular.module('Conciliador.salesController',[])
 		}
 	}
 
-	function selectItemToConcilie(item) {
+	function SelectItemToConcilie(item) {
 		if($scope.concilieItems.length){
 			var flag = false;
 			var removeIndex = null;
@@ -570,12 +489,12 @@ angular.module('Conciliador.salesController',[])
 		}
 	}
 
-	function search() {
+	function Search() {
         document.getElementById("naturezaProduto").value = "";
-		this.getFinancials(true);
+		GetFinancials(true);
 	}
 
-	function clearFilter() {
+	function ClearFilter() {
 		$scope.settlementsSelected = [];
 		$scope.productsSelected = [];
 		$scope.natureza = 0;
@@ -583,11 +502,7 @@ angular.module('Conciliador.salesController',[])
 		document.getElementById("naturezaProduto").value = '';
 	}
 
-	function downloadReport() {
-		Restangular.getList("");
-	}
-
-	function getCachedData() {
+	function GetCachedData() {
 		cacheService.getSettlements();
 		cacheService.getProducts();
 
@@ -618,19 +533,14 @@ angular.module('Conciliador.salesController',[])
 			} else {
 				$scope.settlementsSelected = [];
 			}
-		} else {
-			//cacheService.clearFilter();
 		}
 
 	}
 
-	$scope.sortResults = function (elem,kind) {
+	function SortResults(elem,kind) {
 		var order_string;
 		order_string = $rootScope.sortResults(elem,kind);
 
-		this.getFinancials(false,order_string);
-
+		GetFinancials(false,order_string);
 	};
-
-
 });

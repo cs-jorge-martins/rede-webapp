@@ -25,14 +25,14 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 							'KaplenWeb.kaplenAdminService','KaplenWeb.cacheService',
 							'KaplenWeb.installmentsService', 'chieffancypants.loadingBar',
 							'KaplenWeb.userService',
-							'KaplenWeb.settlementManager','KaplenWeb.settlementService',
-							'KaplenWeb.terminalsManager','KaplenWeb.terminalService',
+							'KaplenWeb.settlementService',
+							'KaplenWeb.terminalService',
 							'KaplenWeb.integrationService', 'KaplenWeb.advancedFilterService',
 							'KaplenWeb.calendarService',
 							'KaplenWeb.Request', 'KaplenWeb.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
                             'Conciliador.FinancialService',
-                            'Conciliador.MovementSummaryService', 'Conciliador.MovementSummaryFilter',
+                            'Conciliador.MovementSummaryService',
                             'Conciliador.AdjustSummaryService', 'Conciliador.TransactionService',
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
                             'Conciliador.FirstAccessController',
@@ -709,7 +709,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, calendarService);
-	$scope.resetCalendarService();
+	$scope.ResetCalendarService();
 
 	$scope.dataInicial = calendarFactory.getFirstDayOfMonth();
 	$scope.dataFinal = calendarFactory.getLastDayOfMonth();
@@ -760,7 +760,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	$scope.pageChanged = function() {
 		$scope.currentPage = this.currentPage;
 
-		resumoConciliacaoService.buscarVendas($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
+		resumoConciliacaoService.buscarVendas($scope.CheckDateInitial($scope.dataInicial), $scope.CheckDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
 				$scope.authorization, $scope.gross, $scope.erpId, $rootScope.currency, $scope.currentPage, $scope.totalItensPage).then(function(itens){
 
 					$scope.itensSearched = itens;
@@ -769,17 +769,17 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	};
 
 	$scope.buscarVendas = function(){
-		$scope.checkInvalidDates = calendarFactory.checkInvalidPeriod($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.initialDateChanged, $scope.finalDateChanged);
+		$scope.checkInvalidDates = calendarFactory.checkInvalidPeriod($scope.CheckDateInitial($scope.dataInicial), $scope.CheckDateFinal($scope.dataFinal), $scope.initialDateChanged, $scope.finalDateChanged);
 
 		if($scope.requiredFields == false){
 			if($scope.checkInvalidDates == false){
-				resumoConciliacaoService.countVendas($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
+				resumoConciliacaoService.countVendas($scope.CheckDateInitial($scope.dataInicial), $scope.CheckDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
 						$scope.authorization, $scope.gross, $scope.erpId, $rootScope.currency).then(function(totalItens){
 
 						$scope.totalItens = totalItens;
-						$scope.maxSize = maxSizePagination(totalItens, $scope.totalItensPage);
+						$scope.maxSize = MaxSizePagination(totalItens, $scope.totalItensPage);
 
-						resumoConciliacaoService.buscarVendas($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
+						resumoConciliacaoService.buscarVendas($scope.CheckDateInitial($scope.dataInicial), $scope.CheckDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
 								$scope.authorization, $scope.gross, $scope.erpId, $rootScope.currency, $scope.currentPage, $scope.totalItensPage).then(function(itens){
 
 									if(itens.length > 0){

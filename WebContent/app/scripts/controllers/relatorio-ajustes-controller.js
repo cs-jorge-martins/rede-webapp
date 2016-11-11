@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -18,7 +18,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
 		//Extensao do serviço para calendario
 		angular.extend($scope, calendarService);
-		$scope.resetCalendarService();
+		$scope.ResetCalendarService();
 
 		menuFactory.setActiveReportsAdjustments();
 		$scope.dateSelected = calendarFactory.getYesterdayDate();
@@ -29,33 +29,34 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
 		$scope.sort = 'date,ASC';
 
-		$scope.exportReport = exportReport;
+		$scope.exportReport = ExportReport;
 
 		var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
-		$scope.pageChanged = pageChanged;
-		$scope.totalItensPageChanged = totalItensPageChanged;
+		$scope.pageChanged = PageChanged;
+		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
 		$scope.totalItensPage = 10;
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
+        $scope.sortResults = SortResults;
 
-		init();
+		Init();
 
-		function init(){
-			getReport();
+		function Init(){
+			GetReport();
 
-			$scope.clearFilter = clearFilter;
-			$scope.search = search;
+			$scope.clearFilter = ClearFilter;
+			$scope.search = Search;
 		}
 
-		function getReport() {
+		function GetReport() {
 
             var curPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
 
-			AdjustSummaryService.listAdjustSummary({
+			AdjustSummaryService.ListAdjustSummary({
 				currency: 'BRL',
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finalDate),
@@ -73,7 +74,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 			});
 		}
 
-		function exportReport() {
+		function ExportReport() {
 			AdjustSummaryService.exportReport({
 				currency: 'BRL',
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
@@ -93,30 +94,30 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 			});
 		}
 
-		function clearFilter() {
+		function ClearFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
 		}
 
-		function search() {
-			getReport();
+		function Search() {
+			GetReport();
 		}
 
-		function pageChanged() {
+		function PageChanged() {
 			$scope.currentPage = this.currentPage;
-			getReport();
+			GetReport();
 		};
 
-		function totalItensPageChanged() {
+		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 1;
 			$scope.totalItensPage = this.totalItensPage;
-			getReport();
+			GetReport();
 		};
 
-		$scope.sortResults = function (elem,kind) {
+		function SortResults(elem,kind) {
 			$scope.sort = $rootScope.sortResults(elem,kind);
-			getReport();
+			GetReport();
 		};
 
     });

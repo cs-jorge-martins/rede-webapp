@@ -2,27 +2,27 @@
    <br />
    <fieldset>
      <ul class="filterList">
-       
+
        <li>
          <label for="periodoInicial">Período</label>
-         
-         
+
+
          <ul>
            <li>
              <input type="text" class="disabled form-control" datepicker-popup="{{format}}" ng-model="dataInicial" is-open="openFirstTaxes"
-				datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDate(dataInicial)"
+				datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(dataInicial)"
 				close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstTaxes = true"/>
            </li>
            <li>
              <label for="">Até</label>
              <input type="text" class="disabled form-control" datepicker-popup="{{format}}" ng-model="dataFinal" is-open="openLastTaxes"
-				datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(dataFinal)"
+				datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(dataFinal)"
 				close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastTaxes = true"/>
            </li>
          </ul>
          <br />
-           
-           
+
+
          <ul>
            <li>
                     <label class="opcoesRelatorios" for="opcoesRelatorios">Opções de Relatórios</label>
@@ -36,82 +36,82 @@
                     </ul>
                   </li>
            </ul>
-           
-           
-           
+
+
+
            <br />
            <a class="botaoVerMais" href="javascript:void(0);" onclick="javascript:toggle();">Mais Filtros</a>
-            
-            <div class="hiddenContent relatorioFilter advancedFilterHiddenContent"> 
-            
+
+            <div class="hiddenContent relatorioFilter advancedFilterHiddenContent">
+
             <ul>
-            
+
             <li class=" grandChild fullWidthList relatorioLojaFilter">
                   <label for="buscaTerminal">Loja</label>
-                  <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}" 
+                  <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
 					 ng-model="settlement" typeahead-append-to-body="true"
 					 typeahead-on-select="addSettlementsSearch(settlement)"
 					 typeahead="item as item.name for item in getSettlements()"/>
-                  
+
                   <ul ng-repeat="item in settlementsSelected">
                     <li>
                       <h4>{{item.name}}, {{item.cnpj}}</h4>
                       <a href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a></li>
                   </ul>
            </li>
-           
-           
-           
+
+
+
            <li class="bandeiraFilter grandChild fullWidthList relatorioLojaFilter opFilter">
               <label for="naturezaOperadora">Operadora</label>
-              <input style="font-size:13px;" id="naturezaOperadora" name="naturezaOperadora" type="text" placeholder="{{getPlaceholder(acquirersSelected)}}" 
+              <input style="font-size:13px;" id="naturezaOperadora" name="naturezaOperadora" type="text" placeholder="{{getPlaceholder(acquirersSelected)}}"
 					ng-model="acquirer" typeahead-append-to-body="true"
 					typeahead-on-select="addAcquirerSearch(acquirer)"
 					typeahead="item as item.name for item in getAcquirers() | filter:$viewValue"/>
-              
+
               <ul ng-repeat="item in acquirersSelected">
                 <li>{{item.name}}<a href="javascript:void(0);" ng-click="removeAcquirerSearch(item)">Fechar</a></li>
               </ul>
-              
+
            </li>
-           
-           
-           
+
+
+
            <br />
            <br />
            <div class="divergencias" ng-show="showDivergencias == null || showDivergencias == true">
              <label class="divergenciaRelatorios" for="opcoesRelatorios">Divergência por:</label>
-             
+
              <ul class="sublabel">
                <li>
                	<label>Percentual(%)</label>
                  <input type="radio" ng-model="opcaoRelatorioCustos" value="1" ng-click="percentual = true; valor = false"/>
                </li>
-               
+
                <li>
                	<label>Valor(<i ng-bind-html='currencySymbol'></i>)</label>
                  <input type="radio" ng-model="opcaoRelatorioCustos" value="2" ng-click="valor = true; percentual = false"/>
                </li>
-               
+
                <br />
                <li ng-show="percentual">
                  <p>Perdas Maiores que:</p>
                  <input style="background:none!important;" type="text" ng-model="valorDivergencia" ui-percentage-mask/>
                </li>
-               
+
                <li ng-show="valor">
                	<p>Perdas Maiores que:</p>
                  <input style="background:none!important;" type="text" ng-model="valorDivergencia" ui-money-mask/>
-               </li> 
-               
+               </li>
+
                <br />
              </ul>
-             
+
            </div>
-           
+
            <br />
             </ul>
-            </div>       
+            </div>
      </ul>
    </fieldset>
    <button data-ng-click="clearAdvancedFilterCustos()"/>Limpar</button>

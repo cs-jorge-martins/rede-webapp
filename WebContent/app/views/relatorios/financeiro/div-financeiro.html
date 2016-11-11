@@ -7,14 +7,14 @@
                 	<li>
                     	<input type="text" class="disabled form-control"
 							datepicker-popup="{{format}}" ng-model="dataInicial" is-open="openFirstFinanceiro"
-							datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDate(dataInicial)"
+							datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(dataInicial)"
 							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstFinanceiro = true"/>
                   	</li>
                   	<li>
                     	<label for="">Até</label>
                     	<input type="text" class="disabled form-control"
 							datepicker-popup="{{format}}" ng-model="dataFinal" is-open="openLastFinanceiro"
-							datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(dataFinal)"
+							datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(dataFinal)"
 							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastFinanceiro = true"/>
                   	</li>
                   	<br />

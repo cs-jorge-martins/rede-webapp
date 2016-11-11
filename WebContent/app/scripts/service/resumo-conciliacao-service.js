@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.resumoConciliacaoService',[])
 	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
@@ -45,66 +45,11 @@ angular.module('KaplenWeb.resumoConciliacaoService',[])
 	/****************************************************************************************************************/
 
 	this.listTransactionConciliationCalendarMonth = function(filter){
-		return TransactionConciliationService.listTransactionConciliationByFilter(filter);
-		/*
-		var x = TransactionConciliationService.listTransactionConciliationByFilter(filter);
-
-		var response = [];
-
-		for(var y = 1;y <= 12; y++) {
-			var entity = new TransactionSummary();
-			entity.date = null;
-			response.post = entity;
-
-
-		}
-
-		if(x){
-			for(item in x) {
-				for(y in response) {
-					// comparar mes
-					if() {
-						response[y] = x[item];
-					}
-				}
-			}
-		}
-
-		return response;
-		*/
-
+		return TransactionConciliationService.ListTransactionConciliationByFilter(filter);
 	}
-
-
-	this.listTransactionConciliationCalendarDay = function(transactionConciliationFilter){
-
-		var list = TransactionConciliationService.listTransactionConciliationByFilter(transactionConciliationFilter);
-
-		return list;
-	}
-
-
-	this.listTransactionSummaryByAcquirer = function(transactionSummaryFilter){
-
-		//var list = TransactionSummaryService.listTransactionSummaryByFilter(transactionSummaryFilter);
-
-		var list;
-
-		return list;
-	}
-
-	this.listTransactionSummaryByCardProduct = function(transactionSummaryFilter){
-
-		//var list = TransactionSummaryService.listTransactionSummaryByFilter(transactionSummaryFilter);
-
-		var list;
-
-		return list;
-	}
-
 
 	this.getTransactionSummary = function(transactionSummaryFilter){
-		return TransactionSummaryService.listTransactionSummaryByFilter(transactionSummaryFilter);
+		return TransactionSummaryService.ListTransactionSummaryByFilter(transactionSummaryFilter);
 	}
 
 	 function TransactionSummary(){
