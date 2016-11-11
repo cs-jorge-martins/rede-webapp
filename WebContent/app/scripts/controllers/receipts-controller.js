@@ -186,9 +186,11 @@ angular.module('KaplenWeb.movementsModule',[])
 						description = data[index].description.toLowerCase(),
 						cardProduct = data[index].cardProduct;
 						amount = data[index].payedAmount;
+						cardProduct.forethought = false;
 
 					if (status == "forethought") {
 						cardProduct.name = "ANTECIPAÇÃO " + cardProduct.name;
+						cardProduct.forethought = true;
 					}
 
 					if(releases.length) {
@@ -207,6 +209,7 @@ angular.module('KaplenWeb.movementsModule',[])
 								var item = {
 									cardProductName: cardProduct.name,
 									cardProductId: cardProduct.id,
+									forethought: cardProduct.forethought,
 									status: status,
 									description: description,
 									sales: 0,
@@ -243,6 +246,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						var item = {
 							cardProductName: cardProduct.name,
 							cardProductId: cardProduct.id,
+							forethought: cardProduct.forethought,
 							status: status,
 							description: description,
 							sales: 0,
@@ -650,7 +654,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			for(var x in data){
 				var obj = {};
 				obj.id = data[x].id;
-				obj.label = data[x].bankName + ' ' + data[x].agencyNumber + ' ' +  data[x].accountNumber;
+				obj.label = data[x].bankName + ' | ' + data[x].agencyNumber + ' | ' +  data[x].accountNumber;
 				obj.bankName = data[x].bankName;
 				obj.agencyNumber = data[x].agencyNumber;
 				obj.accountNumber = data[x].accountNumber;
@@ -679,6 +683,9 @@ angular.module('KaplenWeb.movementsModule',[])
 		// bandeira
 		filtersService.getCardProducts().then(function(response){
 			var filterConfig = [];
+			// var addPipe(fullCardProductName) {
+			// 	fullCardProductName
+			// };
 			for(var x in response.data){
 				var obj = {};
 				obj.id = response.data[x].id;
@@ -847,6 +854,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 
 	function getCardProductsLabel(isFuture) {
+
 		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 		var label = (isFuture ? $scope.cardProductsFutureLabel : $scope.cardProductsLabel);
 
@@ -864,7 +872,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			}
 			label = label.toLowerCase();
 		} else {
-			label = null
+			label = null;
 		}
 
 		if(isFuture) {
@@ -880,6 +888,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				return item.label;
 			}).join(", ");
 		}
+
 	}
 
 	function getLabels(isFuture) {
@@ -888,7 +897,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		getCardProductsLabel(isFuture);
 	}
 
-    function showDetails(acquirer, cardProduct, total, status) {
+    function showDetails(acquirer, cardProduct, total, status, detailPage) {
         $rootScope.receiptsDetails = {};
 
         var dateSelected = $scope.actualReleases.date;
@@ -909,7 +918,24 @@ angular.module('KaplenWeb.movementsModule',[])
 		$rootScope.receiptsDetails.total = total;
 		$rootScope.receiptsDetails.type = status
 
-        $location.path('receipts/details');
+		var redirect_url;
+		switch (detailPage) {
+			case "other_details":
+				redirect_url = "receipts/other_details";
+				break;
+			case "expected_details":
+				redirect_url = "receipts/expected_details";
+				break;
+			case "forethought":
+				redirect_url = "receipts/forethought";
+				break;
+			default:
+				redirect_url = "receipts/details";
+				break;
+		}
+		if(redirect_url) {
+			$location.path(redirect_url);
+		}
     }
 
     function saveFilters() {

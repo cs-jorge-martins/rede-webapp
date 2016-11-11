@@ -24,7 +24,7 @@
                                     <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
                                 </div>
                                 <div class="filter">
-                                    <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"></rc-multiselect>
+                                    <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2" ></rc-multiselect>
                                 </div>
                                 <div class="filter">
                                     <rc-multiselect label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"></rc-multiselect>
@@ -40,27 +40,43 @@
 
                         <!-- LANCAMENTOS ATUAIS INIT -->
                         <article class="data-cards">
+                            <div class="expectedReleases">
+                                <table ng-repeat="item in actualReleasesData" id="receipts_table">
+                                    <tr class="group" ng-show="item.expectedReleases.length">
+                                        <th id="pagamentosNaoRecebidosTitleColumn">existem pagamentos não recebidos nesta data</th>
+                                        <th>
+                                            <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'expected_details')">detalhes</a>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
                             <div class="header-datas">
                                 <div class="date">
                                     <span class="number">{{actualReleases.day}}</span>
                                     <br>{{actualReleases.month}} </div>
                                 <div class="chip-wrapper">
                                     <div class="chip" ng-show="accountsLabel">
-                                        <label>
+                                        <span>
                                             {{ accountsLabel | limitTo: 28 }} {{ accountsLabel.length > 28 ? '...' : '' }}
-                                        </label>
+                                        </span>
                                     </div>
-                                    <div class="chip" ng-show="shopsLabel" ng-class="shopsLabel.length < 1 ? 'hidden-chip' : '' ">
-                                        <label>
+                                    <div class="chip can-close" ng-show="shopsLabel" ng-class="shopsLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        <span>
                                             {{ shopsLabel }}
-                                        </label>
-                                        <div class="clear-filter" ng-click="clearShopFilter()">x</div>
+                                        </span>
+                                        <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter()"></div>
+                                        <span class="rc-tooltip">
+                                            {{ shopsFullLabel }}
+                                        </span>
                                     </div>
-                                    <div class="chip" ng-show="cardProductsLabel" ng-class="cardProductsLabel.length < 1 ? 'hidden-chip' : '' ">
-                                        <label>
+                                    <div class="chip can-close" ng-show="cardProductsLabel" ng-class="cardProductsLabel.length < 1 ? 'hidden-chip' : '' ">
+                                        <span>
                                             {{ cardProductsLabel }}
-                                        </label>
-                                        <div class="clear-filter" ng-click="clearCardProductsFilter()">x</div>
+                                        </span>
+                                        <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter()"></div>
+                                        <span class="rc-tooltip">
+                                            {{ cardProductsFullLabel }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +88,12 @@
                                     </li>
                                     <li class="math-symbol"><strong>-</strong></li>
                                     <li class="discount">
-                                        <strong>total descontado</strong>
+                                        <strong>
+                                            total descontado
+                                            <i class="itauicon-itaufonts_informacao">
+                                                <span class="rc-tooltip up">valor total descontado refere-se a valores debitados, tais como cancelamentos, chargebacks, ajustes e tarifas</span>
+                                            </i>
+                                        </strong>
                                         <span class="big-number"><span>R$</span> {{ discountedTotal | currency: ""}}</span>
                                     </li>
                                     <li class="math-symbol"><strong>+</strong></li>
@@ -105,13 +126,16 @@
                                     </tr>
                                 </tbody>
                                 <tbody ng-repeat="cardProduct in item.cardProducts">
-                                    <tr>
+                                    <tr class="card-product-line">
                                         <th class="except"></th>
                                         <th>
                                             <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }}
                                         </th>
                                         <th>{{ cardProduct.total | number: 02 }}</th>
-                                        <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a></th>
+                                        <th>
+                                            <a ng-hide="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a>
+                                            <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought')">detalhes Antecipados</a>
+                                        </th>
                                     </tr>
                                     <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type }}">
                                         <th></th>
@@ -127,102 +151,20 @@
                                     <th>outros lançamentos</th>
                                     <th>{{ item.otherReleasesTotal | currency}}</th>
                                     <th>
-                                        <!--<a ng-click="showDetails(item.acquirer, item.otherReleases)" href="#/receipts/details">detalhes</a>-->
+                                        <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'other_details')">detalhes</a>
                                     </th>
                                 </tr>
                                  <tbody ng-show="item.otherReleases">
-                                    <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
+                                    <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos card-product-line">
                                         <th></th>
-                                        <th class="inset-1">{{ otherRelease.description }}</th>
+                                        <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
                                         <th>- {{ otherRelease.amount | number: 02}} </th>
                                         <th></th>
                                     </tr>
                                 </tbody>
-
-                                <tr class="group" ng-show="item.expectedReleases.length">
-                                    <th></th>
-                                    <th id="pagamentosNaoRecebidosTitleColumn">pagamentos não recebidos</th>
-                                    <th>{{ item.expectedReleasesTotal | currency}}</th>
-                                    <th>
-                                        <!--<a ng-click="showDetails(item.acquirer, item.expectedReleases)" href="#/receipts/details">detalhes</a>-->
-                                    </th>
-                                </tr>
-                                 <tbody ng-show="item.expectedReleases">
-                                    <tr ng-repeat="expectedRelease in item.expectedReleases">
-                                        <th class="except"></th>
-                                        <th><div class="cardFlag brand_{{ expectedRelease.cardProduct.id }}"></div>{{ expectedRelease.cardProduct.name | capitalize }}</th>
-                                        <th> {{ expectedRelease.expectedAmount | number: 02 }} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-
-
-                                <!--
-                                <tbody ng-repeat="cardProduct in acquirer.cardProducts">
-                                    <tr>
-                                        <th class="except"></th>
-                                        <th>
-                                        <div class="cardFlag brand_{{cardProduct.id}}"></div> {{ cardProduct.name }} </th>
-                                        <th> {{ cardProduct.balanceAmount | currency }} </th>
-                                        <th><a ng-click="showDetails(acquirer, cardProduct)">detalhes</a></th>
-                                    </tr>
-                                    <tr class="inset" ng-class="e.type == 'cancelamentos' || e.type == 'ajustes' ? 'discount' : '' " ng-repeat="e in cardProduct.releases track by $index">
-                                        <th></th>
-                                        <th class="inset-1">{{ e.type }}</th>
-                                        <th>{{e.payedAmount | currency}} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                <tr class="group" ng-show="chipOtherPaiments">
-                                    <th></th>
-                                    <th>outros lançamentos</th>
-                                    <th>{{receipts.otherPayments.value | currency}}</th>
-                                    <th><a href="#/receipts/details">detalhes</a></th>
-                                </tr>
-                                <tbody ng-repeat="op in receipts.otherPayments" ng-show="chipOtherPaiments">
-                                    <tr class="discount">
-                                        <th class="except"></th>
-                                        <th> {{ op.otherDescription }} </th>
-                                        <th> {{op.otherAmount | currency}} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                <tr class="group">
-                                    <th></th>
-                                    <th>pagamentos não recebidos</th>
-                                    <th>{{receipts.expectedPayments.value | currency}}</th>
-                                    <th><a href="#/receipts/details">detalhes</a></th>
-                                </tr>
-                                <tbody ng-repeat="ep in receipts.expectedPayments">
-                                    <tr>
-                                        <th class="except"></th>
-                                        <th>
-                                            <div class="cardFlag brand_{{ep.cardProductId}}"></div> {{ ep.cardProductName }} </th>
-                                        <th> {{ep.expectedAmount | currency}} </th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                -->
                             </table>
                             <span class="alert" ng-show="!actualReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
-                            <!--
-                		<div class="conclusion">
-                			<div class="page-title">
-                				conciliação financeira
-                			</div>
-                			<ul>
-                				<li>
-                					<input type="checkbox">
-                					Confirmo o recebimento de <strong>R$ 40.000,00 </strong> na conta corrente de número <strong>9898 98989-2</strong> banco <strong>itaú</strong> no dia 24/08/2016
-                				</li>
-                				<li>
-                					<input type="checkbox">
-                					Reportar erro no recebimento do valor informado.
-                				</li>
-                			</ul>
-                		</div>
-                		-->
-                    </article>
+                        </article>
                         <!-- LANCAMENTOS ATUAIS: END -->
                 </tab>
                 <tab heading="lançamentos futuros" active="" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
@@ -270,13 +212,13 @@
                                             {{ accountsFutureLabel }}
                                         </label>
                                     </div>
-                                    <div class="chip" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                    <div class="chip can-close" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                         <label>
                                             {{ shopsFutureLabel }}
                                         </label>
                                         <div class="clear-filter" ng-click="clearShopFilter(true)">x</div>
                                     </div>
-                                    <div class="chip" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                    <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                         <label>
                                             {{ cardProductsFutureLabel }}
                                         </label>

@@ -145,7 +145,6 @@ module.exports = function(grunt) {
                     "WebContent/app/js/componente/chart-utils.js",
 
                     "WebContent/app/scripts/app.js",
-
                     "WebContent/app/scripts/controllers/dashboard-controller.js",
                     "WebContent/app/scripts/controllers/login-controller.js",
                     "WebContent/app/scripts/controllers/first-access-controller.js",
@@ -160,6 +159,9 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/controllers/help-controller.js",
                     "WebContent/app/scripts/controllers/integration-controller.js",
                     "WebContent/app/scripts/controllers/receipts-controller.js",
+                    "WebContent/app/scripts/controllers/receiptsExpectedDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsForethoughtDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsOtherDetailsController.js",
                     "WebContent/app/scripts/controllers/receipts-details-controller.js",
                     "WebContent/app/scripts/controllers/redirect-controller.js",
 
