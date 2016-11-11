@@ -78,7 +78,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		var modal;
 		$scope.uploader.onBeforeUploadItem = function(item){
 			modal = $modal.open({
-				templateUrl: "app/views/vendas/uploadInProgress.html",
+				templateUrl: "app/views/vendas/upload-in-progress.html",
 				scope: $scope,
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
@@ -98,7 +98,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			modal.close();
 			$scope.uploader.clearQueue();
 			var $modalInstance = $modal.open({
-				templateUrl: "app/views/vendas/enviadoComSucesso.html",
+				templateUrl: "app/views/vendas/enviado-com-sucesso.html",
 				scope: $scope,
 				size: 'lg',
 				windowClass: 'integrationModalWrapper',
