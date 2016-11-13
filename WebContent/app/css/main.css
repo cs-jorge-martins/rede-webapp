@@ -10312,7 +10312,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 #receiptsDetails .table td,
 #receiptsDetails .table th{
     position: relative;
-    padding: 20px 0;
+    padding: 20px 10px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
 }
