@@ -62,7 +62,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 			var expectedAcquirersFilter = {
 				groupBy: "ACQUIRER",
-				// bankAccountIds: $scope.bankAccount.id,
+				bankAccountIds: $scope.bankAccount.id,
 				status: $scope.filterStatus,
 				startDate: $scope.date,
 				endDate: $scope.date
