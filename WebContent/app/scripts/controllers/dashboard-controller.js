@@ -12,7 +12,7 @@ angular.module('KaplenWeb.dashboardController',[])
 }])
 
 .controller('dashboardController', function($scope, $modal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, userService, cacheService, resumoConciliacaoService, TransactionSummaryService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
 
 	menuFactory.setActiveDashboard();
 
@@ -20,11 +20,11 @@ angular.module('KaplenWeb.dashboardController',[])
 	$scope.now = calendarFactory.getActualDateForDashboard();
 	$scope.actualMonth = calendarFactory.getNameOfMonthAndYearForDashboard();
 
-	$scope.sales = sales;
+	$scope.sales = Sales;
 
-	setUpDashboard();
+	SetUpDashboard();
 
-	function setUpDashboard(){
+	function SetUpDashboard(){
 		$scope.actualPeriod = {};
 		$scope.lastPeriod = {};
 		$scope.taxesValues ={};
@@ -71,56 +71,17 @@ angular.module('KaplenWeb.dashboardController',[])
 		$scope.dateSelected = calendarFactory.getYesterdayDate();
 
 		if($window.sessionStorage.tour) {
-			showVideoModal();
+			ShowVideoModal();
 			delete $window.sessionStorage.tour;
 		}
 
-		setTransactionConciliationCaledar();
-		setTransactionSummaryLineChart();
+		SetTransactionConciliationCalendar();
+		SetTransactionSummaryLineChart();
 	};
 
+	SetUp();
 
-	function checkOneItemStatusDay(item){
-		var count = 0;
-
-		if(item.toReconcile){
-			count++;
-		}
-
-		if(item.toProcess){
-			count++;
-		}
-
-		if(item.concilied && !item.toReconcile && !item.toProcess){
-			count++;
-		}
-
-		if(count == 1){
-			item.oneItem = true;
-		}else{
-			item.oneItem = false;
-		}
-	};
-
-	/**************************************************************** Chama conciliação do dia ***********************************************************************************/
-
-	$scope.conciliacaoDia = function(day) {
-		if(day.date != "" && day.date != null){
-			dashboardService.setDay(day);
-			$location.path('/resumoConciliacao/');
-		}
-	};
-
-	$scope.conciliacaoMes = function() {
-		$location.path('/resumoConciliacao/');
-	};
-
-	/************************************************************************************************************************************/
-	/************************************************************ V1 TRANSACTION CONCILIATION *******************************************/
-
-	setUp();
-
- 	function setUp() {
+ 	function SetUp() {
 		var today = new Date();
 
 		// Se primeiro dia do mês exibe o anterior
@@ -144,24 +105,23 @@ angular.module('KaplenWeb.dashboardController',[])
 		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
 		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfLastMonthForDashboard());
 
-		setTransactionSummaryBox();
-		setMovementSummaryBox();
-		setNplicateTransactionBox();
-		setTransactionConciliationBox();
+		SetTransactionSummaryBox();
+		SetMovementSummaryBox();
+		SetNplicateTransactionBox();
+		SetTransactionConciliationBox();
 	}
 
 	/********************************* TRANSACTION SUMMARY BOX *************************************/
-	function setTransactionSummaryBox(){
-		var transactionSummaryFilterCurrentMonth = new TransactionSummaryFilter();
+	function SetTransactionSummaryBox(){
+		var transactionSummaryFilterCurrentMonth = {};
 		transactionSummaryFilterCurrentMonth.currency =  $rootScope.currency;
 		transactionSummaryFilterCurrentMonth.startDate = $scope.currentMonthPerid.firstDate;
 		transactionSummaryFilterCurrentMonth.endDate = $scope.currentMonthPerid.lastDate;
 		transactionSummaryFilterCurrentMonth.conciliationStatus = 'TO_CONCILIE,CONCILIED';
 		// Consulta do mês corrente
-
-		dashboardService.getTransactionSummaryBox(transactionSummaryFilterCurrentMonth).then(function(item){
+		dashboardService.GetTransactionSummaryBox(transactionSummaryFilterCurrentMonth).then(function(item){
 			item = item.data.content;
-			$scope.transactionSummaryBoxCurrentMonth = new TransactionSummary();
+			$scope.transactionSummaryBoxCurrentMonth = {};
 
 			if (item !== undefined ){
 				if(item.length > 0){
@@ -169,15 +129,15 @@ angular.module('KaplenWeb.dashboardController',[])
 				}
 			}
 
-			var transactionSummaryFilterPrevMonth = new TransactionSummaryFilter();
+			var transactionSummaryFilterPrevMonth = {};
 			transactionSummaryFilterPrevMonth.currency =  $rootScope.currency;
 			transactionSummaryFilterPrevMonth.startDate = $scope.lastMonthPerid.firstDate;
 			transactionSummaryFilterPrevMonth.endDate = $scope.lastMonthPerid.lastDate;
 
 			// Consulta do mes anterior
-			dashboardService.getTransactionSummaryBox(transactionSummaryFilterPrevMonth).then(function(item){
+			dashboardService.GetTransactionSummaryBox(transactionSummaryFilterPrevMonth).then(function(item){
 				item = item.data.content;
-				$scope.transactionSummaryBoxPrevMonth = new TransactionSummary();
+				$scope.transactionSummaryBoxPrevMonth = {};
 
 				if (item !== undefined ){
 					if(item.length > 0){
@@ -211,32 +171,32 @@ angular.module('KaplenWeb.dashboardController',[])
 	};
 
 	/********************************* MOVEMENT SUMMARY BOX *************************************/
-	function setMovementSummaryBox(){
+	function SetMovementSummaryBox(){
 
-		var movementSummaryBoxCurrentMonthFilter = new MovementSummaryFilter();
+		var movementSummaryBoxCurrentMonthFilter = {};
 		movementSummaryBoxCurrentMonthFilter.currency = $rootScope.currency;
 		movementSummaryBoxCurrentMonthFilter.startDate = $scope.currentMonthPeridMovement.firstDate;
 		movementSummaryBoxCurrentMonthFilter.endDate = $scope.currentMonthPeridMovement.lastDate;
 		movementSummaryBoxCurrentMonthFilter.status = 'FORETHOUGHT,RECEIVED';
 
-		dashboardService.getMovementSummary(movementSummaryBoxCurrentMonthFilter).then(function(item){
+		dashboardService.GetMovementSummary(movementSummaryBoxCurrentMonthFilter).then(function(item){
 			item = item.data.content;
-			$scope.movementSummaryBoxCurrentMonth = new MovementSummary();
+			$scope.movementSummaryBoxCurrentMonth = {};
 
 			if(item.length > 0){
 				$scope.movementSummaryBoxCurrentMonth = item[0];
 			}
 
-			var movementSummaryBoxCurrentPrevFilter = new MovementSummaryFilter();
+			var movementSummaryBoxCurrentPrevFilter = {};
 			movementSummaryBoxCurrentPrevFilter.currency = $rootScope.currency;
 			movementSummaryBoxCurrentPrevFilter.startDate = $scope.lastMonthPerid.firstDate;
 			movementSummaryBoxCurrentPrevFilter.endDate = $scope.lastMonthPerid.lastDate;
 			movementSummaryBoxCurrentPrevFilter.status = 'FORETHOUGHT,RECEIVED';
 
 
-			dashboardService.getMovementSummary(movementSummaryBoxCurrentPrevFilter).then(function(item){
+			dashboardService.GetMovementSummary(movementSummaryBoxCurrentPrevFilter).then(function(item){
 				item = item.data.content;
-				$scope.movementionSummaryBoxPrevMonth = new MovementSummary();
+				$scope.movementionSummaryBoxPrevMonth = {};
 
 				if(item.length > 0){
 					$scope.movementionSummaryBoxPrevMonth = item[0];
@@ -249,23 +209,20 @@ angular.module('KaplenWeb.dashboardController',[])
 
 
 	/********************************* NPLICATE SUMMARY BOX *************************************/
-	function setNplicateTransactionBox(){
-		var transactionSummaryNplicate = new TransactionSummaryFilter();
+	function SetNplicateTransactionBox(){
+		var transactionSummaryNplicate = {};
 		transactionSummaryNplicate.currency =  $rootScope.currency;
 		transactionSummaryNplicate.startDate = $scope.currentMonthPerid.firstDate;
 		transactionSummaryNplicate.endDate = $scope.currentMonthPerid.lastDate;
 
-		dashboardService.getNplicateTransactionSummary(transactionSummaryNplicate).then(function(response){
+		dashboardService.GetNplicateTransactionSummary(transactionSummaryNplicate).then(function(response){
 			var item = response.data.content;
 			$scope.totalDuplicate = item[0].amount;
 		});
-
-		//var summaryNplicateTransaction = dashboardService.getNplicateTransactionSummary(transactionSummaryNplicate);
-		//$scope.totalDuplicate = summaryNplicateTransaction.amount;
 	}
 
 	/***************************************** TRANSACTION SUMMARY LINE CHART ******************************************/
-	function setTransactionSummaryLineChart(){
+	function SetTransactionSummaryLineChart(){
 
 		var date = $scope.dateSelected;
 		var actualMonthData = [];
@@ -290,7 +247,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		};
 
 		// actual month data
-		TransactionSummaryService.listTransactionSummaryByFilter(filter).then(function(response){
+		TransactionSummaryService.ListTransactionSummaryByFilter(filter).then(function(response){
 			var response = response.data.content;
 
 			for(var item in response){
@@ -315,10 +272,10 @@ angular.module('KaplenWeb.dashboardController',[])
 			}
 
 			chartData.series.push(calendarFactory.getNameOfMonth(date));
-			chartData.data.push(proccessChartDays(actualMonthData, true));
+			chartData.data.push(ProccessChartDays(actualMonthData, true));
 
 			// last month data
-			TransactionSummaryService.listTransactionSummaryByFilter(filter).then(function(response){
+			TransactionSummaryService.ListTransactionSummaryByFilter(filter).then(function(response){
 				var response = response.data.content;
 
 				for(var item in response){
@@ -330,10 +287,10 @@ angular.module('KaplenWeb.dashboardController',[])
 				}
 
 				chartData.series.push(calendarFactory.getNameOfMonth(lastMonthDate));
-				chartData.data.push(proccessChartDays(lastMonthData));
+				chartData.data.push(ProccessChartDays(lastMonthData));
 
 				$scope.chartjs = chartData;
-				$scope.chartOptions = chartUtils.options.vendas;
+				$scope.chartOptions = chartUtils.Options.vendas;
 
 			}).catch(function(error){
 			});
@@ -343,7 +300,7 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	}
 
-	function proccessChartDays(data, isCurrentMonth){
+	function ProccessChartDays(data, isCurrentMonth){
 		var chartDays = [];
 
 		if(data.length){
@@ -376,7 +333,7 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	/***************************************** TRANSACTION CONCILIATION CALENDAR *******************************************/
 
-	function setTransactionConciliationCaledar(){
+	function SetTransactionConciliationCalendar(){
 
 		var date = $scope.dateSelected;
 
@@ -415,7 +372,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		$scope.weeks = weeks;
 		$scope.calendarMonth = calendarFactory.getNameOfMonth(date);
 
-		resumoConciliacaoService.listTransactionConciliationCalendarMonth({
+		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
 			startDate: calendarFactory.formatDateForService(firstDayOfMonth),
 			endDate: calendarFactory.formatDateForService(lastDayOfMonth),
@@ -466,16 +423,16 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	/***************************************** TRANSACTION CONCILIATION BOX *******************************************/
 
-	function setTransactionConciliationBox(){
+	function SetTransactionConciliationBox(){
 
-		var transactionConciliationFilter = new TransactionConciliationFilter();
+		var transactionConciliationFilter = {};
 		transactionConciliationFilter.currency = $rootScope.currency;
 		transactionConciliationFilter.startDate = $scope.currentMonthPerid.firstDate;
 		transactionConciliationFilter.endDate = $scope.currentMonthPerid.lastDate;
 
-		dashboardService.getTransactionConciliationBox(transactionConciliationFilter).then(function(item){
+		dashboardService.GetTransactionConciliationBox(transactionConciliationFilter).then(function(item){
 			item = item.data.content;
-			$scope.transactionConciliationBox = new TransactionConciliation();
+			$scope.transactionConciliationBox = {};
 
 			if (item !== undefined ){
 				$scope.transactionConciliationBox.transctionToConcilieQuantity = item[0].transctionToConcilieQuantity;
@@ -485,7 +442,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		});
 	}
 
-	function sales(day) {
+	function Sales(day) {
 		if(day){
 			day = day < 10 ? 0 + String(day) : day;
 			var date = $scope.dateSelected;
@@ -497,79 +454,12 @@ angular.module('KaplenWeb.dashboardController',[])
 		}
 	}
 
-	/***************************************** ENTITIES ***************************************/
-
-	function TransactionSummary(){
-
-		this.date;
-		this.quantity = 0;
-		this.acquirer = {
-				id: false,
-				name: false
-		};
-		this.cardProduct;
-		this.shop;
-		this.conciliationStatus;
-		this.amount = 0;
-		this.net = 0;
-		this.cancelledAmount = 0;
-	}
-
-	function MovementSummary(){
-
-		this.date;
-		this.acquirer ={
-			id:null,
-			name:null
-		};
-		this.cardProduct = {
-				id:null,
-				name:null
-		};
-		this.bankAccount = {
-				id:null,
-				bankNumber:null,
-				agencyNumber:null,
-				accountNumber:null
-		};
-		this.shop = {
-				id:null,
-				name:null
-		};
-		this.quantity = 0;
-		this.expetedAmount = 0;
-		this.payedAmount = 0;
-	}
-
-	function TransactionConciliation(){
-
-		this.date = null;
-		this.acquirer = {
-				id: null,
-				name: null
-		};
-		this.cardProduct = {
-				id: null,
-				name: null
-		};
-
-		this.transctionToConcilieQuantity = 0;
-		this.transctionToConcilieAmount = 0;
-		this.transctionConciliedQuantity = 0;
-		this.transctionConciliedAmount = 0;
-		this.transctionUnprocessedQuantity = 0;
-		this.transctionUnprocessedAmount = 0;
-	}
-
 	function Period(){
 		this.firstDate;
 		this.lastDate;
 	}
 
-	function showVideoModal() {
-		// modal
-
-
+	function ShowVideoModal() {
 		var modalInstance = $modal.open({
 			templateUrl: 'video.html',
 			controller: function ($scope, $modalInstance, $sce) {
@@ -589,116 +479,18 @@ angular.module('KaplenWeb.dashboardController',[])
 					}
 				};
 
-				$scope.ok = function () {
-					$modalInstance.close($scope.selected.item);
-				};
+				$scope.ok = Ok;
+				$scope.cancel = Cancel;
 
-				$scope.cancel = function () {
+				function Ok(){
+					$modalInstance.close($scope.selected.item);
+				}
+
+				function Cancel(){
 					$modalInstance.dismiss('cancel');
-				};
+				}
 			}
 		});
-
-	}
-
-	/***************************************** FILTERS ***************************************/
-
-	function AdjustSummaryFilter(){
-
-		this.currency; // BRL
-		this.startDate;  // yyyyMMdd
-		this.endDate;  // yyyyMMdd
-		this.acquirers; // ARRAY {1,2,3}
-		this.shopIds; // ARRAY {1,2,3}
-		this.cardProductIds; // ARRAY {1,2,3}
-		this.types; // ARRAY {ADJUST, POS_CONECTIVITY, CANCELLATION, CHARGEBACK}
-		this.status; // ARRAY {EXPECTED, PAYED, SUSPENDED}
-		this.groupBy; // ARRAY {	DAY, MONTH, BANK_ACCOUNT, SHOP, ACQUIRER, CARD_PRODUCT, TYPE}
-
-		this.pageNumber; // 1;
-		this.maxPageSize; // 50;
-	}
-
-	function MovementSummaryFilter(){
-
-		this.currency; // BRL
-		this.expectedStartDate; // yyyyMMdd
-		this.expecedEndDate; // yyyyMMdd
-		this.payedStartDate; // yyyyMMdd
-		this.payedEndDate; // yyyyMMdd
-		this.status; // ARRAY {EXPECTED , RECEIVED , FORETHOUGHT}
-		this.acquirers; // ARRAY {REDE,CIELO}
-		this.sourceShopIds; // ARRAY {1,2,3}
-		this.creditedShopIds; // ARRAY {1,2,3}
-		this.banckAccountIds; // ARRAY {1,2,3}
-		this.cardProductIds; // ARRAY {1,2,3}
-		this.groupBy; // ARRAY {DAY, MONTH, BANK_ACCOUNT, SHOP, ACQUIRER, CARD_PRODUCT}
-
-		this.pageNumber; // 1
-		this.maxPageSize; // 50
-	}
-
-	function TransactionConciliationFilter(){
-
-		this.currency; // BRL
-		this.startDate; // yyyyMMdd
-		this.endDate; // yyyyMMdd
-		this.acquirers; // ARRAY {REDE,CIELO}
-		this.shopIds; // ARRAY {1,2,3}
-		this.cardProductIds; // ARRAY {1,2,3}
-		this.status; // ARRAY {EXPECTED , RECEIVED , FORETHOUGHT}
-		this.types; // ARRAY {CREDIT, DEBIT}
-		this.modalitys; // 	ARRAY{ IN_CASH, PRE_DATED, INSTALLMENT, BILL_PAYMENT}
-		this.adjustTypes; // ARRAY { ADJUST, CANCELLATION, CHARGEBACK}
-		this.groupBy; // ARRAY { DAY, MONTH, ACQUIRER, SHOP, CARD_PRODUCT}
-
-		this.pageNumber; // 1
-		this.maxPageSize; // 50
-	}
-
-	function TransactionSummaryFilter(){
-
-		var currency; // BRL
-		var startDate; // yyyyMMdd
-		var endDate; // yyyyMMdd
-		var acquirers; // ARRAY{REDE,CIELO}
-		var shopIds; // ARRAY {1,2,3}
-		var cardProductIds; // ARRAY {1,2,3}
-		var conciliationStatus; // ARRAY {TO_CONCILIE, CONCILIED, UNPROCESSED}
-		var status; // ARRAY { PROCESSED, CANCELLED, ADJUSTED}
-		var types; // ARRAY {CREDIT,DEBIT}
-		var modalitys; // ARRAY { IN_CASH, PRE_DATED, INSTALLMENT, BILL_PAYMENT}
-		var adjustType; //  ARRAY {AJUST, CANCELLATION, CHARGEBACK}
-
-		var pageNumber; // 1
-		var maxPageSize; // 50
-	}
-
-	function AdjustSummary(){
-
-		this.date;
-		this.acquirer = {
-				id: null,
-				name: null
-		};
-		this.cardProduct= {
-				id: null,
-				name: null
-		};
-		this.bankAccount = {
-				id: null,
-				bankNumber: null,
-				agencyNumber: null,
-				accountNumber: null
-		};
-		this.shop= {
-				id: null,
-				name: null
-		};
-		this.quantity = 0;
-		this.amount = 0;
-		this.type = null;
-		this.descritption = null;
 
 	}
 });

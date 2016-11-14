@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 (function() {
 	'use strict';
 
@@ -18,27 +18,26 @@
 	.controller('relatorioFinanceiroController', RelatorioFinanceiro);
 
 	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', '$modal', 'calendarFactory', '$rootScope',
-	                               'relatorioService', 'installmentsService', '$window', 'advancedFilterService', 'calendarService', 'MovementSummaryService'];
+	                               '$window', 'advancedFilterService', 'calendarService', 'MovementSummaryService'];
 
 	function RelatorioFinanceiro(menuFactory, $scope, $modal, calendarFactory, $rootScope,
-			relatorioService, installmentsService, $window, advancedFilterService, calendarService, MovementSummaryService) {
+			$window, advancedFilterService, calendarService, MovementSummaryService) {
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
-		$scope.loadParamsByFilter();
+		$scope.LoadParamsByFilter();
 
 		//Extensao do serviço para calendario
 		angular.extend($scope, calendarService);
-		$scope.resetCalendarService();
+		$scope.ResetCalendarService();
 
 		menuFactory.setActiveReportsFinancial();
 
-		$scope.updateIndicator = updateIndicator;
-		$scope.clearFilter = clearFilter;
-		$scope.getReport = getReport;
-		$scope.loadPage = loadPage;
-		$scope.exportReport = exportReport;
-		$scope.pageChanged = pageChanged;
-		$scope.totalItensPageChanged = totalItensPageChanged;
+		$scope.updateIndicator = UpdateIndicator;
+		$scope.clearFilter = ClearFilter;
+		$scope.getReport = GetReport;
+		$scope.loadPage = LoadPage;
+		$scope.pageChanged = PageChanged;
+		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
 
@@ -52,16 +51,16 @@
 		$scope.futureReleases = 0;
 		$scope.payedValues = 0;
 
-		init();
+		Init();
 
-		function init() {
-			clearFilter();
-			loadPage();
+		function Init() {
+			ClearFilter();
+			LoadPage();
 		}
 
 
 		//*************************************************************
-		function getReport() {
+		function GetReport() {
 
 			var shopIds = [];
 			var cardProductIds = [];
@@ -84,8 +83,8 @@
 						creditedShopIds: shopIds,
 						sourceShopIds: shopIds,
 						cardProductIds: cardProductIds,
-						expectedStartDate: handleDate($scope.initialDate),
-						expectedEndDate: handleDate($scope.finalDate),
+						expectedStartDate: HandleDate($scope.initialDate),
+						expectedEndDate: HandleDate($scope.finalDate),
 						status: $scope.status,
                         groupBy: 'BANK_ACCOUNT,EXPECTED_DATE,ACQUIRER',
 						currency: 'BRL',
@@ -98,8 +97,8 @@
 						creditedShopIds: shopIds,
 						sourceShopIds: shopIds,
 						cardProductIds: cardProductIds,
-						startDate: handleDate($scope.initialDate),
-						endDate: handleDate($scope.finalDate),
+						startDate: HandleDate($scope.initialDate),
+						endDate: HandleDate($scope.finalDate),
 						status: $scope.status,
                         groupBy: 'BANK_ACCOUNT,PAYED_DATE,ACQUIRER',
 						currency: 'BRL',
@@ -112,8 +111,8 @@
 				$scope.currentPage = $scope.currentPage + 1;
 			}
 
-			MovementSummaryService.listMovementSummaryByFilter(handleFilter(filter)).then(function(response) {
-				var data = handleResponse(response.data.content);
+			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(filter)).then(function(response) {
+				var data = HandleResponse(response.data.content);
                 var pagination = response.data.page;
 
 				$scope.items = data;
@@ -124,84 +123,22 @@
 			});
 		}
 
-		function exportReport() {
-			var shopIds = [];
-			var cardProductIds = [];
-
-			if($scope.settlementsSelected) {
-				for(var item in $scope.settlementsSelected) {
-					shopIds.push($scope.settlementsSelected[item].id);
-				}
-			}
-
-			if($scope.productsSelected) {
-				for(var item in $scope.productsSelected) {
-					cardProductIds.push($scope.productsSelected[item].id);
-				}
-			}
-
-			var filter;
-
-			if($scope.status[0] === 'EXPECTED'){
-				filter =  {
-						creditedShopIds: shopIds,
-						sourceShopIds: shopIds,
-						cardProductIds: cardProductIds,
-						expectedStartDate: handleDate($scope.initialDate),
-						expectedEndDate: handleDate($scope.finalDate),
-						status: $scope.status,
-						groupBy: ['BANK_ACCOUNT', 'EXPECTED_DATE'],
-						currency: 'BRL',
-						page: $scope.currentPage,
-						size: $scope.totalItensPage
-				}
-
-			}else{
-				filter = {
-						creditedShopIds: shopIds,
-						sourceShopIds: shopIds,
-						cardProductIds: cardProductIds,
-						payedStartDate: handleDate($scope.initialDate),
-						payedEndDate: handleDate($scope.finalDate),
-						status: $scope.status,
-						groupBy: ['BANK_ACCOUNT', 'PAYED_DATE'],
-						currency: 'BRL',
-						page: $scope.currentPage,
-						size: $scope.totalItensPage
-				}
-			}
-
-
-			MovementSummaryService.exportReport(handleFilter(filter), {"Accept" : "application/vnd.ms-excel"}).then(function(response) {
-				var data = handleResponse(response.data.content);
-                var pagination = response.data.page;
-
-				$scope.items = data;
-				$scope.noItensMsg = data.length ? false : true;
-				$scope.totalItens = pagination.totalElements;
-			}).catch(function(response) {
-				console.log(response);
-			})
-		}
-
-
-		/********************************************************************************************/
-		function getExpectedAmount(){
+		function GetExpectedAmount(){
 			var filter = {
 					creditedShopIds: $scope.settlementsSelected,
 					sourceShopIds: $scope.settlementsSelected,
 					acquirers: $scope.acquirersSelected,
 					cardProductIds: $scope.productsSelected,
 					installments: $scope.installmentsSelected,
-					startDate: handleDate($scope.initialDate),
-					endDate: handleDate($scope.finalDate),
+					startDate: HandleDate($scope.initialDate),
+					endDate: HandleDate($scope.finalDate),
 					status: ['EXPECTED'],
 					currency: 'BRL'
 			}
 
-			MovementSummaryService.listMovementSummaryByFilter(handleFilter(filter)).then(function(response) {
+			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(filter)).then(function(response) {
 
-				response = handleResponse(response.data);
+				response = HandleResponse(response.data);
 
 				if(response.length > 0) {
 
@@ -219,22 +156,21 @@
 
 			});
 		}
-		/**************************************************************************************************/
 
-		function getPayedAmount(){
+		function GetPayedAmount(){
 			var filter = {
 					shopIds: $scope.settlementsSelected,
 					acquirers: $scope.acquirersSelected,
 					cardProductIds: $scope.productsSelected,
 					installments: $scope.installmentsSelected,
-					startDate: handleDate($scope.initialDate),
-					endDate: handleDate($scope.finalDate),
+					startDate: HandleDate($scope.initialDate),
+					endDate: HandleDate($scope.finalDate),
 					status: ['FORETHOUGHT','RECEIVED'],
 					currency: 'BRL'
 			}
 
-			MovementSummaryService.listMovementSummaryByFilter(handleFilter(filter)).then(function(response) {
-				response = handleResponse(response.data);
+			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(filter)).then(function(response) {
+				response = HandleResponse(response.data);
 
 				if(response.length > 0) {
 					if(response[1][0].payedAmount !== undefined) {
@@ -251,14 +187,12 @@
 			});
 		}
 
-		/**************************************************************************************************/
-
-		function updateIndicator(status){
+		function UpdateIndicator(status){
 			$scope.status = [status];
-			loadPage();
+			LoadPage();
 		}
 
-		function clearFilter() {
+		function ClearFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -269,7 +203,7 @@
 			$scope.installmentsSelected = [];
 		}
 
-		function handleResponse(response) {
+		function HandleResponse(response) {
 			var items = [];
 
 			for(var item in response){
@@ -283,11 +217,11 @@
 			return items;
 		}
 
-		function handleDate(date) {
+		function HandleDate(date) {
 			return calendarFactory.formatDateTimeForService(date);
 		}
 
-		function handleFilter(filter) {
+		function HandleFilter(filter) {
 			if(filter.creditedShopIds) {
 				if(filter.creditedShopIds.length === 0) {
 					delete filter.creditedShopIds;
@@ -318,12 +252,6 @@
 				}
 			}
 
-//			if(filter.groupBy) {
-//				if(filter.groupBy.length === 0) {
-//					delete filter.groupBy;
-//				}
-//			}
-
 			if(!filter.expectedStartDate) {
 				delete filter.expectedStartDate;
 			}
@@ -343,21 +271,21 @@
 			return filter;
 		}
 
-		function pageChanged() {
+		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
-			loadPage();
+			LoadPage();
 		};
 
-		function totalItensPageChanged() {
+		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
-			loadPage();
+			LoadPage();
 		};
 
-		function loadPage() {
-			getExpectedAmount();
-			getPayedAmount();
-			getReport();
+		function LoadPage() {
+			GetExpectedAmount();
+			GetPayedAmount();
+			GetReport();
 		}
 	}
 })();

@@ -3,8 +3,8 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
-function maxSizePagination(valueMax, itensSize) {
+
+function MaxSizePagination(valueMax, itensSize) {
 	var maxSize = 0;
 
 	if(valueMax < (itensSize - 1 )){

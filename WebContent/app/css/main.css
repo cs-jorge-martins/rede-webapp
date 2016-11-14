@@ -10239,8 +10239,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     background: white;
 }
 
-#receiptsDetails .mainContent .table tr > td,
-#receiptsDetails .tableAntecipated {
+#receiptsDetails .mainContent .table tr > td {
     text-indent: 10px;
 }
 

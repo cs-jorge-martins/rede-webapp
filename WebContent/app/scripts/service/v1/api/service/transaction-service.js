@@ -3,25 +3,19 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 (function() {
     'use strict';
 
     angular
         .module('Conciliador.TransactionService', [])
-		.config(['$routeProvider', 'RestangularProvider', function ($routeProvider, RestangularProvider) {}])
+		.config(['$routeProvider', function ($routeProvider) {}])
         .service('TransactionService', Transaction);
 
-    Transaction.$inject = ['app', 'Restangular', '$http', 'Request'];
+    Transaction.$inject = ['app', '$http', 'Request'];
 
-    function Transaction(app, Restangular, $http, Request) {
-		this.getTransactionById = function(transactionId) {
-			return Restangular.all('transactions').getList({
-				id: transactionId
-			});
-		};
-
-		this.getTransactionByFilter = function(filter) {
+    function Transaction(app, $http, Request) {
+		this.GetTransactionByFilter = function(filter) {
 			var request = filter;
 
 			return $http({
@@ -32,7 +26,7 @@
 			});
 		};
 
-		this.getDuplicateTransaction = function(filter) {
+		this.GetDuplicateTransaction = function(filter) {
 			var request = filter;
 
 			return $http({
@@ -43,7 +37,7 @@
 			});
 		};
 
-		this.concilieTransaction = function(filter){
+		this.ConcilieTransaction = function(filter){
 			var request = filter;
 
 			return $http({
@@ -54,7 +48,7 @@
 			});
 		};
 
-        this.concilieTransactions = function(filter){
+        this.ConcilieTransactions = function(filter){
 			var request = filter;
 
 			return $http({
@@ -65,7 +59,7 @@
 			});
 		};
 
-        this.exportTransactions = function(filter, success, error) {
+        this.ExportTransactions = function(filter, success, error) {
             var startTime = new Date().getTime();
             var timeout = 30 * 1000;  // milisseconds
 

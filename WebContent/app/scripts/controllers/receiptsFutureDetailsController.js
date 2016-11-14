@@ -44,14 +44,14 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
 
 				$scope.otherReleasesTotal = $rootScope.receiptsDetails.otherReleasesTotal;
-				
+
 				$scope.sort = "";
 
 
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-                
+
 				$scope.maxSize = 4;
 				$scope.itensPerPage = 10;
 				$scope.currentPage = 0;
@@ -74,7 +74,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				return item.id;
 			}).join(",");
 		}
-		
+
 		function dateTitle() {
 			var string = "";
 
@@ -124,7 +124,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 			console.log("TO TENTANDO ENTRAR")
 
-			FinancialService.getFutureDetails(filter).then(function (response) {
+			FinancialService.GetFutureDetails(filter).then(function (response) {
 
 				var data = response.data.content;
 				var pagination = response.data.page;

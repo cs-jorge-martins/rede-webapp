@@ -3,15 +3,14 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.receiptsService', [])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider', function ($routeProvider) {
 }])
 
 .service('receiptsService', function(app, $http, Request) {
 
-	this.getFinancials = function(query_strings) {
-
+	this.GetFinancials = function(query_strings) {
 		var request = query_strings;
 
 		return $http({
@@ -20,10 +19,9 @@ angular.module('KaplenWeb.receiptsService', [])
 			params: request,
 			headers: Request.setHeaders()
 		});
-
 	};
 
-	this.getAdjusts = function(query_strings) {
+	this.GetAdjusts = function(query_strings) {
         var request = query_strings;
 		return $http({
             url: app.endpoint + '/adjustsummaries',
