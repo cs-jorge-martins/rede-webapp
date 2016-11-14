@@ -5,9 +5,9 @@
  */
 
 angular.module('Conciliador.TransactionConciliationService',[])
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function($routeProvider) {
 
-}]).service('TransactionConciliationService', function(app, Restangular, $location, $http, Request) {
+}]).service('TransactionConciliationService', function(app, $location, $http, Request) {
 
 	this.ListTransactionConciliationByFilter = function(filter) {
 		var request = filter;

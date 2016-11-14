@@ -6,7 +6,7 @@
 
 angular.module('Conciliador.helpController',[])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/help', {templateUrl: 'app/views/help.html', controller: 'helpController'});
 }]).controller('helpController', function($scope, $rootScope, menuFactory, $location,
 	cacheService, $sce){

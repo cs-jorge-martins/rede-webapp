@@ -6,7 +6,7 @@
 
 angular.module('KaplenWeb.dashboardController',[])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/home', {templateUrl: 'app/views/dashboard.html', controller: 'dashboardController'});
 	$routeProvider.otherwise({ redirectTo: '/home'} );
 }])

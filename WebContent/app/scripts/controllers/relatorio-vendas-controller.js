@@ -9,7 +9,7 @@
 
     angular
         .module('KaplenWeb.relatorioVendasController', ['ui.bootstrap'])
-		.config(['$routeProvider','RestangularProvider', function ($routeProvider, RestangularProvider) {
+		.config(['$routeProvider', function($routeProvider) {
 			$routeProvider.when('/relatorio/vendas', {
 				templateUrl: 'app/views/relatorios/vendas/index.html',
 				controller: 'relatorioVendasController'

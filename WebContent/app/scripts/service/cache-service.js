@@ -5,7 +5,7 @@
  */
 
 angular.module('KaplenWeb.cacheService',[])
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, $angularCacheFactoryProvider) {
+.config(['$routeProvider', function($routeProvider, $angularCacheFactoryProvider) {
 
 }])
 

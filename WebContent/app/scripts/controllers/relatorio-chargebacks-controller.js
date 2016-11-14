@@ -9,7 +9,7 @@
 
     angular
 		.module('KaplenWeb.relatorioChargebacksController', ['ui.bootstrap'])
-		.config(['$routeProvider','RestangularProvider' , function ($routeProvider) {
+		.config(['$routeProvider', function ($routeProvider) {
 			$routeProvider.when('/relatorio/chargebacks', {
 				templateUrl: 'app/views/relatorios/chargebacks/index.html',
 				controller: 'relatorioChargebacksController'

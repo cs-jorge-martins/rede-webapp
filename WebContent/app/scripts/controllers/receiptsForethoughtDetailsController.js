@@ -1,6 +1,6 @@
 angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/receipts/forethought_details', {templateUrl: 'app/views/receipts_forethought_details.html', controller: 'receiptsForethoughtDetailsController'});
 }])
 
@@ -8,9 +8,9 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
      advancedFilterService, $location, MovementService){
 
 		var filter = {};
-		init();
+		Init();
 
-		function init(){
+		function Init(){
 			$rootScope.bodyId = "receiptsDetailsPage";
 			$scope.$on("$routeChangeStart", function(next, current){
 				$rootScope.bodyId = null;
@@ -29,7 +29,6 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
 				$scope.products = $rootScope.receiptsDetails.products;
-				//$scope.type = $rootScope.receiptsDetails.type;
 				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
 
 				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
@@ -68,24 +67,26 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
-				$scope.back = back;
+				$scope.back = Back;
+				$scope.sortResults = SortResults;
+				$scope.pageChangedSales = PageChangedSales;
+				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
+				$scope.pageChangedAdjusts = PageChangedAdjusts;
 
-				getForethought();
+				GetForethought();
 			}
 		}
 
-	    function back(){
+	    function Back(){
 	        $location.path('/receipts');
 	    }
 
-	    function getForethought () {
+	    function GetForethought () {
 	    	$scope.forethought = [];
 	    	filter.sort = $scope.sort;
 	    	MovementService.GetForethoughts(filter).then(function(response) {
 	    		var data = response.data.content;
 	    		var pagination = response.data.page;
-
-	    		console.log(response);
 
 	    		for (var i in data ) {
 	    			$scope.forethought.push(data[i]);
@@ -96,30 +97,30 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 	    	})
 	    }
 
-	    $scope.sortResults = function(elem, kind) {
+	    function SortResults(elem, kind) {
 	    	var order_string;
 	    	order_string = $rootScope.sortResults(elem,kind);
 
 	    	$scope.sort = order_string;
 
-	    	getForethought();
+	    	GetForethought();
 	    }
 
 	    /* pagination */
-		$scope.pageChangedSales = function () {
+		function PageChangedSales() {
 			$scope.salesCurrentPage = this.salesCurrentPage;
-			getForethought();
+			GetForethought();
 		};
 
-		$scope.totalItensPageChangedSales = function () {
+
+		function TotalItensPageChangedSales() {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			getForethought();
+			GetForethought();
 		};
 
-		$scope.pageChangedAdjusts = function () {
+		function PageChangedAdjusts() {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			getForethought();
+			GetForethought();
 		};
-
 	});

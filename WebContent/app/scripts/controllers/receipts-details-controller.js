@@ -6,7 +6,7 @@
 
 angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/receipts/details', {templateUrl: 'app/views/receipts-details.html', controller: 'receiptsDetailsController'});
 }])
 
