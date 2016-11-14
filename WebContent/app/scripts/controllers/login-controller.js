@@ -6,18 +6,19 @@
 
 angular.module('KaplenWeb.loginController',[])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/login', {templateUrl: 'app/views/login.html', controller: 'loginController'});
 }])
 
-.controller('loginController', function($scope, $modal, $rootScope, $window, $location,
-		Restangular, loginService, userService){
+.controller('loginController', function($scope, $modal, $rootScope, $window, $location, loginService){
 
 	$rootScope.destroyVariablesSession();
 
-	var userFirstAccess = "";
-	$scope.validarLogin = function(){
+	$scope.validarLogin = ValidarLogin;
+	$scope.modalChangePassword = ModalChangePassword;
+	$scope.clear = Clear;
 
+	function ValidarLogin() {
 		$rootScope.alerts = [];
 
 		if (!$scope.usuario.login || !$scope.usuario.password) {
@@ -25,7 +26,7 @@ angular.module('KaplenWeb.loginController',[])
 			return;
 		}
 
-		loginService.validarLogin($scope.usuario).then(function(data) {
+		loginService.ValidarLogin($scope.usuario).then(function(data) {
 			var data = data.data;
 			var user = data.user;
 			var token = user.token;
@@ -36,10 +37,9 @@ angular.module('KaplenWeb.loginController',[])
 		}).catch(function(response) {
 			console.log('error');
 		});
-
 	};
 
-	$scope.modalChangePassword = function(user, isManyCompanies) {
+	function ModalChangePassword(user, isManyCompanies) {
 		var modalInstance = $modal.open({
 			templateUrl: 'modalTrocarSenha.html',
 			controller: ModalTrocarSenha,
@@ -63,47 +63,21 @@ angular.module('KaplenWeb.loginController',[])
 		});
 	};
 
-	var ModalTrocarSenha = function ($scope, $window, $rootScope, user1, $modalInstance, $timeout, isManyCompanies) {
+	function ModalTrocarSenha($scope, $window, $rootScope, user1, $modalInstance, $timeout, isManyCompanies) {
 		$scope.password = "";
 		$scope.rewritePassword = "";
+		$scope.cancel = Cancel;
 
 		var user = user1;
 
-		$scope.changePassword = function(){
-			if(this.password != this.rewritePassword){
-				$scope.alertsValidate =  [{type:"danger", msg:"A sessão expirou. Por favor, atualize sua página."}];
-			     $timeout(function(index) {
-			    	 $scope.alertsValidate.splice(index, 1);
-			     }, 3000);
-
-				this.rewritePassword = "";
-				this.password = "";
-			}else{
-				user.password = this.password;
-				userService.editUserChangePassword(user).then(function(user){
-					$window.sessionStorage.user = JSON.stringify(user);
-
-					$scope.alertsValidate =  [{type:"success", msg:" Senha alterada com sucesso!"}];
-				     $timeout(function(index) {
-				    	 $scope.alertsValidate.splice(index, 1);
-				    	 $modalInstance.close(true);
-				     }, 3000);
-
-				    if(isManyCompanies){
-				    	$rootScope.selectdCompanies();
-				    }
-				});
-			}
-		};
-
-		$scope.cancel = function () {
+		function Cancel() {
 			$modalInstance.dismiss('cancel');
 		};
 	};
 
-	$scope.clear = function() {
+	function Clear() {
 		$scope.alertsRenewPassword = undefined;
 		$scope.sendEmail = false;
-	};
+	}
 
 });

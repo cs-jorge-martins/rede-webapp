@@ -28,7 +28,6 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
 				$scope.products = $rootScope.receiptsDetails.products;
-				//$scope.type = $rootScope.receiptsDetails.type;
 				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
 
 				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
@@ -43,7 +42,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
 
 				$scope.otherReleasesTotal = $rootScope.receiptsDetails.otherReleasesTotal;
-				
+
 				$scope.sort = "payedDate,ASC";
 
 
@@ -58,7 +57,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 					bankAccountIds: $scope.bankAccount.id,
 					status: "RECEIVED",
 				};
-                
+
 				$scope.maxSize = 10;
 
 				$scope.otherDetailsData = [];
@@ -95,20 +94,16 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 	    function getOtherDetails() {
 	    	$scope.otherDetailsData = [];
-			filter.sort = $scope.sort; 
-			AdjustService.getOtherDetails(filter).then(function(response) {
+			filter.sort = $scope.sort;
+			AdjustService.GetOtherDetails(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
-
-
-				console.log(response);
 
 				for (var i in data) {
 					$scope.otherDetailsData.push(data[i]);
 				}
 			}).catch(function(response) {
-				// $scope.otherDetailsData = [];
-				// console.log('[receiptsDetailsController:getSales] error');
+
 			});
 	    }
 
@@ -117,7 +112,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 	    function totalOfSumAmount() {
 	    	return $scope.otherDetailsData.reduce(function(prev, curr) {
 		    	return prev + curr.amount;
-		    }, 0);	
+		    }, 0);
 	    }
 
 	    $scope.sortResults = function(elem, kind) {
@@ -125,9 +120,9 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 			order_string = $rootScope.sortResults(elem,kind);
 
 			$scope.sort = order_string;
-			
+
 			getOtherDetails();
-			 
+
 	    }
 
 	    /* pagination */

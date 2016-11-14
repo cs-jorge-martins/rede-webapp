@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.cacheService',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, $angularCacheFactoryProvider) {
 
@@ -15,86 +15,35 @@ angular.module('KaplenWeb.cacheService',[])
 		maxAge: 1800000 ,
 		deleteOnExpire: 'aggressive',
 		onExpire: function (key, value, done) {
-	        initializeCache();
+	        InitializeCache();
 	    }
 	});
 
-	this.instanceCache = function(companyId) {
-
-		$angularCacheFactory.removeAll();
-
-		cache = $angularCacheFactory(companyId.toString()   ,{
-			maxAge: 1800000 ,
-			deleteOnExpire: 'aggressive',
-			onExpire: function (key, value, done) {
-		        initializeCache();
-		    }
-		});
-		initializeCache();
-	};
-
-	function initializeCache() {
+	function InitializeCache() {
 		if($window.sessionStorage.user != undefined){
-			//initializeAccounts();
-			initializeProducts();
-			initializeSettlements();
-			//initializeTerminals();
+			InitializeProducts();
+			InitializeSettlements();
 		}
 	};
 
-	initializeCache();
+	InitializeCache();
 
-	this.getAcquirers = function(){
-		var key = 'acquirers';
-		if (cache.get(key) === undefined) {
-			var result = kaplenAdminService.getAcquiresAutoComplete().$object;
-			cache.put(key, result);
-			return result;
-		}else{
-			return cache.get(key);
-		}
-	};
-
-	this.getBrands = function(){
-		var key = 'brands';
-		if (cache.get(key) === undefined) {
-			 initializeBrands();
-		}
-		return cache.get(key);
-	};
-
-	this.getProducts = function(){
+	this.GetProducts = function(){
 		var key = 'products';
 		if (cache.get(key) === undefined) {
-			 initializeProducts();
+			 InitializeProducts();
 		}
 		return cache.get(key);
 	};
 
-	this.getAccounts = function(){
-		var key = 'accounts';
-		if (cache.get(key) === undefined) {
-			 initializeAccounts();
-		}
-		return cache.get(key);
-	};
 
-	this.getSettlements = function(){
+	this.GetSettlements = function(){
 		var key = 'settlements';
 		if (cache.get(key) === undefined) {
-			initializeSettlements();
+			InitializeSettlements();
 		}
 		return cache.get(key);
 	};
-
-	this.getTerminals = function(){
-		var key = 'terminals';
-		if (cache.get(key) === undefined) {
-			 initializeTerminals();
-		}
-		return cache.get(key);
-	};
-
 
 	this.enabledFilterKeys = [
 		'startDate',
@@ -116,7 +65,7 @@ angular.module('KaplenWeb.cacheService',[])
 		'futureCardProductIds'
 	];
 
-	this.saveFilter = function(filter, context) {
+	this.SaveFilter = function(filter, context) {
 		var enabledKeys = this.enabledFilterKeys;
 
 		cache.put('context', context);
@@ -128,7 +77,7 @@ angular.module('KaplenWeb.cacheService',[])
 		}
 	};
 
-	this.loadFilter = function(key) {
+	this.LoadFilter = function(key) {
 		var enabledKeys = this.enabledFilterKeys;
 
 		for(var item in enabledKeys) {
@@ -140,49 +89,20 @@ angular.module('KaplenWeb.cacheService',[])
 		return false;
 	};
 
-	this.clearFilter = function() {
+	this.ClearFilter = function() {
 		cache.removeAll();
 	};
 
-	/*****************Inicialização************************/
-	function initializeAcquirers(){
-		var key = 'acquirers';
-			kaplenAdminService.getAcquirerByCompany().then(function(itens) {
-				cache.put(key, itens.data);
-			});
-	};
-
-	function initializeBrands(){
-		var key = 'brands';
-			kaplenAdminService.getBrandsAutoComplete().then(function(itens) {
-				cache.put(key, itens.data);
-			});
-	};
-
-	function initializeProducts(){
+	function InitializeProducts(){
 		var key = 'products';
-		kaplenAdminService.getProdutsAutoComplete().then(function(itens) {
+		kaplenAdminService.GetProdutsAutoComplete().then(function(itens) {
 			cache.put(key, itens.data);
 		});
 	};
 
-	function initializeAccounts (){
-		var key = 'accounts';
-			kaplenAdminService.getAccountsAutoComplete().then(function(itens) {
-				cache.put(key, itens.data);
-			});
-	};
-
-	function initializeSettlements (){
+	function InitializeSettlements (){
 		var key = 'settlements';
-		kaplenAdminService.getSettlementsAutoComplete().then(function(itens) {
-			cache.put(key, itens.data);
-		});
-	};
-
-	function initializeTerminals(){
-		var key = 'terminals';
-		kaplenAdminService.getTerminalByCompany().then(function(itens) {
+		kaplenAdminService.GetSettlementsAutoComplete().then(function(itens) {
 			cache.put(key, itens.data);
 		});
 	};

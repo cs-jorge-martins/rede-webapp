@@ -44,7 +44,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;
 
 				$scope.otherReleasesTotal = $rootScope.receiptsDetails.otherReleasesTotal;
-				
+
 				$scope.sort = "payedDate,ASC";
 
 				$scope.forethought = [];
@@ -81,7 +81,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 	    function getForethought () {
 	    	$scope.forethought = [];
 	    	filter.sort = $scope.sort;
-	    	MovementService.getForethoughts(filter).then(function(response) {
+	    	MovementService.GetForethoughts(filter).then(function(response) {
 	    		var data = response.data.content;
 	    		var pagination = response.data.page;
 
@@ -92,7 +92,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 	    		}
 
 	    	}).catch(function(response) {
-	    		
+
 	    	})
 	    }
 
@@ -101,7 +101,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 	    	order_string = $rootScope.sortResults(elem,kind);
 
 	    	$scope.sort = order_string;
-	    	
+
 	    	getForethought();
 	    }
 

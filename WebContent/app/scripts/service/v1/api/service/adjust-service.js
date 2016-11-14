@@ -5,11 +5,11 @@
  */
 
 angular.module('Conciliador.AdjustService',[])
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 
-}]).service('AdjustService', function(app, Restangular, $location, $http, Request) {
+}]).service('AdjustService', function(app, $location, $http, Request) {
 
-	this.getOtherDetails = function(filter) {
+	this.GetOtherDetails = function(filter) {
 		var request = filter;
 
 		return $http({
@@ -19,33 +19,4 @@ angular.module('Conciliador.AdjustService',[])
 			headers: Request.setHeaders()
 		})
 	}
-
-	//GET Adjust by id
-	this.getAdjustByFilter = function(adjustId) {
-
-		return Restangular.all('adjusts').getList(
-				{
-					id: adjustId
-				});
-	};
-
-	//GET Adjust by filter
-	this.getAdjustByFilter = function(adjustFilter) {
-
-		return Restangular.all('adjusts').getList(
-				{
-					currency: adjustFilter.currency,
-					startDate: adjustFilter.startDate,
-					endDate: adjustFilter.endDate,
-					status: adjustFilter.status,
-					acquirers: adjustFilter.acquirers,
-					shopIds: adjustFilter.sourceShopIds,
-					banckAccountIds: adjustFilter.banckAccountIds,
-					cardProductIds: adjustFilter.cardProductIds,
-					groupBy: adjustFilter.groupBy,
-					pageNumber: adjustFilter.pageNumber,
-					maxPageSize: adjustFilter.maxPageSize,
-				});
-	};
-
 });
