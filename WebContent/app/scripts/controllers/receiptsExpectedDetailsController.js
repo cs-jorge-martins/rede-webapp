@@ -10,9 +10,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 		var filter = {};
 		$scope.totalItensPage = 10;
 
-		init();
+		Init();
 
-		function init(){
+		function Init(){
 			$rootScope.bodyId = "receiptsDetailsPage";
 			$scope.$on("$routeChangeStart", function(next, current){
 				$rootScope.bodyId = null;
@@ -44,21 +44,30 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
 
-				$scope.back = back;
+				$scope.back = Back;
 				$scope.changeTab = changeTab;
 				$scope.tabs = [];
 				$scope.translateStatus = TranslateStatus;
 				$scope.adjustsCurrentPage = 0;
 
-				getExpectedAcquirers();
+				$scope.pageChangedSales = PageChangedSales;
+				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
+				$scope.pageChangedAdjusts = PageChangedAdjusts;
+				$scope.totalItensPageChangedAdjusts = TotalItensPageChangedAdjusts;
+				$scope.pageChangedCancellations = PageChangedCancellations;
+				$scope.totalItensPageChangedCancellations = TotalItensPageChangedCancellations;
+				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
+				$scope.sortResults = SortResults;
+
+				GetExpectedAcquirers();
 			}
 		}
 
-	    function back(){
+	    function Back(){
 	        $location.path('/receipts');
 	    }
 
-	    function getExpectedAcquirers() {
+	    function GetExpectedAcquirers() {
 
 			var expectedAcquirersFilter = {
 				groupBy: "ACQUIRER",
@@ -81,18 +90,16 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				}
 
 			}).catch(function (response) {
-
 			});
-
 		}
 
-		$scope.totalItensPageChangedSales = function (acquirer_id) {
+		function TotalItensPageChangedSales(acquirer_id) {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			getExpectedDetails(acquirer_id);
+			GetExpectedDetails(acquirer_id);
 		};
 
-	    function getExpectedDetails(acquirer_id) {
+	    function GetExpectedDetails(acquirer_id) {
 
 			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			filter.size =  $scope.adjustsTotalItensPage;
@@ -102,8 +109,6 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			filter.sort = $scope.sort;
 			filter.bankAccountIds = $scope.bankAccount.id;
 			filter.acquirer = acquirer_id;
-
-			// https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev/financials/details?acquirerIds=1&bankAccountIds=5&cardProductIds=1&endDate=20161004&page=0&size=10&sort=transaction.date,DESC&sort=transaction.hour,DESC&startDate=20161004&status=RECEIVED&type=CREDIT
 
 			FinancialService.GetExpectedDetails(filter).then(function(response) {
 				var data = response.data.content;
@@ -122,7 +127,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 	    function changeTab(index, acquirer_id) {
 	    	$scope.tabs[index].active = true;
 			$scope.sort = "";
-			getExpectedDetails(acquirer_id);
+			GetExpectedDetails(acquirer_id);
 	    }
 
 	    function TranslateStatus(status, date) {
@@ -148,47 +153,47 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 					case "forethought":
 						status = "antecipado em: " + date;
 						break;
+					default:
+                        console.log("error");
 				}
 			}
 			return status;
 		}
 
-	    $scope.sortResults = function(elem, kind, acquirer_id) {
+	    function SortResults(elem, kind, acquirer_id) {
 			$scope.sort = $rootScope.sortResults(elem,kind);
-			getExpectedDetails(acquirer_id);
+			GetExpectedDetails(acquirer_id);
 	    }
 
 	    /* pagination */
-		$scope.pageChangedSales = function () {
+		function PageChangedSales() {
 			$scope.salesCurrentPage = this.salesCurrentPage;
 		};
 
-		$scope.totalItensPageChangedSales = function (acquirer_id) {
+		function TotalItensPageChangedSales(acquirer_id) {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			getExpectedDetails(acquirer_id);
+			GetExpectedDetails(acquirer_id);
 		};
 
-		$scope.pageChangedAdjusts = function () {
+		function PageChangedAdjusts() {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			getExpectedDetails(1);
+			GetExpectedDetails(1);
 		};
 
-		$scope.totalItensPageChangedAdjusts = function () {
+		function TotalItensPageChangedAdjusts() {
 			this.adjustsCurrentPage = $scope.adjustsCurrentPage = 0;
 			$scope.adjustsTotalItensPage = this.adjustsTotalItensPage;
-			getExpectedDetails(1);
+			GetExpectedDetails(1);
 		};
 
-		$scope.pageChangedCancellations = function () {
+		function PageChangedCancellations() {
 			$scope.cancellationsCurrentPage = this.cancellationsCurrentPage;
-			getCancellations();
 		};
 
-		$scope.totalItensPageChangedCancellations = function () {
+		function TotalItensPageChangedCancellations() {
 			this.cancellationsCurrentPage = $scope.cancellationsCurrentPage = 0;
 			$scope.cancellationsTotalItensPage = this.cancellationsTotalItensPage;
-			getCancellations();
 		};
 
 	});
