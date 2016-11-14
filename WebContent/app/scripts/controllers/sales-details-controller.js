@@ -6,13 +6,13 @@
 
 angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/sales/details', {templateUrl: 'app/views/sales-details.html', controller: 'salesDetailsController'});
 }])
 
 .controller('salesDetailsController', function(menuFactory, $rootScope, $scope, $modal, calendarFactory, $timeout, cacheService,
 			dashboardService, kaplenAdminService, $window,
-			integrationService, advancedFilterService, calendarService, Restangular, $location, TransactionService){
+			integrationService, advancedFilterService, calendarService, $location, TransactionService){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);

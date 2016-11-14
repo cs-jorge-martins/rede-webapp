@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate',
+var app = angular.module('KaplenWeb',['ngRoute','highcharts-ng', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate',
                             'ui.utils.masks', 'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
                             'com.2fdevs.videogular.plugins.controls',
@@ -46,8 +46,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 	}).config(function (datepickerConfig) {
 		datepickerConfig.showWeeks = false;
     })
-	.config(['$routeProvider','RestangularProvider','$httpProvider','$angularCacheFactoryProvider',
-	         function ($routeProvider, RestangularProvider, $httpProvider, $angularCacheFactoryProvider) {
+	.config(['$routeProvider', '$httpProvider','$angularCacheFactoryProvider',
+	         function ($routeProvider, $httpProvider, $angularCacheFactoryProvider) {
 
    $httpProvider.defaults.headers.common = {};
    $httpProvider.defaults.headers.post = {};
@@ -55,10 +55,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
    $httpProvider.defaults.headers.patch = {};
 
 	$routeProvider.when('/teste', {templateUrl: 'app/views/login.html', controller: 'loginController'});
-
-	RestangularProvider.setBaseUrl(app.endpoint);
-
-	RestangularProvider.setFullResponse(false);
 
 	$httpProvider.interceptors.push(function ($q, $rootScope, $location, $window) {
 		$rootScope.baseUrl = app.endpoint;
@@ -110,24 +106,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
             }
         };
     });
-}]).run(function(Restangular, $location, $rootScope, $window, $modal, cacheService) {
-
-	Restangular.setResponseInterceptor(function (data, operation, what, url, response, deferred) {
-        var headers = response.headers();
-
-        $rootScope.restartAlerts();
-        if(response.status === 204){
-        	return angular.fromJson(headers.error);
-        }
-        if (angular.isDefined(headers.token)) {
-       	 $window.sessionStorage.token = headers.token;
-        }
-        return response.data;
-    });
-
-
-	// ********************************************************************************************
-
+}]).run(function($location, $rootScope, $window, $modal, cacheService) {
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -583,7 +562,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 			return momentjs.format("MMMM");
 		}
 	}
-	
+
 	function getDayAndMonthFromDate(date) {
 		var new_date_day = moment(date).format('D');
 		var new_date_month = moment(date).format('MMMM');

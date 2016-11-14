@@ -6,7 +6,7 @@
 
 angular.module('Conciliador.salesController',[])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/sales', {templateUrl: 'app/views/sales.html', controller: 'salesController'});
 }]).controller('salesController', function($scope, $modal,  $rootScope, menuFactory, calendarFactory, $location,
 	FinancialService, cacheService, advancedFilterService, TransactionConciliationService, TransactionService, TransactionSummaryService){

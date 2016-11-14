@@ -5,11 +5,11 @@
  */
 
 angular.module('KaplenWeb.advancedFilterService',[])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider', function($routeProvider) {
 
 }])
 
-.service('advancedFilterService', function(cacheService, Restangular) {
+.service('advancedFilterService', function(cacheService) {
 
 	var advancedFilterService = {};
 

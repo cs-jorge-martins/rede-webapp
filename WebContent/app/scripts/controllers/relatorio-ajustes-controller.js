@@ -6,7 +6,7 @@
 
 angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/relatorio/ajustes', {templateUrl: 'app/views/relatorios/ajustes/index.html', controller: 'relatorioAjustesController'});
 }])
 
