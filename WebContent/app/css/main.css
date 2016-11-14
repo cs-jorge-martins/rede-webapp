@@ -10629,8 +10629,9 @@ tr.card-product-line {
 }
 
 /* diners */
-.data-cards table tbody .brand_2, #receiptsDetails .brand_2 {
-    background-position: -250px;
+.data-cards table tbody .brand_2, 
+#receiptsDetails .brand_2 {
+    background-position: -245px;
 }
 
 /* visa e visa credito */

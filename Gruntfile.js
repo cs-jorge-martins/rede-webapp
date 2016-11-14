@@ -193,6 +193,7 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/service/v1/api/service/transaction-service.js",
                     "WebContent/app/scripts/service/v1/api/service/transaction-conciliation-service.js",
                     "WebContent/app/scripts/service/v1/api/service/movement-service.js",
+                    "WebContent/app/scripts/service/v1/api/service/adjust-service.js",
 
                     "WebContent/app/scripts/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/scripts/directives/rc-multiselect/rc-multiselect.js",
