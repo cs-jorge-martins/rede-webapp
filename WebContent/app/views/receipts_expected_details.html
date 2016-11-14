@@ -56,7 +56,7 @@
 									<div class="cardFlag brand_{{details.cardProductCode}}"></div>
 								</td>
 								<td class="toLowerCase">{{details.cardProductType}}</td>
-								<td>{{translateStatus(details.status, 'ola')}}</td>
+								<td>{{translateStatus(details.status, details.payedDate)}}</td>
 								<td>{{details.roDate | date:'dd/MM'}}</td>
 								<td>{{details.roNumber}}</td>
 								<td>R$ {{details.expectedAmount | currency: ""}}</td>

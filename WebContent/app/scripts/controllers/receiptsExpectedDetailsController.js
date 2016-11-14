@@ -146,7 +146,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 						status = "penhorado/bloqueado";
 						break;
 					case "forethought":
-						status = "antecipado em: " + date;
+						status = "antecipado em: " + calendarFactory.getDaySlashMonth(date);
 						break;
 				}
 			}

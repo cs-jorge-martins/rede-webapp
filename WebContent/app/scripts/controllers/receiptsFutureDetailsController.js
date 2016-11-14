@@ -122,8 +122,6 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				status: 'EXPECTED'
 			};
 
-			console.log("TO TENTANDO ENTRAR")
-
 			FinancialService.getFutureDetails(filter).then(function (response) {
 
 				var data = response.data.content;
