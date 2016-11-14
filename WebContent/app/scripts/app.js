@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate',
                             'ui.utils.masks', 'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
@@ -11,38 +11,35 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
                             'com.2fdevs.videogular.plugins.overlayplay',
                             'com.2fdevs.videogular.plugins.poster',
                             'KaplenWeb.dashboardController', 'KaplenWeb.dashboardService',
-                            'KaplenWeb.resumoConciliacaoService',
-                            'KaplenWeb.transactionsService',
                             'KaplenWeb.loginController', 'KaplenWeb.loginService',
                             'KaplenWeb.filtersService',
                             'KaplenWeb.relatorioVendasController',
                             'KaplenWeb.relatorioFinanceiroController',
                             'KaplenWeb.relatorioAjustesController',
                             'KaplenWeb.relatorioChargebacksController',
-                            'KaplenWeb.relatorioService',
-                            'KaplenWeb.taxaAdministracaoService',
-							'KaplenWeb.movementsModule', 'KaplenWeb.movementsService',
+							'KaplenWeb.movementsModule',
 							'KaplenWeb.kaplenAdminService','KaplenWeb.cacheService',
-							'KaplenWeb.installmentsService', 'chieffancypants.loadingBar',
-							'KaplenWeb.userService',
-							'KaplenWeb.settlementManager','KaplenWeb.settlementService',
-							'KaplenWeb.terminalsManager','KaplenWeb.terminalService',
+							'chieffancypants.loadingBar',
 							'KaplenWeb.integrationService', 'KaplenWeb.advancedFilterService',
 							'KaplenWeb.calendarService',
 							'KaplenWeb.Request', 'KaplenWeb.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
                             'Conciliador.FinancialService',
-                            'Conciliador.MovementSummaryService', 'Conciliador.MovementSummaryFilter',
+                            'Conciliador.MovementSummaryService',
                             'Conciliador.AdjustSummaryService', 'Conciliador.TransactionService',
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
-                            'Conciliador.FirstAccessController',
+                            'Conciliador.AdjustService',
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
+                            'Conciliador.MovementService',
                             'Conciliador.receiptsDetailsController',
 							'Conciliador.redirectController',
+							'Conciliador.receiptsExpectedDetailsController',
+							'Conciliador.receiptsForethoughtDetailsController',
                             'ngFileSaver',
                             'Conciliador.appConfig',
-                            'Conciliador.customCurrency'
+                            'Conciliador.currencyFilter',
+                            'Conciliador.receiptsOtherDetailsController'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
@@ -77,9 +74,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
             			$rootScope.pvList = $window.sessionStorage.pvList;
             			$rootScope.currencySymbol = "R$";
                         $rootScope.currency = 'BRL';
-                        if($window.sessionStorage.firstAccess) {
-                            $rootScope.firstAccess = true;
-                        }
 
                         if($window.sessionStorage.pvList){
                             $rootScope.initialized = true;
@@ -108,13 +102,15 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 					case 504 :
 						$rootScope.alerts =  [ { type: "danger", msg: "Erro Interno do Servidor. Por favor, tente mais tarde."} ];
 						break;
+                    default:
+                        console.log("error");
 				}
 
                 return $q.reject(config);
             }
         };
     });
-}]).run(function(Restangular, $location, $rootScope, $window, $modal, userService, cacheService) {
+}]).run(function(Restangular, $location, $rootScope, $window, $modal, cacheService) {
 
 	Restangular.setResponseInterceptor(function (data, operation, what, url, response, deferred) {
         var headers = response.headers();
@@ -185,8 +181,6 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		delete $window.sessionStorage.currencies;
 		delete $window.sessionStorage.tokenApi;
 
-        delete $window.sessionStorage.firstAccess;
-        delete $rootScope.firstAccess;
         delete $window.sessionStorage.tour;
 
         delete $rootScope.initialized;
@@ -200,7 +194,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		delete $rootScope.currency;
 		delete $rootScope.currencies;
 
-		cacheService.clearFilter();
+		cacheService.ClearFilter();
 
 
 		$rootScope.login = 'login';
@@ -589,6 +583,18 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 			return momentjs.format("MMMM");
 		}
 	}
+	
+	function getDayAndMonthFromDate(date) {
+		var new_date_day = moment(date).format('D');
+		var new_date_month = moment(date).format('MMMM');
+		return new_date_day + " de " + new_date_month;
+	}
+
+	function getDaySlashMonth(date) {
+		var new_date_day = moment(date).format('D');
+		var new_date_month = moment(date).format('MM');
+		return new_date_day + "/" + new_date_month;
+	}
 
 
 	function getFirstDayOfSpecificMonth(month, year){
@@ -690,144 +696,10 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		transformBrDateIntoDate: transformBrDateIntoDate,
 		getTomorrowFromTodayToDate: getTomorrowFromTodayToDate,
 		getLastDayOfPlusMonthToDate: getLastDayOfPlusMonthToDate,
-		getToday: getToday
+		getToday: getToday,
+		getDayAndMonthFromDate: getDayAndMonthFromDate,
+		getDaySlashMonth: getDaySlashMonth,
 	};
-})
-
-.controller('consultaVendas', function($rootScope, $scope, $modal, calendarFactory, resumoConciliacaoService, installmentsService, calendarService) {
-
-	//Variaveis
-	$scope.nsu = '';
-	$scope.tid = '';
-	$scope.authorization = '';
-	$scope.gross = '';
-	$scope.erpId = '';
-	$scope.requiredFields = true;
-	$scope.alerts =  '';
-
-	//Extensao do serviço para filtro avançado
-	angular.extend($scope, calendarService);
-	$scope.resetCalendarService();
-
-	$scope.dataInicial = calendarFactory.getFirstDayOfMonth();
-	$scope.dataFinal = calendarFactory.getLastDayOfMonth();
-
-	$scope.totalItensPage = "10";
-	$scope.currentPage = 1;
-
-	$scope.changeRequiredFields = function(){
-		if($scope.nsu != '' || $scope.tid != '' || $scope.authorization != ''){
-			$scope.requiredFields = false;
-		}
-		else{
-			$scope.requiredFields = true;
-		}
-	};
-
-	$scope.comprovanteVenda = function(item) {
-		var modalInstance = $modal.open({
-			templateUrl: 'app/views/resumoConciliacao/comprovanteVenda.html',
-			controller: ModalComprovanteVendas,
-			size:'sm',
-			resolve: {
-				item: function(){
-					return item;
-				}
-			}
-		});
-	};
-
-	var ModalComprovanteVendas = function ($scope, $modalInstance, Restangular, item) {
-		$scope.item = item;
-
-		installmentsService.getByTransactions(item.id, 0, false).then(function(it) {
-			$scope.installments = it;
-		});
-
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
-		};
-	};
-
-	$scope.alterTotalItensPage = function() {
-		this.currentPage = $scope.currentPage = 1;
-		$scope.totalItensPage = this.totalItensPage;
-		$scope.buscarVendas();
-	};
-
-	$scope.pageChanged = function() {
-		$scope.currentPage = this.currentPage;
-
-		resumoConciliacaoService.buscarVendas($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
-				$scope.authorization, $scope.gross, $scope.erpId, $rootScope.currency, $scope.currentPage, $scope.totalItensPage).then(function(itens){
-
-					$scope.itensSearched = itens;
-					$scope.alerts = '';
-		});
-	};
-
-	$scope.buscarVendas = function(){
-		$scope.checkInvalidDates = calendarFactory.checkInvalidPeriod($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.initialDateChanged, $scope.finalDateChanged);
-
-		if($scope.requiredFields == false){
-			if($scope.checkInvalidDates == false){
-				resumoConciliacaoService.countVendas($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
-						$scope.authorization, $scope.gross, $scope.erpId, $rootScope.currency).then(function(totalItens){
-
-						$scope.totalItens = totalItens;
-						$scope.maxSize = maxSizePagination(totalItens, $scope.totalItensPage);
-
-						resumoConciliacaoService.buscarVendas($scope.checkDateInitial($scope.dataInicial), $scope.checkDateFinal($scope.dataFinal), $scope.nsu, $scope.tid,
-								$scope.authorization, $scope.gross, $scope.erpId, $rootScope.currency, $scope.currentPage, $scope.totalItensPage).then(function(itens){
-
-									if(itens.length > 0){
-										angular.forEach(itens, function(item, index){
-											//Verifica status de RECONCILIATION
-											if(item.reconciliationStatusId == 1){
-												item.situation = "NC";
-											}else if(item.reconciliationStatusId == 2){
-												item.situation = "CO";
-											}else{
-												item.situation = "NP";
-											}
-
-											//Verifica se é cancelada
-											if(item.statusId == 2){
-												item.situation = item.situation + " / Canc";
-											}
-										});
-
-										$scope.itensSearched = itens;
-										$scope.alerts = '';
-									}else{
-										$scope.alerts =  [ { type: "danger", msg: 'Nenhuma venda foi encontrada.'} ];
-									}
-						});
-				});
-			}else{
-				$scope.alerts =  [ { type: "danger", msg: 'Período incorreto. Favor corrigir o período e tentar novamente.'} ];
-			}
-		}else{
-			$scope.alerts =  [ { type: "danger", msg: 'O preenchimento dos campos NSU ou TID ou Autorização é obrigatório.'} ];
-		}
-	};
-
-	$scope.consultaVendas = function(item) {
-		var modalInstance = $modal.open({
-			templateUrl: 'app/views/vendas/consultaVendas.html',
-			controller: ModalConsultaVendas,
-			size:'sm'
-		});
-	};
-
-	var ModalConsultaVendas = function ($scope, $modalInstance, Restangular) {
-		$scope.close = function () {
-			$scope.itensSearched = '';
-
-			$modalInstance.dismiss('cancel');
-		};
-	};
-
 })
 .factory('menuFactory', function($rootScope) {
 

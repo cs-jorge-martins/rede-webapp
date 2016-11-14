@@ -24,14 +24,14 @@
 				singleSelection: '=',
 				buttonMaxItems: '='
 			},
-			controller: controller
+			controller: Controller
 		};
 
-		function controller($scope) {
+		function Controller($scope) {
 
-			init();
+			Init();
 
-			function init() {
+			function Init() {
 				$scope.settings = {
 					showCheckAll: true,
 					showUncheckAll: true,
