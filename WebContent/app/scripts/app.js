@@ -590,6 +590,12 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		return new_date_day + " de " + new_date_month;
 	}
 
+	function getDaySlashMonth(date) {
+		var new_date_day = moment(date).format('D');
+		var new_date_month = moment(date).format('MM');
+		return new_date_day + "/" + new_date_month;
+	}
+
 
 	function getFirstDayOfSpecificMonth(month, year){
 		var firstDayOfSpecificMonth = moment("01/" + (month+1) + "/" + year, format);
@@ -692,6 +698,7 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		getLastDayOfPlusMonthToDate: getLastDayOfPlusMonthToDate,
 		getToday: getToday,
 		getDayAndMonthFromDate: getDayAndMonthFromDate,
+		getDaySlashMonth: getDaySlashMonth,
 	};
 })
 .factory('menuFactory', function($rootScope) {
