@@ -162,6 +162,7 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/controllers/receiptsExpectedDetailsController.js",
                     "WebContent/app/scripts/controllers/receiptsForethoughtDetailsController.js",
                     "WebContent/app/scripts/controllers/receiptsOtherDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsFutureDetailsController.js",
                     "WebContent/app/scripts/controllers/receipts-details-controller.js",
                     "WebContent/app/scripts/controllers/redirect-controller.js",
 

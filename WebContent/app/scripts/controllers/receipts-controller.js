@@ -961,6 +961,11 @@ angular.module('KaplenWeb.movementsModule',[])
 			case "forethought_details":
 				redirect_url = "receipts/forethought_details";
 				break;
+			case "future_details":
+				$rootScope.receiptsDetails.periodStartDate = $scope.futureReleases.startDate;
+				$rootScope.receiptsDetails.periodEndDate = $scope.futureReleases.endDate;
+				redirect_url = "receipts/future_details";
+				break;
 			default:
 				redirect_url = "receipts/details";
 				break;

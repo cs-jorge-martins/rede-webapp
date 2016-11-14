@@ -595,6 +595,12 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 			return momentjs.format("MMMM");
 		}
 	}
+	
+	function getDayAndMonthFromDate(date) {
+		var new_date_day = moment(date).format('D');
+		var new_date_month = moment(date).format('MMMM');
+		return new_date_day + " de " + new_date_month;
+	}
 
 
 	function getFirstDayOfSpecificMonth(month, year){
@@ -696,7 +702,8 @@ var app = angular.module('KaplenWeb',['restangular', 'ngRoute','highcharts-ng', 
 		transformBrDateIntoDate: transformBrDateIntoDate,
 		getTomorrowFromTodayToDate: getTomorrowFromTodayToDate,
 		getLastDayOfPlusMonthToDate: getLastDayOfPlusMonthToDate,
-		getToday: getToday
+		getToday: getToday,
+		getDayAndMonthFromDate: getDayAndMonthFromDate,
 	};
 })
 

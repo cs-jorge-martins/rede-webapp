@@ -9046,14 +9046,16 @@ footer nav.fixed {
 	text-align: center;
 }
 
-.receiptsExpectedDetails #details .pagination li a{
+.receiptsExpectedDetails #details .pagination li a,
+.receiptsExpectedDetails .pagination li a{
     background: transparent !important;
     border: 0;
     font-size: 16px;
     padding: 0 16px !important;
 }
 
-#details .pagination {
+#details .pagination,
+.receiptsExpectedDetails .pagination{
     margin: 28px 0 10px 36px;
     float: initial;
 }
@@ -10099,6 +10101,17 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
     font-size: 72px;
 }
+section#receiptsDetails.receiptsExpectedDetails .data-cards.big .header-datas .date .number {
+    font-size: 23px;
+    margin-top: 25px;
+    display: inline-block;
+}
+section#receiptsDetails.receiptsExpectedDetails .data-cards.big .header-datas .date {
+    width: 200px;
+}
+.data-cards.big .header-datas .chip-wrapper {
+    width: 69%;
+}
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .month {
     font-weight: bold;
     display: block;
@@ -10209,6 +10222,13 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
     font-size: 18px;
     font-weight: bolder;
+}
+
+#receiptsDetails .wrapperAcquirerSummary .cardProduct span {
+    text-transform: lowercase;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 17px;
 }
 
 #receiptsDetails .mainContent {

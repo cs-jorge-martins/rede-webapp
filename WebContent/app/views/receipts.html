@@ -233,7 +233,7 @@
                                         <th>{{ item.acquirer.name | uppercase }}</th>
                                         <th></th>
                                         <!-- /* Todo: alterar por adquirente */ -->
-                                        <th>valor total: {{ item.expectedAmount | currency }}</th>
+                                        <th colspan="3">valor total: {{ item.expectedAmount | currency }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -242,6 +242,8 @@
                                         <th>lançamentos</th>
                                         <th></th>
                                         <th>valor líquido (R$)</th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </tbody>
                                 <tbody ng-repeat="cardProduct in item.cardProducts">
@@ -251,6 +253,8 @@
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
                                         <th></th>
                                         <th>{{ cardProduct.releases[0].expectedAmount | number: 02 }}</th>
+                                        <th></th>
+                                        <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'future_details')">detalhes</a></th>
                                     </tr>
                                 </tbody>
                             </table>
