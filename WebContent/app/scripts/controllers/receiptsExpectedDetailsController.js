@@ -23,7 +23,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			} else {
 
 				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
-				
+
 				$scope.startDate = $rootScope.receiptsDetails.startDate;
 				$scope.date = calendarFactory.formatDateTimeForService($scope.startDate);
 				$scope.sort = "";
@@ -68,7 +68,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				endDate: $scope.date
 			};
 
-			MovementSummaryService.listMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
+			MovementSummaryService.ListMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
 
 				var obj;
 				var content = response.data.content;
@@ -105,7 +105,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 			// https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev/financials/details?acquirerIds=1&bankAccountIds=5&cardProductIds=1&endDate=20161004&page=0&size=10&sort=transaction.date,DESC&sort=transaction.hour,DESC&startDate=20161004&status=RECEIVED&type=CREDIT
 
-			FinancialService.getExpectedDetails(filter).then(function(response) {
+			FinancialService.GetExpectedDetails(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 

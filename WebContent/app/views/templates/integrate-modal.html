@@ -5,16 +5,16 @@
                 <label for="periodoInicial">Período</label>
                 <ul>
                   <li>
-                    <input type="text" class="disabled form-control" 
+                    <input type="text" class="disabled form-control"
 							datepicker-popup="{{format}}" ng-model="dataInicial" is-open="openFirst"
-							datepicker-options="dateOptions" ng-required="true" show-weeks="false" ng-change="changeInitialDate(dataInicial)"
+							datepicker-options="dateOptions" ng-required="true" show-weeks="false" ng-change="ChangeInitialDate(dataInicial)"
 							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true"/>
                   </li>
                   <li>
                     <label for="">Até</label>
-                    <input type="text" class="disabled form-control" 
+                    <input type="text" class="disabled form-control"
 							datepicker-popup="{{format}}" ng-model="dataFinal" is-open="openLast"
-							datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDate(dataFinal)"
+							datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(dataFinal)"
 							close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"/>
                   </li>
 				</ul>
@@ -28,8 +28,8 @@
 							</select>
 						</div>
 					</li>
-                </ul>  
-			<br />            
+                </ul>
+			<br />
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>

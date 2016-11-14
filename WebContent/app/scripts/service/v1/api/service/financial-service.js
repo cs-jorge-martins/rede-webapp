@@ -3,41 +3,14 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.FinancialService',[])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider' ,function ($routeProvider) {
 }])
 
 .service('FinancialService', function(app, $http, Request) {
 
-
-	//GET Financial by filter
-	this.getFinancialByFilter = function(financialFilter) {
-
-		return Restangular.all('financials').getList(financialFilter);
-	};
-
-
-	this.getGroupByAcquirer = function(financialFilter){
-
-		return this.getFinancialByFilter(financialFilter);
-	}
-
-	this.getGroupByCardProduct = function(financialFilter){
-
-		return this.getFinancialByFilter(financialFilter);
-	}
-
-	this.getGroupByType = function(financialFilter){
-
-		return this.getFinancialByFilter(financialFilter);
-	}
-
-	this.getAdministrativeCosts = function(adjustSummaryFilter){
-		return Restangular.all('adjustsummaries').getList(adjustSummaryFilter);
-	}
-	
-	this.getExpectedDetails = function (request) {
+	this.GetExpectedDetails = function (request) {
 		return $http({
 			url: app.endpoint + '/movements',
 			method: "GET",
@@ -46,7 +19,7 @@ angular.module('Conciliador.FinancialService',[])
 		});
 	}
 
-	this.getReceipt = function(filter){
+	this.GetReceipt = function(filter){
 		var request = filter;
 
 		return $http({
@@ -56,9 +29,4 @@ angular.module('Conciliador.FinancialService',[])
 			headers: Request.setHeaders()
 		});
 	}
-
-	this.getTaxes = function(filter){
-		return Restangular.all('adjusts').getList(filter);
-	}
-
 });

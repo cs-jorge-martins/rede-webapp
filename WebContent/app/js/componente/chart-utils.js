@@ -5,13 +5,13 @@
  */
 
 
- 
+
 var chartUtils = window.chartUtil || {};
 
 /**
  * proxy para traduzir dados vindos da API, do modelo do hicharts para o charts.js
  */
-chartUtils.proxy = function( dataSource ) {
+chartUtils.Proxy = function( dataSource ) {
 	var chart = {
 		labels: [],
 		series: [],
@@ -37,7 +37,7 @@ chartUtils.proxy = function( dataSource ) {
 	return chart;
 };
 
-chartUtils.tooltip = function(tooltip) {
+chartUtils.Tooltip = function(tooltip) {
 	var tooltipEl = jQuery('#chartjs-tooltip');
 
    if (!tooltip) {
@@ -65,7 +65,7 @@ chartUtils.tooltip = function(tooltip) {
    });
 };
 
-chartUtils.formatters = {
+chartUtils.Formatters = {
 	currency: function( value ) {
 
 		var formatted = value.toFixed(2);
@@ -80,7 +80,7 @@ chartUtils.formatters = {
 	}
 };
 
-chartUtils.options = {
+chartUtils.Options = {
 	vendas: {
 		scaleShowVerticalLines: false,
 		bezierCurve : false,
@@ -92,7 +92,7 @@ chartUtils.options = {
 		tooltipXPadding: 8,
 		tooltipFontSize: 12,
 		tooltipTitleFontSize: 13,
-		multiTooltipTemplate: '<%= datasetLabel + ": " + chartUtils.formatters.currency(value) %>'
+		multiTooltipTemplate: '<%= datasetLabel + ": " + chartUtils.Formatters.currency(value) %>'
 	},
 	relatorioSintetico: {
 		scaleFontSize: 11,

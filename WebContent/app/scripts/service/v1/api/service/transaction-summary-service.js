@@ -3,13 +3,13 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.TransactionSummaryService',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
 }]).service('TransactionSummaryService', function(app, Restangular, $location, $http, Request) {
 
-	this.listTransactionSummaryByFilter = function(transactionSummaryFilter) {
+	this.ListTransactionSummaryByFilter = function(transactionSummaryFilter) {
 		var request = transactionSummaryFilter;
 
 		return $http({
@@ -20,8 +20,7 @@ angular.module('Conciliador.TransactionSummaryService',[])
 		});
 	};
 
-
-	this.listNplicateTransactionSummaryByFilter = function(transactionSummaryFilter){
+	this.ListNplicateTransactionSummaryByFilter = function(transactionSummaryFilter){
 		var request = transactionSummaryFilter;
 
 		return $http({
@@ -31,6 +30,4 @@ angular.module('Conciliador.TransactionSummaryService',[])
 			headers: Request.setHeaders()
 		});
 	}
-
-
 });

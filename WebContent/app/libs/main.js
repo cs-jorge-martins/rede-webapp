@@ -70,7 +70,7 @@ j('document').ready(function(j){
 			var ext = j('body > div:first-child');
 			var body = j('body');
 
-			var isLogin = window.location.hash.match('/firstAccess') || window.location.hash.match('/login');
+			var isLogin = window.location.hash.match('/login');
 
 			if(!isLogin){
 				if (j(this).scrollTop() >= 35) {

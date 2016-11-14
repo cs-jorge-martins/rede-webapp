@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.movementsModule',[])
 
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
@@ -16,13 +16,12 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 })
 
-
-.controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, transactionsService, $window, userService, $timeout,
+.controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParamsByFilter();
+	$scope.LoadParamsByFilter();
 
 	menuFactory.setActiveMovements();
 
@@ -30,47 +29,34 @@ angular.module('KaplenWeb.movementsModule',[])
 
     $scope.expected = [];
 	$scope.receipts = [];
-    $scope.getReceipt = getReceipt;
-
-
-    $scope.getFutureReceipt = getFutureReceipt;
-
+    $scope.getReceipt = GetReceipt;
+    $scope.getFutureReceipt = GetFutureReceipt;
     $scope.actualReleases = {};
     $scope.actualReleases.date = new Date();
-
     $scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
-
     $scope.futureReleases = {};
     $scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
-	// endDate = ultimo_dia_do_mes(startDate + 1 mês)
     $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
-
     $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation($scope.futureReleases.startDate);
     $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
     $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation($scope.futureReleases.endDate);
-
 	$scope.date = new Date();
 	$scope.minDate = new Date();
-
 	$scope.accountsModel = [];
 	$scope.accountsFutureModel = [];
 	$scope.accountsData = [];
-
 	$scope.cardProductsModel = [];
 	$scope.cardProductsFutureModel = [];
 	$scope.cardProductsData = [];
-
 	$scope.shopsModel = [];
 	$scope.shopsFutureModel = [];
 	$scope.shopsData = [];
 	$scope.shopIds = [];
-
 	$scope.acquirersModel = [];
 	$scope.acquirersFutureModel = [];
 	$scope.acquirersData = [];
-
 	$scope.accountsLabel = null;
 	$scope.cardProductsLabel = null;
 	$scope.cardProductsFullLabel = "";
@@ -81,25 +67,19 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.cardProductsFutureFullLabel = "";
 	$scope.shopsFutureLabel = null;
 	$scope.shopsFutureFullLabel = "";
-
-	$scope.clearShopFilter = clearShopFilter;
-	$scope.clearCardProductsFilter = clearCardProductsFilter;
-
+	$scope.clearShopFilter = ClearShopFilter;
+	$scope.clearCardProductsFilter = ClearCardProductsFilter;
 	$scope.totalToReceive = 0;
 	$scope.discountedTotal = 0;
 	$scope.antecipatedTotal = 0;
 	$scope.totalReceived = 0;
+    $scope.showDetails = ShowDetails;
+    $scope.changeTab = ChangeTab;
 	$scope.existsForethought = false;
-
-    $scope.showDetails = showDetails;
-    $scope.changeTab = changeTab;
-
     $scope.actualReleasesData = [];
     var actualReleasesData = [];
-
     $scope.futureReleasesData = [];
     var futureReleasesData = [];
-
     var filterStatus = 0;
 
 	$scope.$watch('futureReleases.startDate', function(response) {
@@ -108,42 +88,42 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	});
 
-	init();
+	Init();
 
-	function init() {
+	function Init() {
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
-        getFilters();
-		getForethought();
+        GetFilters();
+		GetForethought();
 	}
 
-    function getReceipt() {
+    function GetReceipt() {
 		actualReleasesData = [];
 		$scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     	$scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
 
-		saveFilters();
-		getLabels();
-		getSummaries();
-		getReceiptAcquirers();
-		getForethought();
+		SaveFilters();
+		GetLabels();
+		GetSummaries();
+		GetReceiptAcquirers();
+		GetForethought();
     }
 
-	function getReceiptAcquirers() {
+	function GetReceiptAcquirers() {
 
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			groupBy: 'ACQUIRER',
-			bankAccountIds: getAccountsFilter(),
-			shopIds: getShopsFilter(),
-			acquirerIds: getAcquirersFilter(),
-			cardProductIds: getCardProductsFilter(),
+			bankAccountIds: GetAccountsFilter(),
+			shopIds: GetShopsFilter(),
+			acquirerIds: GetAcquirersFilter(),
+			cardProductIds: GetCardProductsFilter(),
 			status: 'RECEIVED,FORETHOUGHT'
 		};
 
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
 
 			if( data.length ) {
@@ -152,9 +132,9 @@ angular.module('KaplenWeb.movementsModule',[])
 					actualReleasesData.push(data[index]);
 				}
 
-				getReceiptReleases();
-				getOtherReleases();
-				getExpectedReleases();
+				GetReceiptReleases();
+				GetOtherReleases();
+				GetExpectedReleases();
 			} else {
 				$scope.actualReleasesData = [];
 			}
@@ -164,17 +144,17 @@ angular.module('KaplenWeb.movementsModule',[])
 		})
 	}
 
-	function getForethought() {
+	function GetForethought() {
 
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			bankAccountIds: getAccountsFilter(),
+			bankAccountIds: GetAccountsFilter(),
 			status: 'EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED'
 		};
 
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
 
 			if( data.length ) {
@@ -182,7 +162,6 @@ angular.module('KaplenWeb.movementsModule',[])
 				$scope.existsForethought = true;
 
 			} else {
-				// $scope.actualReleasesData = [];
 				$scope.existsForethought = false;
 			}
 
@@ -191,7 +170,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		})
 	}
 
-	function getReceiptReleases() {
+	function GetReceiptReleases() {
 
 		for(var index in actualReleasesData){
 			var acquirerId = actualReleasesData[index].acquirer.id;
@@ -200,14 +179,14 @@ angular.module('KaplenWeb.movementsModule',[])
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				groupBy: 'CARD_PRODUCT,STATUS',
-				bankAccountIds: getAccountsFilter(),
-				shopIds: getShopsFilter(),
+				bankAccountIds: GetAccountsFilter(),
+				shopIds: GetShopsFilter(),
 				acquirerIds: acquirerId,
-				cardProductIds: getCardProductsFilter(),
+				cardProductIds: GetCardProductsFilter(),
 				status: 'RECEIVED,FORETHOUGHT'
 			};
 
-			receiptsService.getFinancials(filter).then(function(response) {
+			receiptsService.GetFinancials(filter).then(function(response) {
 				var data = response.data;
 				var releases = [];
 
@@ -323,7 +302,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	}
 
-	function getOtherReleases(acquirerId) {
+	function GetOtherReleases(acquirerId) {
 
 		for(var index in actualReleasesData){
 			var acquirerId = actualReleasesData[index].acquirer.id;
@@ -331,15 +310,15 @@ angular.module('KaplenWeb.movementsModule',[])
 			var filter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				bankAccountIds: getAccountsFilter(),
-				shopIds: getShopsFilter(),
+				bankAccountIds: GetAccountsFilter(),
+				shopIds: GetShopsFilter(),
 				acquirerIds: acquirerId,
 				status: 'RECEIVED',
 				types: 'OTHER',
 				groupBy: 'TYPE,DESCRIPTION'
 			};
 
-			receiptsService.getAdjusts(filter).then(function(response){
+			receiptsService.GetAdjusts(filter).then(function(response){
 					var data = response.data.content;
 					var total = 0;
 
@@ -355,22 +334,22 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	};
 
-	function getExpectedReleases() {
+	function GetExpectedReleases() {
 		for(var index in actualReleasesData){
 			var acquirerId = actualReleasesData[index].acquirer.id;
 
 			var filter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				bankAccountIds: getAccountsFilter(),
-				shopIds: getShopsFilter(),
+				bankAccountIds: GetAccountsFilter(),
+				shopIds: GetShopsFilter(),
 				acquirerIds: acquirerId,
-				cardProductIds: getCardProductsFilter(),
+				cardProductIds: GetCardProductsFilter(),
 				status: 'EXPECTED',
 				groupBy: 'CARD_PRODUCT'
 			};
 
-			receiptsService.getFinancials(filter).then(function(response){
+			receiptsService.GetFinancials(filter).then(function(response){
 					var data = response.data;
 					var total = 0;
 
@@ -386,15 +365,15 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	}
 
-	function getSummaries() {
+	function GetSummaries() {
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			status: 'RECEIVED',
-			bankAccountIds: getAccountsFilter(),
-			shopIds: getShopsFilter(),
-			acquirerIds: getAcquirersFilter(),
-			cardProductIds: getCardProductsFilter()
+			bankAccountIds: GetAccountsFilter(),
+			shopIds: GetShopsFilter(),
+			acquirerIds: GetAcquirersFilter(),
+			cardProductIds: GetCardProductsFilter()
 		};
 
 		var filterOthers = {
@@ -402,14 +381,14 @@ angular.module('KaplenWeb.movementsModule',[])
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			status: 'RECEIVED',
 			types: 'OTHER',
-			bankAccountIds: getAccountsFilter(),
-			shopIds: getShopsFilter(),
-			acquirerIds: getAcquirersFilter(),
+			bankAccountIds: GetAccountsFilter(),
+			shopIds: GetShopsFilter(),
+			acquirerIds: GetAcquirersFilter(),
 		};
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
-			
+
 			var totalToReceive = 0;
 			var discountedTotal = 0;
 			var totalReceived = 0;
@@ -430,7 +409,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 
 			filter.status = 'FORETHOUGHT';
-			receiptsService.getFinancials(filter).then(function(response) {
+			receiptsService.GetFinancials(filter).then(function(response) {
 				var data = response.data;
 				var antecipatedTotal = 0;
 				for(var index in data) {
@@ -439,8 +418,7 @@ angular.module('KaplenWeb.movementsModule',[])
 					}
 				}
 
-				receiptsService.getAdjusts(filterOthers).then(function(responseAdjusts) {
-
+				receiptsService.GetAdjusts(filterOthers).then(function(responseAdjusts) {
 					var others = 0;
 
 					// amount soma em totais descontados
@@ -469,7 +447,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		});
 	}
 
-	function getFutureReceipt() {
+	function GetFutureReceipt() {
 
 		futureReleasesData = [];
 
@@ -483,31 +461,31 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
 		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 
-		saveFilters();
-		getLabels(true);
-		getFutureAcquirers();
+		SaveFilters();
+		GetLabels(true);
+		GetFutureAcquirers();
 	}
 
-	function getFutureAcquirers() {
+	function GetFutureAcquirers() {
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
 			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
 			groupBy: 'ACQUIRER',
-			bankAccountIds: getAccountsFilter(true),
-			shopIds: getShopsFilter(true),
-			acquirerIds: getAcquirersFilter(true),
-			cardProductIds: getCardProductsFilter(true),
+			bankAccountIds: GetAccountsFilter(true),
+			shopIds: GetShopsFilter(true),
+			acquirerIds: GetAcquirersFilter(true),
+			cardProductIds: GetCardProductsFilter(true),
 			status: 'EXPECTED'
 		};
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
 
 			if( data.length ) {
 				for(var index in data) {
 					futureReleasesData.push(data[index]);
 				}
-				getFutureReceiptReleases();
+				GetFutureReceiptReleases();
 			} else {
 				$scope.futureReleasesData = [];
 			}
@@ -517,7 +495,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		})
 	}
 
-	function getFutureReceiptReleases() {
+	function GetFutureReceiptReleases() {
 
 		for(var index in futureReleasesData){
 			var acquirerId = futureReleasesData[index].acquirer.id;
@@ -526,14 +504,14 @@ angular.module('KaplenWeb.movementsModule',[])
 				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
 				groupBy: 'CARD_PRODUCT,STATUS',
-				bankAccountIds: getAccountsFilter(true),
-				shopIds: getShopsFilter(true),
+				bankAccountIds: GetAccountsFilter(true),
+				shopIds: GetShopsFilter(true),
 				acquirerIds: acquirerId,
-				cardProductIds: getCardProductsFilter(true),
+				cardProductIds: GetCardProductsFilter(true),
 				status: 'EXPECTED'
 			};
 
-			receiptsService.getFinancials(filter).then(function(response) {
+			receiptsService.GetFinancials(filter).then(function(response) {
 				var data = response.data;
 				var releases = [];
 
@@ -628,32 +606,31 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	}
 
-	function changeTab(index) {
+	function ChangeTab(index) {
 		$scope.tabs[index].active = true;
 
 		if(filterStatus === 4) {
 	    	if(index === 0) {
-	    		getReceipt();
+	    		GetReceipt();
 	    	} else if(index === 1) {
-	    		getFutureReceipt();
+	    		GetFutureReceipt();
 	    	}
 	    }
     }
 
-
-	function clearShopFilter () {
+	function ClearShopFilter () {
 		$scope.shopsModel = [];
-        getReceipt();
+        GetReceipt();
 	}
 
-	function clearCardProductsFilter () {
+	function ClearCardProductsFilter () {
 		$scope.cardProductsModel = [];
-        getReceipt();
+        GetReceipt();
 	}
 
-  	function getFilters() {
+  	function GetFilters() {
 		// conta
-		filtersService.getAccounts().then(function(response){
+		filtersService.GetAccounts().then(function(response){
 			var filterConfig = [];
 			var data = response.data;
 
@@ -677,9 +654,8 @@ angular.module('KaplenWeb.movementsModule',[])
 			filterStatus++;
 
             if(filterStatus === 4) {
-            	getCachedData();
-                getReceipt();
-
+            	GetCachedData();
+                GetReceipt();
             }
 
 		}).catch(function(response){
@@ -687,11 +663,8 @@ angular.module('KaplenWeb.movementsModule',[])
 		});
 
 		// bandeira
-		filtersService.getCardProducts().then(function(response){
+		filtersService.GetCardProducts().then(function(response){
 			var filterConfig = [];
-			// var addPipe(fullCardProductName) {
-			// 	fullCardProductName
-			// };
 			for(var x in response.data){
 				var obj = {};
 				obj.id = response.data[x].id;
@@ -704,9 +677,8 @@ angular.module('KaplenWeb.movementsModule',[])
 
             filterStatus++;
             if(filterStatus === 4) {
-            	getCachedData();
-                getReceipt();
-
+            	GetCachedData();
+                GetReceipt();
             }
 
 		}).catch(function(response){
@@ -714,7 +686,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		});
 
 		// estabelecimento
-		filtersService.getShops().then(function(response){
+		filtersService.GetShops().then(function(response){
 			var filterConfig = [];
 			for(var x in response.data){
 				var obj = {};
@@ -729,9 +701,8 @@ angular.module('KaplenWeb.movementsModule',[])
             filterStatus++;
 
             if(filterStatus === 4) {
-            	getCachedData();
-                getReceipt();
-
+            	GetCachedData();
+                GetReceipt();
             }
 
 		}).catch(function(response){
@@ -739,7 +710,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		});
 
 		// adquirente
-		filtersService.getAcquirers().then(function(response){
+		filtersService.GetAcquirers().then(function(response){
 			var filterConfig = [];
 			for(var x in response.data){
 				var obj = {};
@@ -754,9 +725,8 @@ angular.module('KaplenWeb.movementsModule',[])
             filterStatus++;
 
             if(filterStatus === 4) {
-            	getCachedData();
-                getReceipt();
-
+            	GetCachedData();
+                GetReceipt();
             }
 
 		}).catch(function(response){
@@ -764,31 +734,26 @@ angular.module('KaplenWeb.movementsModule',[])
 		});
 	}
 
-	function getAccountsFilter(isFuture) {
+	function GetAccountsFilter(isFuture) {
 		var model = (isFuture ? $scope.accountsFutureModel : $scope.accountsModel);
 		return model.id;
-
-		//var model = (isFuture ? $scope.accountsFutureModel : $scope.accountsModel);
-		//return model.map(function(item){
-		//	return item.id;
-		//}).join(",");
 	};
 
-	function getShopsFilter(isFuture) {
+	function GetShopsFilter(isFuture) {
 		var model = (isFuture ? $scope.shopsFutureModel : $scope.shopsModel);
 		return model.map(function(item){
 			return item.id;
 		}).join(",");
 	}
 
-	function getAcquirersFilter(isFuture) {
+	function GetAcquirersFilter(isFuture) {
 		var model = (isFuture ? $scope.acquirersFutureModel : $scope.acquirersModel);
 		return model.map(function(item){
 			return item.id;
 		}).join(",");
 	}
 
-	function getCardProductsFilter(isFuture) {
+	function GetCardProductsFilter(isFuture) {
 		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 
 		if(model.length == $scope.cardProductsData.length) {
@@ -800,7 +765,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		}).join(",");
 	}
 
-	function getAccountsLabel(isFuture) {
+	function GetAccountsLabel(isFuture) {
 
 		var model = (isFuture ? $scope.accountsFutureModel : $scope.accountsModel);
 		var label = (isFuture ? $scope.accountsFutureLabel : $scope.accountsLabel);
@@ -821,7 +786,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	}
 
-	function getShopsLabel(isFuture) {
+	function GetShopsLabel(isFuture) {
 
 		var model = (isFuture ? $scope.shopsFutureModel : $scope.shopsModel);
 		var label = (isFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
@@ -859,8 +824,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	}
 
-	function getCardProductsLabel(isFuture) {
-
+	function GetCardProductsLabel(isFuture) {
 		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 		var label = (isFuture ? $scope.cardProductsFutureLabel : $scope.cardProductsLabel);
 
@@ -897,13 +861,13 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	}
 
-	function getLabels(isFuture) {
-		getAccountsLabel(isFuture);
-		getShopsLabel(isFuture);
-		getCardProductsLabel(isFuture);
+	function GetLabels(isFuture) {
+		GetAccountsLabel(isFuture);
+		GetShopsLabel(isFuture);
+		GetCardProductsLabel(isFuture);
 	}
 
-    function showDetails(acquirer, cardProduct, total, status, detailPage) {
+    function ShowDetails(acquirer, cardProduct, total, status, detailPage) {
         $rootScope.receiptsDetails = {};
 
         var dateSelected = $scope.actualReleases.date;
@@ -944,8 +908,8 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
     }
 
-    function saveFilters() {
-    	cacheService.saveFilter({
+    function SaveFilters() {
+    	cacheService.SaveFilter({
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			bankAccountIds: $scope.accountsModel,
@@ -961,23 +925,20 @@ angular.module('KaplenWeb.movementsModule',[])
 		}, 'receipts');
     }
 
-    function getCachedData() {
+    function GetCachedData() {
+		if(cacheService.LoadFilter('context') == 'receipts') {
+			$scope.actualReleases.date = moment(cacheService.LoadFilter('startDate'), "YYYYMMDD").toDate();
+			$scope.accountsModel = cacheService.LoadFilter('bankAccountIds');
+			$scope.shopsModel = cacheService.LoadFilter('shopIds');
+			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
+			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
+			$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
+			$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
+			$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
+			$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
+			$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
+			$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
 
-		if(cacheService.loadFilter('context') == 'receipts') {
-			$scope.actualReleases.date = moment(cacheService.loadFilter('startDate'), "YYYYMMDD").toDate();
-			$scope.accountsModel = cacheService.loadFilter('bankAccountIds');
-			$scope.shopsModel = cacheService.loadFilter('shopIds');
-			$scope.acquirersModel = cacheService.loadFilter('acquirerIds');
-			$scope.cardProductsModel = cacheService.loadFilter('cardProductIds');
-			$scope.futureReleases.startDate = moment(cacheService.loadFilter('futureStartDate'), "YYYYMMDD").toDate();
-			$scope.futureReleases.endDate = moment(cacheService.loadFilter('futureEndDate'), "YYYYMMDD").toDate();
-			$scope.accountsFutureModel = cacheService.loadFilter('futureBankAccountIds');
-			$scope.shopsFutureModel = cacheService.loadFilter('futureShopIds');
-			$scope.acquirersFutureModel = cacheService.loadFilter('futureAcquirerIds');
-			$scope.cardProductsFutureModel = cacheService.loadFilter('futureCardProductIds');
-
-		} else {
-			//cacheService.clearFilter();
 		}
     }
 
