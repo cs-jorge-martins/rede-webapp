@@ -8,9 +8,9 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
      advancedFilterService, $location,FinancialService){
 
 		var filter = {};
-		init();
+		Init();
 
-		function init(){
+		function Init(){
 			$rootScope.bodyId = "receiptsDetailsPage";
 			$scope.$on("$routeChangeStart", function(next, current){
 				$rootScope.bodyId = null;
@@ -25,11 +25,10 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 				$scope.startDate = $rootScope.receiptsDetails.periodStartDate;
 				$scope.endDate = $rootScope.receiptsDetails.periodEndDate;
-				$scope.dateTitle = dateTitle;
+				$scope.dateTitle = DateTitle;
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
 				$scope.products = $rootScope.receiptsDetails.products;
-				//$scope.type = $rootScope.receiptsDetails.type;
 				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
 
 				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
@@ -62,20 +61,23 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
-				$scope.back = back;
-				$scope.getShopsLabel = getShopsLabel;
-				getFutureDetails();
-				// getOtherDetails();
+				$scope.back = Back;
+				$scope.getShopsLabel = GetShopsLabel;
+				$scope.sortResults = SortResults;
+				$scope.pageChanged = PageChanged;
+				$scope.totalItensPageChanged = TotalItensPageChanged;
+				
+				GetFutureDetails();
 			}
 		}
 
-		function getShopsFilter(model) {
+		function GetShopsFilter(model) {
 			return model.map(function(item){
 				return item.id;
 			}).join(",");
 		}
 
-		function dateTitle() {
+		function DateTitle() {
 			var string = "";
 
 			if($scope.startDate && $scope.endDate) {
@@ -87,8 +89,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 			return string;
 		}
 
-		function getShopsLabel() {
-
+		function GetShopsLabel() {
 			var shops = "";
 
 			if($scope.shops.length > 1) {
@@ -100,20 +101,19 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 			}
 
 			return shops;
-
 		}
 
-	    function back(){
+	    function Back(){
 	        $location.path('/receipts');
 	    }
 
-	    function getFutureDetails() {
+	    function GetFutureDetails() {
 
 			var filter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.startDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 				bankAccountIds: $scope.bankAccount.id,
-				shopIds: getShopsFilter($scope.shopIds),
+				shopIds: GetShopsFilter($scope.shopIds),
 				acquirerIds: $scope.acquirer.id,
 				cardProductIds: $scope.cardProduct.cardProductId,
 				page:  $scope.currentPage ==  0 ? $scope.currentPage : $scope.currentPage - 1,
@@ -131,27 +131,26 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.totalItens = pagination.totalElements;
 
 			}).catch(function (response) {
-
 			});
 
 	    }
 
-		$scope.sortResults = function(elem, kind) {
+		function SortResults(elem, kind) {
 			$scope.sort = $rootScope.sortResults(elem,kind);
-			getFutureDetails();
+			GetFutureDetails();
 		}
 
 	    /* pagination */
-		$scope.pageChanged = function () {
+		function PageChanged() {
 			$scope.currentSize = this.totalItensPage;
 			$scope.currentPage = this.currentPage;
-			getFutureDetails();
+			GetFutureDetails();
 		};
 
-		$scope.totalItensPageChanged = function () {
+		function TotalItensPageChanged() {
 			this.currentPage = $scope.totalItensPage = 0;
 			$scope.totalItensPage = this.currentPage;
-			getFutureDetails();
+			GetFutureDetails();
 		};
 
 	});

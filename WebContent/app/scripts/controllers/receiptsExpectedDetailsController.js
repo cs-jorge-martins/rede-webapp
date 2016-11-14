@@ -1,6 +1,6 @@
 angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/receipts/expected_details', {templateUrl: 'app/views/receipts_expected_details.html', controller: 'receiptsExpectedDetailsController'});
 }])
 

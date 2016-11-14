@@ -6,7 +6,7 @@
 
 angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFileUpload'])
 
-.config(['$routeProvider','RestangularProvider', function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/integration', {templateUrl: 'app/views/vendas/integration.html', controller: 'integrationController'});
 }])
 

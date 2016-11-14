@@ -8,9 +8,9 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
      advancedFilterService, $location, AdjustService){
 
 		var filter = {};
-		init();
+		Init();
 
-		function init(){
+		function Init(){
 			$rootScope.bodyId = "receiptsDetailsPage";
 			$scope.$on("$routeChangeStart", function(next, current){
 				$rootScope.bodyId = null;
@@ -65,15 +65,20 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
-				$scope.back = back;
-				$scope.getShopsLabel = getShopsLabel;
-				$scope.getOtherDetails = getOtherDetails;
-				getOtherDetails();
+				$scope.back = Back;
+				$scope.getShopsLabel = GetShopsLabel;
+				$scope.getOtherDetails = GetOtherDetails;
+				$scope.totalOfSumAmount = TotalOfSumAmount;
+				$scope.sortResults = SortResults;
+				$scope.pageChangedSales = PageChangedSales;
+				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
+				$scope.pageChangedAdjusts = PageChangedAdjusts;
+
+				GetOtherDetails();
 			}
 		}
 
-		function getShopsLabel() {
-
+		function GetShopsLabel() {
 			var shops = "";
 
 			if($scope.shops.length > 1) {
@@ -85,14 +90,13 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 			}
 
 			return shops;
-
 		}
 
-	    function back(){
+	    function Back(){
 	        $location.path('/receipts');
 	    }
 
-	    function getOtherDetails() {
+	    function GetOtherDetails() {
 	    	$scope.otherDetailsData = [];
 			filter.sort = $scope.sort;
 			AdjustService.GetOtherDetails(filter).then(function(response) {
@@ -107,38 +111,34 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 			});
 	    }
 
-	    $scope.totalOfSumAmount = totalOfSumAmount;
-
-	    function totalOfSumAmount() {
+	    function TotalOfSumAmount() {
 	    	return $scope.otherDetailsData.reduce(function(prev, curr) {
 		    	return prev + curr.amount;
 		    }, 0);
 	    }
 
-	    $scope.sortResults = function(elem, kind) {
+	    function SortResults(elem, kind) {
 			var order_string;
 			order_string = $rootScope.sortResults(elem,kind);
-
 			$scope.sort = order_string;
 
-			getOtherDetails();
-
+			GetOtherDetails();
 	    }
 
 	    /* pagination */
-		$scope.pageChangedSales = function () {
+		function PageChangedSales() {
 			$scope.salesCurrentPage = this.salesCurrentPage;
-			getOtherDetails();
+			GetOtherDetails();
 		};
 
-		$scope.totalItensPageChangedSales = function () {
+		function TotalItensPageChangedSales() {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			getOtherDetails();
+			GetOtherDetails();
 		};
 
-		$scope.pageChangedAdjusts = function () {
+		function PageChangedAdjusts() {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			getOtherDetails();
+			GetOtherDetails();
 		};
 	});

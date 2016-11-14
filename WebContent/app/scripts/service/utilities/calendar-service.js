@@ -5,7 +5,7 @@
  */
 
 angular.module('KaplenWeb.calendarService',[])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider', function($routeProvider) {
 
 }])
 

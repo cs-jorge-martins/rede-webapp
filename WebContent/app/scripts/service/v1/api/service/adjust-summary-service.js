@@ -5,9 +5,9 @@
  */
 
 angular.module('Conciliador.AdjustSummaryService',[])
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function($routeProvider) {
 
-}]).service('AdjustSummaryService', function(app, Restangular, $location, $window, $http, Request) {
+}]).service('AdjustSummaryService', function(app, $location, $window, $http, Request) {
 
 	this.ListAdjustSummary = function(filter) {
 		var request = filter;

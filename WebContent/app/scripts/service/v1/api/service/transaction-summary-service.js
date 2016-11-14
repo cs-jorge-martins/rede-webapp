@@ -5,9 +5,9 @@
  */
 
 angular.module('Conciliador.TransactionSummaryService',[])
-.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+.config(['$routeProvider', function ($routeProvider) {
 
-}]).service('TransactionSummaryService', function(app, Restangular, $location, $http, Request) {
+}]).service('TransactionSummaryService', function(app, $location, $http, Request) {
 
 	this.ListTransactionSummaryByFilter = function(transactionSummaryFilter) {
 		var request = transactionSummaryFilter;

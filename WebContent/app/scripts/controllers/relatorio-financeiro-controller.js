@@ -9,7 +9,7 @@
 
 	angular
 	.module('KaplenWeb.relatorioFinanceiroController', ['ui.bootstrap'])
-	.config(['$routeProvider','RestangularProvider' , function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider', function ($routeProvider) {
 		$routeProvider.when('/relatorio/financeiro', {
 			templateUrl: 'app/views/relatorios/financeiro/index.html',
 			controller: 'relatorioFinanceiroController'

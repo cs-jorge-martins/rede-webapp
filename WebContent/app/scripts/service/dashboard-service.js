@@ -9,7 +9,7 @@ angular.module('KaplenWeb.dashboardService',[])
 
 }])
 
-.service('dashboardService', function(Restangular, TransactionSummaryService, AdjustSummaryService, MovementSummaryService, TransactionConciliationService) {
+.service('dashboardService', function(TransactionSummaryService, AdjustSummaryService, MovementSummaryService, TransactionConciliationService) {
 	this.GetTransactionSummaryBox = function(transactionSummaryFilter){
 		return TransactionSummaryService.ListTransactionSummaryByFilter(transactionSummaryFilter);
 	}
