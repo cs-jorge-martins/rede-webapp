@@ -3,18 +3,18 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.Request',[])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider' ,function ($routeProvider) {
 }])
 
-.factory('Request', function(Restangular, $window) {
+.factory('Request', function($window) {
 
 	return {
-		setHeaders: setHeaders
+		setHeaders: SetHeaders
 	};
 
-	function setHeaders() {
+	function SetHeaders() {
 
 		var defaultHeaders = {
 			'Content-Type': 'application/json'

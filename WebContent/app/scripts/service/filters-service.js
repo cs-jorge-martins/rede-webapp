@@ -3,14 +3,14 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.filtersService', [])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider',function ($routeProvider) {
 }])
 
 .service('filtersService', function(app, $http, Request) {
 
-	this.getAcquirers = function() {
+	this.GetAcquirers = function() {
 		var request = {
 		};
 
@@ -22,7 +22,7 @@ angular.module('KaplenWeb.filtersService', [])
 		});
 	};
 
-	this.getAccounts = function() {
+	this.GetAccounts = function() {
 		var request = {
 		};
 
@@ -34,7 +34,7 @@ angular.module('KaplenWeb.filtersService', [])
 		});
 	};
 
-	this.getShops = function() {
+	this.GetShops = function() {
 		var request = {
 		};
 
@@ -46,7 +46,7 @@ angular.module('KaplenWeb.filtersService', [])
 		});
 	};
 
-	this.getCardProducts = function() {
+	this.GetCardProducts = function() {
 		var request = {
 		};
 
@@ -57,17 +57,4 @@ angular.module('KaplenWeb.filtersService', [])
 			headers: Request.setHeaders()
 		});
 	};
-
-	this.getTerminals = function() {
-		var request = {
-		};
-
-		return $http({
-			url: app.endpoint + '/terminals',
-			method: "GET",
-			data: request,
-			headers: Request.setHeaders()
-		});
-	};
-
 });

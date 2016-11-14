@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('KaplenWeb.calendarService',[])
 	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 
@@ -19,7 +19,7 @@ angular.module('KaplenWeb.calendarService',[])
 	calendarService.initialDateChanged = false;
 	calendarService.finalDateChanged = false;
 
-	calendarService.resetCalendarService = function(){
+	calendarService.ResetCalendarService = function(){
 		calendarService.dataInicial = this.dataInicial = calendarFactory.getFirstDayOfMonth();
 		calendarService.dataFinal = this.dataFinal = calendarFactory.getLastDayOfMonth();
 
@@ -29,7 +29,7 @@ angular.module('KaplenWeb.calendarService',[])
 
 
 
-	calendarService.checkDateInitial = function(date){
+	calendarService.CheckDateInitial = function(date){
 		if(calendarService.initialDateChanged){
 			return calendarFactory.formatDate(calendarService.dataInicial, true);
 		}else{
@@ -37,7 +37,7 @@ angular.module('KaplenWeb.calendarService',[])
 		}
 	};
 
-	calendarService.checkDateFinal = function(date){
+	calendarService.CheckDateFinal = function(date){
 		if(calendarService.finalDateChanged){
 			return calendarFactory.formatDate(calendarService.dataFinal, true);
 		}else{
@@ -45,14 +45,14 @@ angular.module('KaplenWeb.calendarService',[])
 		}
 	};
 
-	calendarService.changeInitialDate = function(data){
+	calendarService.ChangeInitialDate = function(data){
 		if(data != calendarService.dataInicial){
 			calendarService.initialDateChanged = this.initialDateChanged = true;
 			calendarService.dataInicial = data;
 		}
 	};
 
-	calendarService.changeFinalDate = function(data){
+	calendarService.ChangeFinalDate = function(data){
 		if(data != calendarService.dataFinal){
 			calendarService.finalDateChanged = this.finalDateChanged = true;
 			calendarService.dataFinal = data;

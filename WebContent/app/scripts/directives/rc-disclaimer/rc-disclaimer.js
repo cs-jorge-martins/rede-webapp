@@ -3,23 +3,23 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 (function() {
 	'use strict';
 
 	angular
 		.module('KaplenWeb')
-		.directive('rcDisclaimer', rcDisclaimer);
+		.directive('rcDisclaimer', RcDisclaimer);
 
-	function rcDisclaimer() {
+	function RcDisclaimer() {
 		return {
 			restrict: 'E',
             templateUrl: 'app/views/directives/rc-disclaimer.html',
 			scope: true,
-            controller: controller
+            controller: Controller
         };
 
-        function controller($scope) {
+        function Controller($scope) {
         }
 	}
 })();

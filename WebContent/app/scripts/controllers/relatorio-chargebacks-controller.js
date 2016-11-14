@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 (function() {
     'use strict';
 
@@ -18,26 +18,26 @@
 		.controller('relatorioChargebacksController', RelatorioFinanceiro);
 
 	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', '$modal', 'calendarFactory', '$rootScope',
-	'relatorioService', 'installmentsService', '$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService'];
+	'$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService'];
 
 	function RelatorioFinanceiro(menuFactory, $scope, $modal, calendarFactory, $rootScope,
-	    relatorioService, installmentsService, $window, advancedFilterService, calendarService, TransactionSummaryService) {
+	    $window, advancedFilterService, calendarService, TransactionSummaryService) {
 
 		//Extensao do serviço para filtro avançado
     	angular.extend($scope, advancedFilterService);
-    	$scope.loadParamsByFilter();
+    	$scope.LoadParamsByFilter();
 
     	//Extensao do serviço para calendario
     	angular.extend($scope, calendarService);
-    	$scope.resetCalendarService();
+    	$scope.ResetCalendarService();
 
     	menuFactory.setActiveReportsChargebacks();
 
-		$scope.updateIndicator = updateIndicator;
-		$scope.clearFilter = clearFilter;
-		$scope.getReport = getReport;
-		$scope.pageChanged = pageChanged;
-		$scope.totalItensPageChanged = totalItensPageChanged;
+		$scope.updateIndicator = UpdateIndicator;
+		$scope.clearFilter = ClearFilter;
+		$scope.getReport = GetReport;
+		$scope.pageChanged = PageChanged;
+		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
 		$scope.totalItensPage = 10;
@@ -49,15 +49,16 @@
 
         $scope.tableName = 'cancelamento';
 		$scope.sort = 'adjustDate,ASC';
+        $scope.sortResults = SortResults;
 
-		init();
+		Init();
 
-		function init(){
-			clearFilter();
-			getReport();
+		function Init(){
+			ClearFilter();
+			GetReport();
 		}
 
-		function getReport(){
+		function GetReport(){
 
             var shopIds = [];
 
@@ -68,12 +69,12 @@
 				shopIds = shopIds.join(",");
     		}
 
-            getIndicator();
+            GetIndicator();
 
 			var filter = {
 				currency: 'BRL',
-				cancellationStartDate: handleDate($scope.initialDate),
-				cancellationEndDate: handleDate($scope.finalDate),
+				cancellationStartDate: HandleDate($scope.initialDate),
+				cancellationEndDate: HandleDate($scope.finalDate),
                 groupBy: 'CANCELLATION_DAY,CARD_PRODUCT,ADJUST_TYPE',
 				cardProductIds: $scope.productsSelected,
 				shopIds: shopIds,
@@ -91,8 +92,8 @@
 				$scope.currentPage = $scope.currentPage + 1;
 			}
 
-			TransactionSummaryService.listTransactionSummaryByFilter(handleFilter(filter)).then(function(response) {
-				var data = handleResponse(response.data.content);
+			TransactionSummaryService.ListTransactionSummaryByFilter(HandleFilter(filter)).then(function(response) {
+				var data = HandleResponse(response.data.content);
                 var pagination = response.data.page;
 
 				$scope.items = data;
@@ -102,7 +103,7 @@
             });
 		}
 
-		function getIndicator() {
+		function GetIndicator() {
 
             var shopIds = [];
 
@@ -115,8 +116,8 @@
 
 			var filter = {
 				currency: 'BRL',
-				cancellationStartDate: handleDate($scope.initialDate),
-				cancellationEndDate: handleDate($scope.finalDate),
+				cancellationStartDate: HandleDate($scope.initialDate),
+				cancellationEndDate: HandleDate($scope.finalDate),
 				shopIds: shopIds,
 				groupBy: ['ADJUST_TYPE'],
 				cardProductIds: $scope.productsSelected,
@@ -124,8 +125,8 @@
 				adjustTypes: 'CANCELLATION,CHARGEBACK'
 			};
 
-			TransactionSummaryService.listTransactionSummaryByFilter(handleFilter(filter)).then(function(response) {
-				var data = handleResponse(response.data.content);
+			TransactionSummaryService.ListTransactionSummaryByFilter(HandleFilter(filter)).then(function(response) {
+				var data = HandleResponse(response.data.content);
 
 				for(var item in data){
 					if(typeof data[item] === 'object') {
@@ -144,7 +145,7 @@
             });
 		}
 
-		function updateIndicator(adjustType){
+		function UpdateIndicator(adjustType){
 			$scope.adjustType = [adjustType];
             if(adjustType == 'CANCELLATION') {
                 $scope.tableName = 'cancelamento';
@@ -152,10 +153,10 @@
                 $scope.tableName = 'chargeback';
             }
 			$scope.currentPage = 0;
-			getReport();
+			GetReport();
 		};
 
-		function clearFilter() {
+		function ClearFilter() {
 			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
 			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
@@ -164,7 +165,7 @@
 			document.getElementById("buscaTerminal").value = '';
 		}
 
-		function handleResponse(response) {
+		function HandleResponse(response) {
 			var items = [];
 
 			for(var item in response){
@@ -178,11 +179,11 @@
 			return items;
 		}
 
-		function handleDate(date) {
+		function HandleDate(date) {
 			return calendarFactory.formatDateTimeForService(date);
 		}
 
-		function handleFilter(filter) {
+		function HandleFilter(filter) {
 			if(filter.cardProductIds) {
 				if(filter.cardProductIds.length === 0) {
 					delete filter.cardProductIds;
@@ -218,20 +219,20 @@
 			return filter;
 		}
 
-		function pageChanged() {
+		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
-			getReport();
+			GetReport();
 		};
 
-		function totalItensPageChanged() {
+		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
-			getReport();
+			GetReport();
 		};
 
-		$scope.sortResults = function (elem,kind) {
+		function SortResults(elem,kind) {
 			$scope.sort = $rootScope.sortResults(elem,kind);
-			getReport();
+			GetReport();
 		};
 	}
 })();
