@@ -99,6 +99,7 @@
 				cardProductIds: $scope.productsSelected.map(function(item){
                     return item.id;
                 }).join(','),
+                conciliationStatus: 'TO_CONCILIE,CONCILIED',
 				currency: 'BRL',
 				sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
