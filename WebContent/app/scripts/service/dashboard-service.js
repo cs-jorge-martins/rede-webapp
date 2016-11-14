@@ -22,7 +22,7 @@ angular.module('KaplenWeb.dashboardService',[])
 		return MovementSummaryService.ListMovementSummaryByFilter(movementSummaryFilter);
 	}
 
-	this.getTransactionConciliationBox = function(transactionFilter){
+	this.GetTransactionConciliationBox = function(transactionFilter){
 		return TransactionConciliationService.ListTransactionConciliationByFilter(transactionFilter);
 	}
 });

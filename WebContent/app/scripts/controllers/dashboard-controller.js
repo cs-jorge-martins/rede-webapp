@@ -12,7 +12,7 @@ angular.module('KaplenWeb.dashboardController',[])
 }])
 
 .controller('dashboardController', function($scope, $modal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, userService, cacheService, resumoConciliacaoService, TransactionSummaryService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
 
 	menuFactory.setActiveDashboard();
 
@@ -119,7 +119,6 @@ angular.module('KaplenWeb.dashboardController',[])
 		transactionSummaryFilterCurrentMonth.endDate = $scope.currentMonthPerid.lastDate;
 		transactionSummaryFilterCurrentMonth.conciliationStatus = 'TO_CONCILIE,CONCILIED';
 		// Consulta do mês corrente
-
 		dashboardService.GetTransactionSummaryBox(transactionSummaryFilterCurrentMonth).then(function(item){
 			item = item.data.content;
 			$scope.transactionSummaryBoxCurrentMonth = {};
@@ -373,7 +372,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		$scope.weeks = weeks;
 		$scope.calendarMonth = calendarFactory.getNameOfMonth(date);
 
-		resumoConciliacaoService.listTransactionConciliationCalendarMonth({
+		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
 			startDate: calendarFactory.formatDateForService(firstDayOfMonth),
 			endDate: calendarFactory.formatDateForService(lastDayOfMonth),

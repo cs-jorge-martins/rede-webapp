@@ -9,17 +9,17 @@ angular.module('Conciliador.salesController',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 	$routeProvider.when('/sales', {templateUrl: 'app/views/sales.html', controller: 'salesController'});
 }]).controller('salesController', function($scope, $modal,  $rootScope, menuFactory, calendarFactory, $location,
-	FinancialService, userService, cacheService, advancedFilterService, movementsService, resumoConciliacaoService, TransactionService){
+	FinancialService, cacheService, advancedFilterService, TransactionConciliationService, TransactionService, TransactionSummaryService){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParamsByFilter();
+	$scope.LoadParamsByFilter();
 	menuFactory.setActiveResumoConciliacao();
 
 	$scope.$on('$routeChangeSuccess', function(next, current,previous) {
 		if(previous) {
 			if(!previous.$$route.originalPath.match('details')) {
-				cacheService.clearFilter();
+				cacheService.ClearFilter();
 			}
 		}
 
@@ -195,7 +195,7 @@ angular.module('Conciliador.salesController',[])
 			}
 		}
 
-		resumoConciliacaoService.listTransactionConciliationCalendarMonth({
+		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
 			startDate: calendarFactory.formatDateForService(firstDayOfMonth),
 			endDate: calendarFactory.formatDateForService(lastDayOfMonth),
@@ -315,7 +315,7 @@ angular.module('Conciliador.salesController',[])
 		}
 
 		if(cache) {
-			cacheService.saveFilter({
+			cacheService.SaveFilter({
 				startDate: date,
 				endDate: date,
 				conciliationStatus: $scope.statusSelected,
@@ -327,7 +327,7 @@ angular.module('Conciliador.salesController',[])
 
 		$scope.items = [];
 
-		resumoConciliacaoService.getTransactionSummary(filter).then(function(data){
+		TransactionSummaryService.ListTransactionSummaryByFilter(filter).then(function(data){
 			data = data.data.content;
 			var items = [];
 			for(var item in data){
@@ -503,24 +503,24 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	function GetCachedData() {
-		cacheService.getSettlements();
-		cacheService.getProducts();
+		cacheService.GetSettlements();
+		cacheService.GetProducts();
 
 		$scope.dateSelected = calendarFactory.getYesterdayDate();
 		$scope.statusSelected = 0;
 
-		if(cacheService.loadFilter('context') == 'sales') {
+		if(cacheService.LoadFilter('context') == 'sales') {
 
-			$scope.dateSelected = cacheService.loadFilter('startDate') || calendarFactory.getYesterdayDate();
-			$scope.natureza = cacheService.loadFilter('types');
-			$scope.statusSelected = cacheService.loadFilter('conciliationStatus') || 0;
+			$scope.dateSelected = cacheService.LoadFilter('startDate') || calendarFactory.getYesterdayDate();
+			$scope.natureza = cacheService.LoadFilter('types');
+			$scope.statusSelected = cacheService.LoadFilter('conciliationStatus') || 0;
 
-			var productsSelected = cacheService.loadFilter('productsSelected');
-			var settlementsSelected = cacheService.loadFilter('settlementsSelected');
+			var productsSelected = cacheService.LoadFilter('productsSelected');
+			var settlementsSelected = cacheService.LoadFilter('settlementsSelected');
 
 			if(productsSelected) {
 				for(var item in productsSelected) {
-					advancedFilterService.addProductsSearch(productsSelected[item]);
+					advancedFilterService.AddProductsSearch(productsSelected[item]);
 				}
 			} else {
 				$scope.productsSelected = [];
@@ -528,7 +528,7 @@ angular.module('Conciliador.salesController',[])
 
 			if(settlementsSelected) {
 				for(var item in settlementsSelected) {
-					advancedFilterService.addSettlementsSearch(settlementsSelected[item]);
+					advancedFilterService.AddSettlementsSearch(settlementsSelected[item]);
 				}
 			} else {
 				$scope.settlementsSelected = [];

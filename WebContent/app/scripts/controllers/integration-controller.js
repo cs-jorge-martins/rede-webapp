@@ -185,7 +185,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					$scope.currentPage = $scope.currentPage + 1;
 				}
 
-				integrationService.getUploadedFiles(filter).then(function(response){
+				integrationService.GetUploadedFiles(filter).then(function(response){
 					$scope.listUploadedFiles = [];
 					var data = response.data.content;
 					var pagination = response.data.page;
@@ -217,7 +217,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				type: $scope.typeModel.type
 			}
 
-			integrationService.downloadFiles(filter).then(function(response){
+			integrationService.DownloadFiles(filter).then(function(response){
 				var vm = this;
 
 				vm.val = {

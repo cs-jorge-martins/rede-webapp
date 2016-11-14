@@ -41,7 +41,7 @@ angular.module('Conciliador.redirectController',[])
 			return ErrorMessage();
 		}
 
-		loginService.singleSignOn(authorization).then(function (data) {
+		loginService.SingleSignOn(authorization).then(function (data) {
 
 			if(data.status != 200) {
 				return ErrorMessage();

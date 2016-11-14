@@ -11,12 +11,12 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 }])
 
 .controller('salesDetailsController', function(menuFactory, $rootScope, $scope, $modal, calendarFactory, $timeout, cacheService,
-			resumoConciliacaoService, transactionsService, dashboardService, installmentsService, kaplenAdminService, $window,
-			userService, integrationService, advancedFilterService, calendarService, Restangular, $location, TransactionService){
+			dashboardService, kaplenAdminService, $window,
+			integrationService, advancedFilterService, calendarService, Restangular, $location, TransactionService){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParamsByFilter();
+	$scope.LoadParamsByFilter();
 
 	menuFactory.setActiveResumoConciliacao();
 
@@ -27,7 +27,6 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	var dateItensAccordion = $rootScope._dateItemAccordionSelected;
 	var settlementsSelected = $rootScope._settlements;
 	$scope.statusItemAccordionSelected = $rootScope._statusItemAccordionSelected ;
-	resumoConciliacaoService.setConcilied(false);
 
 	$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation(dateItensAccordion);
 	$scope.dayOfActualDate = calendarFactory.getDayOfMonth(dateItensAccordion);
@@ -48,7 +47,6 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	$scope.activeButtonConcilied = ActiveButtonConcilied;
 	$scope.checkItem = CheckItem;
 	$scope.checkAllItensModal = CheckAllItensModal;
-	$scope.conciliarVendas = ConciliarVendas;
 	$scope.orderColumn = OrderColumn;
 	$scope.alterTotalItensPage = AlterTotalItensPage;
 	$scope.cancel = Cancel;
@@ -292,19 +290,6 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 			});
 		}
 		ActiveButtonConcilied();
-	};
-
-	function ConciliarVendas(){
-		if(itensSelected.length > 0){
-			this.checkAll = false;
-			$scope.button = false;
-			$scope.buttonConcilied = true;
-
-			resumoConciliacaoService.reconciliateTransactionModal(itensSelected).then(function() {
-				modalUpdated = true;
-				resumoConciliacaoService.setConcilied(true);
-			});
-		}
 	};
 
 	function OrderColumn(column) {

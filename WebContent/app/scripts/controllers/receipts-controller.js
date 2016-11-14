@@ -16,12 +16,12 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 })
 
-.controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, transactionsService, $window, userService, $timeout,
+.controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
-	$scope.loadParamsByFilter();
+	$scope.LoadParamsByFilter();
 
 	menuFactory.setActiveMovements();
 
@@ -120,7 +120,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		};
 
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
 
 			if( data.length ) {
@@ -157,7 +157,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				status: 'RECEIVED,FORETHOUGHT'
 			};
 
-			receiptsService.getFinancials(filter).then(function(response) {
+			receiptsService.GetFinancials(filter).then(function(response) {
 				var data = response.data;
 				var releases = [];
 
@@ -285,7 +285,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				groupBy: 'TYPE,DESCRIPTION'
 			};
 
-			receiptsService.getAdjusts(filter).then(function(response){
+			receiptsService.GetAdjusts(filter).then(function(response){
 					var data = response.data.content;
 					var total = 0;
 
@@ -316,7 +316,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				groupBy: 'CARD_PRODUCT'
 			};
 
-			receiptsService.getFinancials(filter).then(function(response){
+			receiptsService.GetFinancials(filter).then(function(response){
 					var data = response.data;
 					var total = 0;
 
@@ -364,7 +364,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			acquirerIds: GetAcquirersFilter(),
 		};
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
 			var totalToReceive = 0;
 			var discountedTotal = 0;
@@ -387,7 +387,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 
 			filter.status = 'FORETHOUGHT';
-			receiptsService.getFinancials(filter).then(function(response) {
+			receiptsService.GetFinancials(filter).then(function(response) {
 				var data = response.data;
 				var antecipatedTotal = 0;
 				for(var index in data) {
@@ -396,7 +396,7 @@ angular.module('KaplenWeb.movementsModule',[])
 					}
 				}
 
-				receiptsService.getFinancials(filterPagamentosNaoRecebidos).then(function(response) {
+				receiptsService.GetFinancials(filterPagamentosNaoRecebidos).then(function(response) {
 
 					// amount soma em totais descontados
 					var data = response.data;
@@ -404,7 +404,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						pagamentosNaoRecebidos = data[index].expectedAmount;
 					}
 
-					receiptsService.getAdjusts(filterOthers).then(function(responseAdjusts) {
+					receiptsService.GetAdjusts(filterOthers).then(function(responseAdjusts) {
 
 						var others = 0;
 
@@ -470,7 +470,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			status: 'EXPECTED'
 		};
 
-		receiptsService.getFinancials(filter).then(function(response) {
+		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
 
 			if( data.length ) {
@@ -503,7 +503,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				status: 'EXPECTED'
 			};
 
-			receiptsService.getFinancials(filter).then(function(response) {
+			receiptsService.GetFinancials(filter).then(function(response) {
 				var data = response.data;
 				var releases = [];
 
@@ -883,7 +883,7 @@ angular.module('KaplenWeb.movementsModule',[])
     }
 
     function SaveFilters() {
-    	cacheService.saveFilter({
+    	cacheService.SaveFilter({
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			bankAccountIds: $scope.accountsModel,
@@ -900,18 +900,18 @@ angular.module('KaplenWeb.movementsModule',[])
     }
 
     function GetCachedData() {
-		if(cacheService.loadFilter('context') == 'receipts') {
-			$scope.actualReleases.date = moment(cacheService.loadFilter('startDate'), "YYYYMMDD").toDate();
-			$scope.accountsModel = cacheService.loadFilter('bankAccountIds');
-			$scope.shopsModel = cacheService.loadFilter('shopIds');
-			$scope.acquirersModel = cacheService.loadFilter('acquirerIds');
-			$scope.cardProductsModel = cacheService.loadFilter('cardProductIds');
-			$scope.futureReleases.startDate = moment(cacheService.loadFilter('futureStartDate'), "YYYYMMDD").toDate();
-			$scope.futureReleases.endDate = moment(cacheService.loadFilter('futureEndDate'), "YYYYMMDD").toDate();
-			$scope.accountsFutureModel = cacheService.loadFilter('futureBankAccountIds');
-			$scope.shopsFutureModel = cacheService.loadFilter('futureShopIds');
-			$scope.acquirersFutureModel = cacheService.loadFilter('futureAcquirerIds');
-			$scope.cardProductsFutureModel = cacheService.loadFilter('futureCardProductIds');
+		if(cacheService.LoadFilter('context') == 'receipts') {
+			$scope.actualReleases.date = moment(cacheService.LoadFilter('startDate'), "YYYYMMDD").toDate();
+			$scope.accountsModel = cacheService.LoadFilter('bankAccountIds');
+			$scope.shopsModel = cacheService.LoadFilter('shopIds');
+			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
+			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
+			$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
+			$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
+			$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
+			$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
+			$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
+			$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
 
 		}
     }

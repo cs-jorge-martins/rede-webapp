@@ -9,7 +9,7 @@ angular.module('Conciliador.helpController',[])
 .config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
 	$routeProvider.when('/help', {templateUrl: 'app/views/help.html', controller: 'helpController'});
 }]).controller('helpController', function($scope, $rootScope, menuFactory, $location,
-	userService, cacheService, $sce){
+	cacheService, $sce){
 
 	menuFactory.deactivate();
 

@@ -11,9 +11,9 @@
 		.module('KaplenWeb')
 		.directive('rcDatepicker', RcDatepicker);
 
-	RcDatepicker.$inject = ['resumoConciliacaoService', 'calendarFactory']
+	RcDatepicker.$inject = ['calendarFactory']
 
-	function RcDatepicker(resumoConciliacaoService, calendarFactory) {
+	function RcDatepicker(calendarFactory) {
 		return {
 			restrict: 'E',
 			templateUrl: 'app/views/directives/rc-datepicker.html',

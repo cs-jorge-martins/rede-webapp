@@ -65,26 +65,26 @@
                                                     datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
                                             </li>
                                             <li class="center itauicon-itaufonts_para_empresa">
-                                                <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+                                                <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
                                                     ng-model="settlement" typeahead-append-to-body="true"
-                                                    typeahead-on-select="addSettlementsSearch(settlement)"
-                                                    typeahead="item as item.code for item in getSettlements()"/>
+                                                    typeahead-on-select="AddSettlementsSearch(settlement)"
+                                                    typeahead="item as item.code for item in GetSettlements()"/>
                                                 <ul ng-repeat="item in settlementsSelected">
                                                   <li>
                                                     <h4>{{item.code}}</h4>
-                                                    <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a></li>
+                                                    <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="RemoveSettlementsSearch(item)">Fechar</a></li>
                                                 </ul>
                                             </li>
                                             <li class="itauicon-itaufonts_cartao">
                                                 <input id="naturezaProduto" name="naturezaProduto" type="text"
-                                                placeholder="{{getPlaceholderFlag(productsSelected)}}"
+                                                placeholder="{{GetPlaceholderFlag(productsSelected)}}"
                                                     ng-model="product" typeahead-append-to-body="true"
-                                                    typeahead-on-select="addProductsSearch(product)"
-                                                    typeahead="item as item.name for item in getProducts() | filter:$viewValue"/>
+                                                    typeahead-on-select="AddProductsSearch(product)"
+                                                    typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
                                                 <ul ng-repeat="item in productsSelected">
                                                     <li>
                                                         <h4>{{item.name}}</h4>
-                                                        <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="removeProductsSearch(item)">Fechar</a></li>
+                                                        <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="RemoveProductsSearch(item)">Fechar</a></li>
                                                 </ul>
                                             </li>
                                         </ul>

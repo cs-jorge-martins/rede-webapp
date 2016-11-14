@@ -62,14 +62,14 @@
                                                         close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"  style="background:transparent;margin-left:-35px;padding-left:40px!important;"/>
                                                 </li>
                                                 <li class="itauicon-itaufonts_para_empresa">
-                                                    <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{getPlaceholder(settlementsSelected)}}"
+                                                    <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
                                                         ng-model="settlement"
-                                                        typeahead-on-select="addSettlementsSearch(settlement)"
-                                                        typeahead="item as item.code for item in getSettlements()"/>
+                                                        typeahead-on-select="AddSettlementsSearch(settlement)"
+                                                        typeahead="item as item.code for item in GetSettlements()"/>
                                                     <ul ng-repeat="item in settlementsSelected">
                                                       <li>
                                                         <h4>{{item.code}}</h4>
-                                                        <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="removeSettlementsSearch(item)">Fechar</a></li>
+                                                        <a class="removeSettlementsSearch" href="javascript:void(0);" ng-click="RemoveSettlementsSearch(item)">Fechar</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>

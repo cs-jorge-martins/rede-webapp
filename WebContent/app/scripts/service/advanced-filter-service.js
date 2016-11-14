@@ -42,105 +42,39 @@ angular.module('KaplenWeb.advancedFilterService',[])
 	advancedFilterService.terminalsSearch = this.terminalsSearch = [];
 	advancedFilterService.installmentsSearch = this.installmentsSearch = [];
 	advancedFilterService.accountsSearch = this.accountsSearch = [];
-
 	advancedFilterService.filterClick = this.filterClick = false;
-
-	advancedFilterService.getAdditionalInformations = function(companyId){
-		return Restangular.one('integration/additionalInformations').get({companyId:companyId});
-	};
-
 	advancedFilterService.additionalInformations = this.additionalInformations = false;
 
-	/**************arrays de busca vindo do cache*******************************/
-	advancedFilterService.getAcquirers = function() {
-		return cacheService.getAcquirers();
+	advancedFilterService.GetProducts = function() {
+		return cacheService.GetProducts();
 	};
 
-	advancedFilterService.getBrands = function() {
-		return cacheService.getBrands();
-	};
-
-	advancedFilterService.getProducts = function() {
-		return cacheService.getProducts();
-	};
-
-	advancedFilterService.getSettlements = function() {
-		return cacheService.getSettlements();
-	};
-
-	advancedFilterService.getTerminals = function() {
-		return cacheService.getTerminals();
-	};
-
-	advancedFilterService.getAccounts = function() {
-		return cacheService.getAccounts();
-	};
-
-	advancedFilterService.setTipoTerminal = function(value) {
-		advancedFilterService.tipoTerminal = value;
-	};
-
-	advancedFilterService.getTipoTerminal = function() {
-		return advancedFilterService.tipoTerminal;
-	};
-
-	/****************************************Funções do auto complete de operadora*****************************************/
-	advancedFilterService.addAcquirerSearch = function(value) {
-		advancedFilterService.acquirer = this.acquirer = '';
-		advancedFilterService.acquirersSelected = this.acquirersSelected = advancedFilterService.addItemSearch(value, this.acquirersSelected, this.acquirersSearch);
-	};
-
-	advancedFilterService.removeAcquirerSearch = function(value) {
-		advancedFilterService.acquirersSelected.splice(this.acquirersSelected.indexOf(value), 1);
-		advancedFilterService.acquirersSearch.splice(this.acquirersSearch.indexOf(value.id), 1);
-	};
-
-	/****************************************Funções do auto complete de Bandeira*****************************************/
-
-	advancedFilterService.addBrandsSearch = function(value) {
-		advancedFilterService.brand = this.brand = '';
-		advancedFilterService.brandsSelected = this.brandsSelected = advancedFilterService.addItemSearch(value, this.brandsSelected, this.brandsSearch);
-	};
-
-	advancedFilterService.removeBrandsSearch = function(value) {
-		advancedFilterService.brandsSelected.splice(this.brandsSelected.indexOf(value), 1);
-		advancedFilterService.brandsSearch.splice(this.brandsSearch.indexOf(value.id), 1);
+	advancedFilterService.GetSettlements = function() {
+		return cacheService.GetSettlements();
 	};
 
 	/****************************************Funções do auto complete de Produto*****************************************/
 
-	advancedFilterService.addProductsSearch = function(value) {
+	advancedFilterService.AddProductsSearch = function(value) {
 		advancedFilterService.product = this.product = '';
-		advancedFilterService.productsSelected = this.productsSelected = advancedFilterService.addItemSearch(value, this.productsSelected, this.productsSearch);
+		advancedFilterService.productsSelected = this.productsSelected = advancedFilterService.AddItemSearch(value, this.productsSelected, this.productsSearch);
 	};
 
-	advancedFilterService.removeProductsSearch = function(value) {
+	advancedFilterService.RemoveProductsSearch = function(value) {
 		advancedFilterService.productsSelected.splice(this.productsSelected.indexOf(value), 1);
 		advancedFilterService.productsSearch.splice(this.productsSearch.indexOf(value.id), 1);
 	};
 
 	/****************************************Funções do auto complete de Unidades*****************************************/
 
-	advancedFilterService.addSettlementsSearch = function(value) {
+	advancedFilterService.AddSettlementsSearch = function(value) {
 		advancedFilterService.settlement = this.settlement = '';
-		advancedFilterService.settlementsSelected = this.settlementsSelected = advancedFilterService.addItemSearch(value, this.settlementsSelected, this.settlementsSearch);
+		advancedFilterService.settlementsSelected = this.settlementsSelected = advancedFilterService.AddItemSearch(value, this.settlementsSelected, this.settlementsSearch);
 	};
 
-	advancedFilterService.removeSettlementsSearch = function(value) {
+	advancedFilterService.RemoveSettlementsSearch = function(value) {
 		advancedFilterService.settlementsSelected.splice(this.settlementsSelected.indexOf(value), 1);
 		advancedFilterService.settlementsSearch.splice(this.settlementsSearch.indexOf(value.id), 1);
-	};
-
-	/****************************************Funções do auto complete de Terminals*****************************************/
-
-	advancedFilterService.addTerminalsSearch = function(value) {
-		advancedFilterService.terminal = this.terminal = '';
-		advancedFilterService.terminalsSelected = this.terminalsSelected = advancedFilterService.addItemSearch(value, this.terminalsSelected, this.terminalsSearch);
-	};
-
-	advancedFilterService.removeTerminalsSearch = function(value) {
-		advancedFilterService.terminalsSelected.splice(this.terminalsSelected.indexOf(value), 1);
-		advancedFilterService.terminalsSearch.splice(this.terminalsSearch.indexOf(value.id), 1);
 	};
 
 	/****************************************Funções do auto complete de Parcelas*****************************************/
@@ -173,29 +107,9 @@ angular.module('KaplenWeb.advancedFilterService',[])
 	                       {id: 24, name:'24x', number:24},
 	                      ];
 
-	advancedFilterService.addParcelasAutoComplete = function(value) {
-		advancedFilterService.installment = this.installment = '';
-		advancedFilterService.installmentsSelected = this.installmentsSelected = advancedFilterService.addItemSearch(value, this.installmentsSelected, this.installmentsSearch);
-	};
-
-	advancedFilterService.removeParcelasAutoComplete = function(value) {
-		advancedFilterService.installmentsSelected.splice(this.installmentsSelected.indexOf(value), 1);
-		advancedFilterService.installmentsSearch.splice(this.installmentsSearch.indexOf(value.id), 1);
-	};
-
-	advancedFilterService.addAccountsSearch = function(value) {
-		advancedFilterService.account = this.account = '';
-		advancedFilterService.accountsSelected = this.accountsSelected = advancedFilterService.addItemSearch(value, this.accountsSelected, this.accountsSearch);
-	};
-
-	advancedFilterService.removeAccountsSearch = function(value) {
-		advancedFilterService.accountsSelected.splice(this.accountsSelected.indexOf(value), 1);
-		advancedFilterService.accountsSearch.splice(this.accountsSearch.indexOf(value.id), 1);
-	};
-
 	/************************************************Botão e logica para pegar ids para pesquisa************************************/
 
-	advancedFilterService.loadParamsByFilter = function(){
+	advancedFilterService.LoadParamsByFilter = function(){
 		advancedFilterService.natureza = this.natureza = 0;
 		advancedFilterService.tipoTerminal = this.tipoTerminal = 0;
 
@@ -229,7 +143,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 		advancedFilterService.filterClick = this.filterClick = false;
 	};
 
-	advancedFilterService.addItemSearch = function(value, listSelected, listSearch){
+	advancedFilterService.AddItemSearch = function(value, listSelected, listSearch){
 		var validate = false;
 
 		if (value !== "") {
@@ -253,7 +167,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 		return listSelected;
 	};
 
-	advancedFilterService.getPlaceholder = function(listSelected){
+	advancedFilterService.GetPlaceholder = function(listSelected){
 		if(listSelected.length > 0){
 			return listSelected.length + ' item(s) selecionado(s)';
 		}else{
@@ -264,7 +178,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 
 
 
-	advancedFilterService.getPlaceholderFlag = function(listSelected) {
+	advancedFilterService.GetPlaceholderFlag = function(listSelected) {
 		if (listSelected.length > 0) {
 			return listSelected.length + " bandeira(s) selecionada(s)";
 		} else {

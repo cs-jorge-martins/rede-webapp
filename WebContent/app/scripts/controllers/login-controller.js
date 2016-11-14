@@ -10,11 +10,9 @@ angular.module('KaplenWeb.loginController',[])
 	$routeProvider.when('/login', {templateUrl: 'app/views/login.html', controller: 'loginController'});
 }])
 
-.controller('loginController', function($scope, $modal, $rootScope, $window, $location, loginService, userService){
+.controller('loginController', function($scope, $modal, $rootScope, $window, $location, loginService){
 
 	$rootScope.destroyVariablesSession();
-
-	var userFirstAccess = "";
 
 	$scope.validarLogin = ValidarLogin;
 	$scope.modalChangePassword = ModalChangePassword;
@@ -28,7 +26,7 @@ angular.module('KaplenWeb.loginController',[])
 			return;
 		}
 
-		loginService.validarLogin($scope.usuario).then(function(data) {
+		loginService.ValidarLogin($scope.usuario).then(function(data) {
 			var data = data.data;
 			var user = data.user;
 			var token = user.token;
@@ -68,37 +66,9 @@ angular.module('KaplenWeb.loginController',[])
 	function ModalTrocarSenha($scope, $window, $rootScope, user1, $modalInstance, $timeout, isManyCompanies) {
 		$scope.password = "";
 		$scope.rewritePassword = "";
-		$scope.changePassword = ChangePassword;
 		$scope.cancel = Cancel;
 
 		var user = user1;
-
-		function ChangePassword() {
-			if(this.password != this.rewritePassword){
-				$scope.alertsValidate =  [{type:"danger", msg:"A sessão expirou. Por favor, atualize sua página."}];
-			     $timeout(function(index) {
-			    	 $scope.alertsValidate.splice(index, 1);
-			     }, 3000);
-
-				this.rewritePassword = "";
-				this.password = "";
-			}else{
-				user.password = this.password;
-				userService.editUserChangePassword(user).then(function(user){
-					$window.sessionStorage.user = JSON.stringify(user);
-
-					$scope.alertsValidate =  [{type:"success", msg:" Senha alterada com sucesso!"}];
-				     $timeout(function(index) {
-				    	 $scope.alertsValidate.splice(index, 1);
-				    	 $modalInstance.close(true);
-				     }, 3000);
-
-				    if(isManyCompanies){
-				    	$rootScope.selectdCompanies();
-				    }
-				});
-			}
-		};
 
 		function Cancel() {
 			$modalInstance.dismiss('cancel');

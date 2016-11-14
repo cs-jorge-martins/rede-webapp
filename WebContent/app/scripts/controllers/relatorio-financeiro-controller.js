@@ -18,13 +18,13 @@
 	.controller('relatorioFinanceiroController', RelatorioFinanceiro);
 
 	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', '$modal', 'calendarFactory', '$rootScope',
-	                               'relatorioService', 'installmentsService', '$window', 'advancedFilterService', 'calendarService', 'MovementSummaryService'];
+	                               '$window', 'advancedFilterService', 'calendarService', 'MovementSummaryService'];
 
 	function RelatorioFinanceiro(menuFactory, $scope, $modal, calendarFactory, $rootScope,
-			relatorioService, installmentsService, $window, advancedFilterService, calendarService, MovementSummaryService) {
+			$window, advancedFilterService, calendarService, MovementSummaryService) {
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
-		$scope.loadParamsByFilter();
+		$scope.LoadParamsByFilter();
 
 		//Extensao do serviço para calendario
 		angular.extend($scope, calendarService);

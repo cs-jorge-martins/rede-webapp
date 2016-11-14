@@ -11,10 +11,10 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 }])
 
 .controller('relatorioAjustesController', function(menuFactory, $scope, $modal, calendarFactory, $rootScope,
-    relatorioService, installmentsService, $window, advancedFilterService, calendarService, AdjustSummaryService){
+    $window, advancedFilterService, calendarService, AdjustSummaryService){
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
-		$scope.loadParamsByFilter();
+		$scope.LoadParamsByFilter();
 
 		//Extensao do serviço para calendario
 		angular.extend($scope, calendarService);
