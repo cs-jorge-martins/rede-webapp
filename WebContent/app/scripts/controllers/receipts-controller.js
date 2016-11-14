@@ -139,7 +139,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			shopIds: getShopsFilter(),
 			acquirerIds: getAcquirersFilter(),
 			cardProductIds: getCardProductsFilter(),
-			status: 'RECEIVED,FORETHOUGHT,EXPECTED'
+			status: 'RECEIVED,FORETHOUGHT'
 		};
 
 
@@ -166,8 +166,6 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	function getForethought() {
 
-
-
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
@@ -184,7 +182,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				$scope.existsForethought = true;
 
 			} else {
-				$scope.actualReleasesData = [];
+				// $scope.actualReleasesData = [];
 				$scope.existsForethought = false;
 			}
 
@@ -392,18 +390,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			// status: 'EXPECTED,RECEIVED,PENDING',
-			status: 'EXPECTED,RECEIVED',
-			bankAccountIds: getAccountsFilter(),
-			shopIds: getShopsFilter(),
-			acquirerIds: getAcquirersFilter(),
-			cardProductIds: getCardProductsFilter()
-		};
-
-		var filterPagamentosNaoRecebidos = {
-			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			status: 'EXPECTED',
+			status: 'RECEIVED',
 			bankAccountIds: getAccountsFilter(),
 			shopIds: getShopsFilter(),
 			acquirerIds: getAcquirersFilter(),
@@ -422,10 +409,10 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		receiptsService.getFinancials(filter).then(function(response) {
 			var data = response.data;
+			
 			var totalToReceive = 0;
 			var discountedTotal = 0;
 			var totalReceived = 0;
-			var pagamentosNaoRecebidos = 0;
 			var others = 0;
 			var discount = 0;
 
@@ -452,46 +439,33 @@ angular.module('KaplenWeb.movementsModule',[])
 					}
 				}
 
-				receiptsService.getFinancials(filterPagamentosNaoRecebidos).then(function(response) {
+				receiptsService.getAdjusts(filterOthers).then(function(responseAdjusts) {
+
+					var others = 0;
 
 					// amount soma em totais descontados
-					var data = response.data;
+					var data = responseAdjusts.data.content;
 					for(var index in data) {
-						pagamentosNaoRecebidos = data[index].expectedAmount;
+						others += data[index].amount;
 					}
 
-					receiptsService.getAdjusts(filterOthers).then(function(responseAdjusts) {
+					discount = discountedTotal + others;
 
-						var others = 0;
-
-						// amount soma em totais descontados
-						var data = responseAdjusts.data.content;
-						for(var index in data) {
-							others += data[index].amount;
-						}
-
-						discount = pagamentosNaoRecebidos + discountedTotal + others;
-
-						$scope.totalToReceive = totalToReceive;
-						$scope.discountedTotal = discount;
-						$scope.antecipatedTotal = antecipatedTotal;
-						$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
-
-					}).catch(function(response) {
-						console.log('[receiptsController:getSummaries] error');
-					});
+					$scope.totalToReceive = totalToReceive;
+					$scope.discountedTotal = discount;
+					$scope.antecipatedTotal = antecipatedTotal;
+					$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
 
 				}).catch(function(response) {
-					console.log('[receiptsController:getSummaries] error');
+					console.log('[receiptsController:getAdjusts] error');
 				});
 
-
 			}).catch(function(response) {
-				console.log('[receiptsController:getSummaries] error');
+				console.log('[receiptsController:getFinancials] status forethought error');
 			})
 
 		}).catch(function(response) {
-			console.log('[receiptsController:getSummaries] error');
+			console.log('[receiptsController:getFinancials] error');
 		});
 	}
 
