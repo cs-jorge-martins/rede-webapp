@@ -28,7 +28,6 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
 				$scope.products = $rootScope.receiptsDetails.products;
-				//$scope.type = $rootScope.receiptsDetails.type;
 				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
 
 				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
@@ -100,15 +99,11 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				var data = response.data.content;
 				var pagination = response.data.page;
 
-
-				console.log(response);
-
 				for (var i in data) {
 					$scope.otherDetailsData.push(data[i]);
 				}
 			}).catch(function(response) {
-				// $scope.otherDetailsData = [];
-				// console.log('[receiptsDetailsController:getSales] error');
+
 			});
 	    }
 

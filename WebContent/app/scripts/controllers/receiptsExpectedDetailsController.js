@@ -68,7 +68,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				endDate: $scope.date
 			};
 
-			MovementSummaryService.listMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
+			MovementSummaryService.ListMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
 
 				var obj;
 				var content = response.data.content;

@@ -149,7 +149,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			bankAccountIds: getAccountsFilter(),
+			bankAccountIds: GetAccountsFilter(),
 			status: 'EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED'
 		};
 
