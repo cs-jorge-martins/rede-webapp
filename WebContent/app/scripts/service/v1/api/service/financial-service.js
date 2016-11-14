@@ -19,6 +19,15 @@ angular.module('Conciliador.FinancialService',[])
 		});
 	}
 
+	this.GetFutureDetails = function (request) {
+		return $http({
+			url: app.endpoint + '/movements',
+			method: "GET",
+			params: request,
+			headers: Request.setHeaders()
+		});
+	}
+
 	this.GetReceipt = function(filter){
 		var request = filter;
 
