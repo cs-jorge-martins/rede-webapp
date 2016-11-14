@@ -1,0 +1,106 @@
+<script type="text/ng-template" id="comprovanteVenda.html"></script>
+
+<section class="receiptsExpectedDetails" id="receiptsDetails">
+
+	<div id="detailsClose">
+		<div class="container">
+			<h3>recebimentos não efetuados | detalhes</h3>
+			<button ng-click="back()">x</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="receiptsTopSeparator"></div>
+
+	<article class="data-cards">
+		<div class="header-datas">
+			<div class="date">
+				<span class="number">{{ day }}</span>
+				<span class="month">{{ month }}</span>
+			</div>
+			<div class="chip-wrapper">
+				<p>
+					São considerados recebimentos não efetuados, lançamentos que possuíam a data agendada de pagamento para hoje e não ocorreram devido as possíveis causas: créditos que foram suspensos, penhoradas, antecipados, cancelados ou que simplesmente não foram pagos por alguma outra razão. (1) Para casos de créditos suspensos entre no Portal da Rede e verifique as suas informações bancárias. (2) Para mais informações sobre créditos penhorados ou não pagos entre em contato com a Central de Atendimento no telefone <strong>4001-4433</strong> (capitais e regiões metropolitanas) ou <strong>0800-728-4433</strong> (demais regiões).
+				</p>
+				<div>
+					<div class="chip" ng-if="accountsLabel">
+						{{ accountsLabel }}
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</article>
+
+	<div id="primaryContent">
+		<div id="details">
+			<tabset>
+				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
+					<div class="receipts-details-wrapper">
+						<table class="table sortTable">
+							<thead>
+							<tr>
+								<th ng-click="sortResults($event,'cardProductCode', tab.id)">bandeira</th>
+								<th ng-click="sortResults($event,'cardProductType', tab.id)">tipo de venda</th>
+								<th ng-click="sortResults($event,'status', tab.id)">status do crédito</th>
+								<th ng-click="sortResults($event,'roDate', tab.id)">data do lote (RV)</th>
+								<th ng-click="sortResults($event,'roNumber', tab.id)">n do lote (RV)</th>
+								<th ng-click="sortResults($event,'expectedAmount', tab.id)">valor líquido não pago</th>
+								<th ng-click="sortResults($event,'sourcePv.code', tab.id)">n do estabelecimento</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="details in detailsData">
+								<td>
+									<div class="cardFlag brand_{{details.cardProductCode}}"></div>
+								</td>
+								<td class="toLowerCase">{{details.cardProductType}}</td>
+								<td>{{translateStatus(details.status, 'ola')}}</td>
+								<td>{{details.roDate | date:'dd/MM'}}</td>
+								<td>{{details.roNumber}}</td>
+								<td>R$ {{details.expectedAmount | currency: ""}}</td>
+								<td>{{details.sourceShopCode}}</td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="optionsWrapper">
+							<div class="selectWrapper">
+								<label for="totalItensPage">resultados por página</label>
+								<div class="select">
+									<!--<select ng-model="salesTotalItensPage" ng-change="totalItensPageChangedSales(tab.id)" id="totalItensPage">
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+									</select>-->
+									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
+										<option value="10">10</option>
+										<option value="20">20</option>
+										<option value="50">50</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</tab>
+			</tabset>
+			<div class="paginationWrapper center">
+				<pagination
+						total-items="adjustsTotalItens"
+						ng-model="adjustsCurrentPage"
+						ng-change="pageChangedAdjusts()"
+						max-size="maxSize"
+						items-per-page="adjustsTotalItensPage"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="false"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text=" "
+						last-text=" ">
+				</pagination>
+			</div>
+		</div>
+	</div>
+  	<rc-disclaimer></rc-disclaimer>
+</section>

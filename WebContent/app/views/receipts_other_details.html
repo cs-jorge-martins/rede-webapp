@@ -1,0 +1,90 @@
+<section class="receiptsExpectedDetails" id="receiptsDetails">
+
+	<div id="detailsClose">
+		<div class="container">
+			<h3>outros lançamentos | detalhes</h3>
+			<button ng-click="back()">x</button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+	<div class="receiptsTopSeparator"></div>
+
+	<article class="data-cards">
+		<div class="header-datas">
+			<div class="date">
+				<span class="number">{{ day }}</span>
+				<span class="month">{{ month }}</span>
+			</div>
+			<div class="chip-wrapper only-chip-on-header">
+				<div class="chip" ng-if="accountsLabel">
+					{{ accountsLabel }}
+				</div>
+				<div class="chip" ng-if="shops">
+					{{ shopsLabel }}
+				</div>
+			</div>
+		</div>
+
+	</article>
+	<ul class="wrapperAcquirerSummary">
+		<li class="acquirer">{{ acquirer.name }}</li>
+		<li class="totalValue">
+			<span>valor total do ajuste</span>
+			<div class="discount">
+				<span>R$</span>
+				<span class="totalDiscounted">{{ totalOfSumAmount() * -1 | customCurrency: "" }}</span>
+			</div>
+		</li>
+	</ul>
+	
+	<div class="mainContent" id="details">
+		<table class="table sortTable">
+			<thead>
+				<tr>
+					<th ng-click="sortResults($event, 'payedDate')">data do ajuste</th>
+					<th ng-click="sortResults($event, 'amount')">valor</th>
+					<th ng-click="sortResults($event, 'description')">descrição</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in otherDetailsData">
+					<td>{{ item.payedDate | date }}</td>
+					<td>{{ item.amount | currency }}</td>
+					<td>{{ item.description | lowercase }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<span class="alert" ng-show="!otherDetailsData.length">Não existem dados/registros para o filtro selecionado</span>
+		<div class="optionsWrapper">
+			<div class="selectWrapper">
+				<label for="totalItensPage">resultados por página</label>
+				<div class="select">
+					<select ng-model="totalItensPage" ng-change="pageChangedSales()" id="totalItensPage">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="paginationWrapper">
+				<pagination
+						total-items="adjustsTotalItens"
+						ng-model="adjustsCurrentPage"
+						ng-change="pageChangedAdjusts()"
+						max-size="maxSize"
+						items-per-page="totalItensPage"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="true"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text="&laquo;"
+						last-text="&raquo;">
+				</pagination>
+			</div>
+		</div>
+	</div>
+  	<rc-disclaimer></rc-disclaimer>
+</section>

@@ -146,7 +146,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			filter.size =  $scope.salesTotalItensPage;
 			filter.sort = $scope.sort;
 
-			FinancialService.getReceipt(filter).then(function(response) {
+			FinancialService.GetReceipt(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 
@@ -169,7 +169,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				filter.sort = order;
 			}
 
-			FinancialService.getReceipt(filter).then(function(response) {
+			FinancialService.GetReceipt(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 
@@ -191,7 +191,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				filter.sort =  order;
 			}
 
-			FinancialService.getReceipt(filter).then(function(response) {
+			FinancialService.GetReceipt(filter).then(function(response) {
 				var data = response.data.content;
 				var pagination = response.data.page;
 

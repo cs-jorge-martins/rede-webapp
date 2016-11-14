@@ -144,7 +144,6 @@ module.exports = function(grunt) {
                     "WebContent/app/js/componente/chart-utils.js",
 
                     "WebContent/app/scripts/app.js",
-
                     "WebContent/app/scripts/controllers/dashboard-controller.js",
                     "WebContent/app/scripts/controllers/login-controller.js",
                     "WebContent/app/scripts/controllers/sales-details-controller.js",
@@ -156,6 +155,9 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/controllers/help-controller.js",
                     "WebContent/app/scripts/controllers/integration-controller.js",
                     "WebContent/app/scripts/controllers/receipts-controller.js",
+                    "WebContent/app/scripts/controllers/receiptsExpectedDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsForethoughtDetailsController.js",
+                    "WebContent/app/scripts/controllers/receiptsOtherDetailsController.js",
                     "WebContent/app/scripts/controllers/receipts-details-controller.js",
                     "WebContent/app/scripts/controllers/redirect-controller.js",
 
@@ -177,6 +179,8 @@ module.exports = function(grunt) {
                     "WebContent/app/scripts/service/v1/api/service/transaction-summary-service.js",
                     "WebContent/app/scripts/service/v1/api/service/transaction-conciliation-service.js",
                     "WebContent/app/scripts/service/v1/api/service/transaction-service.js",
+                    "WebContent/app/scripts/service/v1/api/service/movement-service.js",
+                    "WebContent/app/scripts/service/v1/api/service/adjust-service.js",
 
                     "WebContent/app/scripts/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/scripts/directives/rc-multiselect/rc-multiselect.js",

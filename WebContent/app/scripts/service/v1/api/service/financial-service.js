@@ -5,11 +5,21 @@
  */
 
 angular.module('Conciliador.FinancialService',[])
-	.config(['$routeProvider','RestangularProvider' ,function ($routeProvider, RestangularProvider) {
+	.config(['$routeProvider' ,function ($routeProvider) {
 }])
 
 .service('FinancialService', function(app, $http, Request) {
-	this.getReceipt = function(filter){
+
+	this.GetExpectedDetails = function (request) {
+		return $http({
+			url: app.endpoint + '/movements',
+			method: "GET",
+			params: request,
+			headers: Request.setHeaders()
+		});
+	}
+
+	this.GetReceipt = function(filter){
 		var request = filter;
 
 		return $http({

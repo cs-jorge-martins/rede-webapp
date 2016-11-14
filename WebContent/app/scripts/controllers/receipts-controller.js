@@ -75,6 +75,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.totalReceived = 0;
     $scope.showDetails = ShowDetails;
     $scope.changeTab = ChangeTab;
+	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
     var actualReleasesData = [];
     $scope.futureReleasesData = [];
@@ -93,6 +94,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
         GetFilters();
+		GetForethought();
 	}
 
     function GetReceipt() {
@@ -104,6 +106,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		GetLabels();
 		GetSummaries();
 		GetReceiptAcquirers();
+		GetForethought();
     }
 
 	function GetReceiptAcquirers() {
@@ -116,7 +119,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			shopIds: GetShopsFilter(),
 			acquirerIds: GetAcquirersFilter(),
 			cardProductIds: GetCardProductsFilter(),
-			status: 'RECEIVED,FORETHOUGHT,EXPECTED'
+			status: 'RECEIVED,FORETHOUGHT'
 		};
 
 
@@ -134,6 +137,32 @@ angular.module('KaplenWeb.movementsModule',[])
 				GetExpectedReleases();
 			} else {
 				$scope.actualReleasesData = [];
+			}
+
+		}).catch(function(response) {
+			console.log('[receiptsController:getSummaries] error');
+		})
+	}
+
+	function GetForethought() {
+
+		var filter = {
+			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			bankAccountIds: getAccountsFilter(),
+			status: 'EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED'
+		};
+
+
+		receiptsService.GetFinancials(filter).then(function(response) {
+			var data = response.data;
+
+			if( data.length ) {
+
+				$scope.existsForethought = true;
+
+			} else {
+				$scope.existsForethought = false;
 			}
 
 		}).catch(function(response) {
@@ -166,9 +195,11 @@ angular.module('KaplenWeb.movementsModule',[])
 						description = data[index].description.toLowerCase(),
 						cardProduct = data[index].cardProduct;
 						amount = data[index].payedAmount;
+						cardProduct.forethought = false;
 
 					if (status == "forethought") {
 						cardProduct.name = "ANTECIPAÇÃO " + cardProduct.name;
+						cardProduct.forethought = true;
 					}
 
 					if(releases.length) {
@@ -187,6 +218,7 @@ angular.module('KaplenWeb.movementsModule',[])
 								var item = {
 									cardProductName: cardProduct.name,
 									cardProductId: cardProduct.id,
+									forethought: cardProduct.forethought,
 									status: status,
 									description: description,
 									sales: 0,
@@ -223,6 +255,7 @@ angular.module('KaplenWeb.movementsModule',[])
 						var item = {
 							cardProductName: cardProduct.name,
 							cardProductId: cardProduct.id,
+							forethought: cardProduct.forethought,
 							status: status,
 							description: description,
 							sales: 0,
@@ -336,18 +369,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		var filter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			// status: 'EXPECTED,RECEIVED,PENDING',
-			status: 'EXPECTED,RECEIVED',
-			bankAccountIds: GetAccountsFilter(),
-			shopIds: GetShopsFilter(),
-			acquirerIds: GetAcquirersFilter(),
-			cardProductIds: GetCardProductsFilter()
-		};
-
-		var filterPagamentosNaoRecebidos = {
-			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			status: 'EXPECTED',
+			status: 'RECEIVED',
 			bankAccountIds: GetAccountsFilter(),
 			shopIds: GetShopsFilter(),
 			acquirerIds: GetAcquirersFilter(),
@@ -366,10 +388,10 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		receiptsService.GetFinancials(filter).then(function(response) {
 			var data = response.data;
+
 			var totalToReceive = 0;
 			var discountedTotal = 0;
 			var totalReceived = 0;
-			var pagamentosNaoRecebidos = 0;
 			var others = 0;
 			var discount = 0;
 
@@ -396,46 +418,32 @@ angular.module('KaplenWeb.movementsModule',[])
 					}
 				}
 
-				receiptsService.GetFinancials(filterPagamentosNaoRecebidos).then(function(response) {
+				receiptsService.GetAdjusts(filterOthers).then(function(responseAdjusts) {
+					var others = 0;
 
 					// amount soma em totais descontados
-					var data = response.data;
+					var data = responseAdjusts.data.content;
 					for(var index in data) {
-						pagamentosNaoRecebidos = data[index].expectedAmount;
+						others += data[index].amount;
 					}
 
-					receiptsService.GetAdjusts(filterOthers).then(function(responseAdjusts) {
+					discount = discountedTotal + others;
 
-						var others = 0;
-
-						// amount soma em totais descontados
-						var data = responseAdjusts.data.content;
-						for(var index in data) {
-							others += data[index].amount;
-						}
-
-						discount = pagamentosNaoRecebidos + discountedTotal + others;
-
-						$scope.totalToReceive = totalToReceive;
-						$scope.discountedTotal = discount;
-						$scope.antecipatedTotal = antecipatedTotal;
-						$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
-
-					}).catch(function(response) {
-						console.log('[receiptsController:getSummaries] error');
-					});
+					$scope.totalToReceive = totalToReceive;
+					$scope.discountedTotal = discount;
+					$scope.antecipatedTotal = antecipatedTotal;
+					$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
 
 				}).catch(function(response) {
-					console.log('[receiptsController:getSummaries] error');
+					console.log('[receiptsController:getAdjusts] error');
 				});
 
-
 			}).catch(function(response) {
-				console.log('[receiptsController:getSummaries] error');
+				console.log('[receiptsController:getFinancials] status forethought error');
 			})
 
 		}).catch(function(response) {
-			console.log('[receiptsController:getSummaries] error');
+			console.log('[receiptsController:getFinancials] error');
 		});
 	}
 
@@ -629,7 +637,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			for(var x in data){
 				var obj = {};
 				obj.id = data[x].id;
-				obj.label = data[x].bankName + ' ' + data[x].agencyNumber + ' ' +  data[x].accountNumber;
+				obj.label = data[x].bankName + ' | ' + data[x].agencyNumber + ' | ' +  data[x].accountNumber;
 				obj.bankName = data[x].bankName;
 				obj.agencyNumber = data[x].agencyNumber;
 				obj.accountNumber = data[x].accountNumber;
@@ -834,7 +842,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			}
 			label = label.toLowerCase();
 		} else {
-			label = null
+			label = null;
 		}
 
 		if(isFuture) {
@@ -850,6 +858,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				return item.label;
 			}).join(", ");
 		}
+
 	}
 
 	function GetLabels(isFuture) {
@@ -858,7 +867,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		GetCardProductsLabel(isFuture);
 	}
 
-    function ShowDetails(acquirer, cardProduct, total, status) {
+    function ShowDetails(acquirer, cardProduct, total, status, detailPage) {
         $rootScope.receiptsDetails = {};
 
         var dateSelected = $scope.actualReleases.date;
@@ -877,9 +886,26 @@ angular.module('KaplenWeb.movementsModule',[])
 		$rootScope.receiptsDetails.cardProductsLabel = $scope.cardProductsLabel;
 		$rootScope.receiptsDetails.cardProductsFullLabel = $scope.cardProductsFullLabel;
 		$rootScope.receiptsDetails.total = total;
-		$rootScope.receiptsDetails.type = status
+		$rootScope.receiptsDetails.type = status;
 
-        $location.path('receipts/details');
+		var redirect_url;
+		switch (detailPage) {
+			case "other_details":
+				redirect_url = "receipts/other_details";
+				break;
+			case "expected_details":
+				redirect_url = "receipts/expected_details";
+				break;
+			case "forethought_details":
+				redirect_url = "receipts/forethought_details";
+				break;
+			default:
+				redirect_url = "receipts/details";
+				break;
+		}
+		if(redirect_url) {
+			$location.path(redirect_url);
+		}
     }
 
     function SaveFilters() {
