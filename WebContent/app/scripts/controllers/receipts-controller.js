@@ -909,10 +909,8 @@ angular.module('KaplenWeb.movementsModule',[])
 				break;
 		}
 		if(redirect_url) {
-			console.log(redirect_url);
 			$location.path(redirect_url);
 		}
-		return false;
     }
 
     function SaveFilters() {
