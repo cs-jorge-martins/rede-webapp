@@ -1,4 +1,4 @@
-angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
+angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/receipts/future_details', {templateUrl: 'app/views/receipts-future-details.html', controller: 'receiptsFutureDetailsController'});
@@ -66,7 +66,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.sortResults = SortResults;
 				$scope.pageChanged = PageChanged;
 				$scope.totalItensPageChanged = TotalItensPageChanged;
-				
+
 				GetFutureDetails();
 			}
 		}
