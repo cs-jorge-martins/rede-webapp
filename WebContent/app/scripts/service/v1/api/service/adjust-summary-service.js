@@ -9,13 +9,13 @@ angular.module('Conciliador.AdjustSummaryService',[])
 
 }]).service('AdjustSummaryService', function(app, $location, $window, $http, Request) {
 
-	this.ListAdjustSummary = function(filter) {
-		var request = filter;
+	this.ListAdjustSummary = function(objFilter) {
+		var objRequest = objFilter;
 
 		return $http({
 			url: app.endpoint + '/adjustsummaries',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	};

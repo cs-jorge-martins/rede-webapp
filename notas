@@ -1,6 +1,8 @@
-nomenclatura de funções
-    pontos de atenção
-        advancedFilterService
-        cacheService
+nomenclatura de variaveis
 
-        parei no installments-service
+    controllers
+    directives
+    factories
+    filters
+    services
+    app.js

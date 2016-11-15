@@ -15,63 +15,63 @@
     Transaction.$inject = ['app', '$http', 'Request'];
 
     function Transaction(app, $http, Request) {
-		this.GetTransactionByFilter = function(filter) {
-			var request = filter;
+		this.GetTransactionByFilter = function(objFilter) {
+			var objRequest = objFilter;
 
 			return $http({
 				url: app.endpoint + '/transactions',
 				method: "GET",
-				params: request,
+				params: objRequest,
 				headers: Request.setHeaders()
 			});
 		};
 
-		this.GetDuplicateTransaction = function(filter) {
-			var request = filter;
+		this.GetDuplicateTransaction = function(objFilter) {
+			var objRequest = objFilter;
 
 			return $http({
 				url: app.endpoint + '/transactions/nplicate',
 				method: "GET",
-				params: request,
+				params: objRequest,
 				headers: Request.setHeaders()
 			});
 		};
 
-		this.ConcilieTransaction = function(filter){
-			var request = filter;
+		this.ConcilieTransaction = function(objFilter){
+			var objRequest = objFilter;
 
 			return $http({
 				url: app.endpoint + '/transactions/concilie',
 				method: "POST",
-				data: request,
+				data: objRequest,
 				headers: Request.setHeaders()
 			});
 		};
 
-        this.ConcilieTransactions = function(filter){
-			var request = filter;
+        this.ConcilieTransactions = function(objFilter){
+			var objRequest = objFilter;
 
 			return $http({
 				url: app.endpoint + '/transactionsummaries/concilie',
 				method: "POST",
-				data: request,
+				data: objRequest,
 				headers: Request.setHeaders()
 			});
 		};
 
-        this.ExportTransactions = function(filter, success, error) {
-            var startTime = new Date().getTime();
-            var timeout = 30 * 1000;  // milisseconds
+        this.ExportTransactions = function(objFilter, success, error) {
+            var dateStartTime = new Date().getTime();
+            var intTimeout = 30 * 1000;  // milisseconds
 
             return $http({
 				url: app.endpoint + '/transactions/export',
 				method: "POST",
-				params: filter,
-                timeout: timeout,
+				params: objFilter,
+                timeout: intTimeout,
 				headers: Request.setHeaders()
 			}).then(success, function(response){
-                var respTime = new Date().getTime() - startTime;
-                if (respTime >= timeout){  //timeout status must be explicitly set
+                var dateRespTime = new Date().getTime() - dateStartTime;
+                if (dateRespTime >= intTimeout){  //timeout status must be explicitly set
                     response.status = 408;
                 }
                 error(response);
