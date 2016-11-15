@@ -9970,6 +9970,7 @@ div.checkbox-toggle-right {
     padding: 22px 22px 16px 11px;
     left: -34px;
     display: none;
+    text-align: justify;
 }
 
 .rc-tooltip.up:before{
