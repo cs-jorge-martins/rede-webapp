@@ -1,11 +1,11 @@
 angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/receipts/other_details', {templateUrl: 'app/views/receipts_other_details.html', controller: 'receiptsOtherDetailsController'});
+	$routeProvider.when('/receipts/future_details', {templateUrl: 'app/views/receipts-future-details.html', controller: 'receiptsFutureDetailsController'});
 }])
 
-.controller('receiptsOtherDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
-     advancedFilterService, $location, AdjustService){
+.controller('receiptsFutureDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
+     advancedFilterService, $location,FinancialService){
 
 		var filter = {};
 		Init();
@@ -23,8 +23,9 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
 				$scope.currency = $rootScope.receiptsDetails.currency;
 
-				$scope.startDate = $rootScope.receiptsDetails.startDate;
-				$scope.endDate = $rootScope.receiptsDetails.endDate;
+				$scope.startDate = $rootScope.receiptsDetails.periodStartDate;
+				$scope.endDate = $rootScope.receiptsDetails.periodEndDate;
+				$scope.dateTitle = DateTitle;
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
 				$scope.products = $rootScope.receiptsDetails.products;
@@ -43,22 +44,17 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 				$scope.otherReleasesTotal = $rootScope.receiptsDetails.otherReleasesTotal;
 
-				$scope.sort = "payedDate,ASC";
+				$scope.sort = "";
 
 
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-				filter = {
-					adjustTypes: "OTHER",
-					acquirerIds: $scope.acquirer.id,
-					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
-					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
-					bankAccountIds: $scope.bankAccount.id,
-					status: "RECEIVED",
-				};
 
-				$scope.maxSize = 10;
+				$scope.maxSize = 4;
+				$scope.itensPerPage = 10;
+				$scope.currentPage = 0;
+				$scope.currentSize = 10;
 
 				$scope.otherDetailsData = [];
 				$scope.totalItensPage = 10;
@@ -67,15 +63,30 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 				$scope.back = Back;
 				$scope.getShopsLabel = GetShopsLabel;
-				$scope.getOtherDetails = GetOtherDetails;
-				$scope.totalOfSumAmount = TotalOfSumAmount;
 				$scope.sortResults = SortResults;
-				$scope.pageChangedSales = PageChangedSales;
-				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
-				$scope.pageChangedAdjusts = PageChangedAdjusts;
-
-				GetOtherDetails();
+				$scope.pageChanged = PageChanged;
+				$scope.totalItensPageChanged = TotalItensPageChanged;
+				
+				GetFutureDetails();
 			}
+		}
+
+		function GetShopsFilter(model) {
+			return model.map(function(item){
+				return item.id;
+			}).join(",");
+		}
+
+		function DateTitle() {
+			var string = "";
+
+			if($scope.startDate && $scope.endDate) {
+				string = calendarFactory.getDayAndMonthFromDate($scope.startDate);
+				string += " a ";
+				string += calendarFactory.getDayAndMonthFromDate($scope.endDate);
+			}
+
+			return string;
 		}
 
 		function GetShopsLabel() {
@@ -96,49 +107,50 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 	        $location.path('/receipts');
 	    }
 
-	    function GetOtherDetails() {
-	    	$scope.otherDetailsData = [];
-			filter.sort = $scope.sort;
-			AdjustService.GetOtherDetails(filter).then(function(response) {
+	    function GetFutureDetails() {
+
+			var filter = {
+				startDate: calendarFactory.formatDateTimeForService($scope.startDate),
+				endDate: calendarFactory.formatDateTimeForService($scope.endDate),
+				bankAccountIds: $scope.bankAccount.id,
+				shopIds: GetShopsFilter($scope.shopIds),
+				acquirerIds: $scope.acquirer.id,
+				cardProductIds: $scope.cardProduct.cardProductId,
+				page:  $scope.currentPage ==  0 ? $scope.currentPage : $scope.currentPage - 1,
+				size:  $scope.currentSize,
+				sort: $scope.sort,
+				status: 'EXPECTED'
+			};
+
+			FinancialService.GetFutureDetails(filter).then(function (response) {
+
 				var data = response.data.content;
 				var pagination = response.data.page;
 
-				for (var i in data) {
-					$scope.otherDetailsData.push(data[i]);
-				}
-			}).catch(function(response) {
+				$scope.detailsData = data;
+				$scope.totalItens = pagination.totalElements;
 
+			}).catch(function (response) {
 			});
+
 	    }
 
-	    function TotalOfSumAmount() {
-	    	return $scope.otherDetailsData.reduce(function(prev, curr) {
-		    	return prev + curr.amount;
-		    }, 0);
-	    }
-
-	    function SortResults(elem, kind) {
-			var order_string;
-			order_string = $rootScope.sortResults(elem,kind);
-			$scope.sort = order_string;
-
-			GetOtherDetails();
-	    }
+		function SortResults(elem, kind) {
+			$scope.sort = $rootScope.sortResults(elem,kind);
+			GetFutureDetails();
+		}
 
 	    /* pagination */
-		function PageChangedSales() {
-			$scope.salesCurrentPage = this.salesCurrentPage;
-			GetOtherDetails();
+		function PageChanged() {
+			$scope.currentSize = this.totalItensPage;
+			$scope.currentPage = this.currentPage;
+			GetFutureDetails();
 		};
 
-		function TotalItensPageChangedSales() {
-			this.salesCurrentPage = $scope.salesCurrentPage = 0;
-			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			GetOtherDetails();
+		function TotalItensPageChanged() {
+			this.currentPage = $scope.totalItensPage = 0;
+			$scope.totalItensPage = this.currentPage;
+			GetFutureDetails();
 		};
 
-		function PageChangedAdjusts() {
-			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			GetOtherDetails();
-		};
 	});

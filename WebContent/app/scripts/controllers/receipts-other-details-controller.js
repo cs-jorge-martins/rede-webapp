@@ -1,11 +1,11 @@
-angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
+angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
-.config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/receipts/forethought_details', {templateUrl: 'app/views/receipts_forethought_details.html', controller: 'receiptsForethoughtDetailsController'});
+.config(['$routeProvider', function ($routeProvider) {
+	$routeProvider.when('/receipts/other_details', {templateUrl: 'app/views/receipts-other-details.html', controller: 'receiptsOtherDetailsController'});
 }])
 
-.controller('receiptsForethoughtDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
-     advancedFilterService, $location, MovementService){
+.controller('receiptsOtherDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
+     advancedFilterService, $location, AdjustService){
 
 		var filter = {};
 		Init();
@@ -19,7 +19,6 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 			if(!$rootScope.receiptsDetails) {
 				$location.path('/receipts');
 			} else {
-
 				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
 				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
 				$scope.currency = $rootScope.receiptsDetails.currency;
@@ -46,81 +45,100 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 
 				$scope.sort = "payedDate,ASC";
 
-				$scope.forethought = [];
 
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-
 				filter = {
-					shopIds: $scope.shopIds,
+					adjustTypes: "OTHER",
 					acquirerIds: $scope.acquirer.id,
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
 					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 					bankAccountIds: $scope.bankAccount.id,
-					status: "FORETHOUGHT",
+					status: "RECEIVED",
 				};
 
 				$scope.maxSize = 10;
 
+				$scope.otherDetailsData = [];
 				$scope.totalItensPage = 10;
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
 				$scope.back = Back;
+				$scope.getShopsLabel = GetShopsLabel;
+				$scope.getOtherDetails = GetOtherDetails;
+				$scope.totalOfSumAmount = TotalOfSumAmount;
 				$scope.sortResults = SortResults;
 				$scope.pageChangedSales = PageChangedSales;
 				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
 				$scope.pageChangedAdjusts = PageChangedAdjusts;
 
-				GetForethought();
+				GetOtherDetails();
 			}
+		}
+
+		function GetShopsLabel() {
+			var shops = "";
+
+			if($scope.shops.length > 1) {
+				shops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+
+				if($scope.shops.length > 2) {
+					shops += 's'
+				}
+			}
+
+			return shops;
 		}
 
 	    function Back(){
 	        $location.path('/receipts');
 	    }
 
-	    function GetForethought () {
-	    	$scope.forethought = [];
-	    	filter.sort = $scope.sort;
-	    	MovementService.GetForethoughts(filter).then(function(response) {
-	    		var data = response.data.content;
-	    		var pagination = response.data.page;
+	    function GetOtherDetails() {
+	    	$scope.otherDetailsData = [];
+			filter.sort = $scope.sort;
+			AdjustService.GetOtherDetails(filter).then(function(response) {
+				var data = response.data.content;
+				var pagination = response.data.page;
 
-	    		for (var i in data ) {
-	    			$scope.forethought.push(data[i]);
-	    		}
+				for (var i in data) {
+					$scope.otherDetailsData.push(data[i]);
+				}
+			}).catch(function(response) {
 
-	    	}).catch(function(response) {
+			});
+	    }
 
-	    	})
+	    function TotalOfSumAmount() {
+	    	return $scope.otherDetailsData.reduce(function(prev, curr) {
+		    	return prev + curr.amount;
+		    }, 0);
 	    }
 
 	    function SortResults(elem, kind) {
-	    	var order_string;
-	    	order_string = $rootScope.sortResults(elem,kind);
+			var order_string;
+			order_string = $rootScope.sortResults(elem,kind);
+			$scope.sort = order_string;
 
-	    	$scope.sort = order_string;
-
-	    	GetForethought();
+			GetOtherDetails();
 	    }
 
 	    /* pagination */
 		function PageChangedSales() {
 			$scope.salesCurrentPage = this.salesCurrentPage;
-			GetForethought();
+			GetOtherDetails();
 		};
-
 
 		function TotalItensPageChangedSales() {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			GetForethought();
+			GetOtherDetails();
 		};
 
 		function PageChangedAdjusts() {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			GetForethought();
+			GetOtherDetails();
 		};
 	});
