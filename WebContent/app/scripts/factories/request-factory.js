@@ -16,15 +16,15 @@ angular.module('KaplenWeb.Request',[])
 
 	function SetHeaders() {
 
-		var defaultHeaders = {
+		var objDefaultHeaders = {
 			'Content-Type': 'application/json'
 		};
 
 		if($window.sessionStorage.token) {
-			defaultHeaders['Authorization'] = $window.sessionStorage.token;
+			objDefaultHeaders['Authorization'] = $window.sessionStorage.token;
 		}
 
-		return defaultHeaders;
+		return objDefaultHeaders;
 	}
 
 });
