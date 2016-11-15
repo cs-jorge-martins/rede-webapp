@@ -1,7 +1,8 @@
 nomenclatura de variaveis
 
+    components ok
     controllers
-    directives
+    directives ok
     factories ok
     filters ok
     services ok
