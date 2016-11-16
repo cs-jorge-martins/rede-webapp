@@ -16,13 +16,13 @@
 
     function MovementSummary(app, $window, $http, Request) {
 
-		this.ListMovementSummaryByFilter = function(movementSummaryFilter) {
-            var request = movementSummaryFilter;
+		this.ListMovementSummaryByFilter = function(objMovementSummaryFilter) {
+            var objRequest = objMovementSummaryFilter;
 
             return $http({
                 url: app.endpoint + '/movementsummaries',
                 method: "GET",
-                params: request,
+                params: objRequest,
                 headers: Request.setHeaders()
             });
 		};

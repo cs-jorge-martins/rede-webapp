@@ -26,35 +26,35 @@ angular.module('KaplenWeb.loginController',[])
 			return;
 		}
 
-		loginService.ValidarLogin($scope.usuario).then(function(data) {
-			var data = data.data;
-			var user = data.user;
-			var token = user.token;
+		loginService.ValidarLogin($scope.usuario).then(function(objData) {
+			var objData = objData.data;
+			var objUser = objData.user;
+			var strToken = objUser.token;
 
-			if(token && user) {
-				$rootScope.signIn(token,user);
+			if(strToken && objUser) {
+				$rootScope.signIn(strToken, objUser);
 			}
 		}).catch(function(response) {
 			console.log('error');
 		});
 	};
 
-	function ModalChangePassword(user, isManyCompanies) {
+	function ModalChangePassword(objUser, bolIsManyCompanies) {
 		var modalInstance = $modal.open({
 			templateUrl: 'modalTrocarSenha.html',
 			controller: ModalTrocarSenha,
 			size:'sm',
 			resolve: {
 		        user1: function () {
-		          return user;
+		          return objUser;
 		        },
 		        isManyCompanies: function(){
-		        	return isManyCompanies;
+		        	return bolIsManyCompanies;
 		        }
 		      }
 		});
-		modalInstance.result.then(function(validate) {
-			if(validate){
+		modalInstance.result.then(function(bolValidate) {
+			if(bolValidate){
 				$rootScope.logout();
 				$scope.usuario = new Object();
 			}
@@ -63,12 +63,12 @@ angular.module('KaplenWeb.loginController',[])
 		});
 	};
 
-	function ModalTrocarSenha($scope, $window, $rootScope, user1, $modalInstance, $timeout, isManyCompanies) {
+	function ModalTrocarSenha($scope, $window, $rootScope, objUser1, $modalInstance, $timeout, bolIsManyCompanies) {
 		$scope.password = "";
 		$scope.rewritePassword = "";
 		$scope.cancel = Cancel;
 
-		var user = user1;
+		var objUser = objUser1;
 
 		function Cancel() {
 			$modalInstance.dismiss('cancel');

@@ -9,13 +9,13 @@ angular.module('Conciliador.TransactionConciliationService',[])
 
 }]).service('TransactionConciliationService', function(app, $location, $http, Request) {
 
-	this.ListTransactionConciliationByFilter = function(filter) {
-		var request = filter;
+	this.ListTransactionConciliationByFilter = function(objFilter) {
+		var objRequest = objFilter;
 
 		return $http({
 			url: app.endpoint + '/transactionconciliations',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	};

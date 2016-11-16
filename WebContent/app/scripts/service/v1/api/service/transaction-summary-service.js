@@ -9,24 +9,24 @@ angular.module('Conciliador.TransactionSummaryService',[])
 
 }]).service('TransactionSummaryService', function(app, $location, $http, Request) {
 
-	this.ListTransactionSummaryByFilter = function(transactionSummaryFilter) {
-		var request = transactionSummaryFilter;
+	this.ListTransactionSummaryByFilter = function(objTransactionSummaryFilter) {
+		var objRequest = objTransactionSummaryFilter;
 
 		return $http({
 			url: app.endpoint + '/transactionsummaries',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	};
 
-	this.ListNplicateTransactionSummaryByFilter = function(transactionSummaryFilter){
-		var request = transactionSummaryFilter;
+	this.ListNplicateTransactionSummaryByFilter = function(objTransactionSummaryFilter){
+		var objRequest = objTransactionSummaryFilter;
 
 		return $http({
 			url: app.endpoint + '/transactionsummaries',
 			method: "GET",
-			data: request,
+			data: objRequest,
 			headers: Request.setHeaders()
 		});
 	}

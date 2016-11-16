@@ -11,30 +11,30 @@ angular.module('KaplenWeb.loginService',[])
 
 .service('loginService', function(app, $http, Request) {
 
-	this.ValidarLogin = function(user) {
-        var url = app.login.endpoint + '/login';
-		var request = {
-			login: user.login,
-			password: user.password
+	this.ValidarLogin = function(objUser) {
+        var strUrl = app.login.endpoint + '/login';
+		var objRequest = {
+			login: objUser.login,
+			password: objUser.password
 		};
 
 		return $http({
-            url: url,
+            url: strUrl,
             method: "POST",
-            data: request,
+            data: objRequest,
             headers: Request.setHeaders()
         });
 	};
 
-	this.SingleSignOn = function(token) {
-		var url = app.login.endpoint + '/singlesignon';
+	this.SingleSignOn = function(strToken) {
+		var strUrl = app.login.endpoint + '/singlesignon';
 
 		return $http({
 			method: "POST",
-			url: url,
+			url: strUrl,
 			headers: {
 				'Content-type': 'application/json',
-				'authorization': token
+				'authorization': strToken
 			}
 		});
 	};

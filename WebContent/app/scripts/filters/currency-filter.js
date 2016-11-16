@@ -7,12 +7,12 @@
 angular.module('Conciliador.currencyFilter',[])
 
 .filter('customCurrency', ['$filter', function($filter){
-	return function (amount, currencySymbol) {
-		var currency = $filter('currency');
-		if(amount < 0) {
-			return currency(amount, currencySymbol).replace("(", "-").replace(")", "");
+	return function (intAmount, strCurrencySymbol) {
+		var filterCurrency = $filter('currency');
+		if(intAmount < 0) {
+			return filterCurrency(intAmount, strCurrencySymbol).replace("(", "-").replace(")", "");
 		}
 
-		return currency(amount, currencySymbol);
+		return filterCurrency(intAmount, strCurrencySymbol);
 	}
 }])

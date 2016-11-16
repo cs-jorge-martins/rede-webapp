@@ -60,24 +60,24 @@
 
 		function GetReport(){
 
-            var shopIds = [];
+            var arrShopIds = [];
 
     		if($scope.settlementsSelected) {
-    			for(var item in $scope.settlementsSelected) {
-    				shopIds.push($scope.settlementsSelected[item].id);
+    			for(var objItem in $scope.settlementsSelected) {
+    				arrShopIds.push($scope.settlementsSelected[objItem].id);
     			}
-				shopIds = shopIds.join(",");
+				arrShopIds = arrShopIds.join(",");
     		}
 
             GetIndicator();
 
-			var filter = {
+			var objFilter = {
 				currency: 'BRL',
 				cancellationStartDate: HandleDate($scope.initialDate),
 				cancellationEndDate: HandleDate($scope.finalDate),
                 groupBy: 'CANCELLATION_DAY,CARD_PRODUCT,ADJUST_TYPE',
 				cardProductIds: $scope.productsSelected,
-				shopIds: shopIds,
+				shopIds: arrShopIds,
 				status: 'CANCELLED',
 				adjustTypes: $scope.adjustType,
 				page: $scope.currentPage,
@@ -92,62 +92,61 @@
 				$scope.currentPage = $scope.currentPage + 1;
 			}
 
-			TransactionSummaryService.ListTransactionSummaryByFilter(HandleFilter(filter)).then(function(response) {
-				var data = HandleResponse(response.data.content);
-                var pagination = response.data.page;
+			TransactionSummaryService.ListTransactionSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
+				var objData = HandleResponse(objResponse.data.content);
+                var objPagination = objResponse.data.page;
 
-				$scope.items = data;
-				$scope.noItensMsg = data.length === 0 ? true : false;
-				$scope.totalItens = pagination.totalElements;
-			}).catch(function(response) {
+				$scope.items = objData;
+				$scope.noItensMsg = objData.length === 0 ? true : false;
+				$scope.totalItens = objPagination.totalElements;
+			}).catch(function(objResponse) {
             });
 		}
 
 		function GetIndicator() {
 
-            var shopIds = [];
+            var arrShopIds = [];
 
     		if($scope.settlementsSelected) {
-    			for(var item in $scope.settlementsSelected) {
-    				shopIds.push($scope.settlementsSelected[item].id);
+    			for(var objItem in $scope.settlementsSelected) {
+    				arrShopIds.push($scope.settlementsSelected[objItem].id);
     			}
-				shopIds = shopIds.join(",");
+				arrShopIds = arrShopIds.join(",");
     		}
 
-			var filter = {
+			var objFilter = {
 				currency: 'BRL',
 				cancellationStartDate: HandleDate($scope.initialDate),
 				cancellationEndDate: HandleDate($scope.finalDate),
-				shopIds: shopIds,
+				shopIds: arrShopIds,
 				groupBy: ['ADJUST_TYPE'],
 				cardProductIds: $scope.productsSelected,
 				status: 'CANCELLED',
 				adjustTypes: 'CANCELLATION,CHARGEBACK'
 			};
 
-			TransactionSummaryService.ListTransactionSummaryByFilter(HandleFilter(filter)).then(function(response) {
-				var data = HandleResponse(response.data.content);
+			TransactionSummaryService.ListTransactionSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
+				var objData = HandleResponse(objResponse.data.content);
 
-				for(var item in data){
-					if(typeof data[item] === 'object') {
-						if(data[item].adjustType === "CANCELLATION") {
-                            $scope.cancelled = data[item].quantity;
-
-                        } else if(data[item].adjustType === "CHARGEBACK") {
-                            $scope.chargebacks = data[item].quantity;
+				for(var objItem in objData){
+					if(typeof objData[objItem] === 'object') {
+						if(objData[objItem].adjustType === "CANCELLATION") {
+                            $scope.cancelled = objData[objItem].quantity;
+                        } else if(objData[objItem].adjustType === "CHARGEBACK") {
+                            $scope.chargebacks = objData[objItem].quantity;
                         }
 					} else {
 						break;
 					}
 				}
 
-			}).catch(function(response) {
+			}).catch(function(objResponse) {
             });
 		}
 
-		function UpdateIndicator(adjustType){
-			$scope.adjustType = [adjustType];
-            if(adjustType == 'CANCELLATION') {
+		function UpdateIndicator(strAdjustType){
+			$scope.adjustType = [strAdjustType];
+            if(strAdjustType == 'CANCELLATION') {
                 $scope.tableName = 'cancelamento';
             } else {
                 $scope.tableName = 'chargeback';
@@ -165,58 +164,58 @@
 			document.getElementById("buscaTerminal").value = '';
 		}
 
-		function HandleResponse(response) {
-			var items = [];
+		function HandleResponse(objResponse) {
+			var arrItems = [];
 
-			for(var item in response){
-				if(typeof response[item] === 'object') {
-					items.push(response[item]);
+			for(var objItem in objResponse){
+				if(typeof objResponse[objItem] === 'object') {
+					arrItems.push(objResponse[objItem]);
 				}
 				else {
 					break;
 				}
 			}
-			return items;
+			return arrItems;
 		}
 
 		function HandleDate(date) {
 			return calendarFactory.formatDateTimeForService(date);
 		}
 
-		function HandleFilter(filter) {
-			if(filter.cardProductIds) {
-				if(filter.cardProductIds.length === 0) {
-					delete filter.cardProductIds;
+		function HandleFilter(objFilter) {
+			if(objFilter.cardProductIds) {
+				if(objFilter.cardProductIds.length === 0) {
+					delete objFilter.cardProductIds;
 				}
 			}
-			if(filter.groupBy) {
-				if(filter.groupBy.length === 0) {
-					delete filter.groupBy;
+			if(objFilter.groupBy) {
+				if(objFilter.groupBy.length === 0) {
+					delete objFilter.groupBy;
 				}
 			}
 
-			if(!filter.cancellationStartDate) {
-				delete filter.cancellationStartDate;
+			if(!objFilter.cancellationStartDate) {
+				delete objFilter.cancellationStartDate;
 			}
 
-			if(!filter.cancellationEndDate) {
-				delete filter.cancellationEndDate;
+			if(!objFilter.cancellationEndDate) {
+				delete objFilter.cancellationEndDate;
 			}
-			if(filter.adjustType) {
-				if(filter.adjustType[0] === 'CANCELLATION') {
-					//filter.groupBy = ['BANK_ACCOUNT','PAYED_DATE'];
+			if(objFilter.adjustType) {
+				if(objFilter.adjustType[0] === 'CANCELLATION') {
+					//objFilter.groupBy = ['BANK_ACCOUNT','PAYED_DATE'];
 				}
-				else if(filter.adjustType[0] === 'CHARGEBACK') {
-					//filter.groupBy = ['BANK_ACCOUNT','EXPECTED_DATE'];
+				else if(objFilter.adjustType[0] === 'CHARGEBACK') {
+					//objFilter.groupBy = ['BANK_ACCOUNT','EXPECTED_DATE'];
 				}
 				else {
-					delete filter.adjustType;
+					delete objFilter.adjustType;
 				}
 			}
 			else {
-				delete filter.adjustType;
+				delete objFilter.adjustType;
 			}
-			return filter;
+			return objFilter;
 		}
 
 		function PageChanged() {
@@ -230,8 +229,8 @@
 			GetReport();
 		};
 
-		function SortResults(elem,kind) {
-			$scope.sort = $rootScope.sortResults(elem,kind);
+		function SortResults(objElem, strKind) {
+			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
 		};
 	}
