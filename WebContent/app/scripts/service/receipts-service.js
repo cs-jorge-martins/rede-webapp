@@ -10,23 +10,23 @@ angular.module('KaplenWeb.receiptsService', [])
 
 .service('receiptsService', function(app, $http, Request) {
 
-	this.GetFinancials = function(query_strings) {
-		var request = query_strings;
+	this.GetFinancials = function(strQueryStrings) {
+		var objRequest = strQueryStrings;
 
 		return $http({
 			url: app.endpoint + '/financials',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	};
 
-	this.GetAdjusts = function(query_strings) {
-        var request = query_strings;
+	this.GetAdjusts = function(strQueryStrings) {
+        var objRequest = strQueryStrings;
 		return $http({
             url: app.endpoint + '/adjustsummaries',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	};

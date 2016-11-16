@@ -58,52 +58,49 @@
 			LoadPage();
 		}
 
-
-		//*************************************************************
 		function GetReport() {
 
-			var shopIds = [];
-			var cardProductIds = [];
+			var arrShopIds = [];
+			var arrCardProductIds = [];
 
 			if($scope.settlementsSelected) {
-				for(var item in $scope.settlementsSelected) {
-					shopIds.push($scope.settlementsSelected[item].id);
+				for(var objItem in $scope.settlementsSelected) {
+					arrShopIds.push($scope.settlementsSelected[objItem].id);
 				}
 			}
 
 			if($scope.productsSelected) {
-				for(var item in $scope.productsSelected) {
-					cardProductIds.push($scope.productsSelected[item].id);
+				for(var objItem in $scope.productsSelected) {
+					arrCardProductIds.push($scope.productsSelected[objItem].id);
 				}
 			}
 
-			var filter;
+			var objFilter;
 			if($scope.status[0] === 'EXPECTED'){
-				filter =  {
-						creditedShopIds: shopIds,
-						sourceShopIds: shopIds,
-						cardProductIds: cardProductIds,
-						expectedStartDate: HandleDate($scope.initialDate),
-						expectedEndDate: HandleDate($scope.finalDate),
-						status: $scope.status,
-                        groupBy: 'BANK_ACCOUNT,EXPECTED_DATE,ACQUIRER',
-						currency: 'BRL',
-						page: $scope.currentPage,
-						size: $scope.totalItensPage
+				objFilter =  {
+					creditedShopIds: arrShopIds,
+					sourceShopIds: arrShopIds,
+					cardProductIds: arrCardProductIds,
+					expectedStartDate: HandleDate($scope.initialDate),
+					expectedEndDate: HandleDate($scope.finalDate),
+					status: $scope.status,
+                    groupBy: 'BANK_ACCOUNT,EXPECTED_DATE,ACQUIRER',
+					currency: 'BRL',
+					page: $scope.currentPage,
+					size: $scope.totalItensPage
 				}
-
 			}else{
-				filter = {
-						creditedShopIds: shopIds,
-						sourceShopIds: shopIds,
-						cardProductIds: cardProductIds,
-						startDate: HandleDate($scope.initialDate),
-						endDate: HandleDate($scope.finalDate),
-						status: $scope.status,
-                        groupBy: 'BANK_ACCOUNT,PAYED_DATE,ACQUIRER',
-						currency: 'BRL',
-						page: $scope.currentPage,
-						size: $scope.totalItensPage
+				objFilter = {
+					creditedShopIds: arrShopIds,
+					sourceShopIds: arrShopIds,
+					cardProductIds: arrCardProductIds,
+					startDate: HandleDate($scope.initialDate),
+					endDate: HandleDate($scope.finalDate),
+					status: $scope.status,
+                    groupBy: 'BANK_ACCOUNT,PAYED_DATE,ACQUIRER',
+					currency: 'BRL',
+					page: $scope.currentPage,
+					size: $scope.totalItensPage
 				}
 			}
 
@@ -111,20 +108,20 @@
 				$scope.currentPage = $scope.currentPage + 1;
 			}
 
-			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(filter)).then(function(response) {
-				var data = HandleResponse(response.data.content);
-                var pagination = response.data.page;
+			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
+				var objData = HandleResponse(objResponse.data.content);
+                var objPagination = objResponse.data.page;
 
-				$scope.items = data;
-				$scope.noItensMsg = data.length ? false : true;
-				$scope.totalItens = pagination.totalElements;
-			}).catch(function(response) {
+				$scope.items = objData;
+				$scope.noItensMsg = objData.length ? false : true;
+				$scope.totalItens = objPagination.totalElements;
+			}).catch(function(objResponse) {
 
 			});
 		}
 
 		function GetExpectedAmount(){
-			var filter = {
+			var objFilter = {
 					creditedShopIds: $scope.settlementsSelected,
 					sourceShopIds: $scope.settlementsSelected,
 					acquirers: $scope.acquirersSelected,
@@ -136,14 +133,14 @@
 					currency: 'BRL'
 			}
 
-			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(filter)).then(function(response) {
+			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
 
-				response = HandleResponse(response.data);
+				objResponse = HandleResponse(objResponse.data);
 
-				if(response.length > 0) {
+				if(objResponse.length > 0) {
 
-					if(response[1][0].expectedAmount !== undefined) {
-                        $scope.futureReleases = response[1][0].expectedAmount;
+					if(objResponse[1][0].expectedAmount !== undefined) {
+                        $scope.futureReleases = objResponse[1][0].expectedAmount;
 					}
 					else {
 						$scope.futureReleases = 0;
@@ -152,13 +149,13 @@
 				else {
 					$scope.futureReleases = 0;
 				}
-			}).catch(function(response) {
+			}).catch(function(objResponse) {
 
 			});
 		}
 
 		function GetPayedAmount(){
-			var filter = {
+			var objFilter = {
 					shopIds: $scope.settlementsSelected,
 					acquirers: $scope.acquirersSelected,
 					cardProductIds: $scope.productsSelected,
@@ -169,12 +166,12 @@
 					currency: 'BRL'
 			}
 
-			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(filter)).then(function(response) {
-				response = HandleResponse(response.data);
+			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
+				objResponse = HandleResponse(objResponse.data);
 
-				if(response.length > 0) {
-					if(response[1][0].payedAmount !== undefined) {
-                        $scope.payedValues = response[1][0].payedAmount;
+				if(objResponse.length > 0) {
+					if(objResponse[1][0].payedAmount !== undefined) {
+                        $scope.payedValues = objResponse[1][0].payedAmount;
 					}
 					else {
 						$scope.payedValues = 0;
@@ -183,7 +180,7 @@
 				else {
 					$scope.payedValues = 0;
 				}
-			}).catch(function(response) {
+			}).catch(function(objResponse) {
 			});
 		}
 
@@ -193,9 +190,9 @@
 		}
 
 		function ClearFilter() {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 			$scope.status = ['RECEIVED'];
 			$scope.settlementsSelected = [];
 			$scope.acquirersSelected = [];
@@ -203,72 +200,72 @@
 			$scope.installmentsSelected = [];
 		}
 
-		function HandleResponse(response) {
-			var items = [];
+		function HandleResponse(objResponse) {
+			var arrItems = [];
 
-			for(var item in response){
-				if(typeof response[item] === 'object') {
-					items.push(response[item]);
+			for(var objItem in objResponse){
+				if(typeof objResponse[objItem] === 'object') {
+					arrItems.push(objResponse[objItem]);
 				}
 				else {
 					break;
 				}
 			}
-			return items;
+			return arrItems;
 		}
 
 		function HandleDate(date) {
 			return calendarFactory.formatDateTimeForService(date);
 		}
 
-		function HandleFilter(filter) {
-			if(filter.creditedShopIds) {
-				if(filter.creditedShopIds.length === 0) {
-					delete filter.creditedShopIds;
+		function HandleFilter(objFilter) {
+			if(objFilter.creditedShopIds) {
+				if(objFilter.creditedShopIds.length === 0) {
+					delete objFilter.creditedShopIds;
 				}
 			}
 
-			if(filter.sourceShopIds) {
-				if(filter.sourceShopIds.length === 0) {
-					delete filter.sourceShopIds;
+			if(objFilter.sourceShopIds) {
+				if(objFilter.sourceShopIds.length === 0) {
+					delete objFilter.sourceShopIds;
 				}
 			}
 
-			if(filter.acquirers) {
-				if(filter.acquirers.length === 0) {
-					delete filter.acquirers;
+			if(objFilter.acquirers) {
+				if(objFilter.acquirers.length === 0) {
+					delete objFilter.acquirers;
 				}
 			}
 
-			if(filter.cardProductIds) {
-				if(filter.cardProductIds.length === 0) {
-					delete filter.cardProductIds;
+			if(objFilter.cardProductIds) {
+				if(objFilter.cardProductIds.length === 0) {
+					delete objFilter.cardProductIds;
 				}
 			}
 
-			if(filter.installments) {
-				if(filter.installments.length === 0) {
-					delete filter.installments;
+			if(objFilter.installments) {
+				if(objFilter.installments.length === 0) {
+					delete objFilter.installments;
 				}
 			}
 
-			if(!filter.expectedStartDate) {
-				delete filter.expectedStartDate;
+			if(!objFilter.expectedStartDate) {
+				delete objFilter.expectedStartDate;
 			}
 
-			if(!filter.expectedEndDate) {
-				delete filter.expectedEndDate;
+			if(!objFilter.expectedEndDate) {
+				delete objFilter.expectedEndDate;
 			}
 
-			if(!filter.payedStartDate) {
-				delete filter.payedStartDate;
+			if(!objFilter.payedStartDate) {
+				delete objFilter.payedStartDate;
 			}
 
-			if(!filter.payedEndDate) {
-				delete filter.payedEndDate;
+			if(!objFilter.payedEndDate) {
+				delete objFilter.payedEndDate;
 			}
 
-			return filter;
+			return objFilter;
 		}
 
 		function PageChanged() {

@@ -11,62 +11,62 @@ angular.module('KaplenWeb.calendarService',[])
 
 .service('calendarService', function(calendarFactory) {
 
-	var calendarService = {};
+	var objCalendarService = {};
 
-	calendarService.dataInicial = calendarFactory.getFirstDayOfMonth();
-	calendarService.dataFinal = calendarFactory.getLastDayOfMonth();
+	objCalendarService.dateDataInicial = calendarFactory.getFirstDayOfMonth();
+	objCalendarService.dateDataFinal = calendarFactory.getLastDayOfMonth();
 
-	calendarService.initialDateChanged = false;
-	calendarService.finalDateChanged = false;
+	objCalendarService.bolInitialDateChanged = false;
+	objCalendarService.bolFinalDateChanged = false;
 
-	calendarService.ResetCalendarService = function(){
-		calendarService.dataInicial = this.dataInicial = calendarFactory.getFirstDayOfMonth();
-		calendarService.dataFinal = this.dataFinal = calendarFactory.getLastDayOfMonth();
+	objCalendarService.ResetCalendarService = function(){
+		objCalendarService.dateDataInicial = this.dateDataInicial = calendarFactory.getFirstDayOfMonth();
+		objCalendarService.dateDataFinal = this.dateDataFinal = calendarFactory.getLastDayOfMonth();
 
-		calendarService.initialDateChanged = this.initialDateChanged = false;
-		calendarService.finalDateChanged = this.finalDateChanged = false;
+		objCalendarService.bolInitialDateChanged = this.bolInitialDateChanged = false;
+		objCalendarService.bolFinalDateChanged = this.bolFinalDateChanged = false;
 	};
 
 
 
-	calendarService.CheckDateInitial = function(date){
-		if(calendarService.initialDateChanged){
-			return calendarFactory.formatDate(calendarService.dataInicial, true);
+	objCalendarService.CheckDateInitial = function(date){
+		if(objCalendarService.bolInitialDateChanged){
+			return calendarFactory.formatDate(objCalendarService.dateDataInicial, true);
 		}else{
 			return date;
 		}
 	};
 
-	calendarService.CheckDateFinal = function(date){
-		if(calendarService.finalDateChanged){
-			return calendarFactory.formatDate(calendarService.dataFinal, true);
+	objCalendarService.CheckDateFinal = function(date){
+		if(objCalendarService.bolFinalDateChanged){
+			return calendarFactory.formatDate(objCalendarService.dateDataFinal, true);
 		}else{
 			return date;
 		}
 	};
 
-	calendarService.ChangeInitialDate = function(data){
-		if(data != calendarService.dataInicial){
-			calendarService.initialDateChanged = this.initialDateChanged = true;
-			calendarService.dataInicial = data;
+	objCalendarService.ChangeInitialDate = function(data){
+		if(data != objCalendarService.dateDataInicial){
+			objCalendarService.bolInitialDateChanged = this.bolInitialDateChanged = true;
+			objCalendarService.dateDataInicial = data;
 		}
 	};
 
-	calendarService.ChangeFinalDate = function(data){
-		if(data != calendarService.dataFinal){
-			calendarService.finalDateChanged = this.finalDateChanged = true;
-			calendarService.dataFinal = data;
+	objCalendarService.ChangeFinalDate = function(data){
+		if(data != objCalendarService.dateDataFinal){
+			objCalendarService.bolFinalDateChanged = this.bolFinalDateChanged = true;
+			objCalendarService.dateDataFinal = data;
 		}
 	};
 
-	calendarService.format = 'dd/MM/yyyy';
+	objCalendarService.format = 'dd/MM/yyyy';
 
-	calendarService.dateOptions = {
+	objCalendarService.dateOptions = {
 		    'year-format': "'yy'",
 		    'starting-day': 1,
 		    'show-weeks': false
 	};
 
-	return calendarService;
+	return objCalendarService;
 
 });
