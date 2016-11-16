@@ -767,7 +767,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		var strLabel = (bolIsFuture ? $scope.accountsFutureLabel : $scope.accountsLabel);
 
 		if( arrModel.id ) {
-			strLabel = 'conta: ' + arrModel.label;
+			strLabel = arrModel.label;
 		} else {
 			strLabel = null;
 		}
