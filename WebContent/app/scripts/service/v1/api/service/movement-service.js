@@ -9,13 +9,13 @@ angular.module('Conciliador.MovementService',[])
 
 }]).service('MovementService', function(app, $location, $window, $http, Request) {
 
-	this.GetForethoughts = function (filter) {
-		var request = filter;
+	this.GetForethoughts = function (objFilter) {
+		var objRequest = objFilter;
 
 		return $http({
 			url: app.endpoint + "/movements",
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		})
 	}

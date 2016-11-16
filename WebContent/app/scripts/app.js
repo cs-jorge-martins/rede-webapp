@@ -197,42 +197,42 @@ var app = angular.module('KaplenWeb',['ngRoute','highcharts-ng', 'ngLocale','ang
 		$rootScope.alerts.splice(index, 1);
 	};
 
-	function SortResults(elem, kind) {
-		var order, order_string;
+	function SortResults(objElem, strKind) {
+		var strOrder, strOrderString;
 
-		var ResetSortClasses = function (elem) {
-			var elementsAsc = elem.getElementsByClassName("sortAsc");
-			var elementsDesc = elem.getElementsByClassName("sortDesc");
+		var ResetSortClasses = function (objElem) {
+			var objElementsAsc = objElem.getElementsByClassName("sortAsc");
+			var objElementsDesc = objElem.getElementsByClassName("sortDesc");
 
-			var ResetClass = function (element, element_class) {
-				[].forEach.call(element, function(el) {
-					el.classList.remove(element_class);
+			var ResetClass = function (objElement, strElementClass) {
+				[].forEach.call(objElement, function(objEl) {
+					objEl.classList.remove(strElementClass);
 				});
 			};
 
-			ResetClass(elementsAsc, "sortAsc");
-			ResetClass(elementsDesc, "sortDesc");
+			ResetClass(objElementsAsc, "sortAsc");
+			ResetClass(objElementsDesc, "sortDesc");
 		};
 
 		if(
-			!elem.target.classList.contains("sortAsc") &&
-			!elem.target.classList.contains("sortDesc")
+			!objElem.target.classList.contains("sortAsc") &&
+			!objElem.target.classList.contains("sortDesc")
 		) {
-			ResetSortClasses(elem.target.parentElement.parentElement.parentElement);
+			ResetSortClasses(objElem.target.parentElement.parentElement.parentElement);
 		}
 
-		if(!elem.target.classList.contains("sortDesc")) {
-			elem.target.classList.add("sortDesc");
-			elem.target.classList.remove("sortAsc");
+		if(!objElem.target.classList.contains("sortDesc")) {
+			objElem.target.classList.add("sortDesc");
+			objElem.target.classList.remove("sortAsc");
 		} else {
-			elem.target.classList.add("sortAsc");
-			elem.target.classList.remove("sortDesc");
+			objElem.target.classList.add("sortAsc");
+			objElem.target.classList.remove("sortDesc");
 		}
 
-		order = elem.target.classList.contains("sortAsc") ? "ASC" : "DESC";
-		order_string = kind + "," + order;
+		strOrder = objElem.target.classList.contains("sortAsc") ? "ASC" : "DESC";
+		strOrderString = strKind + "," + strOrder;
 
-		return order_string;
+		return strOrderString;
 	};
 
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
@@ -245,8 +245,8 @@ var app = angular.module('KaplenWeb',['ngRoute','highcharts-ng', 'ngLocale','ang
                     uploadManager.add(data);
                 },
                 progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    uploadManager.setProgress(progress);
+                    var intProgress = parseInt(data.loaded / data.total * 100, 10);
+                    uploadManager.setProgress(intProgress);
                 },
                 done: function (e, data) {
                     uploadManager.setProgress(0);
@@ -340,7 +340,6 @@ var app = angular.module('KaplenWeb',['ngRoute','highcharts-ng', 'ngLocale','ang
 })
 
 app.filter('utc', function(){
-
   return function(val){
     var date = new Date(val);
      return new Date(date.getUTCFullYear(),
@@ -350,10 +349,10 @@ app.filter('utc', function(){
                      date.getUTCMinutes(),
                      date.getUTCSeconds());
   };
-
 });
-function getDominio(extension) {
-	var url = location.href; //pega endereço que esta no navegador
-	url = url.split("/#/"); //quebra o endeço de acordo com a / (barra)
-	return url[0]+ '/'+extension+'/'; // retorna a parte www.endereco.com.br
+
+function getDominio(strExtension) {
+	var strUrl = location.href;
+	strUrl = strUrl.split("/#/");
+	return strUrl[0]+ '/' + strExtension+ '/';
 };

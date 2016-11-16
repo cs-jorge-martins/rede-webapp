@@ -11,49 +11,49 @@ angular.module('KaplenWeb.filtersService', [])
 .service('filtersService', function(app, $http, Request) {
 
 	this.GetAcquirers = function() {
-		var request = {
+		var objRequest = {
 		};
 
 		return $http({
 			url: app.endpoint + '/acquirers?name=REDE',
 			method: "GET",
-			data: request,
+			data: objRequest,
 			headers: Request.setHeaders()
 		});
 	};
 
 	this.GetAccounts = function() {
-		var request = {
+		var objRequest = {
 		};
 
 		return $http({
 			url: app.endpoint + '/pvs/bankaccounts',
 			method: "GET",
-			data: request,
+			data: objRequest,
 			headers: Request.setHeaders()
 		});
 	};
 
 	this.GetShops = function() {
-		var request = {
+		var objRequest = {
 		};
 
 		return $http({
 			url: app.endpoint + '/pvs/shops',
 			method: "GET",
-			data: request,
+			data: objRequest,
 			headers: Request.setHeaders()
 		});
 	};
 
 	this.GetCardProducts = function() {
-		var request = {
+		var objRequest = {
 		};
 
 		return $http({
 			url: app.endpoint + '/cardproducts',
 			method: "GET",
-			data: request,
+			data: objRequest,
 			headers: Request.setHeaders()
 		});
 	};

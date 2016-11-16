@@ -4,25 +4,25 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-function MaxSizePagination(valueMax, itensSize) {
-	var maxSize = 0;
+function MaxSizePagination(intValueMax, intItensSize) {
+	var intMaxSize = 0;
 
-	if(valueMax < (itensSize - 1 )){
-		maxSize = 1;
+	if(intValueMax < (intItensSize - 1 )){
+		intMaxSize = 1;
 	}
-	else if((valueMax / itensSize ) > 0 <= 9){
-		maxSize = Math.round(valueMax / itensSize) + 1;
+	else if((intValueMax / intItensSize ) > 0 <= 9){
+		intMaxSize = Math.round(intValueMax / intItensSize) + 1;
 
-		if(maxSize > 5){
-			maxSize = 5;
+		if(intMaxSize > 5){
+			intMaxSize = 5;
 		}
 	}
-	else if(valueMax > (itensSize * 5)){
-		maxSize = 5;
+	else if(intValueMax > (intItensSize * 5)){
+		intMaxSize = 5;
 	}
 	else{
-		maxSize = Math.round(valueMax / itensSize);
+		intMaxSize = Math.round(intValueMax / intItensSize);
 	}
-	return maxSize;
+	return intMaxSize;
 
 };

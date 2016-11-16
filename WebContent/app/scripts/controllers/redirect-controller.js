@@ -22,40 +22,40 @@ angular.module('Conciliador.redirectController',[])
 
 	function Init() {
 
-		var authorization = $routeParams.data;
+		var strAuthorization = $routeParams.data;
 
         function ErrorMessage() {
-			var accessValidatingDiv = document.querySelector("#accessValidating");
-			var errorDiv = document.querySelector("#error");
-			var urlRedirectError = "http://userede.com.br";
+			var divAccessValidating = document.querySelector("#accessValidating");
+			var divError = document.querySelector("#error");
+			var strUrlRedirectError = "http://userede.com.br";
 
-			accessValidatingDiv.classList.add("hidden");
-			errorDiv.classList.remove("hidden");
+			divAccessValidating.classList.add("hidden");
+			divError.classList.remove("hidden");
 
 			setTimeout(function () {
-				window.location.href = urlRedirectError;
+				window.location.href = strUrlRedirectError;
 			}, 5000);
 		};
 
-		if(!authorization) {
+		if(!strAuthorization) {
 			return ErrorMessage();
 		}
 
-		loginService.SingleSignOn(authorization).then(function (data) {
+		loginService.SingleSignOn(strAuthorization).then(function (objData) {
 
-			if(data.status != 200) {
+			if(objData.status != 200) {
 				return ErrorMessage();
 			}
 
-			var user = data.data.user;
+			var objUser = objData.data.user;
 
-			if(!user || user.pvList.length <= 0) {
+			if(!objUser || objUser.pvList.length <= 0) {
 				return ErrorMessage();
 			}
 
-			$rootScope.signIn(authorization, user);
+			$rootScope.signIn(strAuthorization, objUser);
 
-		}).catch(function (response) {
+		}).catch(function (objData) {
 			console.log('error');
 		});
 

@@ -11,75 +11,75 @@ angular.module('KaplenWeb.advancedFilterService',[])
 
 .service('advancedFilterService', function(cacheService) {
 
-	var advancedFilterService = {};
+	var objAdvancedFilterService = {};
 
-	advancedFilterService.natureza = this.natureza = 0;
-	advancedFilterService.tipoTerminal = this.tipoTerminal = 0;
+	objAdvancedFilterService.natureza = this.natureza = 0;
+	objAdvancedFilterService.tipoTerminal = this.tipoTerminal = 0;
 
 	/**************Inicialização dos objetos para busca*******************************/
-	advancedFilterService.acquirer = this.acquirer = '';
-	advancedFilterService.brand = this.brand = '';
-	advancedFilterService.product = this.product = '';
-	advancedFilterService.settlement = this.settlement = '';
-	advancedFilterService.terminal = this.terminal = '';
-	advancedFilterService.installment = this.installment = '';
-	advancedFilterService.account = this.account = '';
+	objAdvancedFilterService.acquirer = this.acquirer = '';
+	objAdvancedFilterService.brand = this.brand = '';
+	objAdvancedFilterService.product = this.product = '';
+	objAdvancedFilterService.settlement = this.settlement = '';
+	objAdvancedFilterService.terminal = this.terminal = '';
+	objAdvancedFilterService.installment = this.installment = '';
+	objAdvancedFilterService.account = this.account = '';
 
 	/**************Inicialização de arrays de itens selecionados*******************************/
-	advancedFilterService.acquirersSelected = this.acquirersSelected = [];
-	advancedFilterService.brandsSelected = this.brandsSelected = [];
-	advancedFilterService.productsSelected = this.productsSelected = [];
-	advancedFilterService.settlementsSelected = this.settlementsSelected = [];
-	advancedFilterService.terminalsSelected = this.terminalsSelected = [];
-	advancedFilterService.installmentsSelected = this.installmentsSelected = [];
-	advancedFilterService.accountsSelected = this.accountsSelected = [];
+	objAdvancedFilterService.acquirersSelected = this.acquirersSelected = [];
+	objAdvancedFilterService.brandsSelected = this.brandsSelected = [];
+	objAdvancedFilterService.productsSelected = this.productsSelected = [];
+	objAdvancedFilterService.settlementsSelected = this.settlementsSelected = [];
+	objAdvancedFilterService.terminalsSelected = this.terminalsSelected = [];
+	objAdvancedFilterService.installmentsSelected = this.installmentsSelected = [];
+	objAdvancedFilterService.accountsSelected = this.accountsSelected = [];
 
 	/**************Inicialização de arrays de ids para busca*******************************/
-	advancedFilterService.acquirersSearch = this.acquirersSearch = [];
-	advancedFilterService.brandsSearch = this.brandsSearch = [];
-	advancedFilterService.productsSearch = this.productsSearch = [];
-	advancedFilterService.settlementsSearch = this.settlementsSearch = [];
-	advancedFilterService.terminalsSearch = this.terminalsSearch = [];
-	advancedFilterService.installmentsSearch = this.installmentsSearch = [];
-	advancedFilterService.accountsSearch = this.accountsSearch = [];
-	advancedFilterService.filterClick = this.filterClick = false;
-	advancedFilterService.additionalInformations = this.additionalInformations = false;
+	objAdvancedFilterService.acquirersSearch = this.acquirersSearch = [];
+	objAdvancedFilterService.brandsSearch = this.brandsSearch = [];
+	objAdvancedFilterService.productsSearch = this.productsSearch = [];
+	objAdvancedFilterService.settlementsSearch = this.settlementsSearch = [];
+	objAdvancedFilterService.terminalsSearch = this.terminalsSearch = [];
+	objAdvancedFilterService.installmentsSearch = this.installmentsSearch = [];
+	objAdvancedFilterService.accountsSearch = this.accountsSearch = [];
+	objAdvancedFilterService.filterClick = this.filterClick = false;
+	objAdvancedFilterService.additionalInformations = this.additionalInformations = false;
 
-	advancedFilterService.GetProducts = function() {
+	objAdvancedFilterService.GetProducts = function() {
 		return cacheService.GetProducts();
 	};
 
-	advancedFilterService.GetSettlements = function() {
+	objAdvancedFilterService.GetSettlements = function() {
 		return cacheService.GetSettlements();
 	};
 
 	/****************************************Funções do auto complete de Produto*****************************************/
 
-	advancedFilterService.AddProductsSearch = function(value) {
-		advancedFilterService.product = this.product = '';
-		advancedFilterService.productsSelected = this.productsSelected = advancedFilterService.AddItemSearch(value, this.productsSelected, this.productsSearch);
+	objAdvancedFilterService.AddProductsSearch = function(value) {
+		objAdvancedFilterService.product = this.product = '';
+		objAdvancedFilterService.productsSelected = this.productsSelected = objAdvancedFilterService.AddItemSearch(value, this.productsSelected, this.productsSearch);
 	};
 
-	advancedFilterService.RemoveProductsSearch = function(value) {
-		advancedFilterService.productsSelected.splice(this.productsSelected.indexOf(value), 1);
-		advancedFilterService.productsSearch.splice(this.productsSearch.indexOf(value.id), 1);
+	objAdvancedFilterService.RemoveProductsSearch = function(value) {
+		objAdvancedFilterService.productsSelected.splice(this.productsSelected.indexOf(value), 1);
+		objAdvancedFilterService.productsSearch.splice(this.productsSearch.indexOf(value.id), 1);
 	};
 
 	/****************************************Funções do auto complete de Unidades*****************************************/
 
-	advancedFilterService.AddSettlementsSearch = function(value) {
-		advancedFilterService.settlement = this.settlement = '';
-		advancedFilterService.settlementsSelected = this.settlementsSelected = advancedFilterService.AddItemSearch(value, this.settlementsSelected, this.settlementsSearch);
+	objAdvancedFilterService.AddSettlementsSearch = function(value) {
+		objAdvancedFilterService.settlement = this.settlement = '';
+		objAdvancedFilterService.settlementsSelected = this.settlementsSelected = objAdvancedFilterService.AddItemSearch(value, this.settlementsSelected, this.settlementsSearch);
 	};
 
-	advancedFilterService.RemoveSettlementsSearch = function(value) {
-		advancedFilterService.settlementsSelected.splice(this.settlementsSelected.indexOf(value), 1);
-		advancedFilterService.settlementsSearch.splice(this.settlementsSearch.indexOf(value.id), 1);
+	objAdvancedFilterService.RemoveSettlementsSearch = function(value) {
+		objAdvancedFilterService.settlementsSelected.splice(this.settlementsSelected.indexOf(value), 1);
+		objAdvancedFilterService.settlementsSearch.splice(this.settlementsSearch.indexOf(value.id), 1);
 	};
 
 	/****************************************Funções do auto complete de Parcelas*****************************************/
 
-	advancedFilterService.installments = [
+	objAdvancedFilterService.installments = [
 	                       {id: 0, name:'Débito', number:0},
 	                       {id: 1, name:'Rotativo', number:1},
 	                       {id: 2, name:'2x', number:2},
@@ -109,54 +109,54 @@ angular.module('KaplenWeb.advancedFilterService',[])
 
 	/************************************************Botão e logica para pegar ids para pesquisa************************************/
 
-	advancedFilterService.LoadParamsByFilter = function(){
-		advancedFilterService.natureza = this.natureza = 0;
-		advancedFilterService.tipoTerminal = this.tipoTerminal = 0;
+	objAdvancedFilterService.LoadParamsByFilter = function(){
+		objAdvancedFilterService.natureza = this.natureza = 0;
+		objAdvancedFilterService.tipoTerminal = this.tipoTerminal = 0;
 
 		/**************Inicialização dos objetos para busca*******************************/
-		advancedFilterService.acquirer = this.acquirer = '';
-		advancedFilterService.brand = this.brand = '';
-		advancedFilterService.product = this.product = '';
-		advancedFilterService.settlement = this.settlement = '';
-		advancedFilterService.terminal = this.terminal = '';
-		advancedFilterService.installment = this.installment = '';
-		advancedFilterService.account = this.account = '';
+		objAdvancedFilterService.acquirer = this.acquirer = '';
+		objAdvancedFilterService.brand = this.brand = '';
+		objAdvancedFilterService.product = this.product = '';
+		objAdvancedFilterService.settlement = this.settlement = '';
+		objAdvancedFilterService.terminal = this.terminal = '';
+		objAdvancedFilterService.installment = this.installment = '';
+		objAdvancedFilterService.account = this.account = '';
 
 		/**************Inicialização de arrays de itens selecionados*******************************/
-		advancedFilterService.acquirersSelected = this.acquirersSelected = [];
-		advancedFilterService.brandsSelected = this.brandsSelected = [];
-		advancedFilterService.productsSelected = this.productsSelected = [];
-		advancedFilterService.settlementsSelected = this.settlementsSelected = [];
-		advancedFilterService.terminalsSelected = this.terminalsSelected = [];
-		advancedFilterService.installmentsSelected = this.installmentsSelected = [];
-		advancedFilterService.accountsSelected = this.accountsSelected = [];
+		objAdvancedFilterService.acquirersSelected = this.acquirersSelected = [];
+		objAdvancedFilterService.brandsSelected = this.brandsSelected = [];
+		objAdvancedFilterService.productsSelected = this.productsSelected = [];
+		objAdvancedFilterService.settlementsSelected = this.settlementsSelected = [];
+		objAdvancedFilterService.terminalsSelected = this.terminalsSelected = [];
+		objAdvancedFilterService.installmentsSelected = this.installmentsSelected = [];
+		objAdvancedFilterService.accountsSelected = this.accountsSelected = [];
 
 		/**************Inicialização de arrays de ids para busca*******************************/
-		advancedFilterService.acquirersSearch = this.acquirersSearch = [];
-		advancedFilterService.brandsSearch = this.brandsSearch = [];
-		advancedFilterService.productsSearch = this.productsSearch = [];
-		advancedFilterService.settlementsSearch = this.settlementsSearch = [];
-		advancedFilterService.terminalsSearch = this.terminalsSearch = [];
-		advancedFilterService.installmentsSearch = this.installmentsSearch = [];
-		advancedFilterService.accountsSearch = this.accountsSearch = [];
+		objAdvancedFilterService.acquirersSearch = this.acquirersSearch = [];
+		objAdvancedFilterService.brandsSearch = this.brandsSearch = [];
+		objAdvancedFilterService.productsSearch = this.productsSearch = [];
+		objAdvancedFilterService.settlementsSearch = this.settlementsSearch = [];
+		objAdvancedFilterService.terminalsSearch = this.terminalsSearch = [];
+		objAdvancedFilterService.installmentsSearch = this.installmentsSearch = [];
+		objAdvancedFilterService.accountsSearch = this.accountsSearch = [];
 
-		advancedFilterService.filterClick = this.filterClick = false;
+		objAdvancedFilterService.filterClick = this.filterClick = false;
 	};
 
-	advancedFilterService.AddItemSearch = function(value, listSelected, listSearch){
-		var validate = false;
+	objAdvancedFilterService.AddItemSearch = function(value, listSelected, listSearch){
+		var bolValidate = false;
 
 		if (value !== "") {
 			if(listSelected.length != 0){
 				angular.forEach(listSelected, function(item, index){
 					if(item.id === value.id){
-						validate = true;
+						bolValidate = true;
 					}
 				});
-				if(!validate){
+				if(!bolValidate){
 					listSelected.push(value);
 					listSearch.push(value.id);
-					validate = false;
+					bolValidate = false;
 				}
 			}else{
 				listSearch.push(value.id);
@@ -167,7 +167,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 		return listSelected;
 	};
 
-	advancedFilterService.GetPlaceholder = function(listSelected){
+	objAdvancedFilterService.GetPlaceholder = function(listSelected){
 		if(listSelected.length > 0){
 			return listSelected.length + ' item(s) selecionado(s)';
 		}else{
@@ -178,7 +178,7 @@ angular.module('KaplenWeb.advancedFilterService',[])
 
 
 
-	advancedFilterService.GetPlaceholderFlag = function(listSelected) {
+	objAdvancedFilterService.GetPlaceholderFlag = function(listSelected) {
 		if (listSelected.length > 0) {
 			return listSelected.length + " bandeira(s) selecionada(s)";
 		} else {
@@ -186,5 +186,5 @@ angular.module('KaplenWeb.advancedFilterService',[])
 		}
 	}
 
-	return advancedFilterService;
+	return objAdvancedFilterService;
 });

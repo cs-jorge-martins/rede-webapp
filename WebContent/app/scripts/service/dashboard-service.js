@@ -10,19 +10,19 @@ angular.module('KaplenWeb.dashboardService',[])
 }])
 
 .service('dashboardService', function(TransactionSummaryService, AdjustSummaryService, MovementSummaryService, TransactionConciliationService) {
-	this.GetTransactionSummaryBox = function(transactionSummaryFilter){
-		return TransactionSummaryService.ListTransactionSummaryByFilter(transactionSummaryFilter);
+	this.GetTransactionSummaryBox = function(objTransactionSummaryFilter){
+		return TransactionSummaryService.ListTransactionSummaryByFilter(objTransactionSummaryFilter);
 	}
 
-	this.GetNplicateTransactionSummary = function(transactionSummaryNplicate){
-		return TransactionSummaryService.ListNplicateTransactionSummaryByFilter(transactionSummaryNplicate);
+	this.GetNplicateTransactionSummary = function(objTransactionSummaryNplicate){
+		return TransactionSummaryService.ListNplicateTransactionSummaryByFilter(objTransactionSummaryNplicate);
 	}
 
-	this.GetMovementSummary = function(movementSummaryFilter){
-		return MovementSummaryService.ListMovementSummaryByFilter(movementSummaryFilter);
+	this.GetMovementSummary = function(objMovementSummaryFilter){
+		return MovementSummaryService.ListMovementSummaryByFilter(objMovementSummaryFilter);
 	}
 
-	this.GetTransactionConciliationBox = function(transactionFilter){
-		return TransactionConciliationService.ListTransactionConciliationByFilter(transactionFilter);
+	this.GetTransactionConciliationBox = function(objTransactionFilter){
+		return TransactionConciliationService.ListTransactionConciliationByFilter(objTransactionFilter);
 	}
 });

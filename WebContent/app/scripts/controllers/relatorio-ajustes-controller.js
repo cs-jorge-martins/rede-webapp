@@ -26,14 +26,12 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.items = [];
 		$scope.total = 0;
 		$scope.noItensMsg = false;
-
 		$scope.sort = 'date,ASC';
-
 		$scope.exportReport = ExportReport;
 
-		var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+		var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 		$scope.pageChanged = PageChanged;
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
@@ -46,31 +44,31 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		Init();
 
 		function Init(){
-			GetReport();
-
 			$scope.clearFilter = ClearFilter;
 			$scope.search = Search;
+
+			GetReport();
 		}
 
 		function GetReport() {
 
-            var curPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
+            var intCurPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
 
 			AdjustSummaryService.ListAdjustSummary({
 				currency: 'BRL',
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finalDate),
 				groupBy: 'PAYED_DATE,DESCRIPTION',
-                page: curPage,
+                page: intCurPage,
 				size: $scope.totalItensPage,
 				sort: $scope.sort
-			}).then(function(response){
-				var data = response.data.content;
-                var pagination = response.data.page;
+			}).then(function(objResponse){
+				var objData = objResponse.data.content;
+                var objPagination = objResponse.data.page;
 
-				$scope.items = data;
-				$scope.noItensMsg = data.length ? false : true;
-				$scope.totalItens = pagination.totalElements;
+				$scope.items = objData;
+				$scope.noItensMsg = objData.length ? false : true;
+				$scope.totalItens = objPagination.totalElements;
 			});
 		}
 
@@ -82,12 +80,11 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 				groupBy: 'DAY',
 				page: ($scope.currentPage - 1),
 				size: $scope.totalItensPage
-			}).then(function(response) {
-				var data = response.data.content;
-                var pagination = response.data.page;
+			}).then(function(objResponse) {
+				var objData = objResponse.data.content;
 
-				if(response.status == 200) {
-					window.open(data.uri);
+				if(objResponse.status == 200) {
+					window.open(objData.uri);
 				} else {
 					// TODO Tratamento de erros
 				}
@@ -95,9 +92,9 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		}
 
 		function ClearFilter() {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 		}
 
 		function Search() {
@@ -115,8 +112,8 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 			GetReport();
 		};
 
-		function SortResults(elem,kind) {
-			$scope.sort = $rootScope.sortResults(elem,kind);
+		function SortResults(objElem, strKind) {
+			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
 		};
 

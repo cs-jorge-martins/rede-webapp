@@ -7,7 +7,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 .controller('receiptsExpectedDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService, MovementSummaryService){
 
-		var filter = {};
+		var objFilter = {};
 		$scope.totalItensPage = 10;
 
 		Init();
@@ -77,92 +77,92 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				endDate: $scope.date
 			};
 
-			MovementSummaryService.ListMovementSummaryByFilter(expectedAcquirersFilter).then(function (response) {
+			MovementSummaryService.ListMovementSummaryByFilter(expectedAcquirersFilter).then(function (objResponse) {
 
 				var obj;
-				var content = response.data.content;
-				for (var i=0; i<content.length; i++) {
+				var arrContent = objResponse.data.content;
+				for (var i=0; i < arrContent.length; i++) {
 					obj = {
-						id: content[i].acquirer.id,
-						title: content[i].acquirer.name
+						id: arrContent[i].acquirer.id,
+						title: arrContent[i].acquirer.name
 					};
 					$scope.tabs.push(obj);
 				}
 
-			}).catch(function (response) {
+			}).catch(function (objResponse) {
 			});
 		}
 
-		function TotalItensPageChangedSales(acquirer_id) {
+		function TotalItensPageChangedSales(intAcquirerId) {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			GetExpectedDetails(acquirer_id);
+			GetExpectedDetails(intAcquirerId);
 		};
 
-	    function GetExpectedDetails(acquirer_id) {
+	    function GetExpectedDetails(intAcquirerId) {
 
-			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
-			filter.size =  $scope.adjustsTotalItensPage;
-			filter.status = $scope.filterStatus;
-			filter.startDate = $scope.date;
-			filter.endDate = $scope.date;
-			filter.sort = $scope.sort;
-			filter.bankAccountIds = $scope.bankAccount.id;
-			filter.acquirer = acquirer_id;
+			objFilter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
+			objFilter.size =  $scope.adjustsTotalItensPage;
+			objFilter.status = $scope.filterStatus;
+			objFilter.startDate = $scope.date;
+			objFilter.endDate = $scope.date;
+			objFilter.sort = $scope.sort;
+			objFilter.bankAccountIds = $scope.bankAccount.id;
+			objFilter.acquirer = intAcquirerId;
 
-			FinancialService.GetExpectedDetails(filter).then(function(response) {
-				var data = response.data.content;
-				var pagination = response.data.page;
+			FinancialService.GetExpectedDetails(objFilter).then(function(objResponse) {
+				var dateData = objResponse.data.content;
+				var objPagination = objResponse.data.page;
 
-				$scope.detailsData = data;
-				$scope.adjustsTotalItens = pagination.totalElements;
+				$scope.detailsData = dateData;
+				$scope.adjustsTotalItens = objPagination.totalElements;
 
-			}).catch(function(response) {
+			}).catch(function(objResponse) {
 				$scope.detailsData = [];
 				console.log('[receiptsDetailsController:getSales] error');
 			});
 
 	    }
 
-	    function changeTab(index, acquirer_id) {
+	    function changeTab(index, intAcquirerId) {
 	    	$scope.tabs[index].active = true;
 			$scope.sort = "";
-			GetExpectedDetails(acquirer_id);
+			GetExpectedDetails(intAcquirerId);
 	    }
 
-	    function TranslateStatus(status, date) {
-			if(status && date) {
-				status = status.toLowerCase();
-				switch (status) {
+	    function TranslateStatus(strStatus, date) {
+			if(strStatus && date) {
+				strStatus = strStatus.toLowerCase();
+				switch (strStatus) {
 					case "expected":
 					case "pending":
-					 	status = "pendente";
+					 	strStatus = "pendente";
 						break;
 					case "suspended":
-						status = "suspenso";
+						strStatus = "suspenso";
 						break;
 					case "pawned":
-						status = "penhorado";
+						strStatus = "penhorado";
 						break;
 					case "blocked":
-						status = "bloqueado";
+						strStatus = "bloqueado";
 						break;
 					case "pawned_blocked":
-						status = "penhorado/bloqueado";
+						strStatus = "penhorado/bloqueado";
 						break;
 					case "forethought":
-						status = "antecipado em: " + calendarFactory.getDaySlashMonth(date);
+						strStatus = "antecipado em: " + calendarFactory.getDaySlashMonth(date);
 						break;
 					default:
                         console.log("error");
 				}
 			}
-			return status;
+			return strStatus;
 		}
 
-	    function SortResults(elem, kind, acquirer_id) {
-			$scope.sort = $rootScope.sortResults(elem,kind);
-			GetExpectedDetails(acquirer_id);
+	    function SortResults(objElem, strKind, intAcquirerId) {
+			$scope.sort = $rootScope.sortResults(objElem, strKind);
+			GetExpectedDetails(intAcquirerId);
 	    }
 
 	    /* pagination */
@@ -170,10 +170,10 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			$scope.salesCurrentPage = this.salesCurrentPage;
 		};
 
-		function TotalItensPageChangedSales(acquirer_id) {
+		function TotalItensPageChangedSales(intAcquirerId) {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			GetExpectedDetails(acquirer_id);
+			GetExpectedDetails(intAcquirerId);
 		};
 
 		function PageChangedAdjusts() {

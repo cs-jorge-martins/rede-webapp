@@ -10,31 +10,31 @@ angular.module('Conciliador.FinancialService',[])
 
 .service('FinancialService', function(app, $http, Request) {
 
-	this.GetExpectedDetails = function (request) {
+	this.GetExpectedDetails = function (objRequest) {
 		return $http({
 			url: app.endpoint + '/movements',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	}
 
-	this.GetFutureDetails = function (request) {
+	this.GetFutureDetails = function (objRequest) {
 		return $http({
 			url: app.endpoint + '/movements',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	}
 
-	this.GetReceipt = function(filter){
-		var request = filter;
+	this.GetReceipt = function(objFilter){
+		var objRequest = objFilter;
 
 		return $http({
             url: app.endpoint + '/financials/details',
 			method: "GET",
-			params: request,
+			params: objRequest,
 			headers: Request.setHeaders()
 		});
 	}

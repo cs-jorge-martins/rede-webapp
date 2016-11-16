@@ -76,9 +76,9 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			fileItem.url += "?fileName=" + $scope.fileName;
 		}
 
-		var modal;
-		$scope.uploader.onBeforeUploadItem = function(item){
-			modal = $modal.open({
+		var objModal;
+		$scope.uploader.onBeforeUploadItem = function(){
+			objModal = $modal.open({
 				templateUrl: "app/views/vendas/upload-in-progress.html",
 				scope: $scope,
 				size: 'lg',
@@ -87,7 +87,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
                     $scope.cancel = Cancel;
 					function Cancel() {
 						$scope.uploader.clearQueue();
-						modal.close();
+						objModal.close();
 						$scope.inProgress = false;
 						$scope.labelFindFile = true;
 						$scope.sendFile = true;
@@ -96,8 +96,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			})
 		}
 
-		$scope.uploader.onSuccessItem = function(item, response, status, headers, $timeout) {
-			modal.close();
+		$scope.uploader.onSuccessItem = function() {
+			objModal.close();
 			$scope.uploader.clearQueue();
 			var $modalInstance = $modal.open({
 				templateUrl: "app/views/vendas/enviado-com-sucesso.html",
@@ -115,19 +115,17 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.labelFindFile = true;
 		}
 
-
-
-		$scope.$watch('typeModel.type', function(response) {
-			if(response != 'FUTURE') {
+		$scope.$watch('typeModel.type', function(objResponse) {
+			if(objResponse != 'FUTURE') {
 				SetCalendarLastReleases();
 			} else {
 				SetCalendarFutureReleases();
 			}
 		});
 
-		$scope.$watch('initialDate', function(response) {
-			if(moment($scope.finishDate).isBefore(response)) {
-				$scope.finishDate = moment(response).toDate();
+		$scope.$watch('initialDate', function(objResponse) {
+			if(moment($scope.finishDate).isBefore(objResponse)) {
+				$scope.finishDate = moment(objResponse).toDate();
 			}
 		});
 
@@ -138,21 +136,21 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		}
 
 		function SetCalendarLastReleases() {
-			var today = calendarFactory.getToday();
-			$scope.initialDate = today;
-			$scope.finishDate = today;
+			var dateToday = calendarFactory.getToday();
+			$scope.initialDate = dateToday;
+			$scope.finishDate = dateToday;
 			$scope.initialMinDate = null;
 			$scope.finishMinDate = null;
-			$scope.initialMaxDate = today;
-			$scope.finishMaxDate = today;
+			$scope.initialMaxDate = dateToday;
+			$scope.finishMaxDate = dateToday;
 		}
 
 		function SetCalendarFutureReleases() {
-			var tomorrow = calendarFactory.getTomorrowFromTodayToDate();
-			$scope.initialDate = tomorrow;
-			$scope.finishDate = tomorrow;
-			$scope.initialMinDate = tomorrow;
-			$scope.finishMinDate = tomorrow;
+			var dateTomorrow = calendarFactory.getTomorrowFromTodayToDate();
+			$scope.initialDate = dateTomorrow;
+			$scope.finishDate = dateTomorrow;
+			$scope.initialMinDate = dateTomorrow;
+			$scope.finishMinDate = dateTomorrow;
 			$scope.initialMaxDate = null;
 			$scope.finishMaxDate = null;
 		}
@@ -164,20 +162,20 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			}
 		}
 
-		function GetUploadedFiles(byName) {
+		function GetUploadedFiles(bolByName) {
 			$scope.sendFile = false;
 			$scope.downloadFiles = false;
 
-			if(!$scope.listUploadedFiles.length || byName){
-				var filter = {
+			if(!$scope.listUploadedFiles.length || bolByName){
+				var objFilter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
 					sort: $scope.sort
 				};
 
 				if($scope.fileSearch !== "") {
-					filter.name = $scope.fileSearch;
-					filter.page = 0;
+					objFilter.name = $scope.fileSearch;
+					objFilter.page = 0;
 					$scope.currentPage = 0;
 				}
 
@@ -185,7 +183,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					$scope.currentPage = $scope.currentPage + 1;
 				}
 
-				integrationService.GetUploadedFiles(filter).then(function(response){
+				integrationService.GetUploadedFiles(objFilter).then(function(response){
 					$scope.listUploadedFiles = [];
 					var data = response.data.content;
 					var pagination = response.data.page;
@@ -208,7 +206,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.sendFile = false;
 		}
 		function DownloadFile () {
-			var filter = {
+			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finishDate),
 				shopIds: JSON.parse($window.sessionStorage.user).pvList.map(function(item){
@@ -217,15 +215,15 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				type: $scope.typeModel.type
 			}
 
-			integrationService.DownloadFiles(filter).then(function(response){
+			integrationService.DownloadFiles(objFilter).then(function(response){
 				var vm = this;
 
 				vm.val = {
 					text: response.data
 				}
 				vm.download = function (text) {
-					var data = new Blob([text], {type: 'text/csv'});
-					FileSaver.saveAs(data, 'planilha.csv');
+					var objData = new Blob([text], {type: 'text/csv'});
+					FileSaver.saveAs(objData, 'planilha.csv');
 				};
 				vm.download(vm.val.text);
 			})
@@ -247,13 +245,12 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			GetUploadedFiles(true);
 		};
 
-        function SortResults(elem,kind) {
-			var order_string;
-			order_string = $rootScope.sortResults(elem,kind);
+        function SortResults(objElem, strKind) {
+			var strOrderString;
+			strOrderString = $rootScope.sortResults(objElem, strKind);
 
-			$scope.sort = order_string;
+			$scope.sort = strOrderString;
 			GetUploadedFiles(true);
-
 		};
 
     });
