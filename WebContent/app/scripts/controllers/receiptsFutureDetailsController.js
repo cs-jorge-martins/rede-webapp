@@ -7,7 +7,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 .controller('receiptsFutureDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location,FinancialService){
 
-		var filter = {};
+		var objFilter = {};
 		Init();
 
 		function Init(){
@@ -46,7 +46,6 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 				$scope.sort = "";
 
-
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
@@ -66,14 +65,14 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.sortResults = SortResults;
 				$scope.pageChanged = PageChanged;
 				$scope.totalItensPageChanged = TotalItensPageChanged;
-				
+
 				GetFutureDetails();
 			}
 		}
 
-		function GetShopsFilter(model) {
-			return model.map(function(item){
-				return item.id;
+		function GetShopsFilter(arrModel) {
+			return arrModel.map(function(objItem){
+				return objItem.id;
 			}).join(",");
 		}
 
@@ -90,17 +89,17 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 		}
 
 		function GetShopsLabel() {
-			var shops = "";
+			var strShops = "";
 
 			if($scope.shops.length > 1) {
-				shops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
 
 				if($scope.shops.length > 2) {
-					shops += 's'
+					strShops += 's'
 				}
 			}
 
-			return shops;
+			return strShops;
 		}
 
 	    function Back(){
@@ -109,7 +108,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 	    function GetFutureDetails() {
 
-			var filter = {
+			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.startDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 				bankAccountIds: $scope.bankAccount.id,
@@ -122,21 +121,21 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				status: 'EXPECTED'
 			};
 
-			FinancialService.GetFutureDetails(filter).then(function (response) {
+			FinancialService.GetFutureDetails(objFilter).then(function (objResponse) {
 
-				var data = response.data.content;
-				var pagination = response.data.page;
+				var objData = objResponse.data.content;
+				var objPagination = objResponse.data.page;
 
-				$scope.detailsData = data;
-				$scope.totalItens = pagination.totalElements;
+				$scope.detailsData = objData;
+				$scope.totalItens = objPagination.totalElements;
 
-			}).catch(function (response) {
+			}).catch(function (objResponse) {
 			});
 
 	    }
 
-		function SortResults(elem, kind) {
-			$scope.sort = $rootScope.sortResults(elem,kind);
+		function SortResults(objElem, strKind) {
+			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetFutureDetails();
 		}
 

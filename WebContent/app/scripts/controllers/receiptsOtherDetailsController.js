@@ -7,7 +7,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 .controller('receiptsOtherDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, AdjustService){
 
-		var filter = {};
+		var objFilter = {};
 		Init();
 
 		function Init(){
@@ -49,7 +49,7 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 				$scope.day = calendarFactory.getDayOfDate($scope.startDate);
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
-				filter = {
+				objFilter = {
 					adjustTypes: "OTHER",
 					acquirerIds: $scope.acquirer.id,
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
@@ -79,17 +79,17 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 		}
 
 		function GetShopsLabel() {
-			var shops = "";
+			var strShops = "";
 
 			if($scope.shops.length > 1) {
-				shops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
 
 				if($scope.shops.length > 2) {
-					shops += 's'
+					strShops += 's'
 				}
 			}
 
-			return shops;
+			return strShops;
 		}
 
 	    function Back(){
@@ -98,16 +98,14 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 
 	    function GetOtherDetails() {
 	    	$scope.otherDetailsData = [];
-			filter.sort = $scope.sort;
-			AdjustService.GetOtherDetails(filter).then(function(response) {
-				var data = response.data.content;
-				var pagination = response.data.page;
+			objFilter.sort = $scope.sort;
+			AdjustService.GetOtherDetails(objFilter).then(function(objResponse) {
+				var objData = objResponse.data.content;
 
-				for (var i in data) {
-					$scope.otherDetailsData.push(data[i]);
+				for (var intIndex in objData) {
+					$scope.otherDetailsData.push(objData[intIndex]);
 				}
-			}).catch(function(response) {
-
+			}).catch(function(objResponse) {
 			});
 	    }
 
@@ -117,10 +115,10 @@ angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
 		    }, 0);
 	    }
 
-	    function SortResults(elem, kind) {
-			var order_string;
-			order_string = $rootScope.sortResults(elem,kind);
-			$scope.sort = order_string;
+	    function SortResults(objElem, strKind) {
+			var strOrderString;
+			strOrderString = $rootScope.sortResults(objElem,strKind);
+			$scope.sort = strOrderString;
 
 			GetOtherDetails();
 	    }

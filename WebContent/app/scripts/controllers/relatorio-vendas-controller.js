@@ -70,43 +70,43 @@
         $scope.totalItensPageChangedDuplicate = TotalItensPageChangedDuplicate;
         $scope.sortResults = SortResults;
 
-        function HandleResponse(response) {
-			var items = [];
+        function HandleResponse(objResponse) {
+			var arrItems = [];
 
-			for(var item in response){
-				if(typeof response[item] === 'object') {
-					items.push(response[item]);
+			for(var item in objResponse){
+				if(typeof objResponse[item] === 'object') {
+					arrItems.push(objResponse[item]);
 				}
 				else {
 					break;
 				}
 			}
-			return items;
+			return arrItems;
 		};
 
-        function LoadChart(response) {
-            var chartData = {
+        function LoadChart(objResponse) {
+            var objChartData = {
                 labels: [],
                 data: []
             };
-            for(var index in response) {
-				if(response[index].amount) {
-                	chartData.labels.push(response[index].cardProduct.name);
+            for(var intIndex in objResponse) {
+				if(objResponse[intIndex].amount) {
+                	objChartData.labels.push(objResponse[intIndex].cardProduct.name);
 				}
 				else {
-					chartData.labels.push('');
+					objChartData.labels.push('');
 				}
-                chartData.data.push(response[index].percentage);
+                objChartData.data.push(objResponse[intIndex].percentage);
             }
 
-            $scope.chartjs = chartData;
+            $scope.chartjs = objChartData;
         };
 
-        function GetFilterOptions(reportScope, extraOptions){
-            var extraOptions = extraOptions || {};
-            var filter = {
-				startDate: calendarFactory.formatDateTimeForService(reportScope.initialDate),
-				endDate: calendarFactory.formatDateTimeForService(reportScope.finalDate),
+        function GetFilterOptions(objReportScope, objExtraOptions){
+            var objExtraOptions = objExtraOptions || {};
+            var objFilter = {
+				startDate: calendarFactory.formatDateTimeForService(objReportScope.initialDate),
+				endDate: calendarFactory.formatDateTimeForService(objReportScope.finalDate),
 				shopIds: $scope.settlementsSelected.map(function(item){
                     return item.id;
                 }).join(','),
@@ -117,98 +117,100 @@
 				currency: 'BRL',
 				sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
-            return angular.extend(filter, extraOptions);
+            return angular.extend(objFilter, objExtraOptions);
         };
 
         function GetSynthetic() {
-			var filter = GetFilterOptions($scope.synthetic, {
+			var objFilter = GetFilterOptions($scope.synthetic, {
 				groupBy: ['CARD_PRODUCT'],
 				page: $scope.currentPageSynthetic,
 				size: $scope.totalItensPageSynthetic
 			});
 
-			TransactionSummaryService.ListTransactionSummaryByFilter(filter).then(function(response) {
-				var data = HandleResponse(response.data.content);
-                var pagination = response.data.page;
+			TransactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function(objResponse) {
+				var objData = HandleResponse(objResponse.data.content);
+                var objPagination = objResponse.data.page;
 
-				var total = 0;
-				for(var i = 0; i < data.length; i++) {
-					total = total + data[i].quantity;
+				var intTotal = 0;
+				for(var i = 0; i < objData.length; i++) {
+					intTotal = intTotal + objData[i].quantity;
 				}
 
-				for(var j = 0; j < data.length; j++) {
-					data[j].percentage = ((data[j].quantity * 100) / (total)).toFixed(2);
+				for(var j = 0; j < objData.length; j++) {
+					objData[j].percentage = ((objData[j].quantity * 100) / (intTotal)).toFixed(2);
 				}
 
-				$scope.synthetic.items = data;
+				$scope.synthetic.items = objData;
                 $scope.synthetic.noItensMsg = $scope.synthetic.items.length === 0 ? true : false;
 
-				$scope.totalItensSynthetic = pagination.totalElements;
-				LoadChart(data);
+				$scope.totalItensSynthetic = objPagination.totalElements;
+				LoadChart(objData);
 			});
         };
 
         function GetAnalytical() {
-            var filter = GetFilterOptions($scope.analytical, {
+            var objFilter = GetFilterOptions($scope.analytical, {
                 page: $scope.currentPageAnalytical,
                 size: $scope.totalItensPageAnalytical
             });
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
-			TransactionService.GetTransactionByFilter(filter).then(function(response) {
-                var data = HandleResponse(response.data.content);
-                var pagination = response.data.page;
-                $scope.analytical.items = data;
-				$scope.analytical.noItensMsg = data.length === 0 ? true : false;
-				$scope.totalItensAnalytical = pagination.totalElements;
-			}).catch(function(response) { });
+			TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
+                var objData = HandleResponse(objResponse.data.content);
+                var objPagination = objResponse.data.page;
+                $scope.analytical.items = objData;
+				$scope.analytical.noItensMsg = objData.length === 0 ? true : false;
+				$scope.totalItensAnalytical = objPagination.totalElements;
+			}).catch(function(objResponse) { });
 		};
 
         function ExportAnalytical() {
-			var filter = GetFilterOptions($scope.analytical);
+			var objFilter = GetFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 
-            TransactionService.ExportTransactions(filter, function ok(response){
-                var url = response.data;
-                if (url.indexOf("http") === 0){
-                    $window.location = response.data;
+            TransactionService.ExportTransactions(objFilter, function ok(objResponse){
+                var strUrl = objResponse.data;
+                if (strUrl.indexOf("http") === 0){
+                    $window.location = objResponse.data;
                 } else {
                     $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
                 }
 
-            }, function error(response){
-                if(response.status === 408){
-                    msg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
+            }, function error(objResponse){
+                var strMsg;
+                
+                if(objResponse.status === 408){
+                    strMsg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
                 }
-                $rootScope.alerts =  [ { type: "danger", msg: msg} ];
+                $rootScope.alerts =  [ { type: "danger", msg: strMsg} ];
             });
 		};
 
 		function GetDuplicate() {
-            var filter = GetFilterOptions($scope.duplicate, {
+            var objFilter = GetFilterOptions($scope.duplicate, {
                 page: $scope.currentPageDuplicate,
                 size: $scope.totalItensPageDuplicate
             });
 
-			TransactionService.GetDuplicateTransaction(filter).then(function(response){
-                var data = HandleResponse(response.data.content);
-                var pagination = response.data.page;
+			TransactionService.GetDuplicateTransaction(objFilter).then(function(objResponse){
+                var objData = HandleResponse(objResponse.data.content);
+                var objPagination = objResponse.data.page;
 
-				$scope.duplicate.items = data;
-				$scope.duplicate.noItensMsg = data.length === 0 ? true : false;
-				$scope.totalItensDuplicate = pagination.totalElements;
-			}).catch(function(response) { });
+				$scope.duplicate.items = objData;
+				$scope.duplicate.noItensMsg = objData.length === 0 ? true : false;
+				$scope.totalItensDuplicate = objPagination.totalElements;
+			}).catch(function(objResponse) { });
 		};
 
-		function ChangeTab(tab) {
+		function ChangeTab(intTab) {
 			$scope.currentPage = 0;
 			$scope.sort = "";
             $rootScope.alerts = [];
 			$scope.productsSelected = this.productsSelected = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
 
-			switch(tab) {
+			switch(intTab) {
 				case 1:
 					if($scope.synthetic.items) {
 						if(!$scope.synthetic.items.length) {
@@ -239,37 +241,37 @@
 		};
 
         function ClearFilter() {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 
 			$scope.synthetic = {};
 			$scope.synthetic.items = [];
-			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 
 			$scope.analytical = {};
 			$scope.analytical.items = [];
-			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 
 			$scope.duplicate = {};
 			$scope.duplicate.items = [];
-			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 		};
 
 		function ClearSyntheticFilter() {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
 			document.getElementById('buscaTerminal').value = '';
 		};
 
 		function ClearAnalyticalFilter() {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 			$scope.productsSelected = this.productsSelected = [];
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
@@ -279,9 +281,9 @@
 		};
 
 		function ClearDuplicateFilter () {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
 			$scope.productsSelected = this.productsSelected = [];
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
@@ -324,15 +326,14 @@
 			GetDuplicate();
 		};
 
-		function SortResults(elem,kind,tipo_relatorio) {
-			var order_string;
-			$scope.sort = $rootScope.sortResults(elem,kind);
+		function SortResults(objElem, strKind, strTipoRelatorio) {
+			$scope.sort = $rootScope.sortResults(objElem, strKind);
 
-			if(tipo_relatorio == "sintetico") {
+			if(strTipoRelatorio == "sintetico") {
                 GetSynthetic();
-			} else if (tipo_relatorio == "analitico") {
+			} else if (strTipoRelatorio == "analitico") {
                 GetAnalytical();
-			} else if(tipo_relatorio == "duplicadas") {
+			} else if(strTipoRelatorio == "duplicadas") {
 				GetDuplicate();
 			}
 		};

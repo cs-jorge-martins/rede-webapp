@@ -7,7 +7,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 .controller('receiptsForethoughtDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, MovementService){
 
-		var filter = {};
+		var objFilter = {};
 		Init();
 
 		function Init(){
@@ -52,7 +52,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
 
-				filter = {
+				objFilter = {
 					shopIds: $scope.shopIds,
 					acquirerIds: $scope.acquirer.id,
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
@@ -83,26 +83,24 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 
 	    function GetForethought () {
 	    	$scope.forethought = [];
-	    	filter.sort = $scope.sort;
-	    	MovementService.GetForethoughts(filter).then(function(response) {
-	    		var data = response.data.content;
-	    		var pagination = response.data.page;
+	    	objFilter.sort = $scope.sort;
+	    	MovementService.GetForethoughts(objFilter).then(function(objResponse) {
+	    		var objData = objResponse.data.content;
 
-	    		for (var i in data ) {
-	    			$scope.forethought.push(data[i]);
+	    		for (var intIndex in objData ) {
+	    			$scope.forethought.push(objData[intIndex]);
 	    		}
 
-	    	}).catch(function(response) {
+	    	}).catch(function(objResponse) {
 
 	    	})
 	    }
 
-	    function SortResults(elem, kind) {
-	    	var order_string;
-	    	order_string = $rootScope.sortResults(elem,kind);
+	    function SortResults(objElem, strKind) {
+	    	var strOrderString;
+	    	strOrderString = $rootScope.sortResults(objElem, strKind);
 
-	    	$scope.sort = order_string;
-
+	    	$scope.sort = strOrderString;
 	    	GetForethought();
 	    }
 

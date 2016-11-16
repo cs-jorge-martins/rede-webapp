@@ -13,7 +13,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 .controller('receiptsDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService){
 
-		var filter = {};
+		var objFilter = {};
 		Init();
 
 		function Init(){
@@ -33,7 +33,6 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
 				$scope.products = $rootScope.receiptsDetails.products;
-				//$scope.type = $rootScope.receiptsDetails.type;
 				$scope.bankAccount = $rootScope.receiptsDetails.bankAccount;
 
 				$scope.expectedAmount = $rootScope.receiptsDetails.expectedAmount;
@@ -63,14 +62,9 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 					{
 						title: 'cancelamentos'
 					}
-					/*,
-					{
-						title: 'ecommerce'
-					}
-					*/
 				];
 
-				filter = {
+				objFilter = {
 					cardProductIds: $scope.cardProduct.cardProductId,
 					acquirerIds: $scope.acquirer.id,
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
@@ -79,9 +73,9 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				};
 
 				if($scope.status === 'forethought'){
-					filter.status = 'FORETHOUGHT'
+					objFilter.status = 'FORETHOUGHT'
 				} else {
-					filter.status = 'RECEIVED'
+					objFilter.status = 'RECEIVED'
 				}
 
 				$scope.maxSize = 4;
@@ -120,84 +114,82 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 		}
 
 		function GetShopsLabel() {
-
-			var shops = "";
+			var strShops = "";
 
 			if($scope.shops.length > 1) {
-				shops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
 
 				if($scope.shops.length > 2) {
-					shops += 's'
+					strShops += 's'
 				}
 			}
 
-			return shops;
-
+			return strShops;
 		}
 
 	    function Back(){
 	        $location.path('/receipts');
 	    }
 
-	    function GetSales(cache) {
+	    function GetSales(bolCache) {
 
-			filter.type = 'CREDIT';
-			filter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
-			filter.size =  $scope.salesTotalItensPage;
-			filter.sort = $scope.sort;
+			objFilter.type = 'CREDIT';
+			objFilter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
+			objFilter.size =  $scope.salesTotalItensPage;
+			objFilter.sort = $scope.sort;
 
-			FinancialService.GetReceipt(filter).then(function(response) {
-				var data = response.data.content;
-				var pagination = response.data.page;
+			FinancialService.GetReceipt(objFilter).then(function(objResponse) {
+				var arrData = objResponse.data.content;
+				var objPagination = objResponse.data.page;
 
-				$scope.salesData = data;
-				$scope.salesTotalItens = pagination.totalElements;
+				$scope.salesData = arrData;
+				$scope.salesTotalItens = objPagination.totalElements;
 
-			}).catch(function(response) {
+			}).catch(function(objResponse) {
 				$scope.salesData = [];
 				console.log('[receiptsDetailsController:getSales] error');
 			});
 	    }
 
-	    function GetAdjusts(cache, order) {
-			filter.type = 'ADJUST';
-			filter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
-			filter.size =  $scope.adjustsTotalItensPage;
-			filter.sort = $scope.sort;
+	    function GetAdjusts(bolCache, strOrder) {
+			objFilter.type = 'ADJUST';
+			objFilter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
+			objFilter.size =  $scope.adjustsTotalItensPage;
+			objFilter.sort = $scope.sort;
 
-			if(order) {
-				filter.sort = order;
+			if(strOrder) {
+				objFilter.sort = strOrder;
 			}
 
-			FinancialService.GetReceipt(filter).then(function(response) {
-				var data = response.data.content;
-				var pagination = response.data.page;
+			FinancialService.GetReceipt(objFilter).then(function(objResponse) {
+				var arrData = objResponse.data.content;
+				var objPagination = objResponse.data.page;
 
-				$scope.adjustsData = data;
-				$scope.adjustsTotalItens = pagination.totalElements;
-			}).catch(function(response) {
+				$scope.adjustsData = arrData;
+				$scope.adjustsTotalItens = objPagination.totalElements;
+			}).catch(function(objResponse) {
 				$scope.adjustsData = [];
 				console.log('[receiptsDetailsController:getAdjusts] error');
 			});
 	    }
 
-	    function GetCancellations(cache, order) {
-	    	filter.type = 'CANCELLATION';
-	    	filter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
-			filter.size =  $scope.cancellationsTotalItensPage;
-			filter.sort = $scope.sort;
+	    function GetCancellations(bolCache, strOrder) {
+	    	objFilter.type = 'CANCELLATION';
+	    	objFilter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
+			objFilter.size =  $scope.cancellationsTotalItensPage;
+			objFilter.sort = $scope.sort;
 
-			if (order) {
-				filter.sort =  order;
+			if (strOrder) {
+				objFilter.sort =  strOrder;
 			}
 
-			FinancialService.GetReceipt(filter).then(function(response) {
-				var data = response.data.content;
-				var pagination = response.data.page;
+			FinancialService.GetReceipt(objFilter).then(function(objResponse) {
+				var arrData = objResponse.data.content;
+				var objPagination = objResponse.data.page;
 
-				$scope.cancellationsData = data;
-				$scope.cancellationsTotalItens = pagination.totalElements;
-			}).catch(function(response) {
+				$scope.cancellationsData = arrData;
+				$scope.cancellationsTotalItens = objPagination.totalElements;
+			}).catch(function(objResponse) {
 				$scope.cancellationsData = [];
 				console.log('[receiptsDetailsController:getAdjusts] error');
 			});
@@ -206,28 +198,28 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    function GetEcommerce() {
 	    }
 
-	    function ChangeTab(index) {
-	    	$scope.tabs[index].active = true;
+	    function ChangeTab(intIndex) {
+	    	$scope.tabs[intIndex].active = true;
 			$scope.sort = "";
 
-	    	if(index === 0) {
+	    	if(intIndex === 0) {
 	    		GetSales();
-	    	} else if(index === 1) {
+	    	} else if(intIndex === 1) {
 	    		GetAdjusts();
-	    	} else if(index === 2) {
+	    	} else if(intIndex === 2) {
 	    		GetCancellations();
-	    	} else if(index === 0) {
+	    	} else if(intIndex === 0) {
 	    		getCommerce();
 	    	}
 	    }
 
-	    function SortResults(elem, kind, tipo_relatorio) {
-			$scope.sort = $rootScope.sortResults(elem, kind);
-            if(tipo_relatorio == "sales") {
+	    function SortResults(objElem, strKind, strIipoRelatorio) {
+			$scope.sort = $rootScope.sortResults(objElem, strKind);
+            if(strIipoRelatorio == "sales") {
               GetSales(false);
-            } else if(tipo_relatorio == "adjusts") {
+		  } else if(strIipoRelatorio == "adjusts") {
               GetAdjusts();
-            } else if(tipo_relatorio == "cancellation") {
+		  } else if(strIipoRelatorio == "cancellation") {
               GetCancellations();
             }
 	    }

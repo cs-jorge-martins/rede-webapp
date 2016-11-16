@@ -20,14 +20,9 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 	menuFactory.setActiveResumoConciliacao();
 
-	var acquirerSelected = $rootScope._acquirer;
-	var cardBrandSelected = $rootScope._cardBrand;
-	var cardProductSelected = $rootScope._cardProduct;
-
 	var dateItensAccordion = $rootScope._dateItemAccordionSelected;
-	var settlementsSelected = $rootScope._settlements;
-	$scope.statusItemAccordionSelected = $rootScope._statusItemAccordionSelected ;
 
+	$scope.statusItemAccordionSelected = $rootScope._statusItemAccordionSelected ;
 	$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation(dateItensAccordion);
 	$scope.dayOfActualDate = calendarFactory.getDayOfMonth(dateItensAccordion);
 	$scope.date = calendarFactory.formatDate(dateItensAccordion);
@@ -59,7 +54,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	Init();
 	function Init() {
 
-		var types = ["CREDIT","DEBIT"];
+		var arrTypes = ["CREDIT","DEBIT"];
 
 		if(!$rootScope.salesDetails) {
 			$location.path('/sales');
@@ -69,7 +64,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 			$scope.endDate = $rootScope.salesDetails.endDate;
 			$scope.shopIds = $rootScope.salesDetails.shopIds;
 			$scope.cardProductIds = $rootScope.salesDetails.cardProductIds;
-			$scope.types = types[$rootScope.salesDetails.natureza];
+			$scope.types = arrTypes[$rootScope.salesDetails.natureza];
 			$scope.acquirer = $rootScope.salesDetails.acquirer;
 			$scope.cardProduct = $rootScope.salesDetails.cardProduct;
 			$scope.conciliationStatus = $rootScope.salesDetails.conciliationStatus;
@@ -86,12 +81,12 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	}
 
 	function Concilie() {
-		var toConcilie = [];
-		for(item in $scope.concilieItems) {
-			toConcilie.push($scope.concilieItems[item].id);
+		var arrToConcilie = [];
+		for(var intItem in $scope.concilieItems) {
+			arrToConcilie.push($scope.concilieItems[intItem].id);
 		}
 
-		if(toConcilie.length) {
+		if(arrToConcilie.length) {
 
 			var	modalInstance = $modal.open ({
 				templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
@@ -102,25 +97,25 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 					function Ok() {
 						TransactionService.ConcilieTransaction({
-							ids: toConcilie
-						}).then(function(data){
-							data = data.data.content;
-							var items = [];
+							ids: arrToConcilie
+						}).then(function(objData){
+							objData = objData.data.content;
+							var arrItems = [];
 
-							for(var item in data){
-								items.push(data[item]);
+							for(var item in objData){
+								arrItems.push(objData[item]);
 							}
 
-							for(item in $scope.items){
-								for(subItem in $scope.concilieItems) {
-									if( $scope.items[item].id ==  $scope.concilieItems[subItem].id) {
-										$scope.items[item].isConciliated = true;
+							for(var intItem in $scope.items){
+								for(var intSubItem in $scope.concilieItems) {
+									if( $scope.items[intItem].id ==  $scope.concilieItems[intSubItem].id) {
+										$scope.items[intItem].isConciliated = true;
 									}
 								}
 							}
-
 							Init();
 						});
+
 						$modalInstance.dismiss("cancel");
 						$modal.open({
 							templateUrl: "app/views/resumo-conciliacao/success-conciliacao.html",
@@ -153,14 +148,14 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 		$location.path('/sales');
 	}
 
-	function SelectItemToConcilie(item) {
-		var index = $scope.concilieItems.indexOf(item);
+	function SelectItemToConcilie(objItem) {
+		var objIndex = $scope.concilieItems.indexOf(objItem);
 
-		if (index > -1) {
-			$scope.concilieItems.splice(index, 1);
+		if (objIndex > -1) {
+			$scope.concilieItems.splice(objIndex, 1);
 		} else {
-			$scope.concilieItems.push(item);
-			$scope.concilieItemsId.push(item.id);
+			$scope.concilieItems.push(objItem);
+			$scope.concilieItemsId.push(objItem.id);
 		}
 
 		if($scope.concilieItems.length) {
@@ -172,57 +167,57 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 	function GetTransactionDetails() {
 
-		var shopIds = [];
-		var cardProductIds = [];
+		var arrShopIds = [];
+		var arrCardProductIds = [];
 
 		if($scope.shopIds) {
-			for(item in $scope.shopIds) {
-				shopIds.push($scope.shopIds[item].id);
+			for(var intItem in $scope.shopIds) {
+				arrShopIds.push($scope.shopIds[intItem].id);
 			}
 		}
 
 		if($scope.cardProductIds) {
-			for(item in $scope.cardProductIds) {
-				cardProductIds.push($scope.cardProductIds[item].id);
+			for(var intItem in $scope.cardProductIds) {
+				arrCardProductIds.push($scope.cardProductIds[intItem].id);
 			}
 		}
 
-		if (cardProductIds.length == 0) {
-			cardProductIds.push($scope.cardProduct.id);
+		if (arrCardProductIds.length == 0) {
+			arrCardProductIds.push($scope.cardProduct.id);
 		}
 
 		TransactionService.GetTransactionByFilter({
 			currency: $scope.currency,
 			startDate: calendarFactory.formatDateForService($scope.startDate),
 			endDate: calendarFactory.formatDateForService($scope.endDate),
-			shopIds: shopIds,
-			cardProductIds: cardProductIds,
+			shopIds: arrShopIds,
+			cardProductIds: arrCardProductIds,
 			conciliationStatus: $scope.conciliationStatus,
 			page: ($scope.currentPage - 1),
 			size: $scope.totalItensPage,
 			sort: $scope.sort
 
-		}).then(function(response){
+		}).then(function(objResponse){
 
-			var pagination = response.data.page;
-			var response = response.data.content;
+			var objPagination = objResponse.data.page;
+			var objResponse = objResponse.data.content;
 
-			var items = [];
-			var total = 0;
+			var arrItems = [];
+			var intTotal = 0;
 
-			if(response.length) {
-				for(var item in response){
+			if(objResponse.length) {
+				for(var item in objResponse){
 					if($scope.conciliationStatus === 'TO_CONCILIE'){
-						response[item].isConciliated = false;
+						objResponse[item].isConciliated = false;
 					}
 
-					items.push(response[item]);
-					total += response[item].gross;
+					arrItems.push(objResponse[item]);
+					intTotal += objResponse[item].gross;
 				}
 
-				$scope.items = items;
+				$scope.items = arrItems;
 				$scope.noItensMsg = $scope.items.length === 0 ? true : false;
-				$scope.totalItens = pagination.totalElements;
+				$scope.totalItens = objPagination.totalElements;
 
 			} else {
 				Back();
@@ -236,20 +231,17 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	$scope.order = 1; // asc
 	$scope.column = "gross"; // default
 
-	var itensSelected = [];
+	var arrItensSelected = [];
 	$scope.checkAll = false;
 	$scope.currentPage = 0;
 
-	var modalUpdated = false;
-	var transactionStatus = [];
-
-	var checkedItem = false;
-	var checkedAll = false;
+	var bolCheckedItem = false;
+	var bolCheckedAll = false;
 
 	$scope.button = false;
 
 	function ActiveButtonConcilied() {
-		if(checkedAll || checkedItem){
+		if(bolCheckedAll || bolCheckedItem){
 			$scope.buttonConcilied = false;
 			$scope.button = true;
 		}else{
@@ -258,62 +250,62 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 		}
 	};
 
-	function CheckItem(item){
-		if(item.checked){
-			checkedItem = true;
-			itensSelected.push(item);
+	function CheckItem(objItem){
+		if(objItem.checked){
+			bolCheckedItem = true;
+			arrItensSelected.push(objItem);
 		}
 		else{
-			itensSelected.splice(itensSelected.indexOf(item), 1);
-			if(itensSelected.length > 0){
-				checkedItem = true;
+			arrItensSelected.splice(arrItensSelected.indexOf(objItem), 1);
+			if(arrItensSelected.length > 0){
+				bolCheckedItem = true;
 			}else{
-				checkedItem = false;
+				bolCheckedItem = false;
 			}
 
 		}
 		ActiveButtonConcilied();
 	};
 
-	function CheckAllItensModal(checkAll, item) {
-		checkedAll = checkAll;
-		if(checkAll){
-			angular.forEach($scope.itensDetalheVenda, function(item){
-				item.checked = true;
-				itensSelected.push(item);
+	function CheckAllItensModal(bolCheckAll, objItem) {
+		bolCheckedAll = bolCheckAll;
+		if(bolCheckAll){
+			angular.forEach($scope.itensDetalheVenda, function(objItem){
+				objItem.checked = true;
+				arrItensSelected.push(objItem);
 			});
 		}
-		else if(!checkAll){
-			angular.forEach($scope.itensDetalheVenda, function(item){
-				item.checked = false;
-				itensSelected.splice(itensSelected.indexOf(item), 1);
+		else if(!bolCheckAll){
+			angular.forEach($scope.itensDetalheVenda, function(objItem){
+				objItem.checked = false;
+				arrItensSelected.splice(arrItensSelected.indexOf(objItem), 1);
 			});
 		}
 		ActiveButtonConcilied();
 	};
 
-	function OrderColumn(column) {
+	function OrderColumn(strColumn) {
 
-		var columns = ["nsu", "authorization", "tid", "cardNumber", "installment", "terminalName", "erpId", "gross"];
+		var arrColumns = ["nsu", "authorization", "tid", "cardNumber", "installment", "terminalName", "erpId", "gross"];
 
-		angular.forEach(columns, function(item, index){
+		angular.forEach(arrColumns, function(strItem, intIndex){
 
-			var element = document.getElementById(item);
+			var objElement = document.getElementById(strItem);
 
-			if(item == column){
+			if(strItem == strColumn){
 				 if($scope.order == 1){
 					$scope.order = 2;
-					element.src = "app/img/cresc.png";
+					objElement.src = "app/img/cresc.png";
 				}else{
 					$scope.order = 1;
-					element.src = "app/img/dec.png";
+					objElement.src = "app/img/dec.png";
 				}
 			}else{
-				element.src = "app/img/default.png";
+				objElement.src = "app/img/default.png";
 			}
 		});
 
-		$scope.column = column;
+		$scope.column = strColumn;
 	};
 
 	function AlterTotalItensPage() {
@@ -365,11 +357,11 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 		GetTransactionDetails();
 	};
 
-	function SortResults(elem,kind) {
-		var order_string;
-		order_string = $rootScope.sortResults(elem,kind);
+	function SortResults(objElem, strKind) {
+		var strOrderString;
+		strOrderString = $rootScope.sortResults(objElem, strKind);
 
-		$scope.sort = order_string;
+		$scope.sort = strOrderString;
 		GetTransactionDetails();
 	};
 

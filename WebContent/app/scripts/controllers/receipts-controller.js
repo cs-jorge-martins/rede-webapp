@@ -26,7 +26,6 @@ angular.module('KaplenWeb.movementsModule',[])
 	menuFactory.setActiveMovements();
 
 	$scope.tabs = [{},{}];
-
     $scope.expected = [];
 	$scope.receipts = [];
     $scope.getReceipt = GetReceipt;
@@ -77,13 +76,13 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.changeTab = ChangeTab;
 	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
-    var actualReleasesData = [];
     $scope.futureReleasesData = [];
-    var futureReleasesData = [];
-    var filterStatus = 0;
+	var arrActualReleasesData = [];
+    var arrFutureReleasesData = [];
+    var intFilterStatus = 0;
 
-	$scope.$watch('futureReleases.startDate', function(response) {
-		if(moment($scope.futureReleases.endDate).isBefore(response)) {
+	$scope.$watch('futureReleases.startDate', function(objResponse) {
+		if(moment($scope.futureReleases.endDate).isBefore(objResponse)) {
 			$scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
 		}
 	});
@@ -98,7 +97,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 
     function GetReceipt() {
-		actualReleasesData = [];
+		arrActualReleasesData = [];
 		$scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     	$scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
 
@@ -111,7 +110,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	function GetReceiptAcquirers() {
 
-		var filter = {
+		var objFilter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			groupBy: 'ACQUIRER',
@@ -123,13 +122,13 @@ angular.module('KaplenWeb.movementsModule',[])
 		};
 
 
-		receiptsService.GetFinancials(filter).then(function(response) {
-			var data = response.data;
+		receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+			var objData = objResponse.data;
 
-			if( data.length ) {
+			if( objData.length ) {
 
-				for(var index in data) {
-					actualReleasesData.push(data[index]);
+				for(var intIndex in objData) {
+					arrActualReleasesData.push(objData[intIndex]);
 				}
 
 				GetReceiptReleases();
@@ -139,14 +138,14 @@ angular.module('KaplenWeb.movementsModule',[])
 				$scope.actualReleasesData = [];
 			}
 
-		}).catch(function(response) {
+		}).catch(function(objResponse) {
 			console.log('[receiptsController:getSummaries] error');
 		})
 	}
 
 	function GetForethought() {
 
-		var filter = {
+		var objFilter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			bankAccountIds: GetAccountsFilter(),
@@ -154,180 +153,178 @@ angular.module('KaplenWeb.movementsModule',[])
 		};
 
 
-		receiptsService.GetFinancials(filter).then(function(response) {
-			var data = response.data;
+		receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+			var objData = objResponse.data;
 
-			if( data.length ) {
-
+			if( objData.length ) {
 				$scope.existsForethought = true;
-
 			} else {
 				$scope.existsForethought = false;
 			}
 
-		}).catch(function(response) {
+		}).catch(function(objResponse) {
 			console.log('[receiptsController:getSummaries] error');
 		})
 	}
 
 	function GetReceiptReleases() {
 
-		for(var index in actualReleasesData){
-			var acquirerId = actualReleasesData[index].acquirer.id;
+		for(var intIndex in arrActualReleasesData){
+			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
 
-			var filter = {
+			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				groupBy: 'CARD_PRODUCT,STATUS',
 				bankAccountIds: GetAccountsFilter(),
 				shopIds: GetShopsFilter(),
-				acquirerIds: acquirerId,
+				acquirerIds: intAcquirerId,
 				cardProductIds: GetCardProductsFilter(),
 				status: 'RECEIVED,FORETHOUGHT'
 			};
 
-			receiptsService.GetFinancials(filter).then(function(response) {
-				var data = response.data;
-				var releases = [];
+			receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+				var objData = objResponse.data;
+				var arrReleases = [];
 
-				for( var index in data) {
-					var status = data[index].status.toLowerCase(),
-						description = data[index].description.toLowerCase(),
-						cardProduct = data[index].cardProduct;
-						amount = data[index].payedAmount;
+				for( var intIndex in objData) {
+					var strStatus = objData[intIndex].status.toLowerCase(),
+						description = objData[intIndex].description.toLowerCase(),
+						cardProduct = objData[intIndex].cardProduct;
+						amount = objData[intIndex].payedAmount;
 						cardProduct.forethought = false;
 
-					if (status == "forethought") {
+					if (strStatus == "forethought") {
 						cardProduct.name = "ANTECIPAÇÃO " + cardProduct.name;
 						cardProduct.forethought = true;
 					}
 
-					if(releases.length) {
-						var insert = true;
-						for(var indexb in releases){
-							if((releases[indexb].cardProductId === data[index].cardProduct.id) && (releases[indexb].status === status)){
-								releases[indexb].releases.push({
+					if(arrReleases.length) {
+						var bolInsert = true;
+						for(var intIndexb in arrReleases){
+							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === status)){
+								arrReleases[intIndexb].releases.push({
 									type: description,
-									payedAmount: description == "vendas" ? data[index].expectedAmount : data[index].payedAmount
+									payedAmount: description == "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
 								});
-								insert = false;
+								bolInsert = false;
 								break;
 							}
 						}
-						if(insert) {
-								var item = {
+						if(bolInsert) {
+								var objItem = {
 									cardProductName: cardProduct.name,
 									cardProductId: cardProduct.id,
 									forethought: cardProduct.forethought,
-									status: status,
+									status: strStatus,
 									description: description,
 									sales: 0,
 									cancellation: 0,
 									adjusts: 0,
 									releases: [],
 									total: 0,
-									status: status
+									status: strStatus
 								};
 
 								if(description == "vendas") {
-									item.total = data[index].payedAmount;
+									objItem.total = objData[intIndex].payedAmount;
 
-									item.releases.push({
+									objItem.releases.push({
 										type: 'vendas',
-										payedAmount: data[index].expectedAmount
+										payedAmount: objData[intIndex].expectedAmount
 									});
 								} else if(description == "cancelamentos") {
-									item.releases.push({
+									objItem.releases.push({
 										type: 'cancelamentos',
-										payedAmount: data[index].payedAmount
+										payedAmount: objData[intIndex].payedAmount
 									});
 								} else if(description == "ajustes") {
-									item.releases.push({
+									objItem.releases.push({
 										type: 'ajustes',
-										payedAmount: data[index].payedAmount
+										payedAmount: objData[intIndex].payedAmount
 									});
 								}
 
-								releases.push(item);
+								arrReleases.push(objItem);
 						}
 
 					} else {
-						var item = {
+						var objItem = {
 							cardProductName: cardProduct.name,
 							cardProductId: cardProduct.id,
 							forethought: cardProduct.forethought,
-							status: status,
+							status: strStatus,
 							description: description,
 							sales: 0,
 							cancellation: 0,
 							adjusts: 0,
 							releases: [],
 							total: 0,
-							status: status
+							status: strStatus
 						};
 
 						if(description == "vendas") {
-							item.total = data[index].payedAmount;
-							item.releases.push({
+							objItem.total = objData[intIndex].payedAmount;
+							objItem.releases.push({
 								type: 'vendas',
-								payedAmount: data[index].expectedAmount
+								payedAmount: objData[intIndex].expectedAmount
 							});
 						} else if(description == "cancelamentos") {
-							item.releases.push({
+							objItem.releases.push({
 								type: 'cancelamentos',
-								payedAmount: data[index].payedAmount
+								payedAmount: objData[intIndex].payedAmount
 							});
 						} else if(description == "ajustes") {
-							item.releases.push({
+							objItem.releases.push({
 								type: 'ajustes',
-								payedAmount: data[index].payedAmount
+								payedAmount: objData[intIndex].payedAmount
 							});
 						}
 
-						releases.push(item);
+						arrReleases.push(objItem);
 					}
 				}
 
-				for(var index in actualReleasesData) {
-					if(acquirerId == actualReleasesData[index].acquirer.id){
-						actualReleasesData[index].cardProducts = releases;
+				for(var intIndex in arrActualReleasesData) {
+					if(intAcquirerId == arrActualReleasesData[intIndex].acquirer.id){
+						arrActualReleasesData[intIndex].cardProducts = arrReleases;
 						break;
 					}
 				}
 
-				$scope.actualReleasesData = actualReleasesData;
+				$scope.actualReleasesData = arrActualReleasesData;
 			}).catch(function(){
 				console.log('[receiptsController:getSummaries] error');
 			});
 		}
 	}
 
-	function GetOtherReleases(acquirerId) {
+	function GetOtherReleases(intAcquirerId) {
 
-		for(var index in actualReleasesData){
-			var acquirerId = actualReleasesData[index].acquirer.id;
+		for(var intIndex in arrActualReleasesData){
+			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
 
-			var filter = {
+			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				bankAccountIds: GetAccountsFilter(),
 				shopIds: GetShopsFilter(),
-				acquirerIds: acquirerId,
+				acquirerIds: intAcquirerId,
 				status: 'RECEIVED',
 				types: 'OTHER',
 				groupBy: 'TYPE,DESCRIPTION'
 			};
 
-			receiptsService.GetAdjusts(filter).then(function(response){
-					var data = response.data.content;
-					var total = 0;
+			receiptsService.GetAdjusts(objFilter).then(function(objResponse){
+					var objData = objResponse.data.content;
+					var intTotal = 0;
 
-					for(var item in data) {
-						total += data[item].amount;
+					for(var objItem in objData) {
+						intTotal += objData[objItem].amount;
 					}
 
-					actualReleasesData[index].otherReleasesTotal = total
-					actualReleasesData[index].otherReleases = data;
+					arrActualReleasesData[intIndex].otherReleasesTotal = intTotal
+					arrActualReleasesData[intIndex].otherReleases = objData;
 			}).catch(function(){
 				console.log('[receiptsController:getOtherReleases] error');
 			});
@@ -335,30 +332,30 @@ angular.module('KaplenWeb.movementsModule',[])
 	};
 
 	function GetExpectedReleases() {
-		for(var index in actualReleasesData){
-			var acquirerId = actualReleasesData[index].acquirer.id;
+		for(var intIndex in arrActualReleasesData){
+			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
 
-			var filter = {
+			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				bankAccountIds: GetAccountsFilter(),
 				shopIds: GetShopsFilter(),
-				acquirerIds: acquirerId,
+				acquirerIds: intAcquirerId,
 				cardProductIds: GetCardProductsFilter(),
 				status: 'EXPECTED',
 				groupBy: 'CARD_PRODUCT'
 			};
 
-			receiptsService.GetFinancials(filter).then(function(response){
-					var data = response.data;
-					var total = 0;
+			receiptsService.GetFinancials(objFilter).then(function(objResponse){
+					var objData = objResponse.data;
+					var intTotal = 0;
 
-					for(var item in data) {
-						total += data[item].expectedAmount;
+					for(var objItem in objData) {
+						intTotal += objData[objItem].expectedAmount;
 					}
 
-					actualReleasesData[index].expectedReleasesTotal = total;
-					actualReleasesData[index].expectedReleases = data;
+					arrActualReleasesData[intIndex].expectedReleasesTotal = intTotal;
+					arrActualReleasesData[intIndex].expectedReleases = objData;
 			}).catch(function(){
 				console.log('[receiptsController:getExpectedReleases] error');
 			});
@@ -366,7 +363,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 
 	function GetSummaries() {
-		var filter = {
+		var objFilter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			status: 'RECEIVED',
@@ -376,7 +373,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			cardProductIds: GetCardProductsFilter()
 		};
 
-		var filterOthers = {
+		var objFilterOthers = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			status: 'RECEIVED',
@@ -386,78 +383,77 @@ angular.module('KaplenWeb.movementsModule',[])
 			acquirerIds: GetAcquirersFilter(),
 		};
 
-		receiptsService.GetFinancials(filter).then(function(response) {
-			var data = response.data;
+		receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+			var objData = objResponse.data;
+			var intTotalToReceive = 0;
+			var intDiscountedTotal = 0;
+			var intTotalReceived = 0;
+			var intOthers = 0;
+			var intDiscount = 0;
 
-			var totalToReceive = 0;
-			var discountedTotal = 0;
-			var totalReceived = 0;
-			var others = 0;
-			var discount = 0;
+			for(var intIndex in objData) {
 
-			for(var index in data) {
-
-				if(data[index].description == 'vendas') {
-					totalToReceive = data[index].expectedAmount;
-					totalReceived = data[index].payedAmount;
+				if(objData[intIndex].description == 'vendas') {
+					intTotalToReceive = objData[intIndex].expectedAmount;
+					intTotalReceived = objData[intIndex].payedAmount;
 				}
 
-				if(data[index].description == 'ajustes' || data[index].description == 'cancelamentos') {
-					discountedTotal += data[index].payedAmount;
+				if(objData[intIndex].description == 'ajustes' || objData[intIndex].description == 'cancelamentos') {
+					intDiscountedTotal += objData[intIndex].payedAmount;
 				}
 			}
 
 
-			filter.status = 'FORETHOUGHT';
-			receiptsService.GetFinancials(filter).then(function(response) {
-				var data = response.data;
-				var antecipatedTotal = 0;
-				for(var index in data) {
-					if(data[index].description == 'vendas') {
-						antecipatedTotal = data[index].payedAmount;
+			objFilter.status = 'FORETHOUGHT';
+			receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+				var objData = objResponse.data;
+				var intAntecipatedTotal = 0;
+				for(var intIndex in objData) {
+					if(objData[intIndex].description == 'vendas') {
+						intAntecipatedTotal = objData[intIndex].payedAmount;
 					}
 				}
 
-				receiptsService.GetAdjusts(filterOthers).then(function(responseAdjusts) {
-					var others = 0;
+				receiptsService.GetAdjusts(objFilterOthers).then(function(objResponseAdjusts) {
+					var intOthers = 0;
 
 					// amount soma em totais descontados
-					var data = responseAdjusts.data.content;
-					for(var index in data) {
-						others += data[index].amount;
+					var objData = objResponseAdjusts.data.content;
+					for(var intIndex in objData) {
+						intOthers += objData[intIndex].amount;
 					}
 
-					discount = discountedTotal + others;
+					intDiscount = intDiscountedTotal + intOthers;
 
-					$scope.totalToReceive = totalToReceive;
-					$scope.discountedTotal = discount;
-					$scope.antecipatedTotal = antecipatedTotal;
-					$scope.totalReceived = totalToReceive - discount + antecipatedTotal;
+					$scope.totalToReceive = intTotalToReceive;
+					$scope.discountedTotal = intDiscount;
+					$scope.antecipatedTotal = intAntecipatedTotal;
+					$scope.totalReceived = intTotalToReceive - intDiscount + intAntecipatedTotal;
 
-				}).catch(function(response) {
+				}).catch(function(objResponse) {
 					console.log('[receiptsController:getAdjusts] error');
 				});
 
-			}).catch(function(response) {
+			}).catch(function(objResponse) {
 				console.log('[receiptsController:getFinancials] status forethought error');
 			})
 
-		}).catch(function(response) {
+		}).catch(function(objResponse) {
 			console.log('[receiptsController:getFinancials] error');
 		});
 	}
 
 	function GetFutureReceipt() {
 
-		futureReleasesData = [];
+		arrFutureReleasesData = [];
 
-		var testDate = $scope.futureReleases.startDate instanceof Date;
-		var startDate = !testDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
+		var dateTestDate = $scope.futureReleases.startDate instanceof Date;
+		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
 
 		$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
 
-		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(startDate);
-		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(startDate));
+		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
+		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));
 		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
 		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 
@@ -467,7 +463,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 
 	function GetFutureAcquirers() {
-		var filter = {
+		var objFilter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
 			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
 			groupBy: 'ACQUIRER',
@@ -478,58 +474,58 @@ angular.module('KaplenWeb.movementsModule',[])
 			status: 'EXPECTED'
 		};
 
-		receiptsService.GetFinancials(filter).then(function(response) {
-			var data = response.data;
+		receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+			var objData = objResponse.data;
 
-			if( data.length ) {
-				for(var index in data) {
-					futureReleasesData.push(data[index]);
+			if( objData.length ) {
+				for(var intIndex in objData) {
+					arrFutureReleasesData.push(objData[intIndex]);
 				}
 				GetFutureReceiptReleases();
 			} else {
 				$scope.futureReleasesData = [];
 			}
 
-		}).catch(function(response) {
+		}).catch(function(objResponse) {
 			console.log('[receiptsController:getFutureAcquirers] error');
 		})
 	}
 
 	function GetFutureReceiptReleases() {
 
-		for(var index in futureReleasesData){
-			var acquirerId = futureReleasesData[index].acquirer.id;
+		for(var intIndex in arrFutureReleasesData){
+			var intAcquirerId = arrFutureReleasesData[intIndex].acquirer.id;
 
-			var filter = {
+			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
 				groupBy: 'CARD_PRODUCT,STATUS',
 				bankAccountIds: GetAccountsFilter(true),
 				shopIds: GetShopsFilter(true),
-				acquirerIds: acquirerId,
+				acquirerIds: intAcquirerId,
 				cardProductIds: GetCardProductsFilter(true),
 				status: 'EXPECTED'
 			};
 
-			receiptsService.GetFinancials(filter).then(function(response) {
-				var data = response.data;
-				var releases = [];
+			receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+				var objData = objResponse.data;
+				var arrReleases = [];
 
-				for( var index in data) {
-					var status = data[index].status.toLowerCase(),
-						description = data[index].description.toLowerCase(),
-						cardProduct = data[index].cardProduct;
-						amount = data[index].expectedAmount;
+				for( var intIndex in objData) {
+					var strStatus = objData[intIndex].status.toLowerCase(),
+						description = objData[intIndex].description.toLowerCase(),
+						cardProduct = objData[intIndex].cardProduct;
+						amount = objData[intIndex].expectedAmount;
 
-					if(releases.length) {
-						for(var indexb in releases){
-							if((releases[indexb].cardProductId === data[index].cardProduct.id) && (releases[indexb].status === status)){
+					if(arrReleases.length) {
+						for(var intIndexb in arrReleases){
+							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === status)){
 
 							} else {
-								var item = {
+								var objItem = {
 									cardProductName: cardProduct.name,
 									cardProductId: cardProduct.id,
-									status: status,
+									status: strStatus,
 									description: description,
 									sales: 0,
 									cancellation: 0,
@@ -538,32 +534,32 @@ angular.module('KaplenWeb.movementsModule',[])
 								};
 
 								if(description == "vendas") {
-									item.releases.push({
+									objItem.releases.push({
 										type: 'vendas',
-										expectedAmount: data[index].expectedAmount
+										expectedAmount: objData[intIndex].expectedAmount
 									});
 								} else if(description == "cancelamentos") {
-									item.releases.push({
+									objItem.releases.push({
 										type: 'cancelamentos',
-										expectedAmount: data[index].expectedAmount
+										expectedAmount: objData[intIndex].expectedAmount
 									});
 								} else if(description == "ajustes") {
-									tem.releases.push({
+									objItem.releases.push({
 										type: 'ajustes',
-										expectedAmount: data[index].expectedAmount
+										expectedAmount: objData[intIndex].expectedAmount
 									});
 								}
 
-								releases.push(item);
+								arrReleases.push(objItem);
 								break;
 							}
 						}
 
 					} else {
-						var item = {
+						var objItem = {
 							cardProductName: cardProduct.name,
 							cardProductId: cardProduct.id,
-							status: status,
+							status: strStatus,
 							description: description,
 							sales: 0,
 							cancellation: 0,
@@ -572,47 +568,47 @@ angular.module('KaplenWeb.movementsModule',[])
 						};
 
 						if(description == "vendas") {
-							item.releases.push({
+							objItem.releases.push({
 								type: 'vendas',
-								expectedAmount: data[index].expectedAmount
+								expectedAmount: objData[intIndex].expectedAmount
 							});
 						} else if(description == "cancelamentos") {
-							item.releases.push({
+							objItem.releases.push({
 								type: 'cancelamentos',
-								expectedAmount: data[index].expectedAmount
+								expectedAmount: objData[intIndex].expectedAmount
 							});
 						} else if(description == "ajustes") {
-							tem.releases.push({
+							objItem.releases.push({
 								type: 'ajustes',
-								expectedAmount: data[index].expectedAmount
+								expectedAmount: objData[intIndex].expectedAmount
 							});
 						}
 
-						releases.push(item);
+						arrReleases.push(objItem);
 					}
 				}
 
-				for(var index in futureReleasesData) {
-					if(acquirerId == futureReleasesData[index].acquirer.id){
-						futureReleasesData[index].cardProducts = releases;
+				for(var intIndex in arrFutureReleasesData) {
+					if(intAcquirerId == arrFutureReleasesData[intIndex].acquirer.id){
+						arrFutureReleasesData[intIndex].cardProducts = arrReleases;
 						break;
 					}
 				}
 
-				$scope.futureReleasesData = futureReleasesData;
+				$scope.futureReleasesData = arrFutureReleasesData;
 			}).catch(function(){
 				console.log('[receiptsController:getSummaries] error');
 			});
 		}
 	}
 
-	function ChangeTab(index) {
-		$scope.tabs[index].active = true;
+	function ChangeTab(intIndex) {
+		$scope.tabs[intIndex].active = true;
 
-		if(filterStatus === 4) {
-	    	if(index === 0) {
+		if(intFilterStatus === 4) {
+	    	if(intIndex === 0) {
 	    		GetReceipt();
-	    	} else if(index === 1) {
+	    	} else if(intIndex === 1) {
 	    		GetFutureReceipt();
 	    	}
 	    }
@@ -630,244 +626,244 @@ angular.module('KaplenWeb.movementsModule',[])
 
   	function GetFilters() {
 		// conta
-		filtersService.GetAccounts().then(function(response){
-			var filterConfig = [];
-			var data = response.data;
+		filtersService.GetAccounts().then(function(objResponse){
+			var arrFilterConfig = [];
+			var objData = objResponse.data;
 
-			for(var x in data){
+			for(var x in objData){
 				var obj = {};
-				obj.id = data[x].id;
-				obj.label = data[x].bankName + ' | ' + data[x].agencyNumber + ' | ' +  data[x].accountNumber;
-				obj.bankName = data[x].bankName;
-				obj.agencyNumber = data[x].agencyNumber;
-				obj.accountNumber = data[x].accountNumber;
+				obj.id = objData[x].id;
+				obj.label = objData[x].bankName + ' | ' + objData[x].agencyNumber + ' | ' +  objData[x].accountNumber;
+				obj.bankName = objData[x].bankName;
+				obj.agencyNumber = objData[x].agencyNumber;
+				obj.accountNumber = objData[x].accountNumber;
 
-				filterConfig.push(obj);
+				arrFilterConfig.push(obj);
 			}
 
-			$scope.accountsData = filterConfig;
-			$scope.accountsModel.id = filterConfig[0].id;
-			$scope.accountsModel.label = filterConfig[0].label;
-			$scope.accountsFutureModel.id = filterConfig[0].id;
-			$scope.accountsFutureModel.label = filterConfig[0].label;
+			$scope.accountsData = arrFilterConfig;
+			$scope.accountsModel.id = arrFilterConfig[0].id;
+			$scope.accountsModel.label = arrFilterConfig[0].label;
+			$scope.accountsFutureModel.id = arrFilterConfig[0].id;
+			$scope.accountsFutureModel.label = arrFilterConfig[0].label;
 
-			filterStatus++;
+			intFilterStatus++;
 
-            if(filterStatus === 4) {
+            if(intFilterStatus === 4) {
             	GetCachedData();
                 GetReceipt();
             }
 
-		}).catch(function(response){
+		}).catch(function(objResponse){
 			console.log('error');
 		});
 
 		// bandeira
-		filtersService.GetCardProducts().then(function(response){
-			var filterConfig = [];
-			for(var x in response.data){
+		filtersService.GetCardProducts().then(function(objResponse){
+			var arrFilterConfig = [];
+			for(var x in objResponse.data){
 				var obj = {};
-				obj.id = response.data[x].id;
-				obj.label = response.data[x].name;
-				filterConfig.push(obj);
+				obj.id = objResponse.data[x].id;
+				obj.label = objResponse.data[x].name;
+				arrFilterConfig.push(obj);
 			}
-			$scope.cardProductsData = filterConfig;
+			$scope.cardProductsData = arrFilterConfig;
             $scope.cardProductsModel = angular.copy($scope.cardProductsData);
             $scope.cardProductsFutureModel = angular.copy($scope.cardProductsData);
 
-            filterStatus++;
-            if(filterStatus === 4) {
+            intFilterStatus++;
+            if(intFilterStatus === 4) {
             	GetCachedData();
                 GetReceipt();
             }
 
-		}).catch(function(response){
+		}).catch(function(objResponse){
 			console.log('error');
 		});
 
 		// estabelecimento
-		filtersService.GetShops().then(function(response){
-			var filterConfig = [];
-			for(var x in response.data){
+		filtersService.GetShops().then(function(objResponse){
+			var arrFilterConfig = [];
+			for(var x in objResponse.data){
 				var obj = {};
-				obj.id = response.data[x].id;
-				obj.label = response.data[x].code;
-				filterConfig.push(obj);
+				obj.id = objResponse.data[x].id;
+				obj.label = objResponse.data[x].code;
+				arrFilterConfig.push(obj);
 			}
-			$scope.shopsData = filterConfig;
+			$scope.shopsData = arrFilterConfig;
             $scope.shopsModel = angular.copy($scope.shopsData);
             $scope.shopsFutureModel = angular.copy($scope.shopsData);
 
-            filterStatus++;
+            intFilterStatus++;
 
-            if(filterStatus === 4) {
+            if(intFilterStatus === 4) {
             	GetCachedData();
                 GetReceipt();
             }
 
-		}).catch(function(response){
+		}).catch(function(objResponse){
 			console.log('error');
 		});
 
 		// adquirente
-		filtersService.GetAcquirers().then(function(response){
-			var filterConfig = [];
-			for(var x in response.data){
+		filtersService.GetAcquirers().then(function(objResponse){
+			var arrFilterConfig = [];
+			for(var x in objResponse.data){
 				var obj = {};
-				obj.id = response.data[x].id;
-				obj.label = response.data[x].name;
-				filterConfig.push(obj);
+				obj.id = objResponse.data[x].id;
+				obj.label = objResponse.data[x].name;
+				arrFilterConfig.push(obj);
 			}
-			$scope.acquirersData = filterConfig;
+			$scope.acquirersData = arrFilterConfig;
             $scope.acquirersModel = angular.copy($scope.acquirersData);
             $scope.acquirersFutureModel = angular.copy($scope.acquirersData);
 
-            filterStatus++;
+            intFilterStatus++;
 
-            if(filterStatus === 4) {
+            if(intFilterStatus === 4) {
             	GetCachedData();
                 GetReceipt();
             }
 
-		}).catch(function(response){
+		}).catch(function(objResponse){
 			console.log('error');
 		});
 	}
 
-	function GetAccountsFilter(isFuture) {
-		var model = (isFuture ? $scope.accountsFutureModel : $scope.accountsModel);
-		return model.id;
+	function GetAccountsFilter(bolIsFuture) {
+		var arrModel = (bolIsFuture ? $scope.accountsFutureModel : $scope.accountsModel);
+		return arrModel.id;
 	};
 
-	function GetShopsFilter(isFuture) {
-		var model = (isFuture ? $scope.shopsFutureModel : $scope.shopsModel);
-		return model.map(function(item){
-			return item.id;
+	function GetShopsFilter(bolIsFuture) {
+		var arrModel = (bolIsFuture ? $scope.shopsFutureModel : $scope.shopsModel);
+		return arrModel.map(function(objItem){
+			return objItem.id;
 		}).join(",");
 	}
 
-	function GetAcquirersFilter(isFuture) {
-		var model = (isFuture ? $scope.acquirersFutureModel : $scope.acquirersModel);
-		return model.map(function(item){
-			return item.id;
+	function GetAcquirersFilter(bolIsFuture) {
+		var arrModel = (bolIsFuture ? $scope.acquirersFutureModel : $scope.acquirersModel);
+		return arrModel.map(function(objItem){
+			return objItem.id;
 		}).join(",");
 	}
 
-	function GetCardProductsFilter(isFuture) {
-		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
+	function GetCardProductsFilter(bolIsFuture) {
+		var arrModel = (bolIsFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 
-		if(model.length == $scope.cardProductsData.length) {
+		if(arrModel.length == $scope.cardProductsData.length) {
 			return [];
 		}
 
-		return model.map(function(item){
-			return item.id;
+		return arrModel.map(function(objItem){
+			return objItem.id;
 		}).join(",");
 	}
 
-	function GetAccountsLabel(isFuture) {
+	function GetAccountsLabel(bolIsFuture) {
 
-		var model = (isFuture ? $scope.accountsFutureModel : $scope.accountsModel);
-		var label = (isFuture ? $scope.accountsFutureLabel : $scope.accountsLabel);
+		var arrModel = (bolIsFuture ? $scope.accountsFutureModel : $scope.accountsModel);
+		var strLabel = (bolIsFuture ? $scope.accountsFutureLabel : $scope.accountsLabel);
 
-		if( model.id ) {
-			label = 'conta: ' + model.label;
+		if( arrModel.id ) {
+			strLabel = 'conta: ' + arrModel.label;
 		} else {
-			label = null;
+			strLabel = null;
 		}
 
-		if(isFuture) {
-			$scope.accountsFutureModel = model;
-			$scope.accountsFutureLabel = label;
+		if(bolIsFuture) {
+			$scope.accountsFutureModel = arrModel;
+			$scope.accountsFutureLabel = strLabel;
 		} else {
-			$scope.accountsModel = model;
-			$scope.accountsLabel = label;
+			$scope.accountsModel = arrModel;
+			$scope.accountsLabel = strLabel;
 		}
 
 	}
 
-	function GetShopsLabel(isFuture) {
+	function GetShopsLabel(bolIsFuture) {
 
-		var model = (isFuture ? $scope.shopsFutureModel : $scope.shopsModel);
-		var label = (isFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
+		var arrModel = (bolIsFuture ? $scope.shopsFutureModel : $scope.shopsModel);
+		var strLabel = (bolIsFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
 
-		if( model.length ) {
-			if( model.length == 1 ) {
-				label = model[0].label;
-			} else if ( model.length === $scope.shopsData.length) {
-				label = 'todos os estabelecimentos';
+		if( arrModel.length ) {
+			if( arrModel.length == 1 ) {
+				strLabel = arrModel[0].label;
+			} else if ( arrModel.length === $scope.shopsData.length) {
+				strLabel = 'todos os estabelecimentos';
 			} else {
-				var over = model.length - 1;
-				label = model[0].label + ' + ' +  over + ' estabelecimento';
+				var over = arrModel.length - 1;
+				strLabel = arrModel[0].label + ' + ' +  over + ' estabelecimento';
 
 				if(over > 1) {
-					label = label + 's';
+					strLabel = strLabel + 's';
 				}
 			}
 		} else {
-			label = null
+			strLabel = null
 		}
 
-		if(isFuture) {
-			$scope.shopsFutureModel = model;
-			$scope.shopsFutureLabel = label;
-			$scope.shopsFutureFullLabel = model.map(function(item){
-				return item.label;
+		if(bolIsFuture) {
+			$scope.shopsFutureModel = arrModel;
+			$scope.shopsFutureLabel = strLabel;
+			$scope.shopsFutureFullLabel = arrModel.map(function(objItem){
+				return objItem.label;
 			}).join(", ");
 
 		} else {
-			$scope.shopsModel = model;
-			$scope.shopsLabel = label;
-			$scope.shopsFullLabel = model.map(function(item){
-				return item.label;
+			$scope.shopsModel = arrModel;
+			$scope.shopsLabel = strLabel;
+			$scope.shopsFullLabel = arrModel.map(function(objItem){
+				return objItem.label;
 			}).join(", ");
 		}
 	}
 
-	function GetCardProductsLabel(isFuture) {
-		var model = (isFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
-		var label = (isFuture ? $scope.cardProductsFutureLabel : $scope.cardProductsLabel);
+	function GetCardProductsLabel(bolIsFuture) {
+		var arrModel = (bolIsFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
+		var strLabel = (bolIsFuture ? $scope.cardProductsFutureLabel : $scope.cardProductsLabel);
 
-		if( model.length ) {
-			if( model.length === $scope.cardProductsData.length ) {
-				label = 'todas as bandeiras';
-			} else if ( model.length === 1) {
-				label = model[0].label;
+		if( arrModel.length ) {
+			if( arrModel.length === $scope.cardProductsData.length ) {
+				strLabel = 'todas as bandeiras';
+			} else if ( arrModel.length === 1) {
+				strLabel = arrModel[0].label;
 			} else {
-				if(model.length == 2) {
-					label = model[0].label + ' + ' +  (model.length - 1) + " outra";
+				if(arrModel.length == 2) {
+					strLabel = arrModel[0].label + ' + ' +  (arrModel.length - 1) + " outra";
 				} else {
-					label = model[0].label + ' + ' +  (model.length - 1) + " outras";
+					strLabel = arrModel[0].label + ' + ' +  (arrModel.length - 1) + " outras";
 				}
 			}
-			label = label.toLowerCase();
+			strLabel = strLabel.toLowerCase();
 		} else {
-			label = null;
+			strLabel = null;
 		}
 
-		if(isFuture) {
-			$scope.cardProductsFutureModel = model;
-			$scope.cardProductsFutureLabel = label;
-			$scope.cardProductsFutureFullLabel = model.map(function(item){
-				return item.label;
+		if(bolIsFuture) {
+			$scope.cardProductsFutureModel = arrModel;
+			$scope.cardProductsFutureLabel = strLabel;
+			$scope.cardProductsFutureFullLabel = arrModel.map(function(objItem){
+				return objItem.label;
 			}).join(", ");
 		} else {
-			$scope.cardProductsModel = model;
-			$scope.cardProductsLabel = label;
-			$scope.cardProductsFullLabel = model.map(function(item){
-				return item.label;
+			$scope.cardProductsModel = arrModel;
+			$scope.cardProductsLabel = strLabel;
+			$scope.cardProductsFullLabel = arrModel.map(function(objItem){
+				return objItem.label;
 			}).join(", ");
 		}
 
 	}
 
-	function GetLabels(isFuture) {
-		GetAccountsLabel(isFuture);
-		GetShopsLabel(isFuture);
-		GetCardProductsLabel(isFuture);
+	function GetLabels(bolIsFuture) {
+		GetAccountsLabel(bolIsFuture);
+		GetShopsLabel(bolIsFuture);
+		GetCardProductsLabel(bolIsFuture);
 	}
 
-    function ShowDetails(acquirer, cardProduct, total, status, detailPage) {
+    function ShowDetails(intAcquirer, intCardProduct, intTotal, strStatus, bolDetailPage) {
         $rootScope.receiptsDetails = {};
 
         var dateSelected = $scope.actualReleases.date;
@@ -877,39 +873,39 @@ angular.module('KaplenWeb.movementsModule',[])
         $rootScope.receiptsDetails.shopIds = $scope.settlementsSelected;
         $rootScope.receiptsDetails.products = $scope.productsSearch;
         $rootScope.receiptsDetails.shops = $scope.shopsModel;
-        $rootScope.receiptsDetails.cardProduct = cardProduct;
-        $rootScope.receiptsDetails.acquirer = acquirer;
+        $rootScope.receiptsDetails.cardProduct = intCardProduct;
+        $rootScope.receiptsDetails.acquirer = intAcquirer;
         $rootScope.receiptsDetails.bankAccount = $scope.accountsModel;
 		$rootScope.receiptsDetails.shopsLabel = $scope.shopsLabel;
 		$rootScope.receiptsDetails.shopsFullLabel = $scope.shopsFullLabel;
 		$rootScope.receiptsDetails.accountsLabel = $scope.accountsLabel;
 		$rootScope.receiptsDetails.cardProductsLabel = $scope.cardProductsLabel;
 		$rootScope.receiptsDetails.cardProductsFullLabel = $scope.cardProductsFullLabel;
-		$rootScope.receiptsDetails.total = total;
-		$rootScope.receiptsDetails.type = status;
+		$rootScope.receiptsDetails.total = intTotal;
+		$rootScope.receiptsDetails.type = strStatus;
 
-		var redirect_url;
-		switch (detailPage) {
+		var strRedirectUrl;
+		switch (bolDetailPage) {
 			case "other_details":
-				redirect_url = "receipts/other_details";
+				strRedirectUrl = "receipts/other_details";
 				break;
 			case "expected_details":
-				redirect_url = "receipts/expected_details";
+				strRedirectUrl = "receipts/expected_details";
 				break;
 			case "forethought_details":
-				redirect_url = "receipts/forethought_details";
+				strRedirectUrl = "receipts/forethought_details";
 				break;
 			case "future_details":
 				$rootScope.receiptsDetails.periodStartDate = $scope.futureReleases.startDate;
 				$rootScope.receiptsDetails.periodEndDate = $scope.futureReleases.endDate;
-				redirect_url = "receipts/future_details";
+				strRedirectUrl = "receipts/future_details";
 				break;
 			default:
-				redirect_url = "receipts/details";
+				strRedirectUrl = "receipts/details";
 				break;
 		}
-		if(redirect_url) {
-			$location.path(redirect_url);
+		if(strRedirectUrl) {
+			$location.path(strRedirectUrl);
 		}
     }
 
