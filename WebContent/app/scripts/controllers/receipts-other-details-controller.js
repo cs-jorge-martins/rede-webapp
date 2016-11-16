@@ -1,7 +1,7 @@
-angular.module('Conciliador.receiptsOtherDetailsController', ['ui.bootstrap'])
+angular.module('Conciliador.receiptsOtherDetailsController', [])
 
 .config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/receipts/other_details', {templateUrl: 'app/views/receipts_other_details.html', controller: 'receiptsOtherDetailsController'});
+	$routeProvider.when('/receipts/other_details', {templateUrl: 'app/views/receipts-other-details.html', controller: 'receiptsOtherDetailsController'});
 }])
 
 .controller('receiptsOtherDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
