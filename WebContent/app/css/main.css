@@ -10245,6 +10245,13 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     text-indent: 10px;
 }
 
+#receiptsDetails .mainContent .no-indent tr > td {
+    text-indent: 0;
+}
+
+#receiptsDetails .mainContent .table tr > td.discount {
+    color:red;
+}
 .sprite {
     background-image: url("../img/action-buttons.png");
     background-repeat: no-repeat;
