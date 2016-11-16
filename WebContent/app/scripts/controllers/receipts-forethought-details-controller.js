@@ -1,7 +1,7 @@
 angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/receipts/forethought_details', {templateUrl: 'app/views/receipts_forethought_details.html', controller: 'receiptsForethoughtDetailsController'});
+	$routeProvider.when('/receipts/forethought_details', {templateUrl: 'app/views/receipts-forethought-details.html', controller: 'receiptsForethoughtDetailsController'});
 }])
 
 .controller('receiptsForethoughtDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,

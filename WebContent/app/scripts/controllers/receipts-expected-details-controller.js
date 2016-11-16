@@ -1,7 +1,7 @@
 angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/receipts/expected_details', {templateUrl: 'app/views/receipts_expected_details.html', controller: 'receiptsExpectedDetailsController'});
+	$routeProvider.when('/receipts/expected_details', {templateUrl: 'app/views/receipts-expected-details.html', controller: 'receiptsExpectedDetailsController'});
 }])
 
 .controller('receiptsExpectedDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
