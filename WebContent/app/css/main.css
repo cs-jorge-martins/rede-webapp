@@ -10100,7 +10100,8 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
     margin-top: 20px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
-    font-size: 72px;
+    font-size: 66px;
+    line-height: 66px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards.big .header-datas .date .number {
     font-size: 23px;
