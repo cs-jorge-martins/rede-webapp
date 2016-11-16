@@ -10,22 +10,20 @@ angular.module('KaplenWeb.integrationService',[])
 
 .service('integrationService', function(app, $http, Request) {
 
-	this.GetUploadedFiles = function (params) {
-		var request = params;
+	this.GetUploadedFiles = function (objParams) {
 		return $http({
 			url: app.endpoint + '/integration/files',
 			method: "GET",
-			params: params,
+			params: objParams,
 			headers: Request.setHeaders()
 		});
 	};
 
-	this.DownloadFiles = function (params) {
-		var request = params;
+	this.DownloadFiles = function (objParams) {
 		return $http({
 			url: app.endpoint + '/integration/financials',
 			method: "GET",
-			params: params,
+			params: objParams,
 			headers: Request.setHeaders()
 		});
 	};

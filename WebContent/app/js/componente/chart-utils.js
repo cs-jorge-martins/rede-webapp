@@ -11,22 +11,22 @@ var chartUtils = window.chartUtil || {};
 /**
  * proxy para traduzir dados vindos da API, do modelo do hicharts para o charts.js
  */
-chartUtils.Proxy = function( dataSource ) {
-	var chart = {
+chartUtils.Proxy = function( objDataSource ) {
+	var objChart = {
 		labels: [],
 		series: [],
 		data: []
 	};
 
-	for(x in dataSource) {
-		if(typeof dataSource[x] === 'object'){
-			chart.series.push(dataSource[x].name);
-			chart.data.push(dataSource[x].data);
+	for(x in objDataSource) {
+		if(typeof objDataSource[x] === 'object'){
+			objChart.series.push(objDataSource[x].name);
+			objChart.data.push(objDataSource[x].data);
 
-			if(dataSource[x].data.length > chart.labels.length){
-				chart.labels = [];
-				for(y in dataSource[x].data) {
-					chart.labels.push(y);
+			if(objDataSource[x].data.length > objChart.labels.length){
+				objChart.labels = [];
+				for(y in objDataSource[x].data) {
+					objChart.labels.push(y);
 				}
 			}
 		} else {
@@ -34,28 +34,28 @@ chartUtils.Proxy = function( dataSource ) {
 		}
 	}
 
-	return chart;
+	return objChart;
 };
 
 chartUtils.Tooltip = function(tooltip) {
-	var tooltipEl = jQuery('#chartjs-tooltip');
+	var divTooltipEl = jQuery('#chartjs-tooltip');
 
    if (!tooltip) {
-	   tooltipEl.css({
+	   divTooltipEl.css({
 		   opacity: 0
 	   });
 	   return;
    }
 
-   tooltipEl.removeClass('above below');
-   tooltipEl.addClass(tooltip.yAlign);
+   divTooltipEl.removeClass('above below');
+   divTooltipEl.addClass(tooltip.yAlign);
 
    // split out the label and value and make your own tooltip here
-   var parts = tooltip.text.split(":");
-   var innerHtml = '<span>' + parts[0].trim() + '</span> : <span><b>' + parts[1].trim() + '</b></span>';
-   tooltipEl.html(innerHtml);
+   var arrParts = tooltip.text.split(":");
+   var strInnerHtml = '<span>' + arrParts[0].trim() + '</span> : <span><b>' + arrParts[1].trim() + '</b></span>';
+   divTooltipEl.html(strInnerHtml);
 
-   tooltipEl.css({
+   divTooltipEl.css({
 	   opacity: 1,
 	   left: tooltip.chart.canvas.offsetLeft + tooltip.x + 'px',
 	   top: tooltip.chart.canvas.offsetTop + tooltip.y + 'px',
@@ -68,15 +68,15 @@ chartUtils.Tooltip = function(tooltip) {
 chartUtils.Formatters = {
 	currency: function( value ) {
 
-		var formatted = value.toFixed(2);
-		var tmp;
+		var fltFormatted = value.toFixed(2);
+		var objTmp;
 
-		tmp = formatted.split('.');
-		tmp[0] = tmp[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-		formatted = tmp.join(',');
-		formatted = "R$ " + formatted;
+		objTmp = fltFormatted.split('.');
+		objTmp[0] = objTmp[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		fltFormatted = objTmp.join(',');
+		fltFormatted = "R$ " + fltFormatted;
 
-		return formatted;
+		return fltFormatted;
 	}
 };
 

@@ -11,10 +11,10 @@ angular.module('KaplenWeb.cacheService',[])
 
 .service('cacheService', function($cacheFactory, kaplenAdminService, $angularCacheFactory, $window) {
 
-	var cache = $angularCacheFactory("kaplenCache"  ,{
+	var objCache = $angularCacheFactory("kaplenCache"  ,{
 		maxAge: 1800000 ,
 		deleteOnExpire: 'aggressive',
-		onExpire: function (key, value, done) {
+		onExpire: function (strKey, value, done) {
 	        InitializeCache();
 	    }
 	});
@@ -29,20 +29,20 @@ angular.module('KaplenWeb.cacheService',[])
 	InitializeCache();
 
 	this.GetProducts = function(){
-		var key = 'products';
-		if (cache.get(key) === undefined) {
+		var strKey = 'products';
+		if (objCache.get(strKey) === undefined) {
 			 InitializeProducts();
 		}
-		return cache.get(key);
+		return objCache.get(strKey);
 	};
 
 
 	this.GetSettlements = function(){
-		var key = 'settlements';
-		if (cache.get(key) === undefined) {
+		var strKey = 'settlements';
+		if (objCache.get(strKey) === undefined) {
 			InitializeSettlements();
 		}
-		return cache.get(key);
+		return objCache.get(strKey);
 	};
 
 	this.enabledFilterKeys = [
@@ -66,23 +66,23 @@ angular.module('KaplenWeb.cacheService',[])
 	];
 
 	this.SaveFilter = function(filter, context) {
-		var enabledKeys = this.enabledFilterKeys;
+		var arrEnabledKeys = this.enabledFilterKeys;
 
-		cache.put('context', context);
+		objCache.put('context', context);
 
-		for(enabledKey in enabledKeys){
-			if(filter.hasOwnProperty(enabledKeys[enabledKey])){
-				cache.put(enabledKeys[enabledKey], filter[enabledKeys[enabledKey]]);
+		for(var strEnabledKey in arrEnabledKeys){
+			if(filter.hasOwnProperty(arrEnabledKeys[strEnabledKey])){
+				objCache.put(arrEnabledKeys[strEnabledKey], filter[arrEnabledKeys[strEnabledKey]]);
 			}
 		}
 	};
 
-	this.LoadFilter = function(key) {
-		var enabledKeys = this.enabledFilterKeys;
+	this.LoadFilter = function(strKey) {
+		var arrEnabledKeys = this.enabledFilterKeys;
 
-		for(var item in enabledKeys) {
-			if(enabledKeys[item] == key) {
-				return cache.get(key);
+		for(var strEnabledKey in arrEnabledKeys) {
+			if(arrEnabledKeys[strEnabledKey] == strKey) {
+				return objCache.get(strKey);
 			}
 		}
 
@@ -90,20 +90,20 @@ angular.module('KaplenWeb.cacheService',[])
 	};
 
 	this.ClearFilter = function() {
-		cache.removeAll();
+		objCache.removeAll();
 	};
 
 	function InitializeProducts(){
-		var key = 'products';
+		var strKey = 'products';
 		kaplenAdminService.GetProdutsAutoComplete().then(function(itens) {
-			cache.put(key, itens.data);
+			objCache.put(strKey, itens.data);
 		});
 	};
 
 	function InitializeSettlements (){
-		var key = 'settlements';
+		var strKey = 'settlements';
 		kaplenAdminService.GetSettlementsAutoComplete().then(function(itens) {
-			cache.put(key, itens.data);
+			objCache.put(strKey, itens.data);
 		});
 	};
 });

@@ -11,25 +11,25 @@ angular.module('KaplenWeb.kaplenAdminService',[])
 .service('kaplenAdminService', function(app, $window, $http, Request) {
 
 	this.GetProdutsAutoComplete = function(){
-		var request = {
+		var objRrequest = {
 		};
 
 		return $http({
 			url: app.endpoint + '/cardproducts',
 			method: "GET",
-			data: request,
+			data: objRrequest,
 			headers: Request.setHeaders()
 		});
 	};
 
 	this.GetSettlementsAutoComplete = function(){
-		var request = {
+		var objRrequest = {
 		};
 
 		return $http({
 			url: app.endpoint + '/pvs/shops',
 			method: "GET",
-			data: request,
+			data: objRrequest,
 			headers: Request.setHeaders()
 		});
 	};

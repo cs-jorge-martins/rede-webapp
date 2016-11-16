@@ -7,85 +7,85 @@
 angular.module('Kaplen.CalendarFactory',[])
 .factory('calendarFactory', function() {
 
-    var format = "DD/MM/YYYY";
+    var strFormat = "DD/MM/YYYY";
 
-	var timezone = "America/Brasilia";
+	var timeTimezone = "America/Brasilia";
 	moment.locale('pt-BR');
-	var momentjs = moment();
-	var momentForDashboard = moment();
-	var nowFormattedDashboard = momentForDashboard.tz(timezone).subtract(1, 'days');
-	var firstDayOfMonth = moment("01/" + (momentjs.month()+1) + "/" + momentjs.year(), format);
-	var firstDayOfMonthFormatted = firstDayOfMonth.tz(timezone).format(format);
+	var objMomentjs = moment();
+	var objMomentForDashboard = moment();
+	var objNowFormattedDashboard = objMomentForDashboard.tz(timeTimezone).subtract(1, 'days');
+	var objFirstDayOfMonth = moment("01/" + (objMomentjs.month()+1) + "/" + objMomentjs.year(), strFormat);
+	var objFirstDayOfMonthFormatted = objFirstDayOfMonth.tz(timeTimezone).format(strFormat);
 
-	var firstDayOfCurrentMonth = moment("01/" + (moment().month()+1) + "/" + moment().year());
-	var actualDayOfCurrentMonth = moment().date() == 1 ? moment().tz(timezone) : moment().tz(timezone).subtract(1, 'days');
+	var objFirstDayOfCurrentMonth = moment("01/" + (moment().month()+1) + "/" + moment().year());
+	var objActualDayOfCurrentMonth = moment().date() == 1 ? moment().tz(timeTimezone) : moment().tz(timeTimezone).subtract(1, 'days');
 
-	var firstDayOfLastMonth = moment((moment().month()) + "/"+ "01/" + + moment().year());
-	var lastDayOfLastMonth = moment().tz(timezone).subtract(1, 'months').endOf('month');
+	var objFirstDayOfLastMonth = moment((moment().month()) + "/"+ "01/" + + moment().year());
+	var objLastDayOfLastMonth = moment().tz(timeTimezone).subtract(1, 'months').endOf('month');
 
-	var firstDayOfLastMonthDashboard = moment((momentForDashboard.month()) + "/"+ "01/" + + moment().year());
-	var lastDayOfLastMonthDashboard = moment((momentForDashboard)).tz(timezone).subtract(1, 'months').endOf('month');
+	var objFirstDayOfLastMonthDashboard = moment((objMomentForDashboard.month()) + "/"+ "01/" + + moment().year());
+	var objLastDayOfLastMonthDashboard = moment((objMomentForDashboard)).tz(timeTimezone).subtract(1, 'months').endOf('month');
 
 	function getToday() {
 		return moment().toDate();
 	}
 
-	function getDateFromString(value, format){
-		return moment = moment(value,format);
+	function getDateFromString(value, strFormat){
+		return moment = moment(value,strFormat);
 	}
 
 	function getFirstDayOfMonth(){
-		return firstDayOfCurrentMonth;
+		return objFirstDayOfCurrentMonth;
 	}
 
 	function getActualDayOfCurrentMonth(){
-		return actualDayOfCurrentMonth;
+		return objActualDayOfCurrentMonth;
 	}
 
 	function getActualDayOfCurrentMonthForDashboard(){
-		return nowFormattedDashboard;
+		return objNowFormattedDashboard;
 	}
 
 	function getFirstDayOfLastMonth(){
-		return firstDayOfLastMonth;
+		return objFirstDayOfLastMonth;
 	}
 
 	function getFirstDayOfLastMonthForDashboard(){
-		return firstDayOfLastMonthDashboard;
+		return objFirstDayOfLastMonthDashboard;
 	}
 
 	function getLastDayOfLastMonth(){
-		return lastDayOfLastMonth;
+		return objLastDayOfLastMonth;
 	}
 
 	function getLastDayOfLastMonthForDashboard(){
-		return lastDayOfLastMonthDashboard;
+		return objLastDayOfLastMonthDashboard;
 	}
 
 	function getActualDateForDashboard(){
-		return nowFormattedDashboard.format(format);
+		return objNowFormattedDashboard.format(strFormat);
 	}
 
 	function getMomentOfSpecificDate(date){
-		return moment(date, format).tz(timezone);
+		return moment(date, strFormat).tz(timeTimezone);
 	}
 
     function getUnixMomentOfSpecificDate(date){
-		return moment.unix(date, format).tz(timezone);
+		return moment.unix(date, strFormat).tz(timeTimezone);
 	}
 
 	function getFormat() {
-		return format;
+		return strFormat;
 	}
 
 	function getActualDate() {
-		return moment().tz(timezone).format(format);
+		return moment().tz(timeTimezone).format(strFormat);
 	}
 	function getLastDayOfCurrentMonth() {
 		return getLastDayOfMonth();
 	}
 	function getTomorrowFromToday() {
-		return moment().add(1, 'day').tz(timezone).format(format);
+		return moment().add(1, 'day').tz(timeTimezone).format(strFormat);
 	}
 
 	/**
@@ -93,44 +93,44 @@ angular.module('Kaplen.CalendarFactory',[])
 	 * @returns date
 	 */
 	function getTomorrowFromTodayToDate() {
-		return moment().add(1, 'day').tz(timezone).toDate();
+		return moment().add(1, 'day').tz(timeTimezone).toDate();
 	}
 	function getActualDateUploadModal() {
-		return moment().tz(timezone).format("DD/MM/YYYY HH:mm:ss");
+		return moment().tz(timeTimezone).format("DD/MM/YYYY HH:mm:ss");
 	}
 
 	function getYesterdayDate(){
-		var today = moment().tz(timezone);
+		var dateToday = moment().tz(timeTimezone);
 		//Obter ultimo dia do mes anterior, pois ja havia somado um mes anteriormente
-		var yesterday = today.subtract(1, 'day');
-		return yesterday.tz(timezone).format(format);
+		var dateYesterday = dateToday.subtract(1, 'day');
+		return dateYesterday.tz(timeTimezone).format(strFormat);
 	}
 
 	function getFirstDayOfMonthForDashboard() {
-		var firstDayOfMonthDashboard = moment("01/" + (nowFormattedDashboard.month()+1) + "/" + nowFormattedDashboard.year(), format);
-		return firstDayOfMonthDashboard.tz(timezone).format(format);
+		var objFirstDayOfMonthDashboard = moment("01/" + (objNowFormattedDashboard.month()+1) + "/" + objNowFormattedDashboard.year(), strFormat);
+		return objFirstDayOfMonthDashboard.tz(timeTimezone).format(strFormat);
 	}
 
 	function getFirstDayOfMonth(date) {
         if( date ) {
-            var initialDateMoment = moment(date, format).startOf('month');
+            var objInitialDateMoment = moment(date, strFormat).startOf('month');
         } else {
-            var initialDateMoment = momentjs.startOf('month');
+            var objInitialDateMoment = objMomentjs.startOf('month');
         }
-		return initialDateMoment.tz(timezone).format(format);
+		return objInitialDateMoment.tz(timeTimezone).format(strFormat);
 	}
 
 	function getLastDayOfMonth(date, raw) {
         if( date ) {
-            var finalDateMoment = moment(date, format).endOf('month');
+            var objFinalDateMoment = moment(date, strFormat).endOf('month');
         } else {
-            var finalDateMoment = momentjs.endOf('month');
+            var objFinalDateMoment = objMomentjs.endOf('month');
         }
 
         if(raw) {
-            return finalDateMoment.date();
+            return objFinalDateMoment.date();
         }
-		return finalDateMoment.tz(timezone).format(format);
+		return objFinalDateMoment.tz(timeTimezone).format(strFormat);
 	}
 
 	/**
@@ -140,9 +140,9 @@ angular.module('Kaplen.CalendarFactory',[])
 	 */
 	function getLastDayOfMonthToDate(date) {
         if( date ) {
-            var finalDateMoment = moment(date).endOf('month');
+            var objFinalDateMoment = moment(date).endOf('month');
         }
-		return finalDateMoment.toDate();
+		return objFinalDateMoment.toDate();
 	}
 
 
@@ -157,7 +157,7 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
     function getDayOfWeek(date) {
-        return moment(date, format).day();
+        return moment(date, strFormat).day();
     }
 
     function getFirstDayOfYear(year) {
@@ -170,22 +170,22 @@ angular.module('Kaplen.CalendarFactory',[])
 
 	function formatDate(date, isDiferentFormat) {
 		if(isDiferentFormat){
-			return moment(date).tz(timezone).format("DD/MM/YYYY");
+			return moment(date).tz(timeTimezone).format("DD/MM/YYYY");
 		}else{
-			return moment(date, format).tz(timezone).format(format);
+			return moment(date, strFormat).tz(timeTimezone).format(strFormat);
 		}
 	}
 
 
     function formatDateForService(date) {
-        var momentTemp = moment(date, format).tz(timezone);
-		return momentTemp.format("YYYYMMDD");
+        var dateMomentTemp = moment(date, strFormat).tz(timeTimezone);
+		return dateMomentTemp.format("YYYYMMDD");
     }
 
     function formatDateTimeForService(date) {
 		if(date) {
-			var dateAux = formatDateForService(date);
-			return (dateAux === 'Invalid date') ? (moment(date).tz(timezone)).format("YYYYMMDD") : dateAux;
+			var objDateAux = formatDateForService(date);
+			return (objDateAux === 'Invalid date') ? (moment(date).tz(timeTimezone)).format("YYYYMMDD") : objDateAux;
 		}
 		else {
 			return date;
@@ -193,21 +193,21 @@ angular.module('Kaplen.CalendarFactory',[])
     }
 
 	function getDateFromString(date){
-		return moment(date, format);
+		return moment(date, strFormat);
 	}
 
 	function addDaysToDate(date, qtd){
-		 var resultMoment = moment(date, format);
-		 var resultAddMoment = resultMoment.add(qtd, 'day');
+		 var objResultMoment = moment(date, strFormat);
+		 var objResultAddMoment = objResultMoment.add(qtd, 'day');
 
-		 return resultAddMoment.tz(timezone);
+		 return objResultAddMoment.tz(timeTimezone);
 	}
 
     function addMonthsToDate(date, qtd){
-		 var resultMoment = moment(date, format);
-		 var resultAddMoment = resultMoment.add(qtd, 'month');
+		 var objResultMoment = moment(date, strFormat);
+		 var objResultAddMoment = objResultMoment.add(qtd, 'month');
 
-		 return resultAddMoment.tz(timezone);
+		 return objResultAddMoment.tz(timeTimezone);
 	}
 
 	/**
@@ -216,31 +216,31 @@ angular.module('Kaplen.CalendarFactory',[])
 	 * @param qtd
 	 * @returns date
 	 */
-    function addMonthsOnDate(date, qtd){
-		 var resultMoment = moment(date).add(qtd, 'month');
-		 return resultMoment.toDate();
+    function addMonthsOnDate(date, intQtd){
+		 var objResultMoment = moment(date).add(intQtd, 'month');
+		 return objResultMoment.toDate();
 	}
 
-    function addYearsToDate(date, qtd){
-		 var resultMoment = moment(date, format);
-		 var resultAddMoment = resultMoment.add(qtd, 'year');
+    function addYearsToDate(date, intQtd){
+		 var objResultMoment = moment(date, strFormat);
+		 var objResultAddMoment = objResultMoment.add(intQtd, 'year');
 
-		 return resultAddMoment.tz(timezone);
+		 return objResultAddMoment.tz(timeTimezone);
 	}
 
 	function getYear(date){
-		var momentTemp = moment(date, format).tz(timezone);
-		return momentTemp.format("YYYY");
+		var objMomentTemp = moment(date, strFormat).tz(timeTimezone);
+		return objMomentTemp.format("YYYY");
 	}
 
 	function getMonthNumberOfDate(date){
-		var momentFunction =  moment(date, format).tz(timezone);
+		var objMomentFunction =  moment(date, strFormat).tz(timeTimezone);
 
-		return momentFunction.month()+1;
+		return objMomentFunction.month()+1;
 	}
 
 	function getDayOfMonth(date){
-		return moment(date, format).tz(timezone).format("D");
+		return moment(date, strFormat).tz(timeTimezone).format("D");
     }
 
     function getDayOfDate(date){
@@ -252,7 +252,7 @@ angular.module('Kaplen.CalendarFactory',[])
     }
 
 	function getHoursAndMinutes(hour){
-		return moment(hour, "HH:mm:ss").tz(timezone).format("HH:mm");
+		return moment(hour, "HH:mm:ss").tz(timeTimezone).format("HH:mm");
 	}
 
 	function verifyValidHours(hour){
@@ -260,82 +260,82 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
 	function getMonthNameAbreviation(date){
-		return moment(date, format).tz(timezone).format("MMM");
+		return moment(date, strFormat).tz(timeTimezone).format("MMM");
 	}
 
 	function getNameOfMonthAndYearForDashboard(){
-		return nowFormattedDashboard.format("MMMM YYYY");
+		return objNowFormattedDashboard.format("MMMM YYYY");
 	}
 
 	function getNameOfMonthAndYear(date){
 		if(date != null){
-			return moment(date, format).tz(timezone).format("MMMM YYYY");
+			return moment(date, strFormat).tz(timeTimezone).format("MMMM YYYY");
 		}else{
-			return momentjs.format("MMMM YYYY");
+			return objMomentjs.format("MMMM YYYY");
 		}
 	}
 
     function getNameOfMonth(date){
 		if(date != null){
-			return moment(date, format).tz(timezone).format("MMMM");
+			return moment(date, strFormat).tz(timeTimezone).format("MMMM");
 		}else{
-			return momentjs.format("MMMM");
+			return objMomentjs.format("MMMM");
 		}
 	}
 
 	function getDayAndMonthFromDate(date) {
-		var new_date_day = moment(date).format('D');
-		var new_date_month = moment(date).format('MMMM');
-		return new_date_day + " de " + new_date_month;
+		var objNewDateDay = moment(date).format('D');
+		var objNewDateMonth = moment(date).format('MMMM');
+		return objNewDateDay + " de " + objNewDateMonth;
 	}
 
 	function getDaySlashMonth(date) {
-		var new_date_day = moment(date).format('D');
-		var new_date_month = moment(date).format('MM');
-		return new_date_day + "/" + new_date_month;
+		var objNewDateDay = moment(date).format('D');
+		var objNewDateMonth = moment(date).format('MM');
+		return objNewDateDay + "/" + objNewDateMonth;
 	}
 
 
-	function getFirstDayOfSpecificMonth(month, year){
-		var firstDayOfSpecificMonth = moment("01/" + (month+1) + "/" + year, format);
-		var firstDayOfMonthFormatted = firstDayOfSpecificMonth.tz(timezone).format(format);
+	function getFirstDayOfSpecificMonth(intMonth, intYear){
+		var objFirstDayOfSpecificMonth = moment("01/" + (intMonth+1) + "/" + intYear, strFormat);
+		var objFirstDayOfMonthFormatted = objFirstDayOfSpecificMonth.tz(timeTimezone).format(strFormat);
 
-		return firstDayOfMonthFormatted;
+		return objFirstDayOfMonthFormatted;
 	}
 
-	function getLastDayOfSpecificMonth(month, year){
-		var firstDayOfMonth = moment("01/" + (month+1) + "/" + year, format);
-		var firstDayOfNextMonth = firstDayOfMonth.add(1, 'month');
+	function getLastDayOfSpecificMonth(intMonth, intYear){
+		var objFirstDayOfMonth = moment("01/" + (intMonth + 1) + "/" + intYear, strFormat);
+		var objFirstDayOfNextMonth = objFirstDayOfMonth.add(1, 'month');
 		//Obter ultimo dia do mes anterior, pois ja havia somado um mes anteriormente
-		var lastDayOfLastMonth = firstDayOfNextMonth.subtract(1, 'day');
+		var objLastDayOfLastMonth = objFirstDayOfNextMonth.subtract(1, 'day');
 
-		var lastDayOfMonthFormatted = lastDayOfLastMonth.tz(timezone).format(format);
+		var objLastDayOfMonthFormatted = objLastDayOfLastMonth.tz(timeTimezone).format(strFormat);
 
-		return lastDayOfMonthFormatted;
+		return objLastDayOfMonthFormatted;
 	}
 
-	function getSpecificDateOfYear(year){
-		var momentPersonalized = moment("01/01/" + year, format);
-		return momentPersonalized.tz(timezone).format(format);
+	function getSpecificDateOfYear(intYear){
+		var objMomentPersonalized = moment("01/01/" + intYear, strFormat);
+		return objMomentPersonalized.tz(timeTimezone).format(strFormat);
 	}
 
-	function checkInvalidPeriod(initialDate, finalDate, initialDateChanged, finalDateChanged){
-		var initialDateMoment = null;
-		var finalDateMoment = null;
+	function checkInvalidPeriod(dateInitialDate, dateFinalDate, dateInitialDateChanged, dateFinalDateChanged){
+		var objInitialDateMoment = null;
+		var objFinalDateMoment = null;
 
-		if(initialDateChanged){
-			initialDateMoment = this.getMomentOfSpecificDate(formatDate(initialDate, true));
+		if(dateInitialDateChanged){
+			objInitialDateMoment = this.getMomentOfSpecificDate(formatDate(dateInitialDate, true));
 		}else{
-			initialDateMoment = this.getMomentOfSpecificDate(initialDate);
+			objInitialDateMoment = this.getMomentOfSpecificDate(dateInitialDate);
 		}
 
-		if(finalDateChanged){
-			finalDateMoment = this.getMomentOfSpecificDate(formatDate(finalDate, true));
+		if(dateFinalDateChanged){
+			objFinalDateMoment = this.getMomentOfSpecificDate(formatDate(dateFinalDate, true));
 		}else{
-			finalDateMoment = this.getMomentOfSpecificDate(finalDate);
+			objFinalDateMoment = this.getMomentOfSpecificDate(dateFinalDate);
 		}
 
-		if(initialDateMoment.isAfter(finalDateMoment) || finalDateMoment.isBefore(initialDateMoment)){
+		if(objInitialDateMoment.isAfter(objFinalDateMoment) || objFinalDateMoment.isBefore(objInitialDateMoment)){
 			return true;
 		}else{
 			return false;
@@ -343,8 +343,8 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
 	function transformBrDateIntoDate(date) {
-		var parts = date.split("/");
-		return new Date(parts[2], parts[1]-1, parts[0], 0, 0, 0, 0);
+		var arrParts = date.split("/");
+		return new Date(arrParts[2], arrParts[1]-1, arrParts[0], 0, 0, 0, 0);
 	}
 
     return {

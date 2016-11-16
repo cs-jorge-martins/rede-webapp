@@ -26,9 +26,9 @@
 			controller: Controller,
 			link: function(scope, element, attrs) {
 
-				var calendarIcon = element[0].querySelector('.icon_calendario');
+				var divCalendarIcon = element[0].querySelector('.icon_calendario');
 
-				calendarIcon.addEventListener('click', function(){
+				divCalendarIcon.addEventListener('click', function(){
 					scope.status.opened = true;
 				});
 			}
