@@ -189,23 +189,23 @@ angular.module('KaplenWeb.movementsModule',[])
 
 				for( var intIndex in objData) {
 					var strStatus = objData[intIndex].status.toLowerCase(),
-						description = objData[intIndex].description.toLowerCase(),
-						cardProduct = objData[intIndex].cardProduct;
+						strDescription = objData[intIndex].description.toLowerCase(),
+						objCardProduct = objData[intIndex].cardProduct;
 						amount = objData[intIndex].payedAmount;
-						cardProduct.forethought = false;
+						objCardProduct.forethought = false;
 
 					if (strStatus == "forethought") {
-						cardProduct.name = "ANTECIPAÇÃO " + cardProduct.name;
-						cardProduct.forethought = true;
+						objCardProduct.name = "ANTECIPAÇÃO " + objCardProduct.name;
+						objCardProduct.forethought = true;
 					}
 
 					if(arrReleases.length) {
 						var bolInsert = true;
 						for(var intIndexb in arrReleases){
-							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === status)){
+							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === strStatus)){
 								arrReleases[intIndexb].releases.push({
-									type: description,
-									payedAmount: description == "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
+									type: strDescription,
+									payedAmount: strDescription == "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
 								});
 								bolInsert = false;
 								break;
@@ -213,11 +213,11 @@ angular.module('KaplenWeb.movementsModule',[])
 						}
 						if(bolInsert) {
 								var objItem = {
-									cardProductName: cardProduct.name,
-									cardProductId: cardProduct.id,
-									forethought: cardProduct.forethought,
+									cardProductName: objCardProduct.name,
+									cardProductId: objCardProduct.id,
+									forethought: objCardProduct.forethought,
 									status: strStatus,
-									description: description,
+									description: strDescription,
 									sales: 0,
 									cancellation: 0,
 									adjusts: 0,
@@ -226,19 +226,19 @@ angular.module('KaplenWeb.movementsModule',[])
 									status: strStatus
 								};
 
-								if(description == "vendas") {
+								if(strDescription == "vendas") {
 									objItem.total = objData[intIndex].payedAmount;
 
 									objItem.releases.push({
 										type: 'vendas',
 										payedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(description == "cancelamentos") {
+								} else if(strDescription == "cancelamentos") {
 									objItem.releases.push({
 										type: 'cancelamentos',
 										payedAmount: objData[intIndex].payedAmount
 									});
-								} else if(description == "ajustes") {
+								} else if(strDescription == "ajustes") {
 									objItem.releases.push({
 										type: 'ajustes',
 										payedAmount: objData[intIndex].payedAmount
@@ -250,11 +250,11 @@ angular.module('KaplenWeb.movementsModule',[])
 
 					} else {
 						var objItem = {
-							cardProductName: cardProduct.name,
-							cardProductId: cardProduct.id,
-							forethought: cardProduct.forethought,
+							cardProductName: objCardProduct.name,
+							cardProductId: objCardProduct.id,
+							forethought: objCardProduct.forethought,
 							status: strStatus,
-							description: description,
+							description: strDescription,
 							sales: 0,
 							cancellation: 0,
 							adjusts: 0,
@@ -263,18 +263,18 @@ angular.module('KaplenWeb.movementsModule',[])
 							status: strStatus
 						};
 
-						if(description == "vendas") {
+						if(strDescription == "vendas") {
 							objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'vendas',
 								payedAmount: objData[intIndex].expectedAmount
 							});
-						} else if(description == "cancelamentos") {
+						} else if(strDescription == "cancelamentos") {
 							objItem.releases.push({
 								type: 'cancelamentos',
 								payedAmount: objData[intIndex].payedAmount
 							});
-						} else if(description == "ajustes") {
+						} else if(strDescription == "ajustes") {
 							objItem.releases.push({
 								type: 'ajustes',
 								payedAmount: objData[intIndex].payedAmount
