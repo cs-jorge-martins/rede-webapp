@@ -82,16 +82,12 @@ angular.module('KaplenWeb.dashboardController',[])
 	SetUp();
 
  	function SetUp() {
-		var timeToday = new Date();
+		var objToday = new Date();
 
 		// Se primeiro dia do mês exibe o anterior
-		if(timeToday.getDate() == 1) {
-			timeToday.setDate(timeToday.getDate()-1);
+		if(objToday.getDate() == 1) {
+			objToday.setDate(objToday.getDate()-1);
 		}
-
-		var day = timeToday.getDate();
-		var month = timeToday.getMonth();
-		var year = timeToday.getFullYear();
 
 		$scope.currentMonthPerid = new Period();
 		$scope.currentMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonthForDashboard());
@@ -224,11 +220,11 @@ angular.module('KaplenWeb.dashboardController',[])
 	/***************************************** TRANSACTION SUMMARY LINE CHART ******************************************/
 	function SetTransactionSummaryLineChart(){
 
-		var date = $scope.dateSelected;
+		var objDate = $scope.dateSelected;
 		var arrActualMonthData = [];
 		var arrLastMonthData = [];
 
-		var intLastDayFlag = calendarFactory.getLastDayOfMonth(date, true);
+		var intLastDayFlag = calendarFactory.getLastDayOfMonth(objDate, true);
 
 		var objChartData = {
 			labels: [],
@@ -239,8 +235,8 @@ angular.module('KaplenWeb.dashboardController',[])
 
 		var objFilter = {
 			currency: 'BRL',
-			startDate: calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(date)),
-			endDate: calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(date)),
+			startDate: calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(objDate)),
+			endDate: calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(objDate)),
 			groupBy: 'DAY',
 			size: 31,
 			conciliationStatus: 'TO_CONCILIE,CONCILIED'
@@ -258,20 +254,19 @@ angular.module('KaplenWeb.dashboardController',[])
 				}
 			}
 
+			var objLastMonthDate = calendarFactory.addMonthsToDate(objDate, -1);
+			objFilter.startDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(objLastMonthDate));
+			objFilter.endDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(objLastMonthDate));
 
-			var dateLastMonthDate = calendarFactory.addMonthsToDate(date, -1);
-			objFilter.startDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfMonth(dateLastMonthDate));
-			objFilter.endDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfMonth(dateLastMonthDate));
-
-			if(intLastDayFlag < calendarFactory.getLastDayOfMonth(dateLastMonthDate, true)){
-				intLastDayFlag = calendarFactory.getLastDayOfMonth(dateLastMonthDate, true);
+			if(intLastDayFlag < calendarFactory.getLastDayOfMonth(objLastMonthDate, true)){
+				intLastDayFlag = calendarFactory.getLastDayOfMonth(objLastMonthDate, true);
 			}
 
 			for(var intDay = 1; intDay < intLastDayFlag+1; intDay++) {
 				objChartData.labels.push(intDay);
 			}
 
-			objChartData.series.push(calendarFactory.getNameOfMonth(date));
+			objChartData.series.push(calendarFactory.getNameOfMonth(objDate));
 			objChartData.data.push(ProccessChartDays(arrActualMonthData, true));
 
 			// last month data
@@ -286,7 +281,7 @@ angular.module('KaplenWeb.dashboardController',[])
 					}
 				}
 
-				objChartData.series.push(calendarFactory.getNameOfMonth(dateLastMonthDate));
+				objChartData.series.push(calendarFactory.getNameOfMonth(objLastMonthDate));
 				objChartData.data.push(ProccessChartDays(arrLastMonthData));
 
 				$scope.chartjs = objChartData;
@@ -300,29 +295,29 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	}
 
-	function ProccessChartDays(dateData, bolIsCurrentMonth){
+	function ProccessChartDays(objData, bolIsCurrentMonth){
 		var arrChartDays = [];
 
-		if(dateData.length){
-			var intDayIndex = parseInt(dateData[dateData.length - 1].date.split('-')[2]);
+		if(objData.length){
+			var intDayIndex = parseInt(objData[objData.length - 1].date.split('-')[2]);
 
 			for(var intX = 0; intX < intDayIndex; intX++){
 				arrChartDays.push(0);
 			}
 
-			for(var objItem in dateData) {
-				var intItemDay = parseInt(dateData[objItem].date.split('-')[2]);
-				arrChartDays[intItemDay - 1] = dateData[objItem].amount;
+			for(var objItem in objData) {
+				var intItemDay = parseInt(objData[objItem].date.split('-')[2]);
+				arrChartDays[intItemDay - 1] = objData[objItem].amount;
 			}
 
 		}
 
 		if(bolIsCurrentMonth) {
-			var dateCurrentDay = (new Date()).getDate();
+			var objCurrentDay = (new Date()).getDate();
 
-			if(arrChartDays.length < dateCurrentDay) {
+			if(arrChartDays.length < objCurrentDay) {
 				var intIndex = arrChartDays.length;
-				for (intIndex; intIndex < dateCurrentDay; intIndex++) {
+				for (intIndex; intIndex < objCurrentDay; intIndex++) {
 					arrChartDays.push(0);
 				}
 			}
@@ -335,14 +330,14 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	function SetTransactionConciliationCalendar(){
 
-		var date = $scope.dateSelected;
+		var objdate = $scope.dateSelected;
 
-		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(date);
-		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(date);
+		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(objdate);
+		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(objdate);
 
 		var arrDays = [];
 		var arrWeeks = [];
-		var intTotalDays = calendarFactory.getLastDayOfMonth(date, true) - 1;
+		var intTotalDays = calendarFactory.getLastDayOfMonth(objdate, true) - 1;
 		var intFirstWeekDay = calendarFactory.getDayOfWeek(intFirstDayOfMonth);
 
 		for(var intX = 0; intX < intFirstWeekDay; intX++) {
@@ -357,7 +352,7 @@ angular.module('KaplenWeb.dashboardController',[])
 
 		for(var intDay = 0; intDay <= intTotalDays; intDay++) {
 			arrDays.push({
-				date: intDay+1,
+				date: intDay + 1,
 				toProcess: false,
 				toReconcile: false,
 				concilied: false,
@@ -370,7 +365,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		}
 
 		$scope.weeks = arrWeeks;
-		$scope.calendarMonth = calendarFactory.getNameOfMonth(date);
+		$scope.calendarMonth = calendarFactory.getNameOfMonth(objDate);
 
 		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
@@ -445,11 +440,11 @@ angular.module('KaplenWeb.dashboardController',[])
 	function Sales(intDay) {
 		if(intDay){
 			intDay = intDay < 10 ? 0 + String(intDay) : intDay;
-			var date = $scope.dateSelected;
-			date = date.split('/');
-			date[0] = intDay;
-			date = date.join('/');
-			$rootScope.salesFromDashDate = date;
+			var objDate = $scope.dateSelected;
+			objDate = objDate.split('/');
+			objDate[0] = intDay;
+			objDate = objDate.join('/');
+			$rootScope.salesFromDashDate = objDate;
 			$location.path('/sales');
 		}
 	}
@@ -491,6 +486,5 @@ angular.module('KaplenWeb.dashboardController',[])
 				}
 			}
 		});
-
 	}
 });

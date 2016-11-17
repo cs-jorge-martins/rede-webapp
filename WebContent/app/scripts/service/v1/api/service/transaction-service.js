@@ -60,7 +60,7 @@
 		};
 
         this.ExportTransactions = function(objFilter, success, error) {
-            var dateStartTime = new Date().getTime();
+            var objStartTime = new Date().getTime();
             var intTimeout = 30 * 1000;  // milisseconds
 
             return $http({
@@ -70,7 +70,7 @@
                 timeout: intTimeout,
 				headers: Request.setHeaders()
 			}).then(success, function(response){
-                var dateRespTime = new Date().getTime() - dateStartTime;
+                var dateRespTime = new Date().getTime() - objStartTime;
                 if (dateRespTime >= intTimeout){  //timeout status must be explicitly set
                     response.status = 408;
                 }
