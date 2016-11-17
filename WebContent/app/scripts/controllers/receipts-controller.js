@@ -362,10 +362,6 @@ angular.module('KaplenWeb.movementsModule',[])
 		}
 	}
 
-	function TrimReleasesDescription(strDescription) {
-		return strDescription.replace(" ", "_");
-	}
-
 	function GetSummaries() {
 		var objFilter = {
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
