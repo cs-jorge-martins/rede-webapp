@@ -365,7 +365,7 @@ angular.module('KaplenWeb.dashboardController',[])
 		}
 
 		$scope.weeks = arrWeeks;
-		$scope.calendarMonth = calendarFactory.getNameOfMonth(objDate);
+		$scope.calendarMonth = calendarFactory.getNameOfMonth(objdate);
 
 		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
