@@ -9,10 +9,12 @@ describe('Conciliador', function() {
     beforeEach(module('KaplenWeb'));
 
     describe('RelatorioVendasController', function() {
-        var scope, controller, service;
+        var xScope = null;
+        var xController = null;
+        var xService = null;
 
         beforeEach(module(function($provide) {
-            service = {
+            xService = {
                 exportTransactions: function () {
                    return true;
                 }
@@ -22,8 +24,8 @@ describe('Conciliador', function() {
         }));
 
         beforeEach(inject(function ($rootScope, $controller) {
-            scope = $rootScope.$new();
-            controller = $controller;
+            xScope = $rootScope.$new();
+            xController = $controller;
         }));
 
         it('calls TransactionService with filter params', function() {
@@ -32,12 +34,12 @@ describe('Conciliador', function() {
                 $scope: scope,
                 TransactionService: service
             });
-            scope.analytical.initialDate = '01/03/2016';
-            scope.analytical.finalDate = '30/10/2016';
-            scope.settlementsSelected = [{id: 1}, {id: 2}, {id: 3}];
-            scope.productsSelected = [{id: 4}, {id: 5}, {id: 6}];
+            xScope.analytical.initialDate = '01/03/2016';
+            xScope.analytical.finalDate = '30/10/2016';
+            xScope.settlementsSelected = [{id: 1}, {id: 2}, {id: 3}];
+            xScope.productsSelected = [{id: 4}, {id: 5}, {id: 6}];
 
-            scope.exportAnalytical();
+            xScope.exportAnalytical();
 
             expect(service.exportTransactions).toHaveBeenCalledWith({
                 startDate: '20160301',
