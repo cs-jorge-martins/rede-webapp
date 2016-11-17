@@ -53,7 +53,7 @@
 							<tr>
 								<td>{{ item.fileName }}</td>
 								<td>{{ item.size / 1024 | number: 2 }} MB</td>
-								<td>{{ item.createDate | date: "dd/MM/yyyy 'às' HH:mm" }}</td>
+								<td>{{ item.createDate | brst | date: "dd/MM/yyyy 'às' HH:mm" }}</td>
 								<td>{{ item.message }}</td>
 							</tr>
 						</tbody>
