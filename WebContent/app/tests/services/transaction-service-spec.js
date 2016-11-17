@@ -9,43 +9,51 @@ describe('Conciliador', function() {
     beforeEach(module('KaplenWeb'));
 
     describe('TransactionService', function() {
-        var scope, service, httpBackend;
+        var xScope = null; 
+        var xService = null;
+        var xHttpBackend = null;
 
         beforeEach(inject(function ($rootScope, $httpBackend, TransactionService) {
-            scope = $rootScope.$new();
-            httpBackend = $httpBackend;
-            service = TransactionService;
+            xScope = $rootScope.$new();
+            xHttpBackend = $httpBackend;
+            xService = TransactionService;
         }));
 
         it('check if success callback is called when the service gets a 200 response from backend', function(){
-            fakeSuccessCallback = jasmine.createSpy();
-            fakeErrorCallback = jasmine.createSpy();
+            var xFakeSuccessCallback = null;
+            var xFakeErrorCallback = null;
+            
+            xFakeSuccessCallback = jasmine.createSpy();
+            xFakeErrorCallback = jasmine.createSpy();
 
-            httpBackend
+            xHttpBackend
             .expect('POST', /http(s)?:\/\/.*\/transactions\/export\?.*/)
             .respond(200, { data: 'http://s3-bucket/path/xls' });
 
-            service.exportTransactions(jasmine.any(Object), fakeSuccessCallback, fakeErrorCallback);
-            httpBackend.flush();
+            xService.exportTransactions(jasmine.any(Object), xFakeSuccessCallback, xFakeErrorCallback);
+            xHttpBackend.flush();
 
-            expect(fakeSuccessCallback).toHaveBeenCalled();
-            expect(fakeErrorCallback.calls.any()).toBe(false);
+            expect(xFakeSuccessCallback).toHaveBeenCalled();
+            expect(xFakeErrorCallback.calls.any()).toBe(false);
 
         });
 
         it('check if error callback is called when the service gets a 400 response from backend', function(){
-            fakeSuccessCallback = jasmine.createSpy();
-            fakeErrorCallback = jasmine.createSpy();
+            var xFakeSuccessCallback = null;
+            var xFakeErrorCallback = null;
+            
+            xFakeSuccessCallback = jasmine.createSpy();
+            xFakeErrorCallback = jasmine.createSpy();
 
-            httpBackend
+            xHttpBackend
             .expect('POST', /http(s)?:\/\/.*\/transactions\/export\?.*/)
             .respond(400);
 
-            service.exportTransactions(jasmine.any(Object), fakeSuccessCallback, fakeErrorCallback);
-            httpBackend.flush();
+            xService.exportTransactions(jasmine.any(Object), xFakeSuccessCallback, xFakeErrorCallback);
+            xHttpBackend.flush();
 
-            expect(fakeSuccessCallback.calls.any()).toBe(false);
-            expect(fakeErrorCallback).toHaveBeenCalled();
+            expect(xFakeSuccessCallback.calls.any()).toBe(false);
+            expect(xFakeErrorCallback).toHaveBeenCalled();
 
         });
     });
