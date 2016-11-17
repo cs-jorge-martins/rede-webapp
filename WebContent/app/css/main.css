@@ -8841,7 +8841,7 @@ footer nav.fixed {
     box-shadow: 0 0 0 0;
 }
 /* diners */
-#detailsHeader .brand_2{
+#detailsHeader .brand_2 {
 	width: 156px;
 	background-position: -171px 0;
 }
@@ -8850,7 +8850,7 @@ footer nav.fixed {
 	width: 137px;
 	background-position: -793px 0;
 }
-#detailsHeader .brand_5{
+#detailsHeader .brand_5 {
     width: 96px;
     background-position: -330px 0;
 }
@@ -8869,6 +8869,36 @@ footer nav.fixed {
 	width: 44px !important;
 	background-position: -125px 0 !important;
 }
+
+/* credsystem */
+#detailsHeader .brand_28 {
+    width:70px;
+    background-position: -430px 0!important;
+}
+/* sorocred */
+#detailsHeader .brand_19 {
+    width:50px;
+    background-position: -662px 0;
+}
+
+/* credz */
+#detailsHeader .brand_108 {
+    width:125px;
+    background-position: -942px 0;
+}
+
+/* upi */
+#detailsHeader .brand_97 {
+    width: 70px;
+    background-position: -1140px 0;
+}
+
+/* jcb */
+#detailsHeader .brand_106 {
+    width:70px;
+    background-position: -1070px 0;
+}
+
 #detailsHeader .brand_9{
 	width: 70px;
 	background-position: -503px 0;
@@ -10201,17 +10231,19 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     padding: 70px 30px 10px;
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue {
-    margin-right: 135px;
+    position: absolute;
+    right: 135px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .cardProduct {
     display: flex;
     align-items:center;
+    font-weight: bolder;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue .value {
@@ -10227,6 +10259,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
     font-size: 18px;
     font-weight: bolder;
+    margin-right: 129px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .cardProduct span {
