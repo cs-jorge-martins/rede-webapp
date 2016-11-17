@@ -9,8 +9,9 @@ angular.module('Conciliador.slugfyFilter',[])
 .filter('slugify', ['$filter', function($filter){
     return function (strToSlug) {
 
-        if (!strToSlug)
+        if (!strToSlug) {
             return;
+        }
 
         var strFrom = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
         var strTo   = "aaaaaeeeeeiiiiooooouuuunc------";
