@@ -85,8 +85,8 @@ angular.module('Conciliador.salesController',[])
 		$scope.changeYear(objNewDate);
 	};
 
-	function ChangeYear(date) {
-		$scope.dateSelected = date;
+	function ChangeYear(objDate) {
+		$scope.dateSelected = objDate;
 		$scope.yearSelected = parseInt(calendarFactory.getYear($scope.dateSelected));
 
 		GetCalendarDays();
@@ -314,8 +314,8 @@ angular.module('Conciliador.salesController',[])
 
 		if(bolCache) {
 			cacheService.SaveFilter({
-				startDate: date,
-				endDate: date,
+				startDate: objDate,
+				endDate: objDate,
 				conciliationStatus: $scope.statusSelected,
 				types: objFilter.types || false,
 				settlementsSelected: $scope.settlementsSelected,
@@ -382,7 +382,7 @@ angular.module('Conciliador.salesController',[])
 							}
 						}
 
-						var date = $scope.dateSelected;
+						var objDate = $scope.dateSelected;
 						var arrShopIds = [];
 						var arrCardProductIds = [];
 						var arrAcquirers = [];
@@ -419,8 +419,8 @@ angular.module('Conciliador.salesController',[])
 
 						objFilter = {
 							currency: $rootScope.currency,
-							startDate: calendarFactory.formatDateForService(date),
-							endDate: calendarFactory.formatDateForService(date),
+							startDate: calendarFactory.formatDateForService(objDate),
+							endDate: calendarFactory.formatDateForService(objDate),
 							types: $scope.natureza,
 							shopIds: arrShopIds,
 							cardProductIds: arrCardProductIds,
