@@ -137,7 +137,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 	    }
 
 	    function TranslateStatus(strStatus, objDate) {
-			if(strStatus && objDate) {
+			if(strStatus) {
 				strStatus = strStatus.toLowerCase();
 				switch (strStatus) {
 					case "expected":
