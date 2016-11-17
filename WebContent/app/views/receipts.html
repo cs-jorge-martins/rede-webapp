@@ -137,7 +137,7 @@
                                             <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought_details')">detalhes</a>
                                         </th>
                                     </tr>
-                                    <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type }}">
+                                    <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type | slugify }}">
                                         <th></th>
                                         <th class="inset-1">{{ release.type }}</th>
                                         <th>
