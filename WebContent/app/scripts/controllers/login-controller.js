@@ -17,6 +17,7 @@ angular.module('KaplenWeb.loginController',[])
 	$scope.validarLogin = ValidarLogin;
 	$scope.modalChangePassword = ModalChangePassword;
 	$scope.clear = Clear;
+	$scope.login = "";
 
 	function ValidarLogin() {
 		$rootScope.alerts = [];
