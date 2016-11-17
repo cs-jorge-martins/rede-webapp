@@ -330,14 +330,14 @@ angular.module('KaplenWeb.dashboardController',[])
 
 	function SetTransactionConciliationCalendar(){
 
-		var objdate = $scope.dateSelected;
+		var objDate = $scope.dateSelected;
 
-		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(objdate);
-		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(objdate);
+		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(objDate);
+		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDate);
 
 		var arrDays = [];
 		var arrWeeks = [];
-		var intTotalDays = calendarFactory.getLastDayOfMonth(objdate, true) - 1;
+		var intTotalDays = calendarFactory.getLastDayOfMonth(objDate, true) - 1;
 		var intFirstWeekDay = calendarFactory.getDayOfWeek(intFirstDayOfMonth);
 
 		for(var intX = 0; intX < intFirstWeekDay; intX++) {
