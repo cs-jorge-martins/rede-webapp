@@ -77,6 +77,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
     $scope.futureReleasesData = [];
+    $rootScope.futureSelected = true;
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
     var intFilterStatus = 0;
@@ -603,6 +604,15 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 
 	function ChangeTab(intIndex) {
+
+		if ($rootScope.futureSelected === true) {
+			console.log($rootScope.futureSelected);
+			intIndex = 1;
+			GetFutureReceipt();
+			delete $rootScope.futureSelected;
+		
+		}
+
 		$scope.tabs[intIndex].active = true;
 
 		if(intFilterStatus === 4) {
