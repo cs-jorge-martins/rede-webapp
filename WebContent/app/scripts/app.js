@@ -352,6 +352,12 @@ app.filter('utc', function(){
   };
 });
 
+app.filter('brst', function(){
+  return function(val){
+    return new Date(val);
+  };
+});
+
 function getDominio(strExtension) {
 	var strUrl = location.href;
 	strUrl = strUrl.split("/#/");
