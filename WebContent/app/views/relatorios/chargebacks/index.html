@@ -65,7 +65,7 @@
                                                     <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
                                                         ng-model="settlement"
                                                         typeahead-on-select="AddSettlementsSearch(settlement)"
-                                                        typeahead="item as item.code for item in GetSettlements()"/>
+                                                        typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
                                                     <ul ng-repeat="item in settlementsSelected">
                                                       <li>
                                                         <h4>{{item.code}}</h4>
