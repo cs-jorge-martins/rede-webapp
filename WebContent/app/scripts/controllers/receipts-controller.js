@@ -77,7 +77,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
     $scope.futureReleasesData = [];
-    $rootScope.futureSelected = true;
+    // $rootScope.futureSelected = true;
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
     var intFilterStatus = 0;
