@@ -8,11 +8,11 @@ angular.module('Conciliador.currencyFilter',[])
 
 .filter('customCurrency', ['$filter', function($filter){
 	return function (intAmount, strCurrencySymbol) {
-		var filterCurrency = $filter('currency');
+		var objFilterCurrency = $filter('currency');
 		if(intAmount < 0) {
-			return filterCurrency(intAmount, strCurrencySymbol).replace("(", "-").replace(")", "");
+			return objFilterCurrency(intAmount, strCurrencySymbol).replace("(", "-").replace(")", "");
 		}
 
-		return filterCurrency(intAmount, strCurrencySymbol);
+		return objFilterCurrency(intAmount, strCurrencySymbol);
 	}
 }])

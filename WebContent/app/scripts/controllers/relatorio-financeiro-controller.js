@@ -190,9 +190,9 @@
 		}
 
 		function ClearFilter() {
-			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
 			$scope.status = ['RECEIVED'];
 			$scope.settlementsSelected = [];
 			$scope.acquirersSelected = [];
