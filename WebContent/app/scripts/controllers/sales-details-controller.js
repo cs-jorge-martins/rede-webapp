@@ -20,12 +20,12 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 	menuFactory.setActiveResumoConciliacao();
 
-	var dateItensAccordion = $rootScope._dateItemAccordionSelected;
+	var objItensAccordion = $rootScope._dateItemAccordionSelected;
 
 	$scope.statusItemAccordionSelected = $rootScope._statusItemAccordionSelected ;
-	$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation(dateItensAccordion);
-	$scope.dayOfActualDate = calendarFactory.getDayOfMonth(dateItensAccordion);
-	$scope.date = calendarFactory.formatDate(dateItensAccordion);
+	$scope.monthNameAbreviation = calendarFactory.getMonthNameAbreviation(objItensAccordion);
+	$scope.dayOfActualDate = calendarFactory.getDayOfMonth(objItensAccordion);
+	$scope.date = calendarFactory.formatDate(objItensAccordion);
 	$scope.items = [];
 	$scope.total = 0;
 	$scope.concilieItems = [];
@@ -88,7 +88,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 		if(arrToConcilie.length) {
 
-			var	modalInstance = $modal.open ({
+			var	objModalInstance = $modal.open ({
 				templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
 				scope: $scope,
 				controller: function($scope, $modalInstance){
@@ -318,12 +318,12 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	};
 
 	function ComprovanteVenda(item) {
-		var modalInstance = $modal.open({
+		var objModalInstance = $modal.open({
 			templateUrl: 'app/views/resumo-conciliacao/comprovante-venda.html',
 			controller: ModalComprovanteVendas,
 			size:'sm',
 			resolve: {
-				item: function(){
+			item: function() {
 					return item;
 				}
 			}

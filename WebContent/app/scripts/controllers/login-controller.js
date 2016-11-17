@@ -40,7 +40,7 @@ angular.module('KaplenWeb.loginController',[])
 	};
 
 	function ModalChangePassword(objUser, bolIsManyCompanies) {
-		var modalInstance = $modal.open({
+		var objModalInstance = $modal.open({
 			templateUrl: 'modalTrocarSenha.html',
 			controller: ModalTrocarSenha,
 			size:'sm',
@@ -53,7 +53,8 @@ angular.module('KaplenWeb.loginController',[])
 		        }
 		      }
 		});
-		modalInstance.result.then(function(bolValidate) {
+
+		objModalInstance.result.then(function(bolValidate) {
 			if(bolValidate){
 				$rootScope.logout();
 				$scope.usuario = new Object();

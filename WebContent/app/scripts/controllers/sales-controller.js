@@ -76,13 +76,13 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	function NextYear() {
-		var dateNewDate = calendarFactory.formatDate(calendarFactory.addYearsToDate($scope.dateSelected, 1));
-		$scope.changeYear(dateNewDate);
+		var objNewDate = calendarFactory.formatDate(calendarFactory.addYearsToDate($scope.dateSelected, 1));
+		$scope.changeYear(objNewDate);
 	};
 
 	function PrevYear() {
-		var dateNewDate = calendarFactory.formatDate(calendarFactory.addYearsToDate($scope.dateSelected, -1));
-		$scope.changeYear(dateNewDate);
+		var objNewDate = calendarFactory.formatDate(calendarFactory.addYearsToDate($scope.dateSelected, -1));
+		$scope.changeYear(objNewDate);
 	};
 
 	function ChangeYear(date) {
@@ -170,9 +170,9 @@ angular.module('Conciliador.salesController',[])
 
 
 	function GetCalendarDays() {
-		var date = $scope.dateSelected;
-		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(date);
-		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(date);
+		var objDate = $scope.dateSelected;
+		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(objDate);
+		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDate);
 		var intLastDay = calendarFactory.getDayOfMonth(intLastDayOfMonth) - 1;
 
 		$scope.totalToReconcileForDay = 0;
@@ -271,9 +271,9 @@ angular.module('Conciliador.salesController',[])
 
 	function GetFinancials(bolCache, strOrder) {
 
-		var date = $scope.dateSelected;
-		var dateStartDate = calendarFactory.formatDateForService(date);
-		var dateEndDate = calendarFactory.formatDateForService(date);
+		var objDate = $scope.dateSelected;
+		var objStartDate = calendarFactory.formatDateForService(objDate);
+		var objEndDate = calendarFactory.formatDateForService(objDate);
 		var intTypes = $scope.natureza;
 		var arrShopIds = [];
 		var arrCardProductIds = [];
@@ -296,8 +296,8 @@ angular.module('Conciliador.salesController',[])
 
 		objFilter = {
 			currency: 'BRL',
-			startDate: dateStartDate,
-			endDate: dateEndDate,
+			startDate: objStartDate,
+			endDate: objEndDate,
 			shopIds: arrShopIds.join(','),
 			cardProductIds: arrCardProductIds.join(','),
 			conciliationStatus: $scope.conciliationStatus[$scope.statusSelected],
@@ -348,12 +348,12 @@ angular.module('Conciliador.salesController',[])
 	}
 
 	function ShowDetails(intAcquirer, intCardProduct) {
-		var dateSelected = $scope.dateSelected;
+		var objSelected = $scope.dateSelected;
 
         $rootScope.salesDetails = {};
 		$rootScope.salesDetails.currency = "BRL";
-		$rootScope.salesDetails.startDate = dateSelected;
-		$rootScope.salesDetails.endDate = dateSelected;
+		$rootScope.salesDetails.startDate = objSelected;
+		$rootScope.salesDetails.endDate = objSelected;
 		$rootScope.salesDetails.shopIds = $scope.settlementsSelected;
 		$rootScope.salesDetails.cardProductIds = $scope.productsSelected;
 		$rootScope.salesDetails.natureza = $scope.natureza;
