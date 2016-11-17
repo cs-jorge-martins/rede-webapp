@@ -10099,6 +10099,9 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
     line-height: normal;
     margin-top: 20px;
 }
+section#receiptsDetails.receiptsExpectedDetails.future-details .data-cards .header-datas .date .number {
+    line-height: 38px;
+}
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
     font-size: 66px;
     line-height: 66px;
