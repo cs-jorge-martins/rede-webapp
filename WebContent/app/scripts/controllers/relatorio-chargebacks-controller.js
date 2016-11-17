@@ -156,9 +156,9 @@
 		};
 
 		function ClearFilter() {
-			var initialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(initialDate.month(), initialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(initialDate.month(), initialDate.year());
+			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
 			$scope.settlementsSelected = [];
 			$scope.adjustType = ['CANCELLATION'];
 			document.getElementById("buscaTerminal").value = '';

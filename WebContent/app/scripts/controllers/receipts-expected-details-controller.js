@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
@@ -75,7 +75,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 	    function GetExpectedAcquirers() {
 
-			var expectedAcquirersFilter = {
+			var objExpectedAcquirersFilter = {
 				groupBy: "ACQUIRER",
 				bankAccountIds: $scope.bankAccount.id,
 				status: $scope.filterStatus,
@@ -83,16 +83,16 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				endDate: $scope.date
 			};
 
-			MovementSummaryService.ListMovementSummaryByFilter(expectedAcquirersFilter).then(function (objResponse) {
+			MovementSummaryService.ListMovementSummaryByFilter(objExpectedAcquirersFilter).then(function (objResponse) {
 
-				var obj;
+				var objData;
 				var arrContent = objResponse.data.content;
-				for (var i=0; i < arrContent.length; i++) {
-					obj = {
-						id: arrContent[i].acquirer.id,
-						title: arrContent[i].acquirer.name
+				for (var intIndex = 0; intIndex < arrContent.length; intIndex++) {
+					objData = {
+						id: arrContent[intIndex].acquirer.id,
+						title: arrContent[intIndex].acquirer.name
 					};
-					$scope.tabs.push(obj);
+					$scope.tabs.push(objData);
 				}
 
 			}).catch(function (objResponse) {
@@ -117,10 +117,10 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			objFilter.acquirer = intAcquirerId;
 
 			FinancialService.GetExpectedDetails(objFilter).then(function(objResponse) {
-				var dateData = objResponse.data.content;
+				var objData = objResponse.data.content;
 				var objPagination = objResponse.data.page;
 
-				$scope.detailsData = dateData;
+				$scope.detailsData = objData;
 				$scope.adjustsTotalItens = objPagination.totalElements;
 
 			}).catch(function(objResponse) {
@@ -130,14 +130,14 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 	    }
 
-	    function changeTab(index, intAcquirerId) {
-	    	$scope.tabs[index].active = true;
+	    function changeTab(intIndex, intAcquirerId) {
+	    	$scope.tabs[intIndex].active = true;
 			$scope.sort = "";
 			GetExpectedDetails(intAcquirerId);
 	    }
 
-	    function TranslateStatus(strStatus, date) {
-			if(strStatus && date) {
+	    function TranslateStatus(strStatus, objDate) {
+			if(strStatus && objDate) {
 				strStatus = strStatus.toLowerCase();
 				switch (strStatus) {
 					case "expected":
@@ -157,7 +157,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 						strStatus = "penhorado/bloqueado";
 						break;
 					case "forethought":
-						strStatus = "antecipado em: " + calendarFactory.getDaySlashMonth(date);
+						strStatus = "antecipado em: " + calendarFactory.getDaySlashMonth(objDate);
 						break;
 					default:
                         console.log("error");

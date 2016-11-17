@@ -29,9 +29,9 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.sort = 'date,ASC';
 		$scope.exportReport = ExportReport;
 
-		var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
-		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+		var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
 		$scope.pageChanged = PageChanged;
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
@@ -92,9 +92,9 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		}
 
 		function ClearFilter() {
-			var dateInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(dateInitialDate.month(), dateInitialDate.year());
+			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
 		}
 
 		function Search() {
