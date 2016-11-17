@@ -10201,17 +10201,19 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     padding: 70px 30px 10px;
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue {
-    margin-right: 135px;
+    position: absolute;
+    right: 135px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .cardProduct {
     display: flex;
     align-items:center;
+    font-weight: bolder;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue .value {
@@ -10227,6 +10229,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
     font-size: 18px;
     font-weight: bolder;
+    margin-right: 129px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .cardProduct span {
