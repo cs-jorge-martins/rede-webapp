@@ -42,8 +42,8 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				$scope.total = $rootScope.receiptsDetails.total;
 				$scope.status = $rootScope.receiptsDetails.status;
 
-				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
-				$scope.shopsLabel = $rootScope.receiptsDetails.shopsLabel;
+				$scope.accountsLabel = $rootScope.receiptsDetails.futureAccountsLabel;
+				$scope.shopsLabel = $rootScope.receiptsDetails.futureShopsLabel;
 				$scope.shopsFullLabel = $rootScope.receiptsDetails.shopsFullLabel;
 				$scope.cardProductsLabel = $rootScope.receiptsDetails.cardProductsLabel;
 				$scope.cardProductsFullLabel = $rootScope.receiptsDetails.cardProductsFullLabel;

@@ -889,6 +889,8 @@ angular.module('KaplenWeb.movementsModule',[])
 		$rootScope.receiptsDetails.shopsLabel = $scope.shopsLabel;
 		$rootScope.receiptsDetails.shopsFullLabel = $scope.shopsFullLabel;
 		$rootScope.receiptsDetails.accountsLabel = $scope.accountsLabel;
+		$rootScope.receiptsDetails.futureAccountsLabel = $scope.accountsFutureLabel;
+		$rootScope.receiptsDetails.futureShopsLabel = $scope.shopsFutureLabel;
 		$rootScope.receiptsDetails.cardProductsLabel = $scope.cardProductsLabel;
 		$rootScope.receiptsDetails.cardProductsFullLabel = $scope.cardProductsFullLabel;
 		$rootScope.receiptsDetails.total = intTotal;
