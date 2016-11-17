@@ -110,6 +110,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
 	    function Back(){
 	        $location.path('/receipts');
+	        $rootScope.futureSelected = true;
 	    }
 
 	    function GetFutureDetails() {
@@ -136,6 +137,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				$scope.totalItens = objPagination.totalElements;
 
 			}).catch(function (objResponse) {
+			
 			});
 
 	    }
