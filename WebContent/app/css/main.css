@@ -10716,9 +10716,9 @@ tr.card-product-line {
     visibility: hidden;
 }
 
-/* credsystem - nao tem img ainda */
+/* credsystem  */
 .data-cards table tbody .brand_28, #receiptsDetails .brand_28 {
-    visibility: hidden;
+    background-position: -675px 0;
 }
 
 /* banescard débito */
