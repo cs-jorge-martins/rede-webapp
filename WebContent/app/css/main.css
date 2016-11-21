@@ -9919,7 +9919,7 @@ div.checkbox-toggle-right {
     height: auto;
     box-sizing: border-box;
     padding: 0;
-    box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.1);
+    box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
 }
 .data-cards .header-datas {
     width:100%;
