@@ -42,16 +42,33 @@
 	</ul>
 	
 	<div class="mainContent" id="details">
-		<table class="table sortTable">
+		<table class="table sortTable gray-header">
 			<thead>
 				<tr>
-					<th ng-click="sortResults($event, 'expectedDate')">data prevista do recebimento</th>
-					<th ng-click="sortResults($event, 'roDate')">data do lote(RV)</th>
+					<th ng-click="sortResults($event, 'expectedDate')">
+						data prevista <br>
+						do recebimento
+					</th>
+					<th ng-click="sortResults($event, 'roDate')">
+						data do lote(RV)
+					</th>
 					<th ng-click="sortResults($event, 'roNumber')">nº do lote (RV)</th>
-					<th ng-click="sortResults($event, 'transactionQuantity')">qtd vendas lote (RV)</th>
-					<th ng-click="sortResults($event, 'gross')">valor total do lote (RV)</th>
-					<th ng-click="sortResults($event, 'expectedAmount')">valor líquido do lote (RV)</th>
-					<th ng-click="sortResults($event, 'sourcePvCode')">nº do estabelecimento (PV)</th>
+					<th ng-click="sortResults($event, 'transactionQuantity')">
+						qtd vendas <br>
+						lote (RV)
+					</th>
+					<th ng-click="sortResults($event, 'gross')">
+						valor total <br>
+						do lote (RV)
+					</th>
+					<th ng-click="sortResults($event, 'expectedAmount')">
+						valor líquido <br>
+						do lote (RV)
+					</th>
+					<th ng-click="sortResults($event, 'sourcePvCode')">
+						nº do estabelecimento <br>
+						(PV)
+					</th>
 				</tr>
 			</thead>
 			<tbody>

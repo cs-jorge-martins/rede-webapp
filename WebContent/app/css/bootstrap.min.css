@@ -996,6 +996,12 @@ td[id^="datepicker"], .row {
 .table td,  .table th {
 	background-color: #fff !important;
 }
+.table.gray-header th {
+	background-color: #f0f0f0 !important;
+	color: #575758;
+	font-weight: normal;
+	border: 0;
+}
 .btn > .caret,  .dropup > .btn > .caret {
 	border-top-color: #000 !important;
 }

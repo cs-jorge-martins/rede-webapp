@@ -8932,7 +8932,7 @@ footer nav.fixed {
 }
 #details thead th {
 	color: #333;
-	padding: 10px 0 !important;
+	padding: 20px 8px !important;
 	// text-indent: 10px;
 }
 
@@ -9036,7 +9036,7 @@ footer nav.fixed {
 	margin: 20px 0 10px 0;
 }
 .receiptsExpectedDetails #details .optionsWrapper {
-    margin: 35px 0 10px 20px;
+    margin: 35px 0 10px 30px;
 }
 #details .optionsWrapper .selectWrapper,
 #details .optionsWrapper .archives,
@@ -10285,8 +10285,30 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     background: white;
 }
 
+#receiptsDetails.future-details .mainContent {
+    padding: 0;
+}
+
+.future-details .table th {
+    vertical-align: baseline;
+}
+
+.future-details .table th:after {
+    position: absolute;
+    left: 66%;
+    top: 23px;
+}
+
 #receiptsDetails .mainContent .table tr > td {
     text-indent: 10px;
+}
+
+#receiptsDetails.future-details .mainContent .table tr > td {
+    text-indent: 0;
+}
+#receiptsDetails.future-details .mainContent .table tr > th:first-child,
+#receiptsDetails.future-details .mainContent .table tr > td:first-child {
+    padding-left: 30px !important;
 }
 
 #receiptsDetails .mainContent .no-indent tr > td {
@@ -10386,7 +10408,11 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     position: relative;
     padding: 20px 10px;
     border-bottom: 1px solid #ccc;
+}
+
+#receiptsDetails .table th {
     cursor: pointer;
+    text-indent: 0;
 }
 
 #receiptsDetails .table th span.orderby,
