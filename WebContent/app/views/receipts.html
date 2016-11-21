@@ -141,7 +141,7 @@
                                         <th></th>
                                         <th class="inset-1">{{ release.type }}</th>
                                         <th>
-                                            <ng-show ng-show="{{ release.type === 'cancelamentos' || release.type === 'ajustes'}}"> - </ng-show>
+                                            <ng-show ng-show="{{ release.type === 'cancelamentos' || release.type === 'ajustes' || release.type === 'custo de antecipação'}}"> - </ng-show>
                                             {{ release.payedAmount | number: 02}} </th>
                                         <th></th>
                                     </tr>
@@ -216,13 +216,13 @@
                                         <label>
                                             {{ shopsFutureLabel }}
                                         </label>
-                                        <div class="clear-filter" ng-click="clearShopFilter(true)">x</div>
+                                        <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter(true)"></div>
                                     </div>
                                     <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                         <label>
                                             {{ cardProductsFutureLabel }}
                                         </label>
-                                        <div class="clear-filter" ng-click="clearCardProductsFilter(true)">x</div>
+                                        <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter(true)"></div>
                                     </div>
                                 </div>
                             </div>
