@@ -119,19 +119,6 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 							$scope.confirm = false;
 							$scope.success = true;
 						});
-
-						// $modalInstance.dismiss("cancel");
-						// $modal.open({
-						// 	templateUrl: "app/views/resumo-conciliacao/success-conciliacao.html",
-						// 	scope: $scope,
-						// 	size: 'sm',
-						// 	controller: function($scope, $modalInstance){
-						// 		$scope.cancel = Cancel;
-						// 		function Cancel() {
-						// 			$modalInstance.dismiss("cancel");
-						// 		}
-						// 	}
-						// })
 					};
 
 					function Cancel() {
