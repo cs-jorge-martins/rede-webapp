@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 @charset "utf-8";
 /******************************************
 Sistema desenvolvido por
@@ -7518,39 +7518,6 @@ td.editSettlementList {
 .relatorio .analiticos tr:hover td {
 	background: #dadada;
 }
-/** loader */
-@ -webkit-keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 0 0
-}
-{
-}
-@ -moz-keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 0 0
-}
-{
-}
-@ -o-keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 40px 0
-}
-{
-}
-@ keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 0 0
-}
-{
-}
 .progress {
 	height: 20px;
 	margin-bottom: 20px;
@@ -10673,7 +10640,7 @@ tr.card-product-line {
 }
 
 /* diners */
-.data-cards table tbody .brand_2, 
+.data-cards table tbody .brand_2,
 #receiptsDetails .brand_2 {
     background-position: -245px;
 }

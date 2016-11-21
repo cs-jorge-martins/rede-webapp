@@ -6,36 +6,36 @@
 
 @font-face {
     font-family: 'open_sansitalic';
-    src: url('../../fonts/opensans-italic-webfont.eot');
-    src: url('../../fonts/opensans-italic-webfont.eot?#iefix')  format('embedded-opentype'),  url('../../fonts/opensans-italic-webfont.woff') format('woff'),  url('../../fonts/opensans-italic-webfont.ttf') format('truetype'),  url('../../fonts/opensans-italic-webfont.svg#open_sansitalic')  format('svg');
+    src: url('../fonts/opensans-italic-webfont.eot');
+    src: url('../fonts/opensans-italic-webfont.eot?#iefix')  format('embedded-opentype'),  url('../fonts/opensans-italic-webfont.woff') format('woff'),  url('../fonts/opensans-italic-webfont.ttf') format('truetype'),  url('../fonts/opensans-italic-webfont.svg#open_sansitalic')  format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'open_sansregular';
-    src: url('../../fonts/opensans-regular-webfont.eot');
-    src: url('../../fonts/opensans-regular-webfont.eot?#iefix')  format('embedded-opentype'),  url('../../fonts/opensans-regular-webfont.woff') format('woff'),  url('../../fonts/opensans-regular-webfont.ttf') format('truetype'),  url('../../fonts/opensans-regular-webfont.svg#open_sansregular')  format('svg');
+    src: url('../fonts/opensans-regular-webfont.eot');
+    src: url('../fonts/opensans-regular-webfont.eot?#iefix')  format('embedded-opentype'),  url('../fonts/opensans-regular-webfont.woff') format('woff'),  url('../fonts/opensans-regular-webfont.ttf') format('truetype'),  url('../fonts/opensans-regular-webfont.svg#open_sansregular')  format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'open_sansbold';
-    src: url('../../fonts/opensans-bold-webfont.eot');
-    src: url('../../fonts/opensans-bold-webfont.eot?#iefix')  format('embedded-opentype'),  url('../../fonts/opensans-bold-webfont.woff') format('woff'),  url('../../fonts/opensans-bold-webfont.ttf') format('truetype'),  url('../../fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
+    src: url('../fonts/opensans-bold-webfont.eot');
+    src: url('../fonts/opensans-bold-webfont.eot?#iefix')  format('embedded-opentype'),  url('../fonts/opensans-bold-webfont.woff') format('woff'),  url('../fonts/opensans-bold-webfont.ttf') format('truetype'),  url('../fonts/opensans-bold-webfont.svg#open_sansbold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'open_sanssemibold';
-    src: url('../../fonts/opensans-semibold-webfont.eot');
-    src: url('../../fonts/opensans-semibold-webfont.eot?#iefix')  format('embedded-opentype'),  url('../../fonts/opensans-semibold-webfont.woff') format('woff'),  url('../../fonts/opensans-semibold-webfont.ttf') format('truetype'),  url('../../fonts/opensans-semibold-webfont.svg#open_sanssemibold')  format('svg');
+    src: url('../fonts/opensans-semibold-webfont.eot');
+    src: url('../fonts/opensans-semibold-webfont.eot?#iefix')  format('embedded-opentype'),  url('../fonts/opensans-semibold-webfont.woff') format('woff'),  url('../fonts/opensans-semibold-webfont.ttf') format('truetype'),  url('../fonts/opensans-semibold-webfont.svg#open_sanssemibold')  format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'open_sanslight';
-    src: url('../../fonts/opensans-light-webfont.eot');
-    src: url('../../fonts/opensans-light-webfont.eot?#iefix')  format('embedded-opentype'),  url('../../fonts/opensans-light-webfont.woff') format('woff'),  url('../../fonts/opensans-light-webfont.ttf') format('truetype'),  url('../../fonts/opensans-light-webfont.svg#open_sanslight')  format('svg');
+    src: url('../fonts/opensans-light-webfont.eot');
+    src: url('../fonts/opensans-light-webfont.eot?#iefix')  format('embedded-opentype'),  url('../fonts/opensans-light-webfont.woff') format('woff'),  url('../fonts/opensans-light-webfont.ttf') format('truetype'),  url('../fonts/opensans-light-webfont.svg#open_sanslight')  format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -95,28 +95,9 @@ h2, ul, li, legend {
 	padding:0;
 }
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-/*
-@font-face {
-	font-family: 'open_sansregular';
-	src: url('../../fonts/opensans-regular-webfont.eot');
-	src: url('../../fonts/opensans-regular-webfont.eot?#iefix')
-		format('embedded-opentype'),
-		url('../../fonts/opensans-regular-webfont.woff') format('woff'),
-		url('../../fonts/opensans-regular-webfont.ttf') format('truetype'),
-		url('../../fonts/opensans-regular-webfont.svg#open_sansregular')
-		format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-*/
-
 #login {
     color: #514f4f;
 	font-size: 13px;
-/*	font-family: 'open_sansregular' !important;*/
 	line-height: 1.4;
 }
 #login h1, #login form, #login form#redefinirSenha button, #login form#redefinirSenha span, #login footer {
@@ -564,7 +545,7 @@ body.newHeaderAndFooter footer .link-footer:before {
     float: left;
     width: 10px;
     height: 16px;
-    background: url(../rede_backup/sprites.png) no-repeat left -34px;
+    background: url(../img/sprites.png) no-repeat left -34px;
     margin-top: 2px;
     margin-right: 15px;
 }
@@ -593,7 +574,7 @@ body.newHeaderAndFooter #subtopic-collapse-aplicativo-rede .btn-app-download {
     float: left;
     width: 112px;
     height: 48px;
-    background: url(../rede_backup/icons-app.jpg) no-repeat;
+    background: url(../img/icons-app.jpg) no-repeat;
 }
 
 body.newHeaderAndFooter #subtopic-collapse-aplicativo-rede .btn-app-download.app-apple{
@@ -641,7 +622,7 @@ body.newHeaderAndFooter footer .social-icons a {
 body.newHeaderAndFooter footer .social-icons>.icon {
     width: 32px;
     height: 32px;
-    background: url(../rede_backup/social-icons.png) no-repeat;
+    background: url(../img/social-icons.png) no-repeat;
     margin-right: 16px;
 }
 body.newHeaderAndFooter footer .social-icons>.icon:hover {
@@ -734,7 +715,7 @@ body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a:after {
     margin-left: 15px;
     margin-top: 7px;
     height: 6px;
-    background: url(../rede_backup/sprites.png) no-repeat;
+    background: url(../img/sprites.png) no-repeat;
 }
 
 body.newHeaderAndFooter .navbar-default .navbar-nav > .open > a:after {
@@ -878,7 +859,7 @@ body.newHeaderAndFooter .dropdown-menu .col-links > ul > li > a > div {
     float: left;
     width: 5px;
     height: 8px;
-    background: url(../rede_backup/sprites.png) no-repeat -9px -64px;
+    background: url(../img/sprites.png) no-repeat -9px -64px;
     margin-right: 5px;
     margin-top: 6px;
 }
