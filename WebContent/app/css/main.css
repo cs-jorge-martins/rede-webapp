@@ -9919,7 +9919,7 @@ div.checkbox-toggle-right {
     height: auto;
     box-sizing: border-box;
     padding: 0;
-    box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
+    box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.1);
 }
 .data-cards .header-datas {
     width:100%;
@@ -10507,6 +10507,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetailsPage .data-cards {
     margin-top: 128px;
+    box-shadow: none;
 }
 #receiptsDetailsPage #primaryContent {
     margin-top: 0;
