@@ -81,6 +81,8 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	}
 
 	function Concilie() {
+		$scope.confirm = true;
+		$scope.success = false;
 		var arrToConcilie = [];
 		for(var intItem in $scope.concilieItems) {
 			arrToConcilie.push($scope.concilieItems[intItem].id);
@@ -114,20 +116,9 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 								}
 							}
 							Init();
+							$scope.confirm = false;
+							$scope.success = true;
 						});
-
-						$modalInstance.dismiss("cancel");
-						$modal.open({
-							templateUrl: "app/views/resumo-conciliacao/success-conciliacao.html",
-							scope: $scope,
-							size: 'sm',
-							controller: function($scope, $modalInstance){
-								$scope.cancel = Cancel;
-								function Cancel() {
-									$modalInstance.dismiss("cancel");
-								}
-							}
-						})
 					};
 
 					function Cancel() {

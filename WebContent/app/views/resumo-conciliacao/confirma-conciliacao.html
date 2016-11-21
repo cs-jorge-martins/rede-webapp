@@ -1,13 +1,24 @@
 <div class="modal-header header-confirm-conciliacao">
 	<div class="close" ng-click="cancel()">x</div>
 </div>
-<div class="modal-body modal-confirm-conciliacao">
-	<p>
-		Você deseja conciliar <strong> {{concilieItems.length}} </strong> venda<span ng-if="concilieItems.length > 1">s</span> selecionada<span ng-if="concilieItems.length > 1">s</span>
-		?	
-	</p>
+<div ng-show="confirm">
+	<div class="modal-body modal-confirm-conciliacao">
+		<p>
+			Você deseja conciliar <strong> {{concilieItems.length}} </strong> venda<span ng-if="concilieItems.length > 1">s</span> selecionada<span ng-if="concilieItems.length > 1">s</span>
+			?	
+		</p>
+	</div>
+
+	<div class="modal-footer footer-confirm-conciliacao">
+		<button class="btn btn-cancel" ng-click="cancel()">Cancelar</button>
+		<button class="btn" ng-click="ok()">Conciliar vendas</button>
+	</div>
+		
 </div>
-<div class="modal-footer footer-confirm-conciliacao">
-	<button class="btn btn-cancel" ng-click="cancel()">Cancelar</button>
-	<button class="btn" ng-click="ok()">Conciliar vendas</button>
+
+<div ng-show="success" class="modal-body modal-success">
+	<span class="upload-ico-success itauicon-itaufonts_check"></span>
+	<p>
+		Vendas conciliadas com sucesso!	
+	</p>
 </div>
