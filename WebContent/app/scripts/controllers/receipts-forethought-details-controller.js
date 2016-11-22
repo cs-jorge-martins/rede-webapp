@@ -78,6 +78,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				$scope.pageChangedSales = PageChangedSales;
 				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
 				$scope.pageChangedAdjusts = PageChangedAdjusts;
+				$scope.totalItensPageChanged = TotalItensPageChanged;
 
 				GetForethought();
 			}
@@ -127,4 +128,13 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
 			GetForethought();
 		};
+
+
+
+		function TotalItensPageChanged() {
+			this.currentPage = $scope.totalItensPage = 0;
+			$scope.totalItensPage = this.currentPage;
+			GetForethought();
+		}
+
 	});

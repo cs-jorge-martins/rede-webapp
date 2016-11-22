@@ -7224,7 +7224,7 @@ td.editSettlementList {
 	background-position: 5px -155px !important;
 }
 #primaryContent {
-	margin-bottom: 40px;
+	/*margin-bottom: 40px;*/
 	margin-top: 10px;
 }
 /** filtro avançado */
@@ -8924,6 +8924,13 @@ footer nav.fixed {
 	position: relative;
 }
 
+#details article {
+    margin-top: 0;
+    padding: 0;
+}
+#details.mainContent{
+    background: #fff;
+}
 #details {
 	min-height: 100px;
 }
@@ -10307,7 +10314,9 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     text-indent: 0;
 }
 #receiptsDetails.future-details .mainContent .table tr > th:first-child,
-#receiptsDetails.future-details .mainContent .table tr > td:first-child {
+#receiptsDetails.future-details .mainContent .table tr > td:first-child,
+#receiptsDetails .gray-header.table tr > th:first-child,
+#receiptsDetails .gray-header.table tr > td:first-child{
     padding-left: 30px !important;
 }
 
@@ -10619,6 +10628,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails #primaryContent {
     z-index: 1;
+    background: #fff;
 }
 
 .width50 {
