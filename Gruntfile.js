@@ -113,7 +113,7 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/angular.min.js",
                     "WebContent/app/libs/angular-route.min.js",
                     "WebContent/app/libs/lodash.min.js",
-                    "WebContent/app/libs/angular-locale-pt-br.js",
+                    "WebContent/app/libs/angular-locale_pt-br.js",
                     "WebContent/app/libs/loading-bar.min.js",
                     "WebContent/app/libs/angular-cache.min.js",
                     "WebContent/app/libs/angular-sanitize.min.js",
