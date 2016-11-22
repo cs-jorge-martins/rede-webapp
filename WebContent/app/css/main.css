@@ -10899,6 +10899,7 @@ tr.card-product-line {
 
 .dropdown-multiselect {
     width: 100%;
+	position: relative;
 }
 .dropdown-multiselect .dropdown-toggle {
     width: 100%;
