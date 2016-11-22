@@ -30,4 +30,16 @@ angular.module('KaplenWeb.receiptsService', [])
 			headers: Request.setHeaders()
 		});
 	};
+
+	this.getTimeline = function (objRequest) {
+		var objRequest = objRequest;
+
+		return $http({
+			url: app.endpoint + '/movementsummaries',
+			method: "GET",
+			params: objRequest,
+			headers: Request.setHeaders()
+		});
+	};
+	
 });

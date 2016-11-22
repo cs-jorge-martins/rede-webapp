@@ -168,101 +168,113 @@
                         <!-- LANCAMENTOS ATUAIS: END -->
                 </tab>
                 <tab heading="lançamentos futuros" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
-                		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
-                		<div class="filtersWrapper">
-                            <div class="receipts_future_filters">
-                                <div class="filter firstFilter">
-                                    <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
-                                    </rc-datepicker>
+            		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
+            		<div class="filtersWrapper">
+                        <div class="receipts_future_filters">
+                            <div class="filter firstFilter">
+                                <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
+                                </rc-datepicker>
 
-                                    <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
-                                    </rc-datepicker>
-                                </div>
-                                <div class="filter">
-                                    <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
-                                </div>
-                                <div class="filter">
-                                    <rc-multiselect label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
-                                </div>
-                                <br>
-                                <div class="filter">
-                                    <rc-multiselect label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
-                                </div>
-                                <div class="filter">
-                                    <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
-                                </div>
-                                <div class="filter">
-                                    <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
+                                <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
+                                </rc-datepicker>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
+                            </div>
+                            <br>
+                            <div class="filter">
+                                <rc-multiselect label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
+                            </div>
+                        </div>
+            		</div>
+
+                    <!-- LANCAMENTOS FUTUROS INIT -->
+                    <article class="data-cards">
+                        <div class="header-datas">
+                            <div class="date-wrapper">
+                                <p>Período</p>
+                                <div class="date future">
+                                    {{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} à {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}}
                                 </div>
                             </div>
-                		</div>
-
-                        <!-- LANCAMENTOS FUTUROS INIT -->
-                        <article class="data-cards">
-                            <div class="header-datas">
-                                <div class="date-wrapper">
-                                    <p>Período</p>
-                                    <div class="date future">
-                                        {{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} à {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}}
-                                    </div>
+                            <div class="chip-wrapper">
+                                <div class="chip" ng-show="accountsFutureLabel">
+                                    <label>
+                                        {{ accountsFutureLabel }}
+                                    </label>
                                 </div>
-                                <div class="chip-wrapper">
-                                    <div class="chip" ng-show="accountsFutureLabel">
-                                        <label>
-                                            {{ accountsFutureLabel }}
-                                        </label>
-                                    </div>
-                                    <div class="chip can-close" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
-                                        <label>
-                                            {{ shopsFutureLabel }}
-                                        </label>
-                                        <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter(true)"></div>
-                                    </div>
-                                    <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
-                                        <label>
-                                            {{ cardProductsFutureLabel }}
-                                        </label>
-                                        <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter(true)"></div>
-                                    </div>
+                                <div class="chip can-close" ng-show="shopsFutureLabel" ng-class="shopsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                    <label>
+                                        {{ shopsFutureLabel }}
+                                    </label>
+                                    <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter(true)"></div>
+                                </div>
+                                <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
+                                    <label>
+                                        {{ cardProductsFutureLabel }}
+                                    </label>
+                                    <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter(true)"></div>
                                 </div>
                             </div>
-                            <table ng-repeat="item in futureReleasesData" id="receipts_table">
-                                <thead>
-                                    <tr>
-                                        <th class="except">
-                                        <th>{{ item.acquirer.name | uppercase }}</th>
-                                        <th></th>
-                                        <!-- /* Todo: alterar por adquirente */ -->
-                                        <th colspan="3">valor total: {{ item.expectedAmount | currency }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="group">
-                                        <th></th>
-                                        <th>lançamentos</th>
-                                        <th></th>
-                                        <th>valor líquido (R$)</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </tbody>
-                                <tbody ng-repeat="cardProduct in item.cardProducts">
-                                    <tr>
-                                        <th class="except"></th>
-                                        <th>
-                                        <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
-                                        <th></th>
-                                        <th>{{ cardProduct.releases[0].expectedAmount | number: 02 }}</th>
-                                        <th></th>
-                                        <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'future_details')">detalhes</a></th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <span class="alert" ng-show="!futureReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
-                        </article>
+                        </div>
+                        <div class="timeline-wrapper">
+                            <div class="total">
+                                total de lançamentos <br>
+                                <span>R$</span><span class="big-number">893.251,09</span>
+                            </div>
+                            <div class="timeline-block">
+                                <div class="percent"></div>
+                            </div>
+                            <article>
+                                <aside>de <br> <span>25/10/2016</span></aside>
+                                <aside>até <br> <span>25/10/2017</span> </aside>    
+                            </article>
+                        </div>
+                        <table ng-repeat="item in futureReleasesData" id="receipts_table">
+                            <thead>
+                                <tr>
+                                    <th class="except">
+                                    <th>{{ item.acquirer.name | uppercase }}</th>
+                                    <th></th>
+                                    <!-- /* Todo: alterar por adquirente */ -->
+                                    <th colspan="3">valor total: {{ item.expectedAmount | currency }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="group">
+                                    <th></th>
+                                    <th>lançamentos</th>
+                                    <th></th>
+                                    <th>valor líquido (R$)</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tbody>
+                            <tbody ng-repeat="cardProduct in item.cardProducts">
+                                <tr>
+                                    <th class="except"></th>
+                                    <th>
+                                    <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
+                                    <th></th>
+                                    <th>{{ cardProduct.releases[0].expectedAmount | number: 02 }}</th>
+                                    <th></th>
+                                    <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'future_details')">detalhes</a></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="alert" ng-show="!futureReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                    </article>
 
-                        <!-- LANCAMENTOS FUTUROS: END -->
-
+                    <!-- LANCAMENTOS FUTUROS: END -->
                 </tab>
             </tabset>
         </div>

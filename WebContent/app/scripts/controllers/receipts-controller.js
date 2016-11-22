@@ -95,6 +95,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.actualReleases.date = calendarFactory.getToday();
         GetFilters();
 		GetForethought();
+		getTimeline();
 	}
 
     function GetReceipt() {
@@ -141,6 +142,23 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		}).catch(function(objResponse) {
 			console.log('[receiptsController:getSummaries] error');
+		})
+	}
+
+	function getTimeline() {
+
+		var objFilter = {
+			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			bankAccountIds: GetAccountsFilter(),
+			shopIds: GetShopsFilter(),
+			acquirerIds: GetAcquirersFilter(),
+			cardProductIds: GetCardProductsFilter(),
+			status: 'EXPECTED'
+		};
+
+		receiptsService.getTimeline(objFilter).then(function(objResponse) {
+			console.log(objResponse);
 		})
 	}
 

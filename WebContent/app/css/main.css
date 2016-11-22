@@ -9897,6 +9897,83 @@ div.checkbox-toggle-right {
     box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     box-sizing: border-box;
 }
+
+.data-cards .timeline-wrapper {
+    height: 150px;
+    width: 100%;
+    background: #fff;
+    position: relative;
+    padding:0 25px;
+    box-sizing:border-box;
+}
+
+.data-cards .timeline-wrapper .total {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 14px;
+    color:#b9b8b8;
+    float: left;
+}
+
+.data-cards .timeline-wrapper .total > span {
+    color:#00b9b5;
+    font-size:16px;
+    float: left;
+    width: auto;
+    height: 50px;
+}
+
+.data-cards .timeline-wrapper .total > span:nth-of-type(odd) {
+    line-height: 55px;
+}
+
+.data-cards .timeline-wrapper .total .big-number {
+    font-size: 32px;
+    font-weight: lighter;
+}
+
+.data-cards .timeline-wrapper .timeline-block {
+    width:100%;
+    height: 10px;
+    position: relative;
+    float: left;
+    margin-top: 85px;
+    background: gray;
+}
+
+.data-cards .timeline-wrapper .timeline-block .percent {
+    width: 30%;
+    height: 50px;
+    position: relative;
+}
+
+.data-cards .timeline-wrapper .timeline-block .percent:before {
+    content:"";
+    width:100%;
+    height:10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ff7800;
+}
+
+.data-cards .timeline-wrapper article {
+    padding:0;
+    margin:10px 0;
+    float: left;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.data-cards .timeline-wrapper article aside:nth-child(2) {
+    text-align: right;
+}
+.data-cards .timeline-wrapper article aside span {
+    color:#00b9b5;
+    font-weight: bolder;
+}
+
 .receiptsExpectedDetails .data-cards .header-datas {
     height: auto;
 }
