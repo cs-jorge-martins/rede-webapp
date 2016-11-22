@@ -77,6 +77,8 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
     $scope.futureReleasesData = [];
+    $scope.timelineExpectedAmount = [];
+    $scope.customTimelineExpectedAmount = [];
     // $rootScope.futureSelected = true;
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
@@ -95,7 +97,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.actualReleases.date = calendarFactory.getToday();
         GetFilters();
 		GetForethought();
-		getTimeline();
+		GetTimeline();
 	}
 
     function GetReceipt() {
@@ -145,11 +147,11 @@ angular.module('KaplenWeb.movementsModule',[])
 		})
 	}
 
-	function getTimeline() {
+	function GetTimeline() {
 
 		var objFilter = {
-			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+			startDate: "20161122",
+			endDate: "20171123",
 			bankAccountIds: GetAccountsFilter(),
 			shopIds: GetShopsFilter(),
 			acquirerIds: GetAcquirersFilter(),
@@ -159,6 +161,7 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		receiptsService.getTimeline(objFilter).then(function(objResponse) {
 			console.log(objResponse);
+			$scope.timelineExpectedAmount = objResponse.data.content[0];
 		})
 	}
 
@@ -480,6 +483,21 @@ angular.module('KaplenWeb.movementsModule',[])
 		SaveFilters();
 		GetLabels(true);
 		GetFutureAcquirers();
+
+		var objFilter = {
+			startDate: "20161122",
+			endDate: "20171123",
+			bankAccountIds: GetAccountsFilter(),
+			shopIds: GetShopsFilter(),
+			acquirerIds: GetAcquirersFilter(),
+			cardProductIds: GetCardProductsFilter(),
+			status: 'EXPECTED'
+		};
+
+		receiptsService.getTimeline(objFilter).then(function(objResponse) {
+			console.log("2", objResponse);
+			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
+		})
 	}
 
 	function GetFutureAcquirers() {

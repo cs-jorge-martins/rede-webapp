@@ -227,17 +227,22 @@
                             </div>
                         </div>
                         <div class="timeline-wrapper">
+                            {{ customTimelineExpectedAmount.expectedAmount | currency: "" }} |
+
+                            {{ customTimelineExpectedAmount.expectedAmount / timelineExpectedAmount.expectedAmount * 100 | number: 2}}% do valor total
                             <div class="total">
                                 total de lançamentos <br>
-                                <span>R$</span><span class="big-number">893.251,09</span>
+                                <span>R$</span><span class="big-number">{{ timelineExpectedAmount.expectedAmount | currency: "" }}</span>
                             </div>
                             <div class="timeline-block">
-                                <div class="percent"></div>
+                                <div class="percent" style="width:{{ (customTimelineExpectedAmount.expectedAmount / timelineExpectedAmount.expectedAmount * 100 | number: 2).split(',').join('.')}}%">
+                                    <article>
+                                        <aside>de <br> <span>25/10/2016</span></aside>
+                                        <aside>até <br> <span>25/10/2017</span> </aside>    
+                                    </article>
+                                </div>
                             </div>
-                            <article>
-                                <aside>de <br> <span>25/10/2016</span></aside>
-                                <aside>até <br> <span>25/10/2017</span> </aside>    
-                            </article>
+                            
                         </div>
                         <table ng-repeat="item in futureReleasesData" id="receipts_table">
                             <thead>

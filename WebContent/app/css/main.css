@@ -9943,7 +9943,7 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .timeline-wrapper .timeline-block .percent {
-    width: 30%;
+    // width: 30%;
     height: 50px;
     position: relative;
 }
