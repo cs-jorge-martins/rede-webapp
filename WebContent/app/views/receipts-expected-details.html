@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
-<section class="receiptsExpectedDetails" id="receiptsDetails">
+<section class="receiptsExpectedDetails expected" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
@@ -80,26 +80,24 @@
 									</select>
 								</div>
 							</div>
+							<pagination
+									total-items="adjustsTotalItens"
+									ng-model="adjustsCurrentPage"
+									ng-change="pageChangedAdjusts()"
+									max-size="maxSize"
+									items-per-page="adjustsTotalItensPage"
+									rotate="false"
+									class="pagination-sm"
+									boundary-links="false"
+									previous-text="&lsaquo;"
+									next-text="&rsaquo;"
+									first-text=" "
+									last-text=" ">
+							</pagination>
 						</div>
 					</div>
 				</tab>
 			</tabset>
-			<div class="paginationWrapper center">
-				<pagination
-						total-items="adjustsTotalItens"
-						ng-model="adjustsCurrentPage"
-						ng-change="pageChangedAdjusts()"
-						max-size="maxSize"
-						items-per-page="adjustsTotalItensPage"
-						rotate="false"
-						class="pagination-sm"
-						boundary-links="false"
-						previous-text="&lsaquo;"
-						next-text="&rsaquo;"
-						first-text=" "
-						last-text=" ">
-				</pagination>
-			</div>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>

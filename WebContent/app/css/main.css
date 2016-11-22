@@ -10135,12 +10135,20 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
     line-height: normal;
     margin-top: 20px;
 }
+
+section#receiptsDetails.receiptsExpectedDetails.expected .data-cards .header-datas .date {
+    line-height: normal;
+    margin-top: 40px;
+}
 section#receiptsDetails.receiptsExpectedDetails.future-details .data-cards .header-datas .date .number {
     line-height: 33px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
     font-size: 66px;
     line-height: 66px;
+}
+section#receiptsDetails.receiptsExpectedDetails.expected .data-cards .header-datas .date .number {
+    line-height: 98px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards.big .header-datas .date .number {
     font-size: 23px;
@@ -10234,7 +10242,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     width: 100%;
     float: left;
     background: white;
-    padding: 70px 30px 10px;
+    padding: 60px 30px 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
@@ -10470,7 +10478,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails .nav-tabs li.active a {
     border-top: 0;
-    color: #333 !important;
+    color: #ff7800 !important;
 }
 
 #receiptsDetailsPage {
@@ -10629,6 +10637,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 #receiptsDetails #primaryContent {
     z-index: 1;
     background: #fff;
+    margin-bottom: 30px;
 }
 
 .width50 {
