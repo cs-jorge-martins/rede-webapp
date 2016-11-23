@@ -10140,7 +10140,7 @@ section.receiptsExpectedDetails #details .receipts-details-wrapper table td{
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .only-chip-on-header {
-    margin-top: 63px;
+    margin-top: 56px;
     margin-left: 33px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:first-child {
