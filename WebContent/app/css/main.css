@@ -8894,6 +8894,9 @@ footer nav.fixed {
 #details thead {
     text-indent: 10px;
 }
+.close-modal {
+    font-size: 26px;
+}
 #details thead th {
 	color: #333;
 	padding: 20px 8px !important;
