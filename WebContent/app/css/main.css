@@ -1344,9 +1344,6 @@ body>div:first-child:after {
 	height: 15px;
 	display: block;
 }
-.extended {
-	// padding: 80px 0 0;
-}
 #internas img {
 	margin-bottom: 20px;
 }
@@ -1709,7 +1706,6 @@ header+nav ul {
 }
 .extended header {
     height: 112px;
-	// height: 35px;
 }
 header+nav li a {
 	color: #000;
@@ -6040,7 +6036,6 @@ label[for="ate"] {
 	width: auto !important;
 }
 .filterList input[type=text] {
-	// width: 150px!important;
 	position: relative!important;
 }
 .filterList form li {
@@ -6184,7 +6179,6 @@ label[for="ate"] {
 .hiddenContent.advancedFilterHiddenContent fieldset {
 	padding-bottom: 20px;
 	width: 100%;
-    // border: 1px solid #ff7900;
 	border: 1px solid #eee;
 	clear: both;
 }
@@ -6244,7 +6238,6 @@ label[for="ate"] {
 	color: #212e3b;
 	font-size: 12px;
 	height: 36px;
-	// width: 345px;
     width: 250px;
 	margin-bottom: 8px;
 	background: transparent;
@@ -6267,7 +6260,6 @@ label[for="ate"] {
 }
 .hiddenContent.advancedFilterHiddenContent li:nth-child(2) .grandChild input[type=text], .hiddenContent.advancedFilterHiddenContent .grandChild li {
 	/*width: 156px;*/
-	// width: 250px;
     width: 310px;
 }
 
@@ -7009,9 +7001,6 @@ h2, h3 {
     border:0;
 	border-bottom: 1px solid #ccc;
 }
-.relatorio input[type=text].form-control, .modalFormCalendar {
-	// background: url(../img/calendar.png) 132px center no-repeat;
-}
 .relatorio span .glyphicon, .relatorio span .glyphicon-calendar {
 	padding: 4px;
 	position: absolute!important;
@@ -7255,12 +7244,7 @@ td.editSettlementList {
     transition: background-color .2s ease-in-out;
     line-height: 40px;
 }
-#advancedButton:hover {
-	// background-color: #E20707;
-}
 #advancedButton.active{
-	// color: #E20707;
-	// background-color: transparent;
 	background-position: 15px -73px;
 }
 .advancedFilter {
@@ -7282,7 +7266,6 @@ td.editSettlementList {
 #buscaTerminal {
 	font-size: 12px;
     position: relative;
-    // padding-left:15px;
 }
 #naturezaProduto {
     position: relative;
@@ -7600,9 +7583,6 @@ td.editSettlementList {
 	background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15)  25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%,  rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15)  25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%,  rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%,  transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%,  rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)
-}
-.hiddenContent.advancedFilterHiddenContent input[type=text] {
-	// background: url(../img/icon-hidden-select.png) right center no-repeat!important;
 }
 .hiddenContent.advancedFilterHiddenContent .bandeiraFilter ul {
 	width: 155px;
@@ -8913,7 +8893,6 @@ footer nav.fixed {
 #details thead th {
 	color: #333;
 	padding: 20px 8px !important;
-	// text-indent: 10px;
 }
 
 #details tbody tr {
@@ -9137,7 +9116,6 @@ footer nav.fixed {
 #relatorio_chargeback .hiddenContentReport,
 #relatorio_ajuste .hiddenContentReport {
 	display: none;
-    // border: 1px solid #ff7900;
 	border: 1px solid #eee;
 
 }
@@ -9871,7 +9849,6 @@ div.checkbox-toggle-right {
 }
 .page-title > div.title {
     display: inline-block;
-    // margin-bottom: 15px;
     margin-top: 10px;
 }
 .filter-depth {
@@ -10980,7 +10957,6 @@ tr.card-product-line {
     box-shadow: none;
     box-sizing: border-box;
     top: 43px;
-    // max-height: 220px;
     max-height: 150px;
 }
 
@@ -11041,7 +11017,6 @@ tr.card-product-line {
     font-size: 16px ;
     color: #575757;
     width: 100%;
-    // box-shadow: 0 4px #b1d800 !important;
     position: relative;
     top: -1px;
     height: 40px;
@@ -11237,7 +11212,6 @@ tr.card-product-line {
     font-size: 24px;
     right: 7px;
     top: 8px;
-    // cursor: pointer;
 }
 
 .rcDatepicker .input-group-addon:before {
