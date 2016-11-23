@@ -5190,8 +5190,7 @@ input {
 #details .pagination{
     float: none;
     text-align: center;
-    width: 260px !important;
-    display: block;
+    display: inline-block;
     margin: 20px auto 20px !important;
 }
 .gestaoModal .pagination {
@@ -10145,7 +10144,7 @@ section#receiptsDetails.receiptsExpectedDetails.future-details .data-cards .head
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
     font-size: 66px;
-    line-height: 66px;
+    line-height: 84px;
 }
 section#receiptsDetails.receiptsExpectedDetails.expected .data-cards .header-datas .date .number {
     line-height: 98px;
@@ -10247,6 +10246,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    min-height: 125px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue {
@@ -10294,7 +10294,6 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 #receiptsDetails .mainContent {
     float: left;
     width: 100%;
-    padding:0 30px;
     box-sizing: border-box;
     background: white;
     margin-bottom: 30px;

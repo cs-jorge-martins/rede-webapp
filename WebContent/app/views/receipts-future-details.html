@@ -95,22 +95,22 @@
 					</select>
 				</div>
 			</div>
-
-			<pagination
-					total-items="totalItens"
-					ng-model="currentPage"
-					ng-change="pageChanged()"
-					max-size="maxSize"
-					items-per-page="currentSize"
-					rotate="false"
-					class="pagination-sm"
-					boundary-links="false"
-					previous-text="&lsaquo;"
-					next-text="&rsaquo;"
-					first-text=" "
-					last-text=" ">
-			</pagination>
-
+			<div class="paginationWrapper">
+				<pagination
+						total-items="totalItens"
+						ng-model="currentPage"
+						ng-change="pageChanged()"
+						max-size="maxSize"
+						items-per-page="currentSize"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="false"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text=" "
+						last-text=" ">
+				</pagination>
+			</div>
 		</div>
 	</div>
 

@@ -26,6 +26,9 @@
 					<div class="chip" ng-if="accountsLabel">
 						{{ accountsLabel }}
 					</div>
+					<div class="chip" ng-if="shops">
+						{{ shopsLabel }}
+					</div>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -80,20 +83,22 @@
 									</select>
 								</div>
 							</div>
-							<pagination
-									total-items="adjustsTotalItens"
-									ng-model="adjustsCurrentPage"
-									ng-change="pageChangedAdjusts()"
-									max-size="maxSize"
-									items-per-page="adjustsTotalItensPage"
-									rotate="false"
-									class="pagination-sm"
-									boundary-links="false"
-									previous-text="&lsaquo;"
-									next-text="&rsaquo;"
-									first-text=" "
-									last-text=" ">
-							</pagination>
+							<div class="paginationWrapper">
+								<pagination
+										total-items="adjustsTotalItens"
+										ng-model="adjustsCurrentPage"
+										ng-change="pageChangedAdjusts()"
+										max-size="maxSize"
+										items-per-page="adjustsTotalItensPage"
+										rotate="false"
+										class="pagination-sm"
+										boundary-links="false"
+										previous-text="&lsaquo;"
+										next-text="&rsaquo;"
+										first-text=" "
+										last-text=" ">
+								</pagination>
+							</div>
 						</div>
 					</div>
 				</tab>
