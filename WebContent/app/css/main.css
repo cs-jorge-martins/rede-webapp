@@ -10696,7 +10696,7 @@ tr.card-product-line {
 
 /* hipercard  */
 .data-cards table tbody .brand_5, #receiptsDetails .brand_5 {
-    background-position: -533px 0;
+    background-position: -533px 2px;
 }
 
  /* maestro */
@@ -10706,7 +10706,7 @@ tr.card-product-line {
 
 /* visa electron */
 .data-cards table tbody .brand_7, #receiptsDetails .brand_7 {
-    background-position: -340px 0;
+    background-position: -340px 1px;
 }
 
 /* sorocred */
@@ -10728,11 +10728,12 @@ tr.card-product-line {
 /* banescard débito */
 .data-cards table tbody .brand_59, #receiptsDetails .brand_59,
 .data-cards table tbody .brand_96, #receiptsDetails .brand_96 {
-    background-position: -54px 0;
+    background-position: -54px 1px;
 }
 
 /* outras bandeiras - o que colocar ? */
-.data-cards table tbody .brand_80, #receiptsDetails .brand_80 {
+.data-cards table tbody .brand_80, #receiptsDetails .brand_80,
+.data-cards table tbody .brand_81, #receiptsDetails .brand_81{
     visibility: hidden;
 }
 
