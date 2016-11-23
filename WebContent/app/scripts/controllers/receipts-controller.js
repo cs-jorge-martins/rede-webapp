@@ -412,6 +412,7 @@ angular.module('KaplenWeb.movementsModule',[])
 				for(var intIndex in objData) {
 					if(objData[intIndex].description == 'vendas') {
 						intAntecipatedTotal = objData[intIndex].payedAmount;
+						intDiscountedTotal += (objData[intIndex].expectedAmount - objData[intIndex].payedAmount);
 					}
 				}
 

@@ -1861,7 +1861,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 }
 #primaryContent .nav-tabs.nav-justified>.dropdown .dropdown-menu {
 	top: auto;
-	left: auto
+	left: auto;
 	z-index:1000;
 }
 /* end */
@@ -2774,6 +2774,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 .financas label.disabled {
 	position:relative;
 	top:14px;
+}
 }
 /*@media (min-width:768px) {*/
 @media (min-width:8px) {
