@@ -8,7 +8,7 @@ angular.module('Conciliador.salesController',[])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/sales', {templateUrl: 'app/views/sales.html', controller: 'salesController'});
-}]).controller('salesController', function($scope, $modal,  $rootScope, menuFactory, calendarFactory, $location,
+}]).controller('salesController', function($scope, $uibModal,  $rootScope, menuFactory, calendarFactory, $location,
 	FinancialService, cacheService, advancedFilterService, TransactionConciliationService, TransactionService, TransactionSummaryService){
 
 	//Extensao do serviço para filtro avançado
@@ -368,11 +368,11 @@ angular.module('Conciliador.salesController',[])
 		$scope.confirm = true;
 		$scope.success = false;
 		if($scope.concilieItems.length) {
-			$modal.open ({
+			$uibModal.open ({
 				templateUrl: "app/views/resumo-conciliacao/confirma-conciliacao-resumo.html",
 				scope: $scope,
 				animation: false,
-				controller: function($scope, $modalInstance, $timeout) {
+				controller: function($scope, $uibModalInstance, $timeout) {
 					$scope.ok = function(data) {
 						var arrIds = [];
 
@@ -444,7 +444,7 @@ angular.module('Conciliador.salesController',[])
 			            });
 					}
 					$scope.cancel = function(data) {
-						$modalInstance.close();
+						$uibModalInstance.close();
 					}
 				},
 				size: 'md',

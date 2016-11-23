@@ -40,7 +40,7 @@
 			</div>
 		</li>
 	</ul>
-	
+
 	<div class="mainContent" id="details">
 		<table class="table sortTable">
 			<thead>
@@ -84,7 +84,7 @@
 
 	<div class="optionsWrapper">
 		<div class="paginationWrapper center">
-			<pagination
+			<ul uib-pagination
 					total-items="totalItens"
 					ng-model="currentPage"
 					ng-change="pageChanged()"
@@ -97,7 +97,7 @@
 					next-text="&rsaquo;"
 					first-text=" "
 					last-text=" ">
-			</pagination>
+			</ul>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>

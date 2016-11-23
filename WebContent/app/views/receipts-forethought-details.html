@@ -28,14 +28,14 @@
 		</div>
 
 	</article>
-	
+
 	<ul class="wrapperAcquirerSummary">
 		<li class="acquirer">{{ acquirer.name }}</li>
 		<li class="cardProduct"><div class="cardFlag brand_{{cardProduct.cardProductId}}"></div> {{ cardProduct.cardProductName | capitalize }}</li>
 		<li class="totalValue">
 			<span>total liquido antecipado</span>
 			<div class="value">
-				R$ <span class="big">{{ cardProduct.total | currency: "" }}</span> 
+				R$ <span class="big">{{ cardProduct.total | currency: "" }}</span>
 			</div>
 		</li>
 	</ul>
@@ -77,7 +77,7 @@
 					</div>
 
 					<div class="paginationWrapper">
-						<pagination
+						<ul uib-pagination
 								total-items="adjustsTotalItens"
 								ng-model="adjustsCurrentPage"
 								ng-change="pageChangedAdjusts()"
@@ -90,7 +90,7 @@
 								next-text="&rsaquo;"
 								first-text="&laquo;"
 								last-text="&raquo;">
-						</pagination>
+						</ul>
 					</div>
 				</div>
 			</article>

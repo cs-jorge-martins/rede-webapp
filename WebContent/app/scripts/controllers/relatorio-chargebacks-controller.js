@@ -17,10 +17,10 @@
 		}])
 		.controller('relatorioChargebacksController', RelatorioFinanceiro);
 
-	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', '$modal', 'calendarFactory', '$rootScope',
+	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', 'calendarFactory', '$rootScope',
 	'$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService'];
 
-	function RelatorioFinanceiro(menuFactory, $scope, $modal, calendarFactory, $rootScope,
+	function RelatorioFinanceiro(menuFactory, $scope, calendarFactory, $rootScope,
 	    $window, advancedFilterService, calendarService, TransactionSummaryService) {
 
 		//Extensao do serviço para filtro avançado

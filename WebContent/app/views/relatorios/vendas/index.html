@@ -15,8 +15,8 @@
 
 	<div id="primaryContent">
 		<!-- relatorio sintetico -->
-		<tabset>
-			<tab heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+		<uib-tabset>
+			<uib-tab heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
 				<article id="relatorio_sintetico">
 					<div class="hiddenContentWrapper">
 						<a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
@@ -28,13 +28,13 @@
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
 													<label for="" class="itauicon-itaufonts_calendario"></label>
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.initialDate" is-open="openFirstsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateSynthetic(synthetic.initialDate)" accept=""close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstsynthetic = true" placeholder="Período de vendas" readonly="true"/>
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="synthetic.initialDate" is-open="openFirstsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateSynthetic(synthetic.initialDate)" accept=""close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstsynthetic = true" placeholder="Período de vendas" readonly="true"/>
 
 													<label for="" class="at">Até</label>
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="synthetic.finalDate" is-open="openLastsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateSynthetic(synthetic.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastsynthetic = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="synthetic.finalDate" is-open="openLastsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateSynthetic(synthetic.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastsynthetic = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="itauicon-itaufonts_para_empresa">
-													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)" typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
+													<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0" uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
 
 													<ul ng-repeat="item in settlementsSelected">
 														<li>
@@ -87,11 +87,11 @@
 						<span class="alert" ng-show="synthetic.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 					</div>
 				</article>
-			</tab>
+			</uib-tab>
 
 
 			<!-- relatorio analitico -->
-			<tab heading="relatório analítico" active="tabs[1].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
+			<uib-tab heading="relatório analítico" active="tabs[1].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
 				<article id="relatorio_analitico">
 					<div class="hiddenContentWrapper">
 						<a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
@@ -102,12 +102,12 @@
 										<div class="filterShiny">
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.initialDate" is-open="openFirstAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateAnalitical(analytical.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstAnalitical = true" readonly="true" />
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="analytical.initialDate" is-open="openFirstAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateAnalitical(analytical.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstAnalitical = true" readonly="true" />
 													<label for="" class="at">Até</label>
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="analytical.finalDate" is-open="openLastAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateAnalitical(analytical.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastAnalitical = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="analytical.finalDate" is-open="openLastAnalitical" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateAnalitical(analytical.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastAnalitical = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
-													<input id="buscaTerminal2" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)" typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
+													<input id="buscaTerminal2" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}" ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0" uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
 													<ul ng-repeat="item in settlementsSelected">
 														<li>
 															<h4>{{item.code}}</h4>
@@ -116,7 +116,7 @@
 													</ul>
 												</li>
 												<li class="itauicon-itaufonts_cartao">
-													<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{GetPlaceholderFlag(productsSelected)}}" ng-model="product" typeahead-on-select="AddProductsSearch(product)" typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
+													<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{GetPlaceholderFlag(productsSelected)}}" ng-model="product" typeahead-on-select="AddProductsSearch(product)" typeahead-min-length="0" uib-typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
 													<ul ng-repeat="item in productsSelected">
 														<li>
 															<h4>{{item.name}}</h4>
@@ -179,8 +179,8 @@
 								</div>
 
 								<div class="paginationWrapper">
-									<pagination total-items="totalItensAnalytical" ng-model="currentPageAnalytical" ng-change="pageChangedAnalytical()" max-size="maxSize" items-per-page="totalItensPageAnalytical" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-									</pagination>
+									<ul uib-pagination total-items="totalItensAnalytical" ng-model="currentPageAnalytical" ng-change="pageChangedAnalytical()" max-size="maxSize" items-per-page="totalItensPageAnalytical" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+									</ul>
 								</div>
 
 								<!-- descomentar ao inserir exportação de relatórios -->
@@ -196,10 +196,10 @@
 						</div>
 					</div>
 				</article>
-			</tab>
+			</uib-tab>
 
 			<!-- relatorio de vendas duplicadas -->
-			<tab heading="vendas duplicadas" active="tabs[2].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
+			<uib-tab heading="vendas duplicadas" active="tabs[2].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
 				<article id="relatorio_duplicado">
 					<div class="hiddenContentWrapper">
 						<a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
@@ -210,17 +210,17 @@
 										<div class="filterShiny">
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.initialDate" is-open="openFirstduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateDuplicate(duplicate.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstduplicate = true" readonly="true" />
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="duplicate.initialDate" is-open="openFirstduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateDuplicate(duplicate.initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstduplicate = true" readonly="true" />
 
 													<label for="" class="at">Até</label>
 
-													<input type="text" class="disabled input-date" datepicker-popup="{{format}}" ng-model="duplicate.finalDate" is-open="openLastduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateDuplicate(duplicate.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastduplicate = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="duplicate.finalDate" is-open="openLastduplicate" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateDuplicate(duplicate.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastduplicate = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true"/>
 												</li>
 												<li class="center itauicon-itaufonts_para_empresa">
 													<input id="buscaTerminal3" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
 														ng-model="settlement"
-														typeahead-on-select="AddSettlementsSearch(settlement)"
-														typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
+														typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0"
+														uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
 													<ul ng-repeat="item in settlementsSelected">
 														<li>
 															<h4>{{item.code}}</h4>
@@ -231,8 +231,8 @@
 												<li class="itauicon-itaufonts_cartao">
 													<input id="naturezaProduto2" name="naturezaProduto" type="text" placeholder="{{GetPlaceholderFlag(productsSelected)}}"
 														ng-model="product"
-														typeahead-on-select="AddProductsSearch(product)"
-														typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
+														typeahead-on-select="AddProductsSearch(product)" typeahead-min-length="0"
+														uib-typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
 													<ul ng-repeat="item in productsSelected">
 														<li>
 															<h4>{{item.name}}</h4>
@@ -294,15 +294,15 @@
 								</div>
 
 								<div class="paginationWrapper">
-									<pagination total-items="totalItensDuplicate" ng-model="currentPageDuplicate" ng-change="pageChangedDuplicate()" max-size="maxSize" items-per-page="totalItensPageDuplicate" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-									</pagination>
+									<ul uib-pagination total-items="totalItensDuplicate" ng-model="currentPageDuplicate" ng-change="pageChangedDuplicate()" max-size="maxSize" items-per-page="totalItensPageDuplicate" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
 				</article>
-			</tab>
-		</tabset>
+			</uib-tab>
+		</uib-tabset>
 	</div>
 	<rc-disclaimer></rc-disclaimer>
 </section>

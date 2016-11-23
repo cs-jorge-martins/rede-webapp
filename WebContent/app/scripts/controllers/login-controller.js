@@ -10,7 +10,7 @@ angular.module('KaplenWeb.loginController',[])
 	$routeProvider.when('/login', {templateUrl: 'app/views/login.html', controller: 'loginController'});
 }])
 
-.controller('loginController', function($scope, $modal, $rootScope, $window, $location, loginService){
+.controller('loginController', function($scope, $uibModal, $rootScope, $window, $location, loginService){
 
 	$rootScope.destroyVariablesSession();
 
@@ -49,7 +49,7 @@ angular.module('KaplenWeb.loginController',[])
 	};
 
 	function ModalChangePassword(objUser, bolIsManyCompanies) {
-		var objModalInstance = $modal.open({
+		var objModalInstance = $uibModal.open({
 			templateUrl: 'modalTrocarSenha.html',
 			controller: ModalTrocarSenha,
 			size:'sm',
@@ -73,7 +73,7 @@ angular.module('KaplenWeb.loginController',[])
 		});
 	};
 
-	function ModalTrocarSenha($scope, $window, $rootScope, objUser1, $modalInstance, $timeout, bolIsManyCompanies) {
+	function ModalTrocarSenha($scope, $window, $rootScope, objUser1, $uibModalInstance, $timeout, bolIsManyCompanies) {
 		$scope.password = "";
 		$scope.rewritePassword = "";
 		$scope.cancel = Cancel;
@@ -81,7 +81,7 @@ angular.module('KaplenWeb.loginController',[])
 		var objUser = objUser1;
 
 		function Cancel() {
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		};
 	};
 

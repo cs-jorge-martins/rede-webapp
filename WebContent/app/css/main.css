@@ -7869,7 +7869,7 @@ tr.totais td {
 	width:202px!important;
 }
 .modal, .modal-backdrop {
-	z-index: 100000000000000000000000!important;
+	/* z-index: 100000000000000000000000!important; */
 }
 .botaoAside {
 	height: 55px;
@@ -10899,6 +10899,7 @@ tr.card-product-line {
 
 .dropdown-multiselect {
     width: 100%;
+	position: relative;
 }
 .dropdown-multiselect .dropdown-toggle {
     width: 100%;

@@ -10,7 +10,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	$routeProvider.when('/sales/details', {templateUrl: 'app/views/sales-details.html', controller: 'salesDetailsController'});
 }])
 
-.controller('salesDetailsController', function(menuFactory, $rootScope, $scope, $modal, calendarFactory, $timeout, cacheService,
+.controller('salesDetailsController', function(menuFactory, $rootScope, $scope, $uibModal, calendarFactory, $timeout, cacheService,
 			dashboardService, kaplenAdminService, $window,
 			integrationService, advancedFilterService, calendarService, $location, TransactionService){
 
@@ -90,10 +90,10 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 		if(arrToConcilie.length) {
 
-			var	objModalInstance = $modal.open ({
+			var	objModalInstance = $uibModal.open ({
 				templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
 				scope: $scope,
-				controller: function($scope, $modalInstance){
+				controller: function($scope, $uibModalInstance){
 					$scope.ok = Ok;
 					$scope.cancel = Cancel;
 
@@ -122,7 +122,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 					};
 
 					function Cancel() {
-						$modalInstance.dismiss("cancel");
+						$uibModalInstance.dismiss("cancel");
 					};
 				},
 				size: 'md',
@@ -305,11 +305,11 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	};
 
 	function Cancel() {
-		$modalInstance.dismiss('cancel');
+		$uibModalInstance.dismiss('cancel');
 	};
 
 	function ComprovanteVenda(item) {
-		var objModalInstance = $modal.open({
+		var objModalInstance = $uibModal.open({
 			templateUrl: 'app/views/resumo-conciliacao/comprovante-venda.html',
 			controller: ModalComprovanteVendas,
 			size:'sm',
@@ -321,13 +321,13 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 		});
 	};
 
-	function ModalComprovanteVendas($scope, $modalInstance, item) {
+	function ModalComprovanteVendas($scope, $uibModalInstance, item) {
 		$scope.item = item;
 		$scope.cancel = Cancel;
 		$scope.imprimir = Imprimir;
 
 		function Cancel() {
-			$modalInstance.dismiss('cancel');
+			$uibModalInstance.dismiss('cancel');
 		};
 
 		function Imprimir() {

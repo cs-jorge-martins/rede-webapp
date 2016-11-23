@@ -67,8 +67,8 @@
                                             <li class="center itauicon-itaufonts_para_empresa">
                                                 <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
                                                     ng-model="settlement" typeahead-append-to-body="true"
-                                                    typeahead-on-select="AddSettlementsSearch(settlement)"
-                                                    typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
+                                                    typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0"
+                                                    uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
                                                 <ul ng-repeat="item in settlementsSelected">
                                                   <li>
                                                     <h4>{{item.code}}</h4>
@@ -79,8 +79,8 @@
                                                 <input id="naturezaProduto" name="naturezaProduto" type="text"
                                                 placeholder="{{GetPlaceholderFlag(productsSelected)}}"
                                                     ng-model="product" typeahead-append-to-body="true"
-                                                    typeahead-on-select="AddProductsSearch(product)"
-                                                    typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
+                                                    typeahead-on-select="AddProductsSearch(product)" typeahead-min-length="0"
+                                                    uib-typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
                                                 <ul ng-repeat="item in productsSelected">
                                                     <li>
                                                         <h4>{{item.name}}</h4>
@@ -140,7 +140,7 @@
 						</div>
 
 						<div class="paginationWrapper">
-							<pagination
+							<ul uib-pagination
                                 total-items="totalItens"
                                 ng-model="currentPage"
                                 ng-change="pageChanged()"
@@ -153,7 +153,7 @@
                                 next-text="&rsaquo;"
                                 first-text="&laquo;"
                                 last-text="&raquo;">
-							</pagination>
+							</ul>
 						</div>
 
                         <!-- descomentar ao implantar funcao de exportar relatorio -->

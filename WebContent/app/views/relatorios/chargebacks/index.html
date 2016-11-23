@@ -64,8 +64,8 @@
                                                 <li class="itauicon-itaufonts_para_empresa">
                                                     <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
                                                         ng-model="settlement"
-                                                        typeahead-on-select="AddSettlementsSearch(settlement)"
-                                                        typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
+                                                        typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0" 
+                                                        uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
                                                     <ul ng-repeat="item in settlementsSelected">
                                                       <li>
                                                         <h4>{{item.code}}</h4>
@@ -130,8 +130,8 @@
 								</div>
 
 								<div class="paginationWrapper">
-									<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-									</pagination>
+									<ul uib-pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+									</ul>
 								</div>
 
                                 <!-- <div class="export-report-sales">

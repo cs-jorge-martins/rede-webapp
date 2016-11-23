@@ -10,7 +10,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 	$routeProvider.when('/relatorio/ajustes', {templateUrl: 'app/views/relatorios/ajustes/index.html', controller: 'relatorioAjustesController'});
 }])
 
-.controller('relatorioAjustesController', function(menuFactory, $scope, $modal, calendarFactory, $rootScope,
+.controller('relatorioAjustesController', function(menuFactory, $scope, calendarFactory, $rootScope,
     $window, advancedFilterService, calendarService, AdjustSummaryService){
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
@@ -22,7 +22,6 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
 		menuFactory.setActiveReportsAdjustments();
 		$scope.dateSelected = calendarFactory.getYesterdayDate();
-		$scope.totalItensPage = "10";
 		$scope.items = [];
 		$scope.total = 0;
 		$scope.noItensMsg = false;
@@ -36,7 +35,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 10;
+		$scope.totalItensPage = 20;
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
         $scope.sortResults = SortResults;

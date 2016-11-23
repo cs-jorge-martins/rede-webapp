@@ -16,7 +16,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 })
 
-.controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
+.controller('receiptsController', function(menuFactory, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService){
 
 	//Extensao do serviço para filtro avançado
@@ -611,7 +611,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			intIndex = 1;
 			GetFutureReceipt();
 			delete $rootScope.futureSelected;
-		
+
 		}
 
 		$scope.tabs[intIndex].active = true;
