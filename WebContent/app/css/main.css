@@ -8887,6 +8887,10 @@ footer nav.fixed {
 #details {
 	min-height: 100px;
 }
+#details .nav-tabs {
+    background: #F0EBE8;
+    height: 60px;
+}
 #details thead {
     text-indent: 10px;
 }
