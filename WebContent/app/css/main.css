@@ -8911,7 +8911,7 @@ footer nav.fixed {
 }
 
 #details td, #details th {
-	padding: 10px 0;
+	padding: 10px 7px;
 }
 #details tbody .odd {
 	background: #f0ebe8;
@@ -9902,7 +9902,7 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .header-datas .date-wrapper .future {
-    font-weight:lighter;
+    font-weight:bold;
     font-size:20px;
     width:100%;
     margin-right: 0;
