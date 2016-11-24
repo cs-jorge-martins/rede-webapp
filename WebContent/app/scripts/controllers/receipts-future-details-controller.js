@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
@@ -25,6 +25,9 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 			if(!$rootScope.receiptsDetails) {
 				$location.path('/receipts');
 			} else {
+
+                $rootScope.futureSelected = true;
+                
 				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
 				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
 				$scope.currency = $rootScope.receiptsDetails.currency;
@@ -136,7 +139,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				$scope.totalItens = objPagination.totalElements;
 
 			}).catch(function (objResponse) {
-			
+
 			});
 
 	    }
