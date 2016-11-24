@@ -39,8 +39,10 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
     $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation($scope.futureReleases.startDate);
+    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
     $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation($scope.futureReleases.endDate);
+    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
 	$scope.date = new Date();
 	$scope.minDate = new Date();
 	$scope.accountsModel = [];

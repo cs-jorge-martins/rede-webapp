@@ -996,6 +996,12 @@ td[id^="datepicker"], .row {
 .table td,  .table th {
 	background-color: #fff !important;
 }
+.table.gray-header th {
+	background-color: #f0f0f0 !important;
+	color: #575758;
+	font-weight: normal;
+	border: 0;
+}
 .btn > .caret,  .dropup > .btn > .caret {
 	border-top-color: #000 !important;
 }
@@ -1760,7 +1766,6 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	max-width: none
 }
 #primaryContent .nav-tabs{
-	width: 1000px;
 	margin: 0;
 }
 #headerTabs .nav-tabs{
