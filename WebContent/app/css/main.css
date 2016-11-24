@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 @charset "utf-8";
 /******************************************
 Sistema desenvolvido por
@@ -1344,9 +1344,6 @@ body>div:first-child:after {
 	height: 15px;
 	display: block;
 }
-.extended {
-	// padding: 80px 0 0;
-}
 #internas img {
 	margin-bottom: 20px;
 }
@@ -1709,7 +1706,6 @@ header+nav ul {
 }
 .extended header {
     height: 112px;
-	// height: 35px;
 }
 header+nav li a {
 	color: #000;
@@ -5187,6 +5183,12 @@ input {
 	padding-left: 0;
 	margin: 20px 0;
 }
+#details .pagination{
+    float: none;
+    text-align: center;
+    display: inline-block;
+    margin: 20px auto 20px !important;
+}
 .gestaoModal .pagination {
 	float: left;
 }
@@ -6034,7 +6036,6 @@ label[for="ate"] {
 	width: auto !important;
 }
 .filterList input[type=text] {
-	// width: 150px!important;
 	position: relative!important;
 }
 .filterList form li {
@@ -6178,7 +6179,6 @@ label[for="ate"] {
 .hiddenContent.advancedFilterHiddenContent fieldset {
 	padding-bottom: 20px;
 	width: 100%;
-    // border: 1px solid #ff7900;
 	border: 1px solid #eee;
 	clear: both;
 }
@@ -6238,7 +6238,6 @@ label[for="ate"] {
 	color: #212e3b;
 	font-size: 12px;
 	height: 36px;
-	// width: 345px;
     width: 250px;
 	margin-bottom: 8px;
 	background: transparent;
@@ -6261,7 +6260,6 @@ label[for="ate"] {
 }
 .hiddenContent.advancedFilterHiddenContent li:nth-child(2) .grandChild input[type=text], .hiddenContent.advancedFilterHiddenContent .grandChild li {
 	/*width: 156px;*/
-	// width: 250px;
     width: 310px;
 }
 
@@ -7003,9 +7001,6 @@ h2, h3 {
     border:0;
 	border-bottom: 1px solid #ccc;
 }
-.relatorio input[type=text].form-control, .modalFormCalendar {
-	// background: url(../img/calendar.png) 132px center no-repeat;
-}
 .relatorio span .glyphicon, .relatorio span .glyphicon-calendar {
 	padding: 4px;
 	position: absolute!important;
@@ -7224,7 +7219,6 @@ td.editSettlementList {
 	background-position: 5px -155px !important;
 }
 #primaryContent {
-	margin-bottom: 40px;
 	margin-top: 10px;
 }
 /** filtro avançado */
@@ -7249,12 +7243,7 @@ td.editSettlementList {
     transition: background-color .2s ease-in-out;
     line-height: 40px;
 }
-#advancedButton:hover {
-	// background-color: #E20707;
-}
 #advancedButton.active{
-	// color: #E20707;
-	// background-color: transparent;
 	background-position: 15px -73px;
 }
 .advancedFilter {
@@ -7276,7 +7265,6 @@ td.editSettlementList {
 #buscaTerminal {
 	font-size: 12px;
     position: relative;
-    // padding-left:15px;
 }
 #naturezaProduto {
     position: relative;
@@ -7518,39 +7506,6 @@ td.editSettlementList {
 .relatorio .analiticos tr:hover td {
 	background: #dadada;
 }
-/** loader */
-@ -webkit-keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 0 0
-}
-{
-}
-@ -moz-keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 0 0
-}
-{
-}
-@ -o-keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 40px 0
-}
-{
-}
-@ keyframes progress-bar-stripes {
-from
-}
-to {
-	background-position: 0 0
-}
-{
-}
 .progress {
 	height: 20px;
 	margin-bottom: 20px;
@@ -7627,9 +7582,6 @@ to {
 	background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15)  25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%,  rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15)  25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%,  rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%,  transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%,  rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)
-}
-.hiddenContent.advancedFilterHiddenContent input[type=text] {
-	// background: url(../img/icon-hidden-select.png) right center no-repeat!important;
 }
 .hiddenContent.advancedFilterHiddenContent .bandeiraFilter ul {
 	width: 155px;
@@ -8924,16 +8876,29 @@ footer nav.fixed {
 	position: relative;
 }
 
+#details article {
+    margin-top: 0;
+    padding: 0;
+}
+#details.mainContent{
+    background: #fff;
+}
 #details {
 	min-height: 100px;
+}
+#details .nav-tabs {
+    background: #F0EBE8;
+    height: 60px;
 }
 #details thead {
     text-indent: 10px;
 }
+.close-modal {
+    font-size: 26px;
+}
 #details thead th {
 	color: #333;
-	padding: 10px 0 !important;
-	// text-indent: 10px;
+	padding: 20px 8px !important;
 }
 
 #details tbody tr {
@@ -8946,13 +8911,12 @@ footer nav.fixed {
 }
 
 #details td, #details th {
-	padding: 10px 0;
+	padding: 10px 7px;
 }
 #details tbody .odd {
 	background: #f0ebe8;
 }
 #details table {
-	margin: 25px auto 0;
     width: 930px;
     font-size: 12px;
 }
@@ -9032,16 +8996,11 @@ footer nav.fixed {
 }
 
 #details .optionsWrapper {
-	height: 50px;
-	margin: 20px 0 10px 0;
-}
-.receiptsExpectedDetails #details .optionsWrapper {
-    margin: 35px 0 10px 20px;
+    margin: 35px 0 10px 30px;
 }
 #details .optionsWrapper .selectWrapper,
 #details .optionsWrapper .archives,
 #details .optionsWrapper .paginationWrapper {
-	float: left;
 	clear: none;
 }
 
@@ -9072,7 +9031,6 @@ footer nav.fixed {
 	padding-top: 15px;
 }
 #details .optionsWrapper .paginationWrapper {
-	width: 470px;
 	text-align: center;
 }
 
@@ -9087,7 +9045,6 @@ footer nav.fixed {
 #details .pagination,
 .receiptsExpectedDetails .pagination{
     margin: 28px 0 10px 36px;
-    float: initial;
 }
 
 .selectWrapper label {
@@ -9165,7 +9122,6 @@ footer nav.fixed {
 #relatorio_chargeback .hiddenContentReport,
 #relatorio_ajuste .hiddenContentReport {
 	display: none;
-    // border: 1px solid #ff7900;
 	border: 1px solid #eee;
 
 }
@@ -9899,7 +9855,6 @@ div.checkbox-toggle-right {
 }
 .page-title > div.title {
     display: inline-block;
-    // margin-bottom: 15px;
     margin-top: 10px;
 }
 .filter-depth {
@@ -9947,11 +9902,12 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .header-datas .date-wrapper .future {
-    font-weight:lighter;
+    font-weight:normal;
     font-size:20px;
     width:100%;
     margin-right: 0;
     text-align: left;
+    line-height: 23px;
 }
 
 .data-cards .header-datas .date {
@@ -10129,12 +10085,20 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date 
     line-height: normal;
     margin-top: 20px;
 }
+
+section#receiptsDetails.receiptsExpectedDetails.expected .data-cards .header-datas .date {
+    line-height: normal;
+    margin-top: 40px;
+}
 section#receiptsDetails.receiptsExpectedDetails.future-details .data-cards .header-datas .date .number {
-    line-height: 38px;
+    line-height: 33px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .date .number {
     font-size: 66px;
-    line-height: 66px;
+    line-height: 84px;
+}
+section#receiptsDetails.receiptsExpectedDetails.expected .data-cards .header-datas .date .number {
+    line-height: 98px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards.big .header-datas .date .number {
     font-size: 23px;
@@ -10176,7 +10140,7 @@ section.receiptsExpectedDetails #details .receipts-details-wrapper table td{
 }
 
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas .only-chip-on-header {
-    margin-top: 63px;
+    margin-top: 56px;
     margin-left: 33px;
 }
 section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:first-child {
@@ -10228,16 +10192,25 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     width: 100%;
     float: left;
     background: white;
-    padding: 70px 30px 10px;
+    padding: 60px 30px 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    min-height: 125px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue {
     position: absolute;
     right: 135px;
+}
+
+#receiptsDetails .wrapperAcquirerSummary .totalValue span.valor-liquido {
+    position: absolute;
+    top: -15px;
+    width: 142px;
+    color: #575758;
+    left: 0;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .cardProduct {
@@ -10259,26 +10232,50 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
     font-size: 18px;
     font-weight: bolder;
-    margin-right: 129px;
+    margin-right: 102px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .cardProduct span {
     text-transform: lowercase;
     display: inline-block;
-    font-weight: bold;
-    font-size: 17px;
+    font-weight: normal;
+    font-size: 15px;
 }
 
 #receiptsDetails .mainContent {
     float: left;
     width: 100%;
-    padding:0 30px;
     box-sizing: border-box;
     background: white;
+    margin-bottom: 30px;
+}
+
+#receiptsDetails.future-details .mainContent {
+    padding: 0;
+}
+
+.future-details .table th {
+    vertical-align: baseline;
+}
+
+.future-details .table th:after {
+    position: absolute;
+    left: 66%;
+    top: 23px;
 }
 
 #receiptsDetails .mainContent .table tr > td {
     text-indent: 10px;
+}
+
+#receiptsDetails.future-details .mainContent .table tr > td {
+    text-indent: 0;
+}
+#receiptsDetails.future-details .mainContent .table tr > th:first-child,
+#receiptsDetails.future-details .mainContent .table tr > td:first-child,
+#receiptsDetails .table tr > th:first-child,
+#receiptsDetails .table tr > td:first-child{
+    padding-left: 30px !important;
 }
 
 #receiptsDetails .mainContent .no-indent tr > td {
@@ -10378,7 +10375,11 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     position: relative;
     padding: 20px 10px;
     border-bottom: 1px solid #ccc;
+}
+
+#receiptsDetails .table th {
     cursor: pointer;
+    text-indent: 0;
 }
 
 #receiptsDetails .table th span.orderby,
@@ -10427,7 +10428,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails .nav-tabs li.active a {
     border-top: 0;
-    color: #333 !important;
+    color: #ff7800 !important;
 }
 
 #receiptsDetailsPage {
@@ -10507,6 +10508,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetailsPage .data-cards {
     margin-top: 128px;
+    box-shadow: none;
 }
 #receiptsDetailsPage #primaryContent {
     margin-top: 0;
@@ -10584,6 +10586,8 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails #primaryContent {
     z-index: 1;
+    background: #fff;
+    margin-bottom: 30px;
 }
 
 .width50 {
@@ -10673,7 +10677,7 @@ tr.card-product-line {
 }
 
 /* diners */
-.data-cards table tbody .brand_2, 
+.data-cards table tbody .brand_2,
 #receiptsDetails .brand_2 {
     background-position: -245px;
 }
@@ -10692,7 +10696,7 @@ tr.card-product-line {
 
 /* hipercard  */
 .data-cards table tbody .brand_5, #receiptsDetails .brand_5 {
-    background-position: -533px 0;
+    background-position: -533px 2px;
 }
 
  /* maestro */
@@ -10702,7 +10706,7 @@ tr.card-product-line {
 
 /* visa electron */
 .data-cards table tbody .brand_7, #receiptsDetails .brand_7 {
-    background-position: -340px 0;
+    background-position: -340px 1px;
 }
 
 /* sorocred */
@@ -10724,11 +10728,12 @@ tr.card-product-line {
 /* banescard débito */
 .data-cards table tbody .brand_59, #receiptsDetails .brand_59,
 .data-cards table tbody .brand_96, #receiptsDetails .brand_96 {
-    background-position: -54px 0;
+    background-position: -54px 1px;
 }
 
 /* outras bandeiras - o que colocar ? */
-.data-cards table tbody .brand_80, #receiptsDetails .brand_80 {
+.data-cards table tbody .brand_80, #receiptsDetails .brand_80,
+.data-cards table tbody .brand_81, #receiptsDetails .brand_81{
     visibility: hidden;
 }
 
@@ -10932,6 +10937,7 @@ tr.card-product-line {
 
 .dropdown-multiselect {
     width: 100%;
+	position: relative;
 }
 .dropdown-multiselect .dropdown-toggle {
     width: 100%;
@@ -10959,7 +10965,6 @@ tr.card-product-line {
     box-shadow: none;
     box-sizing: border-box;
     top: 43px;
-    // max-height: 220px;
     max-height: 150px;
 }
 
@@ -11020,7 +11025,6 @@ tr.card-product-line {
     font-size: 16px ;
     color: #575757;
     width: 100%;
-    // box-shadow: 0 4px #b1d800 !important;
     position: relative;
     top: -1px;
     height: 40px;
@@ -11216,7 +11220,6 @@ tr.card-product-line {
     font-size: 24px;
     right: 7px;
     top: 8px;
-    // cursor: pointer;
 }
 
 .rcDatepicker .input-group-addon:before {
