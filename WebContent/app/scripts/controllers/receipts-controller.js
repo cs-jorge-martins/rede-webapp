@@ -41,6 +41,8 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
     $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
     $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
+    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+
 	$scope.date = new Date();
 	$scope.minDate = new Date();
 	$scope.accountsModel = [];
@@ -620,14 +622,32 @@ angular.module('KaplenWeb.movementsModule',[])
 	    }
     }
 
-	function ClearShopFilter () {
-		$scope.shopsModel = [];
-        GetReceipt();
+	function ClearShopFilter (bolIsFuture) {
+		if(bolIsFuture) {
+			$scope.shopsFutureModel = [];
+			MakeReceiptsOrFutureReceipts(true);
+		} else {
+			$scope.shopsModel = [];
+			MakeReceiptsOrFutureReceipts(false);
+		}
 	}
 
-	function ClearCardProductsFilter () {
-		$scope.cardProductsModel = [];
-        GetReceipt();
+	function ClearCardProductsFilter (bolIsFuture) {
+		if(bolIsFuture) {
+			$scope.cardProductsFutureModel = [];
+			MakeReceiptsOrFutureReceipts(true);
+		} else {
+			$scope.cardProductsModel = [];
+			MakeReceiptsOrFutureReceipts(false);
+		}
+	}
+
+	function MakeReceiptsOrFutureReceipts(bolIsFuture) {
+		if(bolIsFuture) {
+			GetFutureReceipt();
+		} else {
+			GetReceipt();
+		}
 	}
 
   	function GetFilters() {

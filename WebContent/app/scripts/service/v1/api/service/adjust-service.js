@@ -9,6 +9,17 @@ angular.module('Conciliador.AdjustService',[])
 
 }]).service('AdjustService', function(app, $location, $http, Request) {
 
+    this.ListAdjusts = function(objFilter) {
+		var objRequest = objFilter;
+
+		return $http({
+			url: app.endpoint + "/adjusts",
+			method: "GET",
+			params: objRequest,
+			headers: Request.setHeaders()
+		})
+	}
+
 	this.GetOtherDetails = function(objFilter) {
 		var objRequest = objFilter;
 
