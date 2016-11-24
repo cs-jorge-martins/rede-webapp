@@ -68,7 +68,7 @@
 					<div class="selectWrapper">
 						<label for="totalItensPage">resultados por página</label>
 						<div class="select">
-							<select ng-model="totalItensPage" ng-change="pageChangedSales()" id="totalItensPage">
+							<select ng-model="totalItensPage" ng-change="pageChanged()" id="totalItensPage">
 								<option value="10">10</option>
 								<option value="20">20</option>
 								<option value="50">50</option>
@@ -77,18 +77,18 @@
 					</div>
 					<div class="paginationWrapper">
 						<pagination
-								total-items="adjustsTotalItens"
-								ng-model="adjustsCurrentPage"
-								ng-change="pageChangedAdjusts()"
+								total-items="totalItens"
+								ng-model="currentPage"
+								ng-change="pageChanged()"
 								max-size="maxSize"
-								items-per-page="totalItensPageChanged"
+								items-per-page="currentSize"
 								rotate="false"
 								class="pagination-sm"
 								boundary-links="false"
 								previous-text="&lsaquo;"
 								next-text="&rsaquo;"
-								first-text="&laquo;"
-								last-text="&raquo;">
+								first-text=" "
+								last-text=" ">
 						</pagination>
 					</div>
 				</div>

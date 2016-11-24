@@ -58,26 +58,15 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
         		$scope.month = calendarFactory.getMonthNameOfDate($scope.startDate);
 
 
-				objFilter = {
-					shopIds: $scope.shopIds,
-					acquirerIds: $scope.acquirer.id,
-					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
-					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
-					bankAccountIds: $scope.bankAccount.id,
-					status: "FORETHOUGHT",
-				};
-
-				$scope.maxSize = 10;
-
+				$scope.maxSize = 4;
+				$scope.itensPerPage = 10;
+				$scope.currentPage = 0;
+				$scope.currentSize = 10;
 				$scope.totalItensPage = 10;
-				$scope.totalItens = 0;
-				$scope.salesCurrentPage = 0;
 
 				$scope.back = Back;
 				$scope.sortResults = SortResults;
-				$scope.pageChangedSales = PageChangedSales;
-				$scope.totalItensPageChangedSales = TotalItensPageChangedSales;
-				$scope.pageChangedAdjusts = PageChangedAdjusts;
+				$scope.pageChanged = PageChanged;
 				$scope.totalItensPageChanged = TotalItensPageChanged;
 
 				GetForethought();
@@ -90,50 +79,54 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 
 	    function GetForethought () {
 	    	$scope.forethought = [];
-	    	objFilter.sort = $scope.sort;
-	    	MovementService.GetForethoughts(objFilter).then(function(objResponse) {
+
+			objFilter = {
+				shopIds: $scope.shopIds,
+				acquirerIds: $scope.acquirer.id,
+				startDate: calendarFactory.formatDateTimeForService($scope.startDate),
+				endDate: calendarFactory.formatDateTimeForService($scope.endDate),
+				bankAccountIds: $scope.bankAccount.id,
+				status: "FORETHOUGHT",
+				page:  $scope.currentPage ==  0 ? $scope.currentPage : $scope.currentPage - 1,
+				size:  $scope.currentSize
+			};
+
+			objFilter.sort = $scope.sort;
+
+			MovementService.GetForethoughts(objFilter).then(function(objResponse) {
 	    		var objData = objResponse.data.content;
+				var objPagination = objResponse.data.page;
 
 	    		for (var intIndex in objData ) {
 	    			$scope.forethought.push(objData[intIndex]);
 	    		}
+
+				$scope.totalItens = objPagination.totalElements;
 
 	    	}).catch(function(objResponse) {
 
 	    	})
 	    }
 
-	    function SortResults(objElem, strKind) {
-	    	var strOrderString;
-	    	strOrderString = $rootScope.sortResults(objElem, strKind);
-
-	    	$scope.sort = strOrderString;
-	    	GetForethought();
-	    }
-
 	    /* pagination */
-		function PageChangedSales() {
-			$scope.salesCurrentPage = this.salesCurrentPage;
+
+		function PageChanged() {
+			$scope.currentSize = this.totalItensPage;
+			$scope.currentPage = this.currentPage;
 			GetForethought();
-		};
-
-
-		function TotalItensPageChangedSales() {
-			this.salesCurrentPage = $scope.salesCurrentPage = 0;
-			$scope.salesTotalItensPage = this.salesTotalItensPage;
-			GetForethought();
-		};
-
-		function PageChangedAdjusts() {
-			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
-			GetForethought();
-		};
-
-
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.totalItensPage = 0;
 			$scope.totalItensPage = this.currentPage;
+			GetForethought();
+		}
+
+		function SortResults(objElem, strKind) {
+			var strOrderString;
+			strOrderString = $rootScope.sortResults(objElem, strKind);
+
+			$scope.sort = strOrderString;
 			GetForethought();
 		}
 
