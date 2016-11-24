@@ -38,7 +38,7 @@
 
 	<div id="primaryContent">
 		<div id="details">
-			<tabset>
+			<tabset ng-show="detailsData">
 				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
 					<div class="receipts-details-wrapper">
 						<table class="table sortTable">
