@@ -38,9 +38,9 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
     $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
     $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation($scope.futureReleases.startDate);
+    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
     $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation($scope.futureReleases.endDate);
+    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 	$scope.date = new Date();
 	$scope.minDate = new Date();
 	$scope.accountsModel = [];
@@ -77,7 +77,6 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
     $scope.futureReleasesData = [];
-    // $rootScope.futureSelected = true;
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
     var intFilterStatus = 0;
@@ -93,8 +92,12 @@ angular.module('KaplenWeb.movementsModule',[])
 	function Init() {
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
-        GetFilters();
-		GetForethought();
+		if ($rootScope.futureSelected) {
+			$scope.tabs[1].active = true;
+		}
+
+		GetFilters();
+
 	}
 
     function GetReceipt() {
@@ -606,14 +609,6 @@ angular.module('KaplenWeb.movementsModule',[])
 
 	function ChangeTab(intIndex) {
 
-		if ($rootScope.futureSelected === true) {
-			console.log($rootScope.futureSelected);
-			intIndex = 1;
-			GetFutureReceipt();
-			delete $rootScope.futureSelected;
-		
-		}
-
 		$scope.tabs[intIndex].active = true;
 
 		if(intFilterStatus === 4) {
@@ -659,11 +654,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			$scope.accountsFutureModel.label = arrFilterConfig[0].label;
 
 			intFilterStatus++;
-
-            if(intFilterStatus === 4) {
-            	GetCachedData();
-                GetReceipt();
-            }
+            HandleTabs();
 
 		}).catch(function(objResponse){
 			console.log('error');
@@ -683,10 +674,7 @@ angular.module('KaplenWeb.movementsModule',[])
             $scope.cardProductsFutureModel = angular.copy($scope.cardProductsData);
 
             intFilterStatus++;
-            if(intFilterStatus === 4) {
-            	GetCachedData();
-                GetReceipt();
-            }
+            HandleTabs();
 
 		}).catch(function(objResponse){
 			console.log('error');
@@ -706,11 +694,7 @@ angular.module('KaplenWeb.movementsModule',[])
             $scope.shopsFutureModel = angular.copy($scope.shopsData);
 
             intFilterStatus++;
-
-            if(intFilterStatus === 4) {
-            	GetCachedData();
-                GetReceipt();
-            }
+            HandleTabs();
 
 		}).catch(function(objResponse){
 			console.log('error');
@@ -730,15 +714,23 @@ angular.module('KaplenWeb.movementsModule',[])
             $scope.acquirersFutureModel = angular.copy($scope.acquirersData);
 
             intFilterStatus++;
-
-            if(intFilterStatus === 4) {
-            	GetCachedData();
-                GetReceipt();
-            }
+			HandleTabs();
 
 		}).catch(function(objResponse){
 			console.log('error');
 		});
+	}
+
+	function HandleTabs() {
+		if( intFilterStatus === 4 ) {
+			GetCachedData();
+			if ($rootScope.futureSelected) {
+				delete $rootScope.futureSelected;
+				GetFutureReceipt();
+			} else {
+				GetReceipt();
+			}
+		}
 	}
 
 	function GetAccountsFilter(bolIsFuture) {
@@ -946,13 +938,17 @@ angular.module('KaplenWeb.movementsModule',[])
 			$scope.shopsModel = cacheService.LoadFilter('shopIds');
 			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
 			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
-			$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
-			$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
-			$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
-			$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
-			$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
-			$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
 
+			if($rootScope.futureSelected) {
+				$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
+				$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
+				$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
+				$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
+				$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
+				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
+				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
+			}
 		}
     }
 
