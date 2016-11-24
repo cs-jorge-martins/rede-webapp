@@ -13,7 +13,9 @@
 	<article class="data-cards big">
 		<div class="header-datas">
 			<div class="date">
-				<span class="number">{{ dateTitle() }}</span>
+				<span class="number">
+					{{dates.startDateDay}} {{dates.startDateMonth}} {{dates.startDateYear}} <br />a {{dates.endDateDay}} {{dates.endDateMonth}} {{dates.endDateYear}}
+				</span>
 			</div>
 			<div class="chip-wrapper only-chip-on-header">
 				<div class="chip" ng-if="accountsLabel">

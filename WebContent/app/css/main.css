@@ -9902,11 +9902,12 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .header-datas .date-wrapper .future {
-    font-weight:bold;
+    font-weight:normal;
     font-size:20px;
     width:100%;
     margin-right: 0;
     text-align: left;
+    line-height: 23px;
 }
 
 .data-cards .header-datas .date {

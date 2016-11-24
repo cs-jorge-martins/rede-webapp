@@ -39,6 +39,7 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
     $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
+    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
     $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
     $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
@@ -921,8 +922,15 @@ angular.module('KaplenWeb.movementsModule',[])
 				strRedirectUrl = "receipts/forethought_details";
 				break;
 			case "future_details":
-				$rootScope.receiptsDetails.periodStartDate = $scope.futureReleases.startDate;
-				$rootScope.receiptsDetails.periodEndDate = $scope.futureReleases.endDate;
+				$rootScope.futureReleases = {};
+				$rootScope.futureReleases.dates = {
+					startDateDay: $scope.futureReleases.startDateDay,
+					startDateMonth: $scope.futureReleases.startDateMonth,
+					startDateYear: $scope.futureReleases.startDateYear,
+					endDateDay: $scope.futureReleases.endDateDay,
+					endDateMonth: $scope.futureReleases.endDateMonth,
+					endDateYear: $scope.futureReleases.endDateYear,
+				};
 				strRedirectUrl = "receipts/future_details";
 				break;
 			default:
