@@ -627,14 +627,32 @@ angular.module('KaplenWeb.movementsModule',[])
 	    }
     }
 
-	function ClearShopFilter () {
-		$scope.shopsModel = [];
-        GetReceipt();
+	function ClearShopFilter (bolIsFuture) {
+		if(bolIsFuture) {
+			$scope.shopsFutureModel = [];
+			MakeReceiptsOrFutureReceipts(true);
+		} else {
+			$scope.shopsModel = [];
+			MakeReceiptsOrFutureReceipts(false);
+		}
 	}
 
-	function ClearCardProductsFilter () {
-		$scope.cardProductsModel = [];
-        GetReceipt();
+	function ClearCardProductsFilter (bolIsFuture) {
+		if(bolIsFuture) {
+			$scope.cardProductsFutureModel = [];
+			MakeReceiptsOrFutureReceipts(true);
+		} else {
+			$scope.cardProductsModel = [];
+			MakeReceiptsOrFutureReceipts(false);
+		}
+	}
+	
+	function MakeReceiptsOrFutureReceipts(bolIsFuture) {
+		if(bolIsFuture) {
+			GetFutureReceipt();
+		} else {
+			GetReceipt();
+		}
 	}
 
   	function GetFilters() {
