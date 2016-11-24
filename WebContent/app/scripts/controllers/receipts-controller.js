@@ -79,7 +79,6 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.futureReleasesData = [];
     $scope.timelineExpectedAmount = [];
     $scope.customTimelineExpectedAmount = [];
-    // $rootScope.futureSelected = true;
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
     var intFilterStatus = 0;
@@ -146,25 +145,24 @@ angular.module('KaplenWeb.movementsModule',[])
 			console.log('[receiptsController:getSummaries] error');
 		})
 	}
-
 	function GetTimeline() {
+		var a = moment().add(1, 'days');
+		$scope.teste = moment(a).add(1, 'years');
 
 		var objFilter = {
-			startDate: "20161122",
-			endDate: "20171123",
+			startDate: calendarFactory.formatDateTimeForService(a),
+			endDate: calendarFactory.formatDateTimeForService($scope.teste),
 			bankAccountIds: GetAccountsFilter(),
 			shopIds: GetShopsFilter(),
 			acquirerIds: GetAcquirersFilter(),
 			cardProductIds: GetCardProductsFilter(),
 			status: 'EXPECTED'
 		};
-
-		receiptsService.getTimeline(objFilter).then(function(objResponse) {
-			console.log(objResponse);
-			$scope.timelineExpectedAmount = objResponse.data.content[0];
+		receiptsService.getTimeline(objFilter).then(function(response){
+			console.log(response);
+			$scope.timelineExpectedAmount = response.data.content[0];
 		})
 	}
-
 	function GetForethought() {
 
 		var objFilter = {
@@ -480,13 +478,21 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
 		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 
+		var strInitialDay = moment($scope.futureReleases.startDate);
+		var strFinalDay = moment($scope.futureReleases.endDate);
+
+		$scope.countDiffDays = strFinalDay.diff(strInitialDay, 'days');
+
 		SaveFilters();
 		GetLabels(true);
 		GetFutureAcquirers();
 
+		var a = moment().add(1, 'days');
+		$scope.teste = moment(a).add(1, 'years');
+
 		var objFilter = {
-			startDate: "20161122",
-			endDate: "20171123",
+			startDate: calendarFactory.formatDateTimeForService(a),
+			endDate: calendarFactory.formatDateTimeForService($scope.teste),
 			bankAccountIds: GetAccountsFilter(),
 			shopIds: GetShopsFilter(),
 			acquirerIds: GetAcquirersFilter(),
