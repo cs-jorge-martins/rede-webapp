@@ -15,7 +15,8 @@
 	<article class="data-cards">
 		<div class="header-datas">
 			<div class="date">
-				<span class="number">{{ day }}</span><br> {{ month }}
+				<span class="number">{{ day }}</span>
+				<span class="month">{{ month }}</span>
 			</div>
 			<div class="chip-wrapper only-chip-on-header">
 				<div class="chip" ng-if="accountsLabel">
@@ -28,14 +29,15 @@
 		</div>
 
 	</article>
-	
+
 	<ul class="wrapperAcquirerSummary">
 		<li class="acquirer">{{ acquirer.name }}</li>
 		<li class="cardProduct"><div class="cardFlag brand_{{cardProduct.cardProductId}}"></div> {{ cardProduct.cardProductName | capitalize }}</li>
 		<li class="totalValue">
-			<span>total liquido antecipado</span>
+			<span class="valor-liquido">total liquido antecipado</span>
 			<div class="value">
-				R$ <span class="big">{{ cardProduct.total | currency: "" }}</span> 
+				<span>R$</span>
+				<span class="totalDiscounted">{{ cardProduct.total | currency: "" }}</span>
 			</div>
 		</li>
 	</ul>
