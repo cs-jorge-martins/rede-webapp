@@ -251,6 +251,10 @@ angular.module('Kaplen.CalendarFactory',[])
         return moment(date).format('MMMM');
     }
 
+    function GetYearOfDate(date){
+        return moment(date).format('YYYY');
+    }
+
 	function GetHoursAndMinutes(hour){
 		return moment(hour, "HH:mm:ss").tz(timeTimezone).format("HH:mm");
 	}
@@ -390,6 +394,7 @@ angular.module('Kaplen.CalendarFactory',[])
         checkInvalidPeriod: CheckInvalidPeriod,
         getDayOfDate: GetDayOfDate,
         getMonthNameOfDate: GetMonthNameOfDate,
+        getYearOfDate: GetYearOfDate,
         getLastDayOfCurrentMonth: GetLastDayOfCurrentMonth,
         getTomorrowFromToday: GetTomorrowFromToday,
         transformBrDateIntoDate: TransformBrDateIntoDate,
