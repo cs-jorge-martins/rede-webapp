@@ -1,11 +1,11 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
-<section class="receiptsExpectedDetails" id="receiptsDetails">
+<section class="receiptsExpectedDetails expected" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
 			<h3>recebimentos não efetuados | detalhes</h3>
-			<button ng-click="back()">x</button>
+			<button ng-click="back()"><i class="itauicon-itaufonts_fechar close-modal"></i></button>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -26,6 +26,9 @@
 					<div class="chip" ng-if="accountsLabel">
 						{{ accountsLabel }}
 					</div>
+					<div class="chip" ng-if="shops">
+						{{ shopsLabel }}
+					</div>
 				</div>
 			</div>
 			<div class="clearfix"></div>
@@ -35,7 +38,7 @@
 
 	<div id="primaryContent">
 		<div id="details">
-			<tabset>
+			<tabset ng-show="detailsData">
 				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
 					<div class="receipts-details-wrapper">
 						<table class="table sortTable">
@@ -80,26 +83,26 @@
 									</select>
 								</div>
 							</div>
+							<div class="paginationWrapper">
+								<ul uib-pagination
+										total-items="adjustsTotalItens"
+										ng-model="adjustsCurrentPage"
+										ng-change="pageChangedAdjusts()"
+										max-size="maxSize"
+										items-per-page="adjustsTotalItensPage"
+										rotate="false"
+										class="pagination-sm"
+										boundary-links="false"
+										previous-text="&lsaquo;"
+										next-text="&rsaquo;"
+										first-text=" "
+										last-text=" ">
+								</ul>
+							</div>
 						</div>
 					</div>
 				</tab>
 			</tabset>
-			<div class="paginationWrapper center">
-				<ul uib-pagination
-						total-items="adjustsTotalItens"
-						ng-model="adjustsCurrentPage"
-						ng-change="pageChangedAdjusts()"
-						max-size="maxSize"
-						items-per-page="adjustsTotalItensPage"
-						rotate="false"
-						class="pagination-sm"
-						boundary-links="false"
-						previous-text="&lsaquo;"
-						next-text="&rsaquo;"
-						first-text=" "
-						last-text=" ">
-				</ul>
-			</div>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>

@@ -11,7 +11,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 }])
 
 .controller('relatorioAjustesController', function(menuFactory, $scope, calendarFactory, $rootScope,
-    $window, advancedFilterService, calendarService, AdjustSummaryService){
+    $window, advancedFilterService, calendarService, AdjustSummaryService, AdjustService){
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
 		$scope.LoadParamsByFilter();
@@ -25,7 +25,7 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.items = [];
 		$scope.total = 0;
 		$scope.noItensMsg = false;
-		$scope.sort = 'date,ASC';
+		$scope.sort = 'payedDate,ASC';
 		$scope.exportReport = ExportReport;
 
 		var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
@@ -53,11 +53,10 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
             var intCurPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
 
-			AdjustSummaryService.ListAdjustSummary({
+			AdjustService.ListAdjusts({
 				currency: 'BRL',
 				startDate: calendarFactory.formatDateTimeForService($scope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.finalDate),
-				groupBy: 'PAYED_DATE,DESCRIPTION',
                 page: intCurPage,
 				size: $scope.totalItensPage,
 				sort: $scope.sort

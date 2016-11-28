@@ -53,7 +53,7 @@
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.authorization}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.cardNumberEnd}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">
-                		{{item.percentFee}}{{ item.percentFee ? '%' : ' ' }}
+                		{{item.percentFee | currency: ""}}{{ item.percentFee ? '%' : ' ' }}
                 	</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.installment}}</td>
                 	<td ng-hide="item.isConciliated" ng-click="comprovanteVenda(item)">{{item.terminal.code}}</td>

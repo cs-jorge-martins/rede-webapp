@@ -57,14 +57,16 @@
         		<table cellpadding="0" cellspacing="0" class="sortTable">
         			<thead>
         				<tr class="taleft">
-        					<th width="350" ng-click="sortResults($event,'payedDate')">data</th>
-        					<th width="410" ng-click="sortResults($event,'description')">descrição</th>
+        					<th width="250" ng-click="sortResults($event,'payedDate')">data do débito/crédito</th>
+                            <th width="250" ng-click="sortResults($event,'roDate')">data do ajuste</th>
+        					<th width="250" ng-click="sortResults($event,'description')">descrição</th>
         					<th ng-click="sortResults($event,'amount')">valor (R$)</th>
         				</tr>
         			</thead>
         			<tbody id="cupomVendasTour" ng-show="items">
         				<tr ng-repeat="item in items" ng-class-odd="'odd'">
-        					<td>{{item.date | date: 'dd/MM/yyyy'}}</td>
+        					<td>{{item.payedDate | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{item.roDate | date: 'dd/MM/yyyy'}}</td>
                         	<td>{{item.description}}</td>
                         	<td>{{item.amount | currency:""}}</td>
         				</tr>

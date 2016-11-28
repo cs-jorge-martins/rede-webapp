@@ -3,7 +3,7 @@
 	<div id="detailsClose">
 		<div class="container">
 			<h3>lançamentos futuros | detalhes</h3>
-			<button ng-click="back()">x</button>
+			<button ng-click="back()"><i class="itauicon-itaufonts_fechar close-modal"></i></button>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -13,7 +13,9 @@
 	<article class="data-cards big">
 		<div class="header-datas">
 			<div class="date">
-				<span class="number">{{ dateTitle() }}</span>
+				<span class="number">
+					{{dates.startDateDay}} {{dates.startDateMonth}} {{dates.startDateYear}} <br />a {{dates.endDateDay}} {{dates.endDateMonth}} {{dates.endDateYear}}
+				</span>
 			</div>
 			<div class="chip-wrapper only-chip-on-header">
 				<div class="chip" ng-if="accountsLabel">
@@ -33,7 +35,7 @@
 			<span>{{cardProduct.cardProductName}}</span>
 		</li>
 		<li class="totalValue">
-			<span>valor líquido a receber</span>
+			<span class="valor-liquido">valor líquido a receber</span>
 			<div class="value">
 				<span>R$</span>
 				<span class="totalDiscounted">{{ cardProduct.releases[0].expectedAmount | customCurrency: "" }}</span>
@@ -42,16 +44,33 @@
 	</ul>
 
 	<div class="mainContent" id="details">
-		<table class="table sortTable">
+		<table class="table sortTable gray-header">
 			<thead>
 				<tr>
-					<th ng-click="sortResults($event, 'expectedDate')">data prevista do recebimento</th>
-					<th ng-click="sortResults($event, 'roDate')">data do lote(RV)</th>
+					<th ng-click="sortResults($event, 'expectedDate')">
+						data prevista <br>
+						do recebimento
+					</th>
+					<th ng-click="sortResults($event, 'roDate')">
+						data do lote (RV)
+					</th>
 					<th ng-click="sortResults($event, 'roNumber')">nº do lote (RV)</th>
-					<th ng-click="sortResults($event, 'transactionQuantity')">qtd vendas lote (RV)</th>
-					<th ng-click="sortResults($event, 'gross')">valor total do lote (RV)</th>
-					<th ng-click="sortResults($event, 'expectedAmount')">valor líquido do lote (RV)</th>
-					<th ng-click="sortResults($event, 'sourcePvCode')">nº do estabelecimento (PV)</th>
+					<th ng-click="sortResults($event, 'transactionQuantity')">
+						qtd vendas <br>
+						lote (RV)
+					</th>
+					<th ng-click="sortResults($event, 'gross')">
+						valor total <br>
+						do lote (RV)
+					</th>
+					<th ng-click="sortResults($event, 'expectedAmount')">
+						valor líquido <br>
+						do lote (RV)
+					</th>
+					<th ng-click="sortResults($event, 'sourcePvCode')">
+						nº do estabelecimento <br>
+						(PV)
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -78,26 +97,22 @@
 					</select>
 				</div>
 			</div>
-
-		</div>
-	</div>
-
-	<div class="optionsWrapper">
-		<div class="paginationWrapper center">
-			<ul uib-pagination
-					total-items="totalItens"
-					ng-model="currentPage"
-					ng-change="pageChanged()"
-					max-size="maxSize"
-					items-per-page="currentSize"
-					rotate="false"
-					class="pagination-sm"
-					boundary-links="false"
-					previous-text="&lsaquo;"
-					next-text="&rsaquo;"
-					first-text=" "
-					last-text=" ">
-			</ul>
+			<div class="paginationWrapper">
+				<ul uib-pagination
+						total-items="totalItens"
+						ng-model="currentPage"
+						ng-change="pageChanged()"
+						max-size="maxSize"
+						items-per-page="currentSize"
+						rotate="false"
+						class="pagination-sm"
+						boundary-links="false"
+						previous-text="&lsaquo;"
+						next-text="&rsaquo;"
+						first-text=" "
+						last-text=" ">
+				</ul>
+			</div>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>

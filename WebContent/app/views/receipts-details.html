@@ -1,11 +1,11 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
-<section class="" id="receiptsDetails">
+<section class="receiptsExpectedDetails" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
-			<h3>detalhes</h3>
-			<button ng-click="back()">x</button>
+			<h3>últimos lançamentos | detalhes</h3>
+			<button ng-click="back()"><i class="itauicon-itaufonts_fechar close-modal"></i></button>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -15,45 +15,37 @@
 	<article class="data-cards">
 		<div class="header-datas">
 			<div class="date">
-				<span class="number">{{ day }}</span><br> {{ month }}
+				<span class="number">{{ day }}</span>
+				<span class="month">{{ month }}</span>
 			</div>
-			<div class="chip-wrapper">
-
+			<div class="chip-wrapper only-chip-on-header">
 				<div class="chip" ng-if="accountsLabel">
 					{{ accountsLabel }}
 				</div>
-				<div class="chip" ng-if="shopsLabel">
+				<div class="chip" ng-if="shops">
 					{{ shopsLabel }}
 				</div>
-				<!--
-				<div class="chip" ng-if="cardProductsLabel">
-					{{ cardProductsLabel }}
-				</div>
-				-->
 			</div>
 		</div>
-		<div class="numbers-data">
-			<div class="width50">
-				<h3>{{ acquirer.name }}</h3>
-				<div class="cardFlag brand_{{cardProduct.cardProductId}}"></div> <h5 class="brandName"> {{cardProduct.cardProductName}} </h5>
-			</div>
-			<div class="width50">
-				<ul class="list-inline">
-					<!--
-					<li>
-						<strong>total vendido</strong>
-						<br> R$ <span class="big-number"> {{ expectedAmount }}</span>
-					</li>
-					-->
-					<li>
-						<strong>total recebido</strong>
-						<br> R$ <span class="big-number"> {{ total | currency : '' }} </span>
-					</li>
-				</ul>
-			</div>
-		</div>
-
 	</article>
+
+	<ul class="wrapperAcquirerSummary">
+		<li class="acquirer">{{ acquirer.name }}</li>
+		<li class="cardProduct">
+			<div class="cardFlag brand_{{cardProduct.cardProductId}}"></div>
+			<span>{{cardProduct.cardProductName}}</span>
+		</li>
+		<li class="totalValue">
+			<span class="valor-liquido">total recebido</span>
+			<div class="value">
+				<span>R$</span>
+				<span class="totalDiscounted">{{ total | currency : '' }}</span>
+			</div>
+		</li>
+	</ul>
+
+
+
 
 	<!-- action buttons -->
     <!--
@@ -131,7 +123,7 @@
 									items-per-page="salesTotalItensPage"
 									rotate="false"
 									class="pagination-sm"
-									boundary-links="true"
+									boundary-links="false"
 									previous-text="&lsaquo;"
 									next-text="&rsaquo;"
 									first-text="&laquo;"
@@ -185,7 +177,7 @@
 									items-per-page="adjustsTotalItensPage"
 									rotate="false"
 									class="pagination-sm"
-									boundary-links="true"
+									boundary-links="false"
 									previous-text="&lsaquo;"
 									next-text="&rsaquo;"
 									first-text="&laquo;"
@@ -244,7 +236,7 @@
 									items-per-page="cancellationsTotalItensPage"
 									rotate="false"
 									class="pagination-sm"
-									boundary-links="true"
+									boundary-links="false"
 									previous-text="&lsaquo;"
 									next-text="&rsaquo;"
 									first-text="&laquo;"

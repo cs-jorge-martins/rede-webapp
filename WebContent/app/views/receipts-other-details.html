@@ -3,7 +3,7 @@
 	<div id="detailsClose">
 		<div class="container">
 			<h3>outros lançamentos | detalhes</h3>
-			<button ng-click="back()">x</button>
+			<button ng-click="back()"><i class="itauicon-itaufonts_fechar close-modal"></i></button>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -25,12 +25,12 @@
 				</div>
 			</div>
 		</div>
-
 	</article>
+
 	<ul class="wrapperAcquirerSummary">
 		<li class="acquirer">{{ acquirer.name }}</li>
 		<li class="totalValue">
-			<span>valor total do ajuste</span>
+			<span class="valor-liquido">valor total do ajuste</span>
 			<div class="discount">
 				<span>R$</span>
 				<span class="totalDiscounted">{{ totalOfSumAmount() * -1 | customCurrency: "" }}</span>
@@ -39,7 +39,7 @@
 	</ul>
 
 	<div class="mainContent" id="details">
-		<table class="table sortTable no-indent">
+		<table class="table sortTable no-indent gray-header">
 			<thead>
 				<tr>
 					<th ng-click="sortResults($event, 'payedDate')">data do ajuste</th>
@@ -77,7 +77,7 @@
 						items-per-page="totalItensPage"
 						rotate="false"
 						class="pagination-sm"
-						boundary-links="true"
+						boundary-links="false"
 						previous-text="&lsaquo;"
 						next-text="&rsaquo;"
 						first-text="&laquo;"

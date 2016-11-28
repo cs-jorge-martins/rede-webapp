@@ -5,7 +5,7 @@
 	<div id="detailsClose">
 		<div class="container">
 			<h3>recebimentos antecipados | detalhes</h3>
-			<button ng-click="back()">x</button>
+			<button ng-click="back()"><i class="itauicon-itaufonts_fechar close-modal"></i></button>
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -15,7 +15,8 @@
 	<article class="data-cards">
 		<div class="header-datas">
 			<div class="date">
-				<span class="number">{{ day }}</span><br> {{ month }}
+				<span class="number">{{ day }}</span>
+				<span class="month">{{ month }}</span>
 			</div>
 			<div class="chip-wrapper only-chip-on-header">
 				<div class="chip" ng-if="accountsLabel">
@@ -33,9 +34,10 @@
 		<li class="acquirer">{{ acquirer.name }}</li>
 		<li class="cardProduct"><div class="cardFlag brand_{{cardProduct.cardProductId}}"></div> {{ cardProduct.cardProductName | capitalize }}</li>
 		<li class="totalValue">
-			<span>total liquido antecipado</span>
+			<span class="valor-liquido">total liquido antecipado</span>
 			<div class="value">
-				R$ <span class="big">{{ cardProduct.total | currency: "" }}</span>
+				<span>R$</span>
+				<span class="totalDiscounted">{{ cardProduct.total | currency: "" }}</span>
 			</div>
 		</li>
 	</ul>
@@ -43,7 +45,7 @@
 	<div id="primaryContent">
 		<div id="details">
 			<article>
-				<table class="table sortTable">
+				<table class="table sortTable gray-header">
 					<thead>
 						<tr>
 							<th ng-click="sortResults($event,'roDate')">data do lote (RV)</th>
@@ -68,28 +70,27 @@
 					<div class="selectWrapper">
 						<label for="totalItensPage">resultados por página</label>
 						<div class="select">
-							<select ng-model="totalItensPage" ng-change="pageChangedSales()" id="totalItensPage">
+							<select ng-model="totalItensPage" ng-change="pageChanged()" id="totalItensPage">
 								<option value="10">10</option>
 								<option value="20">20</option>
 								<option value="50">50</option>
 							</select>
 						</div>
 					</div>
-
 					<div class="paginationWrapper">
 						<ul uib-pagination
-								total-items="adjustsTotalItens"
-								ng-model="adjustsCurrentPage"
-								ng-change="pageChangedAdjusts()"
-								max-size="maxSize"
-								items-per-page="adjustsTotalItensPage"
-								rotate="false"
-								class="pagination-sm"
-								boundary-links="true"
-								previous-text="&lsaquo;"
-								next-text="&rsaquo;"
-								first-text="&laquo;"
-								last-text="&raquo;">
+							total-items="totalItens"
+							ng-model="currentPage"
+							ng-change="pageChanged()"
+							max-size="maxSize"
+							items-per-page="currentSize"
+							rotate="false"
+							class="pagination-sm"
+							boundary-links="false"
+							previous-text="&lsaquo;"
+							next-text="&rsaquo;"
+							first-text=" "
+							last-text=" ">
 						</ul>
 					</div>
 				</div>
