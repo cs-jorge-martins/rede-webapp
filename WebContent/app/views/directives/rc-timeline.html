@@ -1,0 +1,36 @@
+<div class="timeline-wrapper">
+    <ul class="timeline-head">
+        <li>
+            lançamentos no período selecionado <br>
+            <span>
+                {{ dateRange }}
+            </span>
+        </li>
+        <li>
+            total de lançamentos previstos no próximo ano <br>
+            <span>{{maxDateRange}}</span>
+        </li>
+    </ul>
+    <ul class="total">
+        <li>
+            <span>R$</span>
+            {{ initialValue | currency: "" }}
+        </li>
+        <li class="gray">
+            <span>R$</span>
+            {{ finalValue | currency: "" }}
+        </li>
+    </ul>
+    <div class="timeline-block">
+        <!--<div class="percent" style="width:{{ (customTimelineExpectedAmount.expectedAmount / timelineExpectedAmount.expectedAmount * 100 | number: 2).split(',').join('.') }}%">-->
+        <div class="percent" style="width:{{(timeLinePercentage | number: 2).split(',').join('.')}}%">
+            <article>
+                <aside>
+                    <!-- {{ (customTimelineExpectedAmount.expectedAmount / timelineExpectedAmount.expectedAmount * 100 | number: 2) }} -->
+                    {{ timeLinePercentage | number: 2 }}
+                    % do valor
+                </aside>
+            </article>
+        </div>
+    </div>
+</div>

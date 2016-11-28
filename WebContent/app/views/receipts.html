@@ -226,30 +226,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="timeline-wrapper">
-                            <ul class="timeline-head">
-                                <li>lançamentos no período selecionado <br>
-                                    <span>
-                                        {{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} à {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}}
-                                    </span>
-                                </li>
-                                <li>total de lançamentos previstos no próximo ano <br>
-                                    <span>até 10 out 2017</span>
-                                </li>
-                            </ul>
-            
-                            <ul class="total">
-                                <li><span>R$</span>{{ customTimelineExpectedAmount.expectedAmount | currency: "" }}</li>
-                                <li class="gray"><span>R$</span>{{ timelineExpectedAmount.expectedAmount | currency: "" }}</li>
-                            </ul>
-                            <div class="timeline-block">
-                                <div class="percent" style="width:{{ (customTimelineExpectedAmount.expectedAmount / timelineExpectedAmount.expectedAmount * 100 | number: 2).split(',').join('.') }}%">
-                                    <article>
-                                        <aside>{{ (customTimelineExpectedAmount.expectedAmount / timelineExpectedAmount.expectedAmount * 100 | number: 2) }}% do valor</aside>    
-                                    </article>
-                		        </div>
-                            </div>
-                        </div>
+                        <rc-timeline
+                                date-range="{{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} à {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}}"
+                                max-date-range="{{customTimelineExpectedAmount.maxDateRange}}"
+                                initial-value="{{customTimelineExpectedAmount.expectedAmount}}"
+                                final-value="{{timelineExpectedAmount.expectedAmount}}"
+                                time-line-percentage="{{customTimelineExpectedAmount.percentage}}" ></rc-timeline>
                         <table ng-repeat="item in futureReleasesData" id="receipts_table">
                             <thead>
                                 <tr>

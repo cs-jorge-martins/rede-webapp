@@ -99,7 +99,6 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.actualReleases.date = calendarFactory.getToday();
         GetFilters();
 		GetForethought();
-		//GetTimeline();
 		if ($rootScope.futureSelected) {
 			$scope.tabs[1].active = true;
 		}
@@ -152,21 +151,19 @@ angular.module('KaplenWeb.movementsModule',[])
 		})
 	}
 	function GetTimeline() {
-		var a = moment().add(1, 'days');
-		$scope.teste = moment(a).add(1, 'years');
+		var objStartDate = moment().add(1, 'days');
+		var objEndDate = moment(objStartDate).add(1, 'years');
 
 		var objFilter = {
-			startDate: calendarFactory.formatDateTimeForService(a),
-			endDate: calendarFactory.formatDateTimeForService($scope.teste),
+			startDate: calendarFactory.formatDateTimeForService(objStartDate),
+			endDate: calendarFactory.formatDateTimeForService(objEndDate),
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
 			acquirerIds: GetAcquirersFilter(true),
 			cardProductIds: GetCardProductsFilter(true),
 			status: 'EXPECTED'
 		};
-		console.log(JSON.stringify(objFilter));
 		receiptsService.getTimeline(objFilter).then(function(response){
-			console.log(response);
 			$scope.timelineExpectedAmount = response.data.content[0];
 		})
 	}
@@ -506,11 +503,26 @@ angular.module('KaplenWeb.movementsModule',[])
 		};
 
 		receiptsService.getTimeline(objFilter).then(function(objResponse) {
-			console.log("2", objResponse);
 			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
+			$scope.customTimelineExpectedAmount.percentage = $scope.customTimelineExpectedAmount.expectedAmount / $scope.timelineExpectedAmount.expectedAmount * 100;
+			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
 		});
 
 		GetTimeline();
+	}
+	
+	function GetFutureMaxDateRange() {
+		var strDateDay;
+		var strDateMonth;
+		var strDateYear;
+		var objMaxDate;
+
+		objMaxDate = calendarFactory.getNextYear();
+		strDateDay = calendarFactory.getDayOfDate(objMaxDate);
+		strDateMonth = calendarFactory.getMonthNameAbreviation(objMaxDate);
+		strDateYear = calendarFactory.getYear(objMaxDate);
+
+		return "até " + strDateDay + " " + strDateMonth + " " + strDateYear;
 	}
 
 	function GetFutureAcquirers() {

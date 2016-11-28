@@ -29,6 +29,10 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetToday() {
 		return moment().toDate();
 	}
+	
+	function GetNextYear() {
+		return moment().add(1, 'years');
+	}
 
 	function GetDateFromString(value, strFormat){
 		return moment = moment(value,strFormat);
@@ -402,6 +406,7 @@ angular.module('Kaplen.CalendarFactory',[])
         getLastDayOfPlusMonthToDate: GetLastDayOfPlusMonthToDate,
         getToday: GetToday,
         getDayAndMonthFromDate: GetDayAndMonthFromDate,
-        getDaySlashMonth: GetDaySlashMonth
+        getDaySlashMonth: GetDaySlashMonth,
+		getNextYear: GetNextYear
 	};
 });
