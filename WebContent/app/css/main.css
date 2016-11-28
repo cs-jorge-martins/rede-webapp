@@ -7220,6 +7220,7 @@ td.editSettlementList {
 }
 #primaryContent {
 	margin-top: 10px;
+	margin-bottom: 30px;
 }
 /** filtro avançado */
 #advancedButton {
@@ -10333,7 +10334,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 #receiptsDetails .wrapperAcquirerSummary .totalValue span.valor-liquido {
     position: absolute;
     top: -15px;
-    width: 142px;
+    min-width: 142px;
     color: #575758;
     left: 0;
 }
@@ -10826,7 +10827,7 @@ tr.card-product-line {
 
  /* maestro */
 .data-cards table tbody .brand_6, #receiptsDetails .brand_6 {
-    background-position: -622px 0;
+    background-position: -631px 0;
  }
 
 /* visa electron */
@@ -11175,6 +11176,7 @@ tr.card-product-line {
 }
 #integration article {
     float: left;
+	margin-bottom: 20px;
 }
 #integration article ul li aside {
     float: left;
