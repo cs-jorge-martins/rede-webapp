@@ -9941,8 +9941,13 @@ div.checkbox-toggle-right {
     font-weight: lighter;
 }
 
-.data-cards .timeline-wrapper .total .gray {
+.data-cards .timeline-wrapper .total .gray{
     color:#b9b8b8;
+}
+
+
+.data-cards .timeline-wrapper article aside.gray {
+    color: #575758;
 }
 
 .data-cards .timeline-wrapper .total li {
@@ -10011,7 +10016,7 @@ div.checkbox-toggle-right {
     padding:0;
     margin:10px 0;
     float: left;
-    min-width: 180px;
+    min-width: 98px;
     width: 100%;
 }
 

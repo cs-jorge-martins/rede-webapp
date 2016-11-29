@@ -168,6 +168,9 @@ angular.module('KaplenWeb.movementsModule',[])
 			$scope.timelineExpectedAmount = response.data.content[0];
 			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
 			$scope.customTimelineExpectedAmount.percentage = $scope.customTimelineExpectedAmount.expectedAmount / $scope.timelineExpectedAmount.expectedAmount * 100;
+			if(isNaN($scope.customTimelineExpectedAmount.percentage)) {
+				$scope.customTimelineExpectedAmount.percentage = 0;
+			}
 			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
 		})
 	}
