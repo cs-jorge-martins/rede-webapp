@@ -9963,6 +9963,7 @@ div.checkbox-toggle-right {
     height: 50px;
     line-height: 75px;
     margin-right: 5px;
+    font-family: 'open_sansregular';
 }
 
 .data-cards .timeline-wrapper .timeline-block {
@@ -10016,8 +10017,12 @@ div.checkbox-toggle-right {
     padding:0;
     margin:10px 0;
     float: left;
-    min-width: 98px;
+    min-width: 94px;
     width: 100%;
+}
+
+.data-cards .timeline-wrapper article.small {
+    min-width: 78px;
 }
 
 .data-cards .timeline-wrapper article aside {

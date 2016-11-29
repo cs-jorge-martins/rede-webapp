@@ -23,11 +23,11 @@
     </ul>
     <div class="timeline-block">
         <div class="percent" style="width:{{(timeLinePercentage | number: 2).split(',').join('.')}}%">
-            <article>
+            <article ng-class="{small: initialValue <= 0}">
                 <aside ng-class="{gray: initialValue <= 0}" ng-if="finalValue > 0">
-                    <ng-show ng-if="timeLinePercentage != 0 && timeLinePercentage != 100">{{ timeLinePercentage | number: 2 }}</ng-show>
-                    <ng-show ng-if="timeLinePercentage == 0 || timeLinePercentage == 100">{{ timeLinePercentage }}</ng-show>
-                    % do valor
+                    <ng-show ng-if="timeLinePercentage != 0 && timeLinePercentage != 100">{{ timeLinePercentage | number: 2 }}%</ng-show>
+                    <ng-show ng-if="timeLinePercentage == 0 || timeLinePercentage == 100">{{ timeLinePercentage }}%</ng-show>
+                    do valor
                 </aside>
             </article>
         </div>
