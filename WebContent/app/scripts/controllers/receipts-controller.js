@@ -150,7 +150,8 @@ angular.module('KaplenWeb.movementsModule',[])
 			console.log('[receiptsController:getSummaries] error');
 		})
 	}
-	function GetTimeline() {
+
+	function GetTimeline(objResponse) {
 		var objStartDate = moment().add(1, 'days');
 		var objEndDate = moment(objStartDate).add(1, 'years');
 
@@ -165,8 +166,12 @@ angular.module('KaplenWeb.movementsModule',[])
 		};
 		receiptsService.getTimeline(objFilter).then(function(response){
 			$scope.timelineExpectedAmount = response.data.content[0];
+			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
+			$scope.customTimelineExpectedAmount.percentage = $scope.customTimelineExpectedAmount.expectedAmount / $scope.timelineExpectedAmount.expectedAmount * 100;
+			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
 		})
 	}
+
 	function GetForethought() {
 
 		var objFilter = {
@@ -503,12 +508,9 @@ angular.module('KaplenWeb.movementsModule',[])
 		};
 
 		receiptsService.getTimeline(objFilter).then(function(objResponse) {
-			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
-			$scope.customTimelineExpectedAmount.percentage = $scope.customTimelineExpectedAmount.expectedAmount / $scope.timelineExpectedAmount.expectedAmount * 100;
-			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
+			GetTimeline(objResponse);
 		});
 
-		GetTimeline();
 	}
 	
 	function GetFutureMaxDateRange() {
