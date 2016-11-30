@@ -125,7 +125,7 @@
 														<label for="buscaTerminal" class="ico-pre-input itauicon-itaufonts_para_empresa"></label>
 														<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
 															ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0"
-														uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue" />
+														uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue" typeahead-select-on-blur="false" />
 														<label for="buscaTerminal" class="ico-after-input itauicon-itaufonts_busca_consulta"></label>
 
 														<ul class="selectecWrapper">

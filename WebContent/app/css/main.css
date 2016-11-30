@@ -1331,7 +1331,7 @@ em, b {
 .icon-pencil2:before {
 	content: "\e60a";
 }
-body>div:first-child {
+#content {
 	min-height: 100%;
 	margin-bottom: -48px;
 	width: 1002px;
@@ -1339,7 +1339,7 @@ body>div:first-child {
 	left: 50%;
 	margin-left: -502px;
 }
-body>div:first-child:after {
+#content:after {
 	content: "";
 	height: 15px;
 	display: block;
@@ -6300,19 +6300,20 @@ label[for="ate"] {
  color: #514f55;
  font-style: italic;
 }
-.dropdown-menu.focus-list {
+
+form .dropdown-menu {
     max-height: 155px;
     overflow-x: hidden;
     width: 247px;
     background: #c6e6e0;
 }
-.focus-list li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li{
+form .dropdown-menu li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li{
     width: 247px;
     margin-left: 0 !important;
     text-indent: 15px;
 }
 
-.focus-list li a {
+.dropdown-menu li a {
     color: #565658;
     font-size: 12px;
     text-transform: uppercase;
@@ -6322,10 +6323,10 @@ label[for="ate"] {
     line-height: 1;
 }
 
-.focus-list li {
+.dropdown-menu li {
     border-top: 1px solid #fff!important;
 }
-.focus-list li:first-child {
+.dropdown-menu li:first-child {
     border-top: none;
 }
 
@@ -6360,27 +6361,27 @@ label[for="ate"] {
     top: 8px;
 }
 
-.focus-list ::-webkit-scrollbar, .hiddenContent.advancedFilterHiddenContent ::-webkit-scrollbar, .integrateModal .advancedFilterHiddenContent ul li ::-webkit-scrollbar {
+.dropdown-menu ::-webkit-scrollbar, .hiddenContent.advancedFilterHiddenContent ::-webkit-scrollbar, .integrateModal .advancedFilterHiddenContent ul li ::-webkit-scrollbar {
  width: 4px;
  height: 10px;
 }
-.advancedFilterHiddenContent ::-webkit-scrollbar-button:start:decrement, .advancedFilterHiddenContent ::-webkit-scrollbar-button:end:increment, .focus-list ::-webkit-scrollbar-button:start:decrement, .focus-list ::-webkit-scrollbar-button:end:increment {
+.advancedFilterHiddenContent ::-webkit-scrollbar-button:start:decrement, .advancedFilterHiddenContent ::-webkit-scrollbar-button:end:increment, .dropdown-menu ::-webkit-scrollbar-button:start:decrement, .dropdown-menu ::-webkit-scrollbar-button:end:increment {
  display: none;
 }
-.focus-list ::-webkit-scrollbar-track-piece, .advancedFilterHiddenContent ::-webkit-scrollbar-track-piece {
+.dropdown-menu ::-webkit-scrollbar-track-piece, .advancedFilterHiddenContent ::-webkit-scrollbar-track-piece {
  background-color: #c3d9d9;
  -webkit-border-radius: 6px;
  -moz-border-radius: 6px;
  border-radius: 6px;
 }
-.focus-list ::-webkit-scrollbar-thumb:vertical, .advancedFilterHiddenContent ::-webkit-scrollbar-thumb:vertical {
+.dropdown-menu ::-webkit-scrollbar-thumb:vertical, .advancedFilterHiddenContent ::-webkit-scrollbar-thumb:vertical {
  -webkit-border-radius: 6px;
  -moz-border-radius: 6px;
  background: #97b1b1;
  cursor:pointer;
 }
 
-.focus-list a {
+.dropdown-menu a {
 	background: none !important;
 }
 .hiddenContent.advancedFilterHiddenContent .grandChild ul li:first-child {
