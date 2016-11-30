@@ -17,7 +17,7 @@ angular.module('KaplenWeb.movementsModule',[])
 })
 
 .controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
-		advancedFilterService, calendarService, filtersService, receiptsService){
+		advancedFilterService, calendarService, filtersService, receiptsService, $filter){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
@@ -80,6 +80,8 @@ angular.module('KaplenWeb.movementsModule',[])
 	$scope.existsForethought = false;
     $scope.actualReleasesData = [];
     $scope.futureReleasesData = [];
+    $scope.timelineExpectedAmount = [];
+    $scope.customTimelineExpectedAmount = [];
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
     var intFilterStatus = 0;
@@ -95,12 +97,11 @@ angular.module('KaplenWeb.movementsModule',[])
 	function Init() {
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
+        GetFilters();
+		GetForethought();
 		if ($rootScope.futureSelected) {
 			$scope.tabs[1].active = true;
 		}
-
-		GetFilters();
-
 	}
 
     function GetReceipt() {
@@ -147,6 +148,30 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		}).catch(function(objResponse) {
 			console.log('[receiptsController:getSummaries] error');
+		})
+	}
+
+	function GetTimeline(objResponse) {
+		var objStartDate = moment().add(1, 'days');
+		var objEndDate = moment(objStartDate).add(1, 'years');
+
+		var objFilter = {
+			startDate: calendarFactory.formatDateTimeForService(objStartDate),
+			endDate: calendarFactory.formatDateTimeForService(objEndDate),
+			bankAccountIds: GetAccountsFilter(true),
+			shopIds: GetShopsFilter(true),
+			acquirerIds: GetAcquirersFilter(true),
+			cardProductIds: GetCardProductsFilter(true),
+			status: 'EXPECTED'
+		};
+		receiptsService.getTimeline(objFilter).then(function(response){
+			$scope.timelineExpectedAmount = response.data.content[0];
+			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
+			$scope.customTimelineExpectedAmount.percentage = $scope.customTimelineExpectedAmount.expectedAmount / $scope.timelineExpectedAmount.expectedAmount * 100;
+			if(isNaN($scope.customTimelineExpectedAmount.percentage)) {
+				$scope.customTimelineExpectedAmount.percentage = 0;
+			}
+			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
 		})
 	}
 
@@ -466,9 +491,43 @@ angular.module('KaplenWeb.movementsModule',[])
 		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
 
+		var strInitialDay = moment($scope.futureReleases.startDate);
+		var strFinalDay = moment($scope.futureReleases.endDate);
+
+		$scope.countDiffDays = strFinalDay.diff(strInitialDay, 'days');
+
 		SaveFilters();
 		GetLabels(true);
 		GetFutureAcquirers();
+
+		var objFilter = {
+			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			bankAccountIds: GetAccountsFilter(true),
+			shopIds: GetShopsFilter(true),
+			acquirerIds: GetAcquirersFilter(true),
+			cardProductIds: GetCardProductsFilter(true),
+			status: 'EXPECTED'
+		};
+
+		receiptsService.getTimeline(objFilter).then(function(objResponse) {
+			GetTimeline(objResponse);
+		});
+
+	}
+	
+	function GetFutureMaxDateRange() {
+		var strDateDay;
+		var strDateMonth;
+		var strDateYear;
+		var objMaxDate;
+
+		objMaxDate = calendarFactory.getNextYear();
+		strDateDay = calendarFactory.getDayOfDate(objMaxDate);
+		strDateMonth = calendarFactory.getMonthNameAbreviation(objMaxDate);
+		strDateYear = calendarFactory.getYear(objMaxDate);
+
+		return "até " + strDateDay + " " + strDateMonth + " " + strDateYear;
 	}
 
 	function GetFutureAcquirers() {
@@ -665,17 +724,20 @@ angular.module('KaplenWeb.movementsModule',[])
 				obj.bankName = objData[x].bankName;
 				obj.agencyNumber = objData[x].agencyNumber;
 				obj.accountNumber = objData[x].accountNumber;
+				obj.bankId = objData[x].bankId;
 
 				arrFilterConfig.push(obj);
 			}
 
-			$scope.accountsData = arrFilterConfig;
-			$scope.accountsModel.id = arrFilterConfig[0].id;
-			$scope.accountsModel.label = arrFilterConfig[0].label;
-			$scope.accountsFutureModel.id = arrFilterConfig[0].id;
-			$scope.accountsFutureModel.label = arrFilterConfig[0].label;
+			$scope.accountsData = $filter('orderBy')(arrFilterConfig, "bankId");
+			var objAccount = $scope.accountsData[0];
+			$scope.accountsModel.id = objAccount.id;
+			$scope.accountsModel.label = objAccount.label;
+			$scope.accountsFutureModel.id = objAccount.id;
+			$scope.accountsFutureModel.label = objAccount.label;
 
 			intFilterStatus++;
+
             HandleTabs();
 
 		}).catch(function(objResponse){
