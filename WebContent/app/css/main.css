@@ -9886,6 +9886,155 @@ div.checkbox-toggle-right {
     box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     box-sizing: border-box;
 }
+
+.data-cards .timeline-wrapper {
+    height: 150px;
+    width: 100%;
+    background: #fff;
+    position: relative;
+    padding:0 25px;
+    box-sizing:border-box;
+    margin: 32px 0 55px;
+}
+
+.data-cards .timeline-wrapper .timeline-head {
+    float: left;
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content:space-between;
+}
+
+.data-cards .timeline-wrapper .timeline-head li:first-child {
+    color: #575758;
+}
+
+.data-cards .timeline-wrapper > ul li {
+    width: auto!important;
+}
+
+.data-cards .timeline-wrapper .timeline-head li {
+    color:#b9b8b8;
+    font-weight: bolder;
+    font-size: 14px!important;
+    text-align: left!important;
+}
+.data-cards .timeline-wrapper .timeline-head li:nth-child(2) {
+    text-align: right!important;
+}
+
+.data-cards .timeline-wrapper .timeline-head li span {
+    color:#ff7800;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 3px;
+}
+
+.data-cards .timeline-wrapper .total {
+    color:#ff7800;
+    display: flex;
+    width: 100%;
+    height: auto;
+    float: left;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-weight: lighter;
+}
+
+.data-cards .timeline-wrapper .total .gray{
+    color:#b9b8b8;
+}
+
+
+.data-cards .timeline-wrapper article aside.gray {
+    color: #575758;
+}
+
+.data-cards .timeline-wrapper .total li {
+    font-size: 40px;
+    font-weight: lighter;
+    font-family: 'open_sanslight';
+}
+
+.data-cards .timeline-wrapper .total li > span {
+    font-size: 14px;
+    float: left;
+    width: auto;
+    height: 50px;
+    line-height: 75px;
+    margin-right: 5px;
+    font-family: 'open_sansregular';
+}
+
+.data-cards .timeline-wrapper .timeline-block {
+    width:100%;
+    height: 10px;
+    position: relative;
+    float: left;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    background: #DDD;
+}
+
+.data-cards .timeline-wrapper .timeline-block:before,
+.data-cards .timeline-wrapper .timeline-block:after {
+    position: absolute;
+    top:-20px;
+    color:#b9b8b8;
+    font-weight: bolder;
+}
+
+.data-cards .timeline-wrapper .timeline-block:before {
+    content: "0%";
+    left:0;
+}
+
+.data-cards .timeline-wrapper .timeline-block:after {
+    content: "100%";
+    right:0;
+}
+
+.data-cards .timeline-wrapper .timeline-block .percent {
+    // width: 30%;
+    height: 50px;
+    position: relative;
+    -webkit-transition: width 1s;
+    transition: width 1s;
+    max-width: 100%;
+}
+
+.data-cards .timeline-wrapper .timeline-block .percent:before {
+    content:"";
+    width:100%;
+    height:10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #ff7800;
+}
+
+.data-cards .timeline-wrapper article {
+    padding:0;
+    margin:10px 0;
+    float: left;
+    min-width: 94px;
+    width: 100%;
+}
+
+.data-cards .timeline-wrapper article.small {
+    min-width: 78px;
+}
+
+.data-cards .timeline-wrapper article aside {
+    color:#ff7800;
+    font-weight: bolder;
+    display: inline-block;
+    right: 0;
+    position: absolute;
+    margin-top: 8px;
+    font-family: 'open_sansbold';
+}
+
 .receiptsExpectedDetails .data-cards .header-datas {
     height: auto;
 }
