@@ -1096,6 +1096,7 @@ td[id^="datepicker"], .row {
 	-moz-box-shadow:none;
 	box-shadow:none;
 }
+
 .dropdown-menu thead tr:first-child th:nth-child(1) {
 	text-align:center;
 	position:absolute;
@@ -1103,12 +1104,16 @@ td[id^="datepicker"], .row {
 	left:10px;
 	z-index:2000000000;
 }
+*/
+/*
+change
 .dropdown-menu thead tr:first-child th:nth-child(3) {
 	text-align:center;
 	position:absolute;
 	top:6px;
 	right:0;
 }
+*/
 .dropdown-menu thead tr:nth-child(2) small {
 }
 .dropdown-menu .btn-danger:hover, .dropdown-menu .btn-group .btn-info:hover {
@@ -1930,6 +1935,8 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	display: none
 }
 
+/*
+change
 .vendas .tab-pane ul:first-child li,
 .financas .tab-pane ul:first-child li,
 .gestao .tab-pane ul:first-child li,
@@ -1938,6 +1945,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	text-align: center;
 	width: 24px;
 }
+*/
 .vendas .tab-pane ul:first-child li a, .vendas .tab-pane ul:first-child li label,
 .financas .tab-pane ul:first-child li a, .financas .tab-pane ul:first-child li label
 .gestao .tab-pane ul:first-child li a, .gestao .tab-pane ul:first-child li label,
