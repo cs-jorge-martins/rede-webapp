@@ -89,10 +89,12 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 					case 400 :
                         break;
 					case 401 :
-					case 403 :
 						$rootScope.alerts =  [ { type: "danger", msg: config.data.message} ];
 						$rootScope.destroyVariablesSession();
 						$location.path("/login");
+						break;
+					case 403 :
+						alert('você não tem permissão para acessar este serviço');
 						break;
 					case 500 :
 					case 504 :
@@ -106,7 +108,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $modal, cacheService) {
+}]).run(function($location, $rootScope, $window, cacheService) {
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -124,6 +126,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
     $rootScope.currencySelected = CurrencySelected;
     $rootScope.closeAlert = CloseAlert;
     $rootScope.sortResults = SortResults;
+    $rootScope.showAlert = showAlert;
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
@@ -180,6 +183,14 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 	function RestartAlerts(){
 		$rootScope.alerts = [];
 	};
+
+	function showAlert() {
+		var a = $modal.open({
+			template: "<h1> teste </h1>",
+			scope: $scope,
+			size:'sm'
+		})
+	}
 
 	function CurrencySelected(currencyValue) {
 		$window.sessionStorage.currency = currencyValue;

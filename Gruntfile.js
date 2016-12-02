@@ -213,6 +213,6 @@ module.exports = function(grunt) {
     grunt.registerTask('build:prod', ['ngconstant:production', 'concat']);
     grunt.registerTask('local', ['build:local', 'serve', 'watch']);
     grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
-    grunt.registerTask('hml', ['build:hml', 'serve']);
+    grunt.registerTask('hml', ['build:hml', 'serve', 'watch']);
     grunt.registerTask('prod', ['build:prod', 'serve']);
 };
