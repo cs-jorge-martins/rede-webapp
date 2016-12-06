@@ -50,18 +50,15 @@ describe('rc-timeline directive', function(){
         expect(strInitialValueHtml.classList.contains('gray')).toBe(true);
     });
 
-    xit("should hide if finalValue <= 0 ", function () {
+    it("should hide the percent string if finalValue <= 0 ", function () {
         var strFinalValueHtml = strTemplateNode.querySelector('div.percent aside');
 
-        console.log("strFinalValueHtml", strFinalValueHtml);
-        expect((strFinalValueHtml.style.display === "none")).toBe(false);
+        expect(strFinalValueHtml.classList.contains('hidden')).toBe(false);
 
         scope.dblFinalValue = 0;
         scope.$digest();
 
-        console.log("strFinalValueHtml", strFinalValueHtml);
-        expect((strFinalValueHtml.style.display === "none")).toBe(true);
-
+        expect(strFinalValueHtml.classList.contains('hidden')).toBe(true);
     });
 
     xit("should show 0% and 100% instead 0,00% and 100,00% ", function () {
