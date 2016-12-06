@@ -94,7 +94,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 						$location.path("/login");
 						break;
 					case 403 :
-						alert('você não tem permissão para acessar este serviço');
+						$rootScope.showAlert('app/views/action-forbidden.html');
 						break;
 					case 500 :
 					case 504 :
@@ -108,7 +108,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
             }
         };
     });
-}]).run(function($location, $rootScope, $window, cacheService) {
+}]).run(function($location, $rootScope, $window, $modal, cacheService) {
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -126,7 +126,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
     $rootScope.currencySelected = CurrencySelected;
     $rootScope.closeAlert = CloseAlert;
     $rootScope.sortResults = SortResults;
-    $rootScope.showAlert = showAlert;
+    $rootScope.showAlert = ShowAlert;
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
@@ -184,11 +184,16 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 		$rootScope.alerts = [];
 	};
 
-	function showAlert() {
+	function ShowAlert(templateUrl) {
 		var a = $modal.open({
-			template: "<h1> teste </h1>",
-			scope: $scope,
-			size:'sm'
+			templateUrl: templateUrl,
+			windowClass: "new-modal",
+			size:'sm',
+			controller: function($scope, $modalInstance) {
+                $scope.cancel = function() {
+                    $modalInstance.close();
+                }
+			}
 		})
 	}
 

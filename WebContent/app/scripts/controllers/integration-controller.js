@@ -170,8 +170,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				var objFilter = {
 					page: $scope.currentPage,
 					size: $scope.totalItensPage,
-					sort: $scope.sort,
-					shopIds: "918273981278341"
+					sort: $scope.sort
 				};
 
 				if($scope.fileSearch !== "") {

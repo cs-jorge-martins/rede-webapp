@@ -3315,7 +3315,55 @@ button.close {
 	background: #f8f9f9;
 }
 .modal-open {
-	overflow: hidden
+	overflow: hidden;
+    filter: blur(2px);
+}
+.modal-open {
+    filter:blur(2px);
+}
+.new-modal .modal-header {
+    border-bottom: none;
+    padding: 32px 32px 0px;
+}
+.new-modal .modal-body {
+    padding: 10px 32px 0 32px;
+}
+.new-modal .modal-footer {
+    border-top: 0;
+    padding: 25px 32px 32px;
+    margin: 0;
+    height: 34px;
+}
+.new-modal .modal-body p:first-child {
+    margin-top: 0;
+}
+.new-modal .modal-body p:last-child {
+    margin-bottom: 0;
+}
+.new-modal .modal-footer button {
+    margin: 0 0 0 15px;
+    padding: 13px 0px;
+    font-size: 14px;
+}
+.new-modal .modal-sm .modal-footer button {
+    width: 100px;
+}
+.new-modal .modal-header-text {
+    color: #00b9b5;
+    font-size: 17px;
+    font-weight: bolder;
+    width: calc(100% - 26px);
+    float: left;
+}
+.new-modal .modal-header .transparent-button {
+    position: relative;
+    top: -8px;
+    right: -8px;
+    padding: 0;
+}
+.transparent-button {
+    background: transparent;
+    color: #000;
 }
 .modal {
 	position: fixed;
