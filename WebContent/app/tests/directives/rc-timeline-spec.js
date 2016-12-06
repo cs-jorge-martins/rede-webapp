@@ -4,78 +4,69 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
-
 describe('rc-timeline directive', function(){
 
-    var $scope, element, html, group, span, input, label;
+    var scope, template, isolateScope, $httpBackend, teste, strTemplateNode;
 
-    beforeEach(function(){
-        module('KaplenWeb');
+    beforeEach(module('KaplenWeb'));
+    beforeEach(module('app/views/directives/rc-timeline.html'));
 
-        html = angular.element(
-            "<div class=\"timeline-wrapper\">" +
-                "<ul class=\"timeline-head\">" +
-                    "<li>" +
-                        "Lançamentos no período selecionado <br>" +
-                        "<span>" +
-                            "{{ dateRange }}"+
-                        "</span>" +
-                    "</li>" +
-                    "<li>" +
-                        "Total de lançamentos previstos no próximo ano<br>" +
-                        "<span>{{maxDateRange}}</span>" +
-                    "</li>" +
-                "</ul>" +
-                "<ul class=\"total\">" +
-                    "<li ng-class=\"{gray: initialValue <= 0}\">" +
-                        "<span>R$</span>" +
-                        "{{ initialValue | currency: \"\" }}" +
-                    "</li>" +
-                    "<li class=\"gray\">" +
-                        "<span>R$</span>" +
-                        "{{ finalValue | currency: \"\" }}" +
-                    "</li>" +
-                "</ul>" +
-                "<div class=\"timeline-block\">" +
-                    "<div class=\"percent\" style=\"width:{{(timeLinePercentage | number: 2).split(',').join('.')}}%\">" +
-                        "<article ng-class=\"{small: initialValue <= 0}\">" +
-                            "<aside ng-class=\"{gray: initialValue <= 0}\" ng-if=\"finalValue > 0\">" +
-                                "<ng-show ng-if=\"timeLinePercentage != 0 && timeLinePercentage != 100\">" +
-                                    "{{ timeLinePercentage | number: 2 }}%" +
-                                "</ng-show>" +
-                                "<ng-show ng-if=\"timeLinePercentage == 0 || timeLinePercentage == 100\">" +
-                                    "{{ timeLinePercentage }}%" +
-                                "</ng-show>" +
-                                "do valor" +
-                            "</aside>" +
-                        "</article>" +
-                    "</div>" +
-                "</div>" +
-            "</div>"
+    beforeEach(inject(function ($compile, $rootScope) {
+
+        scope = $rootScope.$new();
+
+        var element = angular.element(
+            '<rc-timeline date-range="strDateRange" max-date-range="strMaxDateRange" initial-value="dblInitialValue" final-value="dblFinalValue" time-line-percentage="dblPercentage" ></rc-timeline>'
         );
 
-        inject(function($rootScope, $compile) {
-            $scope = $rootScope.$new();
-            element = $compile(html)($scope);
-            $scope.$digest();
-            group = element.children();
-            span = element.find('span');
-            input = element.find('input');
-            label = element.find('label');
-        });
+        template = $compile(element)(scope);
+        scope.strDateRange = "6 dez 2016 a 31 jan 2017";
+        scope.strMaxDateRange = "até 5 dez 2017";
+        scope.dblInitialValue = 90000;
+        scope.dblFinalValue = 300000;
+        scope.dblPercentage = 30;
+        scope.$digest();
+
+        strTemplateNode = template[0].parentNode;
+
+    }));
+
+    it("should show timeline percentages", function () {
+        scope.dblPercentage = 40;
+        scope.$digest();
+
+        var strPercentDiv = strTemplateNode.querySelector('div.percent').outerHTML;
+        expect(strPercentDiv).toContain('40.00%');
     });
 
+    it("should change number color with initialValue = 0", function () {
+        var strInitialValueHtml = strTemplateNode.querySelector('ul.total li:first-child');
 
-    describe('on load', function() {
-        it('should add class "focus" from parent element', function() {
-            input.triggerHandler('focus');
-            expect(group.hasClass('focus')).toBe(true);
-        });
+        expect(strInitialValueHtml.classList.contains('gray')).toBe(false);
 
-        it('should add class "rc-animate" from parent element', function() {
-            input.triggerHandler('focus');
-            expect(group.hasClass('rc-animate')).toBe(true);
-        });
+        scope.dblInitialValue = 0;
+        scope.$digest();
+
+        expect(strInitialValueHtml.classList.contains('gray')).toBe(true);
+    });
+
+    xit("should hide if finalValue <= 0 ", function () {
+        var strFinalValueHtml = strTemplateNode.querySelector('div.percent aside');
+
+        console.log("strFinalValueHtml", strFinalValueHtml);
+        expect((strFinalValueHtml.style.display === "none")).toBe(false);
+
+        scope.dblFinalValue = 0;
+        scope.$digest();
+
+        console.log("strFinalValueHtml", strFinalValueHtml);
+        expect((strFinalValueHtml.style.display === "none")).toBe(true);
+
+    });
+
+    xit("should show 0% and 100% instead 0,00% and 100,00% ", function () {
+        teste = 1+1;
+        expect(teste).toBe(2);
     });
 
 });
