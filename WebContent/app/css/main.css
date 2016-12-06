@@ -3340,6 +3340,9 @@ button.close {
 .new-modal .modal-body p:last-child {
     margin-bottom: 0;
 }
+.new-modal .modal-body.modal-no-footer {
+    margin-bottom: 40px;
+}
 .new-modal .modal-footer button {
     margin: 0 0 0 15px;
     padding: 13px 0px;
