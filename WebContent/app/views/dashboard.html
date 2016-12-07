@@ -11,7 +11,7 @@
 	</div>
 
   	<br />
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	 <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
   <ul id="valuesTour">
       <li>
         <em>Transações</em>
@@ -24,7 +24,7 @@
       </li>
       <li class="vendasDashboard">
         <em>Vendas</em>
-      	<b><i ng-bind-html="currencySymbol"></i> {{transactionSummaryBoxCurrentMonth.amount | currency:''}}</b>
+      	<b><i ng-bind-html="currencySymbol"></i> {{(transactionSummaryBoxCurrentMonth.amount || 0) | currency:''}}</b>
 
       	<div class="valuesFooter" ng-class="{'negative': percentOfTotalsAmountTransactionsBetweenMonths <= 0,
        					'positive': percentOfTotalsAmountTransactionsBetweenMonths > 0}">
@@ -34,7 +34,7 @@
       </li>
       <li class="recebimentoDashboard">
         <em>Recebimentos</em>
-      	<b><i ng-bind-html='currencySymbol'></i> {{ movementSummaryBoxCurrentMonth.payedAmount| currency:""}}</b>
+      	<b><i ng-bind-html='currencySymbol'></i> {{(movementSummaryBoxCurrentMonth.payedAmount || 0) | currency:""}}</b>
       	<div class="valuesFooter" ng-class="{'negative': percentOfTotalPayedBetweenMonths<= 0,
        					'positive': percentOfTotalPayedBetweenMonths > 0}">
 			<strong><span>Mês anterior:</span><i ng-bind-html="currencySymbol"></i> <span ng-bind="movementionSummaryBoxPrevMonth.payedAmount ? (movementionSummaryBoxPrevMonth.payedAmount | currency:'') : '0,00'"></span></strong>

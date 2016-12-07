@@ -134,10 +134,11 @@ angular.module('Conciliador.salesController',[])
 		var bolIsActive = false;
 
 		for(var intIndex = 0; intIndex < 12; intIndex++){
-			if ($scope.dateSelected != null)
+			if ($scope.dateSelected != null) {
 				$scope.months.push({month: arrMonths[intIndex], active: (intIndex + 1) == calendarFactory.getMonthNumberOfDate($scope.dateSelected)});
-			else
+			} else {
 				$scope.months.push({month: arrMonths[intIndex], active: (intIndex + 1) == (objMomentjs.month()+1)});
+			}
 		}
 
 		for(intInitialDayOfMonth; intInitialDayOfMonth <= 31; intInitialDayOfMonth++){

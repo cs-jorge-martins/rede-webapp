@@ -1344,6 +1344,14 @@ em, b {
 	height: 15px;
 	display: block;
 }
+#content.login {
+	width: auto;
+	height: auto;
+	left: initial;
+	margin-left: 0;
+	min-height: inherit;
+}
+
 #internas img {
 	margin-bottom: 20px;
 }
@@ -1548,13 +1556,13 @@ header li.config li:first-child {
 
 header li a {
 	font-size: 15px;
-	font-weight: bold;
-	color: #000;
+	font-weight: bold !important;
+	color: #000 !important;
     padding-bottom: 27px !important;
 }
 
 header li a.active, header li a:hover {
-	color: #ff7900;
+	color: #ff7900 !important;
 }
 
 header li a.active {
@@ -1571,8 +1579,10 @@ header .dropdown-menu li {
     border-bottom: 1px solid #dedede;
 }
 header .dropdown-menu a {
-	padding: 20px 0 20px 5px;
-    font-size: 13px;
+	padding: 20px 0 20px 5px !important;
+    font-size: 13px !important;
+	text-transform: lowercase !important;
+	font-weight: bold !important;
 }
 
 header .dropdown-menu a.active {
@@ -3729,6 +3739,11 @@ article {
 }
 .vendas col:nth-child(2), .vendas col:nth-child(3), .vendas col:nth-child(4) {
 	width: 300px !important;
+}
+.vendas .tab-pane li {
+	font-size: 14px;
+    text-align: center;
+    width: 24px;
 }
 .gestao col {
 	width: 274px !important;
@@ -11819,3 +11834,5 @@ th.sortAsc:after{
 .uib-daypicker th span {
 	display: none;
 }
+
+#relatorio {}

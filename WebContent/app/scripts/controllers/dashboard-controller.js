@@ -429,10 +429,14 @@ angular.module('KaplenWeb.dashboardController',[])
 			objItem = objItem.data.content;
 			$scope.transactionConciliationBox = {};
 
-			if (objItem !== undefined ){
+			if (objItem.length){
 				$scope.transactionConciliationBox.transctionToConcilieQuantity = objItem[0].transctionToConcilieQuantity;
 				$scope.transactionConciliationBox.transctionConciliedQuantity = objItem[0].transctionConciliedQuantity;
 				$scope.transactionConciliationBox.transctionUnprocessedQuantity = objItem[0].transctionUnprocessedQuantity;
+			} else {
+				$scope.transactionConciliationBox.transctionToConcilieQuantity = 0;
+				$scope.transactionConciliationBox.transctionConciliedQuantity = 0;
+				$scope.transactionConciliationBox.transctionUnprocessedQuantity = 0;
 			}
 		});
 	}

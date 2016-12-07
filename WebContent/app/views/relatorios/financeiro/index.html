@@ -12,7 +12,7 @@
 
 	<br />
 
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+    <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
 
     <ul class="indicators" id="reportIndicators">
         <li ng-class="{'active': status == 'RECEIVED'}">

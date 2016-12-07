@@ -10,8 +10,7 @@
 	</div>
 
 	<br />
-{{alert.msg}}
-	<alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	<div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
 
 	<div class="videogular-container">
 	    <videogular vg-theme="video.theme">
