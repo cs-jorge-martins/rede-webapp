@@ -185,7 +185,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 	};
 
 	function ShowAlert(templateUrl) {
-		var a = $modal.open({
+		var objModal = $modal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
 			size:'sm',
