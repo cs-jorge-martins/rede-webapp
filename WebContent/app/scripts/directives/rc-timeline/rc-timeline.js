@@ -17,11 +17,11 @@
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-timeline.html',
             scope: {
-                dateRange: "@",
-                maxDateRange: "@",
-                initialValue: "@",
-                finalValue: "@",
-                timeLinePercentage: "@"
+                dateRange: "=",
+                maxDateRange: "=",
+                initialValue: "=",
+                finalValue: "=",
+                timeLinePercentage: "="
             },
             controller: Controller
         };
