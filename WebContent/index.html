@@ -39,6 +39,7 @@
 	</style>
 <![endif]-->
     <!-- Loader template -->
+    <div ng-class="{'modal-blur': $root.modalOpen}">
     <div class="extended">
         <header ng-if="initialized">
             <nav class="navbar navbar-default" id="mainNav">
@@ -223,6 +224,7 @@
             </div>
         </div>
     </footer>
+    </div>
     <div id="blockr" class="fade" ng-show="loading"></div>
 
     <!-- Google Analytics -->

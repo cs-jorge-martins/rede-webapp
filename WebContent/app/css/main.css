@@ -3316,10 +3316,9 @@ button.close {
 }
 .modal-open {
 	overflow: hidden;
-    filter: blur(2px);
 }
-.modal-open {
-    filter:blur(2px);
+.modal-blur {
+    filter: blur(2px);
 }
 .new-modal .modal-header {
     border-bottom: none;

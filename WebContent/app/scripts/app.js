@@ -127,6 +127,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
     $rootScope.closeAlert = CloseAlert;
     $rootScope.sortResults = SortResults;
     $rootScope.showAlert = ShowAlert;
+    $rootScope.modalOpen = false;
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
@@ -192,9 +193,11 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 			controller: function($scope, $modalInstance) {
                 $scope.cancel = function() {
                     $modalInstance.close();
+                    $rootScope.modalOpen = false;
                 }
 			}
-		})
+		});
+		$rootScope.modalOpen = true;
 	}
 
 	function CurrencySelected(currencyValue) {
