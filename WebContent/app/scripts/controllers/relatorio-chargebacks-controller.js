@@ -40,7 +40,8 @@
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 10;
+        $scope.totalItensPageOptions = [10,20,50];
+		$scope.totalItensPage = $scope.totalItensPageOptions[0];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
 

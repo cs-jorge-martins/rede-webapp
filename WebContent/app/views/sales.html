@@ -21,7 +21,7 @@
 			<a class="next" href="javascript:void(0);" ng-click="nextYear()">{{yearSelected + 1}}</a>
 			<div class="slider">
 				<div>
-					<uib-tabset  active="1">
+					<uib-tabset  active="activeMonth">
 						<uib-tab ng-repeat="month in months" data-ng-click="changeMonth($index, month.year); tabs[0].active = true">
 							<uib-tab-heading>
 								<span ng-class="{'conciliar': month.toReconcile, 'naoConciliado': month.toProcess,
@@ -162,7 +162,7 @@
 						</div>
 					</div>
 
-					<div id="details" class="sales salesTable">
+					<div id="details" class="sales salesTable" ng-show="items.length">
 						<table cellpadding="0" cellspacing="0" class="sortTable">
 						  <thead>
 							  <tr class="taleft">
@@ -185,11 +185,6 @@
 								  <td>
 									  <div class="checkbox card-favourite">
 									  	<div class="checkbox-left" ng-if="item.conciliationStatus == 'TO_CONCILIE'">
-											<!--
-									  		<input type="checkbox" id="checkbox-favourite-{{$index + 1}}" class="checkbox"
-											ng-model="concilieItems" name="selectedItems[]" value="{{item.ids}}"
-											ng-checked="selection.indexOf(item) > -1" ng-click="selectItemToConcilie(item.ids)" />
-											-->
 											<input type="checkbox" id="checkbox-favourite-{{$index + 1}}" class="checkbox"
 											ng-model="concilieItems" name="selectedItems[]" value="{{item.ids}}"
 											ng-checked="selection.indexOf(item) > -1" ng-click="selectItemToConcilie(item)" />
@@ -203,7 +198,6 @@
 							  </tr>
 						  </tbody>
 					  </table>
-					  <span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 					  <div class="footer">
 						  <div class="buttonWrapper" ng-show="items">
 							  <button class="conciliacaoButton" data-ng-click="concilie()"
@@ -212,6 +206,7 @@
 						  </div>
 					  </div>
 					</div>
+					<span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 				</div>
 			</div>
 		</div>

@@ -12,6 +12,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $uibModal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
+
 		menuFactory.setActiveIntegration();
 		$scope.labelFindFile = true;
 		$scope.uploadedFiles = false;
@@ -34,9 +35,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				type: 'FUTURE'
 			}
 		];
+
 		$scope.typeModel = {"id": 1, type: 'CURRENT'}
-
-
 		$scope.initialDate = [];
 		$scope.finishDate = [];
 
@@ -56,7 +56,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		/* pagination */
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 10;
+		$scope.totalItensPageOptions = [10,20,50];
+		$scope.totalItensPage = $scope.totalItensPageOptions[0];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
 

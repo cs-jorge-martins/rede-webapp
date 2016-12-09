@@ -35,7 +35,8 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 20;
+		$scope.totalItensPageOptions = [10,20,50];
+		$scope.totalItensPage = $scope.totalItensPageOptions[1];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
         $scope.sortResults = SortResults;

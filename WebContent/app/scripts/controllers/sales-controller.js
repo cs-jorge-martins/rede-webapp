@@ -127,7 +127,8 @@ angular.module('Conciliador.salesController',[])
 		$scope.months = [];
 		$scope.days = [];
 		$scope.lastDaySelectedIndex = 0;
-
+		$scope.activeMonth = (calendarFactory.getMonthNumberOfDate($scope.dateSelected) - 1);
+		
 		var objMomentjs = moment();
 		var arrMonths = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 		var intInitialDayOfMonth = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfMonth());

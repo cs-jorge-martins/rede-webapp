@@ -57,7 +57,7 @@
 						</div>
 					</div>
 
-					<div id="chartRelatorioSinteticoContainer" ng-show="synthetic.items">
+					<div id="chartRelatorioSinteticoContainer" ng-show="synthetic.items.length">
 						<canvas id="line" class="chart chart-pie chartRelatorioSintetico" chart-data="chartjs.data"
 		                	chart-labels="chartjs.labels" chart-series="chartjs.series"
 		                	chart-options="chartOptions">
@@ -65,13 +65,13 @@
 					</div>
 
 					<div id="details" class="sales">
-						<table cellpadding="0" cellspacing="0" class="sortTable">
+						<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="synthetic.items.length">
 							<thead>
 								<tr class="taleft">
 									<th width="270" ng-click="sortResults($event,'cardProduct.name', 'sintetico')">produto</th>
-									<th width="270" ng-click="sortResults($event,'id', 'sintetico')">cupons</th>
+									<th width="250" ng-click="sortResults($event,'id', 'sintetico')">cupons</th>
 									<th width="260" ng-click="sortResults($event,'gross', 'sintetico')">faturamento (R$)</th>
-									<th ng-click="sortResults($event,'id', 'sintetico')">percentual</th>
+									<th width="120" ng-click="sortResults($event,'id', 'sintetico')">percentual</th>
 								</tr>
 							</thead>
 
@@ -137,7 +137,7 @@
 					</div>
 
 					<div id="details" class="sales">
-						<table cellpadding="0" cellspacing="0" class="sortTable">
+						<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="analytical.items.length">
 							<thead>
 								<tr class="taleft">
 									<th ng-click="sortResults($event,'date', 'analitico')">data</th>
@@ -165,15 +165,15 @@
 
 						<span class="alert" ng-show="analytical.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 
-						<div class="footer">
+						<div class="footer" ng-show="analytical.items.length">
 							<div class="optionsWrapper">
 								<div class="selectWrapper">
 									<label for="totalItensPageAnalytical">resultados por página</label>
 									<div class="select">
-										<select ng-model="totalItensPageAnalytical" ng-change="totalItensPageChangedAnalytical()" id="totalItensPage">
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="50">50</option>
+										<select ng-model="totalItensPageAnalytical"
+											ng-change="totalItensPageChangedAnalytical()"
+											ng-options="option for option in totalItensPageOptions"
+											id="totalItensPage">
 										</select>
 									</div>
 								</div>
@@ -253,7 +253,7 @@
 					</div>
 
 					<div id="details" class="sales">
-						<table cellpadding="0" cellspacing="0" class="sortTable">
+						<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="duplicate.items.length">
 							<thead>
 								<tr class="taleft">
 									<th ng-click="sortResults($event,'date', 'duplicadas')">data</th>
@@ -278,17 +278,16 @@
 								</tr>
 							</tbody>
 						</table>
-
 						<span class="alert" ng-show="duplicate.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
-						<div class="footer">
+						<div class="footer" ng-show="duplicate.items.length">
 							<div class="optionsWrapper">
 								<div class="selectWrapper">
 									<label for="totalItensPageDuplicate">resultados por página</label>
 									<div class="select">
-										<select ng-model="totalItensPageDuplicate" ng-change="totalItensPageChangedDuplicate()" id="totalItensPage">
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="50">50</option>
+										<select ng-model="totalItensPageDuplicate"
+											ng-change="totalItensPageChangedDuplicate()"
+											ng-options="option for option in totalItensPageOptions"
+											id="totalItensPage">
 										</select>
 									</div>
 								</div>

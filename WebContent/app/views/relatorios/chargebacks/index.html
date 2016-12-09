@@ -87,7 +87,7 @@
 
 
                     <div id="details" class="sales">
-                        <table cellpadding="0" cellspacing="0" class="sortTable">
+                        <table cellpadding="0" cellspacing="0" class="sortTable" ng-show="items.length">
                 			<thead>
                 				<tr class="taleft">
                                     <th ng-click="sortResults($event,'adjustDate')">
@@ -116,16 +116,16 @@
 
 						<span class="alert" ng-if="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 
-                      <div class="footer" ng-show="items">
+                      <div class="footer" ng-show="items.length">
 							<div class="optionsWrapper">
 								<div class="selectWrapper">
 									<label for="totalItensPage">resultados por página</label>
 									<div class="select">
-										<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
-											<option value="10">10</option>
-											<option value="20">20</option>
-											<option value="50">50</option>
-										</select>
+                                        <select ng-model="totalItensPage"
+                                            ng-change="totalItensPageChanged()"
+                                            ng-options="option for option in totalItensPageOptions"
+                                            id="totalItensPage">
+                                        </select>
 									</div>
 								</div>
 

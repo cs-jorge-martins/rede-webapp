@@ -37,16 +37,17 @@
 
 		/* pagination */
 		$scope.maxSize = 4;
+        $scope.totalItensPageOptions = [10,20,50];
 
-		$scope.totalItensPageSynthetic = 50;
+		$scope.totalItensPageSynthetic = $scope.totalItensPageOptions[2];
         $scope.currentPageSynthetic = 0;
 		$scope.totalItensSynthetic = 0;
 
-		$scope.totalItensPageAnalytical = 10;
+		$scope.totalItensPageAnalytical = $scope.totalItensPageOptions[0];
         $scope.currentPageAnalytical = 0;
 		$scope.totalItensAnalytical = 0;
 
-		$scope.totalItensPageDuplicate = 10;
+		$scope.totalItensPageDuplicate = $scope.totalItensPageOptions[0];
         $scope.currentPageDuplicate = 0;
 		$scope.totalItensDuplicate = 0;
 
