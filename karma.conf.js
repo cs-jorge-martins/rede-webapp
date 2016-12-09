@@ -19,8 +19,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'WebContent/app/build.js',
-        'WebContent/app/tests/**/*Spec.js'
+        'WebContent/app/tests/**/*spec.js',
+        'WebContent/app/views/directives/*.html'
     ],
+
+    plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-ng-html2js-preprocessor'],
 
 
     // list of files to exclude
@@ -31,6 +34,12 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'WebContent/app/views/directives/*.html': ['ng-html2js']
+    },
+
+    ngHtml2JsPreprocessor: {
+      // strip app from the file path
+      stripPrefix: 'WebContent/'
     },
 
 
