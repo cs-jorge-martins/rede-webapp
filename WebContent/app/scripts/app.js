@@ -89,10 +89,12 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 					case 400 :
                         break;
 					case 401 :
-					case 403 :
 						$rootScope.alerts =  [ { type: "danger", msg: config.data.message} ];
 						$rootScope.destroyVariablesSession();
 						$location.path("/login");
+						break;
+					case 403 :
+						$rootScope.showAlert('app/views/action-forbidden.html');
 						break;
 					case 500 :
 					case 504 :
@@ -124,6 +126,8 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
     $rootScope.currencySelected = CurrencySelected;
     $rootScope.closeAlert = CloseAlert;
     $rootScope.sortResults = SortResults;
+    $rootScope.showAlert = ShowAlert;
+    $rootScope.modalOpen = false;
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
@@ -180,6 +184,21 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 	function RestartAlerts(){
 		$rootScope.alerts = [];
 	};
+
+	function ShowAlert(templateUrl) {
+		var objModal = $modal.open({
+			templateUrl: templateUrl,
+			windowClass: "new-modal",
+			size:'sm',
+			controller: function($scope, $modalInstance) {
+                $scope.cancel = function() {
+                    $modalInstance.close();
+                    $rootScope.modalOpen = false;
+                }
+			}
+		});
+		$rootScope.modalOpen = true;
+	}
 
 	function CurrencySelected(currencyValue) {
 		$window.sessionStorage.currency = currencyValue;
