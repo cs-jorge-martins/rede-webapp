@@ -79,7 +79,7 @@
         -->
       </main>
       <aside>
-        <h2>Conciliação de vendas</h2>
+        <h2>conciliação de vendas</h2>
         <table class="chargebacks" cellpadding="0" cellspacing="0" id="calendarioTour">
           <thead>
             <tr class="calendarMonth">
@@ -95,7 +95,7 @@
               <th class="weekend">Sab</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="dates">
             <tr ng-repeat="week in weeks">
               <td ng-repeat="day in week" ng-click="sales(day.date)"
               	ng-class="{'naoConciliado': day.toProcess, 'divergencias': day.toReconcile,

@@ -30,7 +30,7 @@ describe('Conciliador', function() {
             .expect('POST', /http(s)?:\/\/.*\/transactions\/export\?.*/)
             .respond(200, { data: 'http://s3-bucket/path/xls' });
 
-            xService.exportTransactions(jasmine.any(Object), xFakeSuccessCallback, xFakeErrorCallback);
+            xService.ExportTransactions(jasmine.any(Object), xFakeSuccessCallback, xFakeErrorCallback);
             xHttpBackend.flush();
 
             expect(xFakeSuccessCallback).toHaveBeenCalled();
@@ -49,7 +49,7 @@ describe('Conciliador', function() {
             .expect('POST', /http(s)?:\/\/.*\/transactions\/export\?.*/)
             .respond(400);
 
-            xService.exportTransactions(jasmine.any(Object), xFakeSuccessCallback, xFakeErrorCallback);
+            xService.ExportTransactions(jasmine.any(Object), xFakeSuccessCallback, xFakeErrorCallback);
             xHttpBackend.flush();
 
             expect(xFakeSuccessCallback.calls.any()).toBe(false);

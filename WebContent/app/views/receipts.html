@@ -200,9 +200,7 @@
                     <article class="data-cards">
                         <div class="header-datas">
                             <div class="date-wrapper">
-                                <div class="date future">
-                                    {{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} {{futureReleases.startDateYear}} <br />a {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}} {{futureReleases.endDateYear}}
-                                </div>
+                                <div class="date future" ng-bind-html="to_trusted(futureReleases.dateRangeWithBr)"></div>
                             </div>
                             <div class="chip-wrapper">
                                 <div class="chip" ng-show="accountsFutureLabel">
@@ -225,11 +223,11 @@
                             </div>
                         </div>
                         <rc-timeline
-                                date-range="{{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} {{futureReleases.startDateYear}} a {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}} {{futureReleases.endDateYear}}"
-                                max-date-range="{{customTimelineExpectedAmount.maxDateRange}}"
-                                initial-value="{{customTimelineExpectedAmount.expectedAmount}}"
-                                final-value="{{timelineExpectedAmount.expectedAmount}}"
-                                time-line-percentage="{{customTimelineExpectedAmount.percentage}}" ></rc-timeline>
+                                date-range="futureReleases.dateRange"
+                                max-date-range="customTimelineExpectedAmount.maxDateRange"
+                                initial-value="customTimelineExpectedAmount.expectedAmount"
+                                final-value="timelineExpectedAmount.expectedAmount"
+                                time-line-percentage="customTimelineExpectedAmount.percentage" ></rc-timeline>
                         <table ng-repeat="item in futureReleasesData" id="receipts_table">
                             <thead>
                                 <tr>
