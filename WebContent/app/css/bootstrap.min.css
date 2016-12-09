@@ -1769,14 +1769,14 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	margin: 0;
 }
 #headerTabs .nav-tabs{
-    width: 980px;
+    width: 1200px;
     margin: 0;
 }
 #primaryContent .nav-tabs>li,
 #headerTabs .nav-tabs>li{
 	float: left;
 	margin-bottom: -1px;
-	width: 326px;
+	width: 400px;
     text-align: center;
 }
 #primaryContent .nav-tabs>li>a
@@ -1790,11 +1790,13 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	-webkit-transition: none;
 	-moz-transition: none;
 	transition: none;
-	border-left: 1px solid #dedede;
-	border-right: 1px solid #dedede;
-	border-top: 1px solid #dedede;
+	border-left: 1px solid #fff;
 	position: relative;
 	top: 1px;
+}
+#primaryContent .nav-tabs>li:nth-child(0)>a,
+#primaryContent .nav-tabs>li:nth-child(1)>a{
+	border-left: 0;
 }
 #primaryContent .nav-tabs>li.active a,
 #headerTabs .nav-tabs>li.active a{
@@ -1802,7 +1804,7 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 }
 #primaryContent .nav-tabs>li a,
 #headerTabs .nav-tabs>li a{
-	background: #f0ebe8;
+	background: #f8f8f8;
 }
 #primaryContent .nav-tabs>li:first-child>a {
 	/*background: #f2f4f4 url(../img/resumoMes.png) 22px 25px no-repeat;*/
@@ -2287,7 +2289,9 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	padding-bottom: 15px
 }
 .navbar-nav.navbar-right:last-child {
-	margin-right: -15px
+	margin-right: -15px;
+	position: inherit;
+	margin-right: -30px !important;
 }
 }
 /*@media (min-width:768px) {*/
@@ -2881,6 +2885,9 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	padding: 15px 15px;
 	font-size: 18px;
 	line-height: 20px
+}
+.extended .navbar-brand {
+	padding: 15px 0;
 }
 .navbar-brand:hover, .navbar-brand:focus {
 	text-decoration: none
