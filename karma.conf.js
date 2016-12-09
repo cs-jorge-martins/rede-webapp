@@ -22,9 +22,6 @@ module.exports = function(config) {
         'WebContent/app/tests/**/*spec.js',
         'WebContent/app/views/directives/*.html',
         'WebContent/app/scripts/**/*.js',
-        'WebContent/app/scripts/**/**/*.js',
-        'WebContent/app/scripts/service/**/*.js',
-        'WebContent/app/scripts/service/v1/api/service/*.js',
     ],
 
     plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-ng-html2js-preprocessor', 'karma-coverage'],
