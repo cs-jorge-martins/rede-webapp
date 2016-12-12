@@ -38,23 +38,27 @@
 	</div>
 
     <uib-accordion close-others="true">
-        <uib-accordion-group heading="Como concilio minhas vendas?">
+        <div uib-accordion-group  class="panel-default" is-open="status.isCustomHeaderOpen">
+			<div uib-accordion-heading>
+				Como concilio minhas vendas?
+				<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+			</div>
             Na aba <i>Vendas</i>, selecione a data que deseja conciliar e que esteja com o indicador amarelo. Em seguida, você terá duas formas de concilição:
 
 			<ul>
 				<li><strong>Total de cada bandeira:</strong> Selecione a bandeira desejada e em seguida clique em <i>conciliar [quantidade] vendas selecionadas</i></li>
 				<li><strong>Venda a venda, por bandeira:</strong> Clique na bandeira desejada e terá acesso ao detalhe de cada transação. Em seguida, selecione as vendas que deseja conciliar e então clique em <i>conciliar [quantidade] vendas selecionadas</i></li>
 			</ul>
-        </uib-accordion-group>
-        <uib-accordion-group heading="O que são os incadores coloridos abaixo de cada dia?">
+        </div>
+        <div uib-accordion-group heading="O que são os incadores coloridos abaixo de cada dia?">
             É o conceito semáforo. Com ele você tem uma visão rápida de quais dias você possui vendas a conciliar ou já conciliadas. Dias com o sinal verde significa que você não tem pendências naquela data, já os dias com o sinal amarelo, indica que você possui vendas a conciliar.
-        </uib-accordion-group>
-        <uib-accordion-group heading="Como posso visualizar meus recebimentos de hoje?">
+        </div>
+        <div uib-accordion-group heading="Como posso visualizar meus recebimentos de hoje?">
             Na aba <i>recebimentos</i> você tem acesso aos seus recebimentos do dia atual e também o batimento dos valores previstos com o que foi realizado. Além disso, na parte superior da tela, você pode escolher outra data que queira visualizar.
-        </uib-accordion-group>
-        <uib-accordion-group heading="Como faço para ter a relação de todas as minhas vendas de um período específico?">
+        </div>
+        <div uib-accordion-group heading="Como faço para ter a relação de todas as minhas vendas de um período específico?">
             Na aba <i>relatórios</i>, selecione a opção <i>vendas</i>. Selecione os filtros que deseja, como por exemplo período, loja ou produto e então clique em <i>filtrar</i>. Serão apresentadas todas as suas vendas, de acordo com os critérios definidos.
-        </uib-accordion-group>
+        </div>
     </uib-accordion>
 
 </section>

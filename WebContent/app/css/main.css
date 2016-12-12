@@ -9793,6 +9793,10 @@ div.checkbox-toggle-right {
 	height: auto;
 }
 
+#faq .panel-title {
+    height: 41px;
+}
+
 .panel-title span {
 	font-weight: bold;
 	font-size: 15px;
@@ -9806,7 +9810,7 @@ div.checkbox-toggle-right {
     top: 0;
     width: 100%;
     height: 30px;
-    text-align: right;
+    text-align: left;
 }
 
 .panel .accordion-toggle .glyphicon {
