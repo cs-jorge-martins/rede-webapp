@@ -3809,6 +3809,23 @@ article {
 .relatorio .botaoVerMais + div {
 	padding-bottom: 20px!important;
 }
+#relatorio #primaryContent ul.nav li a{
+    background: #f8f8f8;
+    color: #ababab;
+    padding: 15px 20px;
+    text-align: left;
+}
+#relatorio #primaryContent ul.nav li {
+    background: #f8f8f8;
+    border-top: 2px solid #f8f8f8;
+}
+#relatorio #primaryContent ul.nav li.active a{
+    background: #fff;
+    color: #ff7800;
+}
+#relatorio #primaryContent ul.nav li.active {
+    border-top: 2px solid #ff7800;
+}
 .filterList ul {
 	position: relative;
 }
@@ -9250,7 +9267,6 @@ footer nav.fixed {
 	padding-bottom: 0 !important;
 }
 
-#relatorio_financeiro,
 #relatorio_chargeback {
 	padding: 20px;
 }
@@ -9299,8 +9315,6 @@ footer nav.fixed {
 	padding: 10px 0 2px 5px !important;
 }
 .relatorio .tab-pane, #receiptsDetails .tab-pane {
-	border-left: 1px solid #dedede;
-    border-right: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
 }
 .relatorio article {
@@ -10600,7 +10614,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 #receiptsDetails .table th{
     position: relative;
     padding: 20px 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #cfcfcf;
 }
 
 #receiptsDetails .table th {
@@ -11436,10 +11450,10 @@ tr.card-product-line {
 
 #integration .halfSize .rcDatepicker,
 #integration .halfSize .rcDatepicker .input-group input {
-    width: 175px;
+    width: 247px;
 }
 #integration .multiselect-parent button {
-    width:250px;
+    width:375px;
 }
 .rcDatepicker .input-group-addon {
     position: absolute;
