@@ -9800,8 +9800,13 @@ div.checkbox-toggle-right {
 .panel-title span {
 	font-weight: bold;
 	font-size: 15px;
-	display: block;
-	padding: 10px 0 10px 21px;
+	display: inline-block;
+	padding: 6px 0 0px 12px;
+    width: 96%;
+}
+
+.panel-heading {
+    position: relative;
 }
 
 .panel .accordion-toggle {
@@ -9814,9 +9819,8 @@ div.checkbox-toggle-right {
 }
 
 .panel .accordion-toggle .glyphicon {
-	right: 19px;
-    top: 9px;
     font-size: 22px;
+    top: 6px;
 }
 
 .panel-body {
