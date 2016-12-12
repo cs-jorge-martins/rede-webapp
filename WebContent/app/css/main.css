@@ -2994,14 +2994,9 @@ aside table table td:after {
 	cursor: pointer;
 	font-weight: bold;
 }
-#conciliacao button:hover, .modal-footer button:hover {
-	/*
-	color: #fff;
-	background: #212e3b;
-	border-color: #212e3b;
-	*/
-}
-#conciliacao .dropdown-menu button, #primaryContent .dropdown-menu button {
+#conciliacao .dropdown-menu button,
+#primaryContent .dropdown-menu button,
+.uib-datepicker-popup.dropdown-menu button {
 	color: #b0b7be;
 	line-height: 1;
 	font-size: 14px;
@@ -3017,6 +3012,7 @@ aside table table td:after {
 }
 .dropdown-menu td button:hover, .dropdown-menu td button.active, #menuLateral .dropdown-menu td button:hover, #menuLateral .dropdown-menu td button.active {
 	color: #16a085!important;
+    background: transparent !important;
 }
 .integrateModal th button {
 	border: none;
@@ -3033,10 +3029,16 @@ aside table table td:after {
 	margin-bottom: 20px;
 }
 
-#conciliacao .dropdown-menu button span.text-info, #receiptsDetails #primaryContent .dropdown-menu button span.text-info {
+#conciliacao .dropdown-menu button span.text-info,
+#receiptsDetails #primaryContent .dropdown-menu button span.text-info,
+.uib-datepicker-popup.dropdown-menu button span.text-info{
 	text-align: center;
 	display: inline;
 	padding-left: 7px;
+}
+.uib-datepicker-popup.dropdown-menu button.uib-title,
+.uib-datepicker-popup.dropdown-menu button.uib-title{
+    width: 203px !important;
 }
 .filterList table {
 	width: 280px;

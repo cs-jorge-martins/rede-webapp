@@ -1104,16 +1104,12 @@ td[id^="datepicker"], .row {
 	left:10px;
 	z-index:2000000000;
 }
-*/
-/*
-change
 .dropdown-menu thead tr:first-child th:nth-child(3) {
 	text-align:center;
 	position:absolute;
 	top:6px;
 	right:0;
 }
-*/
 .dropdown-menu thead tr:nth-child(2) small {
 }
 .dropdown-menu .btn-danger:hover, .dropdown-menu .btn-group .btn-info:hover {
@@ -1324,6 +1320,11 @@ filter:progid:DXImageTransform.Microsoft.gradient(enabled=false)
 	top:10px!important;
 	left:220px!important;
 }
+
+.uib-datepicker-popup.dropdown-menu .uib-button-bar button {
+	position: static !important;
+}
+
 .dropdown-menu .btn-group + button:hover {
 	background:#eaebeb!important;
 }
