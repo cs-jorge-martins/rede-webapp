@@ -11906,3 +11906,15 @@ th.sortAsc:after{
 .toLowerCase{
     text-transform: lowercase;
 }
+
+.integrationTable thead th:nth-child(1) {
+    width: 272px;
+}
+.integrationTable thead th:nth-child(2) {
+    width: 94px;
+    padding-right: 40px;
+}
+.integrationTable thead th:nth-child(3) {
+    width: 159px;
+    padding-right: 40px;
+}
