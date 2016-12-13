@@ -11,7 +11,7 @@ angular.module('KaplenWeb.dashboardController',[])
 	$routeProvider.otherwise({ redirectTo: '/home'} );
 }])
 
-.controller('dashboardController', function($scope, $modal, $rootScope, menuFactory, $window,
+.controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
 	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
 
 	menuFactory.setActiveDashboard();
@@ -429,10 +429,14 @@ angular.module('KaplenWeb.dashboardController',[])
 			objItem = objItem.data.content;
 			$scope.transactionConciliationBox = {};
 
-			if (objItem !== undefined ){
+			if (objItem.length){
 				$scope.transactionConciliationBox.transctionToConcilieQuantity = objItem[0].transctionToConcilieQuantity;
 				$scope.transactionConciliationBox.transctionConciliedQuantity = objItem[0].transctionConciliedQuantity;
 				$scope.transactionConciliationBox.transctionUnprocessedQuantity = objItem[0].transctionUnprocessedQuantity;
+			} else {
+				$scope.transactionConciliationBox.transctionToConcilieQuantity = 0;
+				$scope.transactionConciliationBox.transctionConciliedQuantity = 0;
+				$scope.transactionConciliationBox.transctionUnprocessedQuantity = 0;
 			}
 		});
 	}
@@ -455,9 +459,9 @@ angular.module('KaplenWeb.dashboardController',[])
 	}
 
 	function ShowVideoModal() {
-		var objModalInstance = $modal.open({
+		var objModalInstance = $uibModal.open({
 			templateUrl: 'video.html',
-			controller: function ($scope, $modalInstance, $sce) {
+			controller: function ($scope, $uibModalInstance, $sce) {
 				$scope.video = {
 					sources: [
 						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.mp4"), type: "video/mp4"},
@@ -478,11 +482,11 @@ angular.module('KaplenWeb.dashboardController',[])
 				$scope.cancel = Cancel;
 
 				function Ok(){
-					$modalInstance.close($scope.selected.item);
+					$uibModalInstance.close($scope.selected.item);
 				}
 
 				function Cancel(){
-					$modalInstance.dismiss('cancel');
+					$uibModalInstance.dismiss('cancel');
 				}
 			}
 		});

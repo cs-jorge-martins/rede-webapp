@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate',
+var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
                             'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
                             'com.2fdevs.videogular.plugins.controls',
@@ -45,8 +45,8 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
-	}).config(function (datepickerConfig) {
-		datepickerConfig.showWeeks = false;
+	}).config(function (uibDatepickerConfig) {
+		uibDatepickerConfig.showWeeks = false;
     })
 	.config(['$routeProvider', '$httpProvider','$angularCacheFactoryProvider',
 	         function ($routeProvider, $httpProvider, $angularCacheFactoryProvider) {
@@ -108,7 +108,7 @@ var app = angular.module('KaplenWeb',['ngRoute', 'ngLocale','angularFileUpload',
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $modal, cacheService) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService) {
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){

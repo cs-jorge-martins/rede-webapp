@@ -10,8 +10,8 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 	$routeProvider.when('/relatorio/ajustes', {templateUrl: 'app/views/relatorios/ajustes/index.html', controller: 'relatorioAjustesController'});
 }])
 
-.controller('relatorioAjustesController', function(menuFactory, $scope, $modal, calendarFactory, $rootScope,
-    $window, advancedFilterService, calendarService, AdjustService){
+.controller('relatorioAjustesController', function(menuFactory, $scope, calendarFactory, $rootScope,
+    $window, advancedFilterService, calendarService, AdjustSummaryService, AdjustService){
 		//Extensao do serviço para filtro avançado
 		angular.extend($scope, advancedFilterService);
 		$scope.LoadParamsByFilter();
@@ -22,7 +22,6 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 
 		menuFactory.setActiveReportsAdjustments();
 		$scope.dateSelected = calendarFactory.getYesterdayDate();
-		$scope.totalItensPage = "10";
 		$scope.items = [];
 		$scope.total = 0;
 		$scope.noItensMsg = false;
@@ -30,13 +29,14 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.exportReport = ExportReport;
 
 		var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+		$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+		$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 		$scope.pageChanged = PageChanged;
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 10;
+		$scope.totalItensPageOptions = [10,20,50];
+		$scope.totalItensPage = $scope.totalItensPageOptions[1];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
         $scope.sortResults = SortResults;

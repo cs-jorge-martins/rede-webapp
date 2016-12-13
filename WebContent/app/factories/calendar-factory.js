@@ -34,10 +34,6 @@ angular.module('Kaplen.CalendarFactory',[])
 		return moment().add(1, 'years');
 	}
 
-	function GetDateFromString(value, strFormat){
-		return moment = moment(value,strFormat);
-	}
-
 	function GetFirstDayOfMonth(){
 		return objFirstDayOfCurrentMonth;
 	}
@@ -197,7 +193,7 @@ angular.module('Kaplen.CalendarFactory',[])
     }
 
 	function GetDateFromString(date){
-		return moment(date, strFormat);
+		return moment(date, strFormat).toDate();
 	}
 
 	function AddDaysToDate(date, qtd){
@@ -385,7 +381,6 @@ angular.module('Kaplen.CalendarFactory',[])
         formatDateTimeForService: FormatDateTimeForService,
         getFirstDayOfLastMonth: GetFirstDayOfLastMonth,
         getFirstDayOfLastMonthForDashboard: GetFirstDayOfLastMonthForDashboard,
-        getDateFromString: GetDateFromString,
         getDateFromString: GetDateFromString,
         getMonthNumberOfDate: GetMonthNumberOfDate,
         getHoursAndMinutes: GetHoursAndMinutes,

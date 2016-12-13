@@ -12,7 +12,7 @@
 
 	<br />
 
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+    <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
 
     <div id="primaryContent">
         <div id="details" class="sales box">
@@ -28,16 +28,16 @@
                                             <ul>
                                                 <li>
                                                     <input type="text" class="disabled input-date"
-                                                        datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirstFinanceiro"
+                                                        uib-datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirstFinanceiro"
                                                         datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(initialDate)"
-                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstFinanceiro = true"/>
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstFinanceiro = true" datepicker-append-to-body="true" />
                                                 </li>
                                                 <li>
                                                     <label for="" class="at">Até</label>
                                                     <input type="text" class="disabled input-date"
-                                                        datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLastFinanceiro"
+                                                        uib-datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLastFinanceiro"
                                                         datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(finalDate)"
-                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastFinanceiro = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastFinanceiro = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" datepicker-append-to-body="true" />
                                                 </li>
                                   </ul>
                                 </li>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
 
-        		<table cellpadding="0" cellspacing="0" class="sortTable">
+        		<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="items.length">
         			<thead>
         				<tr class="taleft">
         					<th width="250" ng-click="sortResults($event,'payedDate')">data do débito/crédito</th>
@@ -63,7 +63,7 @@
         					<th ng-click="sortResults($event,'amount')">valor (R$)</th>
         				</tr>
         			</thead>
-        			<tbody id="cupomVendasTour" ng-show="items">
+        			<tbody id="cupomVendasTour">
         				<tr ng-repeat="item in items" ng-class-odd="'odd'">
         					<td>{{item.payedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>{{item.roDate | date: 'dd/MM/yyyy'}}</td>
@@ -72,48 +72,24 @@
         				</tr>
         			</tbody>
         		</table>
-                <!--
-                <table class="parentTable summary" ng-show="items">
-                    <thead>
-                        <tr>
-                            <th width="765">total do relatório</th>
-                            <th></th>
-                            <th>{{total | currency:""}}</th>
-                        </tr>
-                    </thead>
-                </table>
-                -->
                 <span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
-        	    <div class="footer">
+        	    <div class="footer" ng-show="items.length">
 					<div class="optionsWrapper">
 						<div class="selectWrapper">
 							<label for="totalItensPage">resultados por página</label>
 							<div class="select">
-								<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
-									<option value="10">10</option>
-									<option value="20">20</option>
-									<option value="50">50</option>
-								</select>
+                                <select ng-model="totalItensPage"
+                                    ng-change="totalItensPageChanged()"
+                                    ng-options="option for option in totalItensPageOptions"
+                                    id="totalItensPage">
+                                </select>
 							</div>
 						</div>
 
 						<div class="paginationWrapper">
-							<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-							</pagination>
+							<ul uib-pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+							</ul>
 						</div>
-
-<!--
-                        <div class="export-report-sales">
-                            <strong>Exportar como:</strong>
-                            <ul>
-                                <li>
-                                    <a href="javascript:void(0);" ng-click="exportReport()">
-                                        <img src="/assets/img/ico-excel.png" alt="">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
--->
 					</div>
 				</div>
         	</div>

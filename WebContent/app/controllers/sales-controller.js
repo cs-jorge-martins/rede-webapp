@@ -8,7 +8,7 @@ angular.module('Conciliador.salesController',[])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/sales', {templateUrl: 'app/views/sales.html', controller: 'salesController'});
-}]).controller('salesController', function($scope, $modal,  $rootScope, menuFactory, calendarFactory, $location,
+}]).controller('salesController', function($scope, $uibModal,  $rootScope, menuFactory, calendarFactory, $location,
 	FinancialService, cacheService, advancedFilterService, TransactionConciliationService, TransactionService, TransactionSummaryService){
 
 	//Extensao do serviço para filtro avançado
@@ -130,17 +130,19 @@ angular.module('Conciliador.salesController',[])
 		$scope.months = [];
 		$scope.days = [];
 		$scope.lastDaySelectedIndex = 0;
-
+		$scope.activeMonth = (calendarFactory.getMonthNumberOfDate($scope.dateSelected) - 1);
+		
 		var objMomentjs = moment();
 		var arrMonths = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 		var intInitialDayOfMonth = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfMonth());
 		var bolIsActive = false;
 
 		for(var intIndex = 0; intIndex < 12; intIndex++){
-			if ($scope.dateSelected != null)
+			if ($scope.dateSelected != null) {
 				$scope.months.push({month: arrMonths[intIndex], active: (intIndex + 1) == calendarFactory.getMonthNumberOfDate($scope.dateSelected)});
-			else
+			} else {
 				$scope.months.push({month: arrMonths[intIndex], active: (intIndex + 1) == (objMomentjs.month()+1)});
+			}
 		}
 
 		for(intInitialDayOfMonth; intInitialDayOfMonth <= 31; intInitialDayOfMonth++){
@@ -371,11 +373,11 @@ angular.module('Conciliador.salesController',[])
 		$scope.confirm = true;
 		$scope.success = false;
 		if($scope.concilieItems.length) {
-			$modal.open ({
+			$uibModal.open ({
 				templateUrl: "app/views/resumo-conciliacao/confirma-conciliacao-resumo.html",
 				scope: $scope,
 				animation: false,
-				controller: function($scope, $modalInstance, $timeout) {
+				controller: function($scope, $uibModalInstance, $timeout) {
 					$scope.ok = function(data) {
 						var arrIds = [];
 
@@ -447,7 +449,7 @@ angular.module('Conciliador.salesController',[])
 			            });
 					}
 					$scope.cancel = function(data) {
-						$modalInstance.close();
+						$uibModalInstance.close();
 					}
 				},
 				size: 'md',

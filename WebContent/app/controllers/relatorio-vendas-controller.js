@@ -17,10 +17,10 @@
 		}])
         .controller('relatorioVendasController', RelatorioVendas);
 
-    RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', '$modal', 'calendarFactory', '$rootScope', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
+    RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', 'calendarFactory', '$rootScope', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
 
-    function RelatorioVendas(menuFactory, $scope, $window, $modal, calendarFactory, $rootScope,
-	 advancedFilterService, calendarService, TransactionSummaryService, TransactionService) {
+    function RelatorioVendas(menuFactory, $scope, $window, calendarFactory, $rootScope,
+    advancedFilterService, calendarService, TransactionSummaryService,TransactionService) {
     	//Extensao do servico para filtro avancado
     	angular.extend($scope, advancedFilterService);
     	$scope.LoadParamsByFilter();
@@ -36,16 +36,17 @@
 
 		/* pagination */
 		$scope.maxSize = 4;
+        $scope.totalItensPageOptions = [10,20,50];
 
-		$scope.totalItensPageSynthetic = 50;
+		$scope.totalItensPageSynthetic = $scope.totalItensPageOptions[2];
         $scope.currentPageSynthetic = 0;
 		$scope.totalItensSynthetic = 0;
 
-		$scope.totalItensPageAnalytical = 10;
+		$scope.totalItensPageAnalytical = $scope.totalItensPageOptions[0];
         $scope.currentPageAnalytical = 0;
 		$scope.totalItensAnalytical = 0;
 
-		$scope.totalItensPageDuplicate = 10;
+		$scope.totalItensPageDuplicate = $scope.totalItensPageOptions[0];
         $scope.currentPageDuplicate = 0;
 		$scope.totalItensDuplicate = 0;
 
@@ -244,18 +245,18 @@
 
 			$scope.synthetic = {};
 			$scope.synthetic.items = [];
-			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.synthetic.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+			$scope.synthetic.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 
 			$scope.analytical = {};
 			$scope.analytical.items = [];
-			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.analytical.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+			$scope.analytical.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 
 			$scope.duplicate = {};
 			$scope.duplicate.items = [];
-			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.duplicate.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+			$scope.duplicate.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 		};
 
 		function ClearSyntheticFilter() {
