@@ -8,7 +8,7 @@
     'use strict';
 
     angular
-        .module('KaplenWeb.relatorioVendasController', ['ui.bootstrap'])
+        .module('Conciliador.relatorioVendasController', ['ui.bootstrap'])
 		.config(['$routeProvider', function($routeProvider) {
 			$routeProvider.when('/relatorio/vendas', {
 				templateUrl: 'app/views/relatorios/vendas/index.html',

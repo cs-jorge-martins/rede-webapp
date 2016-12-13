@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.receiptsService', [])
+angular.module('Conciliador.receiptsService', [])
 	.config(['$routeProvider', function ($routeProvider) {
 }])
 
@@ -41,5 +41,5 @@ angular.module('KaplenWeb.receiptsService', [])
 			headers: Request.setHeaders()
 		});
 	};
-	
+
 });

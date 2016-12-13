@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.kaplenAdminService',[])
+angular.module('Conciliador.kaplenAdminService',[])
 	.config(['$routeProvider', function ($routeProvider) {
 }])
 

@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.calendarService',[])
+angular.module('Conciliador.calendarService',[])
 	.config(['$routeProvider', function($routeProvider) {
 
 }])

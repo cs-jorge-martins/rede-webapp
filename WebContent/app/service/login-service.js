@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.loginService',[])
+angular.module('Conciliador.loginService',[])
 	.config(['$routeProvider', function ($routeProvider) {
 
 }])

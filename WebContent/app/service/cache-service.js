@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.cacheService',[])
+angular.module('Conciliador.cacheService',[])
 .config(['$routeProvider', function($routeProvider, $angularCacheFactoryProvider) {
 
 }])

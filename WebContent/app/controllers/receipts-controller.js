@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.movementsModule',[])
+angular.module('Conciliador.movementsModule',[])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/receipts', {templateUrl: 'app/views/receipts.html', controller: 'receiptsController'});
