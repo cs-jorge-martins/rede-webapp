@@ -49,6 +49,15 @@
 					startingDay: 1,
 					maxMode: 'day'
 				};
+
+				if($scope.minDate) {
+					console.log("$scope.minDate", $scope.minDate)
+					$scope.dateOptions.minDate = $scope.minDate;
+				}
+
+				if($scope.maxDate) {
+					$scope.dateOptions.maxDate = $scope.maxDate;
+				}
 			}
 
 			function Open() {

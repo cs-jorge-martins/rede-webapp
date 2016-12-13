@@ -3042,7 +3042,8 @@ aside table table td:after {
 .uib-datepicker-popup.dropdown-menu button span.sr-only{
     visibility: hidden;
 }
-.uib-datepicker-popup .text-muted {
+.uib-datepicker-popup .text-muted,
+.uib-datepicker-popup button:disabled span{
     color: #cacaca !important;
 }
 .filterList table {
