@@ -29,8 +29,8 @@ angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
 		$scope.exportReport = ExportReport;
 
 		var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-		$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-		$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+		$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+		$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 		$scope.pageChanged = PageChanged;
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
