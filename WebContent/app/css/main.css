@@ -3036,9 +3036,14 @@ aside table table td:after {
 	display: inline;
 	padding-left: 7px;
 }
-.uib-datepicker-popup.dropdown-menu button.uib-title,
 .uib-datepicker-popup.dropdown-menu button.uib-title{
-    width: 203px !important;
+    width: 100% !important;
+}
+.uib-datepicker-popup.dropdown-menu button span.sr-only{
+    visibility: hidden;
+}
+.uib-datepicker-popup .text-muted {
+    color: #cacaca !important;
 }
 .filterList table {
 	width: 280px;
