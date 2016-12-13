@@ -464,9 +464,9 @@ angular.module('KaplenWeb.dashboardController',[])
 						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.webm"), type: "video/webm"},
 						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.ogg"), type: "video/ogg"}
 					],
-					theme: "app/css/videogular.min.css",
+					theme: "assets/css/videogular.min.css",
 					plugins: {
-						poster: "/app/img/videoPoster.jpg",
+						poster: "/assets/img/videoPoster.jpg",
 						controls: {
 							autoHide: true,
 							autoHideTime: 1000

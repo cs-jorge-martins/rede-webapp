@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 module.exports = function(config) {
   config.set({
 
@@ -19,9 +19,9 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'WebContent/app/build.js',
-        'WebContent/app/tests/**/*spec.js',
+        'tests/**/*spec.js',
         'WebContent/app/views/directives/*.html',
-        'WebContent/app/scripts/**/*.js',
+        'WebContent/app/**/*.js',
     ],
 
     plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-ng-html2js-preprocessor', 'karma-coverage'],
