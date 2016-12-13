@@ -20,8 +20,7 @@ module.exports = function(config) {
     files: [
         'WebContent/app/build.js',
         'tests/**/*spec.js',
-        'WebContent/app/views/directives/*.html',
-        'WebContent/app/**/*.js',
+        'WebContent/app/views/directives/*.html'
     ],
 
     plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-ng-html2js-preprocessor', 'karma-coverage'],
