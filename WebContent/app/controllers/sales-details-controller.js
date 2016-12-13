@@ -286,13 +286,13 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 			if(strItem == strColumn){
 				 if($scope.order == 1){
 					$scope.order = 2;
-					objElement.src = "app/img/cresc.png";
+					objElement.src = "assets/img/cresc.png";
 				}else{
 					$scope.order = 1;
-					objElement.src = "app/img/dec.png";
+					objElement.src = "assets/img/dec.png";
 				}
 			}else{
-				objElement.src = "app/img/default.png";
+				objElement.src = "assets/img/default.png";
 			}
 		});
 

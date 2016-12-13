@@ -18,9 +18,9 @@ angular.module('Conciliador.helpController',[])
             {src: $sce.trustAsResourceUrl("app/videos/video-treinamento.webm"), type: "video/webm"},
             {src: $sce.trustAsResourceUrl("app/videos/video-treinamento.ogg"), type: "video/ogg"}
         ],
-        theme: "app/css/videogular.min.css",
+        theme: "assets/css/videogular.min.css",
         plugins: {
-            poster: "app/img/videoPoster2.png",
+            poster: "assets/img/videoPoster2.png",
             controls: {
                 autoHide: true,
                 autoHideTime: 1000

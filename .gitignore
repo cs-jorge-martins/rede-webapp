@@ -3,7 +3,7 @@ node_modules
 build
 .settings
 .project
-WebContent/app/scripts/config.js
+WebContent/app/config.js
 WebContent/app/build.js
 coverage
 npm-debug.log

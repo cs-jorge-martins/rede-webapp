@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 describe('relatorio vendas controller', function() {
 
     beforeEach(module('KaplenWeb'));
