@@ -1206,7 +1206,7 @@ html>body {
 	font-family: 'open_sansregular';
 	line-height: 1.4;
     background-color: #f3efed;
-	background: #f7f3f1 url(../img/bg.png) top repeat-x;
+	background: #f0f0f0 url(../img/bg.png) top repeat-x;
 }
 
 ::-moz-selection {
@@ -1333,11 +1333,9 @@ em, b {
 }
 body>div:first-child {
 	min-height: 100%;
-	margin-bottom: -48px;
-	width: 1002px;
+	width: 1200px;
 	position: relative;
-	left: 50%;
-	margin-left: -502px;
+    margin: 0 auto;
 }
 body>div:first-child:after {
 	content: "";
@@ -1381,7 +1379,7 @@ nav.fixed {
 }
 
 nav.fixed .container {
-	width: 1032px;
+	width: 1200px;
 	margin: 0 auto;
 }
 
@@ -1470,9 +1468,6 @@ header li.help {
 	margin-left: 90px;
 }
 
-header .logout {
-	margin-right: 15px;
-}
 header .logout a:before, header .help a:before {
     color:#ff7900;
     position: absolute;
@@ -1833,7 +1828,7 @@ header option {
 }
 /** section */
 section {
-	width: 980px;
+	width: 100%;
 	margin: 0 auto;
 	/*padding: 0 0 20px;*/
 	padding: 0;
@@ -2045,9 +2040,9 @@ section .date h2, section .date li {
 }
 section .date h2 {
 	color: #565658;
-	padding: 0 0 0 45px;
+	padding: 11px 0 0 45px;
 	position: relative;
-	font-size: 25px;
+	font-size: 20px;
 	font-weight: bold;
 }
 section .date ul {
@@ -2078,6 +2073,9 @@ section .date time {
 	position: relative;
 	top: -3px!important;
 	left: 0;
+}
+#conciliacao .date time {
+    margin-right:214px;
 }
 section .selectCalendar a.prev, section .selectCalendar a.next {
 	color: #565658;
@@ -2117,11 +2115,11 @@ section .selectCalendar a.next:before {
 	content: "\e606";
 }
 section .selectCalendar a.prev {
-	left: 0;
+	left: 72px;
 	/*background-position: center -38px;*/
 }
 section .selectCalendar a.next {
-	right: 0;
+	right: 72px;
 	/*background-position: center 4px;*/
 }
 section .date .select {
@@ -2287,7 +2285,7 @@ section .date:after {
 }
 #dashboard>ul li {
 	height: 118px;
-	width: 225px;
+	width: 280px;
 	text-align: left;
 	margin-left: 20px;
 	padding: 10px 0 0 0;
@@ -2328,7 +2326,6 @@ section .date:after {
 	font-size: 16px;
 	text-align: left;
 	height: 48px;
-	width: 210px;
     padding: 5px 0 0 15px;
 	display: block;
 	z-index: 1;
@@ -2403,7 +2400,7 @@ section .date:after {
 }
 /* main */
 #dashboard main {
-	width: 662px;
+	width: 892px;
 	float: left;
 }
 #dashboard aside>h2, #dashboard caption {
@@ -2414,6 +2411,7 @@ section .date:after {
 	padding: 14px 0 0;
 	background: #383838;
 	display: block;
+    font-size:18px;
 }
 
 #dashboard aside .calendarTotals,
@@ -2431,9 +2429,8 @@ section .date:after {
 	font-size: 18px;
 	height: 20px;
 	font-weight: bold;
-	/*text-indent: 31px;
-	background: url(../img/dashboardTitle.png) left top no-repeat;*/
 	display: inline-block;
+    text-transform: lowercase;
 }
 #dashboard article div {
 	margin: 0 !important;
@@ -2484,7 +2481,7 @@ section .date:after {
 	padding: 20px;
 }
 #dashboard main article:first-child {
-	height: 370px;
+	height: 375px;
 }
 #dashboard main article div[config="chartVendas"] {
 	margin: 0 !important;
@@ -2493,6 +2490,9 @@ section .date:after {
 #dashboard table, #relatorio table {
 	width: 100%;
 	position: relative;
+}
+#relatorio table {
+    margin-top: 55px;
 }
 #dashboard aside table {
 	border: 1px solid #ddd;
@@ -2555,7 +2555,7 @@ section .date:after {
 	text-decoration: none;
 }
 #dashboard aside {
-	width: 298px;
+	width: 280px;
 	float: right;
 	position: relative;
 }
@@ -2595,6 +2595,7 @@ aside .chargebacks .weekCalendar th {
 	color: #a2a3a3;
 	/*text-transform: uppercase;*/
 	border-top: 1px solid #eceff0;
+    font-size: 11px;
 }
 aside .chargebacks thead th, aside .chargebacks .calendarTitle td, aside .chargebacks .calendarMonth td {
 	padding: 8px 0;
@@ -2739,7 +2740,7 @@ aside table table tbody h3, aside table table tbody em {
 }
 aside table table tbody h3 {
 	color: #747474;
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: normal;
 	/*text-transform: uppercase;*/
 	margin: 13px 0 0 !important;
@@ -2747,9 +2748,9 @@ aside table table tbody h3 {
 	line-height: 1;
 }
 aside table table tbody em {
-	font-size: 30px;
+	font-size: 19px;
 	margin: 0;
-	padding: 10px 0 0;
+	padding: 10px 0;
 }
 aside table table tbody .conciliados:before,
 aside table table tbody .aConciliar:before,
@@ -3315,7 +3316,57 @@ button.close {
 	background: #f8f9f9;
 }
 .modal-open {
-	overflow: hidden
+	overflow: hidden;
+}
+.modal-blur {
+    filter: blur(2px);
+}
+.new-modal .modal-header {
+    border-bottom: none;
+    padding: 32px 32px 0px;
+}
+.new-modal .modal-body {
+    padding: 10px 32px 0 32px;
+}
+.new-modal .modal-footer {
+    border-top: 0;
+    padding: 25px 32px 32px;
+    margin: 0;
+    height: 34px;
+}
+.new-modal .modal-body p:first-child {
+    margin-top: 0;
+}
+.new-modal .modal-body p:last-child {
+    margin-bottom: 0;
+}
+.new-modal .modal-body.modal-no-footer {
+    margin-bottom: 40px;
+}
+.new-modal .modal-footer button {
+    margin: 0 0 0 15px;
+    padding: 13px 0px;
+    font-size: 14px;
+}
+.new-modal .modal-sm .modal-footer button {
+    width: 100px;
+}
+.new-modal .modal-header-text {
+    color: #00b9b5;
+    font-size: 17px;
+    font-weight: bolder;
+    width: calc(100% - 26px);
+    float: left;
+}
+.new-modal .modal-header .transparent-button {
+    position: relative;
+    top: -8px;
+    right: -8px;
+    padding: 0;
+}
+.transparent-button {
+    background: transparent;
+    color: #000;
 }
 .modal {
 	position: fixed;
@@ -3758,6 +3809,23 @@ article {
 .relatorio .botaoVerMais + div {
 	padding-bottom: 20px!important;
 }
+#relatorio #primaryContent ul.nav li a{
+    background: #f8f8f8;
+    color: #ababab;
+    padding: 15px 20px;
+    text-align: left;
+}
+#relatorio #primaryContent ul.nav li {
+    background: #f8f8f8;
+    border-top: 2px solid #f8f8f8;
+}
+#relatorio #primaryContent ul.nav li.active a{
+    background: #fff;
+    color: #ff7800;
+}
+#relatorio #primaryContent ul.nav li.active {
+    border-top: 2px solid #ff7800;
+}
 .filterList ul {
 	position: relative;
 }
@@ -3874,7 +3942,9 @@ article {
 }
 
 .export-report-sales {
-    float: right;
+    position: absolute;
+    right: 27px;
+    bottom: 100px;
 }
 .export-report-sales strong {
     float: left;
@@ -6062,7 +6132,7 @@ label[for="ate"] {
 	position: relative;
 	margin: 0;
 	pading: 0;
-	width: 151px;
+	width: 302px;
 }
 .analiticos .highcharts-container {
 	width: 936px!important;
@@ -6751,7 +6821,7 @@ ul.archives li.integrate a {
 /** footer */
 footer {
 	height: 32px;
-	background: #efe7e3;
+	background: #dedede;
 	clear: both;
 	z-index: 0 !important;
 }
@@ -8652,7 +8722,25 @@ canvas {
 }
 
 .chartVendas {
-    height: 170px;
+    height: 130px;
+}
+
+#dashboard .line-legend li span {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+#dashboard .line-legend {
+    margin-top: 10px;
+}
+
+#dashboard .line-legend li {
+    padding: 1px 15px 2px 19px;
+}
+
+#dashboard #calendarioTour tbody.dates tr:last-child {
+    border-bottom: solid white 11px;
 }
 
 .chartRelatorioSintetico {
@@ -8729,7 +8817,7 @@ canvas {
 }
 
 #reportIndicators li {
-	width: 471px
+	width: 581px
 }
 #reportIndicators li:last-child {
 	margin-right: 0;
@@ -8887,8 +8975,11 @@ footer nav.fixed {
 #details {
 	min-height: 100px;
 }
+#details.sales.box {
+    padding: 20px;
+}
 #details .nav-tabs {
-    background: #F0EBE8;
+    background: #F8F8F8;
     height: 60px;
 }
 #details thead {
@@ -8918,7 +9009,6 @@ footer nav.fixed {
 	background: #f0ebe8;
 }
 #details table {
-    width: 930px;
     font-size: 12px;
 }
 
@@ -8938,7 +9028,6 @@ footer nav.fixed {
 #details .footer {
 	border-top: 1px solid #e5e5e5;
 	margin: 0 auto;
-	width: 930px;
 	padding: 0;
 }
 .modal-success {
@@ -8997,7 +9086,7 @@ footer nav.fixed {
 }
 
 #details .optionsWrapper {
-    margin: 35px 0 10px 30px;
+    margin: 35px 0 10px;
 }
 #details .optionsWrapper .selectWrapper,
 #details .optionsWrapper .archives,
@@ -9010,6 +9099,7 @@ footer nav.fixed {
 }
 #details .optionsWrapper .selectWrapper {
 	width: 230px;
+    margin-left: 30px;
 }
 #details .optionsWrapper .selectWrapper .select {
 	width: 55px;
@@ -9177,9 +9267,12 @@ footer nav.fixed {
 	padding-bottom: 0 !important;
 }
 
-#relatorio_financeiro,
 #relatorio_chargeback {
 	padding: 20px;
+}
+
+#relatorio_financeiro table {
+    width: 100%;
 }
 
 #relatorio_financeiro .filter{
@@ -9222,8 +9315,6 @@ footer nav.fixed {
 	padding: 10px 0 2px 5px !important;
 }
 .relatorio .tab-pane, #receiptsDetails .tab-pane {
-	border-left: 1px solid #dedede;
-    border-right: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
 }
 .relatorio article {
@@ -9257,10 +9348,11 @@ footer nav.fixed {
 }
 #receipts #headerTabs .nav-tabs li {
     width:50%;
-    background:#f0ebe8;
+    background:#f8f8f8;
     font-weight: bolder;
     font-size: 17px;
     border-left:0;
+    border-top: 2px solid #f8f8f8;
 }
 #receipts #headerTabs .nav-tabs li a {
     color:#ababab;
@@ -9268,7 +9360,7 @@ footer nav.fixed {
     padding: 15px 20px;
 }
 #receipts #headerTabs .nav-tabs li.active {
-    border-top: 3px solid #ff7800;
+    border-top: 2px solid #ff7800;
     background:white;
     color:#ff7800;
 }
@@ -9786,10 +9878,6 @@ div.checkbox-toggle-right {
     bottom: 0;
     width:100%;
 }
-
-.filterShiny ul li {
-    width:33%!important;
-}
 .filterShiny ul li:before {
     font-size: 18px;
 }
@@ -9880,7 +9968,7 @@ div.checkbox-toggle-right {
 .data-cards .header-datas {
     width:100%;
     height:100px;
-    padding: 45px 20px 84px;
+    padding: 45px 30px 84px 30px;
     -webkit-box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     -moz-box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
     box-shadow: 0px 6px 13px 0px rgba(183, 179, 179, 0.14);
@@ -10129,7 +10217,8 @@ div.checkbox-toggle-right {
 }
 
 #headerTabs div.numbers-data > ul > li.math-symbol > strong {
-    font-size: 22px;
+    font-size: 32px;
+    font-family: 'open_sanslight';
 }
 
 .data-cards .header-datas .chip-wrapper .chip {
@@ -10168,7 +10257,7 @@ div.checkbox-toggle-right {
 .data-cards .numbers-data {
     width: 100%;
     float: left;
-    padding:38px 20px 30px;
+    padding:38px 30px 30px;
     box-sizing: border-box;
 }
 .data-cards .numbers-data ul {
@@ -10179,7 +10268,7 @@ div.checkbox-toggle-right {
 .data-cards .numbers-data ul li {
     width: auto !important;
     display: inline-block;
-    width: 175px !important;
+    width: 193px !important;
     text-align: left !important;
     color: #4d4d4d;
 }
@@ -10189,15 +10278,16 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .numbers-data ul .math-symbol {
-    width: 80px !important;
+    width: auto !important;
     text-align: center;
     color: #999;
     font-size: 22px;
-    font-family: open_sanssemibold;
+    font-family: open_sanslight;
+    padding: 0 40px;
 }
 
 .data-cards .numbers-data ul strong{
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .data-cards .numbers-data ul span {
@@ -10205,7 +10295,7 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .numbers-data span span {
-    font-size: 12px;
+    font-size: 14px;
     display: inline;
     font-family: 'open_sanssemibold';
 }
@@ -10316,7 +10406,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     margin: 0 -1px;
     padding-left: 20px ;
     padding-top: 20px ;
-    padding-bottom: 11px ;
+    padding-bottom: 12px ;
     display: block;
     color: #ababab ;
 }
@@ -10454,7 +10544,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 }
 
 .page-header {
-    width: 980px;
+    width: 1200px;
     /* float: left; */
     margin: 0 auto;
 }
@@ -10524,7 +10614,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 #receiptsDetails .table th{
     position: relative;
     padding: 20px 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #cfcfcf;
 }
 
 #receiptsDetails .table th {
@@ -10565,11 +10655,12 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     margin-top: 10px;
 }
 #receiptsDetails .nav-tabs > li, #receipts .nav-tabs > li {
-    width: 326px;
+    width: 399.5px;
+    border-top: 2px solid #F8F8F8;
 }
 
 #receiptsDetails .nav-tabs li.active  {
-    border-top: 3px solid #ff7800;
+    border-top: 2px solid #ff7800;
 }
 
 #receiptsDetails .nav-tabs li, #receipts .nav-tabs li {
@@ -10582,7 +10673,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 }
 
 #receiptsDetailsPage {
-    background: #f7f7f7;
+    background: #f0f0f0;
 }
 
 #receiptsDetailsPage header,
@@ -10652,7 +10743,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 }
 
 #receiptsDetailsPage .container{
-    width: 1002px;
+    width: 1200px;
     margin: 0 auto;
 }
 
@@ -10760,8 +10851,9 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
     color:#00b9b5;
 }
 .data-cards .numbers-data ul li .big-number {
-    font-size: 25px;
+    font-size: 32px;
     font-weight: lighter;
+    font-family: 'open_sanslight', sans-serif;
 }
 .data-cards table {
     width:100%;
@@ -10805,7 +10897,7 @@ tr.card-product-line {
 
 .data-cards table thead tr th.except, .data-cards table tbody tr th.except {
     text-align: center;
-    padding-right: 30px;
+    padding-right: 10px;
 }
 
 .data-cards table tbody .cardFlag, #receiptsDetails .cardFlag {
@@ -11213,13 +11305,13 @@ tr.card-product-line {
     align-items:flex-end;
 }
 #integration article ul li aside .findfile {
-    width:700px;
+    width:892px;
     border:1px solid #ddd;
-    padding:10px;
+    padding:12px;
     color:#4d4d4d;
     box-sizing: border-box;
     float: left;
-    margin:0;
+    margin:0 0 0 25px;
 }
 
 #integration article ul li aside button.submit {
@@ -11358,10 +11450,10 @@ tr.card-product-line {
 
 #integration .halfSize .rcDatepicker,
 #integration .halfSize .rcDatepicker .input-group input {
-    width: 175px;
+    width: 247px;
 }
 #integration .multiselect-parent button {
-    width:250px;
+    width:375px;
 }
 .rcDatepicker .input-group-addon {
     position: absolute;
@@ -11813,4 +11905,16 @@ th.sortAsc:after{
 
 .toLowerCase{
     text-transform: lowercase;
+}
+
+.integrationTable thead th:nth-child(1) {
+    width: 272px;
+}
+.integrationTable thead th:nth-child(2) {
+    width: 94px;
+    padding-right: 40px;
+}
+.integrationTable thead th:nth-child(3) {
+    width: 159px;
+    padding-right: 40px;
 }

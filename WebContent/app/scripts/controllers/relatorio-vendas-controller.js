@@ -17,11 +17,10 @@
 		}])
         .controller('relatorioVendasController', RelatorioVendas);
 
-    RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', '$modal', 'calendarFactory', '$rootScope', '$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
+    RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', '$modal', 'calendarFactory', '$rootScope', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
 
     function RelatorioVendas(menuFactory, $scope, $window, $modal, calendarFactory, $rootScope,
-    $window, advancedFilterService, calendarService, TransactionSummaryService,
-	TransactionService) {
+	 advancedFilterService, calendarService, TransactionSummaryService, TransactionService) {
     	//Extensao do servico para filtro avancado
     	angular.extend($scope, advancedFilterService);
     	$scope.LoadParamsByFilter();

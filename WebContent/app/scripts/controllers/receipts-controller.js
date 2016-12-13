@@ -17,7 +17,7 @@ angular.module('KaplenWeb.movementsModule',[])
 })
 
 .controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
-		advancedFilterService, calendarService, filtersService, receiptsService, $filter){
+		advancedFilterService, calendarService, filtersService, receiptsService, $filter, $sce){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
@@ -26,6 +26,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	menuFactory.setActiveMovements();
 
 	$scope.tabs = [{},{}];
+	$scope.to_trusted = ToTrusted;
     $scope.expected = [];
 	$scope.receipts = [];
     $scope.getReceipt = GetReceipt;
@@ -102,6 +103,10 @@ angular.module('KaplenWeb.movementsModule',[])
 		if ($rootScope.futureSelected) {
 			$scope.tabs[1].active = true;
 		}
+	}
+
+	function ToTrusted(html_code) {
+		return $sce.trustAsHtml(html_code);
 	}
 
     function GetReceipt() {
@@ -475,6 +480,19 @@ angular.module('KaplenWeb.movementsModule',[])
 			console.log('[receiptsController:getFinancials] error');
 		});
 	}
+	
+	function GetDateLabel(bolHasBr) {
+
+		var strBr = "";
+		if(bolHasBr) {
+			strBr = "<br>";
+		}
+
+		return $scope.futureReleases.startDateDay + " " + $scope.futureReleases.startDateMonth + " " +
+		$scope.futureReleases.startDateYear + strBr + " a " + $scope.futureReleases.endDateDay +  " " +
+		$scope.futureReleases.endDateMonth + " " + $scope.futureReleases.endDateYear;
+
+	}
 
 	function GetFutureReceipt() {
 
@@ -487,9 +505,12 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
 		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));
+		$scope.futureReleases.startDateYear = calendarFactory.getYearOfDate(dateStartDate);
 		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
 		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+		$scope.futureReleases.dateRange = GetDateLabel();
+		$scope.futureReleases.dateRangeWithBr = GetDateLabel(true);
 
 		var strInitialDay = moment($scope.futureReleases.startDate);
 		var strFinalDay = moment($scope.futureReleases.endDate);
