@@ -17,7 +17,7 @@
 		</div>
 		<input
 			type="text"
-			datepicker-popup="{{dateFormat}}"
+			uib-datepicker-popup="{{dateFormat}}"
 			ng-model="date"
 			is-open="status.opened"
 			datepicker-options="dateOptions"
@@ -26,8 +26,6 @@
 			current-text="Data atual"
 			ng-click="open()"
 			show-button-bar="false"
-			min-date="minDate"
-			max-date="maxDate"
 			readonly="readonly"
 			required />
 		<span class="input-group-addon icon_calendario"></span>

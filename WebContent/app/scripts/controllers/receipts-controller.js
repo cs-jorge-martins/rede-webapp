@@ -16,7 +16,7 @@ angular.module('KaplenWeb.movementsModule',[])
 	}
 })
 
-.controller('receiptsController', function(menuFactory, $modal, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
+.controller('receiptsController', function(menuFactory, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService, $filter, $sce){
 
 	//Extensao do serviço para filtro avançado
@@ -36,7 +36,8 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
     $scope.futureReleases = {};
-    $scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
+	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
+	$scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
     $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
     $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
@@ -480,7 +481,7 @@ angular.module('KaplenWeb.movementsModule',[])
 			console.log('[receiptsController:getFinancials] error');
 		});
 	}
-	
+
 	function GetDateLabel(bolHasBr) {
 
 		var strBr = "";
@@ -500,8 +501,6 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		var dateTestDate = $scope.futureReleases.startDate instanceof Date;
 		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
-
-		$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
 
 		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
 		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));
@@ -536,7 +535,7 @@ angular.module('KaplenWeb.movementsModule',[])
 		});
 
 	}
-	
+
 	function GetFutureMaxDateRange() {
 		var strDateDay;
 		var strDateMonth;

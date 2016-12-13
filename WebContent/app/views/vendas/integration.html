@@ -38,7 +38,7 @@
 				</div>
 				<span class="title" ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
 				<aside ng-show="uploadedFiles">
-					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch">
+					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch" />
 					<button class="submit" ng-click="getUploadedFiles(true)">buscar</button>
 					<table class="filesTable sortTable integrationTable">
 						<thead>
@@ -63,17 +63,17 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="totalItensPage"
+										ng-change="totalItensPageChanged()"
+										ng-options="option for option in totalItensPageOptions"
+										id="totalItensPage">
 									</select>
 								</div>
 							</div>
 
 							<div class="paginationWrapper">
-								<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-								</pagination>
+								<ul uib-pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+								</ul>
 							</div>
 						</div>
 					</div>

@@ -17,10 +17,10 @@
 		}])
 		.controller('relatorioChargebacksController', RelatorioFinanceiro);
 
-	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', '$modal', 'calendarFactory', '$rootScope',
+	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', 'calendarFactory', '$rootScope',
 	'$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService'];
 
-	function RelatorioFinanceiro(menuFactory, $scope, $modal, calendarFactory, $rootScope,
+	function RelatorioFinanceiro(menuFactory, $scope, calendarFactory, $rootScope,
 	    $window, advancedFilterService, calendarService, TransactionSummaryService) {
 
 		//Extensao do serviço para filtro avançado
@@ -40,7 +40,8 @@
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 10;
+        $scope.totalItensPageOptions = [10,20,50];
+		$scope.totalItensPage = $scope.totalItensPageOptions[0];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
 
@@ -157,8 +158,8 @@
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+			$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 			$scope.settlementsSelected = [];
 			$scope.adjustType = ['CANCELLATION'];
 			document.getElementById("buscaTerminal").value = '';

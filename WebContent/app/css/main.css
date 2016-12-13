@@ -1331,17 +1331,25 @@ em, b {
 .icon-pencil2:before {
 	content: "\e60a";
 }
-body>div:first-child {
+#content {
 	min-height: 100%;
 	width: 1200px;
 	position: relative;
     margin: 0 auto;
 }
-body>div:first-child:after {
+#content:after {
 	content: "";
 	height: 15px;
 	display: block;
 }
+#content.login {
+	width: auto;
+	height: auto;
+	left: initial;
+	margin-left: 0;
+	min-height: inherit;
+}
+
 #internas img {
 	margin-bottom: 20px;
 }
@@ -1543,13 +1551,13 @@ header li.config li:first-child {
 
 header li a {
 	font-size: 15px;
-	font-weight: bold;
-	color: #000;
+	font-weight: bold !important;
+	color: #000 !important;
     padding-bottom: 27px !important;
 }
 
 header li a.active, header li a:hover {
-	color: #ff7900;
+	color: #ff7900 !important;
 }
 
 header li a.active {
@@ -1566,8 +1574,10 @@ header .dropdown-menu li {
     border-bottom: 1px solid #dedede;
 }
 header .dropdown-menu a {
-	padding: 20px 0 20px 5px;
-    font-size: 13px;
+	padding: 20px 0 20px 5px !important;
+    font-size: 13px !important;
+	text-transform: lowercase !important;
+	font-weight: bold !important;
 }
 
 header .dropdown-menu a.active {
@@ -2984,14 +2994,9 @@ aside table table td:after {
 	cursor: pointer;
 	font-weight: bold;
 }
-#conciliacao button:hover, .modal-footer button:hover {
-	/*
-	color: #fff;
-	background: #212e3b;
-	border-color: #212e3b;
-	*/
-}
-#conciliacao .dropdown-menu button, #primaryContent .dropdown-menu button {
+#conciliacao .dropdown-menu button,
+#primaryContent .dropdown-menu button,
+.uib-datepicker-popup.dropdown-menu button {
 	color: #b0b7be;
 	line-height: 1;
 	font-size: 14px;
@@ -3007,6 +3012,7 @@ aside table table td:after {
 }
 .dropdown-menu td button:hover, .dropdown-menu td button.active, #menuLateral .dropdown-menu td button:hover, #menuLateral .dropdown-menu td button.active {
 	color: #16a085!important;
+    background: transparent !important;
 }
 .integrateModal th button {
 	border: none;
@@ -3023,10 +3029,22 @@ aside table table td:after {
 	margin-bottom: 20px;
 }
 
-#conciliacao .dropdown-menu button span.text-info, #receiptsDetails #primaryContent .dropdown-menu button span.text-info {
+#conciliacao .dropdown-menu button span.text-info,
+#receiptsDetails #primaryContent .dropdown-menu button span.text-info,
+.uib-datepicker-popup.dropdown-menu button span.text-info{
 	text-align: center;
 	display: inline;
 	padding-left: 7px;
+}
+.uib-datepicker-popup.dropdown-menu button.uib-title{
+    width: 100% !important;
+}
+.uib-datepicker-popup.dropdown-menu button span.sr-only{
+    visibility: hidden;
+}
+.uib-datepicker-popup .text-muted,
+.uib-datepicker-popup button:disabled span{
+    color: #cacaca !important;
 }
 .filterList table {
 	width: 280px;
@@ -3780,6 +3798,11 @@ article {
 }
 .vendas col:nth-child(2), .vendas col:nth-child(3), .vendas col:nth-child(4) {
 	width: 300px !important;
+}
+.vendas .tab-pane li {
+	font-size: 14px;
+    text-align: center;
+    width: 24px;
 }
 .gestao col {
 	width: 274px !important;
@@ -5828,6 +5851,11 @@ input[type=reset]:hover, input[type=submit]:hover, input[type="button"]:hover,  
 	cursor: pointer;
     -moz-appearance: inherit;
 }
+
+.select:after {
+	display: none;
+}
+
 select:focus {
 	outline: none;
 }
@@ -6370,19 +6398,20 @@ label[for="ate"] {
  color: #514f55;
  font-style: italic;
 }
-.dropdown-menu.focus-list {
+
+form .dropdown-menu {
     max-height: 155px;
     overflow-x: hidden;
     width: 247px;
     background: #c6e6e0;
 }
-.focus-list li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li{
+form .dropdown-menu li, .hiddenContent.advancedFilterHiddenContent .grandChild ul li, .integrateModal .advancedFilterHiddenContent ul li{
     width: 247px;
     margin-left: 0 !important;
     text-indent: 15px;
 }
 
-.focus-list li a {
+.dropdown-menu li a {
     color: #565658;
     font-size: 12px;
     text-transform: uppercase;
@@ -6392,10 +6421,10 @@ label[for="ate"] {
     line-height: 1;
 }
 
-.focus-list li {
+.dropdown-menu li {
     border-top: 1px solid #fff!important;
 }
-.focus-list li:first-child {
+.dropdown-menu li:first-child {
     border-top: none;
 }
 
@@ -6430,27 +6459,27 @@ label[for="ate"] {
     top: 8px;
 }
 
-.focus-list ::-webkit-scrollbar, .hiddenContent.advancedFilterHiddenContent ::-webkit-scrollbar, .integrateModal .advancedFilterHiddenContent ul li ::-webkit-scrollbar {
+.dropdown-menu ::-webkit-scrollbar, .hiddenContent.advancedFilterHiddenContent ::-webkit-scrollbar, .integrateModal .advancedFilterHiddenContent ul li ::-webkit-scrollbar {
  width: 4px;
  height: 10px;
 }
-.advancedFilterHiddenContent ::-webkit-scrollbar-button:start:decrement, .advancedFilterHiddenContent ::-webkit-scrollbar-button:end:increment, .focus-list ::-webkit-scrollbar-button:start:decrement, .focus-list ::-webkit-scrollbar-button:end:increment {
+.advancedFilterHiddenContent ::-webkit-scrollbar-button:start:decrement, .advancedFilterHiddenContent ::-webkit-scrollbar-button:end:increment, .dropdown-menu ::-webkit-scrollbar-button:start:decrement, .dropdown-menu ::-webkit-scrollbar-button:end:increment {
  display: none;
 }
-.focus-list ::-webkit-scrollbar-track-piece, .advancedFilterHiddenContent ::-webkit-scrollbar-track-piece {
+.dropdown-menu ::-webkit-scrollbar-track-piece, .advancedFilterHiddenContent ::-webkit-scrollbar-track-piece {
  background-color: #c3d9d9;
  -webkit-border-radius: 6px;
  -moz-border-radius: 6px;
  border-radius: 6px;
 }
-.focus-list ::-webkit-scrollbar-thumb:vertical, .advancedFilterHiddenContent ::-webkit-scrollbar-thumb:vertical {
+.dropdown-menu ::-webkit-scrollbar-thumb:vertical, .advancedFilterHiddenContent ::-webkit-scrollbar-thumb:vertical {
  -webkit-border-radius: 6px;
  -moz-border-radius: 6px;
  background: #97b1b1;
  cursor:pointer;
 }
 
-.focus-list a {
+.dropdown-menu a {
 	background: none !important;
 }
 .hiddenContent.advancedFilterHiddenContent .grandChild ul li:first-child {
@@ -7925,7 +7954,7 @@ tr.totais td {
 	width:202px!important;
 }
 .modal, .modal-backdrop {
-	z-index: 100000000000000000000000!important;
+	/* z-index: 100000000000000000000000!important; */
 }
 .botaoAside {
 	height: 55px;
@@ -9786,11 +9815,20 @@ div.checkbox-toggle-right {
 	height: auto;
 }
 
+#faq .panel-title {
+    height: 41px;
+}
+
 .panel-title span {
 	font-weight: bold;
 	font-size: 15px;
-	display: block;
-	padding: 10px 0 10px 21px;
+	display: inline-block;
+	padding: 6px 0 0px 12px;
+    width: 96%;
+}
+
+.panel-heading {
+    position: relative;
 }
 
 .panel .accordion-toggle {
@@ -9799,13 +9837,12 @@ div.checkbox-toggle-right {
     top: 0;
     width: 100%;
     height: 30px;
-    text-align: right;
+    text-align: left;
 }
 
 .panel .accordion-toggle .glyphicon {
-	right: 19px;
-    top: 9px;
     font-size: 22px;
+    top: 6px;
 }
 
 .panel-body {
@@ -11215,6 +11252,8 @@ tr.card-product-line {
     padding: 8px 0 8px 36px;
     color: #626262;
     display: block;
+	font-size: 14px;
+	text-transform: none;
 }
 
 .dropdown-multiselect .caret {
@@ -11905,6 +11944,10 @@ th.sortAsc:after{
 
 .toLowerCase{
     text-transform: lowercase;
+}
+
+.uib-daypicker th span {
+	display: none;
 }
 
 .integrationTable thead th:nth-child(1) {

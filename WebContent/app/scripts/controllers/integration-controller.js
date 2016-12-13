@@ -10,8 +10,9 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 	$routeProvider.when('/integration', {templateUrl: 'app/views/vendas/integration.html', controller: 'integrationController'});
 }])
 
-.controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $modal, $timeout,
+.controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $uibModal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
+
 		menuFactory.setActiveIntegration();
 		$scope.labelFindFile = true;
 		$scope.uploadedFiles = false;
@@ -34,9 +35,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				type: 'FUTURE'
 			}
 		];
+
 		$scope.typeModel = {"id": 1, type: 'CURRENT'}
-
-
 		$scope.initialDate = [];
 		$scope.finishDate = [];
 
@@ -56,7 +56,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		/* pagination */
 		$scope.maxSize = 4;
-		$scope.totalItensPage = 10;
+		$scope.totalItensPageOptions = [10,20,50];
+		$scope.totalItensPage = $scope.totalItensPageOptions[0];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
 
@@ -78,12 +79,12 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		var objModal;
 		$scope.uploader.onBeforeUploadItem = function(){
-			objModal = $modal.open({
+			objModal = $uibModal.open({
 				templateUrl: "app/views/vendas/upload-in-progress.html",
 				scope: $scope,
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
-				controller: function($modalInstance, $timeout){
+				controller: function($uibModalInstance, $timeout){
                     $scope.cancel = Cancel;
 					function Cancel() {
 						$scope.uploader.clearQueue();
@@ -99,15 +100,15 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.uploader.onSuccessItem = function() {
 			objModal.close();
 			$scope.uploader.clearQueue();
-			var objModalInstance = $modal.open({
+			var objModalInstance = $uibModal.open({
 				templateUrl: "app/views/vendas/enviado-com-sucesso.html",
 				scope: $scope,
 				size: 'lg',
 				windowClass: 'integrationModalWrapper',
-				controller: function($scope, $modalInstance){
+				controller: function($scope, $uibModalInstance){
                     $scope.cancel = Cancel;
                     function Cancel() {
-                        $modalInstance.dismiss("cancel");
+                        $uibModalInstance.dismiss("cancel");
                     }
 				}
 			})
