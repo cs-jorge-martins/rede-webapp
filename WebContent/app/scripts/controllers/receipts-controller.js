@@ -36,8 +36,8 @@ angular.module('KaplenWeb.movementsModule',[])
     $scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
     $scope.futureReleases = {};
-    $scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
-	console.log("$scope.futureReleases.startDate", $scope.futureReleases.startDate)
+	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
+	$scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
     $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
     $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
     $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
@@ -501,9 +501,6 @@ angular.module('KaplenWeb.movementsModule',[])
 
 		var dateTestDate = $scope.futureReleases.startDate instanceof Date;
 		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
-
-		$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
-		console.log("$scope.futureReleases.inicialStartDate", $scope.futureReleases.inicialStartDate)
 
 		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
 		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));

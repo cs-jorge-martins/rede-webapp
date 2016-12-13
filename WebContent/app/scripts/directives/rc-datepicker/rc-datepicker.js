@@ -51,7 +51,6 @@
 				};
 
 				if($scope.minDate) {
-					console.log("$scope.minDate", $scope.minDate)
 					$scope.dateOptions.minDate = $scope.minDate;
 				}
 
