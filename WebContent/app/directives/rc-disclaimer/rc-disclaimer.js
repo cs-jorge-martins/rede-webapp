@@ -8,7 +8,7 @@
 	'use strict';
 
 	angular
-		.module('KaplenWeb')
+		.module('Conciliador')
 		.directive('rcDisclaimer', RcDisclaimer);
 
 	function RcDisclaimer() {

@@ -8,7 +8,7 @@ describe('rc-timeline directive', function(){
 
     var scope, template, isolateScope, $httpBackend, teste, strTemplateNode;
 
-    beforeEach(module('KaplenWeb'));
+    beforeEach(module('Conciliador'));
     beforeEach(module('app/views/directives/rc-timeline.html'));
 
     beforeEach(inject(function ($compile, $rootScope) {

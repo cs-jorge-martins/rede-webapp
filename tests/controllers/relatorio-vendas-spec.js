@@ -6,7 +6,7 @@
 
 describe('relatorio vendas controller', function() {
 
-    beforeEach(module('KaplenWeb'));
+    beforeEach(module('Conciliador'));
 
     describe('RelatorioVendasController', function() {
 

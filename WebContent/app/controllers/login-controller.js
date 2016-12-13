@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.loginController',[])
+angular.module('Conciliador.loginController',[])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/login', {templateUrl: 'app/views/login.html', controller: 'loginController'});

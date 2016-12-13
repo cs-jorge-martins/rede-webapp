@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.relatorioAjustesController',['ui.bootstrap'])
+angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/relatorio/ajustes', {templateUrl: 'app/views/relatorios/ajustes/index.html', controller: 'relatorioAjustesController'});

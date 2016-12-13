@@ -3,13 +3,13 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 describe('Conciliador', function() {
 
-    beforeEach(module('KaplenWeb'));
+    beforeEach(module('Conciliador'));
 
     describe('TransactionService', function() {
-        var xScope = null; 
+        var xScope = null;
         var xService = null;
         var xHttpBackend = null;
 
@@ -22,7 +22,7 @@ describe('Conciliador', function() {
         it('check if success callback is called when the service gets a 200 response from backend', function(){
             var xFakeSuccessCallback = null;
             var xFakeErrorCallback = null;
-            
+
             xFakeSuccessCallback = jasmine.createSpy();
             xFakeErrorCallback = jasmine.createSpy();
 
@@ -41,7 +41,7 @@ describe('Conciliador', function() {
         it('check if error callback is called when the service gets a 400 response from backend', function(){
             var xFakeSuccessCallback = null;
             var xFakeErrorCallback = null;
-            
+
             xFakeSuccessCallback = jasmine.createSpy();
             xFakeErrorCallback = jasmine.createSpy();
 

@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('KaplenWeb.dashboardController',[])
+angular.module('Conciliador.dashboardController',[])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/home', {templateUrl: 'app/views/dashboard.html', controller: 'dashboardController'});
