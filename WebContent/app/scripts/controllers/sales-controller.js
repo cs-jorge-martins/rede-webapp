@@ -30,9 +30,12 @@ angular.module('Conciliador.salesController',[])
 
 		GetCachedData();
 
+		var bolCacheData = false;
+
 		if($rootScope.salesFromDashDate) {
 			$scope.dateSelected = $rootScope.salesFromDashDate;
 			$rootScope.salesFromDashDate = null;
+			bolCacheData = true;
 		}
 
 		$scope.actualDateSelected = calendarFactory.getNameOfMonthAndYear($scope.dateSelected);
@@ -72,7 +75,7 @@ angular.module('Conciliador.salesController',[])
         $scope.sortResults = SortResults;
 
 		CalendarInit();
-		GetFinancials();
+		GetFinancials(bolCacheData);
 	}
 
 	function NextYear() {
