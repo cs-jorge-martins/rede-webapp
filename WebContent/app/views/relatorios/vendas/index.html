@@ -266,8 +266,8 @@
 								</tr>
 							</thead>
 
-							<tbody id="cupomVendasTour">
-								<tr ng-repeat="item in duplicate.items" ng-class-odd="'odd'">
+							<tbody class="cupomVendasTour" ng-repeat="item in duplicate.items">
+								<tr ng-class-odd="'odd'">
 									<td>{{item.date | date:'dd/MM/yyyy'}}</td>
 									<td>{{item.nsu}}</td>
 									<td>{{item.authorization}}</td>
@@ -275,6 +275,15 @@
 									<td>{{item.installment}}</td>
 									<td>{{item.terminal.code}}</td>
 									<td>{{item.gross | currency:''}}</td>
+								</tr>
+								<tr ng-show="item.duplicateFrom" ng-class-odd="'odd'">
+									<td>{{item.duplicateFrom.date | date:'dd/MM/yyyy'}}</td>
+									<td>{{item.duplicateFrom.nsu}}</td>
+									<td>{{item.duplicateFrom.authorization}}</td>
+									<td>{{item.duplicateFrom.cardNumber}}</td>
+									<td>{{item.duplicateFrom.installment}}</td>
+									<td>{{item.duplicateFrom.terminal.code}}</td>
+									<td>{{item.duplicateFrom.gross | currency:''}}</td>
 								</tr>
 							</tbody>
 						</table>
