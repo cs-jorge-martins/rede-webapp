@@ -108,7 +108,19 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route) {
+
+	init();
+		
+	function init() {
+		WatchHtmlId();
+	}
+	
+	function WatchHtmlId() {
+		$rootScope.$on('$routeChangeSuccess', function() {
+			$rootScope.migrationId = $route.current.$$route.migrationId;
+		});
+	}
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
