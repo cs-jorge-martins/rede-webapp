@@ -19,12 +19,21 @@ angular.module('Conciliador.integrationService',[])
 		});
 	};
 
-	this.DownloadFiles = function (objParams) {
+	this.DownloadFiles = function (objParams, success, error) {
+		var intTimeout = 30 * 1000;
+        var objStartTime = new Date().getTime();
+
 		return $http({
 			url: app.endpoint + '/integration/financials',
 			method: "GET",
 			params: objParams,
 			headers: Request.setHeaders()
-		});
+		}).then(success, function(response){
+            var dateRespTime = new Date().getTime() - objStartTime;
+            if (dateRespTime >= intTimeout){
+                response.status = 408;
+            }
+            error(response);
+        });
 	};
 });
