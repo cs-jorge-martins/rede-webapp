@@ -192,17 +192,30 @@ module.exports = function(grunt) {
         },
 
         watch: {
-            files: '<%= concat.dist.src %>',
-            tasks: ['concat']
+            files: ['<%= concat.dist.src %>', 'WebContent/assets/sass/**/*.scss'],
+            tasks: ['concat', 'sass'],
+            options: {
+                atBegin: true,
+                livereload: true
+            }
+        },
+
+        sass: {
+            dist: {
+                files: {
+                    'WebContent/assets/css/main-v2.css': 'WebContent/assets/sass/main.scss'
+                }
+            }
         }
+
     });
 
 	grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
     grunt.registerTask('serve', ['http-server:server']);
-    grunt.registerTask('build:local', ['ngconstant:local', 'concat']);
-    grunt.registerTask('build:dev', ['ngconstant:development', 'concat']);
-    grunt.registerTask('build:hml', ['ngconstant:homologation', 'concat']);
-    grunt.registerTask('build:prod', ['ngconstant:production', 'concat']);
+    grunt.registerTask('build:local', ['ngconstant:local', 'sass', 'concat']);
+    grunt.registerTask('build:dev', ['ngconstant:development', 'sass', 'concat']);
+    grunt.registerTask('build:hml', ['ngconstant:homologation', 'sass', 'concat']);
+    grunt.registerTask('build:prod', ['ngconstant:production', 'sass', 'concat']);
     grunt.registerTask('local', ['build:local', 'serve', 'watch']);
     grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
     grunt.registerTask('hml', ['build:hml', 'serve']);
