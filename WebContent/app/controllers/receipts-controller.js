@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.movementsModule',[])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/receipts', {templateUrl: 'app/views/receipts.html', controller: 'receiptsController'});
-}])
-
 .filter('capitalize', function() {
 	return function(input) {
 		return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';

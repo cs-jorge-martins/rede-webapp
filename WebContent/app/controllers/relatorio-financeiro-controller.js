@@ -9,12 +9,6 @@
 
 	angular
 	.module('Conciliador.relatorioFinanceiroController', ['ui.bootstrap'])
-	.config(['$routeProvider', function ($routeProvider) {
-		$routeProvider.when('/relatorio/financeiro', {
-			templateUrl: 'app/views/relatorios/financeiro/index.html',
-			controller: 'relatorioFinanceiroController'
-		})
-	}])
 	.controller('relatorioFinanceiroController', RelatorioFinanceiro);
 
 	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', 'calendarFactory', '$rootScope',

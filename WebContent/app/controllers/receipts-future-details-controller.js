@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/receipts/future_details', {templateUrl: 'app/views/receipts-future-details.html', controller: 'receiptsFutureDetailsController'});
-}])
-
 .controller('receiptsFutureDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location,FinancialService){
 
@@ -27,7 +23,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 			} else {
 
                 $rootScope.futureSelected = true;
-                
+
 				$scope.acquirer = $rootScope.receiptsDetails.acquirer;
 				$scope.cardProduct = $rootScope.receiptsDetails.cardProduct;
 				$scope.currency = $rootScope.receiptsDetails.currency;

@@ -9,12 +9,6 @@
 
     angular
         .module('Conciliador.relatorioVendasController', ['ui.bootstrap'])
-		.config(['$routeProvider', function($routeProvider) {
-			$routeProvider.when('/relatorio/vendas', {
-				templateUrl: 'app/views/relatorios/vendas/index.html',
-				controller: 'relatorioVendasController'
-			});
-		}])
         .controller('relatorioVendasController', RelatorioVendas);
 
     RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', 'calendarFactory', '$rootScope', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];

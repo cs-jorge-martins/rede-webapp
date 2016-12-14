@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.loginController',[])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/login', {templateUrl: 'app/views/login.html', controller: 'loginController'});
-}])
-
 .controller('loginController', function($scope, $uibModal, $rootScope, $window, $location, loginService){
 
 	$rootScope.destroyVariablesSession();
@@ -64,12 +60,13 @@ angular.module('Conciliador.loginController',[])
 		});
 
 		objModalInstance.result.then(function(bolValidate) {
+			console.log('bolValidate',bolValidate)
 			if(bolValidate){
 				$rootScope.logout();
 				$scope.usuario = new Object();
 			}
 		}, function() {
-			$location.path("/dashboard");
+			$location.path("/home");
 		});
 	};
 
