@@ -131,6 +131,7 @@ module.exports = function(grunt) {
                     "WebContent/assets/js/componente/chart-utils.js",
 
                     "WebContent/app/app.js",
+                    "WebContent/app/routes.js",
                     "WebContent/app/controllers/dashboard-controller.js",
                     "WebContent/app/controllers/login-controller.js",
                     "WebContent/app/controllers/sales-details-controller.js",

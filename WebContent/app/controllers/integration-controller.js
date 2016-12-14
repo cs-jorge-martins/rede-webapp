@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFileUpload'])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/integration', {templateUrl: 'app/views/vendas/integration.html', controller: 'integrationController'});
-}])
-
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $uibModal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
 

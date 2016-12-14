@@ -6,11 +6,6 @@
 
 angular.module('Conciliador.dashboardController',[])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/home', {templateUrl: 'app/views/dashboard.html', controller: 'dashboardController'});
-	$routeProvider.otherwise({ redirectTo: '/home'} );
-}])
-
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
 	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
 
