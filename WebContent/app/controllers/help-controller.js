@@ -6,9 +6,7 @@
 
 angular.module('Conciliador.helpController',[])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/help', {templateUrl: 'app/views/help.html', controller: 'helpController'});
-}]).controller('helpController', function($scope, $rootScope, menuFactory, $location, cacheService, $sce){
+.controller('helpController', function($scope, $rootScope, menuFactory, $location, cacheService, $sce){
 
 	menuFactory.deactivate();
 

@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/receipts/details', {templateUrl: 'app/views/receipts-details.html', controller: 'receiptsDetailsController'});
-}])
-
 .controller('receiptsDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService){
 

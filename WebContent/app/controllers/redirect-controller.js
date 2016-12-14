@@ -6,14 +6,6 @@
 
 angular.module('Conciliador.redirectController',[])
 
-.config(['$routeProvider' ,function ($routeProvider) {
-	$routeProvider
-		.when('/redirect', {
-			templateUrl: "app/views/redirect.html",
-			controller  : "redirectController"
-		});
-}])
-
 .controller('redirectController', function($rootScope, loginService, $routeParams) {
 
 	$rootScope.bodyId = "redirectPage";

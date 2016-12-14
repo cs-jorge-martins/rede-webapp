@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFileUpload'])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/integration', {templateUrl: 'app/views/vendas/integration.html', controller: 'integrationController'});
-}])
-
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $uibModal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
 
@@ -216,19 +212,22 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				type: $scope.typeModel.type
 			};
 
-			integrationService.DownloadFiles(objFilter).then(function(objResponse){
+			integrationService.DownloadFiles(objFilter, function success(objResponse){
 
-				var objVal = {
-					text: objResponse.data
-				}
+                var strUrl = objResponse.data;
+                if (strUrl.indexOf("http") === 0){
+                    $window.location = objResponse.data;
+                } else {
+                    $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
+                }
+			}, function error(objResponse){
+                var strMsg;
 
-				function Download(strText) {
-					var objData = new Blob([strText], {type: 'text/csv'});
-					FileSaver.saveAs(objData, 'planilha.csv');
-				};
-
-				Download(objVal.text);
-			});
+                if(objResponse.status === 408){
+                    strMsg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
+                }
+                $rootScope.alerts =  [ { type: "danger", msg: strMsg} ];
+            });
 		}
 
 		function AddOther() {

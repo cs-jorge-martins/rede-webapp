@@ -6,9 +6,7 @@
 
 angular.module('Conciliador.salesController',[])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/sales', {templateUrl: 'app/views/sales.html', controller: 'salesController'});
-}]).controller('salesController', function($scope, $uibModal,  $rootScope, menuFactory, calendarFactory, $location,
+.controller('salesController', function($scope, $uibModal,  $rootScope, menuFactory, calendarFactory, $location,
 	FinancialService, cacheService, advancedFilterService, TransactionConciliationService, TransactionService, TransactionSummaryService){
 
 	//Extensao do serviço para filtro avançado
@@ -131,7 +129,7 @@ angular.module('Conciliador.salesController',[])
 		$scope.days = [];
 		$scope.lastDaySelectedIndex = 0;
 		$scope.activeMonth = (calendarFactory.getMonthNumberOfDate($scope.dateSelected) - 1);
-		
+
 		var objMomentjs = moment();
 		var arrMonths = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 		var intInitialDayOfMonth = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfMonth());

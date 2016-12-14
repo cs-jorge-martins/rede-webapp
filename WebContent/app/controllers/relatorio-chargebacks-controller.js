@@ -9,13 +9,7 @@
 
     angular
 		.module('Conciliador.relatorioChargebacksController', ['ui.bootstrap'])
-		.config(['$routeProvider', function ($routeProvider) {
-			$routeProvider.when('/relatorio/chargebacks', {
-				templateUrl: 'app/views/relatorios/chargebacks/index.html',
-				controller: 'relatorioChargebacksController'
-			});
-		}])
-		.controller('relatorioChargebacksController', RelatorioFinanceiro);
+        .controller('relatorioChargebacksController', RelatorioFinanceiro);
 
 	RelatorioFinanceiro.$inject = ['menuFactory', '$scope', 'calendarFactory', '$rootScope',
 	'$window', 'advancedFilterService', 'calendarService', 'TransactionSummaryService'];
