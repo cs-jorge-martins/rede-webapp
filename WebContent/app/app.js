@@ -94,7 +94,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 						$location.path("/login");
 						break;
 					case 403 :
-						$rootScope.showAlert('app/views/action-forbidden.html');
+                        $rootScope.showAlert('app/views/action-forbidden.html');
 						break;
 					case 500 :
 					case 504 :
@@ -198,13 +198,13 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 	};
 
 	function ShowAlert(templateUrl) {
-		var objModal = $modal.open({
+		var objModal = $uibModal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
 			size:'sm',
-			controller: function($scope, $modalInstance) {
+			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {
-                    $modalInstance.close();
+                    $uibModalInstance.close();
                     $rootScope.modalOpen = false;
                 }
 			}

@@ -443,7 +443,7 @@ angular.module('Conciliador.salesController',[])
 							$scope.success = true;
 
 						}).catch(function(response) {
-							console.log('error.. ' + response)
+                            $uibModalInstance.close();
 			            });
 					}
 					$scope.cancel = function(data) {
