@@ -1139,16 +1139,16 @@
 }
 
 
-html, button, input, select, textarea {
+button, input, select, textarea {
 	color: #565658;
 	font-family: 'open_sansregular';
 }
-html, body {
+body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 }
-html>body {
+body {
 	color: #514f4f;
 	font-size: 13px;
 	font-family: 'open_sansregular';
