@@ -9,16 +9,14 @@
 @import 'helpers';
 @import 'base';
 
-#v2 {
+.v2 {
 	@import 'bootstrap/bootstrap.min';
 }
 
 @import 'v1/fonts';
-#v1 {
+.v1 {
 	@import "v1/bootstrap.min";
 	@import 'v1/main';
-	@import 'v1/angular-chart.min';
-	@import 'v1/loading-bar';
 	@import "v1/login";
 }
 

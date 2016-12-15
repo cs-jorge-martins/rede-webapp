@@ -457,21 +457,6 @@ angular.module('Conciliador.dashboardController',[])
 		var objModalInstance = $uibModal.open({
 			templateUrl: 'video.html',
 			controller: function ($scope, $uibModalInstance, $sce) {
-				$scope.video = {
-					sources: [
-						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.mp4"), type: "video/mp4"},
-						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.webm"), type: "video/webm"},
-						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.ogg"), type: "video/ogg"}
-					],
-					theme: "assets/css/videogular.min.css",
-					plugins: {
-						poster: "/assets/img/videoPoster.jpg",
-						controls: {
-							autoHide: true,
-							autoHideTime: 1000
-						}
-					}
-				};
 
 				$scope.ok = Ok;
 				$scope.cancel = Cancel;
