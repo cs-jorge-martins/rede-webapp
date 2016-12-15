@@ -3,12 +3,8 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
-angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/receipts/forethought_details', {templateUrl: 'app/views/receipts-forethought-details.html', controller: 'receiptsForethoughtDetailsController'});
-}])
+angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
 
 .controller('receiptsForethoughtDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, MovementService){

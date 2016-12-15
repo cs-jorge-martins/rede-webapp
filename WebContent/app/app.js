@@ -142,7 +142,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		$rootScope.bodyId = "";
 
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
-			$location.path("/dashboard");
+			$location.path("/home");
 		}
 	};
 

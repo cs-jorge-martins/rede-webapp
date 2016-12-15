@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
-.config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/sales/details', {templateUrl: 'app/views/sales-details.html', controller: 'salesDetailsController'});
-}])
-
 .controller('salesDetailsController', function(menuFactory, $rootScope, $scope, $uibModal, calendarFactory, $timeout, cacheService,
 			dashboardService, kaplenAdminService, $window,
 			integrationService, advancedFilterService, calendarService, $location, TransactionService){

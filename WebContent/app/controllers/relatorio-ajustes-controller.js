@@ -6,10 +6,6 @@
 
 angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
-.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/relatorio/ajustes', {templateUrl: 'app/views/relatorios/ajustes/index.html', controller: 'relatorioAjustesController'});
-}])
-
 .controller('relatorioAjustesController', function(menuFactory, $scope, calendarFactory, $rootScope,
     $window, advancedFilterService, calendarService, AdjustSummaryService, AdjustService){
 		//Extensao do serviço para filtro avançado
