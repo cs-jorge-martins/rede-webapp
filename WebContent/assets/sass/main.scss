@@ -17,6 +17,8 @@
 #v1 {
 	@import "v1/bootstrap.min";
 	@import 'v1/main';
+	@import 'v1/angular-chart.min';
+	@import 'v1/loading-bar';
 	@import "v1/login";
 }
 
