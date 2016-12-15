@@ -9,6 +9,17 @@
 @import 'helpers';
 @import 'base';
 
+#v2 {
+	@import 'bootstrap/stylesheets/bootstrap';
+}
+
+@import 'v1/fonts';
+#v1 {
+	@import 'v1/main';
+	@import "v1/login";
+	@import "v1/bootstrap.min";
+}
+
 @import 'components/button';
 @import 'components/breadcrumb';
 @import 'components/font';
