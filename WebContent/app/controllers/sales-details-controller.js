@@ -114,7 +114,9 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 							Init();
 							$scope.confirm = false;
 							$scope.success = true;
-						});
+						}).catch(function(response) {
+                            $uibModalInstance.close();
+                        });
 					};
 
 					function Cancel() {

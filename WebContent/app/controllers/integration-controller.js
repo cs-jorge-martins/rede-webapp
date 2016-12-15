@@ -91,7 +91,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					}
 				}
 			})
-		}
+		};
 
 		$scope.uploader.onSuccessItem = function() {
 			objModal.close();
@@ -107,10 +107,21 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
                         $uibModalInstance.dismiss("cancel");
                     }
 				}
-			})
+			});
 			$scope.inProgress = false;
 			$scope.labelFindFile = true;
-		}
+		};
+
+		$scope.uploader.onErrorItem = function onError(item, response, status) {
+			if (status === 403) {
+                $scope.uploader.clearQueue();
+                objModal.close();
+                $scope.inProgress = false;
+                $scope.labelFindFile = true;
+                $scope.sendFile = true;
+                $rootScope.showAlert('app/views/action-forbidden.html');
+            }
+		};
 
 		$scope.$watch('typeModel.type', function(objResponse) {
 			if(objResponse != 'FUTURE') {

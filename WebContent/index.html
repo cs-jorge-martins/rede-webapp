@@ -40,7 +40,7 @@
 	</style>
 <![endif]-->
     <!-- Loader template -->
-    <div class="extended" id="content" ng-class="{'login': !initialized}">
+    <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
         <header ng-if="initialized">
             <nav class="navbar navbar-default" id="mainNav">
                 <div class="container">
@@ -145,7 +145,7 @@
         </header>
         <div ng-view></div>
     </div>
-    <footer ng-if="initialized">
+    <footer ng-if="initialized" ng-class="{'modal-blur': $root.modalOpen}">
         <p>Rede 2016 - Todos os direitos reservados</p>
     </footer>
     <footer ng-if="!initialized" class="container-fluid clearfix">
@@ -225,7 +225,6 @@
         </div>
     </footer>
     </div>
-    <div ng-class="{'modal-blur': $root.modalOpen}">
     <div id="blockr" class="fade" ng-show="loading"></div>
 
     <!-- Google Analytics -->
