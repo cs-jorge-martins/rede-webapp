@@ -1224,14 +1224,6 @@ br {
 em, b {
 	font-style: normal;
 }
-/** -- content -- */
-@font-face {
-	font-family: 'icomoon';
-	src: url('../fonts/icomoon.eot?-q9ibc');
-	src: url('../fonts/icomoon.eot?#iefix-q9ibc')  format('embedded-opentype'), url('../fonts/icomoon.woff?-q9ibc')  format('woff'), url('../fonts/icomoon.ttf?-q9ibc') format('truetype'),  url('../fonts/icomoon.svg?-q9ibc#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
  [class^="icon-"], [class*=" icon-"], table :before, .positive:before,  .negative:before, .calendarMonth a:before, .prev a:before, .next a:before,  aside .proccessStats .conciliado:before, .select:after {
  font-family: 'icomoon';
  speak: none;
