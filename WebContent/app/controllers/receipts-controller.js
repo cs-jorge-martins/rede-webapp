@@ -1001,6 +1001,10 @@ angular.module('Conciliador.movementsModule',[])
 				strRedirectUrl = "receipts/forethought_details";
 				break;
 			case "future_details":
+                $rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
+                $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
+                $rootScope.receiptsDetails.startDate = $scope.futureReleases.startDate;
+                $rootScope.receiptsDetails.endDate = $scope.futureReleases.endDate;
 				$rootScope.futureReleases = {};
 				$rootScope.futureReleases.dates = {
 					startDateDay: $scope.futureReleases.startDateDay,
