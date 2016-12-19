@@ -38,8 +38,8 @@
 
 	<div id="primaryContent">
 		<div id="details">
-			<tabset ng-show="detailsData">
-				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
+			<uib-tabset ng-show="detailsData">
+				<uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
 					<div class="receipts-details-wrapper">
 						<table class="table sortTable">
 							<thead>
@@ -101,8 +101,8 @@
 							</div>
 						</div>
 					</div>
-				</tab>
-			</tabset>
+				</uib-tab>
+			</uib-tabset>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>
