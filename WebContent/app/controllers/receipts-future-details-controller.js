@@ -55,12 +55,13 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
 
 				$scope.maxSize = 4;
+				$scope.totalItensPageOptions = [10,20,50];
 				$scope.itensPerPage = 10;
 				$scope.currentPage = 0;
 				$scope.currentSize = 10;
 
 				$scope.otherDetailsData = [];
-				$scope.totalItensPage = 10;
+				$scope.totalItensPage = $scope.totalItensPageOptions[0];
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
