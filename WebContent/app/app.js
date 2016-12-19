@@ -10,6 +10,10 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'com.2fdevs.videogular.plugins.controls',
                             'com.2fdevs.videogular.plugins.overlayplay',
                             'com.2fdevs.videogular.plugins.poster',
+
+                            'Conciliador.HeaderController',
+                            'Conciliador.FooterController',
+
                             'Conciliador.dashboardController', 'Conciliador.dashboardService',
                             'Conciliador.loginController', 'Conciliador.loginService',
                             'Conciliador.filtersService',
@@ -111,11 +115,11 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 }]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route) {
 
 	init();
-		
+
 	function init() {
 		WatchHtmlId();
 	}
-	
+
 	function WatchHtmlId() {
 		$rootScope.$on('$routeChangeSuccess', function() {
 			$rootScope.migrationId = $route.current.$$route.migrationId;
