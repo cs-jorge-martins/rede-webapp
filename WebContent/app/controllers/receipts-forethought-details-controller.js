@@ -58,7 +58,8 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				$scope.itensPerPage = 10;
 				$scope.currentPage = 0;
 				$scope.currentSize = 10;
-				$scope.totalItensPage = 10;
+				$scope.totalItensPageOptions = [10,20,50];
+				$scope.totalItensPage = $scope.totalItensPageOptions[0];
 
 				$scope.back = Back;
 				$scope.sortResults = SortResults;

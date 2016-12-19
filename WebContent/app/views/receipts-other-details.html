@@ -60,10 +60,10 @@
 			<div class="selectWrapper">
 				<label for="totalItensPage">resultados por página</label>
 				<div class="select">
-					<select ng-model="totalItensPage" ng-change="pageChangedSales()" id="totalItensPage">
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="50">50</option>
+					<select ng-model="totalItensPage"
+							ng-change="pageChangedSales()"
+							ng-options="option for option in totalItensPageOptions"
+							id="totalItensPage">
 					</select>
 				</div>
 			</div>

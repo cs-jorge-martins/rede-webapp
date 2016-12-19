@@ -63,7 +63,8 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 				$scope.maxSize = 10;
 
 				$scope.otherDetailsData = [];
-				$scope.totalItensPage = 10;
+				$scope.totalItensPageOptions = [10,20,50];
+				$scope.totalItensPage = $scope.totalItensPageOptions[0];
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 
