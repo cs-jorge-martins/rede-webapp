@@ -129,9 +129,14 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/angularjs-dropdown-multiselect.min.js",
                     "WebContent/assets/js/componente/max-size-pagination.js",
                     "WebContent/assets/js/componente/chart-utils.js",
+                    "WebContent/assets/js/bootstrap.min.js",
 
                     "WebContent/app/app.js",
                     "WebContent/app/routes.js",
+
+                    "WebContent/app/controllers/header-controller.js",
+                    "WebContent/app/controllers/footer-controller.js",
+
                     "WebContent/app/controllers/dashboard-controller.js",
                     "WebContent/app/controllers/login-controller.js",
                     "WebContent/app/controllers/sales-details-controller.js",

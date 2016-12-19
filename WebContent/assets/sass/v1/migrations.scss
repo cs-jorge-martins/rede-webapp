@@ -4,15 +4,25 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-.uib-datepicker-popup.dropdown-menu{
+.v1 .uib-datepicker-popup.dropdown-menu{
     display:block;
     float:none;
     margin:0;
 }
-.uib-button-bar{
+.v1 .uib-button-bar{
     padding:10px 9px 2px;
 }
 
-[uib-typeahead-popup].dropdown-menu{
+.v1 [uib-typeahead-popup].dropdown-menu{
     display:block;
+}
+
+#migrationContainer {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+body {
+    background: #f0f0f0;
+    font-size: 0.75em;
 }

@@ -1,5 +1,1137 @@
 /*
-	Projeto: conciliation-webapp
-	Author/Empresa: Rede
-	Copyright (C) 2016 Redecard S.A.
+    Projeto: conciliation
+    Author/Empresa: Rede
+    Copyright (C) 2016 Redecard S.A.
  */
+
+[class^="icon_"]:before, [class*=" icon_"]:before {
+    font-family: 'itaufonts_master_24px_v1' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon_5_servicos:before {
+    content: "\e900";
+}
+.icon_50_cinema:before {
+    content: "\e901";
+}
+.icon_50_futebol:before {
+    content: "\e902";
+}
+.icon_50_teatro:before {
+    content: "\e903";
+}
+.icon_acoes:before {
+    content: "\e904";
+}
+.icon_agencia_personalite:before {
+    content: "\e905";
+}
+.icon_agencia:before {
+    content: "\e906";
+}
+.icon_agil_descomplic:before {
+    content: "\e907";
+}
+.icon_ajuda:before {
+    content: "\e908";
+}
+.icon_alimentacao:before {
+    content: "\e909";
+}
+.icon_alvo:before {
+    content: "\e90a";
+}
+.icon_antecip_de_recebiveis:before {
+    content: "\e90b";
+}
+.icon_aplicacao:before {
+    content: "\e90c";
+}
+.icon_aplicativos:before {
+    content: "\e90d";
+}
+.icon_aporte_de_capital:before {
+    content: "\e90e";
+}
+.icon_ar_condicionado:before {
+    content: "\e90f";
+}
+.icon_armario:before {
+    content: "\e910";
+}
+.icon_arroba:before {
+    content: "\e911";
+}
+.icon_assessoria:before {
+    content: "\e912";
+}
+.icon_atend_telefonico:before {
+    content: "\e913";
+}
+.icon_atualizando:before {
+    content: "\e914";
+}
+.icon_autoriz_pelo_celular:before {
+    content: "\e915";
+}
+.icon_balanco_de_caixa:before {
+    content: "\e916";
+}
+.icon_bike:before {
+    content: "\e917";
+}
+.icon_biometria:before {
+    content: "\e918";
+}
+.icon_brilhos_nos_olhos:before {
+    content: "\e919";
+}
+.icon_busca_consulta:before {
+    content: "\e91a";
+}
+.icon_caixa_eletronico:before {
+    content: "\e91b";
+}
+.icon_caixas_exclusivos:before {
+    content: "\e91c";
+}
+.icon_calculadora:before {
+    content: "\e91d";
+}
+.icon_calendario:before {
+    content: "\e91e";
+}
+.icon_cambio:before {
+    content: "\e91f";
+}
+.icon_cartao_de_seguranca:before {
+    content: "\e920";
+}
+.icon_cartao:before {
+    content: "\e921";
+}
+.icon_carteirada:before {
+    content: "\e922";
+}
+.icon_cartoes:before {
+    content: "\e923";
+}
+.icon_celular_pre_pago:before {
+    content: "\e924";
+}
+.icon_celular:before {
+    content: "\e925";
+}
+.icon_chave_patrimonio:before {
+    content: "\e926";
+}
+.icon_check:before {
+    content: "\e927";
+}
+.icon_cheque:before {
+    content: "\e928";
+}
+.icon_cobranca_ativa:before {
+    content: "\e929";
+}
+.icon_coleta:before {
+    content: "\e92a";
+}
+.icon_compras_vendas:before {
+    content: "\e92b";
+}
+.icon_comprovante:before {
+    content: "\e92c";
+}
+.icon_computador_internet:before {
+    content: "\e92d";
+}
+.icon_conexao:before {
+    content: "\e92e";
+}
+.icon_configuracoes:before {
+    content: "\e92f";
+}
+.icon_cons_investimentos:before {
+    content: "\e930";
+}
+.icon_consorcio_auto:before {
+    content: "\e931";
+}
+.icon_consorcio_imobiliario:before {
+    content: "\e932";
+}
+.icon_consorcio:before {
+    content: "\e933";
+}
+.icon_conta_corrente:before {
+    content: "\e934";
+}
+.icon_contatos:before {
+    content: "\e935";
+}
+.icon_contin_negocios:before {
+    content: "\e936";
+}
+.icon_craques:before {
+    content: "\e937";
+}
+.icon_credito_auto:before {
+    content: "\e938";
+}
+.icon_credito_automatico:before {
+    content: "\e939";
+}
+.icon_credito_consignado:before {
+    content: "\e93a";
+}
+.icon_credito_imobiliario:before {
+    content: "\e93b";
+}
+.icon_credito_sob_medida:before {
+    content: "\e93c";
+}
+.icon_credito:before {
+    content: "\e93d";
+}
+.icon_cultura:before {
+    content: "\e93e";
+}
+.icon_curtir:before {
+    content: "\e93f";
+}
+.icon_debito:before {
+    content: "\e940";
+}
+.icon_deposito:before {
+    content: "\e941";
+}
+.icon_desbloqueio:before {
+    content: "\e942";
+}
+.icon_descurtir:before {
+    content: "\e943";
+}
+.icon_despesas_com_saude:before {
+    content: "\e944";
+}
+.icon_docs:before {
+    content: "\e945";
+}
+.icon_documento:before {
+    content: "\e946";
+}
+.icon_download:before {
+    content: "\e947";
+}
+.icon_e_comercial:before {
+    content: "\e948";
+}
+.icon_educacao_uso_consc:before {
+    content: "\e949";
+}
+.icon_email_resp_rapida:before {
+    content: "\e94a";
+}
+.icon_emprestimos:before {
+    content: "\e94b";
+}
+.icon_esportes:before {
+    content: "\e94c";
+}
+.icon_estrela:before {
+    content: "\e94d";
+}
+.icon_excel:before {
+    content: "\e94e";
+}
+.icon_exclamacao:before {
+    content: "\e94f";
+}
+.icon_excluir:before {
+    content: "\e950";
+}
+.icon_exclusivo_beneficios:before {
+    content: "\e951";
+}
+.icon_exportar:before {
+    content: "\e952";
+}
+.icon_extrato_lancamentos:before {
+    content: "\e953";
+}
+.icon_facebook:before {
+    content: "\e954";
+}
+.icon_fatura:before {
+    content: "\e955";
+}
+.icon_fechar:before {
+    content: "\e956";
+}
+.icon_filtro:before {
+    content: "\e957";
+}
+.icon_foco_inovacao:before {
+    content: "\e958";
+}
+.icon_garantia:before {
+    content: "\e959";
+}
+.icon_ger_dedicados:before {
+    content: "\e95a";
+}
+.icon_gerenciador_de_vendas:before {
+    content: "\e95b";
+}
+.icon_gerente:before {
+    content: "\e95c";
+}
+.icon_gestao_de_crises:before {
+    content: "\e95d";
+}
+.icon_hist_de_rentabilidade:before {
+    content: "\e95e";
+}
+.icon_impressora:before {
+    content: "\e95f";
+}
+.icon_informacao:before {
+    content: "\e960";
+}
+.icon_inss:before {
+    content: "\e961";
+}
+.icon_instagram:before {
+    content: "\e962";
+}
+.icon_maiores_limites:before {
+    content: "\e963";
+}
+.icon_institucional:before {
+    content: "\e964";
+}
+.icon_investimento:before {
+    content: "\e965";
+}
+.icon_ir:before {
+    content: "\e966";
+}
+.icon_iso:before {
+    content: "\e967";
+}
+.icon_itau_30_horas:before {
+    content: "\e968";
+}
+.icon_itoken_aplicativo:before {
+    content: "\e969";
+}
+.icon_itoken_chaveiro:before {
+    content: "\e96a";
+}
+.icon_itoken_sms:before {
+    content: "\e96b";
+}
+.icon_jornal:before {
+    content: "\e96c";
+}
+.icon_juros_descontos:before {
+    content: "\e96d";
+}
+.icon_lavagem_de_dinheiro:before {
+    content: "\e96e";
+}
+.icon_leitor_cod_barras:before {
+    content: "\e96f";
+}
+.icon_lideranca:before {
+    content: "\e970";
+}
+.icon_limites:before {
+    content: "\e971";
+}
+.icon_maiores_limites2:before {
+    content: "\e972";
+}
+.icon_mais:before {
+    content: "\e973";
+}
+.icon_mala:before {
+    content: "\e974";
+}
+.icon_maq_rede_cartao:before {
+    content: "\e975";
+}
+.icon_maquina_fotografica:before {
+    content: "\e976";
+}
+.icon_maximizar:before {
+    content: "\e977";
+}
+.icon_mercado_noticias:before {
+    content: "\e978";
+}
+.icon_minimizar:before {
+    content: "\e979";
+}
+.icon_mundo_mapa:before {
+    content: "\e97a";
+}
+.icon_notificacao:before {
+    content: "\e97b";
+}
+.icon_orientador_de_credito:before {
+    content: "\e97c";
+}
+.icon_outros:before {
+    content: "\e97d";
+}
+.icon_pagamentos_contas:before {
+    content: "\e97e";
+}
+.icon_paixao:before {
+    content: "\e97f";
+}
+.icon_para_empresa:before {
+    content: "\e980";
+}
+.icon_parcelamento:before {
+    content: "\e981";
+}
+.icon_pare_de_fumar:before {
+    content: "\e982";
+}
+.icon_pdf:before {
+    content: "\e983";
+}
+.icon_perfil_do_investidor:before {
+    content: "\e984";
+}
+.icon_pers_conta:before {
+    content: "\e985";
+}
+.icon_pgto_ao_fornecedor:before {
+    content: "\e986";
+}
+.icon_pjto_sucessorio:before {
+    content: "\e987";
+}
+.icon_portabilidade:before {
+    content: "\e988";
+}
+.icon_pos_maq_adquirente:before {
+    content: "\e989";
+}
+.icon_poupanca:before {
+    content: "\e98a";
+}
+.icon_premio:before {
+    content: "\e98b";
+}
+.icon_prevencao_de_fraude:before {
+    content: "\e98c";
+}
+.icon_previdencia:before {
+    content: "\e98d";
+}
+.icon_processos:before {
+    content: "\e98e";
+}
+.icon_produtos_servicos:before {
+    content: "\e98f";
+}
+.icon_programa_de_pontos:before {
+    content: "\e990";
+}
+.icon_radio:before {
+    content: "\e991";
+}
+.icon_reload:before {
+    content: "\e992";
+}
+.icon_relogio:before {
+    content: "\e993";
+}
+.icon_resgate:before {
+    content: "\e994";
+}
+.icon_residencia:before {
+    content: "\e995";
+}
+.icon_respons_social:before {
+    content: "\e996";
+}
+.icon_restaurar:before {
+    content: "\e997";
+}
+.icon_sair_do_vermelho:before {
+    content: "\e998";
+}
+.icon_salarios:before {
+    content: "\e999";
+}
+.icon_saldo:before {
+    content: "\e99a";
+}
+.icon_salvar:before {
+    content: "\e99b";
+}
+.icon_saque:before {
+    content: "\e99c";
+}
+.icon_seg_informacao:before {
+    content: "\e99d";
+}
+.icon_seg_patrimonial:before {
+    content: "\e99e";
+}
+.icon_seg_redes_sociais:before {
+    content: "\e99f";
+}
+.icon_seguranca:before {
+    content: "\e9a0";
+}
+.icon_seguro_auto:before {
+    content: "\e9a1";
+}
+.icon_seguro_cartao:before {
+    content: "\e9a2";
+}
+.icon_seguro_crianca:before {
+    content: "\e9a3";
+}
+.icon_seguro_de_credito:before {
+    content: "\e9a4";
+}
+.icon_seguro_empresas:before {
+    content: "\e9a5";
+}
+.icon_seguro_mulher:before {
+    content: "\e9a6";
+}
+.icon_seguro_patrimonial:before {
+    content: "\e9a7";
+}
+.icon_seguro_prestamista:before {
+    content: "\e9a8";
+}
+.icon_seguro_renda:before {
+    content: "\e9a9";
+}
+.icon_seguro_residencia:before {
+    content: "\e9aa";
+}
+.icon_seguro_resp_social:before {
+    content: "\e9ab";
+}
+.icon_seguro_transporte:before {
+    content: "\e9ac";
+}
+.icon_seguro_viagens:before {
+    content: "\e9ad";
+}
+.icon_seguro_vida:before {
+    content: "\e9ae";
+}
+.icon_seguros:before {
+    content: "\e9af";
+}
+.icon_senha:before {
+    content: "\e9b0";
+}
+.icon_seta:before {
+    content: "\e9b1";
+}
+.icon_sifrao:before {
+    content: "\e9b2";
+}
+.icon_sms_mensagem_chat:before {
+    content: "\e9b3";
+}
+.icon_sonho_grande:before {
+    content: "\e9b4";
+}
+.icon_sorriso:before {
+    content: "\e9b5";
+}
+.icon_sustentabilidade:before {
+    content: "\e9b6";
+}
+.icon_switch:before {
+    content: "\e9b7";
+}
+.icon_tablet:before {
+    content: "\e9b8";
+}
+.icon_telefone:before {
+    content: "\e9b9";
+}
+.icon_todos_pelo_cliente:before {
+    content: "\e9ba";
+}
+.icon_tranferencias:before {
+    content: "\e9bb";
+}
+.icon_transporte:before {
+    content: "\e9bc";
+}
+.icon_tv:before {
+    content: "\e9bd";
+}
+.icon_twitter:before {
+    content: "\e9be";
+}
+.icon_universitarios:before {
+    content: "\e9bf";
+}
+.icon_usuario_perfil:before {
+    content: "\e9c0";
+}
+.icon_veiculo:before {
+    content: "\e9c1";
+}
+.icon_viagem:before {
+    content: "\e9c2";
+}
+.icon_vida_sustentavel:before {
+    content: "\e9c3";
+}
+.icon_vida:before {
+    content: "\e9c4";
+}
+.icon_video:before {
+    content: "\e9c5";
+}
+.icon_word:before {
+    content: "\e9c6";
+}
+.icon_xicara:before {
+    content: "\e9c7";
+}
+.icon_compartilhar:before {
+    content: "\e9c8";
+}
+.icon_feedback:before {
+    content: "\e9c9";
+}
+.icon_relatorios_financeiros:before {
+    content: "\e9ca";
+}
+.icon_senha_stroke:before {
+    content: "\e9cb";
+}
+.icon_seta_down:before {
+    content: "\e9cc";
+}
+.icon_seta_right:before {
+    content: "\e9cd";
+}
+.icon_seta_up:before {
+    content: "\e9ce";
+}
+.icon_full_50_cinema:before {
+    content: "\e9cf";
+}
+.icon_full_50_futebol:before {
+    content: "\e9d0";
+}
+.icon_full_50_teatro:before {
+    content: "\e9d1";
+}
+.icon_full_agencia_personalite:before {
+    content: "\e9d2";
+}
+.icon_full_agencia:before {
+    content: "\e9d3";
+}
+.icon_full_agil_descomplic:before {
+    content: "\e9d4";
+}
+.icon_full_alimentacao:before {
+    content: "\e9d5";
+}
+.icon_full_alvo:before {
+    content: "\e9d6";
+}
+.icon_full_antecip_de_recebiveis:before {
+    content: "\e9d7";
+}
+.icon_full_aplicativos:before {
+    content: "\e9d8";
+}
+.icon_full_aporte_de_capital:before {
+    content: "\e9d9";
+}
+.icon_full_ar_condicionado:before {
+    content: "\e9da";
+}
+.icon_full_armario:before {
+    content: "\e9db";
+}
+.icon_full_atualizando:before {
+    content: "\e9dc";
+}
+.icon_full_autoriz_pelo_celular:before {
+    content: "\e9dd";
+}
+.icon_full_balanco_de_caixa:before {
+    content: "\e9de";
+}
+.icon_full_bike:before {
+    content: "\e9df";
+}
+.icon_full_biometria:before {
+    content: "\e9e0";
+}
+.icon_full_brilhos_nos_olhos:before {
+    content: "\e9e1";
+}
+.icon_full_busca_consulta:before {
+    content: "\e9e2";
+}
+.icon_full_caixa_eletronico:before {
+    content: "\e9e3";
+}
+.icon_full_calendario:before {
+    content: "\e9e4";
+}
+.icon_full_cambio:before {
+    content: "\e9e5";
+}
+.icon_full_cartao_de_seguranca:before {
+    content: "\e9e6";
+}
+.icon_full_cartao:before {
+    content: "\e9e7";
+}
+.icon_full_cartoes:before {
+    content: "\e9e8";
+}
+.icon_full_celular_pre_pago:before {
+    content: "\e9e9";
+}
+.icon_full_celular:before {
+    content: "\e9ea";
+}
+.icon_full_chave_patrimonio:before {
+    content: "\e9eb";
+}
+.icon_full_cheque:before {
+    content: "\e9ec";
+}
+.icon_full_coleta:before {
+    content: "\e9ed";
+}
+.icon_full_compras_vendas:before {
+    content: "\e9ee";
+}
+.icon_full_comprovante:before {
+    content: "\e9ef";
+}
+.icon_full_computador_internet:before {
+    content: "\e9f0";
+}
+.icon_full_configuracoes:before {
+    content: "\e9f1";
+}
+.icon_full_consorcio_auto:before {
+    content: "\e9f2";
+}
+.icon_full_consorcio_imobiliario:before {
+    content: "\e9f3";
+}
+.icon_full_consorcio:before {
+    content: "\e9f4";
+}
+.icon_full_conta_corrente:before {
+    content: "\e9f5";
+}
+.icon_full_contatos:before {
+    content: "\e9f6";
+}
+.icon_full_craques:before {
+    content: "\e9f7";
+}
+.icon_full_credito_auto:before {
+    content: "\e9f8";
+}
+.icon_full_credito_automatico:before {
+    content: "\e9f9";
+}
+.icon_full_credito_consignado:before {
+    content: "\e9fa";
+}
+.icon_full_credito_imobiliario:before {
+    content: "\e9fb";
+}
+.icon_full_credito_sob_medida:before {
+    content: "\e9fc";
+}
+.icon_full_credito:before {
+    content: "\e9fd";
+}
+.icon_full_cultura:before {
+    content: "\e9fe";
+}
+.icon_full_curtir:before {
+    content: "\e9ff";
+}
+.icon_full_debito:before {
+    content: "\ea00";
+}
+.icon_full_desbloqueio:before {
+    content: "\ea01";
+}
+.icon_full_descurtir:before {
+    content: "\ea02";
+}
+.icon_full_despesas_com_saude:before {
+    content: "\ea03";
+}
+.icon_full_docs:before {
+    content: "\ea04";
+}
+.icon_full_documento:before {
+    content: "\ea05";
+}
+.icon_full_download:before {
+    content: "\ea06";
+}
+.icon_full_educacao_uso_consc:before {
+    content: "\ea07";
+}
+.icon_full_email_resp_rapida:before {
+    content: "\ea08";
+}
+.icon_full_emprestimos:before {
+    content: "\ea09";
+}
+.icon_full_esportes:before {
+    content: "\ea0a";
+}
+.icon_full_estrela:before {
+    content: "\ea0b";
+}
+.icon_full_excel:before {
+    content: "\ea0c";
+}
+.icon_full_exclamacao:before {
+    content: "\ea0d";
+}
+.icon_full_excluir:before {
+    content: "\ea0e";
+}
+.icon_full_exclusivo_beneficios:before {
+    content: "\ea0f";
+}
+.icon_full_exportar:before {
+    content: "\ea10";
+}
+.icon_full_facebook:before {
+    content: "\ea11";
+}
+.icon_full_fatura:before {
+    content: "\ea12";
+}
+.icon_full_filtro:before {
+    content: "\ea13";
+}
+.icon_full_foco_inovacao:before {
+    content: "\ea14";
+}
+.icon_full_garantia:before {
+    content: "\ea15";
+}
+.icon_full_gerenciador_de_vendas:before {
+    content: "\ea16";
+}
+.icon_full_gerente:before {
+    content: "\ea17";
+}
+.icon_full_gestao_de_crises:before {
+    content: "\ea18";
+}
+.icon_full_hist_de_rentabilidade:before {
+    content: "\ea19";
+}
+.icon_full_impressora:before {
+    content: "\ea1a";
+}
+.icon_full_informacao:before {
+    content: "\ea1b";
+}
+.icon_full_instagram:before {
+    content: "\ea1c";
+}
+.icon_full_institucional:before {
+    content: "\ea1d";
+}
+.icon_full_investimento:before {
+    content: "\ea1e";
+}
+.icon_full_itau_30_horas:before {
+    content: "\ea1f";
+}
+.icon_full_itoken_aplicativo:before {
+    content: "\ea20";
+}
+.icon_full_itoken_chaveiro:before {
+    content: "\ea21";
+}
+.icon_full_itoken_sms:before {
+    content: "\ea22";
+}
+.icon_full_jornal:before {
+    content: "\ea23";
+}
+.icon_full_lavagem_de_dinheiro:before {
+    content: "\ea24";
+}
+.icon_full_lideranca:before {
+    content: "\ea25";
+}
+.icon_full_limites:before {
+    content: "\ea26";
+}
+.icon_full_maiores_limites:before {
+    content: "\ea27";
+}
+.icon_full_mala:before {
+    content: "\ea28";
+}
+.icon_full_maq_rede_cartao:before {
+    content: "\ea29";
+}
+.icon_full_maquina_fotografica:before {
+    content: "\ea2a";
+}
+.icon_full_maximizar:before {
+    content: "\ea2b";
+}
+.icon_full_mercado_noticias:before {
+    content: "\ea2c";
+}
+.icon_full_minimizar:before {
+    content: "\ea2d";
+}
+.icon_full_mundo_mapa:before {
+    content: "\ea2e";
+}
+.icon_full_notificacao:before {
+    content: "\ea2f";
+}
+.icon_full_orientador_de_credito:before {
+    content: "\ea30";
+}
+.icon_full_paixao:before {
+    content: "\ea31";
+}
+.icon_full_para_empresa:before {
+    content: "\ea32";
+}
+.icon_full_parcelamento:before {
+    content: "\ea33";
+}
+.icon_full_pare_de_fumar:before {
+    content: "\ea34";
+}
+.icon_full_pdf:before {
+    content: "\ea35";
+}
+.icon_full_perfil_do_investidor:before {
+    content: "\ea36";
+}
+.icon_full_pers_conta:before {
+    content: "\ea37";
+}
+.icon_full_pgto_ao_fornecedor:before {
+    content: "\ea38";
+}
+.icon_full_pjto_sucessorio:before {
+    content: "\ea39";
+}
+.icon_full_portabilidade:before {
+    content: "\ea3a";
+}
+.icon_full_pos_maq_adquirente:before {
+    content: "\ea3b";
+}
+.icon_full_poupanca:before {
+    content: "\ea3c";
+}
+.icon_full_premio:before {
+    content: "\ea3d";
+}
+.icon_full_prevencao_de_fraude:before {
+    content: "\ea3e";
+}
+.icon_full_previdencia:before {
+    content: "\ea3f";
+}
+.icon_full_processos:before {
+    content: "\ea40";
+}
+.icon_full_produtos_servicos:before {
+    content: "\ea41";
+}
+.icon_full_programa_de_pontos:before {
+    content: "\ea42";
+}
+.icon_full_radio:before {
+    content: "\ea43";
+}
+.icon_full_relogio:before {
+    content: "\ea44";
+}
+.icon_full_residencia:before {
+    content: "\ea45";
+}
+.icon_full_respons_social:before {
+    content: "\ea46";
+}
+.icon_full_restaurar:before {
+    content: "\ea47";
+}
+.icon_full_salarios:before {
+    content: "\ea48";
+}
+.icon_full_saldo:before {
+    content: "\ea49";
+}
+.icon_full_salvar:before {
+    content: "\ea4a";
+}
+.icon_full_seg_informacao:before {
+    content: "\ea4b";
+}
+.icon_full_seg_patrimonial:before {
+    content: "\ea4c";
+}
+.icon_full_seg_redes_sociais:before {
+    content: "\ea4d";
+}
+.icon_full_seguranca:before {
+    content: "\ea4e";
+}
+.icon_full_seguro_auto:before {
+    content: "\ea4f";
+}
+.icon_full_seguro_cartao:before {
+    content: "\ea50";
+}
+.icon_full_seguro_crianca:before {
+    content: "\ea51";
+}
+.icon_full_seguro_de_credito:before {
+    content: "\ea52";
+}
+.icon_full_seguro_empresas:before {
+    content: "\ea53";
+}
+.icon_full_seguro_mulher:before {
+    content: "\ea54";
+}
+.icon_full_seguro_patrimonial:before {
+    content: "\ea55";
+}
+.icon_full_seguro_prestamista:before {
+    content: "\ea56";
+}
+.icon_full_seguro_renda:before {
+    content: "\ea57";
+}
+.icon_full_seguro_residencia:before {
+    content: "\ea58";
+}
+.icon_full_seguro_resp_social:before {
+    content: "\ea59";
+}
+.icon_full_seguro_transporte:before {
+    content: "\ea5a";
+}
+.icon_full_seguro_viagens:before {
+    content: "\ea5b";
+}
+.icon_full_seguro_vida:before {
+    content: "\ea5c";
+}
+.icon_full_senha:before {
+    content: "\ea5d";
+}
+.icon_full_sms_mensagem_chat:before {
+    content: "\ea5e";
+}
+.icon_full_sonho_grande:before {
+    content: "\ea5f";
+}
+.icon_full_sorriso:before {
+    content: "\ea60";
+}
+.icon_full_sustentabilidade:before {
+    content: "\ea61";
+}
+.icon_full_switch:before {
+    content: "\ea62";
+}
+.icon_full_tablet:before {
+    content: "\ea63";
+}
+.icon_full_telefone:before {
+    content: "\ea64";
+}
+.icon_full_todos_pelo_cliente:before {
+    content: "\ea65";
+}
+.icon_full_transporte:before {
+    content: "\ea66";
+}
+.icon_full_twitter:before {
+    content: "\ea67";
+}
+.icon_full_universitarios:before {
+    content: "\ea68";
+}
+.icon_full_usuario_perfil:before {
+    content: "\ea69";
+}
+.icon_full_veiculo:before {
+    content: "\ea6a";
+}
+.icon_full_viagem:before {
+    content: "\ea6b";
+}
+.icon_full_vida_sustentavel:before {
+    content: "\ea6c";
+}
+.icon_full_vida:before {
+    content: "\ea6d";
+}
+.icon_full_video:before {
+    content: "\ea6e";
+}
+.icon_full_word:before {
+    content: "\ea6f";
+}
+.icon_full_xicara:before {
+    content: "\ea70";
+}
+.icon_full_compartilhar:before {
+    content: "\ea71";
+}
+.icon_full_feedback:before {
+    content: "\ea72";
+}
+.icon_full_relatorios_financeiros:before {
+    content: "\ea73";
+}
+.icon_full_senha_fill:before {
+    content: "\ea74";
+}
