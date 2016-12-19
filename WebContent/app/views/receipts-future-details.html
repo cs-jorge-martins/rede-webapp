@@ -98,7 +98,7 @@
 				</div>
 			</div>
 			<div class="paginationWrapper">
-				<pagination
+				<ul uib-pagination
 						total-items="totalItens"
 						ng-model="currentPage"
 						ng-change="pageChanged()"
@@ -111,11 +111,9 @@
 						next-text="&rsaquo;"
 						first-text=" "
 						last-text=" ">
-				</pagination>
+				</ul>
 			</div>
 		</div>
 	</div>
-
-
   	<rc-disclaimer></rc-disclaimer>
 </section>

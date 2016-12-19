@@ -1,9 +1,11 @@
+npm-debug.log
 node_modules
 .idea
 build
 .settings
+.sass-cache
 .project
-WebContent/app/scripts/config.js
-WebContent/app/build.js
 coverage
-npm-debug.log
+WebContent/app/config.js
+WebContent/app/build.js
+WebContent/assets/css/main-v2.*
