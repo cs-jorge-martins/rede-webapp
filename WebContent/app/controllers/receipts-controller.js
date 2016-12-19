@@ -973,7 +973,7 @@ angular.module('Conciliador.movementsModule',[])
         $rootScope.receiptsDetails.currency = "BRL";
         $rootScope.receiptsDetails.startDate = dateSelected;
         $rootScope.receiptsDetails.endDate = dateSelected;
-        $rootScope.receiptsDetails.shopIds = $scope.settlementsSelected;
+        $rootScope.receiptsDetails.shopIds = $scope.shopsModel;
         $rootScope.receiptsDetails.products = $scope.productsSearch;
         $rootScope.receiptsDetails.shops = $scope.shopsModel;
         $rootScope.receiptsDetails.cardProduct = intCardProduct;
