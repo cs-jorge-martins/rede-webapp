@@ -20,7 +20,7 @@
     <script type="text/javascript" src="app/build.js"></script>
 </head>
 
-<body id="{{bodyId}}" ng-class="{'newHeaderAndFooter': !initialized}" ng-cloak>
+<body ng-class="{'newHeaderAndFooter': !initialized}" ng-cloak>
     <!--[if lt IE 7]>
 	<p class="chromeframe">Você está utilizando um browser <strong>desatualizado</strong>. Por favor, <a href="http://browsehappy.com/">atualize o seu browser</a> ou <a href="http://www.google.com/chromeframe/?redirect=true">ative o Google Chrome Frame</a> para melhorar a sua experiência.</p>
 <![endif]-->
@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="v2">
+    <div class="v2 {{pageId}}">
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu}"></header>
     </div>
     <div id="migrationContainer">
@@ -51,7 +51,7 @@
             <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>
-    <div class="v2">
+    <div class="v2 {{pageId}}">
         <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm"></footer>
     </div>
     <div id="blockr" class="fade" ng-show="loading"></div>

@@ -25,27 +25,24 @@
 body {
     background: $backgroundColor;
     font-size: 0.75em;
+    font-family: 'open_sansregular';
 }
 
-body.newHeaderAndFooter {
+.newHeaderAndFooter {
     background: #fff;
-}
 
-body.newHeaderAndFooter .btn-primary {
-    background-color: $primaryButtomBackground;
-    color: $menuFontColor;
-    padding: 13px 46px;
-    font-weight: 700;
-    border-bottom: 4px solid $primaryButtomBorderColor;
-}
-
-html {
-    body {
-        .v2 {
-            font-family: 'open_sansregular';
-        }
-        .v1 {
-            font-family: 'open_sansregular';
-        }
+    .btn-primary {
+        background-color: $primaryButtomBackground;
+        color: $menuFontColor;
+        padding: 13px 46px;
+        font-weight: 700;
     }
+}
+
+.receiptsDetailsPage header,
+.receiptsDetailsPage footer,
+.redirectPage header,
+.redirectPage footer
+{
+    display: none !important;
 }
