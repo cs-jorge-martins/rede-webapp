@@ -77,7 +77,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 	    	$scope.forethought = [];
 
 			objFilter = {
-				shopIds: $scope.shopIds,
+				shopIds: GetShopsFilter($scope.shopIds),
 				acquirerIds: $scope.acquirer.id,
 				startDate: calendarFactory.formatDateTimeForService($scope.startDate),
 				endDate: calendarFactory.formatDateTimeForService($scope.endDate),
@@ -103,6 +103,12 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 
 	    	})
 	    }
+
+		function GetShopsFilter(arrModel) {
+			return arrModel.map(function(objItem){
+				return objItem.id;
+			}).join(",");
+		}
 
 	    /* pagination */
 
