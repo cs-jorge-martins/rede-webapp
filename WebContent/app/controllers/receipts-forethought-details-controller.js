@@ -13,9 +13,9 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 		Init();
 
 		function Init(){
-			$rootScope.pageName = "receiptsDetailsPage";
+			$rootScope.hideHeaderAndFooter = true;
 			$scope.$on("$routeChangeStart", function(next, current){
-				$rootScope.pageName = null;
+				$rootScope.hideHeaderAndFooter = false;
 			});
 
 			if(!$rootScope.receiptsDetails) {

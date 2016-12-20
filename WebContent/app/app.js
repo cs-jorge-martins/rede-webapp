@@ -119,6 +119,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 	function init() {
 		WatchHtmlId();
         RemoveLoader();
+		InitiateRootVariables();
 	}
 
 	function WatchHtmlId() {
@@ -136,6 +137,10 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
             }, 1000);
         }, 1000);
     }
+
+    function InitiateRootVariables() {
+		$rootScope.hideHeaderAndFooter = false;
+	}
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -166,7 +171,6 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		}
 
 		$rootScope.alerts = [];
-		$rootScope.pageName = "";
 
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
 			$location.path("/home");

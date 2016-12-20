@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="v2 {{pageName}}">
+    <div class="v2" ng-if="!hideHeaderAndFooter">
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu}"></header>
     </div>
     <div id="migrationContainer">
@@ -51,7 +51,7 @@
             <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>
-    <div class="v2 {{pageName}}">
+    <div class="v2" ng-if="!hideHeaderAndFooter">
         <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm"></footer>
     </div>
     <div id="blockr" class="fade" ng-show="loading"></div>
