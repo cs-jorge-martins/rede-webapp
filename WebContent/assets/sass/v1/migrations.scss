@@ -38,3 +38,14 @@ body.newHeaderAndFooter .btn-primary {
     font-weight: 700;
     border-bottom: 4px solid $primaryButtomBorderColor;
 }
+
+html {
+    body {
+        .v2 {
+            font-family: 'open_sansregular';
+        }
+        .v1 {
+            font-family: 'open_sansregular';
+        }
+    }
+}
