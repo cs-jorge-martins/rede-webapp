@@ -23,6 +23,18 @@
 }
 
 body {
-    background: #f0f0f0;
+    background: $backgroundColor;
     font-size: 0.75em;
+}
+
+body.newHeaderAndFooter {
+    background: #fff;
+}
+
+body.newHeaderAndFooter .btn-primary {
+    background-color: $primaryButtomBackground;
+    color: $menuFontColor;
+    padding: 13px 46px;
+    font-weight: 700;
+    border-bottom: 4px solid $primaryButtomBorderColor;
 }
