@@ -12,4 +12,10 @@ header {
 		height: 2.7em;
 		background: $menuBackgroundColor;
 	}
+
+	&.login {
+		&:before {
+			display: none;
+		}
+	}
 }

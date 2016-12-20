@@ -12,6 +12,46 @@
 			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="app-navbar">
+			<ul class="nav navbar-nav navbar-left" ng-hide="vm.showMenu" id="productsDropdown">
+				<li class="dropdown">
+					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						Nossos produtos <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li class="title">Solução mobile</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/mobile-rede/">Maquininha para celular</a>
+						</li>
+						<li class="title">Soluções para lojas físicas</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/maquininha-sem-fio/">Maquininha sem fio</a>
+						</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/maquininha-com-fio/">Maquininha com fio</a>
+						</li>
+						<li class="title">Soluções para lojas online</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/redepay/">Rede Pay</a>
+						</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/e-rede/">e.Rede</a>
+						</li>
+						<li class="title">Grandes empresas</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/leitor-de-cartao-pin-pad/">Leitor Pin Pad</a>
+						</li>
+						<li class="title">
+							<a href="https://www.userede.com.br/nossos-produtos/">Todos os produtos</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right" ng-show="vm.showMenu">
 				<li>
 					<a href="/#/home" ng-class="{active: vm.isActive('/home')}">home</a>

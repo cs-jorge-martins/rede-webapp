@@ -134,4 +134,63 @@
 			position: relative;
 		}
 	}
+
+	#productsDropdown {
+		margin-left: 4em;
+
+		.dropdown {
+			padding: 0 1em;
+		}
+
+		.open {
+			background: #f7f7f7;
+		}
+
+		.dropdown-menu {
+			background: #f7f7f7;
+			left: 0;
+			width: 380px;
+			padding: 1.5em 0 3em;
+
+			span {
+				color: #484343;
+				display: inline-block;
+				font-size: 0.7em;
+				position: relative;
+				top: 0.05em;
+			}
+
+			a {
+				padding: 0.5em 0;
+				font-family: 'open_sansregular';
+				display: inline-block;
+			}
+		}
+
+		.title {
+			color: #ff7800;
+			font-size: 1.2em;
+			margin-top: 0.7em;
+
+			a {
+				color: #ff7800;
+				font-size: 1em;
+				font-family: 'open_sanssemibold';
+			}
+		}
+
+		li {
+			margin-left: 1em;
+		}
+
+		a {
+			background-color: transparent !important;
+			border-bottom: none;
+
+			&:hover {
+				text-decoration: underline;
+				color: inherit;
+			}
+		}
+	}
 }

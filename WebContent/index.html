@@ -36,8 +36,15 @@
 <![endif]-->
     <!-- Loader template -->
 
+
     <div class="v2">
-        <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm"></header>
+        <div id="loader">
+            loading
+        </div>
+    </div>
+
+    <div class="v2">
+        <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu}"></header>
     </div>
     <div id="migrationContainer">
         <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
