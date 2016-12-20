@@ -15,9 +15,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 		Init();
 
 		function Init(){
-			$rootScope.bodyId = "receiptsDetailsPage";
+			$rootScope.pageName = "receiptsDetailsPage";
 			$scope.$on("$routeChangeStart", function(next, current){
-				$rootScope.bodyId = null;
+				$rootScope.pageName = null;
 			});
 
 			if(!$rootScope.receiptsDetails) {

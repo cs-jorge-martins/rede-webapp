@@ -166,7 +166,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		}
 
 		$rootScope.alerts = [];
-		$rootScope.bodyId = "";
+		$rootScope.pageName = "";
 
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
 			$location.path("/home");

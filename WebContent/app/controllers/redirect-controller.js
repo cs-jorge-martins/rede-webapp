@@ -8,7 +8,7 @@ angular.module('Conciliador.redirectController',[])
 
 .controller('redirectController', function($rootScope, loginService, $routeParams) {
 
-	$rootScope.bodyId = "redirectPage";
+	$rootScope.pageName = "redirectPage";
 
 	Init();
 
