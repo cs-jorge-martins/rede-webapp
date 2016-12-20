@@ -12,8 +12,8 @@
     <div class="page-title">recebimentos</div>
     <div id="receipts">
         <div id="headerTabs" class="filter-depth container">
-            <uib-tabset>
-                <uib-tab heading="últimos lançamentos" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+            <uib-tabset active="activeTab">
+                <uib-tab index="0" heading="últimos lançamentos" select="changeTab(0)" id="botaoConciliacaoDiaTour">
                     <h3>utilize os campos abaixo para filtrar sua busca:</h3>
                     <div class="filtersWrapper">
                         <div class="receipts_present_filters">
@@ -167,7 +167,7 @@
                     </article>
                     <!-- LANCAMENTOS ATUAIS: END -->
                 </uib-tab>
-                <uib-tab heading="lançamentos futuros" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+                <uib-tab index="1" heading="lançamentos futuros" select="changeTab(1)" id="botaoConciliacaoDiaTour">
             		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
             		<div class="filtersWrapper">
                         <div class="receipts_future_filters">
