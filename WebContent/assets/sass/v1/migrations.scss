@@ -20,6 +20,7 @@
 #migrationContainer {
     width: 1200px;
     margin: 0 auto;
+    min-height: 575px;
 }
 
 body {
@@ -42,7 +43,6 @@ body {
 .receiptsDetailsPage header,
 .receiptsDetailsPage footer,
 .redirectPage header,
-.redirectPage footer
-{
+.redirectPage footer {
     display: none !important;
 }
