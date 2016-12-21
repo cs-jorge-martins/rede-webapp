@@ -31,48 +31,49 @@
         return {
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-breadcrumb.html',
-            controller: controller
+            controller: Controller
         };
 
-        function controller($scope) {
+        function Controller($scope) {
 
-            init();
+            Init();
 
-            function init() {
+            function Init() {
                 $scope.breadcrumb = null;
-                watchBreadcrumb();
+                WatchBreadcrumb();
             }
 
-            function watchBreadcrumb() {
+            function WatchBreadcrumb() {
                 $scope.$on('$routeChangeSuccess', function() {
-                    getBreadcrumb();
+                    GetBreadcrumb();
                 });
             }
 
-            function getBreadcrumb() {
-                var breadcrumb = {};
-                var breadcrumbSteps = $route.current.$$route.breadcrumb;
-                var actualStep;
-                var actualRoute;
+            function GetBreadcrumb() {
+                var objBreadcrumb = {};
+                var arrBreadcrumbSteps = $route.current.$$route.breadcrumb;
+                var strActualStep;
+                var objActualRoute;
+                var intStepsIndex;
 
-                if (breadcrumbSteps) {
-                    for (var stepsIndex in breadcrumbSteps) {
-                        actualStep = breadcrumbSteps[stepsIndex];
+                if (arrBreadcrumbSteps) {
+                    for (intStepsIndex in arrBreadcrumbSteps) {
+                        strActualStep = arrBreadcrumbSteps[intStepsIndex];
 
                         for(var route in $route.routes) {
                             if ($route.routes[route].breadcrumb) {
-                                actualRoute = $route.routes[route];
+                                objActualRoute = $route.routes[route];
 
-                                if (actualStep === actualRoute.breadcrumb[actualRoute.breadcrumb.length - 1] ) {
-                                    breadcrumb[actualStep] = '#' + actualRoute.originalPath;
+                                if (strActualStep === objActualRoute.breadcrumb[objActualRoute.breadcrumb.length - 1] ) {
+                                    objBreadcrumb[strActualStep] = '#' + objActualRoute.originalPath;
                                 }
                             }
                         }
                     }
                 }
 
-                if (Object.keys(breadcrumb).length) {
-                    $scope.breadcrumb = breadcrumb;
+                if (Object.keys(objBreadcrumb).length) {
+                    $scope.breadcrumb = objBreadcrumb;
                 } else {
                     $scope.breadcrumb = null;
                 }
