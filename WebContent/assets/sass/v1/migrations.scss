@@ -4,7 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-.v1 .uib-datepicker-popup.dropdown-menu{
+// V1 migrations
+.v1 .uib-datepicker-popup.dropdown-menu,
+.v2 .uib-datepicker-popup.dropdown-menu{
     display:block;
     float:none;
     margin:0;

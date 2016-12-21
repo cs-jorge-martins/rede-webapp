@@ -178,6 +178,7 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
                     "WebContent/app/directives/rc-datepicker/rc-datepicker.js",
+                    "WebContent/app/directives/rc-datepicker-v2/rc-datepicker-v2.js",
                     "WebContent/app/directives/rc-timeline/rc-timeline.js",
 
                     "WebContent/app/factories/request-factory.js",
