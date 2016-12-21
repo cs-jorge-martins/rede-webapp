@@ -22,12 +22,14 @@
                 .when('/help', {
     				templateUrl: 'app/views/help.html',
     				controller: 'helpController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home', 'ajuda']
     			})
                 .when('/integration', {
     				templateUrl: 'app/views/vendas/integration.html',
     				controller: 'integrationController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home', 'integração']
     			})
                 .when('/login', {
     				templateUrl: 'app/views/login.html',
@@ -37,7 +39,8 @@
                 .when('/receipts', {
     				templateUrl: 'app/views/receipts.html',
     				controller: 'receiptsController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home', 'recebimentos']
     			})
                 .when('/receipts/details', {
     				templateUrl: 'app/views/receipts-details.html',
@@ -72,12 +75,14 @@
                 .when('/relatorio/ajustes', {
     				templateUrl: 'app/views/relatorios/ajustes/index.html',
     				controller: 'relatorioAjustesController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home', 'relatórios', 'relatório de tarifas e ajustes']
     			})
                 .when('/relatorio/chargebacks', {
     				templateUrl: 'app/views/relatorios/chargebacks/index.html',
     				controller: 'relatorioChargebacksController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home', 'relatórios', 'cancelamentos e chargebacks']
     			})
                 .when('/relatorio/financeiro', {
     				templateUrl: 'app/views/relatorios/financeiro/index.html',
@@ -87,7 +92,8 @@
                 .when('/relatorio/vendas', {
     				templateUrl: 'app/views/relatorios/vendas/index.html',
     				controller: 'relatorioVendasController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home', 'relatórios', 'relatório de vendas']
     			})
                 .when('/sales', {
     				templateUrl: 'app/views/sales.html',

@@ -46,10 +46,12 @@
     <div id="modalWrapperV1" class="v1"></div>
     <div class="v2" ng-if="!hideHeaderAndFooter">
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu}"></header>
-        <rc-breadcrumb></rc-breadcrumb>
     </div>
     <div id="migrationContainer">
         <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
+            <div class="v2">
+                <rc-breadcrumb></rc-breadcrumb>
+            </div>
             <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>
