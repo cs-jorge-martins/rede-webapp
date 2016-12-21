@@ -4,6 +4,25 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+
+/**
+ * @class Conciliador.rcDatepickerV2
+ * @extends ui.bootstrap.datepickerPopup
+ * Diretiva de calendário
+ *
+ * Utiliza a diretiva datepicker do angular-ui-bootstrap como base do componente.
+ * @param {String} type Tipo de componente, pode ser 'single' para calendário simples
+ * e 'range' para calendário com range de datas
+ * @param {String} date Model que será utilizado no componente, conterá a data
+ * @param {String} label Texto que será exibido no label do componente, logo acima do input
+ * @param {String} minDate Trava de data mínima selecionável do componente
+ * @param {String} maxDate Trava de data máxima selecionável do componente
+ *
+ * Exemplo:
+ *
+ *     @example
+ *     <rc-datepicker-v2 date="dateModel" max-date="todayDate" label="'data'"></rc-datepicker-v2>
+ */
 (function() {
 	'use strict';
 
@@ -19,6 +38,7 @@
 			restrict: 'E',
 			templateUrl: 'app/views/directives/rc-datepicker-v2.html',
 			scope: {
+				type: '=',
 				date: '=',
 				label: '=',
 				minDate: '=',
@@ -36,6 +56,8 @@
 		};
 
 		function Controller($scope) {
+
+			var strPlaceHolder = '';
 
 			Init();
 

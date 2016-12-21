@@ -3,3 +3,15 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+.rcDatepicker {
+    .form-control {
+        border-right: 0;
+    }
+
+    .input-group {
+        input {
+            background-color: $inputBackgroundColor;
+        }
+    }
+}
