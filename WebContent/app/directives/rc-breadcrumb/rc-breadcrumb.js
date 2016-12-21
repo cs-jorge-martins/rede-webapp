@@ -1,7 +1,21 @@
 /*
- Projeto: conciliation-webapp
+ Projeto: conciliation
  Author/Empresa: Rede
  Copyright (C) 2016 Redecard S.A.
+ */
+
+
+/**
+ * @class Conciliador.rcBreadcrumb
+ * Diretiva de breadcrumb
+ *
+ * Adiciona na página o caminho completo de páginas antecessoras para se chegar na atual. O caminho do breadcrumb é
+ * definido na rota específica do arquivo /app/routes.js
+ *
+ * Exemplo:
+ *
+ *     @example
+ *     <rc-breadcrumb></rc-breadcrumb>
  */
 
 (function() {
