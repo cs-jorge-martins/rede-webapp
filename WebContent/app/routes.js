@@ -98,7 +98,8 @@
                 .when('/sales', {
     				templateUrl: 'app/views/sales.html',
     				controller: 'salesController',
-                    migrationId: 'v2'
+                    migrationId: 'v2',
+					breadcrumb: ['vendas']
     			})
                 .when('/sales/details', {
     				templateUrl: 'app/views/sales-details.html',
