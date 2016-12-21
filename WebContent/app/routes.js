@@ -16,7 +16,8 @@
     			.when('/home', {
     				templateUrl: 'app/views/dashboard.html',
     				controller: 'dashboardController',
-                    migrationId: 'v1'
+                    migrationId: 'v1',
+					breadcrumb: ['home']
     			})
                 .when('/help', {
     				templateUrl: 'app/views/help.html',
