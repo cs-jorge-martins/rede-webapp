@@ -7,10 +7,9 @@
 footer {
 	background:  $footerBackgroundColor;
 	text-align: center;
-	position: fixed;
 	bottom: 0;
 	width: 100%;
-    z-index: 10;
+	clear: both;
 
 	p {
 		margin: 0;
