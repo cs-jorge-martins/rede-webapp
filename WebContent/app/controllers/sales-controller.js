@@ -373,6 +373,7 @@ angular.module('Conciliador.salesController',[])
 		if($scope.concilieItems.length) {
 			$uibModal.open ({
 				templateUrl: "app/views/resumo-conciliacao/confirma-conciliacao-resumo.html",
+				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 				scope: $scope,
 				animation: false,
 				controller: function($scope, $uibModalInstance, $timeout) {

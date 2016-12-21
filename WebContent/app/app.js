@@ -220,6 +220,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		var objModal = $uibModal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
+			appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 			size:'sm',
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {
