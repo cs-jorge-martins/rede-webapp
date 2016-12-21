@@ -80,6 +80,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				scope: $scope,
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
+				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 				controller: function($uibModalInstance, $timeout){
                     $scope.cancel = Cancel;
 					function Cancel() {
@@ -101,6 +102,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				scope: $scope,
 				size: 'lg',
 				windowClass: 'integrationModalWrapper',
+				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 				controller: function($scope, $uibModalInstance){
                     $scope.cancel = Cancel;
                     function Cancel() {
