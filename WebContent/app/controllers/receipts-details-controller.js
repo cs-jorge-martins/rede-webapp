@@ -63,6 +63,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				objFilter = {
 					cardProductIds: $scope.cardProduct.cardProductId,
 					acquirerIds: $scope.acquirer.id,
+					shopIds: GetShopsFilter($scope.shopIds),
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
 					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 					bankAccountIds: $scope.bankAccount.id
@@ -110,6 +111,12 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
                 $scope.pageChangedCancellations = PageChangedCancellations;
                 $scope.totalItensPageChangedCancellations = TotalItensPageChangedCancellations;
 			}
+		}
+
+		function GetShopsFilter(arrModel) {
+			return arrModel.map(function(objItem){
+				return objItem.id;
+			}).join(",");
 		}
 
 		function GetShopsLabel() {

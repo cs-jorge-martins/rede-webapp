@@ -975,7 +975,7 @@ angular.module('Conciliador.movementsModule',[])
         $rootScope.receiptsDetails.currency = "BRL";
         $rootScope.receiptsDetails.startDate = dateSelected;
         $rootScope.receiptsDetails.endDate = dateSelected;
-        $rootScope.receiptsDetails.shopIds = $scope.settlementsSelected;
+        $rootScope.receiptsDetails.shopIds = $scope.shopsModel;
         $rootScope.receiptsDetails.products = $scope.productsSearch;
         $rootScope.receiptsDetails.shops = $scope.shopsModel;
         $rootScope.receiptsDetails.cardProduct = intCardProduct;
@@ -1003,6 +1003,10 @@ angular.module('Conciliador.movementsModule',[])
 				strRedirectUrl = "receipts/forethought_details";
 				break;
 			case "future_details":
+                $rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
+                $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
+                $rootScope.receiptsDetails.startDate = $scope.futureReleases.startDate;
+                $rootScope.receiptsDetails.endDate = $scope.futureReleases.endDate;
 				$rootScope.futureReleases = {};
 				$rootScope.futureReleases.dates = {
 					startDateDay: $scope.futureReleases.startDateDay,
