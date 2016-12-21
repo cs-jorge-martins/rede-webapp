@@ -23,13 +23,13 @@
     				templateUrl: 'app/views/help.html',
     				controller: 'helpController',
                     migrationId: 'v1',
-					breadcrumb: ['home', 'ajuda']
+					breadcrumb: ['ajuda']
     			})
                 .when('/integration', {
     				templateUrl: 'app/views/vendas/integration.html',
     				controller: 'integrationController',
                     migrationId: 'v1',
-					breadcrumb: ['home', 'integração']
+					breadcrumb: ['integração']
     			})
                 .when('/login', {
     				templateUrl: 'app/views/login.html',
@@ -40,7 +40,7 @@
     				templateUrl: 'app/views/receipts.html',
     				controller: 'receiptsController',
                     migrationId: 'v1',
-					breadcrumb: ['home', 'recebimentos']
+					breadcrumb: ['recebimentos']
     			})
                 .when('/receipts/details', {
     				templateUrl: 'app/views/receipts-details.html',
@@ -76,13 +76,13 @@
     				templateUrl: 'app/views/relatorios/ajustes/index.html',
     				controller: 'relatorioAjustesController',
                     migrationId: 'v1',
-					breadcrumb: ['home', 'relatórios', 'relatório de tarifas e ajustes']
+					breadcrumb: ['relatórios', 'relatório de tarifas e ajustes']
     			})
                 .when('/relatorio/chargebacks', {
     				templateUrl: 'app/views/relatorios/chargebacks/index.html',
     				controller: 'relatorioChargebacksController',
                     migrationId: 'v1',
-					breadcrumb: ['home', 'relatórios', 'cancelamentos e chargebacks']
+					breadcrumb: ['relatórios', 'cancelamentos e chargebacks']
     			})
                 .when('/relatorio/financeiro', {
     				templateUrl: 'app/views/relatorios/financeiro/index.html',
@@ -93,7 +93,7 @@
     				templateUrl: 'app/views/relatorios/vendas/index.html',
     				controller: 'relatorioVendasController',
                     migrationId: 'v1',
-					breadcrumb: ['home', 'relatórios', 'relatório de vendas']
+					breadcrumb: ['relatórios', 'relatório de vendas']
     			})
                 .when('/sales', {
     				templateUrl: 'app/views/sales.html',
