@@ -1,6 +1,7 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
-<section class="receiptsExpectedDetails expected" id="receiptsDetails">
+<div id="receiptsDetailsPage">
+	<section class="receiptsExpectedDetails expected" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
@@ -71,15 +72,10 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<!--<select ng-model="salesTotalItensPage" ng-change="totalItensPageChangedSales(tab.id)" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
-									</select>-->
-									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="adjustsTotalItensPage"
+											ng-change="totalItensPageChangedAdjusts()"
+											ng-options="option for option in totalItensPageOptions"
+											id="totalItensPage">
 									</select>
 								</div>
 							</div>
@@ -107,3 +103,4 @@
 	</div>
   	<rc-disclaimer></rc-disclaimer>
 </section>
+</div>

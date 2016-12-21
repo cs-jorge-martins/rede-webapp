@@ -129,9 +129,14 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/angularjs-dropdown-multiselect.min.js",
                     "WebContent/assets/js/componente/max-size-pagination.js",
                     "WebContent/assets/js/componente/chart-utils.js",
+                    "WebContent/assets/js/bootstrap.min.js",
 
                     "WebContent/app/app.js",
                     "WebContent/app/routes.js",
+
+                    "WebContent/app/controllers/header-controller.js",
+                    "WebContent/app/controllers/footer-controller.js",
+
                     "WebContent/app/controllers/dashboard-controller.js",
                     "WebContent/app/controllers/login-controller.js",
                     "WebContent/app/controllers/sales-details-controller.js",
@@ -173,6 +178,7 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
                     "WebContent/app/directives/rc-datepicker/rc-datepicker.js",
+                    "WebContent/app/directives/rc-datepicker-v2/rc-datepicker-v2.js",
                     "WebContent/app/directives/rc-timeline/rc-timeline.js",
 
                     "WebContent/app/factories/request-factory.js",

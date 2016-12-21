@@ -15,71 +15,88 @@
     		$routeProvider
     			.when('/home', {
     				templateUrl: 'app/views/dashboard.html',
-    				controller: 'dashboardController'
+    				controller: 'dashboardController',
+                    migrationId: 'v1'
     			})
                 .when('/help', {
     				templateUrl: 'app/views/help.html',
-    				controller: 'helpController'
+    				controller: 'helpController',
+                    migrationId: 'v1'
     			})
                 .when('/integration', {
     				templateUrl: 'app/views/vendas/integration.html',
-    				controller: 'integrationController'
+    				controller: 'integrationController',
+                    migrationId: 'v1'
     			})
                 .when('/login', {
     				templateUrl: 'app/views/login.html',
-    				controller: 'loginController'
+    				controller: 'loginController',
+                    migrationId: 'v1'
     			})
                 .when('/receipts', {
     				templateUrl: 'app/views/receipts.html',
-    				controller: 'receiptsController'
+    				controller: 'receiptsController',
+                    migrationId: 'v1'
     			})
                 .when('/receipts/details', {
     				templateUrl: 'app/views/receipts-details.html',
-    				controller: 'receiptsDetailsController'
+    				controller: 'receiptsDetailsController',
+                    migrationId: 'v1'
     			})
                 .when('/receipts/expected_details', {
     				templateUrl: 'app/views/receipts-expected-details.html',
-    				controller: 'receiptsExpectedDetailsController'
+    				controller: 'receiptsExpectedDetailsController',
+                    migrationId: 'v1'
     			})
                 .when('/receipts/forethought_details', {
     				templateUrl: 'app/views/receipts-forethought-details.html',
-    				controller: 'receiptsForethoughtDetailsController'
+    				controller: 'receiptsForethoughtDetailsController',
+                    migrationId: 'v1'
     			})
                 .when('/receipts/future_details', {
     				templateUrl: 'app/views/receipts-future-details.html',
-    				controller: 'receiptsFutureDetailsController'
+    				controller: 'receiptsFutureDetailsController',
+                    migrationId: 'v1'
     			})
                 .when('/receipts/other_details', {
     				templateUrl: 'app/views/receipts-other-details.html',
-    				controller: 'receiptsOtherDetailsController'
+    				controller: 'receiptsOtherDetailsController',
+                    migrationId: 'v1'
     			})
                 .when('/redirect', {
     				templateUrl: 'app/views/redirect.html',
-    				controller: 'redirectController'
+    				controller: 'redirectController',
+                    migrationId: 'v1'
     			})
                 .when('/relatorio/ajustes', {
     				templateUrl: 'app/views/relatorios/ajustes/index.html',
-    				controller: 'relatorioAjustesController'
+    				controller: 'relatorioAjustesController',
+                    migrationId: 'v1'
     			})
                 .when('/relatorio/chargebacks', {
     				templateUrl: 'app/views/relatorios/chargebacks/index.html',
-    				controller: 'relatorioChargebacksController'
+    				controller: 'relatorioChargebacksController',
+                    migrationId: 'v1'
     			})
                 .when('/relatorio/financeiro', {
     				templateUrl: 'app/views/relatorios/financeiro/index.html',
-    				controller: 'relatorioFinanceiroController'
+    				controller: 'relatorioFinanceiroController',
+                    migrationId: 'v1'
     			})
                 .when('/relatorio/vendas', {
     				templateUrl: 'app/views/relatorios/vendas/index.html',
-    				controller: 'relatorioVendasController'
+    				controller: 'relatorioVendasController',
+                    migrationId: 'v1'
     			})
                 .when('/sales', {
     				templateUrl: 'app/views/sales.html',
-    				controller: 'salesController'
+    				controller: 'salesController',
+                    migrationId: 'v2'
     			})
                 .when('/sales/details', {
     				templateUrl: 'app/views/sales-details.html',
-    				controller: 'salesDetailsController'
+    				controller: 'salesDetailsController',
+                    migrationId: 'v1'
     			})
                 .otherwise({
                     redirectTo: '/login'

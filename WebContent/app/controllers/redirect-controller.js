@@ -8,11 +8,11 @@ angular.module('Conciliador.redirectController',[])
 
 .controller('redirectController', function($rootScope, loginService, $routeParams) {
 
-	$rootScope.bodyId = "redirectPage";
-
 	Init();
 
 	function Init() {
+
+		$rootScope.hideHeaderAndFooter = true;
 
 		var strAuthorization = $routeParams.data;
 

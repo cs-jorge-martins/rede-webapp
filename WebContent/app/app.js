@@ -10,6 +10,10 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'com.2fdevs.videogular.plugins.controls',
                             'com.2fdevs.videogular.plugins.overlayplay',
                             'com.2fdevs.videogular.plugins.poster',
+
+                            'Conciliador.HeaderController',
+                            'Conciliador.FooterController',
+
                             'Conciliador.dashboardController', 'Conciliador.dashboardService',
                             'Conciliador.loginController', 'Conciliador.loginService',
                             'Conciliador.filtersService',
@@ -108,7 +112,35 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout) {
+
+	init();
+
+	function init() {
+		WatchHtmlId();
+        RemoveLoader();
+		InitiateRootVariables();
+	}
+
+	function WatchHtmlId() {
+		$rootScope.$on('$routeChangeSuccess', function() {
+			$rootScope.migrationId = $route.current.$$route.migrationId;
+		});
+	}
+
+    function RemoveLoader() {
+        var loader = angular.element(document.querySelector('#loader'));
+        $timeout(function() {
+            loader.addClass('loaderHide');
+            $timeout(function() {
+                loader.remove();
+            }, 1000);
+        }, 1000);
+    }
+
+    function InitiateRootVariables() {
+		$rootScope.hideHeaderAndFooter = false;
+	}
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -139,7 +171,6 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		}
 
 		$rootScope.alerts = [];
-		$rootScope.bodyId = "";
 
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
 			$location.path("/home");
@@ -189,6 +220,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		var objModal = $uibModal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
+			appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 			size:'sm',
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {

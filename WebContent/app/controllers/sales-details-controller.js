@@ -88,6 +88,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 
 			var	objModalInstance = $uibModal.open ({
 				templateUrl: 'app/views/resumo-conciliacao/confirma-conciliacao.html',
+				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 				scope: $scope,
 				controller: function($scope, $uibModalInstance){
 					$scope.ok = Ok;
@@ -309,6 +310,7 @@ angular.module('Conciliador.salesDetailsController',['ui.bootstrap'])
 	function ComprovanteVenda(item) {
 		var objModalInstance = $uibModal.open({
 			templateUrl: 'app/views/resumo-conciliacao/comprovante-venda.html',
+			appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 			controller: ModalComprovanteVendas,
 			size:'sm',
 			resolve: {

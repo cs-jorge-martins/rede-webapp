@@ -15,9 +15,9 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 		Init();
 
 		function Init(){
-			$rootScope.bodyId = "receiptsDetailsPage";
+			$rootScope.hideHeaderAndFooter = true;
 			$scope.$on("$routeChangeStart", function(next, current){
-				$rootScope.bodyId = null;
+				$rootScope.hideHeaderAndFooter = false;
 			});
 
 			if(!$rootScope.receiptsDetails) {
@@ -35,13 +35,14 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.filterStatus = "EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED";
 
 				$scope.maxSize = 4;
+				$scope.totalItensPageOptions = [10,20,50];
 
 				$scope.detailsData = [];
 				$scope.salesTotalItensPage = 10;
 				$scope.salesTotalItens = 0;
 				$scope.salesCurrentPage = 0;
 
-				$scope.adjustsTotalItensPage = 10;
+				$scope.adjustsTotalItensPage = $scope.totalItensPageOptions[0];
 				$scope.adjustsTotalItens = 0;
 
 				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;

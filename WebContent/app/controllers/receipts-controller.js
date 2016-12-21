@@ -98,7 +98,9 @@ angular.module('Conciliador.movementsModule',[])
         GetFilters();
 		GetForethought();
 		if ($rootScope.futureSelected) {
-			$scope.tabs[1].active = true;
+			$scope.activeTab = 1;
+		} else {
+			$scope.activeTab = 0;
 		}
 	}
 

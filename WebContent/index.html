@@ -13,19 +13,14 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="assets/css/normalize.min.css?v=0.0.1">
     <!-- start not login -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=0.0.1">
-    <link rel="stylesheet" href="assets/css/main.css?v=0.0.1">
     <link rel="stylesheet" href="assets/css/main-v2.css?v=0.0.1">
     <!-- end not login -->
     <link rel="stylesheet" href="assets/css/angular-chart.min.css?v=0.0.1">
     <link rel="stylesheet" href="assets/css/loading-bar.css?v=0.0.1">
-    <!-- start login -->
-    <link rel="stylesheet" href="assets/css/login.css">
-    <!-- end login -->
     <script type="text/javascript" src="app/build.js"></script>
 </head>
 
-<body id="{{bodyId}}" ng-class="{'newHeaderAndFooter': !initialized}" ng-cloak>
+<body ng-class="{'newHeaderAndFooter': !initialized}" ng-cloak>
     <!--[if lt IE 7]>
 	<p class="chromeframe">Você está utilizando um browser <strong>desatualizado</strong>. Por favor, <a href="http://browsehappy.com/">atualize o seu browser</a> ou <a href="http://www.google.com/chromeframe/?redirect=true">ative o Google Chrome Frame</a> para melhorar a sua experiência.</p>
 <![endif]-->
@@ -40,190 +35,25 @@
 	</style>
 <![endif]-->
     <!-- Loader template -->
-    <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
-        <header ng-if="initialized">
-            <nav class="navbar navbar-default" id="mainNav">
-                <div class="container">
-                    <div class="navbar-header">
-                        <a href="#/home" class="navbar-brand">
-                            <h1>Control Rede</h1> </a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="app-navbar" ng-show="initialized">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li> <a href="#/home" ng-class="{'active': activeDashboard}">home</a> </li>
-                            <li class="dropdown">
-                                <a href="#/sales" ng-class="{'active': activeResumoConciliacao}">
-									vendas
-								</a>
-                            </li>
 
-                            <li>
-                                <a href="#/integration" ng-class="{'active': activeIntegration}" role="button" aria-haspopup="true" aria-expanded="false">
-                                    integração
-                                </a>
-                            </li>
-                            <li> <a href="#/receipts" ng-class="{'active': activeMovements}">recebimentos</a> </li>
-                            <li class="dropdown"> <a href="#/relatorio/vendas" ng-class="{'active': activeReports}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									relatórios <span class="caret"></span>
-								</a>
-                                <ul class="dropdown-menu">
-                                    <li> <a href="#/relatorio/vendas" ng-class="{'active': activeReportsSales}">vendas</a> </li>
-                                    <li> <a href="#/relatorio/ajustes" ng-class="{'active': activeReportsAdjustments}">tarifas e ajustes</a> </li>
-<!--                                    <li> <a href="#/relatorio/financeiro" ng-class="{'active': activeReportsFinancial}">financeiro</a> </li>-->
-                                    <li> <a href="#/relatorio/chargebacks" ng-class="{'active': activeReportsChargebacks}">cancelamentos e chargebacks</a> </li>
-                                </ul>
-                            </li>
-                            <li class="help"> <a href="#/help" class="itauicon-itaufonts_ajuda">ajuda</a> </li>
-                            <li class="logout"> <a ng-click="logout()" href="javascript:void(0);" class="itauicon-itaufonts_desbloqueio">sair</a> </li>
-                            <hr /> </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <header ng-if="!initialized">
-            <nav class="navbar navbar-default">
-                <div class="container">
-                    <div class="navbar-header"> <img class="logo-svg" src="https://www.userede.com.br/Paginas/portal2016/images/logo-rede.svg" alt="Control Rede" width="120" height="39" /> </div>
-                    <!-- nossos produtos -->
-                    <div class="col-md-4 col-sm-4 col-xs-12 col-collapse">
-                        <!-- Collapse -->
-                        <div id="navbar-rede" class="navbar-collapse collapse" aria-expanded="false">
-                            <!-- Menu Dropdown -->
-                            <ul class="nav navbar-nav">
-                                <!-- Produtos -->
-                                <li id="dropdown-produtos" class="dropdown dropdown-produtos-gtm-trigger dynamic-image-dropdown">
-                                    <a href="#" id="ourProductsButton" class="dropdown-toggle dropdown-produtos-gtm-trigger" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nossos produtos</a>
-                                    <!-- Dropdown container -->
-                                    <ul class="dropdown-menu dropdown-menu-produtos">
-                                        <!-- Links -->
-                                        <div class="col-links">
-                                            <ul>
-                                                <div class="ul-title">Solução mobile</div>
-                                                <li><a href="https://www.userede.com.br/nossos-produtos/mobile-rede/">Maquininha para celular</a></li>
-                                            </ul>
-                                            <ul>
-                                                <div class="ul-title">Soluções para lojas físicas</div>
-                                                <li><a href="https://www.userede.com.br/nossos-produtos/maquininha-sem-fio/">Maquininha sem fio</a></li>
-                                                <li><a href="https://www.userede.com.br/nossos-produtos/maquininha-com-fio/">Maquininha com fio</a></li>
-                                            </ul>
-                                            <ul>
-                                                <div class="ul-title">Soluções para lojas online</div>
-                                                <li><a href="https://www.userede.com.br/nossos-produtos/redepay/">Rede Pay</a></li>
 
-                                                <li><a href="https://www.userede.com.br/nossos-produtos/e-rede/">e.Rede</a></li>
-
-                                            </ul>
-                                            <ul>
-                                                <div class="ul-title">
-                                                    Grandes empresas
-                                                </div>
-                                                <li><a href="https://www.userede.com.br/nossos-produtos/leitor-de-cartao-pin-pad/">Leitor Pin Pad</a></li>
-                                            </ul>
-
-                                            <ul>
-                                                <div class="ul-title">
-                                                    <a href="https://www.userede.com.br/nossos-produtos/"><span>Todos os produtos</span></a>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                        <!-- End Links -->
-                                    </ul>
-                                    <!-- End Dropdown container -->
-                                </li>
-                                <!-- End Produtos -->
-                                <!-- Tipos Negócio -->
-                                <!-- End Tipos Negócio -->
-                            </ul>
-                            <!-- End Nav Right -->
-                        </div>
-                        <!-- End Collapse -->
-                    </div>
-
-                    <!-- nossos produtos -->
-                </div>
-            </nav>
-        </header>
-        <div ng-view></div>
-    </div>
-    <footer ng-if="initialized" ng-class="{'modal-blur': $root.modalOpen}">
-        <p>Rede 2016 - Todos os direitos reservados</p>
-    </footer>
-    <footer ng-if="!initialized" class="container-fluid clearfix">
-        <div class="container">
-            <div class="row">
-                <nav class="navbar">
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <ul class="nav navbar-nav">
-                            <div class="ul-title">
-                                <p class="hidden-xs"><a title="Nossos produtos" href="https://www.userede.com.br/nossos-produtos/" class="hidden-xs lnk-todos-produtos-footer">Nossos produtos</a></p>
-                            </div>
-                            <div class="collapse navbar-collapse" id="footer-collapse-1">
-                                <li><a data-gtm-attr="mobile-rede" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/mobile-rede/" title="Maquininha para celular">Maquininha para celular</a> </li>
-                                <li><a data-gtm-attr="maquininha-sem-fio" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/maquininha-sem-fio/" title="Maquininha sem fio">Maquininha sem fio</a> </li>
-                                <li><a data-gtm-attr="maquininha-com-fio" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/maquininha-com-fio/" title="Maquininha com fio">Maquininha com fio</a> </li>
-                                <li><a data-gtm-attr="Rede Pay" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/redepay/" title="Rede Pay">Rede Pay</a> </li>
-                                <li><a data-gtm-attr="e.Rede" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/e-rede/" title="E.Rede">e.Rede</a> </li>
-                                <li><a data-gtm-attr="terminal-pinpad" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/leitor-de-cartao-pin-pad/" title="Terminal Pinpad">Leitor Pin pad</a> </li>
-                                <li><a data-gtm-attr="preco-unico" class="lnk-produto-footer" href="https://www.userede.com.br/nossos-produtos/preco-unico/" title="Preço Único">Preço Único</a> </li>
-                                <li><a href="https://www.userede.com.br/nossos-produtos/" class="lnk-todos-produtos-footer" title="Todos os produtos">Todos os produtos</a> </li>
-                            </div>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <ul class="nav navbar-nav">
-                            <div class="ul-title">
-                                <p class="hidden-xs"> <a title="Ajuda" data-gtm-attr="" href="https://www.userede.com.br/atendimento/" class="lnk-ajuda-footer hidden-xs">Ajuda</a></p>
-                            </div>
-                            <div class="collapse navbar-collapse" id="footer-collapse-3">
-                                <li><a data-gtm-attr="-FAQ" class="lnk-ajuda-footer" href="https://www.userede.com.br/atendimento/" title="Tire dúvidas (FAQ)">Tire dúvidas (FAQ)</a> </li>
-                                <li><a data-gtm-attr="-fale-conosco" class="lnk-ajuda-footer" href="https://www.userede.com.br/atendimento/fale-conosco/" title="Fale conosco">Fale conosco</a> </li>
-                                <li><a data-gtm-attr="-atendimento" class="lnk-ajuda-footer" href="https://www.userede.com.br/atendimento/" title="Canais de atendimento">Canais de atendimento
-                                    </a> </li>
-                                <li><a data-gtm-attr="-downloads-documentos" class="lnk-ajuda-footer" href="https://www.userede.com.br/atendimento/documentos/" title="Downloads de documentos">Downloads de documentos</a> </li>
-                            </div>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <ul class="nav navbar-nav">
-                            <div class="ul-title">
-                                <p class="hidden-xs lnk-informacoes-footer"><a data-gtm-attr="informacoes" title="Informações" href="https://www.userede.com.br/nossos-beneficios/" class="lnk-informacoes-footer hidden-xs">Informações</a></p>
-                            </div>
-                            <div class="collapse navbar-collapse" id="footer-collapse-4">
-                                <li><a class="lnk-informacoes-footer" data-gtm-attr="vantagens" href="https://www.userede.com.br/nossos-beneficios/" title="Vantagens">Vantagens</a> </li>
-                                <li><a class="lnk-sobre-rede-footer" href="https://www.userede.com.br/rede/" title="Sobre a Rede">Sobre a Rede</a> </li>
-                                <li><a href="https://www.userede.com.br/rede/relacoes-investidores/" title="Relações com investidores">Relações com investidores</a> </li>
-                                <li><a class="lnk-dicas-seguranca-footer" href="https://www.userede.com.br/rede/dicas-seguranca/" title="Dicas de segurança">Dicas de segurança</a> </li>
-                                <li><a href="https://www.userede.com.br/rede/termos-de-uso/" title="Termos de uso e política de privacidade">Termos de uso e política de privacidade</a> </li>
-                            </div>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <div class="apps-container">
-                            <p>Baixe o aplicativo da Rede</p>
-                            <div class="apps">
-                                <a data-gtm-attr="googleplay" href="https://play.google.com/store/apps/details?id=br.com.userede" target="_blank" title="Disponível no Google Play" class="btn-app-download app-google"></a>
-                                <a data-gtm-attr="appstore" href="https://itunes.apple.com/br/app/rede/id1020661630?mt=8" target="_blank" title="Disponível na App Store" class="btn-app-download app-apple"></a>
-                            </div>
-                        </div>
-                        <div class="social clearfix">
-                            <p class="ul-title social-title">Siga-nos</p>
-                            <div class="social-icons">
-                                <div class="icon facebook">
-                                    <a data-gtm-attr="facebook" class="btn-social-media" href="https://www.facebook.com/UseRede/" target="_blank" title="Facebook"></a>
-                                </div>
-                                <div class="icon twitter">
-                                    <a data-gtm-attr="twitter" class="btn-social-media" href="https://twitter.com/userede" target="_blank" title="Twitter"></a>
-                                </div>
-                                <div class="icon youtube">
-                                    <a data-gtm-attr="youtube" class="btn-social-media" href="https://www.youtube.com/user/redecardbrasil" target="_blank" title="Youtube"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+    <div class="v2">
+        <div id="loader">
+            loading
         </div>
-    </footer>
+    </div>
+
+    <div id="modalWrapperV1" class="v1"></div>
+    <div class="v2" ng-if="!hideHeaderAndFooter">
+        <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu}"></header>
+    </div>
+    <div id="migrationContainer">
+        <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
+            <div ng-view class="{{migrationId}}"></div>
+        </div>
+    </div>
+    <div class="v2" ng-if="!hideHeaderAndFooter">
+        <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm"></footer>
     </div>
     <div id="blockr" class="fade" ng-show="loading"></div>
 

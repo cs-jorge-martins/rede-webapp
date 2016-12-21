@@ -4,35 +4,38 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
- $fontsPath: '/assets/fonts/';
- $imgPath: '/assets/img/';
-// $spritePath: '#{$imgPath}controlSprite.png';
+$fontsPath: '/assets/fonts/';
+$imgPath: '/assets/img/';
+$spritePath: '#{$imgPath}controlSprite.png';
 
-// $backgroundColor: #f0f0f0;
+$backgroundColor: #f0f0f0;
 
-// $positiveValueColor: #179ca0;
-// $negativeValueColor: #f34235;
+$positiveValueColor: #179ca0;
+$negativeValueColor: #f34235;
 
-// $toConcilieColor: #f39c12;
-// $conciliedColor: #2ecc71;
-// $unprocessedColor: #c0392b;
+$toConcilieColor: #f39c12;
+$conciliedColor: #2ecc71;
+$unprocessedColor: #c0392b;
 
  // header
-// $headerBorderColor: #ddd;
-// $menuBackgroundColor: #fff;
-// $menuFontColor: #4d4d4d;
-// $menuFontSize: 1.5em;
-// $menuActiveFontColor: #ff7800;
-// $menuBorderColor: $menuActiveFontColor;
+$headerBorderColor: #ddd;
+$menuBackgroundColor: #fff;
+$menuFontColor: #4d4d4d;
+$menuFontSize: 1.2em;
+$menuActiveFontColor: #ff7800;
+$menuBorderColor: $menuActiveFontColor;
 
  // font
-// $footerBackgroundColor: #ece6e2;
-// $fontColor: #222;
+$footerBackgroundColor: #ece6e2;
+$fontColor: #222;
 // $inverseFontColor: #fff;
 
+// loader
+$loaderBackgroundColor: #fff;
+
  // buttons
+$primaryButtomBackground: #ffc807;
 // $buttonTextColor: #272727;
-// $primaryButtomBackgroundColor: #f1c730;
 // $secondaryButtomBackgroundColor: #d6d3cb;
 // $successButtomBackgroundColor: #449d44;
 // $infoButtomBackgroundColor: #31b0d5;

@@ -1,0 +1,94 @@
+<nav class="navbar navbar-default">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar" aria-expanded="false" ng-show="vm.showMenu">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="#/home" class="navbar-brand">
+				<h1>Control Rede</h1>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="app-navbar">
+			<ul class="nav navbar-nav navbar-left" ng-hide="vm.showMenu" id="productsDropdown">
+				<li class="dropdown">
+					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						Nossos produtos <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li class="title">Solução mobile</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/mobile-rede/">Maquininha para celular</a>
+						</li>
+						<li class="title">Soluções para lojas físicas</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/maquininha-sem-fio/">Maquininha sem fio</a>
+						</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/maquininha-com-fio/">Maquininha com fio</a>
+						</li>
+						<li class="title">Soluções para lojas online</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/redepay/">Rede Pay</a>
+						</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/e-rede/">e.Rede</a>
+						</li>
+						<li class="title">Grandes empresas</li>
+						<li>
+							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+							<a href="https://www.userede.com.br/nossos-produtos/leitor-de-cartao-pin-pad/">Leitor Pin Pad</a>
+						</li>
+						<li class="title">
+							<a href="https://www.userede.com.br/nossos-produtos/">Todos os produtos</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right" ng-show="vm.showMenu">
+				<li>
+					<a href="/#/home" ng-class="{active: vm.isActive('/home')}">home</a>
+				</li>
+				<li>
+					<a href="/#/sales" ng-class="{active: vm.isActive('/sales')}">vendas</a>
+				</li>
+				<li>
+					<a href="/#/integration" ng-class="{active: vm.isActive('/integration')}">integração</a>
+				</li>
+				<li>
+					<a href="/#/receipts" ng-class="{active: vm.isActive('/receipts')}">recebimentos</a>
+				</li>
+				<li class="dropdown">
+					<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+					ng-class="{active: vm.isActive('/relatorio/vendas') || vm.isActive('/relatorio/ajustes') || vm.isActive('/relatorio/chargebacks')}">
+						relatórios <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="/#/relatorio/vendas" ng-class="{active: vm.isActive('/relatorio/vendas')}">vendas</a>
+						</li>
+						<li>
+							<a href="/#/relatorio/ajustes" ng-class="{active: vm.isActive('/relatorio/ajustes')}">tarifas e ajustes</a>
+						</li>
+						<li>
+							<a href="/#/relatorio/chargebacks" ng-class="{active: vm.isActive('/relatorio/chargebacks')}">cancelamentos e chargebacks</a>
+						</li>
+					</ul>
+				</li>
+				<li class="help">
+					<a href="/#/help" class="icon_ajuda" ng-class="{active: vm.isActive('/help')}">ajuda</a>
+				</li>
+				<li class="logout">
+					<a ng-click="vm.logout()" class="icon_desbloqueio">sair</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
