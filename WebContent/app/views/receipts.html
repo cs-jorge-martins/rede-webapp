@@ -12,8 +12,8 @@
     <div class="page-title">recebimentos</div>
     <div id="receipts">
         <div id="headerTabs" class="filter-depth container">
-            <tabset>
-                <tab heading="últimos lançamentos" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+            <uib-tabset active="activeTab">
+                <uib-tab index="0" heading="últimos lançamentos" select="changeTab(0)" id="botaoConciliacaoDiaTour">
                     <h3>utilize os campos abaixo para filtrar sua busca:</h3>
                     <div class="filtersWrapper">
                         <div class="receipts_present_filters">
@@ -165,15 +165,14 @@
                         <span class="alert" ng-show="!actualReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
                     </article>
                     <!-- LANCAMENTOS ATUAIS: END -->
-                </tab>
-                <tab heading="lançamentos futuros" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+                </uib-tab>
+                <uib-tab index="1" heading="lançamentos futuros" select="changeTab(1)" id="botaoConciliacaoDiaTour">
             		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
             		<div class="filtersWrapper">
                         <div class="receipts_future_filters">
                             <div class="filter firstFilter">
                                 <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
                                 </rc-datepicker>
-
                                 <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
                                 </rc-datepicker>
                             </div>
@@ -200,9 +199,7 @@
                     <article class="data-cards">
                         <div class="header-datas">
                             <div class="date-wrapper">
-                                <div class="date future">
-                                    {{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} {{futureReleases.startDateYear}} <br />a {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}} {{futureReleases.endDateYear}}
-                                </div>
+                                <div class="date future" ng-bind-html="to_trusted(futureReleases.dateRangeWithBr)"></div>
                             </div>
                             <div class="chip-wrapper">
                                 <div class="chip" ng-show="accountsFutureLabel">
@@ -225,11 +222,11 @@
                             </div>
                         </div>
                         <rc-timeline
-                                date-range="{{futureReleases.startDateDay}} {{futureReleases.startDateMonth}} {{futureReleases.startDateYear}} a {{futureReleases.endDateDay}} {{futureReleases.endDateMonth}} {{futureReleases.endDateYear}}"
-                                max-date-range="{{customTimelineExpectedAmount.maxDateRange}}"
-                                initial-value="{{customTimelineExpectedAmount.expectedAmount}}"
-                                final-value="{{timelineExpectedAmount.expectedAmount}}"
-                                time-line-percentage="{{customTimelineExpectedAmount.percentage}}" ></rc-timeline>
+                                date-range="futureReleases.dateRange"
+                                max-date-range="customTimelineExpectedAmount.maxDateRange"
+                                initial-value="customTimelineExpectedAmount.expectedAmount"
+                                final-value="timelineExpectedAmount.expectedAmount"
+                                time-line-percentage="customTimelineExpectedAmount.percentage" ></rc-timeline>
                         <table ng-repeat="item in futureReleasesData" id="receipts_table">
                             <thead>
                                 <tr>
@@ -266,8 +263,8 @@
                     </article>
 
                     <!-- LANCAMENTOS FUTUROS: END -->
-                </tab>
-            </tabset>
+                </uib-tab>
+            </uib-tabset>
         </div>
     </div>
     <rc-disclaimer></rc-disclaimer>

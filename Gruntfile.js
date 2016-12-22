@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 
         ngconstant: {
             options: {
-                dest: 'WebContent/app/scripts/config.js',
+                dest: 'WebContent/app/config.js',
                 space: ' ',
                 wrap: '"use strict";\n\n {\%= __ngModule %}',
                 name: 'Conciliador.appConfig'
@@ -90,14 +90,6 @@ module.exports = function(grunt) {
             }
         },
 
-
-        // Execute a fake login server
-        execute: {
-            target: {
-                src: ['WebContent/app/tests/scripts/mock-login.js']
-            }
-        },
-
         concat: {
             options: {
                 // Replace all 'use strict' statements in the code with a single one at the top
@@ -112,13 +104,15 @@ module.exports = function(grunt) {
                 src: [
                     "WebContent/app/libs/angular.min.js",
                     "WebContent/app/libs/angular-route.min.js",
+                    "WebContent/app/libs/angular-mocks.js",
                     "WebContent/app/libs/lodash.min.js",
-                    "WebContent/app/libs/angular-locale-pt-br.js",
+                    "WebContent/app/libs/angular-locale_pt-br.js",
                     "WebContent/app/libs/loading-bar.min.js",
                     "WebContent/app/libs/angular-cache.min.js",
                     "WebContent/app/libs/angular-sanitize.min.js",
                     "WebContent/app/libs/angular-animate.min.js",
-                    "WebContent/app/libs/ui-bootstrap-tpls-0.11.0.min.js",
+                    "WebContent/app/libs/angular-touch.min.js",
+                    "WebContent/app/libs/ui-bootstrap-tpls-2.2.0.min.js",
                     "WebContent/app/libs/modernizr-2.6.2.min.js",
                     "WebContent/app/libs/jquery-1.11.1.min.js",
                     "WebContent/app/libs/main.js",
@@ -129,88 +123,106 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/angular-resource.min.js",
                     "WebContent/app/libs/moment-with-locales.min.js",
                     "WebContent/app/libs/moment-timezone.min.js",
-                    "WebContent/app/libs/dateparser.js",
+                    //"WebContent/app/libs/dateparser.js",
                     "WebContent/app/libs/Chart.min.js",
                     "WebContent/app/libs/angular-chart.min.js",
                     "WebContent/app/libs/angularjs-dropdown-multiselect.min.js",
-                    "WebContent/app/js/componente/max-size-pagination.js",
-                    "WebContent/app/js/componente/chart-utils.js",
+                    "WebContent/assets/js/componente/max-size-pagination.js",
+                    "WebContent/assets/js/componente/chart-utils.js",
+                    "WebContent/assets/js/bootstrap.min.js",
 
-                    "WebContent/app/scripts/app.js",
-                    "WebContent/app/scripts/controllers/dashboard-controller.js",
-                    "WebContent/app/scripts/controllers/login-controller.js",
-                    "WebContent/app/scripts/controllers/sales-details-controller.js",
-                    "WebContent/app/scripts/controllers/sales-controller.js",
-                    "WebContent/app/scripts/controllers/relatorio-vendas-controller.js",
-                    "WebContent/app/scripts/controllers/relatorio-financeiro-controller.js",
-                    "WebContent/app/scripts/controllers/relatorio-ajustes-controller.js",
-                    "WebContent/app/scripts/controllers/relatorio-chargebacks-controller.js",
-                    "WebContent/app/scripts/controllers/help-controller.js",
-                    "WebContent/app/scripts/controllers/integration-controller.js",
-                    "WebContent/app/scripts/controllers/receipts-controller.js",
-                    "WebContent/app/scripts/controllers/receipts-expected-details-controller.js",
-                    "WebContent/app/scripts/controllers/receipts-forethought-details-controller.js",
-                    "WebContent/app/scripts/controllers/receipts-other-details-controller.js",
-                    "WebContent/app/scripts/controllers/receipts-future-details-controller.js",
-                    "WebContent/app/scripts/controllers/receipts-details-controller.js",
-                    "WebContent/app/scripts/controllers/redirect-controller.js",
+                    "WebContent/app/app.js",
+                    "WebContent/app/routes.js",
 
-                    "WebContent/app/scripts/service/dashboard-service.js",
-                    "WebContent/app/scripts/service/login-service.js",
-                    "WebContent/app/scripts/service/transactions-service.js",
-                    "WebContent/app/scripts/service/relatorio-service.js",
-                    "WebContent/app/scripts/service/kaplen-admin-service.js",
-                    "WebContent/app/scripts/service/cache-service.js",
-                    "WebContent/app/scripts/service/integration-service.js",
-                    "WebContent/app/scripts/service/advanced-filter-service.js",
-                    "WebContent/app/scripts/service/utilities/calendar-service.js",
-                    "WebContent/app/scripts/service/filters-service.js",
-                    "WebContent/app/scripts/service/receipts-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/financial-service.js",
-                    "WebContent/app/scripts/service/v1/api/filter/financial-filter.js",
-                    "WebContent/app/scripts/service/v1/api/service/movement-summary-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/adjust-summary-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/transaction-summary-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/transaction-conciliation-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/transaction-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/movement-service.js",
-                    "WebContent/app/scripts/service/v1/api/service/adjust-service.js",
+                    "WebContent/app/controllers/header-controller.js",
+                    "WebContent/app/controllers/footer-controller.js",
 
-                    "WebContent/app/scripts/directives/rc-disclaimer/rc-disclaimer.js",
-                    "WebContent/app/scripts/directives/rc-multiselect/rc-multiselect.js",
-                    "WebContent/app/scripts/directives/rc-datepicker/rc-datepicker.js",
-                    "WebContent/app/scripts/directives/rc-timeline/rc-timeline.js",
+                    "WebContent/app/controllers/dashboard-controller.js",
+                    "WebContent/app/controllers/login-controller.js",
+                    "WebContent/app/controllers/sales-details-controller.js",
+                    "WebContent/app/controllers/sales-controller.js",
+                    "WebContent/app/controllers/relatorio-vendas-controller.js",
+                    "WebContent/app/controllers/relatorio-financeiro-controller.js",
+                    "WebContent/app/controllers/relatorio-ajustes-controller.js",
+                    "WebContent/app/controllers/relatorio-chargebacks-controller.js",
+                    "WebContent/app/controllers/help-controller.js",
+                    "WebContent/app/controllers/integration-controller.js",
+                    "WebContent/app/controllers/receipts-controller.js",
+                    "WebContent/app/controllers/receipts-expected-details-controller.js",
+                    "WebContent/app/controllers/receipts-forethought-details-controller.js",
+                    "WebContent/app/controllers/receipts-other-details-controller.js",
+                    "WebContent/app/controllers/receipts-future-details-controller.js",
+                    "WebContent/app/controllers/receipts-details-controller.js",
+                    "WebContent/app/controllers/redirect-controller.js",
 
-                    "WebContent/app/scripts/factories/request-factory.js",
-                    "WebContent/app/scripts/factories/calendar-factory.js",
+                    "WebContent/app/service/dashboard-service.js",
+                    "WebContent/app/service/login-service.js",
+                    "WebContent/app/service/transactions-service.js",
+                    "WebContent/app/service/relatorio-service.js",
+                    "WebContent/app/service/kaplen-admin-service.js",
+                    "WebContent/app/service/cache-service.js",
+                    "WebContent/app/service/integration-service.js",
+                    "WebContent/app/service/advanced-filter-service.js",
+                    "WebContent/app/service/calendar-service.js",
+                    "WebContent/app/service/filters-service.js",
+                    "WebContent/app/service/receipts-service.js",
+                    "WebContent/app/service/financial-service.js",
+                    "WebContent/app/service/movement-summary-service.js",
+                    "WebContent/app/service/adjust-summary-service.js",
+                    "WebContent/app/service/transaction-summary-service.js",
+                    "WebContent/app/service/transaction-conciliation-service.js",
+                    "WebContent/app/service/transaction-service.js",
+                    "WebContent/app/service/movement-service.js",
+                    "WebContent/app/service/adjust-service.js",
 
-                    "WebContent/app/scripts/filters/currency-filter.js",
-                    "WebContent/app/scripts/filters/slugfy-filter.js",
+                    "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
+                    "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
+                    "WebContent/app/directives/rc-datepicker/rc-datepicker.js",
+                    "WebContent/app/directives/rc-datepicker-v2/rc-datepicker-v2.js",
+                    "WebContent/app/directives/rc-timeline/rc-timeline.js",
+
+                    "WebContent/app/factories/request-factory.js",
+                    "WebContent/app/factories/calendar-factory.js",
+
+                    "WebContent/app/filters/currency-filter.js",
+                    "WebContent/app/filters/slugfy-filter.js",
 
                     "WebContent/app/libs/videogular.min.js",
                     "WebContent/app/libs/vg-controls.min.js",
                     "WebContent/app/libs/vg-overlay-play.min.js",
                     "WebContent/app/libs/vg-poster.min.js",
                     "WebContent/app/libs/vg-buffering.min.js",
-                    "WebContent/app/scripts/config.js",
+                    "WebContent/app/config.js",
                 ],
                 dest: "WebContent/app/build.js",
             },
         },
 
         watch: {
-            files: '<%= concat.dist.src %>',
-            tasks: ['concat']
+            files: ['<%= concat.dist.src %>', 'WebContent/assets/sass/**/*.scss'],
+            tasks: ['concat', 'sass'],
+            options: {
+                atBegin: true,
+                livereload: true
+            }
+        },
+
+        sass: {
+            dist: {
+                files: {
+                    'WebContent/assets/css/main-v2.css': 'WebContent/assets/sass/main.scss'
+                }
+            }
         }
+
     });
 
 	grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
-    grunt.registerTask('local:login', ['execute']);
     grunt.registerTask('serve', ['http-server:server']);
-    grunt.registerTask('build:local', ['ngconstant:local', 'concat']);
-    grunt.registerTask('build:dev', ['ngconstant:development', 'concat']);
-    grunt.registerTask('build:hml', ['ngconstant:homologation', 'concat']);
-    grunt.registerTask('build:prod', ['ngconstant:production', 'concat']);
+    grunt.registerTask('build:local', ['ngconstant:local', 'sass', 'concat']);
+    grunt.registerTask('build:dev', ['ngconstant:development', 'sass', 'concat']);
+    grunt.registerTask('build:hml', ['ngconstant:homologation', 'sass', 'concat']);
+    grunt.registerTask('build:prod', ['ngconstant:production', 'sass', 'concat']);
     grunt.registerTask('local', ['build:local', 'serve', 'watch']);
     grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
     grunt.registerTask('hml', ['build:hml', 'serve']);

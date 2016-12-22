@@ -11,7 +11,7 @@
 	</div>
 
   	<br />
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	 <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
   <ul id="valuesTour">
       <li>
         <em>Transações</em>
@@ -24,7 +24,7 @@
       </li>
       <li class="vendasDashboard">
         <em>Vendas</em>
-      	<b><i ng-bind-html="currencySymbol"></i> {{transactionSummaryBoxCurrentMonth.amount | currency:''}}</b>
+      	<b><i ng-bind-html="currencySymbol"></i> {{(transactionSummaryBoxCurrentMonth.amount || 0) | currency:''}}</b>
 
       	<div class="valuesFooter" ng-class="{'negative': percentOfTotalsAmountTransactionsBetweenMonths <= 0,
        					'positive': percentOfTotalsAmountTransactionsBetweenMonths > 0}">
@@ -34,7 +34,7 @@
       </li>
       <li class="recebimentoDashboard">
         <em>Recebimentos</em>
-      	<b><i ng-bind-html='currencySymbol'></i> {{ movementSummaryBoxCurrentMonth.payedAmount| currency:""}}</b>
+      	<b><i ng-bind-html='currencySymbol'></i> {{(movementSummaryBoxCurrentMonth.payedAmount || 0) | currency:""}}</b>
       	<div class="valuesFooter" ng-class="{'negative': percentOfTotalPayedBetweenMonths<= 0,
        					'positive': percentOfTotalPayedBetweenMonths > 0}">
 			<strong><span>Mês anterior:</span><i ng-bind-html="currencySymbol"></i> <span ng-bind="movementionSummaryBoxPrevMonth.payedAmount ? (movementionSummaryBoxPrevMonth.payedAmount | currency:'') : '0,00'"></span></strong>
@@ -79,7 +79,7 @@
         -->
       </main>
       <aside>
-        <h2>Conciliação de vendas</h2>
+        <h2>conciliação de vendas</h2>
         <table class="chargebacks" cellpadding="0" cellspacing="0" id="calendarioTour">
           <thead>
             <tr class="calendarMonth">
@@ -95,7 +95,7 @@
               <th class="weekend">Sab</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="dates">
             <tr ng-repeat="week in weeks">
               <td ng-repeat="day in week" ng-click="sales(day.date)"
               	ng-class="{'naoConciliado': day.toProcess, 'divergencias': day.toReconcile,
@@ -158,36 +158,3 @@
 -->
 	<br />
 </section>
-
-<script type="text/ng-template" id="video.html">
-    <div class="tabelaDetalhamentoModal gestaoModal">
-	<div class="modal-header">
-        <h3>Vídeo tutorial</h3>
-		<button class="icon-close" ng-click="cancel()"></button>
-    </div>
-    <div class="modal-body">
-        <videogular vg-theme="video.theme">
-            <vg-media vg-src="video.sources"
-                vg-tracks="video.tracks">
-            </vg-media>
-            <vg-controls
-                vg-autohide="video.plugins.controls.autoHide"
-                vg-autohide-time="video.plugins.controls.autoHideTime">
-                <vg-play-pause-button></vg-play-pause-button>
-                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-                <vg-scrub-bar>
-                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                </vg-scrub-bar>
-                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-                <vg-volume>
-                    <vg-mute-button></vg-mute-button>
-                    <vg-volume-bar></vg-volume-bar>
-                </vg-volume>
-                <vg-fullscreen-button></vg-fullscreen-button>
-            </vg-controls>
-            <vg-overlay-play></vg-overlay-play>
-            <vg-poster vg-url='video.plugins.poster'></vg-poster>
-        </videogular>
-	</div>
-	</div>
-</script>

@@ -1,6 +1,7 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
-<section class="receiptsExpectedDetails expected" id="receiptsDetails">
+<div id="receiptsDetailsPage">
+	<section class="receiptsExpectedDetails expected" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
@@ -38,8 +39,8 @@
 
 	<div id="primaryContent">
 		<div id="details">
-			<tabset ng-show="detailsData">
-				<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
+			<uib-tabset ng-show="detailsData">
+				<uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" select="changeTab($index, tab.id)">
 					<div class="receipts-details-wrapper">
 						<table class="table sortTable">
 							<thead>
@@ -71,20 +72,15 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<!--<select ng-model="salesTotalItensPage" ng-change="totalItensPageChangedSales(tab.id)" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
-									</select>-->
-									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="adjustsTotalItensPage"
+											ng-change="totalItensPageChangedAdjusts()"
+											ng-options="option for option in totalItensPageOptions"
+											id="totalItensPage">
 									</select>
 								</div>
 							</div>
 							<div class="paginationWrapper">
-								<pagination
+								<ul uib-pagination
 										total-items="adjustsTotalItens"
 										ng-model="adjustsCurrentPage"
 										ng-change="pageChangedAdjusts()"
@@ -97,13 +93,14 @@
 										next-text="&rsaquo;"
 										first-text=" "
 										last-text=" ">
-								</pagination>
+								</ul>
 							</div>
 						</div>
 					</div>
-				</tab>
-			</tabset>
+				</uib-tab>
+			</uib-tabset>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>
 </section>
+</div>

@@ -1,0 +1,50 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+// V1 migrations
+.v1 .uib-datepicker-popup.dropdown-menu,
+.v2 .uib-datepicker-popup.dropdown-menu{
+    display:block;
+    float:none;
+    margin:0;
+}
+.v1 .uib-button-bar{
+    padding:10px 9px 2px;
+}
+
+.v1 [uib-typeahead-popup].dropdown-menu{
+    display:block;
+}
+
+#migrationContainer {
+    width: 1200px;
+    margin: 0 auto;
+    min-height: 575px;
+}
+
+body {
+    background: $backgroundColor;
+    font-size: 0.75em;
+    font-family: 'open_sansregular';
+}
+
+.newHeaderAndFooter {
+    background: #fff;
+
+    .btn-primary {
+        background-color: $primaryButtomBackground;
+        color: $menuFontColor;
+        padding: 13px 46px;
+        font-weight: 700;
+    }
+}
+
+.receiptsDetailsPage header,
+.receiptsDetailsPage footer,
+.redirectPage header,
+.redirectPage footer {
+    display: none !important;
+}

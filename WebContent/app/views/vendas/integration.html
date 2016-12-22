@@ -1,14 +1,14 @@
 <div class="page-header">
 	<ol class="breadCrumb">
         <li>você está em:</li>
-        <li><a href="#/dashboard">home</a></li>
+        <li><a href="#/home">home</a></li>
         <li><a href="#/integration">integração</a></li>
     </ol>
 	<div class="page-title">
 		<div class="title">integração</div>
 		<ul>
-			<li><a href="app/files/manual-de-integracao-control-rede.pdf" download><span class="rules"></span>veja as regras para envio do seu arquivo</a><i>
-			<li><a href="app/files/arquivo-modelo-integracao-control-rede.csv" download><span class="download"></span>download arquivo modelo</a></li>
+			<li><a href="assets/files/manual-de-integracao-control-rede.pdf" download><span class="rules"></span>veja as regras para envio do seu arquivo</a><i>
+			<li><a href="assets/files/arquivo-modelo-integracao-control-rede.csv" download><span class="download"></span>download arquivo modelo</a></li>
 		</ul>
 
 	</div>
@@ -38,9 +38,9 @@
 				</div>
 				<span class="title" ng-click="getUploadedFiles(true); uploadedFiles = !uploadedFiles;">consultar arquivos enviados</span>
 				<aside ng-show="uploadedFiles">
-					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch">
+					<input class="findfile" placeholder="localizar arquivo pelo nome" ng-model="fileSearch" />
 					<button class="submit" ng-click="getUploadedFiles(true)">buscar</button>
-					<table class="filesTable sortTable">
+					<table class="filesTable sortTable integrationTable">
 						<thead>
 							<tr>
 								<th ng-click="sortResults($event,'fileName')">nome do arquivo <!--<i class="orderby"></i>--></th>
@@ -63,17 +63,17 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="totalItensPage"
+										ng-change="totalItensPageChanged()"
+										ng-options="option for option in totalItensPageOptions"
+										id="totalItensPage">
 									</select>
 								</div>
 							</div>
 
 							<div class="paginationWrapper">
-								<pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-								</pagination>
+								<ul uib-pagination total-items="totalItens" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" items-per-page="totalItensPage" rotate="false" class="pagination-sm" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+								</ul>
 							</div>
 						</div>
 					</div>

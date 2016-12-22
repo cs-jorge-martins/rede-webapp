@@ -1,0 +1,196 @@
+/*
+	Projeto: conciliation
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+.navbar-default {
+	font-family: 'open_sanssemibold';
+	font-size: $menuFontSize;
+	background: $menuBackgroundColor;
+	box-shadow: 0 1px 4px 0 rgba(50, 50, 50, 0.2);
+	border: none;
+
+	.navbar-nav {
+		li {
+
+			&:first-of-type {
+				a {
+					margin-left: 0;
+				}
+			}
+
+			a {
+
+				padding: 2.2em 0 1.8em 0;
+				margin: 0em 0em 0em 2.9em;
+				color: $menuFontColor;
+				position: relative;
+
+				&.active {
+					color: $menuActiveFontColor;
+
+					&:after {
+						height: 3px;
+					}
+				}
+
+				&:hover {
+					color: $menuActiveFontColor;
+				}
+
+				&:after {
+					content: ' ';
+					display: block;
+					width: 100%;
+					height: 0;
+					position: absolute;
+					bottom: 0;
+					background: $menuBorderColor;
+					transition: .17s ease-in-out;
+				}
+			}
+
+			.dropdown-menu {
+				top: 5.5em;
+				left: 2em;
+				border-top: none;
+				border-color: #dedede;
+				width: 175px;
+				box-shadow: 0 2px 4px rgba(0,0,0,.175);
+
+				a {
+					padding: 1.6em 1em;
+					margin: 0;
+					border-bottom: 1px solid #dedede;
+					white-space: inherit;
+					font-size: .9em;
+
+					&:after {
+						content: initial;
+					}
+				}
+
+				li:last-child a {
+					border: none;
+				}
+			}
+		}
+
+		.open {
+			a {
+				background-color: $menuBackgroundColor !important;
+			}
+		}
+	}
+
+	.navbar-brand {
+		@extend .imageReplacement;
+
+		background: url($spritePath) no-repeat no-repeat -1px -95px;
+		width: 150px;
+		height: 45px;
+		margin-top: 1em;
+		margin-bottom: 0.8em;
+	}
+
+	#app-navbar {
+
+		.help,
+		.logout {
+			a {
+				padding: 0;
+				margin: 0;
+				font-size: 0.8em;
+				padding-bottom: 1em;
+				padding-top: 1em;
+
+				&:before {
+					font-size: 2em;
+					color: $menuBorderColor;
+					display: block;
+    				text-align: center;
+					margin-top: 0.5em;
+				}
+			}
+		}
+
+		.help {
+			margin-left: 4.9em;
+
+			&:before {
+				background-position: -26px -180px;
+			}
+		}
+
+		.logout {
+			margin-left: 3.4em;
+			&:before {
+				background-position: -5px -180px;
+			}
+		}
+
+		& > ul {
+			position: relative;
+		}
+	}
+
+	#productsDropdown {
+		margin-left: 4em;
+
+		.dropdown {
+			padding: 0 1em;
+		}
+
+		.open {
+			background: #f7f7f7;
+		}
+
+		.dropdown-menu {
+			background: #f7f7f7;
+			left: 0;
+			width: 380px;
+			padding: 1.5em 0 3em;
+
+			span {
+				color: #484343;
+				display: inline-block;
+				font-size: 0.7em;
+				position: relative;
+				top: 0.05em;
+			}
+
+			a {
+				padding: 0.5em 0;
+				font-family: 'open_sansregular';
+				display: inline-block;
+			}
+		}
+
+		.title {
+			color: #ff7800;
+			font-size: 1.2em;
+			margin-top: 0.7em;
+
+			a {
+				color: #ff7800;
+				font-size: 1em;
+				font-family: 'open_sanssemibold';
+			}
+		}
+
+		li {
+			margin-left: 1em;
+		}
+
+		a {
+			background-color: transparent !important;
+			border-bottom: none;
+
+			&:hover {
+				text-decoration: underline;
+				color: inherit;
+			}
+		}
+	}
+}

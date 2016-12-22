@@ -1,5 +1,6 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
+<div id="receiptsDetailsPage">
 <section class="receiptsExpectedDetails" id="receiptsDetails">
 
 	<div id="detailsClose">
@@ -70,28 +71,28 @@
 					<div class="selectWrapper">
 						<label for="totalItensPage">resultados por página</label>
 						<div class="select">
-							<select ng-model="totalItensPage" ng-change="pageChanged()" id="totalItensPage">
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="50">50</option>
+							<select ng-model="totalItensPage"
+									ng-change="pageChanged()"
+									ng-options="option for option in totalItensPageOptions"
+									id="totalItensPage">
 							</select>
 						</div>
 					</div>
 					<div class="paginationWrapper">
-						<pagination
-								total-items="totalItens"
-								ng-model="currentPage"
-								ng-change="pageChanged()"
-								max-size="maxSize"
-								items-per-page="currentSize"
-								rotate="false"
-								class="pagination-sm"
-								boundary-links="false"
-								previous-text="&lsaquo;"
-								next-text="&rsaquo;"
-								first-text=" "
-								last-text=" ">
-						</pagination>
+						<ul uib-pagination
+							total-items="totalItens"
+							ng-model="currentPage"
+							ng-change="pageChanged()"
+							max-size="maxSize"
+							items-per-page="currentSize"
+							rotate="false"
+							class="pagination-sm"
+							boundary-links="false"
+							previous-text="&lsaquo;"
+							next-text="&rsaquo;"
+							first-text=" "
+							last-text=" ">
+						</ul>
 					</div>
 				</div>
 			</article>
@@ -99,3 +100,4 @@
 	</div>
   	<rc-disclaimer></rc-disclaimer>
 </section>
+</div>

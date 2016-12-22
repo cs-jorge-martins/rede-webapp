@@ -1,4 +1,5 @@
-<section class="receiptsExpectedDetails" id="receiptsDetails">
+<div id="receiptsDetailsPage">
+	<section class="receiptsExpectedDetails" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
@@ -37,7 +38,7 @@
 			</div>
 		</li>
 	</ul>
-	
+
 	<div class="mainContent" id="details">
 		<table class="table sortTable no-indent gray-header">
 			<thead>
@@ -60,16 +61,16 @@
 			<div class="selectWrapper">
 				<label for="totalItensPage">resultados por página</label>
 				<div class="select">
-					<select ng-model="totalItensPage" ng-change="pageChangedSales()" id="totalItensPage">
-						<option value="10">10</option>
-						<option value="20">20</option>
-						<option value="50">50</option>
+					<select ng-model="totalItensPage"
+							ng-change="pageChangedSales()"
+							ng-options="option for option in totalItensPageOptions"
+							id="totalItensPage">
 					</select>
 				</div>
 			</div>
 
 			<div class="paginationWrapper">
-				<pagination
+				<ul uib-pagination
 						total-items="adjustsTotalItens"
 						ng-model="adjustsCurrentPage"
 						ng-change="pageChangedAdjusts()"
@@ -82,9 +83,10 @@
 						next-text="&rsaquo;"
 						first-text="&laquo;"
 						last-text="&raquo;">
-				</pagination>
+				</ul>
 			</div>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>
 </section>
+</div>

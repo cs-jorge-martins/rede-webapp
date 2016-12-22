@@ -1,0 +1,10 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+// bugfix santander protection module ¬¬
+object[type^='application/gas-events'] {
+    display: none;
+}

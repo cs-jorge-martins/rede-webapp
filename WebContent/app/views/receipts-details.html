@@ -1,6 +1,7 @@
 <script type="text/ng-template" id="comprovanteVenda.html"></script>
 
-<section class="receiptsExpectedDetails" id="receiptsDetails">
+<div id="receiptsDetailsPage">
+	<section class="receiptsExpectedDetails" id="receiptsDetails">
 
 	<div id="detailsClose">
 		<div class="container">
@@ -74,8 +75,8 @@
 
 	<div id="primaryContent">
 		<div id="details">
-			<tabset>
-				<tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+			<uib-tabset>
+				<uib-tab heading="{{tabs[0].title}}" active="tabs[0].active" select="changeTab(0)" id="botaoConciliacaoDiaTour">
 					<article>
 						<table class="table sortTable">
 							<thead>
@@ -106,16 +107,16 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<select ng-model="salesTotalItensPage" ng-change="totalItensPageChangedSales()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="salesTotalItensPage"
+											ng-change="totalItensPageChangedSales()"
+											ng-options="option for option in totalItensPageOptionsSales"
+											id="totalItensPage">
 									</select>
 								</div>
 							</div>
 
 							<div class="paginationWrapper">
-								<pagination
+								<ul uib-pagination
 									total-items="salesTotalItens"
 									ng-model="salesCurrentPage"
 									ng-change="pageChangedSales()"
@@ -128,14 +129,14 @@
 									next-text="&rsaquo;"
 									first-text="&laquo;"
 									last-text="&raquo;">
-								</pagination>
+								</ul>
 							</div>
 						</div>
 					</article>
-				</tab>
+				</uib-tab>
 
 
-				<tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+				<uib-tab heading="{{tabs[1].title}}" active="tabs[1].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
 					<article>
 						<table class="table sortTable">
 							<thead>
@@ -160,16 +161,16 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="adjustsTotalItensPage"
+											ng-change="totalItensPageChangedAdjusts()"
+											ng-options="option for option in totalItensPageOptionsAdjusts"
+											id="totalItensPage">
 									</select>
 								</div>
 							</div>
 
 							<div class="paginationWrapper">
-								<pagination
+								<ul uib-pagination
 									total-items="adjustsTotalItens"
 									ng-model="adjustsCurrentPage"
 									ng-change="pageChangedAdjusts()"
@@ -182,13 +183,13 @@
 									next-text="&rsaquo;"
 									first-text="&laquo;"
 									last-text="&raquo;">
-								</pagination>
+								</ul>
 							</div>
 						</div>
 					</article>
-				</tab>
+				</uib-tab>
 
-				<tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
+				<uib-tab heading="{{tabs[2].title}}" active="tabs[2].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
 					<article>
 						<table class="table sortTable">
 							<thead>
@@ -219,16 +220,16 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<select ng-model="cancellationsTotalItensPage" ng-change="totalItensPageChangedCancellations()" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
+									<select ng-model="cancellationsTotalItensPage"
+											ng-change="totalItensPageChangedCancellations()"
+											ng-options="option for option in totalItensPageOptionsCancellations"
+											id="totalItensPage">
 									</select>
 								</div>
 							</div>
 
 							<div class="paginationWrapper">
-								<pagination
+								<ul uib-pagination
 									total-items="cancellationsTotalItens"
 									ng-model="cancellationsCurrentPage"
 									ng-change="pageChangedCancellations()"
@@ -241,11 +242,11 @@
 									next-text="&rsaquo;"
 									first-text="&laquo;"
 									last-text="&raquo;">
-								</pagination>
+								</ul>
 							</div>
 						</div>
 					</article>
-				</tab>
+				</uib-tab>
 
 				<!--
 				<tab heading="{{tabs[3].title}}" active="tabs[3].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
@@ -254,8 +255,9 @@
 					</article>
 				</tab>
 				-->
-			</tabset>
+			</uib-tabset>
 		</div>
 	</div>
   	<rc-disclaimer></rc-disclaimer>
 </section>
+</div>
