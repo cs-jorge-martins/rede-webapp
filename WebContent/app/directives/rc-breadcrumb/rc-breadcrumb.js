@@ -43,15 +43,8 @@
                 WatchBreadcrumb();
             }
 
-            function WatchBreadcrumb() {
-                $scope.$on('$routeChangeSuccess', function() {
-                    GetBreadcrumb();
-                });
-            }
-
-            function GetBreadcrumb() {
+            $scope.getBreadCrumb = function GetBreadcrumb(arrBreadcrumbSteps) {
                 var objBreadcrumb = {};
-                var arrBreadcrumbSteps = $route.current.$$route.breadcrumb;
                 var strActualStep;
                 var objActualRoute;
                 var intStepsIndex;
@@ -74,9 +67,14 @@
 
                 if (Object.keys(objBreadcrumb).length) {
                     $scope.breadcrumb = objBreadcrumb;
-                } else {
-                    $scope.breadcrumb = null;
                 }
+            };
+
+            function WatchBreadcrumb() {
+                $scope.$on('$routeChangeSuccess', function() {
+                    var arrBreadcrumbSteps = $route.current.$$route.breadcrumb;
+                    $scope.getBreadCrumb(arrBreadcrumbSteps);
+                });
             }
         }
     }
