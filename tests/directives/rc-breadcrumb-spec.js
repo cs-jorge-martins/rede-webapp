@@ -4,6 +4,8 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
+// Todo: Refatorar este teste para testar o componente e não a aplicação
+
 describe('rc-breadcrumb directive', function(){
 
     beforeEach(module('Conciliador'));
@@ -26,17 +28,13 @@ describe('rc-breadcrumb directive', function(){
         it('should have null values', function() {
             expect(scope.breadcrumb).toBe(null);
         });
-    });
 
-    describe('should make object with a route given by array', function() {
-        it('should have null values', function() {
+        it('should make object with a route given by array', function() {
             scope.getBreadCrumb(['home']);
             expect(scope.breadcrumb).toEqual({home: '#/home'});
         });
-    });
 
-    describe('should make html with a route given by array in html', function() {
-        it('should have null values', function() {
+        it('should make html with a route given by array in html', function() {
             scope.getBreadCrumb(['home']);
             scope.$digest();
             strTemplateNode = template[0];
@@ -50,7 +48,5 @@ describe('rc-breadcrumb directive', function(){
             expect(strTemplateNodeCustom).toContain('ajuda');
         });
     });
-
-    // Todo: Refatorar este teste para testar o componente e não a aplicação
 
 });
