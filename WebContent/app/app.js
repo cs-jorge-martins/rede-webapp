@@ -225,9 +225,10 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {
                     $uibModalInstance.close();
-                    $rootScope.modalOpen = false;
                 }
 			}
+		}).closed.then(function() {
+            $rootScope.modalOpen = false;
 		});
 		$rootScope.modalOpen = true;
 	}
