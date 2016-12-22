@@ -1,0 +1,46 @@
+.rc-message {
+  width: 100%;
+  background: #fff;
+  padding: 0;
+  position:relative;
+  height: 56px;
+
+  span {
+    width: 56px;
+    height: 56px;
+    display: inline-block;
+    margin-right: 2em;
+    i {
+      color: #fff;
+      font-size: 2.3em;
+      display: inline-block;
+      margin: 0.45em;
+    }
+  }
+
+  p {
+    font-size: 1.3em;
+    position: absolute;
+    top: 36%;
+    display: inline-block;
+    &.action {
+      right: 3em;
+    }
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  &.danger {
+    color: $errorColor;
+    span {
+      background: $errorColor;
+    }
+    p {
+      a {
+        color: $errorColor;
+      }
+    }
+  }
+
+}
