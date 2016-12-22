@@ -50,7 +50,7 @@
 			<tbody>
 				<tr ng-repeat="item in otherDetailsData">
 					<td>{{ item.payedDate | date }}</td>
-					<td ng-class="{ 'discount' : item.nature === 'DEBIT' }">R$ <span ng-show="{ item.nature === 'DEBIT' }">- </span>{{ item.amount | currency: '' }}</td>
+					<td ng-class="{ 'discount' : item.nature === 'DEBIT' }">R$ {{ item.amount | customCurrency: '' }}</td>
 					<td>{{ item.description | lowercase }}</td>
 				</tr>
 			</tbody>

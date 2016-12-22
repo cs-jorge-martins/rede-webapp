@@ -2598,6 +2598,7 @@ aside .chargebacks .weekCalendar th {
 }
 aside .chargebacks thead th, aside .chargebacks .calendarTitle td, aside .chargebacks .calendarMonth td {
 	padding: 8px 0;
+	cursor: inherit;
 }
 aside .chargebacks>tbody td {
 	width: 30px !important;
@@ -11246,7 +11247,8 @@ tr.card-product-line {
     text-align: left;
     padding-left: 15px!important;
     cursor: auto;
-    min-width: 145px;
+    table-layout:fixed;
+    width: 250px;
 }
 #integration article ul li aside table.filesTable thead tr {
     background:#ddd;

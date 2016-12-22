@@ -459,7 +459,7 @@ angular.module('KaplenWeb.movementsModule',[])
 					intDiscount = intDiscountedTotal + intOthers;
 
 					$scope.totalToReceive = intTotalToReceive;
-					$scope.discountedTotal = intDiscount;
+					$scope.discountedTotal = Math.abs(intDiscount);
 					$scope.antecipatedTotal = intAntecipatedTotal;
 					$scope.totalReceived = intTotalToReceive - intDiscount + intAntecipatedTotal;
 
