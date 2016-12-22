@@ -24,29 +24,27 @@ describe('rc-breadcrumb directive', function(){
 
     }));
 
-    describe('should initialize as null', function() {
-        it('should have null values', function() {
-            expect(scope.breadcrumb).toBe(null);
-        });
+    it('should have null value', function() {
+        expect(scope.breadcrumb).toBe(null);
+    });
 
-        it('should make object with a route given by array', function() {
-            scope.getBreadCrumb(['home']);
-            expect(scope.breadcrumb).toEqual({home: '#/home'});
-        });
+    it('should make object with a route given by array', function() {
+        scope.getBreadCrumb(['home']);
+        expect(scope.breadcrumb).toEqual({home: '#/home'});
+    });
 
-        it('should make html with a route given by array in html', function() {
-            scope.getBreadCrumb(['home']);
-            scope.$digest();
-            strTemplateNode = template[0];
-            var strBreadcrumbNode = strTemplateNode.querySelector('.breadcrumb li:nth-child(2)').outerHTML;
-            expect(strBreadcrumbNode).toContain('home');
+    it('should make html with a route given by array in html', function() {
+        scope.getBreadCrumb(['home']);
+        scope.$digest();
+        strTemplateNode = template[0];
+        var strBreadcrumbNode = strTemplateNode.querySelector('.breadcrumb li:nth-child(2)').outerHTML;
+        expect(strBreadcrumbNode).toContain('home');
 
-            scope.getBreadCrumb(['ajuda']);
-            scope.$digest();
-            strTemplateNodeCustom = template[0];
-            var strTemplateNodeCustom = strTemplateNode.querySelector('.breadcrumb li:nth-child(3)').outerHTML;
-            expect(strTemplateNodeCustom).toContain('ajuda');
-        });
+        scope.getBreadCrumb(['ajuda']);
+        scope.$digest();
+        strTemplateNodeCustom = template[0];
+        var strTemplateNodeCustom = strTemplateNode.querySelector('.breadcrumb li:nth-child(3)').outerHTML;
+        expect(strTemplateNodeCustom).toContain('ajuda');
     });
 
 });
