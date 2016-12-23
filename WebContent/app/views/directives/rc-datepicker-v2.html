@@ -1,30 +1,18 @@
 <div class="rcDatepicker">
-	<label for="period">{{ label }}</label>
+	<label for="{{directiveId}}">{{ label }}</label>
 	<div class="form-group icon-right">
-
-        <!--
-		<div ng-show="status.opened" class="datepickerInfo">
-			<p>legenda:</p>
-			<ul>
-				<li class="toConcilie">
-					<span>existem operações à conciliar</span>
-				</li>
-				<li class="concilied">
-					<span>operações do dia conciliadas</span>
-				</li>
-				<li class="unprocessed">
-					<span>pagamentos não efetuados</span>
-				</li>
-			</ul>
-		</div>
-        -->
         <div class="input-group">
+			<a ng-click="open()" class="placeholder">{{datePlaceholder}}</a>
             <input
                 type="text"
                 class="form-control"
+				id="{{directiveId}}"
                 uib-datepicker-popup="{{dateFormat}}"
-    			ng-model="date"
+    			ng-model="pickerDate"
+				ng-change="update()"
     			is-open="status.opened"
+				datepicker-popup-template-url="app/views/directives/rc-datepicker-popup-v2.html"
+				close-on-date-selection="{{closeOnSelection}}"
     			datepicker-options="dateOptions"
     			ng-click="open()"
     			show-button-bar="false"

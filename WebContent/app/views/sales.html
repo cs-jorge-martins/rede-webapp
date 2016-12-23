@@ -1,14 +1,34 @@
 <section style="background: #fff;">
 
-	<br /><br /><br /><br /><br />
-
+	<br /><br />
 	<div class="container">
-		<div class="col-xs-4"></div>
 		<div class="col-xs-4">
-			<rc-datepicker-v2 date="actualReleases.date" max-date="todayDate" label="'data'"></rc-datepicker-v2>
+			<rc-datepicker-v2
+				date="testDate"
+				range="false"
+				max-date="todayDate"
+				label="'normal'">
+				</rc-datepicker-v2>
 		</div>
-		<div class="col-xs-4"></div>
+		<div class="col-xs-4">
+			<rc-datepicker-v2
+				date="testRange"
+				range="true"
+				max-date="todayDate"
+				show-next-dates-filter="true"
+				label="'range com filtro futuro'">
+				</rc-datepicker-v2>
+		</div>
+		<div class="col-xs-4">
+			<rc-datepicker-v2
+				date="testRange"
+				range="true"
+				max-date="todayDate"
+				show-previous-dates-filter="true"
+				label="'range com filtro passado'">
+				</rc-datepicker-v2>
+		</div>
 	</div>
-	<br /><br /><br /><br /><br />
+	<br /><br />
 
 </section>
