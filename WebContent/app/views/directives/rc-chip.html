@@ -1,0 +1,7 @@
+<div class="chip" ng-show="show" ng-class="{'can-close': closeable, 'hidden-chip': !show }">
+    <span>
+        {{ label }}
+    </span>
+    <div class="clear-filter icon_fechar" ng-click="onClear()" ng-if="closeable"></div>
+    <div ng-transclude></div>
+</div>
