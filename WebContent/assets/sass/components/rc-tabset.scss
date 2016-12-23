@@ -1,0 +1,49 @@
+.rc-tabset {
+  .nav-tabs {
+
+    width: 100%;
+    border-bottom: none;
+
+    li {
+      width: 50%;
+      background: $lightGray;
+      font-weight: bolder;
+      font-size: 1.4em;
+      border-left: 0;
+      border-right: 0;
+      border-top: 2px solid $lightGray;
+
+      &.active {
+        border-top: 2px solid $defaultOrange;
+        background: white;
+        color: $defaultOrange;
+        a {
+          border-left: 0;
+          border-right: 0;
+          background: #fff;
+          color: $defaultOrange;
+        }
+      }
+
+      a {
+        display: block;
+        padding: 0.9em 1.2em;
+        border: none;
+        @include border-radius(0,0,0,0);
+        color: $darkGray;
+        &:hover {
+          border: none;
+          background: none;
+        }
+        &:focus {
+          border: none;
+        }
+      }
+
+      &hover{
+        cursor: pointer;
+      }
+
+    }
+  }
+}
