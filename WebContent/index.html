@@ -45,18 +45,18 @@
 
     <div id="modalWrapperV1" class="v1"></div>
     <div class="v2" ng-if="!hideHeaderAndFooter">
-        <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu}"></header>
+        <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu, 'modal-blur': $root.modalOpen}"></header>
     </div>
     <div id="migrationContainer">
-        <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
+        <div class="extended" {{migrationId}} id="content" ng-class="{'login': !initialized}">
             <div class="v2">
                 <rc-breadcrumb></rc-breadcrumb>
             </div>
-            <div ng-view class="{{migrationId}}"></div>
+            <div ng-view class="{{migrationId}}" ng-class="{'modal-blur': $root.modalOpen}"></div>
         </div>
     </div>
     <div class="v2" ng-if="!hideHeaderAndFooter">
-        <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm"></footer>
+        <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm" ng-class="{'modal-blur': $root.modalOpen}"></footer>
     </div>
     <div id="blockr" class="fade" ng-show="loading"></div>
 
