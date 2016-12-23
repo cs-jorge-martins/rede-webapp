@@ -17,11 +17,11 @@
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-message.html',
             scope: {
-                type: "@",
-                text: "@",
-                href: "@",
-                actionText: "@",
-                onClick: "@"
+                type: "=",
+                text: "=",
+                href: "=",
+                actionText: "=",
+                onClick: "="
             },
             controller: Controller
         };
