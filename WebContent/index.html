@@ -49,6 +49,9 @@
     </div>
     <div id="migrationContainer">
         <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
+            <div class="v2">
+                <rc-breadcrumb></rc-breadcrumb>
+            </div>
             <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>

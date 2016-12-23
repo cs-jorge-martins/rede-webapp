@@ -23,7 +23,6 @@
 
 .v2 {
 	@import 'components/button';
-	@import 'components/breadcrumb';
 	@import 'components/font';
 	@import 'components/filter';
 	@import 'components/footer';
@@ -37,6 +36,7 @@
 	@import 'components/toastr';
 	@import 'components/rc-input';
 	@import 'components/rc-datepicker';
+	@import 'components/rc-breadcrumb';
 
 	@import 'pages/login';
 }
