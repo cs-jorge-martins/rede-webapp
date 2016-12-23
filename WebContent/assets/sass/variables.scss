@@ -8,7 +8,13 @@ $fontsPath: '/assets/fonts/';
 $imgPath: '/assets/img/';
 $spritePath: '#{$imgPath}controlSprite.png';
 
+
+// default colors
 $backgroundColor: #f0f0f0;
+
+$defaultOrange: #ff7800;
+$lightGray: #f8f8f8;
+$darkGray: #ababab;
 
 $positiveValueColor: #179ca0;
 $negativeValueColor: #f34235;
@@ -22,7 +28,7 @@ $headerBorderColor: #ddd;
 $menuBackgroundColor: #fff;
 $menuFontColor: #4d4d4d;
 $menuFontSize: 1.2em;
-$menuActiveFontColor: #ff7800;
+$menuActiveFontColor: $defaultOrange;
 $menuBorderColor: $menuActiveFontColor;
 
  // font
