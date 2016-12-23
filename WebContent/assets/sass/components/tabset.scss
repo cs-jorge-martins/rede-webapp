@@ -1,46 +1,61 @@
 .rc-tabset {
-  .nav-tabs {
+  .nav-tabs, .nav-tabs.nav-justified {
 
-    width: 100%;
     border-bottom: none;
+    width: 100%;
 
     li {
-      width: 50%;
+
       background: $lightGray;
-      font-weight: bolder;
-      font-size: 1.4em;
-      border-left: 0;
+      border-left: 1px solid #fff;
       border-right: 0;
       border-top: 2px solid $lightGray;
+      font-size: 1.4em;
+      font-weight: bolder;
+
+      &:first-child {
+        border-left-color: $lightGray;
+      }
 
       &.active {
+
+        border-right: none;
         border-top: 2px solid $defaultOrange;
         background: white;
         color: $defaultOrange;
+
         a {
-          border-left: 0;
-          border-right: 0;
+
           background: #fff;
+          border-left: none;
+          border-right: none;
           color: $defaultOrange;
+
+          &:hover, &:focus {
+            border: 0;
+          }
+
         }
+
       }
 
       a {
+
+        @include border-radius(0,0,0,0);
+        border: none;
+        color: $darkGray;
         display: block;
         padding: 0.9em 1.2em;
-        border: none;
-        @include border-radius(0,0,0,0);
-        color: $darkGray;
+        text-align: left;
+
         &:hover {
-          border: none;
           background: none;
-        }
-        &:focus {
           border: none;
         }
+
       }
 
-      &hover{
+      &:hover{
         cursor: pointer;
       }
 
