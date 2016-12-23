@@ -1,0 +1,10 @@
+<ol class="breadcrumb" ng-if="breadcrumb">
+    <li>você está em:</li>
+
+    <li ng-if="breadcrumb.home === undefined"><a href="#/home">home</a></li>
+
+    <li ng-repeat="(label, href) in breadcrumb">
+        <a href="{{ href }}" ng-if="!$last">{{ label }}</a>
+        <span ng-if="$last">{{ label }}</span>
+    </li>
+</ol>
