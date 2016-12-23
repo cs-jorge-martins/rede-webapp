@@ -48,7 +48,10 @@
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu, 'modal-blur': $root.modalOpen}"></header>
     </div>
     <div id="migrationContainer">
-        <div class="extended {{migrationId}}" id="content" ng-class="{'login': !initialized}">
+        <div class="extended" {{migrationId}} id="content" ng-class="{'login': !initialized}">
+            <div class="v2">
+                <rc-breadcrumb></rc-breadcrumb>
+            </div>
             <div ng-view class="{{migrationId}}" ng-class="{'modal-blur': $root.modalOpen}"></div>
         </div>
     </div>
