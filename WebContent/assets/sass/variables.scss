@@ -50,11 +50,14 @@ $primaryButtomBackground: #ffc807;
 // $dangerButtomBackgroundColor: #c9302c;
 
  // input
-// $inputColor: #6f6c6c;
-// $inputFontSize: 1.4em;
-// $inputBorderColor: #ffdddd;
-// $inputBorderColorFocus: #ccc;
-// $inputIconColor: #c4c4c4;
+$inputColor: #6f6c6c;
+$inputFontSize: 1.1em;
+$inputBorderColor: #ffdddd;
+$inputBorderRadius: 0;
+$inputBackgroundColor: #fff;
+$inputBorderColorFocus: #ccc;
+$inputIconColor: #ddd;
+$inputIconFontSize: 1.5em;
 
  // loader
 // $spinnerColor: $menuActiveFontColor;
