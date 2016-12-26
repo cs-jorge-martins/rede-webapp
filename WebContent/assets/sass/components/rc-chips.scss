@@ -14,7 +14,7 @@
 }
 
 .chip-wrapper .chip .clear-filter {
-  color:#ff7800;
+  color:$defaultOrange;
   padding: 0.2em 0.9em 0 0;
   width:1em;
   height:1em;
@@ -28,7 +28,7 @@
 }
 
 .chip-wrapper .chip {
-  background: #f0f0f0;
+  background: $backgroundColor;
   font-weight: bolder;
   color: #575758;
   float: left;
