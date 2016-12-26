@@ -6,9 +6,7 @@
 
 .chip-wrapper {
   float: left;
-  width: 81%;
-  display: flex;
-  justify-content:flex-start;
+  max-width: 100%;
 }
 
 .chip-wrapper .chip.can-close {
@@ -42,4 +40,6 @@
   margin-top: 1em;
   position: relative;
   margin-right: 1.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
