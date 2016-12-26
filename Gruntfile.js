@@ -180,6 +180,7 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-datepicker/rc-datepicker.js",
                     "WebContent/app/directives/rc-datepicker-v2/rc-datepicker-v2.js",
                     "WebContent/app/directives/rc-timeline/rc-timeline.js",
+                    "WebContent/app/directives/rc-breadcrumb/rc-breadcrumb.js",
                     "WebContent/app/directives/rc-chips/rc-chips.js",
 
                     "WebContent/app/factories/request-factory.js",
@@ -214,7 +215,26 @@ module.exports = function(grunt) {
                     'WebContent/assets/css/main-v2.css': 'WebContent/assets/sass/main.scss'
                 }
             }
+        },
+
+        jsduck: {
+            main: {
+                src: [
+                    'WebContent/app/directives/**/*.js'
+                    //'WebContent/app/factories/**/*.js',
+                    //'WebContent/app/filters/**/*.js',
+                    //'WebContent/app/service/**/*.js'
+                ],
+                dest: 'docs',
+                options: {
+                    'title': 'Conciliador Webapp',
+                    'builtin-classes': false,
+                    'warnings': ['-no_doc', '-dup_member', '-link_ambiguous'],
+                    'external': ['XMLHttpRequest']
+                }
+            }
         }
+
 
     });
 
@@ -228,4 +248,5 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
     grunt.registerTask('hml', ['build:hml', 'serve']);
     grunt.registerTask('prod', ['build:prod', 'serve']);
+    grunt.registerTask('docs', ['jsduck:main']);
 };

@@ -72,6 +72,12 @@ angular.module('Conciliador.salesController',[])
         $scope.concilie = Concilie;
         $scope.sortResults = SortResults;
 
+		$scope.testDate = calendarFactory.getToday();
+		//$scope.testDate = new Date();
+		$scope.testRangeInit = calendarFactory.getToday();
+		$scope.testRangeEnd = calendarFactory.getToday();
+		$scope.testRange = [$scope.testRangeInit, $scope.testRangeEnd];
+
 		CalendarInit();
 		GetFinancials(bolCacheData);
 	}
