@@ -182,6 +182,7 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-timeline/rc-timeline.js",
                     "WebContent/app/directives/rc-message/rc-message.js",
                     "WebContent/app/directives/rc-breadcrumb/rc-breadcrumb.js",
+                    "WebContent/app/directives/rc-chips/rc-chips.js",
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",
