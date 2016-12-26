@@ -117,14 +117,15 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 	init();
 
 	function init() {
-		WatchHtmlId();
+		WatchRouteChange();
         RemoveLoader();
 		InitiateRootVariables();
 	}
 
-	function WatchHtmlId() {
+	function WatchRouteChange() {
 		$rootScope.$on('$routeChangeSuccess', function() {
 			$rootScope.migrationId = $route.current.$$route.migrationId;
+			$rootScope.pageTitle = $route.current.$$route.title;
 		});
 	}
 

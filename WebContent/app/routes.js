@@ -99,6 +99,7 @@
     				templateUrl: 'app/views/sales.html',
     				controller: 'salesController',
                     migrationId: 'v2',
+					title: 'vendas',
 					breadcrumb: ['vendas']
     			})
                 .when('/sales/details', {
