@@ -202,6 +202,13 @@ angular.module('Kaplen.CalendarFactory',[])
 
 		 return objResultAddMoment.tz(timeTimezone);
 	}
+	
+	function SubtractMonthsToDate(intMonthsQuantity, objDate) {
+		var objDateSubtracted;
+		var objDate = objDate ? moment(objDate) : moment();
+		objDateSubtracted = objDate.subtract(intMonthsQuantity, "months");
+		return objDate;
+	}
 
     function AddMonthsToDate(date, qtd){
 		 var objResultMoment = moment(date, strFormat);
@@ -402,6 +409,7 @@ angular.module('Kaplen.CalendarFactory',[])
         getToday: GetToday,
         getDayAndMonthFromDate: GetDayAndMonthFromDate,
         getDaySlashMonth: GetDaySlashMonth,
-		getNextYear: GetNextYear
+		getNextYear: GetNextYear,
+		subtractMonthsToDate: SubtractMonthsToDate
 	};
 });
