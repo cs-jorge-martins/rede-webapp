@@ -8,7 +8,13 @@ $fontsPath: '/assets/fonts/';
 $imgPath: '/assets/img/';
 $spritePath: '#{$imgPath}controlSprite.png';
 
+
+// default colors
 $backgroundColor: #f0f0f0;
+
+$defaultOrange: #ff7800;
+$lightGray: #f8f8f8;
+$darkGray: #ababab;
 
 $positiveValueColor: #179ca0;
 $negativeValueColor: #f34235;
@@ -22,13 +28,14 @@ $headerBorderColor: #ddd;
 $menuBackgroundColor: #fff;
 $menuFontColor: #4d4d4d;
 $menuFontSize: 1.2em;
-$menuActiveFontColor: #ff7800;
+$menuActiveFontColor: $defaultOrange;
 $menuBorderColor: $menuActiveFontColor;
 
  // font
 $footerBackgroundColor: #ece6e2;
 $fontColor: #222;
 // $inverseFontColor: #fff;
+$lightText: #514F4F;
 
 // loader
 $loaderBackgroundColor: #fff;
@@ -46,11 +53,14 @@ $primaryButtomBackground: #ffc807;
 $errorColor: #e84438;
 
  // input
-// $inputColor: #6f6c6c;
-// $inputFontSize: 1.4em;
-// $inputBorderColor: #ffdddd;
-// $inputBorderColorFocus: #ccc;
-// $inputIconColor: #c4c4c4;
+$inputColor: #6f6c6c;
+$inputFontSize: 1.1em;
+$inputBorderColor: #ffdddd;
+$inputBorderRadius: 0;
+$inputBackgroundColor: #fff;
+$inputBorderColorFocus: #ccc;
+$inputIconColor: #ddd;
+$inputIconFontSize: 1.5em;
 
  // loader
 // $spinnerColor: $menuActiveFontColor;

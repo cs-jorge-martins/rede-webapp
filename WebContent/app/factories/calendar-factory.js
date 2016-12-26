@@ -29,7 +29,7 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetToday() {
 		return moment().toDate();
 	}
-	
+
 	function GetNextYear() {
 		return moment().add(1, 'years');
 	}
