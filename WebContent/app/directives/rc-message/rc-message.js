@@ -21,7 +21,7 @@
                 text: "=",
                 href: "=",
                 actionText: "=",
-                onClick: "="
+                onClick: "&"
             },
             controller: Controller
         };
