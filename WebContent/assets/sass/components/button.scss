@@ -3,3 +3,44 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+// CSS base
+.btn,.btn:hover {
+  font-family: 'open_sanssemibold';
+  font-size: 16px ;
+  width: 100%;
+  position: relative;
+  top: -1px;
+  height: 40px;
+  -webkit-border-radius:0;
+  -moz-border-radius:0;
+  border-radius:0;
+}
+
+// Cor principal
+.btn.btn-primary, .btn.btn-primary:hover {
+  //background: #F8DEOO !important;
+  background: $primaryButtomBackground;
+  color: #575757;
+  border: 0 !important;
+  font-style: bold !important;
+  shadow-color: #000000;
+  shadow-opacity: 24%;
+  shadow-distance: 1px;
+  shadow-expansion: 0%;
+  shadow-size: 2px;
+  shadow-angle:90;
+}
+
+.btn.btn-primary:active {
+  color: #ad9c2a !important;
+  background: $primaryButtomBackground;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+// Desabilitado
+.btn.disabled {
+  background: #ddd;
+  cursor: not-allowed;
+}
