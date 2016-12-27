@@ -26,7 +26,7 @@
     &.action {
       right: 3em;
     }
-    a {
+    button {
       text-decoration: underline;
     }
   }
@@ -37,7 +37,7 @@
       background: $errorColor;
     }
     p {
-      a {
+      button {
         color: $errorColor;
       }
     }
