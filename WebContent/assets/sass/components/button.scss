@@ -44,3 +44,7 @@
   background: #ddd;
   cursor: not-allowed;
 }
+
+.btn-link:focus, .btn.btn-link:focus {
+  outline: none
+}
