@@ -5,6 +5,9 @@
  */
 
 .rcDatepicker {
+
+    font-family: $fontBold;
+
     .form-control {
         border-right: 0;
     }
@@ -15,15 +18,23 @@
         input {
             background-color: $inputBackgroundColor;
             color: $inputBackgroundColor;
+            border-color: $inputBorderColor;
+            border-radius: 0;
+            height: 40px;
+        }
+
+        span {
+            border-color: $inputBorderColor;
+            border-radius: 0;
         }
 
         .placeholder {
             position: absolute;
             left: 0;
-            color: #6f6c6c;
-            font-size: 1.1em;
+            color: $inputColor;
+            font-size: 1em;
             z-index: 5;
-            padding: 0.6em 1em;
+            padding: 1em;
 
             &:hover {
                 text-decoration: none;

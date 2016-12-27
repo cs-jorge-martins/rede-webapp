@@ -3,3 +3,24 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+.filter {
+
+  width: 100%;
+  padding: 0 0.6em;
+  margin-top: 3em;
+
+  label {
+    margin-bottom: 0.5em;
+    display: block;
+    color: $filterLabelColor;
+    font-family: $fontBold;
+    font-size: $filterLabelFontSize;
+  }
+
+  .btn {
+    &.btn-primary {
+      margin-top: 1.8em;
+    }
+  }
+}
