@@ -24,6 +24,9 @@ angular.module('Conciliador.salesController',[])
 		Init();
 	});
 
+	$scope.accountsData = [{id: 1, label: 'bankname'}, {id: 2, label: 'bankname2'}, {id: 3, label: 'bankname3'}];
+	$scope.accountsFutureModel = {id: 1, label: 'bankname'};
+
 	function Init(){
 
 		GetCachedData();
