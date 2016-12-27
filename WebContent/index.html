@@ -51,6 +51,8 @@
         <div class="extended" {{migrationId}} id="content" ng-class="{'login': !initialized}">
             <div class="v2">
                 <rc-breadcrumb></rc-breadcrumb>
+                <rc-message ng-if="pageTitle" type="'danger'" text="'existem vendas duplicadas'" href="'#'" action-text="'ver detalhes'"></rc-message>
+                <h1 ng-if="pageTitle" class="page-title">{{pageTitle}}</h1>
             </div>
             <div ng-view class="{{migrationId}}" ng-class="{'modal-blur': $root.modalOpen}"></div>
         </div>
