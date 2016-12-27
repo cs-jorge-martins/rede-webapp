@@ -174,6 +174,7 @@ module.exports = function(grunt) {
                     "WebContent/app/service/transaction-service.js",
                     "WebContent/app/service/movement-service.js",
                     "WebContent/app/service/adjust-service.js",
+                    "WebContent/app/service/rc-message-service.js",
 
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
