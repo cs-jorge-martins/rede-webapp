@@ -12,15 +12,47 @@
         .module('Conciliador.salesToReconcileController', [])
         .controller('salesToReconcileController', salesToReconcile);
 
-    salesToReconcile.$inject = [];
+    salesToReconcile.$inject = ['filtersService', '$scope'];
 
-    function salesToReconcile() {
+    function salesToReconcile(filterService, $scope) {
 
         var objVm = this;
 
         Init();
 
         function Init() {
+            InitFilterVariables();
+            GetFilters();
+        }
+
+        function InitFilterVariables() {
+            $scope.cardProductsData = [];
+            $scope.cardProductsModel = {};
+            $scope.terminalsData = [];
+            $scope.terminalsModel = {}
+            $scope.pvsData = [];
+            $scope.pvsModel = {};
+            $scope.acquirersData = [];
+            $scope.acquirersModel = {};
+        }
+        
+        function GetFilters() {
+            filterService.GetCardProductDeferred().then(function (objCardProducts) {
+                $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
+                $scope.cardProductsModel = angular.copy($scope.cardProductsData);
+            });
+            filterService.GetTerminalDeferred().then(function (objTerminals) {
+                $scope.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code');
+                $scope.terminalsModel = angular.copy($scope.terminalsData);
+            });
+            filterService.GetPvsDeferred().then(function (objPvs) {
+                $scope.pvsData = filterService.TransformDeferredDataInArray(objPvs, 'code');
+                $scope.pvsModel = angular.copy($scope.pvsData);
+            });
+            filterService.GetAcquirersDeferred().then(function (objAcquirers) {
+                $scope.acquirersData = filterService.TransformDeferredDataInArray(objAcquirers, 'name');
+                $scope.acquirersModel = angular.copy($scope.acquirersData);
+            });
         }
 
     }
