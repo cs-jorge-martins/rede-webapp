@@ -1,1 +1,28 @@
-sales-to-reconcile
+<div class="container filter">
+    <div class="col-xs-12">
+        <h2>utilize os campos abaixo para filtrar sua busca</h2>
+    </div>
+    <div class="col-xs-4">
+        <rc-datepicker-v2
+                date="testDate"
+                range="false"
+                max-date="todayDate"
+                label="'normal'">
+        </rc-datepicker-v2>
+    </div>
+    <div class="col-xs-4">
+        <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+    </div>
+    <div class="col-xs-4">
+        <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+    </div>
+    <div class="col-xs-4">
+        <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+    </div>
+    <div class="col-xs-4">
+        <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+    </div>
+    <div class="col-xs-4">
+        <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+    </div>
+</div>
