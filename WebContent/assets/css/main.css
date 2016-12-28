@@ -1943,7 +1943,7 @@ section hgroup h2, .date h2 {
 .conciliationIndicators li{
 	display: inline-block;
 	background: #fff;
-	width: 305px;
+	width: 378px;
 	margin-right: 29px;
 	position: relative;
 	top: 0;
@@ -10305,7 +10305,7 @@ div.checkbox-toggle-right {
 .data-cards .numbers-data ul li {
     width: auto !important;
     display: inline-block;
-    width: 193px !important;
+    width: 200px !important;
     text-align: left !important;
     color: #4d4d4d;
 }
@@ -10320,7 +10320,7 @@ div.checkbox-toggle-right {
     color: #999;
     font-size: 22px;
     font-family: open_sanslight;
-    padding: 0 40px;
+    padding: 0 25px 0px 0px;
 }
 
 .data-cards .numbers-data ul strong{
@@ -11951,7 +11951,7 @@ th.sortAsc:after{
 }
 
 .integrationTable thead th:nth-child(1) {
-    width: 272px;
+    width: 300px;
 }
 .integrationTable thead th:nth-child(2) {
     width: 94px;
