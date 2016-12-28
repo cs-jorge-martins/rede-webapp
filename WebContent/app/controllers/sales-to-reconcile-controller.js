@@ -12,20 +12,26 @@
         .module('Conciliador.salesToReconcileController', [])
         .controller('salesToReconcileController', salesToReconcile);
 
-    salesToReconcile.$inject = ['filtersService', '$scope'];
+    salesToReconcile.$inject = ['filtersService', '$scope', 'calendarFactory'];
 
-    function salesToReconcile(filterService, $scope) {
+    function salesToReconcile(filterService, $scope, calendarFactory) {
 
         var objVm = this;
 
         Init();
 
         function Init() {
+            DefaultOptions();
             InitFilterVariables();
             GetFilters();
         }
+        
+        function DefaultOptions() {
+            $scope.filterMaxDate = calendarFactory.getYesterday();
+        }
 
         function InitFilterVariables() {
+            $scope.date = calendarFactory.getYesterday();
             $scope.cardProductsData = [];
             $scope.cardProductsModel = {};
             $scope.terminalsData = [];
