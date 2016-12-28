@@ -9,6 +9,13 @@
   max-width: 100%;
 }
 
+.chip-wrapper .chip-parent {
+  display: inline-block;
+  float: left;
+  margin-right: 1.9em;
+  max-height: 1.3em;
+}
+
 .chip-wrapper .chip.can-close {
   padding:0 3em 0 1.2em;
 }
@@ -31,7 +38,6 @@
   background: $backgroundColor;
   font-weight: bolder;
   color: #575758;
-  float: left;
   height:3.2em;
   padding:0 1.3em;
   text-align: center;
@@ -39,7 +45,6 @@
   font-size: 1em;
   margin-top: 1em;
   position: relative;
-  margin-right: 1.9em;
   overflow: hidden;
   text-overflow: ellipsis;
 }
