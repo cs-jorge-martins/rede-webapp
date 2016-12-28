@@ -16,11 +16,11 @@
 
 	function Sales() {
 
-		var vm = this;
+		var objVm = this;
 
-		init();
+		Init();
 
-		function init() {
+		function Init() {
 		}
 
 	}
