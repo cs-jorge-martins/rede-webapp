@@ -1,8 +1,10 @@
 <section class="clean-bg">
 	<uib-tabset active="activeTab" class="rc-tabset" justified="true">
 		<uib-tab index="0" heading="vendas a conciliar">
+			<div ng-include="'app/views/sales-to-reconcile.html'" ng-controller="salesToReconcileController as vm"></div>
 		</uib-tab>
 		<uib-tab index="1" heading="vendas conciliadas">
+			<div ng-include="'app/views/sales-reconciled.html'" ng-controller="salesReconciledController as vm"></div>
 		</uib-tab>
 	</uib-tabset>
 
