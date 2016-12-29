@@ -17,6 +17,7 @@
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-timeline.html',
             scope: {
+                cssClass: "=",
                 dateRange: "=",
                 maxDateRange: "=",
                 monetaryValues: "=",

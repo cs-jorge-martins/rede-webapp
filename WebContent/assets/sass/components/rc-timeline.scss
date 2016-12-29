@@ -71,6 +71,10 @@
       color: $rcTimelineSecondaryColor;
     }
 
+    &.success {
+      color: $rcTimelineSuccessColor;
+    }
+
   }
 
   .timeline-block {
@@ -81,6 +85,15 @@
     margin-top: 2.083em;
     position: relative;
     width: 100%;
+
+    &.success {
+      article aside {
+        color: $rcTimelineSuccessColor;
+      }
+      .percent:before {
+        background: $rcTimelineSuccessColor;
+      }
+    }
 
     .percent {
 
