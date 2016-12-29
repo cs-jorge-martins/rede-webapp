@@ -29,6 +29,9 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetToday() {
 		return moment().toDate();
 	}
+	function GetYesterday() {
+		return moment().add(-1, 'day').tz(timeTimezone).toDate();
+	}
 
 	function GetNextYear() {
 		return moment().add(1, 'years');
@@ -402,6 +405,7 @@ angular.module('Kaplen.CalendarFactory',[])
         getToday: GetToday,
         getDayAndMonthFromDate: GetDayAndMonthFromDate,
         getDaySlashMonth: GetDaySlashMonth,
-		getNextYear: GetNextYear
+		getNextYear: GetNextYear,
+		getYesterday: GetYesterday
 	};
 });
