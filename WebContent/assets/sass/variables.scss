@@ -17,6 +17,7 @@ $lightGray: #f8f8f8;
 $mediumGray: #ddd;
 $darkGray: #ababab;
 $grafitteGray: #575758;
+$platinum: #b9b8b8;
 $oceanBlue: #00b9b5;
 
 $positiveValueColor: #179ca0;
@@ -68,6 +69,8 @@ $inputIconFontSize: 1.5em;
 
 // font-family
 $fontBold: 'open_sanssemibold';
+$fontLight: 'open_sanslight';
+$fontRegular: 'open_sansregular';
 $fontItau: 'itaufonts_master_24px_v1';
 
 // filter
@@ -78,6 +81,12 @@ $filterLabelColor: $grafitteGray;
 $rcMultiBorderColor: $mediumGray;
 $rcMultiLabelColor: $grafitteGray;
 $rcMultiIconColor: $defaultOrange;
+
+// rc-timeline
+$rcTimelineMainColor: $defaultOrange;
+$rcTimelineSecondaryColor: $platinum;
+$rcTimelineTitleColor: $grafitteGray;
+$rcTimelineTimelineBackgroundColor: $mediumGray;
 
  // loader
 // $spinnerColor: $menuActiveFontColor;
