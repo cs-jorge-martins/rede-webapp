@@ -31,9 +31,9 @@
         return {
             restrict: 'E',
             templateUrl : 'app/views/directives/rc-chip.html',
-            transclude: true,
             scope: {
                 show: '=?',
+                tooltipText: '=?',
                 closeable: '=?',
                 label: '=',
                 onClear: '&'
