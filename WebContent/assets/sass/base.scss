@@ -8,3 +8,15 @@
 object[type^='application/gas-events'] {
     display: none;
 }
+
+.container.box {
+    display: block;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.container.box:before {
+    width: 100%;
+    background: $backgroundColor;
+    height: 1.5em;
+}
