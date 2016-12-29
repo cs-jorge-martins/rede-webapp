@@ -1,28 +1,47 @@
-<div class="container filter">
-    <div class="col-xs-12">
-        <h2>utilize os campos abaixo para filtrar sua busca</h2>
+<div>
+    <div class="container filter">
+        <div class="col-xs-12">
+            <h2>utilize os campos abaixo para filtrar sua busca</h2>
+        </div>
+        <div class="col-xs-4">
+            <rc-datepicker-v2
+                    date="date"
+                    range="false"
+                    max-date="filterMaxDate"
+                    label="'data'">
+            </rc-datepicker-v2>
+        </div>
+        <div class="col-xs-4">
+            <rc-multiselect label="'terminal'" model="terminalsModel" data="terminalsData" placeholder="'selecione os terminais'" single-selection="2"> </rc-multiselect>
+        </div>
+        <div class="col-xs-4">
+            <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" single-selection="2"> </rc-multiselect>
+        </div>
+        <div class="col-xs-4">
+            <rc-multiselect label="'número do estabelecimento'" model="pvsModel" data="pvsData" placeholder="'selecione os estabelecimentos'" single-selection="2"> </rc-multiselect>
+        </div>
+        <div class="col-xs-4">
+            <rc-multiselect label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione os adquirentes'" single-selection="2"> </rc-multiselect>
+        </div>
+        <div class="col-xs-4">
+            <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+        </div>
     </div>
-    <div class="col-xs-4">
-        <rc-datepicker-v2
-                date="date"
-                range="false"
-                max-date="filterMaxDate"
-                label="'data'">
-        </rc-datepicker-v2>
-    </div>
-    <div class="col-xs-4">
-        <rc-multiselect label="'terminal'" model="terminalsModel" data="terminalsData" placeholder="'selecione os terminais'" single-selection="2"> </rc-multiselect>
-    </div>
-    <div class="col-xs-4">
-        <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" single-selection="2"> </rc-multiselect>
-    </div>
-    <div class="col-xs-4">
-        <rc-multiselect label="'número do estabelecimento'" model="pvsModel" data="pvsData" placeholder="'selecione os estabelecimentos'" single-selection="2"> </rc-multiselect>
-    </div>
-    <div class="col-xs-4">
-        <rc-multiselect label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione os adquirentes'" single-selection="2"> </rc-multiselect>
-    </div>
-    <div class="col-xs-4">
-        <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+
+    <div class="container box">
+        <div class="content-header">
+            <div class="date">
+                <span class="number">{{dateModel.day}}</span>
+                <br>{{dateModel.monthName}}
+            </div>
+            <rc-chips>
+                <rc-chip label="terminalLabel" show="terminalsData.length != filteredTerminals.length" closeable="true" on-clear="resetFilter('terminals')" tooltip-text="terminalFullLabel"></rc-chip>
+                <rc-chip label="cardProductLabel" show="cardProductsData.length != filteredCardProducts.length" closeable="true" on-clear="resetFilter('cardProducts')" tooltip-text="cardProductFullLabel"></rc-chip>
+                <rc-chip label="pvLabel" show="pvsData.length != filteredPvs.length" closeable="true" on-clear="resetFilter('pvs')" tooltip-text="pvFullLabel"></rc-chip>
+                <rc-chip label="acquirerLabel" show="acquirersData.length != filteredAcquirers.length" closeable="true" on-clear="resetFilter('acquirers')" tooltip-text="acquirerFullLabel"></rc-chip>
+                <div class="clearfix"></div>
+            </rc-chips>
+            <div class="clearfix"></div>
+        </div>
     </div>
 </div>
