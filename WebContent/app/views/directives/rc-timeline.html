@@ -1,24 +1,24 @@
 <div class="timeline-wrapper">
     <ul class="timeline-head">
         <li>
-            Lançamentos no período selecionado <br>
-            <span>
-                {{ dateRange }}
-            </span>
+            {{labelInitialValue}} <br>
+            <span ng-if="dateRange">{{ dateRange }}</span>
         </li>
         <li>
-            Total de lançamentos previstos no próximo ano<br>
-            <span>{{maxDateRange}}</span>
+            {{labelFinalValue}}<br>
+            <span ng-if="maxDateRange">{{maxDateRange}}</span>
         </li>
     </ul>
     <ul class="total">
         <li ng-class="{gray: initialValue <= 0}">
-            <span>R$</span>
-            {{ initialValue | currency: "" }}
+            <span class="money" ng-if="monetaryValues">R$</span>
+            <span ng-if="monetaryValues">{{ initialValue | currency: "" }}</span>
+            <span ng-if="!monetaryValues">{{ initialValue | number }}</span>
         </li>
         <li class="gray">
-            <span>R$</span>
-            {{ finalValue | currency: "" }}
+            <span class="money" ng-if="monetaryValues">R$</span>
+            <span ng-if="monetaryValues">{{ finalValue | currency: "" }}</span>
+            <span ng-if="!monetaryValues">{{ finalValue | number }}</span>
         </li>
     </ul>
     <div class="timeline-block">
@@ -31,5 +31,8 @@
                 </aside>
             </article>
         </div>
+    </div>
+    <div ng-if="totalValue && labelTotalValue" class="timeline-footer">
+        <p>{{labelTotalValue}}: {{totalValue | number}}</p>
     </div>
 </div>

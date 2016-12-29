@@ -19,8 +19,13 @@
             scope: {
                 dateRange: "=",
                 maxDateRange: "=",
+                monetaryValues: "=",
+                labelInitialValue: "=",
+                labelFinalValue: "=",
                 initialValue: "=",
                 finalValue: "=",
+                totalValue: "=",
+                labelTotalValue: "=",
                 timeLinePercentage: "="
             },
             controller: Controller

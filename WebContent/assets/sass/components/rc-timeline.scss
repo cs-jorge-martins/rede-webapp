@@ -56,7 +56,7 @@
         color: $rcTimelineSecondaryColor;
       }
 
-      span {
+      span.money {
         float: left;
         font-family: $fontRegular;
         font-size: 0.350em;
@@ -135,6 +135,14 @@
       font-weight: bolder;
     }
 
+  }
+
+  .timeline-footer {
+    color: $rcTimelineTitleColor;
+    float:left;
+    font-size: 1em;
+    font-weight: bolder;
+    margin-top: 40px;
   }
 
 }
