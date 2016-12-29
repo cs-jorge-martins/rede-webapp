@@ -17,10 +17,16 @@
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-timeline.html',
             scope: {
+                cssClass: "=",
                 dateRange: "=",
                 maxDateRange: "=",
+                monetaryValues: "=",
+                labelInitialValue: "=",
+                labelFinalValue: "=",
                 initialValue: "=",
                 finalValue: "=",
+                totalValue: "=",
+                labelTotalValue: "=",
                 timeLinePercentage: "="
             },
             controller: Controller
