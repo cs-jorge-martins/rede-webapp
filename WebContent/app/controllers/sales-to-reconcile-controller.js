@@ -87,19 +87,22 @@
             var intLength = 0;
             var objEntity = xModel;
             if (xModel.length) {
-                intLength = xModel.length - 1;
+                intLength = xModel.length;
                 objEntity = xModel[0];
             }
 
-            var strLabel =  strName + ': ' + objEntity.label;
-
             if (intLength > 0) {
-                var strPluralized = strName;
+                var strLabel =  strName + ': ' + objEntity.label;
                 if (intLength > 1) {
-                    strPluralized = strName.substring(0, strName.length - intRemoveLast) + strSuffix;
+                    var strPluralized = strName;
+
+                    if (intLength > 2) {
+                        strPluralized = strName.substring(0, strName.length - intRemoveLast) + strSuffix;
+                    }
+
+                    strLabel += ' +' + (intLength - 1) + ' ' + strPluralized;
                 }
 
-                strLabel += ' +' + intLength + ' ' + strPluralized;
 
                 return strLabel;
             }
