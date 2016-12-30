@@ -1,0 +1,56 @@
+.panel {
+
+  @include border-radius(0,0,0,0);
+  border: 0;
+
+  &.panel-success {
+    .panel-heading {
+      background: $panelSucessBackgroundColor;
+      color:#fff;
+    }
+  }
+
+  &.panel-secondary {
+    .panel-heading {
+      background: $panelSecondaryBackgroundColor;
+      color:$panelSecondaryColor;
+      padding-left: 103px;
+      font-size:  14px;
+
+      span {
+        font-size: 12px;
+      }
+    }
+    .panel-body {
+      table th,
+      table td {
+        padding-left: 103px;
+      }
+    }
+  }
+
+  .panel-heading {
+    @include border-radius(0,0,0,0);
+    border: 0;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px 107px 20px 32px;
+
+    span {
+      display: inline-block;
+      float: right;
+      font-weight: normal;
+      font-size: 16px;
+      margin-top: 3px;
+    }
+
+  }
+
+  .panel-footer {
+    @include border-radius(0,0,0,0);
+    background: transparent;
+    padding: 0;
+    border: 0;
+  }
+
+}

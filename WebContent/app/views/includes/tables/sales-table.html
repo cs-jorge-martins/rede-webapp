@@ -1,0 +1,64 @@
+<div class="container box" ng-repeat="sale in sales">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            {{sale.acquirer.name}}
+            <span>valor total: R$ {{ sale.acquirer.valor | currency: ""}}</span>
+        </div>
+        <div class="panel-body">
+            <table class="table" ng-if="sale.lancamentos">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>lançamentos</th>
+                    <th>valor bruto (R$)</th>
+                    <th>quantidade</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="lancamento in sale.lancamentos">
+                    <th scope="row">{{lancamento.cardProductId}}</th>
+                    <td>{{lancamento.cardProductName}}</td>
+                    <td>{{lancamento.valorBruto}}</td>
+                    <td>{{lancamento.quantidade}}</td>
+                    <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
+                </tr>
+            </tbody>
+        </table>
+            <div class="col-md-offset-9 col-md-3 reconcile-button">
+                <input type="submit" value="conciliar x vendas" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-secondary">
+        <div class="panel-heading">
+            vendas não processadas
+            <span>valor total: R$ {{ sale.trocar_valor_nao_processadas | currency: ""}}</span>
+        </div>
+        <div class="panel-body">
+            <table class="table" ng-if="sale.lancamentos">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>lançamentos</th>
+                    <th>valor bruto (R$)</th>
+                    <th>quantidade</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="lancamento in sale.lancamentos">
+                    <th scope="row">{{lancamento.cardProductId}}</th>
+                    <td>{{lancamento.cardProductName}}</td>
+                    <td>{{lancamento.valorBruto}}</td>
+                    <td>{{lancamento.quantidade}}</td>
+                    <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="col-md-offset-9 col-md-3 reconcile-button">
+                <input type="submit" value="conciliar x vendas" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+            </div>
+        </div>
+    </div>
+</div>

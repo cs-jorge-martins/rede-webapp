@@ -28,6 +28,59 @@
             InitFilterVariables();
             UpdateDateModel();
             GetFilters();
+            GenerateFakeResponseObject();
+        }
+        
+        function GenerateFakeResponseObject() {
+            $scope.sales = [
+                    {
+                        "trocar_valor_nao_processadas": 17250,
+                        "acquirer": {
+                            "name": "Rede",
+                            "valor": 19000
+                        },
+                        "lancamentos": [
+                            {
+                                cardProductId: 1,
+                                cardProductName: "Mastercard crédito",
+                                valorBruto: 4500,
+                                quantidade: 14,
+                            },
+                            {
+                                cardProductId: 3,
+                                cardProductName: "Mastercard débito",
+                                valorBruto: 4500,
+                                quantidade: 20,
+                            },
+                            {
+                                cardProductId: 2,
+                                cardProductName: "Visa",
+                                valorBruto: 10000,
+                                quantidade: 10,
+                            }
+                        ],
+                        "nao_processadas": [
+                            {
+                                cardProductId: 1,
+                                cardProductName: "Mastercard crédito",
+                                valorBruto: 10000,
+                                quantidade: 14,
+                            },
+                            {
+                                cardProductId: 3,
+                                cardProductName: "Mastercard débito",
+                                valorBruto: 5000,
+                                quantidade: 14,
+                            },
+                            {
+                                cardProductId: 2,
+                                cardProductName: "Visa",
+                                valorBruto: 2500,
+                                quantidade: 14,
+                            }
+                        ]
+                    }
+            ];
         }
         
         function DefaultOptions() {
