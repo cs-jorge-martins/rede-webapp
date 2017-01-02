@@ -324,6 +324,7 @@ angular.module('Conciliador.dashboardController',[])
 					arrChartDays.push(0);
 				}
 			}
+			arrChartDays.pop();
 		}
 
 		return arrChartDays;
