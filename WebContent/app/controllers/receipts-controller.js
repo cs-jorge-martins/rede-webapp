@@ -538,7 +538,7 @@ angular.module('Conciliador.movementsModule',[])
 		var strDateYear;
 		var objMaxDate;
 
-		objMaxDate = calendarFactory.getNextYear();
+		objMaxDate = calendarFactory.getActualDateOfNextYear();
 		strDateDay = calendarFactory.getDayOfDate(objMaxDate);
 		strDateMonth = calendarFactory.getMonthNameAbreviation(objMaxDate);
 		strDateYear = calendarFactory.getYear(objMaxDate);

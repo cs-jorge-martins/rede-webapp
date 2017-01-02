@@ -27,6 +27,12 @@ angular.module('Kaplen.CalendarFactory',[])
 	var objFirstDayOfLastMonthDashboard = moment(objMomentForDashboard).subtract(1, 'months').startOf('month');
 	var objLastDayOfLastMonthDashboard = moment(objMomentForDashboard).tz(timeTimezone).subtract(1, 'months').endOf('month');
 
+	var objActualDayOfNextYear = objActualDayOfCurrentMonth.add(1, 'years');
+
+	function GetActualDateOfNextYear() {
+		return objActualDayOfNextYear;
+	}
+
 	function GetToday() {
 		return moment().toDate();
 	}
@@ -408,6 +414,7 @@ angular.module('Kaplen.CalendarFactory',[])
         getLastDayOfPlusMonthToDate: GetLastDayOfPlusMonthToDate,
         getToday: GetToday,
         getDayAndMonthFromDate: GetDayAndMonthFromDate,
-        getDaySlashMonth: GetDaySlashMonth
+        getDaySlashMonth: GetDaySlashMonth,
+        getActualDateOfNextYear: GetActualDateOfNextYear
 	};
 });
