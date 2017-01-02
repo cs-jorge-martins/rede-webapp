@@ -41,11 +41,14 @@
 	@import 'components/rc-datepicker';
 	@import 'components/rc-message';
 	@import 'components/tabset';
+	@import 'components/panel';
+	@import 'components/table';
 	@import 'components/rc-breadcrumb';
 	@import 'components/rc-chips';
 	@import 'components/rc-multiselect';
 	@import 'components/rc-timeline';
 	@import 'pages/login';
+	@import 'pages/sales';
 }
 
 @media only screen and (max-width : 1200px) {
