@@ -1,12 +1,14 @@
 <section id="dashboard">
+  <div>  
     <ol class="breadCrumb">
         <li>você está em:</li>
         <li><a href="#/home">home</a></li>
     </ol>
-
+  </div>
+  
 	<div class="date">
 		<h2>
-			<time datetime="{{actualMonth}}">{{actualMonth}}</time>
+			<time>{{currentPeriodStartDateDay}} a {{currentPeriodEndDateDay}} {{currentPeriodStartDateMonth}} {{currentPeriodStartDateYear}}</time>
 		</h2>
 	</div>
 
@@ -18,8 +20,19 @@
       	<b ng-bind="transactionSummaryBoxCurrentMonth.quantity ? transactionSummaryBoxCurrentMonth.quantity : 0"></b>
       	<div class="valuesFooter" ng-class="{'negative': percentOfQuantityTransactionsBetweenMonths <= 0,
        			 'positive': percentOfQuantityTransactionsBetweenMonths > 0}">
-            <strong><span>Mês anterior:</span>{{transactionSummaryBoxPrevMonth.quantity}}</strong>
-       		<p>({{ percentOfQuantityTransactionsBetweenMonths | number:1}}%)</p>
+            <div class="prev-time">
+            <strong>
+                <span>período anterior:</span>
+                <time>{{prevPeriodStartDateDay}} a {{prevPeriodEndDateDay}} {{prevPeriodStartDateMonth}} 
+              {{prevPeriodStartDateYear}}</time>
+            </strong>
+            </div>
+            <div class="values">
+              <strong>
+                {{transactionSummaryBoxPrevMonth.quantity}}
+              </strong>
+              <p>{{ percentOfQuantityTransactionsBetweenMonths | number:1 }}%</p>
+            </div>
       	</div>
       </li>
       <li class="vendasDashboard">
@@ -28,8 +41,19 @@
 
       	<div class="valuesFooter" ng-class="{'negative': percentOfTotalsAmountTransactionsBetweenMonths <= 0,
        					'positive': percentOfTotalsAmountTransactionsBetweenMonths > 0}">
-            <strong><span>Mês anterior:</span><i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : 0"></span></strong>
-       		<p>({{ percentOfTotalsAmountTransactionsBetweenMonths | number:1}}%)</p>
+            <div class="prev-time">
+              <strong>
+                <span>período anterior:</span>
+                <time>{{prevPeriodStartDateDay}} a {{prevPeriodEndDateDay}} {{prevPeriodStartDateMonth}} 
+              {{prevPeriodStartDateYear}}</time>
+              </strong>
+            </div>
+            <div class="values">
+            <strong>
+              <i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : 0"></span>
+            </strong>
+       		  <p>{{ percentOfTotalsAmountTransactionsBetweenMonths | number:1}}%</p>
+            </div>
        	</div>
       </li>
       <li class="recebimentoDashboard">
@@ -37,8 +61,19 @@
       	<b><i ng-bind-html='currencySymbol'></i> {{(movementSummaryBoxCurrentMonth.payedAmount || 0) | currency:""}}</b>
       	<div class="valuesFooter" ng-class="{'negative': percentOfTotalPayedBetweenMonths<= 0,
        					'positive': percentOfTotalPayedBetweenMonths > 0}">
-			<strong><span>Mês anterior:</span><i ng-bind-html="currencySymbol"></i> <span ng-bind="movementionSummaryBoxPrevMonth.payedAmount ? (movementionSummaryBoxPrevMonth.payedAmount | currency:'') : '0,00'"></span></strong>
-            <p>(<span ng-bind="percentOfTotalPayedBetweenMonths ? (percentOfTotalPayedBetweenMonths | number:1) : '0,0'"></span>%)</p>
+			      <div class="prev-time">
+              <strong>
+                <span>período anterior:</span>
+                <time>{{prevPeriodStartDateDay}} a {{prevPeriodEndDateDay}} {{prevPeriodStartDateMonth}} 
+              {{prevPeriodStartDateYear}}</time>
+              </strong>
+            </div>
+            <div class="values">
+            <strong>
+            <i ng-bind-html="currencySymbol"></i> <span ng-bind="movementionSummaryBoxPrevMonth.payedAmount ? (movementionSummaryBoxPrevMonth.payedAmount | currency:'') : '0,00'"></span></strong>
+            <p><span ng-bind="percentOfTotalPayedBetweenMonths ? (percentOfTotalPayedBetweenMonths | number:1) : '0,0'"></span>%</p>
+            </strong>
+            </div>
        	</div>
       </li>
       <li class="ticketDashboard">
@@ -46,8 +81,19 @@
       	<b><i ng-bind-html="currencySymbol"></i> <span ng-bind="ticketAverageCurrentMonth ? (ticketAverageCurrentMonth | currency:'') : '0,00'"></span></b>
 
       	<div class="valuesFooter" ng-class="{'negative': percentOfTicketAverageBetweenMonths <= 0, 'positive': percentOfTicketAverageBetweenMonths > 0}">
-            <strong><span>Mês anterior:</span><i ng-bind-html='currencySymbol'></i> {{ticketAveragePrevMonth | currency:""}}</strong>
-			<p>(<span ng-bind="percentOfTicketAverageBetweenMonths ? (percentOfTicketAverageBetweenMonths | number:1) : '0,0'"></span>%)</p>
+            <div class="prev-time">
+              <strong>
+                <span>período anterior:</span>
+                <time>{{prevPeriodStartDateDay}} a {{prevPeriodEndDateDay}} {{prevPeriodStartDateMonth}} 
+              {{prevPeriodStartDateYear}}</time>
+              </strong>
+            </div>
+            <div class="values">
+            <strong>
+              <i ng-bind-html="currencySymbol"></i> {{ticketAveragePrevMonth | currency:""}}</strong>
+			        <p><span ng-bind="percentOfTicketAverageBetweenMonths ? (percentOfTicketAverageBetweenMonths | number:1) : '0,0'"></span>%</p>
+            </strong>
+            </div>
        	</div>
       </li>
     </ul>
