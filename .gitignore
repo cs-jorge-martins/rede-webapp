@@ -9,3 +9,4 @@ coverage
 WebContent/app/config.js
 WebContent/app/build.js
 WebContent/assets/css/main-v2.*
+WebContent/app/scripts/config.js
