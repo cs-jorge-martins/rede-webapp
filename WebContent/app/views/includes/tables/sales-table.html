@@ -1,11 +1,11 @@
-<div class="container box" ng-repeat="sale in sales">
+<div class="container box" ng-repeat="result in resultModel">
     <div class="panel panel-success">
         <div class="panel-heading">
-            {{sale.acquirer.name}}
-            <span>valor total: R$ {{ sale.acquirer.valor | currency: ""}}</span>
+            {{result.acquirer.name}}
+            <span>valor total: R$ {{ result.transactionsToReconcile.totalAmount | currency: ""}}</span>
         </div>
         <div class="panel-body">
-            <table class="table" ng-if="sale.lancamentos">
+            <table class="table" ng-if="result.transactionsToReconcile.transactions">
             <thead>
                 <tr>
                     <th>#</th>
@@ -16,24 +16,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="lancamento in sale.lancamentos">
-                    <th scope="row">{{lancamento.cardProductId}}</th>
-                    <td>{{lancamento.cardProductName}}</td>
-                    <td>{{lancamento.valorBruto}}</td>
-                    <td>{{lancamento.quantidade}}</td>
+                <tr ng-repeat="transaction in result.transactionsToReconcile.transactions">
+                    <th scope="row">{{transaction.cardProduct.id}}</th>
+                    <td>{{transaction.cardProduct.name}}</td>
+                    <td><span>R$</span> {{transaction.amount | currency: ''}}</td>
+                    <td>{{transaction.quantity}}</td>
                     <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
                 </tr>
             </tbody>
         </table>
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <input type="submit" value="conciliar x vendas" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+                <input type="submit" value="conciliar {{result.transactionsToReconcile.count}} vendas" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
             </div>
         </div>
     </div>
     <div class="panel panel-secondary">
         <div class="panel-heading">
             vendas não processadas
-            <span>valor total: R$ {{ sale.trocar_valor_nao_processadas | currency: ""}}</span>
+            <span>valor total: R$ {{ result.trocar_valor_nao_processadas | currency: ""}}</span>
         </div>
         <div class="panel-body">
             <table class="table" ng-if="sale.lancamentos">
@@ -47,7 +47,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="lancamento in sale.lancamentos">
+                <tr ng-repeat="lancamento in result.lancamentos">
                     <th scope="row">{{lancamento.cardProductId}}</th>
                     <td>{{lancamento.cardProductName}}</td>
                     <td>{{lancamento.valorBruto}}</td>

@@ -12,12 +12,20 @@
         .module('Conciliador.salesToReconcileController', [])
         .controller('salesToReconcileController', salesToReconcile);
 
-    salesToReconcile.$inject = ['filtersService', '$scope', 'calendarFactory'];
+    salesToReconcile.$inject = ['filtersService', '$scope', 'calendarFactory', 'TransactionSummaryService'];
 
-    function salesToReconcile(filterService, $scope, calendarFactory) {
+    function salesToReconcile(filterService, $scope, calendarFactory, transactionSummaryService) {
 
         var objVm = this;
 
+        $scope.dateModel = {};
+        $scope.resultModel = [];
+        $scope.timelineModel = {
+            toConcilie: 0,
+            concilied: 0,
+            total: 0,
+            percentage: 100
+        };
         $scope.getReceipt = GetReceipt;
         $scope.resetFilter = ResetFilter;
 
@@ -26,61 +34,9 @@
         function Init() {
             DefaultOptions();
             InitFilterVariables();
-            UpdateDateModel();
             GetFilters();
-            GenerateFakeResponseObject();
-        }
-        
-        function GenerateFakeResponseObject() {
-            $scope.sales = [
-                    {
-                        "trocar_valor_nao_processadas": 17250,
-                        "acquirer": {
-                            "name": "Rede",
-                            "valor": 19000
-                        },
-                        "lancamentos": [
-                            {
-                                cardProductId: 1,
-                                cardProductName: "Mastercard crédito",
-                                valorBruto: 4500,
-                                quantidade: 14,
-                            },
-                            {
-                                cardProductId: 3,
-                                cardProductName: "Mastercard débito",
-                                valorBruto: 4500,
-                                quantidade: 20,
-                            },
-                            {
-                                cardProductId: 2,
-                                cardProductName: "Visa",
-                                valorBruto: 10000,
-                                quantidade: 10,
-                            }
-                        ],
-                        "nao_processadas": [
-                            {
-                                cardProductId: 1,
-                                cardProductName: "Mastercard crédito",
-                                valorBruto: 10000,
-                                quantidade: 14,
-                            },
-                            {
-                                cardProductId: 3,
-                                cardProductName: "Mastercard débito",
-                                valorBruto: 5000,
-                                quantidade: 14,
-                            },
-                            {
-                                cardProductId: 2,
-                                cardProductName: "Visa",
-                                valorBruto: 2500,
-                                quantidade: 14,
-                            }
-                        ]
-                    }
-            ];
+            UpdateDateModel();
+            GetReceipt();
         }
         
         function DefaultOptions() {
@@ -88,15 +44,15 @@
         }
 
         function InitFilterVariables() {
-            $scope.date = calendarFactory.getYesterday();
+            $scope.dateModel.date = calendarFactory.getYesterday();
             $scope.cardProductsData = [];
-            $scope.cardProductsModel = {};
+            $scope.cardProductsModel = [];
             $scope.terminalsData = [];
-            $scope.terminalsModel = {};
+            $scope.terminalsModel = [];
             $scope.pvsData = [];
-            $scope.pvsModel = {};
+            $scope.pvsModel = [];
             $scope.acquirersData = [];
-            $scope.acquirersModel = {};
+            $scope.acquirersModel = [];
         }
         
         function GetFilters() {
@@ -119,10 +75,8 @@
         }
 
         function UpdateDateModel() {
-            $scope.dateModel = {
-                day: calendarFactory.getDayOfDate($scope.date),
-                monthName: calendarFactory.getMonthNameOfDate($scope.date)
-            }
+            $scope.dateModel.day = calendarFactory.getDayOfDate($scope.date);
+            $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.date);
         }
 
         function GetLabels() {
@@ -166,8 +120,98 @@
             $scope.filteredAcquirers = angular.copy($scope.acquirersModel);
             $scope.filteredPvs = angular.copy($scope.pvsModel);
             $scope.filteredCardProducts = angular.copy($scope.cardProductsModel);
+            $scope.resultModel.splice(0);
 
             GetLabels();
+            UpdateDateModel();
+            GetTimeLine();
+
+            var strDate = FormatDateForService();
+
+            var objFilter = {
+                conciliationStatus: 'TO_CONCILIE',
+                currency: 'BRL',
+                groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
+                startDate: strDate,
+                endDate: strDate,
+                cardProductIds: JoinMappedArray($scope.filteredCardProducts, 'id', ','),
+                terminalIds: JoinMappedArray($scope.filteredTerminals, 'id', ','),
+                acquirerIds: JoinMappedArray($scope.filteredAcquirers, 'id', ','),
+                shopIds: JoinMappedArray($scope.filteredPvs, 'id', ',')
+            };
+
+            transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function ProcessResults(objResponse) {
+                var objContent = objResponse.data.content;
+                objContent.forEach(function(objItem) {
+
+                    var bolFoundAcquirer = false;
+                    var objAcquirerInfo = null;
+
+                    $scope.resultModel.forEach(function(objAcquirerData) {
+                        if (objAcquirerData.acquirer.id === objItem.acquirer.id) {
+                            bolFoundAcquirer = true;
+                            objAcquirerInfo = objAcquirerData;
+                            return;
+                        }
+                    });
+
+                    if (bolFoundAcquirer === false) {
+                        objAcquirerInfo = {};
+                        objAcquirerInfo.acquirer = objItem.acquirer;
+                        objAcquirerInfo.transactionsToReconcile = {
+                            totalAmount: 0,
+                            count: 0,
+                            transactions: [],
+                            checks: {},
+                            cardProductIds: [],
+                            allChecked: false
+                        };
+                        $scope.resultModel.push(objAcquirerInfo);
+                    }
+
+                    objAcquirerInfo.transactionsToReconcile.transactions.push(objItem);
+                    objAcquirerInfo.transactionsToReconcile.totalAmount += objItem.amount;
+                });
+            });
+        }
+
+        function GetTimeLine() {
+            var strDate = FormatDateForService();
+
+            var objFilter = {
+                currency: 'BRL',
+                groupBy: 'CONCILIATION_STATUS',
+                startDate: strDate,
+                endDate: strDate,
+                cardProductIds: JoinMappedArray($scope.filteredCardProducts, 'id', ','),
+                terminalIds: JoinMappedArray($scope.filteredTerminals, 'id', ','),
+                acquirerIds: JoinMappedArray($scope.filteredAcquirers, 'id', ','),
+                shopIds: JoinMappedArray($scope.filteredPvs, 'id', ',')
+            };
+
+            transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function ProcessResults(objResponse) {
+                var objContent = objResponse.data.content;
+                $scope.timelineModel.total = 0;
+                $scope.timelineModel.toConcilie = 0;
+                $scope.timelineModel.concilied = 0;
+                $scope.timelineModel.percentage = 0;
+
+                objContent.forEach(function(objItem) {
+                    if (objItem.conciliationStatus === 'TO_CONCILIE') {
+                        $scope.timelineModel.toConcilie = objItem.quantity;
+                    } else if (objItem.conciliationStatus === 'CONCILIED') {
+                        $scope.timelineModel.concilied = objItem.quantity;
+                    }
+
+                    $scope.timelineModel.total += objItem.quantity;
+                });
+
+                $scope.timelineModel.percentage = $scope.timelineModel.toConcilie / $scope.timelineModel.total * 100;
+            });
+        }
+
+        function FormatDateForService() {
+            return calendarFactory.formatDateTimeForService($scope.dateModel.date);
         }
 
         function ResetFilter(strModel) {
@@ -176,9 +220,13 @@
         }
 
         function BuildTooltip(arrModel) {
-            return arrModel.map(function(objItem){
-                return objItem.label;
-            }).join(", ");
+            return JoinMappedArray(arrModel, 'label', ", ");
+        }
+
+        function JoinMappedArray(arrJoinable, strField, strJoin) {
+            return arrJoinable.map(function(objItem){
+                return objItem[strField];
+            }).join(strJoin);
         }
 
     }

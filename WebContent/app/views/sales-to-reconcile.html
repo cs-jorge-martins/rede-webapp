@@ -5,7 +5,7 @@
         </div>
         <div class="col-xs-4">
             <rc-datepicker-v2
-                    date="date"
+                    date="dateModel.date"
                     range="false"
                     max-date="filterMaxDate"
                     label="'data'">
@@ -47,12 +47,12 @@
             <rc-timeline
                     label-initial-value="'quantidade de vendas a conciliar'"
                     label-final-value="'quantidade de vendas conciliadas'"
-                    initial-value="4320"
-                    final-value="1200"
-                    total-value="5520"
+                    initial-value="timelineModel.toConcilie"
+                    final-value="timelineMOdel.concilied"
+                    total-value="timelineModel.total"
                     label-total-value="'Total de vendas'"
                     monetary-values="false"
-                    time-line-percentage="10" ></rc-timeline>
+                    time-line-percentage="timelineModel.percentage" ></rc-timeline>
         </div>
         <div ng-include="'app/views/includes/tables/sales-table.html'"></div>
     </div>
