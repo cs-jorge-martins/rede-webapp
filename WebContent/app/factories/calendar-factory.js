@@ -14,24 +14,25 @@ angular.module('Kaplen.CalendarFactory',[])
 	var objMomentjs = moment();
 	var objMomentForDashboard = moment();
 	var objNowFormattedDashboard = objMomentForDashboard.tz(timeTimezone).subtract(1, 'days');
-	var objFirstDayOfMonth = moment("01/" + (objMomentjs.month()+1) + "/" + objMomentjs.year(), strFormat);
+	var objFirstDayOfMonth = moment(objMomentjs).startOf('month');
 	var objFirstDayOfMonthFormatted = objFirstDayOfMonth.tz(timeTimezone).format(strFormat);
 
-	var objFirstDayOfCurrentMonth = moment("01/" + (moment().month()+1) + "/" + moment().year());
+	var objFirstDayOfCurrentMonth = moment(moment()).startOf('month');
 	var objActualDayOfCurrentMonth = moment().date() == 1 ? moment().tz(timeTimezone) : moment().tz(timeTimezone).subtract(1, 'days');
 
-	var objFirstDayOfLastMonth = moment((moment().month()) + "/"+ "01/" + + moment().year());
+	var objFirstDayOfLastMonth = moment(moment()).subtract(1, 'months').startOf('month');
+	var objActualDayOfLastMonth = objActualDayOfCurrentMonth.subtract(1, 'months');
 	var objLastDayOfLastMonth = moment().tz(timeTimezone).subtract(1, 'months').endOf('month');
 
-	var objFirstDayOfLastMonthDashboard = moment((objMomentForDashboard.month()) + "/"+ "01/" + + moment().year());
-	var objLastDayOfLastMonthDashboard = moment((objMomentForDashboard)).tz(timeTimezone).subtract(1, 'months').endOf('month');
+	var objFirstDayOfLastMonthDashboard = moment(objMomentForDashboard).subtract(1, 'months').startOf('month');
+	var objLastDayOfLastMonthDashboard = moment(objMomentForDashboard).tz(timeTimezone).subtract(1, 'months').endOf('month');
 
 	function GetToday() {
 		return moment().toDate();
 	}
-	
-	function GetNextYear() {
-		return moment().add(1, 'years');
+
+	function GetDateFromString(value, strFormat){
+		return moment = moment(value,strFormat);
 	}
 
 	function GetFirstDayOfMonth(){
@@ -64,6 +65,10 @@ angular.module('Kaplen.CalendarFactory',[])
 
 	function GetActualDateForDashboard(){
 		return objNowFormattedDashboard.format(strFormat);
+	}
+
+	function GetActualDateOfLastMonthForDashboard(){
+		return objActualDayOfLastMonth;
 	}
 
 	function GetMomentOfSpecificDate(date){
@@ -193,7 +198,7 @@ angular.module('Kaplen.CalendarFactory',[])
     }
 
 	function GetDateFromString(date){
-		return moment(date, strFormat).toDate();
+		return moment(date, strFormat);
 	}
 
 	function AddDaysToDate(date, qtd){
@@ -370,6 +375,7 @@ angular.module('Kaplen.CalendarFactory',[])
         formatDate: FormatDate,
         getDayOfMonth: GetDayOfMonth,
         getLastDayOfLastMonth: GetLastDayOfLastMonth,
+        getActualDateOfLastMonthForDashboard: GetActualDateOfLastMonthForDashboard,
         getLastDayOfLastMonthForDashboard: GetLastDayOfLastMonthForDashboard,
         getActualDayOfCurrentMonth: GetActualDayOfCurrentMonth,
         getActualDayOfCurrentMonthForDashboard: GetActualDayOfCurrentMonthForDashboard,
@@ -381,6 +387,7 @@ angular.module('Kaplen.CalendarFactory',[])
         formatDateTimeForService: FormatDateTimeForService,
         getFirstDayOfLastMonth: GetFirstDayOfLastMonth,
         getFirstDayOfLastMonthForDashboard: GetFirstDayOfLastMonthForDashboard,
+        getDateFromString: GetDateFromString,
         getDateFromString: GetDateFromString,
         getMonthNumberOfDate: GetMonthNumberOfDate,
         getHoursAndMinutes: GetHoursAndMinutes,
@@ -401,7 +408,6 @@ angular.module('Kaplen.CalendarFactory',[])
         getLastDayOfPlusMonthToDate: GetLastDayOfPlusMonthToDate,
         getToday: GetToday,
         getDayAndMonthFromDate: GetDayAndMonthFromDate,
-        getDaySlashMonth: GetDaySlashMonth,
-		getNextYear: GetNextYear
+        getDaySlashMonth: GetDaySlashMonth
 	};
 });

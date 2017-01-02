@@ -11,9 +11,17 @@ angular.module('Conciliador.dashboardController',[])
 
 	menuFactory.setActiveDashboard();
 
-	$scope.firstDayOfCurrentMonth = calendarFactory.getFirstDayOfMonthForDashboard();
 	$scope.now = calendarFactory.getActualDateForDashboard();
-	$scope.actualMonth = calendarFactory.getNameOfMonthAndYearForDashboard();
+	
+	$scope.currentPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfMonth());
+	$scope.currentPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfCurrentMonthForDashboard());
+	$scope.currentPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
+	$scope.currentPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
+
+	$scope.prevPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfLastMonthForDashboard());
+	$scope.prevPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDateOfLastMonthForDashboard());
+	$scope.prevPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
+	$scope.prevPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 
 	$scope.sales = Sales;
 
@@ -94,7 +102,7 @@ angular.module('Conciliador.dashboardController',[])
 
 		$scope.lastMonthPerid = new Period();
 		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
-		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfLastMonthForDashboard());
+		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDateOfLastMonthForDashboard());
 
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
