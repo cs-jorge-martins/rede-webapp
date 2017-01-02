@@ -60,7 +60,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				$scope.currentSize = 10;
 
 				$scope.otherDetailsData = [];
-				$scope.totalItensPage = 10;
+				$scope.totalItensPage = "10";
 				$scope.totalItens = 0;
 				$scope.salesCurrentPage = 0;
 

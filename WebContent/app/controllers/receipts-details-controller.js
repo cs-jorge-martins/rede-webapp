@@ -77,22 +77,22 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				$scope.maxSize = 4;
 
 				$scope.salesData = [];
-				$scope.salesTotalItensPage = 10;
+				$scope.salesTotalItensPage = "10";
 				$scope.salesTotalItens = 0;
 				$scope.salesCurrentPage = 0;
 
         		$scope.adjustsData = [];
-        		$scope.adjustsTotalItensPage = 10;
+        		$scope.adjustsTotalItensPage = "10";
         		$scope.adjustsTotalItens = 0;
 				$scope.adjustsCurrentPage = 0;
 
         		$scope.cancellationsData = [];
-        		$scope.cancellationsTotalItensPage = 10;
+        		$scope.cancellationsTotalItensPage = "10";
         		$scope.cancellationsTotalItens = 0;
 				$scope.cancellationsCurrentPage = 0;
 
         		$scope.ecommerceData = [];
-        		$scope.ecommerceTotalItensPage = 10;
+        		$scope.ecommerceTotalItensPage = "10";
         		$scope.ecommerceTotalItens = 0;
 				$scope.ecommerceCurrentPage = 0;
 
