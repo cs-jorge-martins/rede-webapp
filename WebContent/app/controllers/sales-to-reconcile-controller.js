@@ -21,13 +21,15 @@
         $scope.dateModel = {};
         $scope.resultModel = [];
         $scope.timelineModel = {
-            toConcilie: 0,
+            toReconcile: 0,
             concilied: 0,
             total: 0,
             percentage: 100
         };
         $scope.getReceipt = GetReceipt;
         $scope.resetFilter = ResetFilter;
+        $scope.selectSingle = SelectSingle;
+        $scope.selectAll = SelectAll;
 
         Init();
 
@@ -38,7 +40,7 @@
             UpdateDateModel();
             GetReceipt();
         }
-        
+
         function DefaultOptions() {
             $scope.filterMaxDate = calendarFactory.getYesterday();
         }
@@ -54,7 +56,7 @@
             $scope.acquirersData = [];
             $scope.acquirersModel = [];
         }
-        
+
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
                 $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
@@ -75,8 +77,8 @@
         }
 
         function UpdateDateModel() {
-            $scope.dateModel.day = calendarFactory.getDayOfDate($scope.date);
-            $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.date);
+            $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
+            $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
         }
 
         function GetLabels() {
@@ -129,7 +131,7 @@
             var strDate = FormatDateForService();
 
             var objFilter = {
-                conciliationStatus: 'TO_CONCILIE',
+                conciliationStatus: 'TO_CONCILIE,UNPROCESSED',
                 currency: 'BRL',
                 groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
                 startDate: strDate,
@@ -140,39 +142,51 @@
                 shopIds: JoinMappedArray($scope.filteredPvs, 'id', ',')
             };
 
-            transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function ProcessResults(objResponse) {
-                var objContent = objResponse.data.content;
-                objContent.forEach(function(objItem) {
+            transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(ProcessResults);
+        }
 
-                    var bolFoundAcquirer = false;
-                    var objAcquirerInfo = null;
+        function ProcessResults(objResponse) {
+            var objContent = objResponse.data.content;
+            objContent.forEach(function(objItem) {
+                var strModel = 'transactionsModel';
+                if (objItem.conciliationStatus === 'UNPROCESSED') {
+                    strModel = 'unprocessedModel';
+                }
 
-                    $scope.resultModel.forEach(function(objAcquirerData) {
-                        if (objAcquirerData.acquirer.id === objItem.acquirer.id) {
-                            bolFoundAcquirer = true;
-                            objAcquirerInfo = objAcquirerData;
-                            return;
-                        }
-                    });
+                var bolFoundModel = false;
+                var objModelFound = null;
 
-                    if (bolFoundAcquirer === false) {
-                        objAcquirerInfo = {};
-                        objAcquirerInfo.acquirer = objItem.acquirer;
-                        objAcquirerInfo.transactionsToReconcile = {
-                            totalAmount: 0,
-                            count: 0,
-                            transactions: [],
-                            checks: {},
-                            cardProductIds: [],
-                            allChecked: false
-                        };
-                        $scope.resultModel.push(objAcquirerInfo);
+                $scope.resultModel.forEach(function(objModel) {
+                    if (objModel.acquirer.id === objItem.acquirer.id) {
+                        bolFoundModel = true;
+                        objModelFound = objModel;
+                        return;
                     }
-
-                    objAcquirerInfo.transactionsToReconcile.transactions.push(objItem);
-                    objAcquirerInfo.transactionsToReconcile.totalAmount += objItem.amount;
                 });
+
+                if (bolFoundModel === false) {
+                    objModelFound = {};
+                    objModelFound.acquirer = objItem.acquirer;
+                    objModelFound[strModel] = new TransactionModel();
+                    $scope.resultModel.push(objModelFound);
+                }
+
+                if (!objModelFound[strModel]) {
+                    objModelFound[strModel] = new TransactionModel()
+                }
+
+                objModelFound[strModel].transactions.push(objItem);
+                objModelFound[strModel].totalAmount += objItem.amount;
             });
+        }
+
+        function TransactionModel() {
+            this.totalAmount = 0;
+            this.count = 0;
+            this.transactions = [];
+            this.checks = {};
+            this.cardProductIds = [];
+            this.allChecked = false
         }
 
         function GetTimeLine() {
@@ -192,13 +206,13 @@
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function ProcessResults(objResponse) {
                 var objContent = objResponse.data.content;
                 $scope.timelineModel.total = 0;
-                $scope.timelineModel.toConcilie = 0;
+                $scope.timelineModel.toReconcile = 0;
                 $scope.timelineModel.concilied = 0;
                 $scope.timelineModel.percentage = 0;
 
                 objContent.forEach(function(objItem) {
                     if (objItem.conciliationStatus === 'TO_CONCILIE') {
-                        $scope.timelineModel.toConcilie = objItem.quantity;
+                        $scope.timelineModel.toReconcile = objItem.quantity;
                     } else if (objItem.conciliationStatus === 'CONCILIED') {
                         $scope.timelineModel.concilied = objItem.quantity;
                     }
@@ -206,7 +220,7 @@
                     $scope.timelineModel.total += objItem.quantity;
                 });
 
-                $scope.timelineModel.percentage = $scope.timelineModel.toConcilie / $scope.timelineModel.total * 100;
+                $scope.timelineModel.percentage = $scope.timelineModel.toReconcile / $scope.timelineModel.total * 100;
             });
         }
 
@@ -217,6 +231,42 @@
         function ResetFilter(strModel) {
             $scope[strModel+ 'Model'] = angular.copy($scope[strModel + 'Data']);
             GetReceipt();
+        }
+
+        function SelectSingle(objTransactionContainer, objTransaction) {
+            DoSelectSingle(objTransactionContainer, objTransaction);
+
+            objTransactionContainer.allChecked = objTransactionContainer.transactions.length === objTransactionContainer.cardProductIds.length;
+        }
+
+        function DoSelectSingle(objTransactionContainer, objTransaction) {
+            var intCardProduct = objTransaction.cardProduct.id;
+            var intQuantity = objTransaction.quantity;
+            if (objTransactionContainer.checks[intCardProduct] === true) {
+                var intItemIndex = objTransactionContainer.cardProductIds.indexOf(intCardProduct);
+                objTransactionContainer.cardProductIds.splice(intItemIndex, 1);
+                objTransactionContainer.count -= intQuantity;
+                objTransactionContainer.checks[intCardProduct] = false;
+            } else {
+                objTransactionContainer.cardProductIds.push(intCardProduct);
+                objTransactionContainer.count += intQuantity;
+                objTransactionContainer.checks[intCardProduct] = true;
+            }
+        }
+
+        function SelectAll(objTransactionContainer) {
+            // objTransactionContainer.count = 0;
+            // objTransactionContainer.cardProductIds.splice(0);
+
+            var bolOldValue = objTransactionContainer.allChecked;
+            objTransactionContainer.allChecked = !bolOldValue;
+            objTransactionContainer.transactions.forEach(function (objItem) {
+                // objTransactionContainer.checks[objItem.cardProduct.id] = bolOldValue;
+                var bolCurrent = objTransactionContainer.checks[objItem.cardProduct.id];
+                if (bolCurrent !== objTransactionContainer.allChecked) {
+                    DoSelectSingle(objTransactionContainer, objItem);
+                }
+            });
         }
 
         function BuildTooltip(arrModel) {

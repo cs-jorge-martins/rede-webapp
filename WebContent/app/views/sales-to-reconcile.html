@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="container box">
+    <div class="container box" style="padding-bottom: 1.5em !important">
         <div class="content-header">
             <div class="date">
                 <span class="number">{{dateModel.day}}</span>
@@ -47,13 +47,14 @@
             <rc-timeline
                     label-initial-value="'quantidade de vendas a conciliar'"
                     label-final-value="'quantidade de vendas conciliadas'"
-                    initial-value="timelineModel.toConcilie"
-                    final-value="timelineMOdel.concilied"
+                    initial-value="timelineModel.toReconcile"
+                    final-value="timelineModel.concilied"
                     total-value="timelineModel.total"
                     label-total-value="'Total de vendas'"
                     monetary-values="false"
                     time-line-percentage="timelineModel.percentage" ></rc-timeline>
         </div>
-        <div ng-include="'app/views/includes/tables/sales-table.html'"></div>
     </div>
+
+    <div ng-include="'app/views/includes/tables/sales-table.html'"></div>
 </div>
