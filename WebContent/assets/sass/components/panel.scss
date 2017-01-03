@@ -14,18 +14,16 @@
     .panel-heading {
       background: $panelSecondaryBackgroundColor;
       color:$panelSecondaryColor;
-      padding-left: 103px;
       font-size:  14px;
+      padding-left: 5em;
 
       span {
         font-size: 12px;
       }
     }
-    .panel-body {
-      table th,
-      table td {
-        padding-left: 103px;
-      }
+
+    .panel-body tr td:first-child, .panel-body tr th:first-child {
+      padding-left: 5em;
     }
   }
 

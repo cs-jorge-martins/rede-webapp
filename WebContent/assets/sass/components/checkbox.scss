@@ -25,7 +25,11 @@ input[type="checkbox"].checkbox:checked + label {
 }
 
 .checkbox-header {
-  width: 2.5em;
+  width: 3em;
+}
+
+.panel-secondary .checkbox-header {
+  width: 8em;
 }
 
 .checkbox-header .checkbox {
