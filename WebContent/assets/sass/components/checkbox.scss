@@ -1,0 +1,113 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+input[type="checkbox"].checkbox {
+  position: relative;
+  display: none;
+}
+
+input[type="checkbox"].checkbox:checked + label {
+  background: #FF7800;
+  border: 3px solid #FF7800;
+
+  -webkit-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+
+  transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+
+  transition-delay: 0.2s;
+  -webkit-transition-delay: 0s;
+}
+
+.checkbox-header {
+  width: 3em;
+}
+
+.panel-secondary .checkbox-header {
+  width: 8em;
+}
+
+.checkbox-header .checkbox {
+  top: -1.3em
+}
+
+div.checkbox-left {
+  left: 2em;
+}
+
+.checkbox, .checkbox div {
+  padding: 0 !important;
+}
+
+.checkbox label {
+  min-height: 0;
+  padding-left: 0;
+}
+
+div.checkbox, div.checkbox-toggle {
+  font-size: 12px;
+  color: #222222;
+}
+
+.checkbox {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+div.checkbox label {
+  /*cursor: pointer;*/
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #B9B8B8;
+  border-radius: 5px;
+  background: #fff;
+  box-sizing: border-box;
+
+  -webkit-transform: rotate(-360deg);
+  -ms-transform: rotate(-360deg);
+  transform: rotate(-360deg);
+
+  transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+
+  transition-delay: 0.2s;
+  -webkit-transition-delay: 0s;
+}
+
+div.checkbox label:before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  top: 7px;
+  left: 1px;
+  border: 1px solid #FCFFFF;
+  border-radius: 5px;
+  border-top: none;
+  border-right: none;
+
+  -webkit-transform: rotate(50deg);
+  -ms-transform: rotate(50deg);
+  transform: rotate(50deg);
+}
+
+div.checkbox label:after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  top: 5px;
+  left: 2px;
+  border: 1px solid #FCFFFF;
+  border-radius: 5px;
+  border-top: none;
+  border-right: none;
+
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
