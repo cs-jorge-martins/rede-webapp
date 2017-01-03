@@ -1,0 +1,28 @@
+<div class="checkbox" ng-if="checkAll && !actionButton">
+    <div class="checkbox-left">
+        <input type="checkbox"
+               id="checkbox-all-{{$id}}"
+               class="checkbox"
+               ng-checked="checks[model.id]"
+               ng-click="selectAll()">
+        <label for="checkbox-all-{{$id}}"></label>
+    </div>
+</div>
+
+<div class="checkbox" ng-if="!checkAll && !actionButton">
+    <div class="checkbox-left">
+        <input type="checkbox" id="rc-checkbox-{{$id}}"
+               class="checkbox"
+               ng-checked="model[target.id]"
+               ng-click="selectSingle()">
+        <label for="rc-checkbox-{{$id}}"></label>
+    </div>
+</div>
+
+<input ng-if="actionButton"
+        type="submit"
+        value="{{actionButtonPrefix}} {{responseModel.length}} {{actionButtonSufix}}"
+        class="btn btn-primary btn-block"
+        ng-href="#"
+        ng-click="actionButtonOnClick()"
+        href="#">

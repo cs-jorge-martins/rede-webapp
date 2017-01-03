@@ -40,8 +40,8 @@
             GetFilters();
             UpdateDateModel();
             GetReceipt();
-        }
-
+                            }
+        
         function DefaultOptions() {
             $scope.filterMaxDate = calendarFactory.getYesterday();
         }
@@ -57,7 +57,7 @@
             $scope.acquirersData = [];
             $scope.acquirersModel = [];
         }
-
+        
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
                 $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
@@ -80,7 +80,7 @@
         function UpdateDateModel() {
             $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
             $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
-        }
+            }
 
         function GetLabels() {
             $scope.terminalLabel = BuildLabel('terminal', $scope.filteredTerminals, 'is', 1);
