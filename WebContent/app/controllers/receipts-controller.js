@@ -96,10 +96,6 @@ angular.module('Conciliador.movementsModule',[])
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
         GetFilters();
-		GetForethought();
-		if ($rootScope.futureSelected) {
-			$scope.tabs[1].active = true;
-		}
 	}
 
 	function ToTrusted(html_code) {
@@ -687,9 +683,6 @@ angular.module('Conciliador.movementsModule',[])
 	}
 
 	function ChangeTab(intIndex) {
-
-		$scope.tabs[intIndex].active = true;
-
 		if(intFilterStatus === 4) {
 	    	if(intIndex === 0) {
 	    		GetReceipt();
@@ -826,7 +819,7 @@ angular.module('Conciliador.movementsModule',[])
 			GetCachedData();
 			if ($rootScope.futureSelected) {
 				delete $rootScope.futureSelected;
-				GetFutureReceipt();
+				$scope.activeReceipts = 1;
 			} else {
 				GetReceipt();
 			}
@@ -1002,6 +995,10 @@ angular.module('Conciliador.movementsModule',[])
 				break;
 			case "future_details":
 				$rootScope.futureReleases = {};
+				$rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
+                $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
+                $rootScope.receiptsDetails.startDate = $scope.futureReleases.startDate;
+                $rootScope.receiptsDetails.endDate = $scope.futureReleases.endDate;
 				$rootScope.futureReleases.dates = {
 					startDateDay: $scope.futureReleases.startDateDay,
 					startDateMonth: $scope.futureReleases.startDateMonth,
