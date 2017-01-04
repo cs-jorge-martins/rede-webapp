@@ -71,12 +71,7 @@
 							<div class="selectWrapper">
 								<label for="totalItensPage">resultados por página</label>
 								<div class="select">
-									<!--<select ng-model="salesTotalItensPage" ng-change="totalItensPageChangedSales(tab.id)" id="totalItensPage">
-										<option value="10">10</option>
-										<option value="20">20</option>
-										<option value="50">50</option>
-									</select>-->
-									<select ng-model="adjustsTotalItensPage" ng-change="totalItensPageChangedAdjusts()" id="totalItensPage">
+									<select ng-model="totalItensPage" ng-change="totalItensPageChanged()" id="totalItensPage">
 										<option value="10">10</option>
 										<option value="20">20</option>
 										<option value="50">50</option>
@@ -85,11 +80,11 @@
 							</div>
 							<div class="paginationWrapper">
 								<ul uib-pagination
-										total-items="adjustsTotalItens"
-										ng-model="adjustsCurrentPage"
-										ng-change="pageChangedAdjusts()"
+										total-items="totalItens"
+										ng-model="currentPage"
+										ng-change="pageChanged"
 										max-size="maxSize"
-										items-per-page="adjustsTotalItensPage"
+										items-per-page="totalItensPage"
 										rotate="false"
 										class="pagination-sm"
 										boundary-links="false"
