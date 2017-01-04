@@ -124,7 +124,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				switch (strStatus) {
 					case "expected":
 					case "pending":
-					 	strStatus = "pendente";
+					 	strStatus = "pagamento pendente";
 						break;
 					case "suspended":
 						strStatus = "suspenso";
@@ -155,7 +155,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 	    /* pagination */
 		function PageChanged() {
-			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
+			$scope.currentPage = this.currentPage;
 			GetExpectedDetails(1);
 		};
 
