@@ -13,8 +13,10 @@
 .content-header .chip-wrapper {
   width: 82%;
   position: relative;
-  margin-top: 4.5em;
-  top: -0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 11.2em;
 }
 
 .content-header .date {
