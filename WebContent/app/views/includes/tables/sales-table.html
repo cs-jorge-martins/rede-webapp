@@ -9,12 +9,7 @@
                 <thead>
                 <tr>
                     <th class="checkbox-header">
-                        <div class="checkbox">
-                            <div class="checkbox-left">
-                                <input type="checkbox" id="checkbox-reconcile-all" class="checkbox" ng-checked="result.transactionsModel.allChecked" ng-click="selectAll(result.transactionsModel)">
-                                <label for="checkbox-reconcile-all"></label>
-                            </div>
-                        </div>
+                        <rc-checkbox-parent quantity-model="result.transactionsModel.count" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" checked="result.transactionsModel.allChecked" quantity-field="quantity"></rc-checkbox-parent>
                     </th>
                     <th>lançamentos</th>
                     <th>valor bruto (R$)</th>
@@ -25,12 +20,7 @@
                 <tbody>
                 <tr ng-repeat="transaction in result.transactionsModel.transactions">
                     <th scope="row">
-                        <div class="checkbox">
-                            <div class="checkbox-left">
-                                <input type="checkbox" id="checkbox-reconcile-{{$index + 1}}" class="checkbox" ng-checked="result.transactionsModel.checks[transaction.cardProduct.id]" ng-click="selectSingle(result.transactionsModel, transaction)">
-                                <label for="checkbox-reconcile-{{$index + 1}}"></label>
-                            </div>
-                        </div>
+                        <rc-checkbox quantity-model="result.transactionsModel.count" quantity-field="quantity" model="transaction" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" parent-checked="result.transactionsModel.allChecked"></rc-checkbox>
                     </th>
                     <td>{{transaction.cardProduct.name}}</td>
                     <td>{{transaction.amount | currency: ''}}</td>
@@ -40,7 +30,7 @@
                 </tbody>
             </table>
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <input type="submit" value="conciliar {{result.transactionsModel.count}} vendas" class="btn btn-primary btn-block" ng-href='#here' ng-click="reconcile(result.transactionsModel, result.acquirer)" ng-disabled="result.transactionsModel.count === 0" />
+                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
             </div>
         </div>
     </div>
@@ -54,12 +44,7 @@
                 <thead>
                 <tr>
                     <th class="checkbox-header">
-                        <div class="checkbox">
-                            <div class="checkbox-left">
-                                <input type="checkbox" id="checkbox-unprocessed-all" class="checkbox" ng-checked="result.unprocessedModel.allChecked" ng-click="selectAll(result.unprocessedModel)">
-                                <label for="checkbox-unprocessed-all"></label>
-                            </div>
-                        </div>
+                        <rc-checkbox-parent quantity-model="result.unprocessedModel.count" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" checked="result.unprocessedModel.allChecked" quantity-field="quantity"></rc-checkbox-parent>
                     </th>
                     <th>lançamentos</th>
                     <th>valor bruto (R$)</th>
@@ -70,12 +55,7 @@
                 <tbody>
                 <tr ng-repeat="transaction in result.unprocessedModel.transactions">
                     <th scope="row">
-                        <div class="checkbox">
-                            <div class="checkbox-left">
-                                <input class="checkbox" id="checkbox-unprocessed-{{$index + 1}}" class="checkbox" type="checkbox" ng-checked="result.unprocessedModel.checks[transaction.cardProduct.id]" ng-click="selectSingle(result.unprocessedModel, transaction)">
-                                <label for="checkbox-unprocessed-{{$index + 1}}"></label>
-                            </div>
-                        </div>
+                        <rc-checkbox quantity-model="result.unprocessedModel.count" quantity-field="quantity" model="transaction" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" parent-checked="result.unprocessedModel.allChecked"></rc-checkbox>
                     </th>
                     <td>{{transaction.cardProduct.name}}</td>
                     <td>{{transaction.amount | currency: ''}}</td>
