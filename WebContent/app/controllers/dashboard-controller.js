@@ -19,9 +19,11 @@ angular.module('Conciliador.dashboardController',[])
 	$scope.currentPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
 
 	$scope.prevPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfLastMonthForDashboard());
-	$scope.prevPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDateOfLastMonthForDashboard());
+	$scope.prevPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfLastMonthForDashboard());
 	$scope.prevPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 	$scope.prevPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
+
+	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDateOfLastMonth());
 
 	$scope.sales = Sales;
 
@@ -35,12 +37,10 @@ angular.module('Conciliador.dashboardController',[])
 		$scope.cancellationValues = {};
 
 		$scope.dashboardComparativeValuesDTO.sumOfQuantitiesTransactions = 0;
-		//	$scope.dashboardComparativeValuesDTO.percentOfQuantityTransactionsBetweenMonths = 0;
 		$scope.dashboardComparativeValuesDTO.sumOfQuantitiesTransactionsLastMonth = 0;
 		$scope.dashboardComparativeValuesDTO.sumOfTotalsAmountTransactions = 0;
 		$scope.percentOfQuantityTransactionsBetweenMonths = 0;
 		$scope.percentOfTotalsAmountTransactionsBetweenMonths = 0;
-		//	$scope.dashboardComparativeValuesDTO.percentOfTotalsAmountTransactionsBetweenMonths = 0;
 		$scope.dashboardComparativeValuesDTO.sumOfTotalsAmountTransactionsLastMonth = 0;
 		$scope.dashboardComparativeValuesDTO.totalPayedPeriod = 0;
 		$scope.dashboardComparativeValuesDTO.percentOfTotalPayedBetweenMonths = 0;
@@ -102,7 +102,11 @@ angular.module('Conciliador.dashboardController',[])
 
 		$scope.lastMonthPerid = new Period();
 		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
-		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDateOfLastMonthForDashboard());
+		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDayOfLastMonthForDashboard());
+
+		$scope.lastMonthPeridMovement = new Period();
+		$scope.lastMonthPeridMovement.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
+		$scope.lastMonthPeridMovement.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDateOfLastMonth());
 
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
@@ -188,8 +192,8 @@ angular.module('Conciliador.dashboardController',[])
 
 			var objMovementSummaryBoxCurrentPrevFilter = {};
 			objMovementSummaryBoxCurrentPrevFilter.currency = $rootScope.currency;
-			objMovementSummaryBoxCurrentPrevFilter.startDate = $scope.lastMonthPerid.firstDate;
-			objMovementSummaryBoxCurrentPrevFilter.endDate = $scope.lastMonthPerid.lastDate;
+			objMovementSummaryBoxCurrentPrevFilter.startDate = $scope.lastMonthPeridMovement.firstDate;
+			objMovementSummaryBoxCurrentPrevFilter.endDate = $scope.lastMonthPeridMovement.lastDate;
 			objMovementSummaryBoxCurrentPrevFilter.status = 'FORETHOUGHT,RECEIVED';
 
 
