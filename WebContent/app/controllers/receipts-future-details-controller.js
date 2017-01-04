@@ -29,6 +29,8 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				$scope.currency = $rootScope.receiptsDetails.currency;
 
 				$scope.dates = $rootScope.futureReleases.dates;
+				$scope.startDate = $rootScope.receiptsDetails.startDate;
+ 				$scope.endDate = $rootScope.receiptsDetails.endDate;
 				$scope.dateTitle = DateTitle;
 				$scope.shopIds = $rootScope.receiptsDetails.shopIds;
 				$scope.shops = $rootScope.receiptsDetails.shops;
@@ -106,7 +108,8 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 			return strShops;
 		}
 
-	    function Back(){
+	    function Back() {
+	    	$rootScope.futureSelected = true;
 	        $location.path('/receipts');
 	    }
 
