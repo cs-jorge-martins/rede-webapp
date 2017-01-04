@@ -18,6 +18,22 @@
 
         var objVm = this;
 
+        $scope.closeableChips = true;
+        $scope.chipsConfig = {
+            show: {
+                acquirers: false,
+                pvs: false,
+                terminals: false,
+                cardProducts: false
+            },
+            update: function Update() {
+                $scope.chipsConfig.show.terminals = $scope.terminalsData.length != $scope.filteredTerminals.length;
+                $scope.chipsConfig.show.pvs = $scope.pvsData.length != $scope.filteredPvs.length;
+                $scope.chipsConfig.show.acquirers = $scope.acquirersData.length != $scope.filteredAcquirers.length;
+                $scope.chipsConfig.show.cardProducts = $scope.cardProductsData.length != $scope.filteredCardProducts.length;
+            },
+            closeable: true
+        };
         $scope.dateModel = {};
         $scope.resultModel = [];
         $scope.timelineModel = {
@@ -162,6 +178,7 @@
             GetLabels();
             UpdateDateModel();
             GetTimeLine();
+            $scope.chipsConfig.update();
 
             var strDate = FormatDateForService();
 
