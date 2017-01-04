@@ -18,6 +18,22 @@
 
         var objVm = this;
 
+        $scope.closeableChips = true;
+        $scope.chipsConfig = {
+            show: {
+                acquirers: false,
+                pvs: false,
+                terminals: false,
+                cardProducts: false
+            },
+            update: function Update() {
+                $scope.chipsConfig.show.terminals = $scope.terminalsData.length != $scope.filteredTerminals.length;
+                $scope.chipsConfig.show.pvs = $scope.pvsData.length != $scope.filteredPvs.length;
+                $scope.chipsConfig.show.acquirers = $scope.acquirersData.length != $scope.filteredAcquirers.length;
+                $scope.chipsConfig.show.cardProducts = $scope.cardProductsData.length != $scope.filteredCardProducts.length;
+            },
+            closeable: true
+        };
         $scope.dateModel = {};
         $scope.resultModel = [];
         $scope.timelineModel = {
@@ -40,8 +56,8 @@
             GetFilters();
             UpdateDateModel();
             GetReceipt();
-        }
-
+                            }
+        
         function DefaultOptions() {
             $scope.filterMaxDate = calendarFactory.getYesterday();
         }
@@ -57,7 +73,7 @@
             $scope.acquirersData = [];
             $scope.acquirersModel = [];
         }
-
+        
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
                 $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
@@ -80,7 +96,7 @@
         function UpdateDateModel() {
             $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
             $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
-        }
+            }
 
         function GetLabels() {
             $scope.terminalLabel = BuildLabel('terminal', $scope.filteredTerminals, 'is', 1);
@@ -162,6 +178,7 @@
             GetLabels();
             UpdateDateModel();
             GetTimeLine();
+            $scope.chipsConfig.update();
 
             var strDate = FormatDateForService();
 
