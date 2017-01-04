@@ -13,21 +13,21 @@ angular.module('Kaplen.CalendarFactory',[])
 	moment.locale('pt-BR');
 	var objMomentjs = moment();
 	var objMomentForDashboard = moment();
-	var objNowFormattedDashboard = objMomentForDashboard.tz(timeTimezone).subtract(1, 'days');
-	var objFirstDayOfMonth = moment(objMomentjs).startOf('month');
+	var objNowFormattedDashboard = objMomentForDashboard.tz(timeTimezone).subtract(1, 'd');
+	var objFirstDayOfMonth = moment(objMomentjs).startOf('M');
 	var objFirstDayOfMonthFormatted = objFirstDayOfMonth.tz(timeTimezone).format(strFormat);
 
-	var objFirstDayOfCurrentMonth = moment(moment()).startOf('month');
-	var objActualDayOfCurrentMonth = moment().date() == 1 ? moment().tz(timeTimezone) : moment().tz(timeTimezone).subtract(1, 'days');
+	var objFirstDayOfCurrentMonth = moment(moment()).startOf('M');
+	var objActualDayOfCurrentMonth = moment().date() == 1 ? moment().tz(timeTimezone) : moment().tz(timeTimezone).subtract(1, 'd');
 
-	var objFirstDayOfLastMonth = moment(moment()).subtract(1, 'months').startOf('month');
-	var objActualDayOfLastMonth = objActualDayOfCurrentMonth.subtract(1, 'months');
-	var objLastDayOfLastMonth = moment().tz(timeTimezone).subtract(1, 'months').endOf('month');
+	var objFirstDayOfLastMonth = moment(moment()).subtract(1, 'M').startOf('month');
+	var objActualDayOfLastMonth = objActualDayOfCurrentMonth.subtract(1, 'M');
+	var objLastDayOfLastMonth = moment().tz(timeTimezone).subtract(1, 'M').endOf('month');
 
-	var objFirstDayOfLastMonthDashboard = moment(objMomentForDashboard).subtract(1, 'months').startOf('month');
-	var objLastDayOfLastMonthDashboard = moment(objMomentForDashboard).tz(timeTimezone).subtract(1, 'months').endOf('month');
+	var objFirstDayOfLastMonthDashboard = moment(objMomentForDashboard).subtract(1, 'M').startOf('month');
+	var objLastDayOfLastMonthDashboard = moment(objMomentForDashboard).tz(timeTimezone).subtract(1, 'M').endOf('month');
 
-	var objActualDayOfNextYear = objActualDayOfCurrentMonth.add(1, 'years');
+	var objActualDayOfNextYear = objActualDayOfCurrentMonth.add(1, 'Y');
 
 	function GetActualDateOfNextYear() {
 		return objActualDayOfNextYear;
@@ -73,7 +73,7 @@ angular.module('Kaplen.CalendarFactory',[])
 		return objNowFormattedDashboard.format(strFormat);
 	}
 
-	function GetActualDateOfLastMonthForDashboard(){
+	function GetActualDayOfLastMonthForDashboard(){
 		return objActualDayOfLastMonth;
 	}
 
@@ -92,9 +92,15 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetActualDate() {
 		return moment().tz(timeTimezone).format(strFormat);
 	}
+
+	function GetActualDateOfLastMonth() {
+		return moment().tz(timeTimezone).subtract(1, 'M').format(strFormat);
+	}
+
 	function GetLastDayOfCurrentMonth() {
 		return GetLastDayOfMonth();
 	}
+
 	function GetTomorrowFromToday() {
 		return moment().add(1, 'day').tz(timeTimezone).format(strFormat);
 	}
@@ -106,6 +112,7 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetTomorrowFromTodayToDate() {
 		return moment().add(1, 'day').tz(timeTimezone).toDate();
 	}
+
 	function GetActualDateUploadModal() {
 		return moment().tz(timeTimezone).format("DD/MM/YYYY HH:mm:ss");
 	}
@@ -155,7 +162,6 @@ angular.module('Kaplen.CalendarFactory',[])
         }
 		return objFinalDateMoment.toDate();
 	}
-
 
 	/**
 	 * faz o somatorio: ultimo_dia_do_mes(startDate + x mês)
@@ -368,6 +374,7 @@ angular.module('Kaplen.CalendarFactory',[])
         getFormat: GetFormat,
         getActualDateUploadModal: GetActualDateUploadModal,
         getActualDate: GetActualDate,
+        getActualDateOfLastMonth: GetActualDateOfLastMonth,
         getFirstDayOfMonth: GetFirstDayOfMonth,
         getLastDayOfMonth: GetLastDayOfMonth,
         getFirstDayOfYear: GetFirstDayOfYear,
@@ -381,7 +388,7 @@ angular.module('Kaplen.CalendarFactory',[])
         formatDate: FormatDate,
         getDayOfMonth: GetDayOfMonth,
         getLastDayOfLastMonth: GetLastDayOfLastMonth,
-        getActualDateOfLastMonthForDashboard: GetActualDateOfLastMonthForDashboard,
+        getActualDayOfLastMonthForDashboard: GetActualDayOfLastMonthForDashboard,
         getLastDayOfLastMonthForDashboard: GetLastDayOfLastMonthForDashboard,
         getActualDayOfCurrentMonth: GetActualDayOfCurrentMonth,
         getActualDayOfCurrentMonthForDashboard: GetActualDayOfCurrentMonthForDashboard,
