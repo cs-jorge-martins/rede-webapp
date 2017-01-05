@@ -45,11 +45,15 @@
 
             
             function GetPercentage() {
-                if($scope.initialValue === 0 && $scope.finalValue === 0) {
+
+                var xCompareValue = $scope.totalValue ? $scope.totalValue : $scope.finalValue;
+
+                if($scope.initialValue === 0 && xCompareValue === 0) {
                     $scope.timeLinePercentage = 0;
                 } else {
-                    $scope.timeLinePercentage = $scope.initialValue / $scope.finalValue * 100;
+                    $scope.timeLinePercentage = $scope.initialValue / xCompareValue * 100;
                 }
+
             }
 
         }

@@ -29,7 +29,7 @@
                         {{ timeLinePercentage | number: 2 }}%
                     </ng-show>
                     <ng-show ng-if="timeLinePercentage == 0 || timeLinePercentage == 100">
-                        {{ timeLinePercentage }}%
+                        {{ timeLinePercentage | number: 2}}%
                     </ng-show>
                     do valor
                 </aside>
