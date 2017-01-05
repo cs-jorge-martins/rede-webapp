@@ -20,7 +20,8 @@
         'TransactionService',
         '$uibModal',
         '$rootScope',
-        'utilsFactory'
+        'utilsFactory',
+        'modalService'
     ];
 
     function salesToReconcile(
@@ -31,7 +32,8 @@
         transactionService,
         $uibModal,
         $rootScope,
-        utilsFactory) {
+        utilsFactory,
+        modalService) {
 
         var objVm = this;
 
@@ -245,8 +247,9 @@
                 shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', false)
             };
 
-            OpenModal("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
                 $scope.count = objTransactionModel.count;
+                $scope.reconcileType = "conciliar";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
@@ -258,22 +261,12 @@
                     });
                 }
             });
+
         }
 
         function ResetFilter(strModel) {
             $scope[strModel+ 'Model'] = angular.copy($scope[strModel + 'Data']);
             GetReceipt();
-        }
-
-        function OpenModal(strTemplate, objController) {
-            $uibModal.open({
-                templateUrl: strTemplate,
-                appendTo:  angular.element(document.querySelector('#modalWrapperV2')),
-                controller: objController
-            }).closed.then(function() {
-                $rootScope.modalOpen = false;
-            });
-            $rootScope.modalOpen = true;
         }
 
     }
