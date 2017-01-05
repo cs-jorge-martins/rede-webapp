@@ -173,7 +173,6 @@ angular.module('Conciliador.salesController',[])
 
 
 	function GetCalendarDays() {
-		console.log('objDate', $scope.dateSelected);
 		var objDate = $scope.dateSelected;
 		var intFirstDayOfMonth = calendarFactory.getFirstDayOfMonth(objDate);
 		var intLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDate);
@@ -441,7 +440,7 @@ angular.module('Conciliador.salesController',[])
 
 							GetCalendarDays();
 							GetFinancials();
-							
+
 							$scope.confirm = false;
 							$scope.success = true;
 
