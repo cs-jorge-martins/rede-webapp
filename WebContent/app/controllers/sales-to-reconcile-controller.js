@@ -61,7 +61,7 @@
             total: 0,
             percentage: 100
         };
-        $scope.getReceipt = GetReceipt;
+        $scope.getSales = GetSales;
         $scope.resetFilter = ResetFilter;
         $scope.reconcile = Reconcile;
 
@@ -71,7 +71,7 @@
             InitFilterVariables();
             GetFilters();
             UpdateDateModel();
-            GetReceipt();
+            GetSales();
         }
 
         function InitFilterVariables() {
@@ -159,7 +159,7 @@
             });
         }
 
-        function GetReceipt() {
+        function GetSales() {
             $scope.filteredTerminals = angular.copy($scope.terminalsModel);
             $scope.filteredAcquirers = angular.copy($scope.acquirersModel);
             $scope.filteredPvs = angular.copy($scope.pvsModel);
@@ -256,7 +256,7 @@
 
                 $scope.confirm = function Confirm() {
                     transactionService.ConcilieTransactions(objFilter).then(function(objResponse) {
-                        GetReceipt();
+                        GetSales();
                         $uibModalInstance.close();
                     });
                 }
@@ -266,7 +266,7 @@
 
         function ResetFilter(strModel) {
             $scope[strModel+ 'Model'] = angular.copy($scope[strModel + 'Data']);
-            GetReceipt();
+            GetSales();
         }
 
     }
