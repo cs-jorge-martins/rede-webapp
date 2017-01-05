@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">/*
+ Projeto: conciliation
+ Author/Empresa: Rede
+ Copyright (C) 2016 Redecard S.A.
+ */
+
+
+<span id='Conciliador-rcBreadcrumb'>/**
+</span> * @class Conciliador.rcBreadcrumb
+ * Diretiva de breadcrumb
+ *
+ * Adiciona na página o caminho completo de páginas antecessoras para se chegar na atual. O caminho do breadcrumb é
+ * definido na rota específica do arquivo /app/routes.js
+ *
+ * Exemplo:
+ *
+ *     @example
+ *     &lt;rc-breadcrumb&gt;&lt;/rc-breadcrumb&gt;
+ */
+
+(function() {
+    &#39;use strict&#39;;
+
+    angular
+        .module(&#39;Conciliador&#39;)
+        .directive(&#39;rcBreadcrumb&#39;, Breadcrumb);
+
+    Breadcrumb.$inject = [&#39;$route&#39;];
+
+    function Breadcrumb($route) {
+        return {
+            restrict: &#39;E&#39;,
+            templateUrl: &#39;app/views/directives/rc-breadcrumb.html&#39;,
+            controller: Controller
+        };
+
+        function Controller($scope) {
+
+            Init();
+
+            function Init() {
+                $scope.breadcrumb = null;
+                WatchBreadcrumb();
+            }
+
+            $scope.getBreadCrumb = function GetBreadcrumb(arrBreadcrumbSteps) {
+                var objBreadcrumb = {};
+                var strActualStep;
+                var objActualRoute;
+                var intStepsIndex;
+
+                if (arrBreadcrumbSteps) {
+                    for (intStepsIndex in arrBreadcrumbSteps) {
+                        strActualStep = arrBreadcrumbSteps[intStepsIndex];
+
+                        for(var route in $route.routes) {
+                            if ($route.routes[route].breadcrumb) {
+                                objActualRoute = $route.routes[route];
+
+                                if (strActualStep === objActualRoute.breadcrumb[objActualRoute.breadcrumb.length - 1] ) {
+                                    objBreadcrumb[strActualStep] = &#39;#&#39; + objActualRoute.originalPath;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (Object.keys(objBreadcrumb).length) {
+                    $scope.breadcrumb = objBreadcrumb;
+                }
+            };
+
+            function WatchBreadcrumb() {
+                $scope.$on(&#39;$routeChangeSuccess&#39;, function() {
+                    var arrBreadcrumbSteps = $route.current.$$route.breadcrumb;
+                    $scope.getBreadCrumb(arrBreadcrumbSteps);
+                });
+            }
+        }
+    }
+
+})();</pre>
+</body>
+</html>
