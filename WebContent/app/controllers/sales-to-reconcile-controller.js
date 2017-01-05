@@ -12,9 +12,26 @@
         .module('Conciliador.salesToReconcileController', [])
         .controller('salesToReconcileController', salesToReconcile);
 
-    salesToReconcile.$inject = ['filtersService', '$scope', 'calendarFactory', 'TransactionSummaryService', 'TransactionService', '$uibModal', '$rootScope'];
+    salesToReconcile.$inject = [
+        'filtersService',
+        '$scope',
+        'calendarFactory',
+        'TransactionSummaryService',
+        'TransactionService',
+        '$uibModal',
+        '$rootScope',
+        'utilsFactory'
+    ];
 
-    function salesToReconcile(filterService, $scope, calendarFactory, transactionSummaryService, transactionService, $uibModal, $rootScope) {
+    function salesToReconcile(
+        filterService,
+        $scope,
+        calendarFactory,
+        transactionSummaryService,
+        transactionService,
+        $uibModal,
+        $rootScope,
+        utilsFactory) {
 
         var objVm = this;
 
@@ -44,25 +61,19 @@
         };
         $scope.getReceipt = GetReceipt;
         $scope.resetFilter = ResetFilter;
-        $scope.selectSingle = SelectSingle;
-        $scope.selectAll = SelectAll;
         $scope.reconcile = Reconcile;
 
         Init();
 
         function Init() {
-            DefaultOptions();
             InitFilterVariables();
             GetFilters();
             UpdateDateModel();
             GetReceipt();
-                            }
-        
-        function DefaultOptions() {
-            $scope.filterMaxDate = calendarFactory.getYesterday();
         }
 
         function InitFilterVariables() {
+            $scope.filterMaxDate = calendarFactory.getYesterday();
             $scope.dateModel.date = calendarFactory.getYesterday();
             $scope.cardProductsData = [];
             $scope.cardProductsModel = [];
@@ -93,45 +104,20 @@
             });
         }
 
+        function GetLabels() {
+            $scope.terminalLabel = filterService.BuildLabel('terminal', $scope.filteredTerminals, 'is', 1);
+            $scope.terminalFullLabel = filterService.BuildTooltip($scope.filteredTerminals);
+            $scope.pvLabel = filterService.BuildLabel('estabelecimento', $scope.filteredPvs, 's', 0);
+            $scope.pvFullLabel = filterService.BuildTooltip($scope.filteredPvs);
+            $scope.acquirerLabel = filterService.BuildLabel('adquirente', $scope.filteredAcquirers, 's', 0);
+            $scope.acquirerFullLabel = filterService.BuildTooltip($scope.filteredAcquirers);
+            $scope.cardProductLabel = filterService.BuildLabel('bandeira', $scope.filteredCardProducts, 's', 0);
+            $scope.cardProductFullLabel = filterService.BuildTooltip($scope.filteredCardProducts);
+        }
+
         function UpdateDateModel() {
             $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
             $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
-            }
-
-        function GetLabels() {
-            $scope.terminalLabel = BuildLabel('terminal', $scope.filteredTerminals, 'is', 1);
-            $scope.terminalFullLabel = BuildTooltip($scope.filteredTerminals);
-            $scope.pvLabel = BuildLabel('estabelecimento', $scope.filteredPvs, 's', 0);
-            $scope.pvFullLabel = BuildTooltip($scope.filteredPvs);
-            $scope.acquirerLabel = BuildLabel('adquirente', $scope.filteredAcquirers, 's', 0);
-            $scope.acquirerFullLabel = BuildTooltip($scope.filteredAcquirers);
-            $scope.cardProductLabel = BuildLabel('bandeira', $scope.filteredCardProducts, 's', 0);
-            $scope.cardProductFullLabel = BuildTooltip($scope.filteredCardProducts);
-        }
-
-        function BuildLabel(strName, xModel, strSuffix, intRemoveLast) {
-            var intLength = 0;
-            var objEntity = xModel;
-            if (xModel.length) {
-                intLength = xModel.length;
-                objEntity = xModel[0];
-            }
-
-            if (intLength > 0) {
-                var strLabel =  strName + ': ' + objEntity.label;
-                if (intLength > 1) {
-                    var strPluralized = strName;
-
-                    if (intLength > 2) {
-                        strPluralized = strName.substring(0, strName.length - intRemoveLast) + strSuffix;
-                    }
-
-                    strLabel += ' +' + (intLength - 1) + ' ' + strPluralized;
-                }
-
-
-                return strLabel;
-            }
         }
 
         function Reconcile(objTransactionModel, objAcquirer) {
@@ -148,9 +134,9 @@
                 startDate: strDate,
                 endDate: strDate,
                 cardProductIds: objTransactionModel.cardProductIds,
-                terminalIds: JoinMappedArray($scope.filteredTerminals, 'id', false),
+                terminalIds: utilsFactory.joinMappedArray($scope.filteredTerminals, 'id', false),
                 acquirerIds: [objAcquirer.id],
-                shopIds: JoinMappedArray($scope.filteredPvs, 'id', false)
+                shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', false)
             };
 
             OpenModal("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
@@ -188,10 +174,10 @@
                 groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
                 startDate: strDate,
                 endDate: strDate,
-                cardProductIds: JoinMappedArray($scope.filteredCardProducts, 'id', ','),
-                terminalIds: JoinMappedArray($scope.filteredTerminals, 'id', ','),
-                acquirerIds: JoinMappedArray($scope.filteredAcquirers, 'id', ','),
-                shopIds: JoinMappedArray($scope.filteredPvs, 'id', ',')
+                cardProductIds: utilsFactory.joinMappedArray($scope.filteredCardProducts, 'id', ','),
+                terminalIds: utilsFactory.joinMappedArray($scope.filteredTerminals, 'id', ','),
+                acquirerIds: utilsFactory.joinMappedArray($scope.filteredAcquirers, 'id', ','),
+                shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', ',')
             };
 
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(ProcessResults);
@@ -249,10 +235,10 @@
                 groupBy: 'CONCILIATION_STATUS',
                 startDate: strDate,
                 endDate: strDate,
-                cardProductIds: JoinMappedArray($scope.filteredCardProducts, 'id', ','),
-                terminalIds: JoinMappedArray($scope.filteredTerminals, 'id', ','),
-                acquirerIds: JoinMappedArray($scope.filteredAcquirers, 'id', ','),
-                shopIds: JoinMappedArray($scope.filteredPvs, 'id', ',')
+                cardProductIds: utilsFactory.joinMappedArray($scope.filteredCardProducts, 'id', ','),
+                terminalIds: utilsFactory.joinMappedArray($scope.filteredTerminals, 'id', ','),
+                acquirerIds: utilsFactory.joinMappedArray($scope.filteredAcquirers, 'id', ','),
+                shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', ',')
             };
 
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function ProcessResults(objResponse) {
@@ -283,58 +269,6 @@
         function ResetFilter(strModel) {
             $scope[strModel+ 'Model'] = angular.copy($scope[strModel + 'Data']);
             GetReceipt();
-        }
-
-        function SelectSingle(objTransactionContainer, objTransaction) {
-            DoSelectSingle(objTransactionContainer, objTransaction);
-
-            objTransactionContainer.allChecked = objTransactionContainer.transactions.length === objTransactionContainer.cardProductIds.length;
-        }
-
-        function DoSelectSingle(objTransactionContainer, objTransaction) {
-            var intCardProduct = objTransaction.cardProduct.id;
-            var intQuantity = objTransaction.quantity;
-            if (objTransactionContainer.checks[intCardProduct] === true) {
-                var intItemIndex = objTransactionContainer.cardProductIds.indexOf(intCardProduct);
-                objTransactionContainer.cardProductIds.splice(intItemIndex, 1);
-                objTransactionContainer.count -= intQuantity;
-                objTransactionContainer.checks[intCardProduct] = false;
-            } else {
-                objTransactionContainer.cardProductIds.push(intCardProduct);
-                objTransactionContainer.count += intQuantity;
-                objTransactionContainer.checks[intCardProduct] = true;
-            }
-        }
-
-        function SelectAll(objTransactionContainer) {
-            // objTransactionContainer.count = 0;
-            // objTransactionContainer.cardProductIds.splice(0);
-
-            var bolOldValue = objTransactionContainer.allChecked;
-            objTransactionContainer.allChecked = !bolOldValue;
-            objTransactionContainer.transactions.forEach(function (objItem) {
-                // objTransactionContainer.checks[objItem.cardProduct.id] = bolOldValue;
-                var bolCurrent = objTransactionContainer.checks[objItem.cardProduct.id];
-                if (bolCurrent !== objTransactionContainer.allChecked) {
-                    DoSelectSingle(objTransactionContainer, objItem);
-                }
-            });
-        }
-
-        function BuildTooltip(arrModel) {
-            return JoinMappedArray(arrModel, 'label', ", ");
-        }
-
-        function JoinMappedArray(arrJoinable, strField, xJoin) {
-            var map = arrJoinable.map(function(objItem){
-                return objItem[strField];
-            });
-
-            if (xJoin !== false) {
-                return map.join(xJoin);
-            }
-
-            return map;
         }
 
         function OpenModal(strTemplate, objController) {

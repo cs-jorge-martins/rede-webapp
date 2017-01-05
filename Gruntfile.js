@@ -190,6 +190,7 @@ module.exports = function(grunt) {
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",
+                    "WebContent/app/factories/utils-factory.js",
 
                     "WebContent/app/filters/currency-filter.js",
                     "WebContent/app/filters/slugfy-filter.js",

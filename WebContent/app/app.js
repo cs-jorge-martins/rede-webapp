@@ -26,6 +26,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 							'chieffancypants.loadingBar',
 							'Conciliador.integrationService', 'Conciliador.advancedFilterService',
 							'Conciliador.calendarService', 'Kaplen.CalendarFactory',
+							'Conciliador.UtilsFactory',
 							'Conciliador.Request', 'Conciliador.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
                             'Conciliador.salesToReconcileController', 'Conciliador.salesReconciledController',
