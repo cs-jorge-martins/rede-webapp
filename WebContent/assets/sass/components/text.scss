@@ -5,8 +5,8 @@
  */
 
 .page-title {
-  color:#00b9b5;
-  margin: 1.4em 0;
+  color:$pageTitle;
+  margin: 1.2em 0;
   font-size: 2em;
-  font-family: 'open_sansbold';
+  font-family: $fontBold;
 }
