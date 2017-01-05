@@ -108,7 +108,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, calendarFactory) {
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -117,7 +117,6 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
     $rootScope.$on("cfpLoadingBar:completed",function(){
        $rootScope.loading = false;
     });
-
 
 	$rootScope.signIn = SignIn;
     $rootScope.logout = Logout;
@@ -128,6 +127,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
     $rootScope.sortResults = SortResults;
     $rootScope.showAlert = ShowAlert;
     $rootScope.modalOpen = false;
+    $rootScope.year = calendarFactory.getYear(calendarFactory.getActualDate());
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
