@@ -6466,6 +6466,7 @@ form .dropdown-menu li, .hiddenContent.advancedFilterHiddenContent .grandChild u
     right: 10px;
     right: 8px;
     top: 8px;
+	overflow: hidden;
 }
 
 .dropdown-menu ::-webkit-scrollbar, .hiddenContent.advancedFilterHiddenContent ::-webkit-scrollbar, .integrateModal .advancedFilterHiddenContent ul li ::-webkit-scrollbar {
@@ -11258,7 +11259,7 @@ tr.card-product-line {
 
 .dropdown-multiselect .dropdown-menu a {
     cursor: pointer;
-    padding: 11px 0 8px 36px; 
+    padding: 11px 0 8px 36px;
     color: #626262;
     display: block;
 	font-size: 14px;
