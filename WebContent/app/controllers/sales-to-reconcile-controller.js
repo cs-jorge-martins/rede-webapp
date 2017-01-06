@@ -107,14 +107,14 @@
         }
 
         function GetLabels() {
-            $scope.terminalLabel = filterService.BuildLabel('terminal', $scope.filteredTerminals, 'is', 1);
-            $scope.terminalFullLabel = filterService.BuildTooltip($scope.filteredTerminals);
-            $scope.pvLabel = filterService.BuildLabel('estabelecimento', $scope.filteredPvs, 's', 0);
-            $scope.pvFullLabel = filterService.BuildTooltip($scope.filteredPvs);
-            $scope.acquirerLabel = filterService.BuildLabel('adquirente', $scope.filteredAcquirers, 's', 0);
-            $scope.acquirerFullLabel = filterService.BuildTooltip($scope.filteredAcquirers);
-            $scope.cardProductLabel = filterService.BuildLabel('bandeira', $scope.filteredCardProducts, 's', 0);
-            $scope.cardProductFullLabel = filterService.BuildTooltip($scope.filteredCardProducts);
+            $scope.terminalLabel = utilsFactory.buildLabel('terminal', $scope.filteredTerminals, 'is', 1);
+            $scope.terminalFullLabel = utilsFactory.buildTooltip($scope.filteredTerminals);
+            $scope.pvLabel = utilsFactory.buildLabel('estabelecimento', $scope.filteredPvs, 's', 0);
+            $scope.pvFullLabel = utilsFactory.buildTooltip($scope.filteredPvs);
+            $scope.acquirerLabel = utilsFactory.buildLabel('adquirente', $scope.filteredAcquirers, 's', 0);
+            $scope.acquirerFullLabel = utilsFactory.buildTooltip($scope.filteredAcquirers);
+            $scope.cardProductLabel = utilsFactory.buildLabel('bandeira', $scope.filteredCardProducts, 's', 0);
+            $scope.cardProductFullLabel = utilsFactory.buildTooltip($scope.filteredCardProducts);
         }
 
         function UpdateDateModel() {

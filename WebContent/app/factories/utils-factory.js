@@ -16,19 +16,60 @@
     function Utils() {
 
         return {
-            joinMappedArray: JoinMappedArray
+            joinMappedArray: JoinMappedArray,
+            buildLabel: BuildLabel,
+            buildTooltip: BuildTooltip
         };
 
-        function JoinMappedArray(arrJoinable, strField, xJoin) {
-            var map = arrJoinable.map(function(objItem){
-                return objItem[strField];
+        function JoinMappedArray(arrJoinable, strField, xJoin, intMaxNumber) {
+
+            var xMapped
+            xMapped = arrJoinable.map(function(objItem, intIndex) {
+                if(!intMaxNumber || (intIndex < intMaxNumber) ) {
+                    return objItem[strField];
+                }
             });
 
             if (xJoin !== false) {
-                return map.join(xJoin);
+
+                xMapped = _.compact(xMapped).join(xJoin);
+
+                if(arrJoinable.length > intMaxNumber) {
+                    xMapped = xMapped + " ...";
+                }
+
             }
 
-            return map;
+            return xMapped;
+        }
+
+        function BuildLabel(strName, xModel, strSuffix, intRemoveLast) {
+            var intLength = 0;
+            var objEntity = xModel;
+            if (xModel.length) {
+                intLength = xModel.length;
+                objEntity = xModel[0];
+            }
+
+            if (intLength > 0) {
+                var strLabel =  strName + ': ' + objEntity.label;
+                if (intLength > 1) {
+                    var strPluralized = strName;
+
+                    if (intLength > 2) {
+                        strPluralized = strName.substring(0, strName.length - intRemoveLast) + strSuffix;
+                    }
+
+                    strLabel += ' +' + (intLength - 1) + ' ' + strPluralized;
+                }
+
+
+                return strLabel;
+            }
+        }
+
+        function BuildTooltip(arrModel) {
+            return  JoinMappedArray(arrModel, 'label', ", ", 30);;
         }
 
     }

@@ -106,35 +106,6 @@ angular.module('Conciliador.filtersService', [])
 		return arrResponse;
 	};
 
-    this.BuildLabel = function (strName, xModel, strSuffix, intRemoveLast) {
-        var intLength = 0;
-        var objEntity = xModel;
-        if (xModel.length) {
-            intLength = xModel.length;
-            objEntity = xModel[0];
-        }
-
-        if (intLength > 0) {
-            var strLabel =  strName + ': ' + objEntity.label;
-            if (intLength > 1) {
-                var strPluralized = strName;
-
-                if (intLength > 2) {
-                    strPluralized = strName.substring(0, strName.length - intRemoveLast) + strSuffix;
-                }
-
-                strLabel += ' +' + (intLength - 1) + ' ' + strPluralized;
-            }
-
-
-            return strLabel;
-        }
-    }
-
-    this.BuildTooltip = function (arrModel) {
-        return utilsFactory.joinMappedArray(arrModel, 'label', ", ");
-    }
-
 	this.GetCardProductDeferred = function () {
 		return this.DeferIt(strUrlCardProducts);
 	};
