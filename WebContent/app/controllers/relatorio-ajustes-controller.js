@@ -24,9 +24,6 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 		$scope.sort = 'payedDate,ASC';
 		$scope.exportReport = ExportReport;
 
-		var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-		$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
-		$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
 		$scope.pageChanged = PageChanged;
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
@@ -88,8 +85,8 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
+			$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 		}
 
 		function Search() {
@@ -111,5 +108,7 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
 		};
+
+		ClearFilter();
 
     });
