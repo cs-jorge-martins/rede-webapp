@@ -60,9 +60,8 @@
                         strPluralized = strName.substring(0, strName.length - intRemoveLast) + strSuffix;
                     }
 
-                    strLabel += ' +' + (intLength - 1) + ' ' + strPluralized;
+                    strLabel = objEntity.label + ' +' + (intLength - 1) + ' ' + strPluralized;
                 }
-
 
                 return strLabel;
             }
