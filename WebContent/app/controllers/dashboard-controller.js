@@ -148,8 +148,8 @@ angular.module('Conciliador.dashboardController',[])
 				}
 
 				// Calculo de percentuais
-				$scope.percentOfQuantityTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.quantity - $scope.transactionSummaryBoxPrevMonth.quantity) * 100) / ($scope.transactionSummaryBoxPrevMonth.quantity | 1);
-				$scope.percentOfTotalsAmountTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxPrevMonth.amount) * 100) / ($scope.transactionSummaryBoxPrevMonth.amount | 1);
+				$scope.percentOfQuantityTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.quantity - $scope.transactionSummaryBoxPrevMonth.quantity) * 100) / ($scope.transactionSummaryBoxPrevMonth.quantity || 1);
+				$scope.percentOfTotalsAmountTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxPrevMonth.amount) * 100) / ($scope.transactionSummaryBoxPrevMonth.amount || 1);
 
 				// Calculo ticket médio
 				if($scope.transactionSummaryBoxCurrentMonth.quantity !== 0){
@@ -164,7 +164,7 @@ angular.module('Conciliador.dashboardController',[])
 					$scope.ticketAveragePrevMonth = 0;
 				}
 
-				$scope.percentOfTicketAverageBetweenMonths = ([($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100] / ($scope.ticketAveragePrevMonth) | 1);
+				$scope.percentOfTicketAverageBetweenMonths = ([($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100] / ($scope.ticketAveragePrevMonth) || 1);
 			});
 		});
 	};
@@ -201,7 +201,7 @@ angular.module('Conciliador.dashboardController',[])
 					$scope.movementionSummaryBoxPrevMonth = objItem[0];
 				}
 
-				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100] / ($scope.movementionSummaryBoxPrevMonth.payedAmount) | 1);
+				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100] / ($scope.movementionSummaryBoxPrevMonth.payedAmount) || 1);
 			});
 		});
 	}
