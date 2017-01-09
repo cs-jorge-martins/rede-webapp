@@ -110,7 +110,6 @@ angular.module('Conciliador.dashboardController',[])
 
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
-		SetNplicateTransactionBox();
 		SetTransactionConciliationBox();
 	}
 
@@ -149,8 +148,8 @@ angular.module('Conciliador.dashboardController',[])
 				}
 
 				// Calculo de percentuais
-				$scope.percentOfQuantityTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.quantity - $scope.transactionSummaryBoxPrevMonth.quantity) * 100) / $scope.transactionSummaryBoxPrevMonth.quantity | 0;
-				$scope.percentOfTotalsAmountTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxPrevMonth.amount) * 100) / $scope.transactionSummaryBoxPrevMonth.amount | 0;
+				$scope.percentOfQuantityTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.quantity - $scope.transactionSummaryBoxPrevMonth.quantity) * 100) / ($scope.transactionSummaryBoxPrevMonth.quantity | 1);
+				$scope.percentOfTotalsAmountTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxPrevMonth.amount) * 100) / ($scope.transactionSummaryBoxPrevMonth.amount | 1);
 
 				// Calculo ticket médio
 				if($scope.transactionSummaryBoxCurrentMonth.quantity !== 0){
@@ -165,10 +164,7 @@ angular.module('Conciliador.dashboardController',[])
 					$scope.ticketAveragePrevMonth = 0;
 				}
 
-				$scope.percentOfTicketAverageBetweenMonths = ([($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100]/ $scope.ticketAveragePrevMonth) | 0;
-
-				$scope.totalTaxaAdm = ($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxCurrentMonth.net);
-
+				$scope.percentOfTicketAverageBetweenMonths = ([($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100] / ($scope.ticketAveragePrevMonth) | 1);
 			});
 		});
 	};
@@ -205,22 +201,8 @@ angular.module('Conciliador.dashboardController',[])
 					$scope.movementionSummaryBoxPrevMonth = objItem[0];
 				}
 
-				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100]/ $scope.movementionSummaryBoxPrevMonth.payedAmount) | 0;
+				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100] / ($scope.movementionSummaryBoxPrevMonth.payedAmount) | 1);
 			});
-		});
-	}
-
-
-	/********************************* NPLICATE SUMMARY BOX *************************************/
-	function SetNplicateTransactionBox(){
-		var objTransactionSummaryNplicate = {};
-		objTransactionSummaryNplicate.currency =  $rootScope.currency;
-		objTransactionSummaryNplicate.startDate = $scope.currentMonthPerid.firstDate;
-		objTransactionSummaryNplicate.endDate = $scope.currentMonthPerid.lastDate;
-
-		dashboardService.GetNplicateTransactionSummary(objTransactionSummaryNplicate).then(function(objResponse){
-			var objItem = objResponse.data.content;
-			$scope.totalDuplicate = objItem[0].amount;
 		});
 	}
 
