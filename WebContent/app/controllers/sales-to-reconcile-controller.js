@@ -29,10 +29,6 @@
         'modalService'
     ];
 
-    /**
-     * @method SalesToReconcile
-     * metodo principal do sales-to-reconcile, faz todas as ações necessárias para a página
-     */
     function SalesToReconcile(
         filterService,
         $scope,
