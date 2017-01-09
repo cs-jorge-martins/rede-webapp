@@ -108,6 +108,10 @@ h2, ul, li, legend {
 	top: 0px !important;
 }
 
+#login .alert button {
+    display: none;
+}
+
 #login h1 {
 	text-indent:-10000px;
 	height:48px;

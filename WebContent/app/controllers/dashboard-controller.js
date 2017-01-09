@@ -12,7 +12,7 @@ angular.module('Conciliador.dashboardController',[])
 	menuFactory.setActiveDashboard();
 
 	$scope.now = calendarFactory.getActualDateForDashboard();
-	
+
 	$scope.currentPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfMonth());
 	$scope.currentPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfCurrentMonthForDashboard());
 	$scope.currentPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
