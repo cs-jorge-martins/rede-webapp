@@ -223,7 +223,7 @@
         /**
          * @method ProcessResults
          * processa a resposta enviada pela api, para manipular a view
-         * @param {Promisse} objResponse, resposta do GetSales()
+         * @param {Promisse} objResponse resposta do GetSales()
          */
         function ProcessResults(objResponse) {
             var objContent = objResponse.data.content;
@@ -272,8 +272,8 @@
         /**
          * @method Reconcile
          * concilia vendas selecionadas na view
-         * @param {Object} objTransactionModel, Transações selecionadas
-         * @param {Object} objAcquirer, Acquirer das transações selecionadas
+         * @param {Object} objTransactionModel Transações selecionadas
+         * @param {Object} objAcquirer Acquirer das transações selecionadas
          */
         function Reconcile(objTransactionModel, objAcquirer) {
 
@@ -313,7 +313,7 @@
          *
          * O reset filter é ligado diretamente com a diretiva rc-chips, quando clicado no "X" do chips
          * o ResetFilter deve ser acionado para fazer a ação na view
-         * @param {String} strModel, primeiro nome da Model
+         * @param {String} strModel primeiro nome da Model
          */
         function ResetFilter(strModel) {
             objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
