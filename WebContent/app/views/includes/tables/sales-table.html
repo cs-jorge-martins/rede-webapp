@@ -22,7 +22,10 @@
                     <th scope="row">
                         <rc-checkbox quantity-model="result.transactionsModel.count" quantity-field="quantity" model="transaction" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" parent-checked="result.transactionsModel.allChecked"></rc-checkbox>
                     </th>
-                    <td>{{transaction.cardProduct.name}}</td>
+                    <td>
+                        <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
+                        {{transaction.cardProduct.name}}
+                    </td>
                     <td>{{transaction.amount | currency: ''}}</td>
                     <td>{{transaction.quantity}} vendas</td>
                     <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
