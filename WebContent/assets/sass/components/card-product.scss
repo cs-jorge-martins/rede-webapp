@@ -1,13 +1,11 @@
 .card-product {
 
+  @extend .imageReplacement;
   background-image: url(#{$imgPath}flags.png);
   background-repeat: no-repeat;
   display: inline-block;
   height: 27px;
   margin-right: 10px;
-  overflow: hidden;
-  text-indent: 100%;
-  white-space: nowrap;
   width: 45px;
 
   /* mastercard */
