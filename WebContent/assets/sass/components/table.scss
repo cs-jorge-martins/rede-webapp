@@ -7,6 +7,7 @@
   thead>tr>th{
     border-top-color: #eee;
     border-bottom: none;
+    vertical-align: middle;
   }
 
   thead:first-child {
@@ -18,6 +19,7 @@
   }
 
   td {
+    font-size: 1.1em;
     a, button {
       color: $tableLinkColor;
       text-decoration: underline;
