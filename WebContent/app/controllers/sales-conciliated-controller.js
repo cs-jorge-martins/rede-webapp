@@ -5,7 +5,7 @@
  */
 
 /**
- * @class Conciliador.salesReconciledController
+ * @class Conciliador.salesConciliatedController
  * Controller de vendas conciliadas
  *
  */
@@ -14,10 +14,10 @@
     'use strict';
 
     angular
-        .module('Conciliador.salesReconciledController', [])
-        .controller('salesReconciledController', SalesReconciled);
+        .module('Conciliador.salesConciliatedController', [])
+        .controller('salesConciliatedController', SalesConciliated);
 
-    SalesReconciled.$inject = [
+    SalesConciliated.$inject = [
         'filtersService',
         '$scope',
         'calendarFactory',
@@ -29,7 +29,7 @@
         'modalService'
     ];
 
-    function SalesReconciled(
+    function SalesConciliated(
         filterService,
         $scope,
         calendarFactory,

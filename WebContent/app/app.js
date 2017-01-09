@@ -29,7 +29,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 							'Conciliador.UtilsFactory',
 							'Conciliador.Request', 'Conciliador.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
-                            'Conciliador.salesToReconcileController', 'Conciliador.salesReconciledController',
+                            'Conciliador.salesToConciliateController', 'Conciliador.salesConciliatedController',
                             'Conciliador.FinancialService',
                             'Conciliador.MovementSummaryService',
                             'Conciliador.ModalService',
