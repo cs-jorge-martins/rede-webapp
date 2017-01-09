@@ -4,6 +4,11 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
+/**
+ * @class Conciliador.salesReconciledController
+ * Controller de vendas conciliadas
+ *
+ */
 (function() {
 
     'use strict';
@@ -24,6 +29,10 @@
         'modalService'
     ];
 
+    /**
+     * @method SalesReconciled
+     * metodo principal do sales-reconciled, faz todas as ações necessárias para a página
+     */
     function SalesReconciled(
         filterService,
         $scope,
@@ -65,28 +74,33 @@
         $scope.resetFilter = ResetFilter;
         $scope.reconcile = Reconcile;
 
+        $scope.filterMaxDate = calendarFactory.getYesterday();
+        $scope.dateModel.date = calendarFactory.getYesterday();
+        $scope.cardProductsData = [];
+        $scope.cardProductsModel = [];
+        $scope.terminalsData = [];
+        $scope.terminalsModel = [];
+        $scope.pvsData = [];
+        $scope.pvsModel = [];
+        $scope.acquirersData = [];
+        $scope.acquirersModel = [];
+
         Init();
 
+        /**
+         * @method Init
+         * inicializa as funções principais deste controller ao carregar a página
+         */
         function Init() {
-            InitFilterVariables();
             GetFilters();
             UpdateDateModel();
             GetSales();
         }
 
-        function InitFilterVariables() {
-            $scope.filterMaxDate = calendarFactory.getYesterday();
-            $scope.dateModel.date = calendarFactory.getYesterday();
-            $scope.cardProductsData = [];
-            $scope.cardProductsModel = [];
-            $scope.terminalsData = [];
-            $scope.terminalsModel = [];
-            $scope.pvsData = [];
-            $scope.pvsModel = [];
-            $scope.acquirersData = [];
-            $scope.acquirersModel = [];
-        }
-
+        /**
+         * @method GetFilters
+         * faz as chamadas para serializar os dados de filtro e coloca-los em scopes, para manipula-los na view
+         */
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
                 $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
@@ -106,6 +120,10 @@
             });
         }
 
+        /**
+         * @method GetLabels
+         * serializa os dados dos filtros para strings correspondentes, que serão inseridas na view
+         */
         function GetLabels() {
             $scope.terminalLabel = utilsFactory.buildLabel('terminal', $scope.filteredTerminals, 'is', 1);
             $scope.terminalFullLabel = utilsFactory.buildTooltip($scope.filteredTerminals);
@@ -117,15 +135,28 @@
             $scope.cardProductFullLabel = utilsFactory.buildTooltip($scope.filteredCardProducts);
         }
 
+        /**
+         * @method UpdateDateModel
+         * atualiza o model da data no cabeçalho da página
+         */
         function UpdateDateModel() {
             $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
             $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
         }
 
+        /**
+         * @method FormatDateForService
+         * formata o dateModel para ser utilizado nas chamadas para a api
+         * @return data formatada para (YYYYMMDD)
+         */
         function FormatDateForService() {
             return calendarFactory.formatDateTimeForService($scope.dateModel.date);
         }
 
+        /**
+         * @method GetTimeLine
+         * atualiza os dados da timeline, usando a diretiva rc-timeline na view
+         */
         function GetTimeLine() {
             var strDate = FormatDateForService();
 
@@ -159,6 +190,10 @@
             });
         }
 
+        /**
+         * @method GetSales
+         * atualiza os resultados, utilizando os filtros para buscar na api e responder na view
+         */
         function GetSales() {
             $scope.filteredTerminals = angular.copy($scope.terminalsModel);
             $scope.filteredAcquirers = angular.copy($scope.acquirersModel);
@@ -188,6 +223,11 @@
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(ProcessResults);
         }
 
+        /**
+         * @method ProcessResults
+         * processa a resposta enviada pela api, para manipular a view
+         * @param {Promisse} objResponse, resposta do GetSales()
+         */
         function ProcessResults(objResponse) {
             var objContent = objResponse.data.content;
             objContent.forEach(function(objItem) {
@@ -219,6 +259,10 @@
             });
         }
 
+        /**
+         * @method TransactionModel
+         * cria um modelo de dados para ser utilizado pelo metodo ProcessResults()
+         */
         function TransactionModel() {
             this.totalAmount = 0;
             this.count = 0;
@@ -228,6 +272,12 @@
             this.allChecked = false
         }
 
+        /**
+         * @method Reconcile
+         * concilia vendas selecionadas na view
+         * @param {Object} objTransactionModel, Transações selecionadas
+         * @param {Object} objAcquirer, Acquirer das transações selecionadas
+         */
         function Reconcile(objTransactionModel, objAcquirer) {
 
             var strDate = FormatDateForService();
@@ -260,6 +310,14 @@
 
         }
 
+        /**
+         * @method ResetFilter
+         * reseta o filtro que foi "fechado"
+         *
+         * O reset filter é ligado diretamente com a diretiva rc-chips, quando clicado no "X" do chips
+         * o ResetFilter deve ser acionado para fazer a ação na view
+         * @param {String} strModel, primeiro nome da Model
+         */
         function ResetFilter(strModel) {
             $scope[strModel+ 'Model'] = angular.copy($scope[strModel + 'Data']);
             GetSales();
