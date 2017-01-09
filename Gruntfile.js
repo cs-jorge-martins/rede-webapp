@@ -141,8 +141,8 @@ module.exports = function(grunt) {
                     "WebContent/app/controllers/login-controller.js",
                     "WebContent/app/controllers/sales-details-controller.js",
                     "WebContent/app/controllers/sales-controller.js",
-                    "WebContent/app/controllers/sales-reconciled-controller.js",
-                    "WebContent/app/controllers/sales-to-reconcile-controller.js",
+                    "WebContent/app/controllers/sales-conciliated-controller.js",
+                    "WebContent/app/controllers/sales-to-conciliate-controller.js",
                     "WebContent/app/controllers/relatorio-vendas-controller.js",
                     "WebContent/app/controllers/relatorio-financeiro-controller.js",
                     "WebContent/app/controllers/relatorio-ajustes-controller.js",
@@ -177,6 +177,7 @@ module.exports = function(grunt) {
                     "WebContent/app/service/movement-service.js",
                     "WebContent/app/service/adjust-service.js",
                     "WebContent/app/service/rc-message-service.js",
+                    "WebContent/app/service/modal-service.js",
 
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
@@ -190,6 +191,7 @@ module.exports = function(grunt) {
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",
+                    "WebContent/app/factories/utils-factory.js",
 
                     "WebContent/app/filters/currency-filter.js",
                     "WebContent/app/filters/slugfy-filter.js",

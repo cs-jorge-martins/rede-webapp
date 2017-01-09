@@ -8,7 +8,7 @@ angular.module('Conciliador.filtersService', [])
 	.config(['$routeProvider',function ($routeProvider) {
 }])
 
-.service('filtersService', function(app, $http, Request, $q) {
+.service('filtersService', function(app, $http, Request, $q, utilsFactory) {
 
 	var strUrlAcquirers = app.endpoint + '/acquirers?name=REDE';
 	var strUrlAccounts = app.endpoint + '/pvs/bankaccounts';

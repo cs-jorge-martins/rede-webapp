@@ -67,6 +67,9 @@
 
                 if (Object.keys(objBreadcrumb).length) {
                     $scope.breadcrumb = objBreadcrumb;
+                } else {
+                    $scope.breadcrumb = null;
+
                 }
             };
 

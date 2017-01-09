@@ -26,8 +26,7 @@
                 initialValue: "=",
                 finalValue: "=",
                 totalValue: "=",
-                labelTotalValue: "=",
-                timeLinePercentage: "="
+                labelTotalValue: "="
             },
             controller: Controller
         };
@@ -37,6 +36,23 @@
             Init();
 
             function Init() {
+                GetPercentage();
+            }
+
+            $scope.$watchGroup(['initialValue', 'finalValue'], function(newValues, oldValues) {
+                GetPercentage();
+            }, true);
+
+            
+            function GetPercentage() {
+
+                var xCompareValue = $scope.totalValue ? $scope.totalValue : $scope.finalValue;
+
+                if($scope.initialValue === 0 && xCompareValue === 0) {
+                    $scope.timeLinePercentage = 0;
+                } else {
+                    $scope.timeLinePercentage = $scope.initialValue / xCompareValue * 100;
+                }
 
             }
 
