@@ -1,4 +1,4 @@
-<div class="container box" ng-repeat="result in resultModel">
+<div class="container box" ng-repeat="result in vm.resultModel">
     <div class="panel panel-success">
         <div class="panel-heading">
             {{result.acquirer.name}}
@@ -30,7 +30,7 @@
                 </tbody>
             </table>
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
+                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
             </div>
         </div>
     </div>

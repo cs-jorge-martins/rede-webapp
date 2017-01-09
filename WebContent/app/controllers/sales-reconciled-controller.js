@@ -42,8 +42,8 @@
 
         var objVm = this;
 
-        $scope.closeableChips = true;
-        $scope.chipsConfig = {
+        objVm.closeableChips = true;
+        objVm.chipsConfig = {
             show: {
                 acquirers: false,
                 pvs: false,
@@ -51,35 +51,35 @@
                 cardProducts: false
             },
             update: function Update() {
-                $scope.chipsConfig.show.terminals = $scope.terminalsData.length != $scope.filteredTerminals.length;
-                $scope.chipsConfig.show.pvs = $scope.pvsData.length != $scope.filteredPvs.length;
-                $scope.chipsConfig.show.acquirers = $scope.acquirersData.length != $scope.filteredAcquirers.length;
-                $scope.chipsConfig.show.cardProducts = $scope.cardProductsData.length != $scope.filteredCardProducts.length;
+                objVm.chipsConfig.show.terminals = objVm.terminalsData.length != objVm.filteredTerminals.length;
+                objVm.chipsConfig.show.pvs = objVm.pvsData.length != objVm.filteredPvs.length;
+                objVm.chipsConfig.show.acquirers = objVm.acquirersData.length != objVm.filteredAcquirers.length;
+                objVm.chipsConfig.show.cardProducts = objVm.cardProductsData.length != objVm.filteredCardProducts.length;
             },
             closeable: true
         };
-        $scope.dateModel = {};
-        $scope.resultModel = [];
-        $scope.timelineModel = {
+        objVm.dateModel = {};
+        objVm.resultModel = [];
+        objVm.timelineModel = {
             toReconcile: 0,
             concilied: 0,
             total: 0,
             percentage: 100
         };
-        $scope.getSales = GetSales;
-        $scope.resetFilter = ResetFilter;
-        $scope.reconcile = Reconcile;
+        objVm.getSales = GetSales;
+        objVm.resetFilter = ResetFilter;
+        objVm.reconcile = Reconcile;
 
-        $scope.filterMaxDate = calendarFactory.getYesterday();
-        $scope.dateModel.date = calendarFactory.getYesterday();
-        $scope.cardProductsData = [];
-        $scope.cardProductsModel = [];
-        $scope.terminalsData = [];
-        $scope.terminalsModel = [];
-        $scope.pvsData = [];
-        $scope.pvsModel = [];
-        $scope.acquirersData = [];
-        $scope.acquirersModel = [];
+        objVm.filterMaxDate = calendarFactory.getYesterday();
+        objVm.dateModel.date = calendarFactory.getYesterday();
+        objVm.cardProductsData = [];
+        objVm.cardProductsModel = [];
+        objVm.terminalsData = [];
+        objVm.terminalsModel = [];
+        objVm.pvsData = [];
+        objVm.pvsModel = [];
+        objVm.acquirersData = [];
+        objVm.acquirersModel = [];
 
         Init();
 
@@ -99,20 +99,20 @@
          */
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
-                $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
-                $scope.cardProductsModel = angular.copy($scope.cardProductsData);
+                objVm.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
+                objVm.cardProductsModel = angular.copy(objVm.cardProductsData);
             });
             filterService.GetTerminalDeferred().then(function (objTerminals) {
-                $scope.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code');
-                $scope.terminalsModel = angular.copy($scope.terminalsData);
+                objVm.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code');
+                objVm.terminalsModel = angular.copy(objVm.terminalsData);
             });
             filterService.GetPvsDeferred().then(function (objPvs) {
-                $scope.pvsData = filterService.TransformDeferredDataInArray(objPvs, 'code');
-                $scope.pvsModel = angular.copy($scope.pvsData);
+                objVm.pvsData = filterService.TransformDeferredDataInArray(objPvs, 'code');
+                objVm.pvsModel = angular.copy(objVm.pvsData);
             });
             filterService.GetAcquirersDeferred().then(function (objAcquirers) {
-                $scope.acquirersData = filterService.TransformDeferredDataInArray(objAcquirers, 'name');
-                $scope.acquirersModel = angular.copy($scope.acquirersData);
+                objVm.acquirersData = filterService.TransformDeferredDataInArray(objAcquirers, 'name');
+                objVm.acquirersModel = angular.copy(objVm.acquirersData);
             });
         }
 
@@ -121,23 +121,24 @@
          * serializa os dados dos filtros para strings correspondentes, que serão inseridas na view
          */
         function GetLabels() {
-            $scope.terminalLabel = utilsFactory.buildLabel('terminal', $scope.filteredTerminals, 'is', 1);
-            $scope.terminalFullLabel = utilsFactory.buildTooltip($scope.filteredTerminals);
-            $scope.pvLabel = utilsFactory.buildLabel('estabelecimento', $scope.filteredPvs, 's', 0);
-            $scope.pvFullLabel = utilsFactory.buildTooltip($scope.filteredPvs);
-            $scope.acquirerLabel = utilsFactory.buildLabel('adquirente', $scope.filteredAcquirers, 's', 0);
-            $scope.acquirerFullLabel = utilsFactory.buildTooltip($scope.filteredAcquirers);
-            $scope.cardProductLabel = utilsFactory.buildLabel('bandeira', $scope.filteredCardProducts, 's', 0);
-            $scope.cardProductFullLabel = utilsFactory.buildTooltip($scope.filteredCardProducts);
+            objVm.terminalLabel = utilsFactory.buildLabel('terminal', objVm.filteredTerminals, 'is', 1);
+            objVm.terminalFullLabel = utilsFactory.buildTooltip(objVm.filteredTerminals);
+            objVm.pvLabel = utilsFactory.buildLabel('estabelecimento', objVm.filteredPvs, 's', 0);
+            objVm.pvFullLabel = utilsFactory.buildTooltip(objVm.filteredPvs);
+            objVm.acquirerLabel = utilsFactory.buildLabel('adquirente', objVm.filteredAcquirers, 's', 0);
+            objVm.acquirerFullLabel = utilsFactory.buildTooltip(objVm.filteredAcquirers);
+            objVm.cardProductLabel = utilsFactory.buildLabel('bandeira', objVm.filteredCardProducts, 's', 0);
+            objVm.cardProductFullLabel = utilsFactory.buildTooltip(objVm.filteredCardProducts);
         }
+
 
         /**
          * @method UpdateDateModel
          * atualiza o model da data no cabeçalho da página
          */
         function UpdateDateModel() {
-            $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
-            $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
+            objVm.dateModel.day = calendarFactory.getDayOfDate(objVm.dateModel.date);
+            objVm.dateModel.monthName = calendarFactory.getMonthNameOfDate(objVm.dateModel.date);
         }
 
         /**
@@ -146,7 +147,7 @@
          * @return data formatada para (YYYYMMDD)
          */
         function FormatDateForService() {
-            return calendarFactory.formatDateTimeForService($scope.dateModel.date);
+            return calendarFactory.formatDateTimeForService(objVm.dateModel.date);
         }
 
         /**
@@ -161,26 +162,26 @@
                 groupBy: 'CONCILIATION_STATUS',
                 startDate: strDate,
                 endDate: strDate,
-                cardProductIds: utilsFactory.joinMappedArray($scope.filteredCardProducts, 'id', ','),
-                terminalIds: utilsFactory.joinMappedArray($scope.filteredTerminals, 'id', ','),
-                acquirerIds: utilsFactory.joinMappedArray($scope.filteredAcquirers, 'id', ','),
-                shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', ',')
+                cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
+                terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
+                acquirerIds: utilsFactory.joinMappedArray(objVm.filteredAcquirers, 'id', ','),
+                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ',')
             };
 
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function (objResponse) {
                 var objContent = objResponse.data.content;
-                $scope.timelineModel.total = 0;
-                $scope.timelineModel.toReconcile = 0;
-                $scope.timelineModel.concilied = 0;
+                objVm.timelineModel.total = 0;
+                objVm.timelineModel.toReconcile = 0;
+                objVm.timelineModel.concilied = 0;
 
                 objContent.forEach(function(objItem) {
                     if (objItem.conciliationStatus === 'TO_CONCILIE') {
-                        $scope.timelineModel.toReconcile = objItem.quantity;
+                        objVm.timelineModel.toReconcile = objItem.quantity;
                     } else if (objItem.conciliationStatus === 'CONCILIED') {
-                        $scope.timelineModel.concilied = objItem.quantity;
+                        objVm.timelineModel.concilied = objItem.quantity;
                     }
 
-                    $scope.timelineModel.total += objItem.quantity;
+                    objVm.timelineModel.total += objItem.quantity;
                 });
 
             });
@@ -191,16 +192,16 @@
          * atualiza os resultados, utilizando os filtros para buscar na api e responder na view
          */
         function GetSales() {
-            $scope.filteredTerminals = angular.copy($scope.terminalsModel);
-            $scope.filteredAcquirers = angular.copy($scope.acquirersModel);
-            $scope.filteredPvs = angular.copy($scope.pvsModel);
-            $scope.filteredCardProducts = angular.copy($scope.cardProductsModel);
-            $scope.resultModel.splice(0);
+            objVm.filteredTerminals = angular.copy(objVm.terminalsModel);
+            objVm.filteredAcquirers = angular.copy(objVm.acquirersModel);
+            objVm.filteredPvs = angular.copy(objVm.pvsModel);
+            objVm.filteredCardProducts = angular.copy(objVm.cardProductsModel);
+            objVm.resultModel.splice(0);
 
             GetLabels();
             UpdateDateModel();
             GetTimeLine();
-            $scope.chipsConfig.update();
+            objVm.chipsConfig.update();
 
             var strDate = FormatDateForService();
 
@@ -210,10 +211,10 @@
                 groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
                 startDate: strDate,
                 endDate: strDate,
-                cardProductIds: utilsFactory.joinMappedArray($scope.filteredCardProducts, 'id', ','),
-                terminalIds: utilsFactory.joinMappedArray($scope.filteredTerminals, 'id', ','),
-                acquirerIds: utilsFactory.joinMappedArray($scope.filteredAcquirers, 'id', ','),
-                shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', ',')
+                cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
+                terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
+                acquirerIds: utilsFactory.joinMappedArray(objVm.filteredAcquirers, 'id', ','),
+                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ',')
             };
 
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(ProcessResults);
@@ -231,7 +232,7 @@
                 var bolFoundModel = false;
                 var objModelFound = null;
 
-                $scope.resultModel.forEach(function(objModel) {
+                objVm.resultModel.forEach(function(objModel) {
                     if (objModel.acquirer.id === objItem.acquirer.id) {
                         bolFoundModel = true;
                         objModelFound = objModel;
@@ -243,7 +244,7 @@
                     objModelFound = {};
                     objModelFound.acquirer = objItem.acquirer;
                     objModelFound[strModel] = new TransactionModel();
-                    $scope.resultModel.push(objModelFound);
+                    objVm.resultModel.push(objModelFound);
                 }
 
                 if (!objModelFound[strModel]) {
@@ -284,9 +285,9 @@
                 startDate: strDate,
                 endDate: strDate,
                 cardProductIds: objTransactionModel.cardProductIds,
-                terminalIds: utilsFactory.joinMappedArray($scope.filteredTerminals, 'id', false),
+                terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', false),
                 acquirerIds: [objAcquirer.id],
-                shopIds: utilsFactory.joinMappedArray($scope.filteredPvs, 'id', false)
+                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
             modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
@@ -315,7 +316,7 @@
          * @param {String} strModel, primeiro nome da Model
          */
         function ResetFilter(strModel) {
-            $scope[strModel+ 'Model'] = angular.copy($scope[strModel + 'Data']);
+            objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
             GetSales();
         }
 
