@@ -153,18 +153,18 @@ angular.module('Conciliador.dashboardController',[])
 
 				// Calculo ticket médio
 				if($scope.transactionSummaryBoxCurrentMonth.quantity !== 0){
-					$scope.ticketAverageCurrentMonth = ($scope.transactionSummaryBoxCurrentMonth.amount/$scope.transactionSummaryBoxCurrentMonth.quantity);
+					$scope.ticketAverageCurrentMonth = ($scope.transactionSummaryBoxCurrentMonth.amount / $scope.transactionSummaryBoxCurrentMonth.quantity);
 				}else{
 					$scope.ticketAverageCurrentMonth = 0;
 				}
 
 				if($scope.transactionSummaryBoxPrevMonth.quantity !== 0){
-					$scope.ticketAveragePrevMonth = ($scope.transactionSummaryBoxPrevMonth.amount/$scope.transactionSummaryBoxPrevMonth.quantity);
+					$scope.ticketAveragePrevMonth = ($scope.transactionSummaryBoxPrevMonth.amount / $scope.transactionSummaryBoxPrevMonth.quantity);
 				}else{
 					$scope.ticketAveragePrevMonth = 0;
 				}
 
-				$scope.percentOfTicketAverageBetweenMonths = ([($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100] / ($scope.ticketAveragePrevMonth) || 1);
+				$scope.percentOfTicketAverageBetweenMonths = (($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100) / ($scope.ticketAveragePrevMonth || 1);
 			});
 		});
 	};
@@ -201,7 +201,7 @@ angular.module('Conciliador.dashboardController',[])
 					$scope.movementionSummaryBoxPrevMonth = objItem[0];
 				}
 
-				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100] / ($scope.movementionSummaryBoxPrevMonth.payedAmount) || 1);
+				$scope.percentOfTotalPayedBetweenMonths = (($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100) / ($scope.movementionSummaryBoxPrevMonth.payedAmount || 1);
 			});
 		});
 	}
