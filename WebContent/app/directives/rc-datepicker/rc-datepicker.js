@@ -57,6 +57,14 @@
 				if($scope.maxDate) {
 					$scope.dateOptions.maxDate = $scope.maxDate;
 				}
+
+				$scope.$watch('minDate', function() {
+					$scope.dateOptions.minDate = $scope.minDate;
+				});
+
+				$scope.$watch('maxDate', function() {
+					$scope.dateOptions.maxDate = $scope.maxDate;
+				});
 			}
 
 			function Open() {
