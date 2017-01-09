@@ -20,3 +20,9 @@ object[type^='application/gas-events'] {
     background: $backgroundColor;
     height: 2.667em;
 }
+
+.modal-blur {
+    filter: blur(2px);
+    // Adicionado para corrigir um problema no MS Edge que impede a aplicação correta do blur
+    position: relative;
+}

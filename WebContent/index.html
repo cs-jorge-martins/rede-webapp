@@ -44,17 +44,18 @@
     </div>
 
     <div id="modalWrapperV1" class="v1"></div>
+    <div id="modalWrapperV2" class="v2"></div>
     <div class="v2" ng-if="!hideHeaderAndFooter">
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu, 'modal-blur': $root.modalOpen}"></header>
     </div>
-    <div id="migrationContainer">
+    <div id="migrationContainer" ng-class="{'modal-blur': $root.modalOpen}">
         <div class="extended" {{migrationId}} id="content" ng-class="{'login': !initialized}">
             <div class="v2">
                 <rc-breadcrumb></rc-breadcrumb>
                 <rc-message ng-repeat="message in rcMessages" type="message.type" text="message.text" href="message.href" action-text="message.actionText" on-click="message.onClick(message.scope)"></rc-message>
                 <h1 ng-if="pageTitle" class="page-title">{{pageTitle}}</h1>
             </div>
-            <div ng-view class="{{migrationId}}" ng-class="{'modal-blur': $root.modalOpen}"></div>
+            <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>
     <div class="v2" ng-if="!hideHeaderAndFooter">

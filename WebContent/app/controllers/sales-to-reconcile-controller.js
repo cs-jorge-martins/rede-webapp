@@ -12,12 +12,28 @@
         .module('Conciliador.salesToReconcileController', [])
         .controller('salesToReconcileController', salesToReconcile);
 
-    salesToReconcile.$inject = ['filtersService', '$scope', 'calendarFactory', 'TransactionSummaryService'];
+    salesToReconcile.$inject = ['filtersService', '$scope', 'calendarFactory', 'TransactionSummaryService', 'TransactionService', '$uibModal', '$rootScope'];
 
-    function salesToReconcile(filterService, $scope, calendarFactory, transactionSummaryService) {
+    function salesToReconcile(filterService, $scope, calendarFactory, transactionSummaryService, transactionService, $uibModal, $rootScope) {
 
         var objVm = this;
 
+        $scope.closeableChips = true;
+        $scope.chipsConfig = {
+            show: {
+                acquirers: false,
+                pvs: false,
+                terminals: false,
+                cardProducts: false
+            },
+            update: function Update() {
+                $scope.chipsConfig.show.terminals = $scope.terminalsData.length != $scope.filteredTerminals.length;
+                $scope.chipsConfig.show.pvs = $scope.pvsData.length != $scope.filteredPvs.length;
+                $scope.chipsConfig.show.acquirers = $scope.acquirersData.length != $scope.filteredAcquirers.length;
+                $scope.chipsConfig.show.cardProducts = $scope.cardProductsData.length != $scope.filteredCardProducts.length;
+            },
+            closeable: true
+        };
         $scope.dateModel = {};
         $scope.resultModel = [];
         $scope.timelineModel = {
@@ -30,6 +46,7 @@
         $scope.resetFilter = ResetFilter;
         $scope.selectSingle = SelectSingle;
         $scope.selectAll = SelectAll;
+        $scope.reconcile = Reconcile;
 
         Init();
 
@@ -39,8 +56,8 @@
             GetFilters();
             UpdateDateModel();
             GetReceipt();
-        }
-
+                            }
+        
         function DefaultOptions() {
             $scope.filterMaxDate = calendarFactory.getYesterday();
         }
@@ -56,7 +73,7 @@
             $scope.acquirersData = [];
             $scope.acquirersModel = [];
         }
-
+        
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
                 $scope.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
@@ -79,7 +96,7 @@
         function UpdateDateModel() {
             $scope.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
             $scope.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
-        }
+            }
 
         function GetLabels() {
             $scope.terminalLabel = BuildLabel('terminal', $scope.filteredTerminals, 'is', 1);
@@ -117,6 +134,40 @@
             }
         }
 
+        function Reconcile(objTransactionModel, objAcquirer) {
+            if (objTransactionModel.cardProductIds.length < 1) {
+                alert('Selecione ao menos um lançamento.');
+                return;
+            }
+
+            var strDate = FormatDateForService();
+
+            var objFilter = {
+                conciliationStatus: ['TO_CONCILIE'],
+                currency: 'BRL',
+                startDate: strDate,
+                endDate: strDate,
+                cardProductIds: objTransactionModel.cardProductIds,
+                terminalIds: JoinMappedArray($scope.filteredTerminals, 'id', false),
+                acquirerIds: [objAcquirer.id],
+                shopIds: JoinMappedArray($scope.filteredPvs, 'id', false)
+            };
+
+            OpenModal("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+                $scope.count = objTransactionModel.count;
+                $scope.cancel = function Cancel() {
+                    $uibModalInstance.close();
+                };
+
+                $scope.confirm = function Confirm() {
+                    transactionService.ConcilieTransactions(objFilter).then(function(objResponse) {
+                        GetReceipt();
+                        $uibModalInstance.close();
+                    });
+                }
+            });
+        }
+
         function GetReceipt() {
             $scope.filteredTerminals = angular.copy($scope.terminalsModel);
             $scope.filteredAcquirers = angular.copy($scope.acquirersModel);
@@ -127,6 +178,7 @@
             GetLabels();
             UpdateDateModel();
             GetTimeLine();
+            $scope.chipsConfig.update();
 
             var strDate = FormatDateForService();
 
@@ -273,10 +325,27 @@
             return JoinMappedArray(arrModel, 'label', ", ");
         }
 
-        function JoinMappedArray(arrJoinable, strField, strJoin) {
-            return arrJoinable.map(function(objItem){
+        function JoinMappedArray(arrJoinable, strField, xJoin) {
+            var map = arrJoinable.map(function(objItem){
                 return objItem[strField];
-            }).join(strJoin);
+            });
+
+            if (xJoin !== false) {
+                return map.join(xJoin);
+            }
+
+            return map;
+        }
+
+        function OpenModal(strTemplate, objController) {
+            $uibModal.open({
+                templateUrl: strTemplate,
+                appendTo:  angular.element(document.querySelector('#modalWrapperV2')),
+                controller: objController
+            }).closed.then(function() {
+                $rootScope.modalOpen = false;
+            });
+            $rootScope.modalOpen = true;
         }
 
     }
