@@ -24,3 +24,11 @@
 	-moz-border-radius-bottomright: $bottomright;
 	-moz-border-radius-bottomleft: $bottomleft;
 }
+
+@mixin transition($seconds, $type) {
+	-webkit-transition: all $seconds $type;
+	-moz-transition: all $seconds $type;
+	-o-transition: all $seconds $type;
+	-ms-transition: all $seconds $type;
+	transition: all $seconds $type;
+}

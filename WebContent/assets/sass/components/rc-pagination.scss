@@ -1,0 +1,59 @@
+.rc-pagination {
+
+  font-family: $rcPaginationFontFamily;
+
+  .results-per-page {
+
+    label {
+      color: $rcPaginationDefaultColor;
+      font-size: 1.1em;
+      font-weight: normal;
+      margin-right: 0.5em;
+      position: relative;
+      top: -11px;
+    }
+
+    .select {
+      color: $rcPaginationDefaultColor;
+      height: 30px;
+      width: 55px;
+
+      select {
+        height: 28px;
+      }
+
+    }
+
+  }
+
+  .results-pagination {
+
+    text-align: center;
+
+    .pagination li {
+
+      a {
+
+        @include transition(.2s, ease-in);
+        background: transparent;
+        border: 0;
+        color: $rcPaginationDefaultColor;
+        font-size: 1.3em;
+        padding: 0 1.3em;
+
+      }
+
+      &.active a {
+
+        color: $rcPaginationLinkActiveColor;
+        cursor: default;
+        font-family: $fontBold;
+        text-decoration: underline;
+
+      }
+
+    }
+
+  }
+
+}
