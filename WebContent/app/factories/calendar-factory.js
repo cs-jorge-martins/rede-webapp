@@ -27,7 +27,7 @@ angular.module('Kaplen.CalendarFactory',[])
 	var objFirstDayOfLastMonthDashboard = moment(objMomentForDashboard).subtract(1, 'M').startOf('month');
 	var objLastDayOfLastMonthDashboard = moment(objMomentForDashboard).tz(timeTimezone).subtract(1, 'M').endOf('month');
 
-	var objActualDayOfNextYear = objActualDayOfCurrentMonth.add(1, 'Y');
+	var objActualDayOfNextYear = moment().tz(timeTimezone).add(1, 'Year');
 
 	function GetActualDateOfNextYear() {
 		return objActualDayOfNextYear;
