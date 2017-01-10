@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 
     var API_URLS = {
         local: 'http://localhost:8080/conciliation-api',
-        dev: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev',
+        dev: 'https://va4f0tsgxh.execute-api.us-east-1.amazonaws.com/dev',
         hml: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml',
         prod: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
     };
