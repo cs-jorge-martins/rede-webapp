@@ -50,18 +50,24 @@
                 maxSize: '=',
                 onChange: '&'
 			},
-			controller: Controller
+			controller: Controller,
+            link: function(scope, element, attrs, ctrl) {
+
+                scope.$watch("resultsPaginationTotalItens",function(intNewValue,intOldValue) {
+                    ctrl.MakeResultsPerPageOptions();
+                });
+
+            }
 		};
 
 		function Controller($scope) {
 
-			Init();
+            $scope.resultsPerPageOptions = [10];
+
+            Init();
 
 			function Init() {
-
-                MakeResultsPerPageOptions();
                 CheckResultsPerPageModel();
-
             }
 
             /**
@@ -69,17 +75,17 @@
              * cria a lógica do resultsPerPageOptions, retornando um array com as opções 10 ou 10,20 ou 10,20,50
              * @return {Array} $scope.resultsPerPageOptions
              */
-            function MakeResultsPerPageOptions() {
+            this.MakeResultsPerPageOptions = function () {
 
-                $scope.resultsPerPageOptions = [10];
-
-                if($scope.resultsPaginationTotalItens > 10 && $scope.resultsPaginationTotalItens < 50) {
-                    $scope.resultsPerPageOptions = [10,20];
-				} else if ($scope.resultsPaginationTotalItens >= 50) {
+                if($scope.resultsPaginationTotalItens >= 50) {
                     $scope.resultsPerPageOptions = [10,20,50];
-				}
+                } else if ($scope.resultsPaginationTotalItens > 10 && $scope.resultsPaginationTotalItens < 50) {
+                    $scope.resultsPerPageOptions = [10,20];
+                } else {
+                    $scope.resultsPerPageOptions = [10];
+                }
 
-            }
+            };
 
             /**
              * @method CheckResultsPerPageModel

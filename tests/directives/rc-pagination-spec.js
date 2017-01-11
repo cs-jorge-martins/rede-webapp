@@ -34,4 +34,63 @@ describe('rc-pagination directive', function(){
 
     }));
 
+    it("should have only option equal to 10 on select with 9 items", function () {
+
+        var objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        var objOptions =  objRcPaginationSelect.options;
+
+        expect(objOptions.length).toBe(3);
+
+        scope.intTotalItens = 9;
+        scope.$digest();
+
+        objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        objOptions =  objRcPaginationSelect.options;
+
+        expect(objOptions.length).toBe(1);
+        expect(objOptions[0].label).toBe('10');
+
+    });
+
+    it("should have options equal to 10 and 20 on select with 15 items", function () {
+
+        var objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        var objOptions =  objRcPaginationSelect.options;
+
+        expect(objOptions.length).toBe(3);
+
+        scope.intTotalItens = 15;
+        scope.$digest();
+
+        objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        objOptions =  objRcPaginationSelect.options;
+
+        console.log("objOptions", objOptions[0].label);
+
+        expect(objOptions.length).toBe(2);
+        expect(objOptions[0].label).toBe('10');
+        expect(objOptions[1].label).toBe('20');
+
+    });
+
+    it("should have options equal to 10, 20 and 30 on select with 60 items", function () {
+
+        var objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        var objOptions =  objRcPaginationSelect.options;
+
+        expect(objOptions.length).toBe(3);
+
+        scope.intTotalItens = 60;
+        scope.$digest();
+
+        objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        objOptions =  objRcPaginationSelect.options;
+
+        expect(objOptions.length).toBe(3);
+        expect(objOptions[0].label).toBe('10');
+        expect(objOptions[1].label).toBe('20');
+        expect(objOptions[2].label).toBe('50');
+
+    });
+
 });
