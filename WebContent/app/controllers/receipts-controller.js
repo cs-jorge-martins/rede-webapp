@@ -491,12 +491,12 @@ angular.module('Conciliador.movementsModule',[])
 
 		arrFutureReleasesData = [];
 
-		var dateTestDate = $scope.futureReleases.startDate instanceof Date;
-		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
+		var objTestDate = $scope.futureReleases.startDate instanceof Date;
+		var objStartDate = !objTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
 
-		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
-		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));
-		$scope.futureReleases.startDateYear = calendarFactory.getYearOfDate(dateStartDate);
+		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(objStartDate);
+		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(objStartDate));
+		$scope.futureReleases.startDateYear = calendarFactory.getYearOfDate(objStartDate);
 		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
 		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
 		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
@@ -897,7 +897,7 @@ angular.module('Conciliador.movementsModule',[])
 				}
 			}
 		} else {
-			strLabel = null
+			strLabel = null;
 		}
 
 		if(bolIsFuture) {
