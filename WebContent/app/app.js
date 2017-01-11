@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
+var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
                             'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
                             'com.2fdevs.videogular.plugins.controls',
@@ -57,7 +57,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
    $httpProvider.defaults.headers.patch = {};
 
 	$httpProvider.interceptors.push(function ($q, $rootScope, $location, $window) {
-		$rootScope.baseUrl = app.endpoint;
+		$rootScope.baseUrl = objApp.endpoint;
 
         return {
         	'request': function(config) {
@@ -360,7 +360,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 	};
 })
 
-app.filter('utc', function(){
+objApp.filter('utc', function(){
   return function(val){
     var date = new Date(val);
      return new Date(date.getUTCFullYear(),
@@ -372,7 +372,7 @@ app.filter('utc', function(){
   };
 });
 
-app.filter('brst', function(){
+objApp.filter('brst', function(){
   return function(val){
     return new Date(val);
   };
