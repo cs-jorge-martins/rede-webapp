@@ -76,10 +76,10 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="details in detailsData">
-					<td>{{ details.expectedDate | date }}</td>
-					<td>{{ details.roDate | date }}</td>
+					<td>{{ details.expectedDate | date: 'dd/MM/yyyy' }}</td>
+					<td>{{ details.roDate | date: 'dd/MM/yyyy' }}</td>
 					<td>{{ details.roNumber }}</td>
-					<td>{{ details.transactionQuantity }}</td>
+					<td>{{ details.transactionQuantity || "-" }}</td>
 					<td>{{ details.gross | currency: ""}}</td>
 					<td>{{ details.expectedAmount | currency: ""}}</td>
 					<td>{{ details.sourceShopCode }}</td>
