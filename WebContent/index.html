@@ -45,6 +45,7 @@
 
     <div id="modalWrapperV1" class="v1"></div>
     <div id="modalWrapperV2" class="v2"></div>
+    <rc-disclaimer></rc-disclaimer>
     <div class="v2" ng-if="!hideHeaderAndFooter">
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu, 'modal-blur': $root.modalOpen}"></header>
     </div>
