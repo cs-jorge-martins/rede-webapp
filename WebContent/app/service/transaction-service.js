@@ -70,8 +70,8 @@
                 timeout: intTimeout,
 				headers: Request.setHeaders()
 			}).then(success, function(response){
-                var dateRespTime = new Date().getTime() - objStartTime;
-                if (dateRespTime >= intTimeout){  //timeout status must be explicitly set
+                var objRespTime = new Date().getTime() - objStartTime;
+                if (objRespTime >= intTimeout){  //timeout status must be explicitly set
                     response.status = 408;
                 }
                 error(response);
