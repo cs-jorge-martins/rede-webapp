@@ -164,9 +164,8 @@
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 
             TransactionService.ExportTransactions(objFilter, function ok(objResponse){
-                var strUrl = objResponse.data;
-                if (strUrl.indexOf("http") === 0){
-                    $window.location = objResponse.data;
+                if (objResponse.data.url.indexOf("http") === 0){
+                    $window.location = objResponse.data.url;
                 } else {
                     $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
                 }
@@ -239,18 +238,19 @@
 
 			$scope.synthetic = {};
 			$scope.synthetic.items = [];
-			$scope.synthetic.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
-			$scope.synthetic.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+
+			$scope.synthetic.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
+			$scope.synthetic.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 
 			$scope.analytical = {};
 			$scope.analytical.items = [];
-			$scope.analytical.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
-			$scope.analytical.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+			$scope.analytical.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
+			$scope.analytical.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 
 			$scope.duplicate = {};
 			$scope.duplicate.items = [];
-			$scope.duplicate.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
-			$scope.duplicate.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year()));
+			$scope.duplicate.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
+			$scope.duplicate.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 		};
 
 		function ClearSyntheticFilter() {

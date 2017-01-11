@@ -152,11 +152,12 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		function SetCalendarLastReleases() {
 			var objToday = calendarFactory.getToday();
+			var objTomorrow = calendarFactory.getTomorrowFromTodayToDate();
 			$scope.initialDate = objToday;
 			$scope.finishDate = objToday;
 			$scope.initialMinDate = null;
-			$scope.finishMinDate = null;
 			$scope.initialMaxDate = objToday;
+			$scope.finishMinDate = $scope.initialDate;
 			$scope.finishMaxDate = objToday;
 		}
 
@@ -165,8 +166,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.initialDate = objTomorrow;
 			$scope.finishDate = objTomorrow;
 			$scope.initialMinDate = objTomorrow;
-			$scope.finishMinDate = objTomorrow;
 			$scope.initialMaxDate = null;
+			$scope.finishMinDate = $scope.initialDate;
 			$scope.finishMaxDate = null;
 		}
 

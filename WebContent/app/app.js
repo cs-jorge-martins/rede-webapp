@@ -156,7 +156,6 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
        $rootScope.loading = false;
     });
 
-
 	$rootScope.signIn = SignIn;
     $rootScope.logout = Logout;
     $rootScope.destroyVariablesSession = DestroyVariablesSession;

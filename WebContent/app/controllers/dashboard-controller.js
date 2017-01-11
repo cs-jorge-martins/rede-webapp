@@ -11,9 +11,19 @@ angular.module('Conciliador.dashboardController',[])
 
 	menuFactory.setActiveDashboard();
 
-	$scope.firstDayOfCurrentMonth = calendarFactory.getFirstDayOfMonthForDashboard();
 	$scope.now = calendarFactory.getActualDateForDashboard();
-	$scope.actualMonth = calendarFactory.getNameOfMonthAndYearForDashboard();
+
+	$scope.currentPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfMonth());
+	$scope.currentPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfCurrentMonthForDashboard());
+	$scope.currentPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
+	$scope.currentPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
+
+	$scope.prevPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfLastMonthForDashboard());
+	$scope.prevPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfLastMonthForDashboard());
+	$scope.prevPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
+	$scope.prevPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
+
+	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDateOfLastMonth());
 
 	$scope.sales = Sales;
 
@@ -27,12 +37,10 @@ angular.module('Conciliador.dashboardController',[])
 		$scope.cancellationValues = {};
 
 		$scope.dashboardComparativeValuesDTO.sumOfQuantitiesTransactions = 0;
-		//	$scope.dashboardComparativeValuesDTO.percentOfQuantityTransactionsBetweenMonths = 0;
 		$scope.dashboardComparativeValuesDTO.sumOfQuantitiesTransactionsLastMonth = 0;
 		$scope.dashboardComparativeValuesDTO.sumOfTotalsAmountTransactions = 0;
 		$scope.percentOfQuantityTransactionsBetweenMonths = 0;
 		$scope.percentOfTotalsAmountTransactionsBetweenMonths = 0;
-		//	$scope.dashboardComparativeValuesDTO.percentOfTotalsAmountTransactionsBetweenMonths = 0;
 		$scope.dashboardComparativeValuesDTO.sumOfTotalsAmountTransactionsLastMonth = 0;
 		$scope.dashboardComparativeValuesDTO.totalPayedPeriod = 0;
 		$scope.dashboardComparativeValuesDTO.percentOfTotalPayedBetweenMonths = 0;
@@ -94,11 +102,14 @@ angular.module('Conciliador.dashboardController',[])
 
 		$scope.lastMonthPerid = new Period();
 		$scope.lastMonthPerid.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
-		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getLastDayOfLastMonthForDashboard());
+		$scope.lastMonthPerid.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDayOfLastMonthForDashboard());
+
+		$scope.lastMonthPeridMovement = new Period();
+		$scope.lastMonthPeridMovement.firstDate = calendarFactory.formatDateForService(calendarFactory.getFirstDayOfLastMonthForDashboard());
+		$scope.lastMonthPeridMovement.lastDate = calendarFactory.formatDateForService(calendarFactory.getActualDateOfLastMonth());
 
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
-		SetNplicateTransactionBox();
 		SetTransactionConciliationBox();
 	}
 
@@ -137,26 +148,23 @@ angular.module('Conciliador.dashboardController',[])
 				}
 
 				// Calculo de percentuais
-				$scope.percentOfQuantityTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.quantity - $scope.transactionSummaryBoxPrevMonth.quantity) * 100) / $scope.transactionSummaryBoxPrevMonth.quantity | 0;
-				$scope.percentOfTotalsAmountTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxPrevMonth.amount) * 100) / $scope.transactionSummaryBoxPrevMonth.amount | 0;
+				$scope.percentOfQuantityTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.quantity - $scope.transactionSummaryBoxPrevMonth.quantity) * 100) / ($scope.transactionSummaryBoxPrevMonth.quantity || 1);
+				$scope.percentOfTotalsAmountTransactionsBetweenMonths = (($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxPrevMonth.amount) * 100) / ($scope.transactionSummaryBoxPrevMonth.amount || 1);
 
 				// Calculo ticket médio
 				if($scope.transactionSummaryBoxCurrentMonth.quantity !== 0){
-					$scope.ticketAverageCurrentMonth = ($scope.transactionSummaryBoxCurrentMonth.amount/$scope.transactionSummaryBoxCurrentMonth.quantity);
+					$scope.ticketAverageCurrentMonth = ($scope.transactionSummaryBoxCurrentMonth.amount / $scope.transactionSummaryBoxCurrentMonth.quantity);
 				}else{
 					$scope.ticketAverageCurrentMonth = 0;
 				}
 
 				if($scope.transactionSummaryBoxPrevMonth.quantity !== 0){
-					$scope.ticketAveragePrevMonth = ($scope.transactionSummaryBoxPrevMonth.amount/$scope.transactionSummaryBoxPrevMonth.quantity);
+					$scope.ticketAveragePrevMonth = ($scope.transactionSummaryBoxPrevMonth.amount / $scope.transactionSummaryBoxPrevMonth.quantity);
 				}else{
 					$scope.ticketAveragePrevMonth = 0;
 				}
 
-				$scope.percentOfTicketAverageBetweenMonths = ([($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100]/ $scope.ticketAveragePrevMonth) | 0;
-
-				$scope.totalTaxaAdm = ($scope.transactionSummaryBoxCurrentMonth.amount - $scope.transactionSummaryBoxCurrentMonth.net);
-
+				$scope.percentOfTicketAverageBetweenMonths = (($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100) / ($scope.ticketAveragePrevMonth || 1);
 			});
 		});
 	};
@@ -180,8 +188,8 @@ angular.module('Conciliador.dashboardController',[])
 
 			var objMovementSummaryBoxCurrentPrevFilter = {};
 			objMovementSummaryBoxCurrentPrevFilter.currency = $rootScope.currency;
-			objMovementSummaryBoxCurrentPrevFilter.startDate = $scope.lastMonthPerid.firstDate;
-			objMovementSummaryBoxCurrentPrevFilter.endDate = $scope.lastMonthPerid.lastDate;
+			objMovementSummaryBoxCurrentPrevFilter.startDate = $scope.lastMonthPeridMovement.firstDate;
+			objMovementSummaryBoxCurrentPrevFilter.endDate = $scope.lastMonthPeridMovement.lastDate;
 			objMovementSummaryBoxCurrentPrevFilter.status = 'FORETHOUGHT,RECEIVED';
 
 
@@ -193,22 +201,8 @@ angular.module('Conciliador.dashboardController',[])
 					$scope.movementionSummaryBoxPrevMonth = objItem[0];
 				}
 
-				$scope.percentOfTotalPayedBetweenMonths = ([($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100]/ $scope.movementionSummaryBoxPrevMonth.payedAmount) | 0;
+				$scope.percentOfTotalPayedBetweenMonths = (($scope.movementSummaryBoxCurrentMonth.payedAmount - $scope.movementionSummaryBoxPrevMonth.payedAmount) * 100) / ($scope.movementionSummaryBoxPrevMonth.payedAmount || 1);
 			});
-		});
-	}
-
-
-	/********************************* NPLICATE SUMMARY BOX *************************************/
-	function SetNplicateTransactionBox(){
-		var objTransactionSummaryNplicate = {};
-		objTransactionSummaryNplicate.currency =  $rootScope.currency;
-		objTransactionSummaryNplicate.startDate = $scope.currentMonthPerid.firstDate;
-		objTransactionSummaryNplicate.endDate = $scope.currentMonthPerid.lastDate;
-
-		dashboardService.GetNplicateTransactionSummary(objTransactionSummaryNplicate).then(function(objResponse){
-			var objItem = objResponse.data.content;
-			$scope.totalDuplicate = objItem[0].amount;
 		});
 	}
 
@@ -316,6 +310,7 @@ angular.module('Conciliador.dashboardController',[])
 					arrChartDays.push(0);
 				}
 			}
+			arrChartDays.pop();
 		}
 
 		return arrChartDays;
