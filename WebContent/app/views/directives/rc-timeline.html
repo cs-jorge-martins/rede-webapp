@@ -26,10 +26,10 @@
             <article ng-class="{small: initialValue <= 0}">
                 <aside ng-class="{gray: initialValue <= 0, hidden: finalValue <= 0 || initialValue <= 0}">
                     <ng-show ng-if="timeLinePercentage != 0 && timeLinePercentage != 100">
-                        {{ timeLinePercentage | number: 2 }}%
+                    {{ timeLinePercentage | number: 2 }}%
                     </ng-show>
                     <ng-show ng-if="timeLinePercentage == 0 || timeLinePercentage == 100">
-                        {{ timeLinePercentage | number: 2}}%
+                        {{ timeLinePercentage | number: 0}}%
                     </ng-show>
                     do valor
                 </aside>
