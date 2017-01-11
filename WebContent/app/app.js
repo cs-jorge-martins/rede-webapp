@@ -120,16 +120,28 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 
 	init();
 
+    $rootScope.pageTitle = PageTitle;
+    $rootScope.hideHeaderAndFooter = false;
+    $rootScope.signIn = SignIn;
+    $rootScope.logout = Logout;
+    $rootScope.destroyVariablesSession = DestroyVariablesSession;
+    $rootScope.restartAlerts = RestartAlerts;
+    $rootScope.currencySelected = CurrencySelected;
+    $rootScope.closeAlert = CloseAlert;
+    $rootScope.sortResults = SortResults;
+    $rootScope.showAlert = ShowAlert;
+    $rootScope.modalOpen = false;
+    $rootScope.loading = true;
+
 	function init() {
 		WatchRouteChange();
         RemoveLoader();
-		InitiateRootVariables();
 	}
+
 
 	function WatchRouteChange() {
 		$rootScope.$on('$routeChangeSuccess', function() {
 			$rootScope.migrationId = $route.current.$$route.migrationId;
-			$rootScope.pageTitle = $route.current.$$route.title;
 			RcMessageService.clear();
 		});
 	}
@@ -144,27 +156,13 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
         }, 1000);
     }
 
-    function InitiateRootVariables() {
-		$rootScope.hideHeaderAndFooter = false;
-	}
-
-    $rootScope.loading = true;
-    $rootScope.$on("cfpLoadingBar:loading",function(){
-       $rootScope.loading = true;
-    });
-    $rootScope.$on("cfpLoadingBar:completed",function(){
-       $rootScope.loading = false;
-    });
-
-	$rootScope.signIn = SignIn;
-    $rootScope.logout = Logout;
-    $rootScope.destroyVariablesSession = DestroyVariablesSession;
-    $rootScope.restartAlerts = RestartAlerts;
-    $rootScope.currencySelected = CurrencySelected;
-    $rootScope.closeAlert = CloseAlert;
-    $rootScope.sortResults = SortResults;
-    $rootScope.showAlert = ShowAlert;
-    $rootScope.modalOpen = false;
+    function PageTitle() {
+        try {
+            return $route.current.$$route.title;
+        } catch (objError) {
+            return '';
+        }
+    };
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
@@ -292,6 +290,14 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 
 		return strOrderString;
 	};
+
+    $rootScope.$on("cfpLoadingBar:loading",function(){
+       $rootScope.loading = true;
+    });
+
+    $rootScope.$on("cfpLoadingBar:completed",function(){
+       $rootScope.loading = false;
+    });
 
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {

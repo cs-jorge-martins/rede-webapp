@@ -1,11 +1,4 @@
 <section class="relatorio" id="relatorio">
-
-    <div class="date">
-        <h2>cancelamentos e chargebacks</h2>
-    </div>
-
-	<br />
-
     <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
     <ul class="indicators" id="reportIndicators">
         <li ng-class="{'active': adjustType[0] == 'CANCELLATION'}">
