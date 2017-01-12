@@ -118,10 +118,10 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
 	function GetYesterdayDate(){
-		var dateToday = moment().tz(strTimezone);
+		var objToday = moment().tz(strTimezone);
 		//Obter ultimo dia do mes anterior, pois ja havia somado um mes anteriormente
-		var dateYesterday = dateToday.subtract(1, 'day');
-		return dateYesterday.tz(strTimezone).format(strFormat);
+		var objYesterday = objToday.subtract(1, 'day');
+		return objYesterday.tz(strTimezone).format(strFormat);
 	}
 
 	function GetFirstDayOfMonthForDashboard() {
@@ -195,8 +195,8 @@ angular.module('Kaplen.CalendarFactory',[])
 
 
     function FormatDateForService(date) {
-        var dateMomentTemp = moment(date, strFormat).tz(strTimezone);
-		return dateMomentTemp.format("YYYYMMDD");
+        var objMomentTemp = moment(date, strFormat).tz(strTimezone);
+		return objMomentTemp.format("YYYYMMDD");
     }
 
     function FormatDateTimeForService(date) {
