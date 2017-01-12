@@ -1,7 +1,7 @@
 <div class="rc-pagination" ng-if="resultsPaginationTotalItens">
     <div class="results-per-page">
         <label for="total-itens-{{$id}}">resultados por página</label>
-        <div class="select">
+        <div class="select-wrapper">
             <select ng-model="resultsPerPageModel"
                     ng-change="onChange()"
                     ng-options="option for option in resultsPerPageOptions"

@@ -93,7 +93,7 @@
              * @return {Number} $scope.resultsPerPageModel
              */
             function CheckResultsPerPageModel() {
-                $scope.resultsPerPageModel = $scope.resultsPerPageModel ? $scope.resultsPerPageModel : $scope.resultsPerPageOptions[0];
+                $scope.resultsPerPageModel = $scope.resultsPerPageModel || $scope.resultsPerPageOptions[0];
             }
 
 		}
