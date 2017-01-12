@@ -21,7 +21,7 @@
                 type: "=",
                 text: "=",
                 actionText: "=",
-                onClick: "&"
+                onClick: "="
             },
             controller: Controller
         };

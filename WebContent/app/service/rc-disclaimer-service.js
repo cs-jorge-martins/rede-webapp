@@ -35,7 +35,7 @@
          *      RcDisclaimerService.create('warning', 'existem vendas duplicadas', 'ver detalhes', $scope.teste);
          *
          */
-        this.create = function(strType, strText, strActionText, funOnClick) {
+        this.create = function(strType, strText, strActionText, strLinkOnClick) {
 
             if($rootScope.rcDisclaimer) {
                 this.clear();
@@ -45,7 +45,7 @@
                 type: strType,
                 text: strText,
                 actionText: strActionText,
-                onClick: funOnClick
+                onClick: strLinkOnClick
             };
 
         };
