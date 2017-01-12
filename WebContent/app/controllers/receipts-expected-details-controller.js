@@ -43,7 +43,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
 
 				$scope.back = Back;
-				$scope.changeTab = changeTab;
+				$scope.changeTab = ChangeTab;
 				$scope.tabs = [];
 				$scope.translateStatus = TranslateStatus;
 
@@ -112,7 +112,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 	    }
 
-	    function changeTab(intIndex, intAcquirerId) {
+	    function ChangeTab(intIndex, intAcquirerId) {
 	    	$scope.tabs[intIndex].active = true;
 			$scope.sort = "";
 			GetExpectedDetails(intAcquirerId);
