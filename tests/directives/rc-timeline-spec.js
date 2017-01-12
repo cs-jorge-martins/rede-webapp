@@ -38,7 +38,7 @@ describe('rc-timeline directive', function(){
 
         var strPercentDiv = strTemplateNode.querySelector('div.percent').outerHTML;
 
-        expect(strPercentDiv).toContain('10,00%');
+        expect(strPercentDiv).toContain('10%');
 
     });
 
@@ -62,25 +62,6 @@ describe('rc-timeline directive', function(){
         scope.$digest();
 
         expect(strFinalValueHtml.classList.contains('hidden')).toBe(true);
-    });
-
-    it("should show 0% and 100% instead 0,00% and 100,00% ", function () {
-
-        var strPercentDiv = strTemplateNode.querySelector('div.percent').outerHTML;
-        expect(strPercentDiv).toContain('30,00%');
-
-        scope.dblInitialValue = 0;
-        scope.dblFinalValue = 100;
-        scope.$digest();
-        var strChangedPercentDiv = strTemplateNode.querySelector('div.percent').outerHTML;
-        expect(strChangedPercentDiv).toContain('0%');
-
-        scope.dblInitialValue = 100;
-        scope.dblFinalValue = 100;
-        scope.$digest();
-        var strNewChangedPercentDiv = strTemplateNode.querySelector('div.percent').outerHTML;
-        expect(strNewChangedPercentDiv).toContain('100%');
-
     });
 
 });

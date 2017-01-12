@@ -36,7 +36,7 @@ describe('rc-pagination directive', function(){
 
     it("should have only option equal to 10 on select with 9 items", function () {
 
-        var objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        var objRcPaginationSelect = strTemplateNode.querySelector('.select-wrapper select');
         var objOptions =  objRcPaginationSelect.options;
 
         expect(objOptions.length).toBe(3);
@@ -44,7 +44,7 @@ describe('rc-pagination directive', function(){
         scope.intTotalItens = 9;
         scope.$digest();
 
-        objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        objRcPaginationSelect = strTemplateNode.querySelector('.select-wrapper select');
         objOptions =  objRcPaginationSelect.options;
 
         expect(objOptions.length).toBe(1);
@@ -54,7 +54,7 @@ describe('rc-pagination directive', function(){
 
     it("should have options equal to 10 and 20 on select with 15 items", function () {
 
-        var objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        var objRcPaginationSelect = strTemplateNode.querySelector('.select-wrapper select');
         var objOptions =  objRcPaginationSelect.options;
 
         expect(objOptions.length).toBe(3);
@@ -62,7 +62,7 @@ describe('rc-pagination directive', function(){
         scope.intTotalItens = 15;
         scope.$digest();
 
-        objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        objRcPaginationSelect = strTemplateNode.querySelector('.select-wrapper select');
         objOptions =  objRcPaginationSelect.options;
 
         console.log("objOptions", objOptions[0].label);
@@ -75,7 +75,7 @@ describe('rc-pagination directive', function(){
 
     it("should have options equal to 10, 20 and 30 on select with 60 items", function () {
 
-        var objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        var objRcPaginationSelect = strTemplateNode.querySelector('.select-wrapper select');
         var objOptions =  objRcPaginationSelect.options;
 
         expect(objOptions.length).toBe(3);
@@ -83,7 +83,7 @@ describe('rc-pagination directive', function(){
         scope.intTotalItens = 60;
         scope.$digest();
 
-        objRcPaginationSelect = strTemplateNode.querySelector('.select select');
+        objRcPaginationSelect = strTemplateNode.querySelector('.select-wrapper select');
         objOptions =  objRcPaginationSelect.options;
 
         expect(objOptions.length).toBe(3);
