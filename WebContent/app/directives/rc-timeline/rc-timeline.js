@@ -25,7 +25,7 @@
                 labelFinalValue: "=",
                 initialValue: "=",
                 finalValue: "=",
-                totalValue: "=",
+                totalValue: "=?",
                 labelTotalValue: "="
             },
             controller: Controller
@@ -46,12 +46,12 @@
             
             function GetPercentage() {
 
-                var xCompareValue = $scope.totalValue ? $scope.totalValue : $scope.finalValue;
+                var intCompareValue = $scope.totalValue || $scope.finalValue;
 
-                if($scope.initialValue === 0 && xCompareValue === 0) {
+                if($scope.initialValue === 0 && intCompareValue === 0) {
                     $scope.timeLinePercentage = 0;
                 } else {
-                    $scope.timeLinePercentage = $scope.initialValue / xCompareValue * 100;
+                    $scope.timeLinePercentage = $scope.initialValue / intCompareValue * 100;
                 }
 
             }

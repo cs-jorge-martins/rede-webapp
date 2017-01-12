@@ -70,6 +70,7 @@ $inputBackgroundColor: #fff;
 $inputBorderColorFocus: #ccc;
 $inputIconColor: $mediumGray;
 $inputIconFontSize: 1.5em;
+$selectMainColor: $mediumGray;
 
 // font-family
 $fontBold: 'open_sanssemibold';
@@ -92,6 +93,10 @@ $rcTimelineSecondaryColor: $platinum;
 $rcTimelineSuccessColor: $jade;
 $rcTimelineTitleColor: $grafitteGray;
 $rcTimelineTimelineBackgroundColor: $mediumGray;
+
+// rc-pagination
+$rcPaginationLinkActiveColor: $defaultOrange;
+$rcPaginationDefaultColor: $grafitteGray;
 
 // panels
 $panelSucessBackgroundColor: $jade;
