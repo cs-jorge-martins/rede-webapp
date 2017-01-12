@@ -1,0 +1,55 @@
+.rc-disclaimer {
+
+  background: #fff;
+  height: 48px;
+  padding: 0;
+  position:relative;
+  width: 100%;
+
+  .container {
+
+    padding: 0;
+
+    &:before {
+      font-family: $fontItau;
+      font-size: 2em;
+      padding: 0.5em 0 0 0;
+      position: absolute;
+    }
+
+  }
+
+  p {
+
+    display: inline-block;
+    font-size: 1.1em;
+    margin: 1.2em 0 0 3.5em;
+
+  }
+
+  button {
+
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0.9em 0 0 0;
+    text-decoration: underline;
+
+  }
+
+  &.warning {
+
+    background: $warningBackgroundColor;
+    color: $warningColor;
+
+    .container:before {
+      content: "\ea0d";
+    }
+
+    button {
+      color: $warningColor;
+    }
+
+  }
+
+}

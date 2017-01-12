@@ -37,6 +37,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
                             'Conciliador.AdjustService',
                             'Conciliador.RcMessageService',
+                            'Conciliador.RcDisclaimerService',
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.MovementService',
@@ -116,7 +117,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout, RcMessageService) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout, RcMessageService, RcDisclaimerService) {
 
 	init();
 
@@ -124,7 +125,23 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		WatchRouteChange();
         RemoveLoader();
 		InitiateRootVariables();
+		InitDisclaimer();
 	}
+
+	function InitDisclaimer() {
+
+		var objDisclaimer = {
+			type: 'warning',
+            text: 'Os termos de uso e política de privacidade foram atualizados e ao continuar navegando neste você aceita suas condições.',
+            actionText: 'Saiba Mais.',
+            onClick: function () {
+				console.log("clicado");
+            }
+		};
+
+		RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
+
+    }
 
 	function WatchRouteChange() {
 		$rootScope.$on('$routeChangeSuccess', function() {
