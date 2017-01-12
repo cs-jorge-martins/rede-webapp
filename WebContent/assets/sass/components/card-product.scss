@@ -1,0 +1,96 @@
+.card-product {
+
+  @extend .imageReplacement;
+  background-image: url(#{$imgPath}flags.png);
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 27px;
+  margin-right: 10px;
+  width: 45px;
+
+  /* mastercard */
+  &.brand-1 {
+    background-position: -720px 0;
+  }
+
+  /* diners */
+  &.brand-2 {
+    background-position: -245px 0;
+  }
+
+  /* visa e visa credito */
+  &.brand-3, &.brand-21 {
+    background-position: -1060px 0;
+  }
+
+  /* cabal débito e cabal crédito */
+  &.brand-4, &.brand-8 {
+    background-position: -104px 0 ;
+  }
+
+  /* hipercard  */
+  &.brand-5 {
+    background-position: -533px 2px;
+  }
+
+  /* maestro */
+  &.brand-6 {
+    background-position: -631px 0;
+  }
+
+  /* visa electron */
+  &.brand-7 {
+    background-position: -340px 1px;
+  }
+
+  /* sorocred */
+  &.brand-19 {
+    background-position: -870px 0;
+  }
+
+  /* sicredi debito e credito - nao tem imagem ainda */
+  &.brand-24, &.brand-79 {
+    visibility: hidden;
+  }
+
+  /* credsystem  */
+  &.brand-28 {
+    background-position: -675px 0;
+  }
+
+  /* banescard débito */
+  &.brand-59, &.brand-96 {
+    background-position: -54px 1px;
+  }
+
+  /* outras bandeiras */
+  &.brand-80, &.brand-81 {
+    visibility: hidden;
+  }
+
+  /* union pay */
+  &.brand-97 {
+    background-position: -963px 0;
+  }
+
+  /* avista - nao tem img ainda */
+  &.brand-104 {
+    visibility: hidden;
+  }
+
+  /* jcb */
+  &.brand-106 {
+    background-position: -580px 0;
+  }
+
+  /* credz */
+  &.brand-108 {
+    background-position: -195px 0;
+  }
+
+  /* hiper */
+  &.brand-109 {
+    background-position: -485px 0;
+  }
+
+}

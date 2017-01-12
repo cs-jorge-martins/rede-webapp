@@ -1,9 +1,4 @@
 <section class="financas" id="financeiro">
-    <ol class="breadCrumb">
-        <li>você está em:</li>
-        <li><a href="#/home">home</a></li>
-        <li><a href="#/receipts">recebimentos</a></li>
-    </ol>
 
     <div class="date">
         <h2>
@@ -12,8 +7,8 @@
     <div class="page-title">recebimentos</div>
     <div id="receipts">
         <div id="headerTabs" class="filter-depth container">
-            <uib-tabset active="activeTab">
-                <uib-tab index="0" heading="últimos lançamentos" select="changeTab(0)" id="botaoConciliacaoDiaTour">
+            <uib-tabset active="activeReceipts">
+                <uib-tab heading="últimos lançamentos" select="changeTab(0)">
                     <h3>utilize os campos abaixo para filtrar sua busca:</h3>
                     <div class="filtersWrapper">
                         <div class="receipts_present_filters">
@@ -145,7 +140,7 @@
                                     <th></th>
                                 </tr>
                             </tbody>
-                            <tr class="group" ng-show="item.otherReleases">
+                            <tr class="card-product-line" ng-show="item.otherReleases">
                                 <th></th>
                                 <th>outros lançamentos</th>
                                 <th>{{ item.otherReleasesTotal | customCurrency }}</th>
@@ -154,7 +149,7 @@
                                 </th>
                             </tr>
                              <tbody ng-show="item.otherReleases">
-                                <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos card-product-line">
+                                <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
                                     <th></th>
                                     <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
                                     <th>{{ otherRelease.amount | customCurrency: ''}} </th>
@@ -166,7 +161,7 @@
                     </article>
                     <!-- LANCAMENTOS ATUAIS: END -->
                 </uib-tab>
-                <uib-tab index="1" heading="lançamentos futuros" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+                <uib-tab heading="lançamentos futuros" select="changeTab(1)">
             		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
             		<div class="filtersWrapper">
                         <div class="receipts_future_filters">
@@ -222,6 +217,9 @@
                             </div>
                         </div>
                         <rc-timeline
+                                label-initial-value="'Lançamentos no período selecionado'"
+                                label-final-value="'Total de lançamentos previstos no próximo ano'"
+                                monetary-values="true"
                                 date-range="futureReleases.dateRange"
                                 max-date-range="customTimelineExpectedAmount.maxDateRange"
                                 initial-value="customTimelineExpectedAmount.expectedAmount"

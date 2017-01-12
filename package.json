@@ -9,6 +9,7 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-http-server": "^2.0.0",
+    "grunt-jsduck": "^1.0.1",
     "grunt-karma": "^2.0.0",
     "grunt-ng-constant": "^2.0.1",
     "http-server": "^0.7.4",

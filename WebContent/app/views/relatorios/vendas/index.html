@@ -1,10 +1,4 @@
 <section class="relatorio" id="relatorio">
-	<ol class="breadCrumb">
-		<li>você está em:</li>
-        <li><a href="#/home">home</a></li>
-        <li><a href="#/relatorio/vendas">relatórios</a></li>
-        <li><a href="#/relatorio/vendas">relatório de vendas</a></li>
-    </ol>
 
 	<div class="date">
 		<h2>relatório de vendas</h2>
@@ -12,7 +6,6 @@
 	<br />
 
 	<div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
-
 	<div id="primaryContent">
 		<!-- relatorio sintetico -->
 		<uib-tabset>
@@ -28,7 +21,7 @@
 											<ul>
 												<li class="itauicon-itaufonts_calendario">
 													<label for="" class="itauicon-itaufonts_calendario"></label>
-													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="synthetic.initialDate" is-open="openFirstsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateSynthetic(synthetic.initialDate)" accept=""close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstsynthetic = true" placeholder="Período de vendas" readonly="true" datepicker-append-to-body="true" />
+													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="synthetic.initialDate" is-open="openFirstsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeInitialDateSynthetic(synthetic.initialDate)" accept=""close-text="Fechar" clear-text="Limpar" ng-click="openFirstsynthetic = true" readonly="true" datepicker-append-to-body="true" />
 
 													<label for="" class="at">Até</label>
 													<input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="synthetic.finalDate" is-open="openLastsynthetic" datepicker-options="dateOptions" ng-required="true" ng-change="changeFinalDateSynthetic(synthetic.finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastsynthetic = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" readonly="true" datepicker-append-to-body="true" />
@@ -145,7 +138,7 @@
 									<th ng-click="sortResults($event,'authorization', 'analitico')">autorização</th>
 									<th ng-click="sortResults($event,'cardNumber', 'analitico')">cartão</th>
 									<th ng-click="sortResults($event,'installment', 'analitico')">plano</th>
-									<th ng-click="sortResults($event,'terminal.code', 'analitico')">maquineta</th>
+									<th ng-click="sortResults($event,'terminal.code', 'analitico')">terminal</th>
 									<th ng-click="sortResults($event,'gross', 'analitico')">valor bruto (R$)</th>
 								</tr>
 							</thead>
@@ -271,7 +264,7 @@
 									<th ng-click="sortResults($event,'authorization', 'duplicadas')">autorização</th>
 									<th ng-click="sortResults($event,'cardNumber', 'duplicadas')">cartão</th>
 									<th ng-click="sortResults($event,'installment', 'duplicadas')">plano</th>
-									<th ng-click="sortResults($event,'terminal.code', 'duplicadas')">maquineta</th>
+									<th ng-click="sortResults($event,'terminal.code', 'duplicadas')">terminal</th>
 									<th ng-click="sortResults($event,'gross', 'duplicadas')">valor bruto (R$)</th>
 								</tr>
 							</thead>

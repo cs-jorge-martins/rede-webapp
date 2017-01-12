@@ -96,12 +96,6 @@ angular.module('Conciliador.movementsModule',[])
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = calendarFactory.getToday();
         GetFilters();
-		GetForethought();
-		if ($rootScope.futureSelected) {
-			$scope.activeTab = 1;
-		} else {
-			$scope.activeTab = 0;
-		}
 	}
 
 	function ToTrusted(html_code) {
@@ -540,7 +534,7 @@ angular.module('Conciliador.movementsModule',[])
 		var strDateYear;
 		var objMaxDate;
 
-		objMaxDate = calendarFactory.getNextYear();
+		objMaxDate = calendarFactory.getActualDateOfNextYear();
 		strDateDay = calendarFactory.getDayOfDate(objMaxDate);
 		strDateMonth = calendarFactory.getMonthNameAbreviation(objMaxDate);
 		strDateYear = calendarFactory.getYear(objMaxDate);
@@ -689,9 +683,6 @@ angular.module('Conciliador.movementsModule',[])
 	}
 
 	function ChangeTab(intIndex) {
-
-		$scope.tabs[intIndex].active = true;
-
 		if(intFilterStatus === 4) {
 	    	if(intIndex === 0) {
 	    		GetReceipt();
@@ -828,7 +819,7 @@ angular.module('Conciliador.movementsModule',[])
 			GetCachedData();
 			if ($rootScope.futureSelected) {
 				delete $rootScope.futureSelected;
-				GetFutureReceipt();
+				$scope.activeReceipts = 1;
 			} else {
 				GetReceipt();
 			}

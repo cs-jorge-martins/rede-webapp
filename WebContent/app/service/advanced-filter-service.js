@@ -184,7 +184,7 @@ angular.module('Conciliador.advancedFilterService',[])
 		} else {
 			return "Bandeira"
 		}
-	}
+	};
 
 	return objAdvancedFilterService;
 });

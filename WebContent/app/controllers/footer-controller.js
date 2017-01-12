@@ -17,6 +17,7 @@
 
 		var vm = this;
 		vm.dummy = dummy;
+		vm.year = (new Date()).getFullYear();
 
 		init();
 

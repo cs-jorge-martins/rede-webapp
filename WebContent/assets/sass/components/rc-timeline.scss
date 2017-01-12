@@ -1,0 +1,161 @@
+.timeline-wrapper {
+
+  height: 12.5em;
+
+  li {
+    list-style: none;
+  }
+
+  .timeline-head {
+
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    width: 100%;
+
+    li {
+
+      color: $rcTimelineSecondaryColor;
+      font-size: 1.167em;
+      font-weight: bolder;
+
+      span {
+        color: $rcTimelineMainColor;
+        display: inline-block;
+        margin-top: 0.250em;
+      }
+
+      &:first-child {
+        color: $rcTimelineTitleColor;
+      }
+
+      &:nth-child(2) {
+        text-align: right;
+      }
+
+    }
+
+  }
+
+  .total {
+
+    color: $rcTimelineMainColor;
+    display: flex;
+    float: left;
+    justify-content: space-between;
+    margin-top: 1.667em;
+    padding: 0;
+    width: 100%;
+
+    li {
+
+      font-family: $fontLight;
+      font-size: 3.333em;
+
+      .gray {
+        color: $rcTimelineSecondaryColor;
+      }
+
+      span.money {
+        float: left;
+        font-family: $fontRegular;
+        font-size: 0.350em;
+        height: 3.125em;
+        line-height: 5.2em;
+        margin-right: 0.317em;
+      }
+
+    }
+
+    .gray {
+      color: $rcTimelineSecondaryColor;
+    }
+
+    &.success {
+      color: $rcTimelineSuccessColor;
+    }
+
+  }
+
+  .timeline-block {
+
+    background: $rcTimelineTimelineBackgroundColor;
+    float: left;
+    height: 0.833em;
+    margin-top: 2.083em;
+    position: relative;
+    width: 100%;
+
+    &.success {
+      article aside {
+        color: $rcTimelineSuccessColor;
+      }
+      .percent:before {
+        background: $rcTimelineSuccessColor;
+      }
+    }
+
+    .percent {
+
+      -webkit-transition: width 1s;
+      transition: width 1s;
+      max-width: 100%;
+      position: relative;
+
+      &:before {
+        background: $rcTimelineMainColor;
+        content: "";
+        height: 0.833em;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+    }
+
+    article {
+
+      float: left;
+      margin: 0.833em 0;
+      min-width: 7.833em;
+      width: 100%;
+
+      aside {
+        color: $rcTimelineMainColor;
+        right: 0;
+        position: absolute;
+        margin-top: 0.667em;
+        font-family: $fontBold;
+      }
+
+    }
+
+    &:before {
+      content: "0%";
+      left: 0;
+    }
+
+    &:after {
+      content: "100%";
+      right: 0;
+    }
+
+    &:before, &:after {
+      position: absolute;
+      top: -20px;
+      color: $rcTimelineSecondaryColor;
+      font-weight: bolder;
+    }
+
+  }
+
+  .timeline-footer {
+    color: $rcTimelineTitleColor;
+    float:left;
+    font-size: 1em;
+    font-weight: bolder;
+    margin-top: 5em;
+  }
+
+}

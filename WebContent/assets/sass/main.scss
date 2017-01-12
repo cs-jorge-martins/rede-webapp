@@ -23,7 +23,8 @@
 
 .v2 {
 	@import 'components/button';
-	@import 'components/breadcrumb';
+	@import 'components/content-header';
+	@import 'components/checkbox';
 	@import 'components/font';
 	@import 'components/filter';
 	@import 'components/footer';
@@ -33,12 +34,23 @@
 	@import 'components/link';
 	@import 'components/loader';
 	@import 'components/menu';
+	@import 'components/modal';
 	@import 'components/text';
 	@import 'components/toastr';
+	@import 'components/tooltip';
 	@import 'components/rc-input';
 	@import 'components/rc-datepicker';
-
+	@import 'components/rc-message';
+	@import 'components/tabset';
+	@import 'components/panel';
+	@import 'components/table';
+	@import 'components/card-product';
+	@import 'components/rc-breadcrumb';
+	@import 'components/rc-chips';
+	@import 'components/rc-multiselect';
+	@import 'components/rc-timeline';
 	@import 'pages/login';
+	@import 'pages/sales';
 }
 
 @media only screen and (max-width : 1200px) {

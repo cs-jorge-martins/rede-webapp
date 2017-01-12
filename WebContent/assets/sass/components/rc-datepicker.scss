@@ -3,3 +3,256 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+.rcDatepicker {
+
+    font-family: $fontBold;
+
+    .form-control {
+        border-right: 0;
+    }
+
+    .input-group {
+        position: relative;
+
+        input {
+            background-color: $inputBackgroundColor;
+            color: $inputBackgroundColor;
+            border-color: $inputBorderColor;
+            border-radius: 0;
+            height: 40px;
+        }
+
+        span {
+            border-color: $inputBorderColor;
+            border-radius: 0;
+        }
+
+        .placeholder {
+            position: absolute;
+            left: 0;
+            color: $inputColor;
+            font-size: 1em;
+            z-index: 5;
+            padding: 1em;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .uib-datepicker-popup {
+        top: 3em !important;
+    }
+
+    .uib-datepicker {
+        font-size: 1em;
+        font-family: 'open_sansregular';
+
+        button {
+            background-color: transparent;
+            border: none;
+            color: #353230;
+            font-size: 1em;
+        }
+
+        thead {
+
+            tr {
+                height: 4em;
+
+                th:first-of-type {
+                    padding-left: 1.4em;
+                }
+                th:last-of-type {
+                    padding-right: 1.4em;
+                }
+            }
+
+            tr:first-of-type {
+                border-bottom: 1px solid #ddd;
+                height: inherit;
+
+                th {
+                    padding: inherit;
+                }
+            }
+
+            small {
+                text-transform: uppercase;
+                color: #575758;
+                font-size: 1.1em;
+            }
+
+            strong {
+                color: #575758;
+                color: rgba(87, 87, 88, 1);
+                font-size: 1.3em;
+                font-weight: 600;
+            }
+
+            button {
+                opacity: 1;
+
+                &:active:focus {
+                    background: none;
+                    box-shadow: none;
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                }
+            }
+
+            .btn-sm {
+                padding: 1.2em 1.5em;
+            }
+        }
+
+        .uib-day {
+            position: relative;
+
+            .btn-sm {
+                padding: 1.37em 2em;
+                font-size: 1.1em;
+            }
+
+            button {
+                position: relative;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+
+                &:hover {
+                    background: none;
+                    border: none;
+
+                    span {
+                        color: #ff7800;
+                    }
+                }
+
+                span {
+                    position: absolute;
+                    z-index: 11;
+                    left: 1.6em;
+                    top: 0.6em;
+                }
+
+            }
+
+            &.ball {
+                button {
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        background: #ff7800;
+                        border-radius: 50%;
+                        width: 2.2em;
+                        height: 2.2em;
+                        left: 0;
+                        z-index: 10;
+                        left: 1em;
+                        top: .2em;
+                    }
+                }
+            }
+
+            &.bar {
+                button {
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        background: #ff7800;
+                        width: 100%;
+                        height: 2.2em;
+                        left: -2em;
+                        top: 0.2em;
+                        padding-right: 8em;
+                        z-index: 10;
+                    }
+                }
+            }
+
+            &.ball, &.bar {
+                span {
+                    color: #fff;
+                }
+
+                &:hover {
+                    span {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+
+        .uib-weeks {
+            td:first-of-type {
+                padding-left: 1.4em;
+            }
+            td:last-of-type {
+                padding-right: 1.4em;
+            }
+        }
+
+        .text-muted {
+            color: #ddd;
+        }
+
+        .glyphicon {
+            font-family: 'itaufonts_master_24px_v1';
+            color: #ff7800;
+            font-size: 1.7em;
+
+            &.glyphicon-chevron-left:before {
+                content: '\e9b1';
+            }
+
+            &.glyphicon-chevron-right:before {
+                content: '\e9cd';
+            }
+        }
+    }
+
+    .dateFilters {
+        border-top: 1px solid #ddd;
+
+        .container {
+            width: inherit;
+        }
+
+        .row {
+            padding: 1em 0;
+        }
+
+        a {
+            &:hover {
+                text-decoration: none;
+
+                p {
+                    color: #ff7800;
+                }
+            }
+
+            p {
+                color: #575758;
+            }
+        }
+
+        p {
+            margin: 0;
+            color: #b9b8b8;
+            font-weight: 600;
+        }
+
+        .legend {
+            p {
+                margin-left: 1.4em;
+            }
+        }
+    }
+
+    & *:focus {
+        outline: 0 !important;
+    }
+}

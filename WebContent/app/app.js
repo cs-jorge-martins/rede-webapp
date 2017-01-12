@@ -26,13 +26,17 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 							'chieffancypants.loadingBar',
 							'Conciliador.integrationService', 'Conciliador.advancedFilterService',
 							'Conciliador.calendarService', 'Kaplen.CalendarFactory',
+							'Conciliador.UtilsFactory',
 							'Conciliador.Request', 'Conciliador.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
+                            'Conciliador.salesToConciliateController', 'Conciliador.salesConciliatedController',
                             'Conciliador.FinancialService',
                             'Conciliador.MovementSummaryService',
+                            'Conciliador.ModalService',
                             'Conciliador.AdjustSummaryService', 'Conciliador.TransactionService',
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
                             'Conciliador.AdjustService',
+                            'Conciliador.RcMessageService',
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.MovementService',
@@ -112,19 +116,21 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout, RcMessageService) {
 
 	init();
 
 	function init() {
-		WatchHtmlId();
+		WatchRouteChange();
         RemoveLoader();
 		InitiateRootVariables();
 	}
 
-	function WatchHtmlId() {
+	function WatchRouteChange() {
 		$rootScope.$on('$routeChangeSuccess', function() {
 			$rootScope.migrationId = $route.current.$$route.migrationId;
+			$rootScope.pageTitle = $route.current.$$route.title;
+			RcMessageService.clear();
 		});
 	}
 
@@ -149,7 +155,6 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
     $rootScope.$on("cfpLoadingBar:completed",function(){
        $rootScope.loading = false;
     });
-
 
 	$rootScope.signIn = SignIn;
     $rootScope.logout = Logout;
@@ -225,9 +230,10 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {
                     $uibModalInstance.close();
-                    $rootScope.modalOpen = false;
                 }
 			}
+		}).closed.then(function() {
+            $rootScope.modalOpen = false;
 		});
 		$rootScope.modalOpen = true;
 	}

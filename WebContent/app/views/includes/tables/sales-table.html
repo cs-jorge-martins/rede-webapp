@@ -1,0 +1,75 @@
+<div class="container box" ng-repeat="result in vm.resultModel">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            {{result.acquirer.name}}
+            <span>valor total: R$ {{ result.transactionsModel.totalAmount | currency: ""}}</span>
+        </div>
+        <div class="panel-body">
+            <table class="table" ng-if="result.transactionsModel.transactions">
+                <thead>
+                <tr>
+                    <th class="checkbox-header">
+                        <rc-checkbox-parent quantity-model="result.transactionsModel.count" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" checked="result.transactionsModel.allChecked" quantity-field="quantity"></rc-checkbox-parent>
+                    </th>
+                    <th>lançamentos</th>
+                    <th>valor bruto (R$)</th>
+                    <th>quantidade</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="transaction in result.transactionsModel.transactions">
+                    <th scope="row">
+                        <rc-checkbox quantity-model="result.transactionsModel.count" quantity-field="quantity" model="transaction" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" parent-checked="result.transactionsModel.allChecked"></rc-checkbox>
+                    </th>
+                    <td>
+                        <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
+                        {{transaction.cardProduct.name}}
+                    </td>
+                    <td>{{transaction.amount | currency: ''}}</td>
+                    <td>{{transaction.quantity}} vendas</td>
+                    <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="col-md-offset-9 col-md-3 reconcile-button">
+                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-secondary" ng-if="result.unprocessedModel">
+        <div class="panel-heading">
+            vendas não processadas
+            <span>valor total: R$ {{ result.unprocessedModel.totalAmount | currency: ""}}</span>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="checkbox-header">
+                        <rc-checkbox-parent quantity-model="result.unprocessedModel.count" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" checked="result.unprocessedModel.allChecked" quantity-field="quantity"></rc-checkbox-parent>
+                    </th>
+                    <th>lançamentos</th>
+                    <th>valor bruto (R$)</th>
+                    <th>quantidade</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="transaction in result.unprocessedModel.transactions">
+                    <th scope="row">
+                        <rc-checkbox quantity-model="result.unprocessedModel.count" quantity-field="quantity" model="transaction" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" parent-checked="result.unprocessedModel.allChecked"></rc-checkbox>
+                    </th>
+                    <td>{{transaction.cardProduct.name}}</td>
+                    <td>{{transaction.amount | currency: ''}}</td>
+                    <td>{{transaction.quantity}} vendas</td>
+                    <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="col-md-offset-9 col-md-3 reconcile-button">
+                <input type="submit" value="excluir vendas não processadas" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+            </div>
+        </div>
+    </div>
+</div>
