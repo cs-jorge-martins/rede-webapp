@@ -12,6 +12,7 @@ $spritePath: '#{$imgPath}controlSprite.png';
 // default colors
 $backgroundColor: #f0f0f0;
 
+$defaultYellow: #f8DE00;
 $defaultOrange: #ff7800;
 $lightGray: #f8f8f8;
 $mediumGray: #ddd;
@@ -57,6 +58,8 @@ $primaryButtomBackground: #ffc807;
 
 // rc-colors
 $errorColor: #e84438;
+$warningBackgroundColor: $defaultYellow;
+$warningColor: $grafitteGray;
 
  // input
 $inputColor: $grafitteGray;
