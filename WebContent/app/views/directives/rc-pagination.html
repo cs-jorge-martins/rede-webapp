@@ -1,0 +1,28 @@
+<div class="rc-pagination" ng-if="resultsPaginationTotalItens">
+    <div class="results-per-page">
+        <label for="total-itens-{{$id}}">resultados por página</label>
+        <div class="select-wrapper">
+            <select ng-model="resultsPerPageModel"
+                    ng-change="onChange()"
+                    ng-options="option for option in resultsPerPageOptions"
+                    id="total-itens-{{$id}}">
+            </select>
+        </div>
+    </div>
+    <div class="results-pagination">
+        <ul uib-pagination
+            total-items="resultsPaginationTotalItens"
+            ng-model="resultsPageModel"
+            ng-change="onChange()"
+            max-size="maxSize"
+            items-per-page="resultsPerPageModel"
+            rotate="false"
+            class="pagination-sm"
+            boundary-links="false"
+            previous-text="&lsaquo;"
+            next-text="&rsaquo;"
+            first-text=" "
+            last-text=" ">
+        </ul>
+    </div>
+</div>

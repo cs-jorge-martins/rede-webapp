@@ -81,15 +81,15 @@
                                     <strong>total a receber</strong>
                                     <span class="big-number"><span>R$</span> {{ totalToReceive | currency: "" }}</span>
                                 </li>
-                                <li class="math-symbol"><strong>-</strong></li>
-                                <li class="discount">
+                                <li class="math-symbol"><strong>{{ getDiscountedSignal(discountedTotal) }}</strong></li>
+                                <li ng-class="discountedTotal > 0 ? 'addition' : 'discount'">
                                     <strong>
-                                        total descontado
+                                        total ajustes a crédito/débito
                                         <i class="itauicon-itaufonts_informacao">
-                                            <span class="rc-tooltip up">valor total descontado refere-se a valores debitados, tais como cancelamentos, chargebacks, ajustes e tarifas</span>
+                                            <span class="rc-tooltip up">Valor de ajustes a crédito/débito referem-se a valores creditados ou debitados provenientes de cancelamentos, chargebacks, tarifas, ajustes a crédito ou débito.</span>
                                         </i>
                                     </strong>
-                                    <span class="big-number"><span>R$</span> {{ discountedTotal | currency: ""}}</span>
+                                    <span class="big-number"><span>R$</span> {{ getDiscountedAbs(discountedTotal) | currency: ""}}</span>
                                 </li>
                                 <li class="math-symbol"><strong>+</strong></li>
                                 <li class="addition">
@@ -132,7 +132,7 @@
                                         <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought_details')">detalhes</a>
                                     </th>
                                 </tr>
-                                <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type | slugify }}">
+                                <tr ng-repeat="release in cardProduct.releases" class="inset {{ getClassByType(release.type, release.payedAmount) | slugify }}">
                                     <th></th>
                                     <th class="inset-1">{{ release.type }}</th>
                                     <th>
@@ -152,7 +152,7 @@
                                 <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
                                     <th></th>
                                     <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
-                                    <th>{{ otherRelease.amount | customCurrency: ''}} </th>
+                                    <th>{{ otherRelease.amount | customCurrency }} </th>
                                     <th></th>
                                 </tr>
                             </tbody>

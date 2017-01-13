@@ -12,7 +12,7 @@ angular.module('Conciliador.loginService',[])
 .service('loginService', function(app, $http, Request) {
 
 	this.ValidarLogin = function(objUser) {
-        var strUrl = app.login.endpoint + '/login';
+        var strUrl = app.login.endpoint + '/mock';
 		var objRequest = {
 			login: objUser.login,
 			password: objUser.password
