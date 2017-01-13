@@ -460,6 +460,9 @@ angular.module('Conciliador.movementsModule',[])
 					$scope.discountedTotal = intDiscount;
 					$scope.antecipatedTotal = intAntecipatedTotal;
 					$scope.totalReceived = intTotalToReceive - intDiscount + intAntecipatedTotal;
+					$scope.getDiscountedSignal = GetDiscountedSignal;
+					$scope.getDiscountedAbs = GetDiscountedAbs;
+					$scope.getClassByType = GetClassByType;
 
 				}).catch(function(objResponse) {
 					console.log('[receiptsController:getAdjusts] error');
@@ -474,6 +477,28 @@ angular.module('Conciliador.movementsModule',[])
 		});
 	}
 
+	function GetClassByType(strType, intAmount) {
+		if(strType != "ajustes") {
+			return strType;
+		} else if (intAmount > 0) {
+			return "ajustes-credito";
+		} else {
+			return "ajustes-debito";
+		}
+	}
+	
+	function GetDiscountedSignal(intDiscountedTotal) {
+		if (intDiscountedTotal > 0) {
+			return "+";
+		} else {
+			return "-";
+		}
+	}
+	
+	function GetDiscountedAbs(intDiscountedTotal) {
+		return Math.abs(intDiscountedTotal);
+	}
+	
 	function GetDateLabel(bolHasBr) {
 
 		var strBr = "";

@@ -34,7 +34,7 @@
 			<span class="valor-liquido">valor total do ajuste</span>
 			<div class="discount">
 				<span>R$</span>
-				<span class="totalDiscounted">{{ totalOfSumAmount() * -1 | customCurrency: "" }}</span>
+				<span class="totalDiscounted">{{ totalOfSumAmount() | customCurrency: "" }}</span>
 			</div>
 		</li>
 	</ul>
@@ -51,7 +51,7 @@
 			<tbody>
 				<tr ng-repeat="item in otherDetailsData">
 					<td>{{ item.payedDate | date }}</td>
-					<td ng-class="{ 'discount' : item.nature === 'DEBIT' }">R$ <span ng-show="{ item.nature === 'DEBIT' }">- </span>{{ item.amount | currency: '' }}</td>
+					<td ng-class="{ 'discount' : item.nature === 'DEBIT' }">R$ {{ item.amount | customCurrency: '' }}</td>
 					<td>{{ item.description | lowercase }}</td>
 				</tr>
 			</tbody>
