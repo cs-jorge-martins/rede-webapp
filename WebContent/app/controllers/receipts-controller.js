@@ -478,9 +478,9 @@ angular.module('Conciliador.movementsModule',[])
 	}
 
 	function GetClassByType(strType, intAmount) {
-		if(type != "ajustes") {
-			return type;
-		} else if (amount > 0) {
+		if(strType != "ajustes") {
+			return strType;
+		} else if (intAmount > 0) {
 			return "ajustes-credito";
 		} else {
 			return "ajustes-debito";
@@ -488,7 +488,7 @@ angular.module('Conciliador.movementsModule',[])
 	}
 	
 	function GetDiscountedSignal(intDiscountedTotal) {
-		if (discountedTotal > 0) {
+		if (intDiscountedTotal > 0) {
 			return "+";
 		} else {
 			return "-";
@@ -496,7 +496,7 @@ angular.module('Conciliador.movementsModule',[])
 	}
 	
 	function GetDiscountedAbs(intDiscountedTotal) {
-		return Math.abs(discountedTotal);
+		return Math.abs(intDiscountedTotal);
 	}
 	
 	function GetDateLabel(bolHasBr) {
