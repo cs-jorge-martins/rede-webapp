@@ -22,7 +22,8 @@
 				events: '=',
 				placeholder: '=',
 				singleSelection: '=',
-				buttonMaxItems: '='
+				buttonMaxItems: '=',
+                tooltipText: '=?'
 			},
 			controller: Controller
 		};
@@ -32,6 +33,7 @@
 			Init();
 
 			function Init() {
+
 				$scope.settings = {
 					showCheckAll: true,
 					showUncheckAll: true,
