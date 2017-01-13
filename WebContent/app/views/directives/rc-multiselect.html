@@ -1,5 +1,8 @@
 <div class="rcMultiselect">
-	<label for="account">{{ label }}</label>
+	<label for="account">
+		{{ label }}
+		<span nf-if="tooltipText" ng-class="tooltipText ? 'visible' : ''" uib-tooltip="{{tooltipText}}" tooltip-placement="auto top-left"></span>
+	</label>
 	<div class="form-group">
 		<div 
 			ng-dropdown-multiselect="" 
