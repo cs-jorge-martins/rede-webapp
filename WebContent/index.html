@@ -3,7 +3,7 @@
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" xmlns:ng="http://angularjs.org" ng-app="KaplenWeb" lang="pt-BR" >
+<html class="no-js" xmlns:ng="http://angularjs.org" ng-app="Conciliador" lang="pt-BR" >
 <!--<![endif]-->
 
 <head>
@@ -11,15 +11,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Rede - Conciliador</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="app/css/normalize.min.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/normalize.min.css?v=0.0.1">
     <!-- start not login -->
-    <link rel="stylesheet" href="app/css/bootstrap.min.css?v=0.0.1">
-    <link rel="stylesheet" href="app/css/main.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/main.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/main-v2.css?v=0.0.1">
     <!-- end not login -->
-    <link rel="stylesheet" href="app/css/angular-chart.min.css?v=0.0.1">
-    <link rel="stylesheet" href="app/css/loading-bar.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/angular-chart.min.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/loading-bar.css?v=0.0.1">
     <!-- start login -->
-    <link rel="stylesheet" href="app/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
     <!-- end login -->
     <script type="text/javascript" src="app/build.js"></script>
 </head>
@@ -39,7 +40,7 @@
 	</style>
 <![endif]-->
     <!-- Loader template -->
-    <div class="extended">
+    <div class="extended" id="content" ng-class="{'login': !initialized, 'modal-blur': $root.modalOpen}">
         <header ng-if="initialized">
             <nav class="navbar navbar-default" id="mainNav">
                 <div class="container">
@@ -142,10 +143,10 @@
                 </div>
             </nav>
         </header>
-        <div ng-view></div>
+        <div ng-view autoscroll="true"></div>
     </div>
-    <footer ng-if="initialized">
-        <p>Rede 2016 - Todos os direitos reservados</p>
+    <footer ng-if="initialized" ng-class="{'modal-blur': $root.modalOpen}">
+        <p>Rede {{ year }} - Todos os direitos reservados</p>
     </footer>
     <footer ng-if="!initialized" class="container-fluid clearfix">
         <div class="container">
@@ -223,7 +224,20 @@
             </div>
         </div>
     </footer>
+    </div>
     <div id="blockr" class="fade" ng-show="loading"></div>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-72916551-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
 </body>
 
 </html>

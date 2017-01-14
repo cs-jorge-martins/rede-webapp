@@ -3,7 +3,7 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
- 
+
 module.exports = function(config) {
   config.set({
 
@@ -19,8 +19,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'WebContent/app/build.js',
-        'WebContent/app/tests/**/*Spec.js'
+        'tests/**/*spec.js',
+        'WebContent/app/views/directives/*.html'
     ],
+
+    plugins : ['karma-jasmine', 'karma-phantomjs-launcher', 'karma-ng-html2js-preprocessor', 'karma-coverage'],
 
 
     // list of files to exclude
@@ -31,13 +34,26 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'WebContent/app/views/directives/*.html': ['ng-html2js'],
+      'WebContent/app/**/**/*.js': ['coverage'],
+      'WebContent/app/**/*.js': ['coverage']
+    },
+
+    ngHtml2JsPreprocessor: {
+      // strip app from the file path
+      stripPrefix: 'WebContent/'
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      type: 'html',
+      dir: 'coverage/'
+    },
 
 
     // web server port

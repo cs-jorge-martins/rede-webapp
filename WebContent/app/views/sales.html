@@ -12,7 +12,7 @@
 	</div>
 
 	<br />
-	 <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+	 <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
 
 	<!-- calendar init -->
 	<div id="calendarioVendasTour" class="selectCalendar">
@@ -21,14 +21,14 @@
 			<a class="next" href="javascript:void(0);" ng-click="nextYear()">{{yearSelected + 1}}</a>
 			<div class="slider">
 				<div>
-					<tabset>
-						<tab ng-repeat="month in months" active="month.active" data-ng-click="changeMonth($index, month.year); tabs[0].active = true">
-							<tab-heading>
+					<uib-tabset  active="activeMonth">
+						<uib-tab ng-repeat="month in months" data-ng-click="changeMonth($index, month.year); tabs[0].active = true">
+							<uib-tab-heading>
 								<span ng-class="{'conciliar': month.toReconcile, 'naoConciliado': month.toProcess,
 									'conciliado': month.concilied && !month.toReconcile && !month.toProcess}" class="oneItem">
 									{{month.month}}
 								</span>
-							</tab-heading>
+							</uib-tab-heading>
 							<ul>
 								<li ng-class="{'conciliar': day.toReconcile, 'naoConciliado':day.toProcess,
 									'conciliado': day.concilied && !day.toReconcile && !day.toProcess, 'ativo': day.isActive}" ng-repeat="day in days" class="oneItem">
@@ -37,8 +37,8 @@
 									</a>
 								</li>
 							</ul>
-						</tab>
-					</tabset>
+						</uib-tab>
+					</uib-tabset>
 				</div>
 			</div>
 		</div>
@@ -124,8 +124,8 @@
 													<li>
 														<label for="buscaTerminal" class="ico-pre-input itauicon-itaufonts_para_empresa"></label>
 														<input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
-															ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)"
-														typeahead="item as item.code for item in GetSettlements() | filter:$viewValue" />
+															ng-model="settlement" typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0"
+														uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue" typeahead-select-on-blur="false" />
 														<label for="buscaTerminal" class="ico-after-input itauicon-itaufonts_busca_consulta"></label>
 
 														<ul class="selectecWrapper">
@@ -133,19 +133,14 @@
 															<h4>{{item.code}}</h4>
 															<a href="javascript:void(0);" ng-click="RemoveSettlementsSearch(item)">Fechar</a></li>
 														</ul>
-														<!--
-														<span ng-show="additionalInformations == false">
-															O FILTRO DE LOJA NÃO PODE SER APLICADO ÀS VENDAS NÃO PROCESSADAS, DEVIDO A LIMITAÇÃO DE SUA INTEGRAÇÃO.
-														</span>
-														-->
 													</li>
 												</ul>
 												<ul class="grandChild halfWidthList">
 													<li>
 														<label for="naturezaProduto" class="ico-pre-input itauicon-itaufonts_cartao"></label>
 														<input id="naturezaProduto" name="naturezaProduto" type="text" placeholder="{{GetPlaceholderFlag(productsSelected)}}"
-															ng-model="product" typeahead-on-select="AddProductsSearch(product)"
-															typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
+															ng-model="product" typeahead-on-select="AddProductsSearch(product)" typeahead-min-length="0"
+															uib-typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
 															<label for="naturezaProduto" class="ico-after-input itauicon-itaufonts_busca_consulta"></label>
 														<ul class="selectecWrapper">
 															<li ng-repeat="item in productsSelected"><h4>{{item.name}}</h4><a href="javascript:void(0);" ng-click="RemoveProductsSearch(item)">Excluir</a></li>
@@ -167,7 +162,7 @@
 						</div>
 					</div>
 
-					<div id="details" class="sales salesTable">
+					<div id="details" class="sales salesTable" ng-show="items.length">
 						<table cellpadding="0" cellspacing="0" class="sortTable">
 						  <thead>
 							  <tr class="taleft">
@@ -190,11 +185,6 @@
 								  <td>
 									  <div class="checkbox card-favourite">
 									  	<div class="checkbox-left" ng-if="item.conciliationStatus == 'TO_CONCILIE'">
-											<!--
-									  		<input type="checkbox" id="checkbox-favourite-{{$index + 1}}" class="checkbox"
-											ng-model="concilieItems" name="selectedItems[]" value="{{item.ids}}"
-											ng-checked="selection.indexOf(item) > -1" ng-click="selectItemToConcilie(item.ids)" />
-											-->
 											<input type="checkbox" id="checkbox-favourite-{{$index + 1}}" class="checkbox"
 											ng-model="concilieItems" name="selectedItems[]" value="{{item.ids}}"
 											ng-checked="selection.indexOf(item) > -1" ng-click="selectItemToConcilie(item)" />
@@ -208,15 +198,15 @@
 							  </tr>
 						  </tbody>
 					  </table>
-					  <span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 					  <div class="footer">
-						  <div class="buttonWrapper" ng-show="(statusSelected == 0) && items">
+						  <div class="buttonWrapper" ng-show="items && (statusSelected == 0)">
 							  <button class="conciliacaoButton" data-ng-click="concilie()"
 							  		  ng-class="isConcilieButtonActive ? 'active' : 'disabled'"
 									  ng-disabled="!isConcilieButtonActive">conciliar {{ concilieQuantity }} venda<span ng-if="concilieQuantity > 1">s</span></button>
 						  </div>
 					  </div>
 					</div>
+					<span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 				</div>
 			</div>
 		</div>

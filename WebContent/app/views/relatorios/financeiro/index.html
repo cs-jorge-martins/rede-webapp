@@ -12,7 +12,7 @@
 
 	<br />
 
-    <alert ng-repeat="alert in alerts" type="{{alert.type}}">{{alert.msg}}</alert>
+    <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
 
     <ul class="indicators" id="reportIndicators">
         <li ng-class="{'active': status == 'RECEIVED'}">
@@ -55,20 +55,20 @@
                                         <ul>
                                             <li class="itauicon-itaufonts_calendario">
                                                 <input type="text" class="disabled input-date"
-                                                    datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirst"
+                                                    uib-datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirst"
                                                     datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(initialDate)"
                                                     close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true"/>
 
                                                 <label for="" class="at">Até</label>
                                                 <input type="text" class="disabled input-date"
-                                                    datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLast"
+                                                    uib-datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLast"
                                                     datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(finalDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;"/>
                                             </li>
                                             <li class="center itauicon-itaufonts_para_empresa">
                                                 <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
                                                     ng-model="settlement" typeahead-append-to-body="true"
-                                                    typeahead-on-select="AddSettlementsSearch(settlement)"
-                                                    typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
+                                                    typeahead-on-select="AddSettlementsSearch(settlement)" typeahead-min-length="0"
+                                                    uib-typeahead="item as item.code for item in GetSettlements() | filter:$viewValue"/>
                                                 <ul ng-repeat="item in settlementsSelected">
                                                   <li>
                                                     <h4>{{item.code}}</h4>
@@ -79,8 +79,8 @@
                                                 <input id="naturezaProduto" name="naturezaProduto" type="text"
                                                 placeholder="{{GetPlaceholderFlag(productsSelected)}}"
                                                     ng-model="product" typeahead-append-to-body="true"
-                                                    typeahead-on-select="AddProductsSearch(product)"
-                                                    typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
+                                                    typeahead-on-select="AddProductsSearch(product)" typeahead-min-length="0"
+                                                    uib-typeahead="item as item.name for item in GetProducts() | filter:$viewValue"/>
                                                 <ul ng-repeat="item in productsSelected">
                                                     <li>
                                                         <h4>{{item.name}}</h4>
@@ -140,7 +140,7 @@
 						</div>
 
 						<div class="paginationWrapper">
-							<pagination
+							<ul uib-pagination
                                 total-items="totalItens"
                                 ng-model="currentPage"
                                 ng-change="pageChanged()"
@@ -153,7 +153,7 @@
                                 next-text="&rsaquo;"
                                 first-text="&laquo;"
                                 last-text="&raquo;">
-							</pagination>
+							</ul>
 						</div>
 
                         <!-- descomentar ao implantar funcao de exportar relatorio -->
@@ -162,7 +162,7 @@
                             <ul>
                                 <li>
                                     <a href="javascript:void(0);" ng-click="exportReport()">
-                                        <img src="/app/img/ico-excel.png" alt="">
+                                        <img src="/assets/img/ico-excel.png" alt="">
                                     </a>
                                 </li>
                             </ul>
