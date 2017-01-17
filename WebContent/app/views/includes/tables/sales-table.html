@@ -68,7 +68,7 @@
                 </tbody>
             </table>
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <input type="submit" value="excluir vendas não processadas" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+                <input type="submit" value="excluir vendas não processadas" class="btn btn-primary btn-block" ng-href='#here' ng-click="vm.removeUnprocessed(result.unprocessedModel, result.acquirer)" />
             </div>
         </div>
     </div>

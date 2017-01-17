@@ -293,8 +293,9 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
-                $scope.count = objTransactionModel.count;
                 $scope.reconcileType = "desconciliar";
+                $scope.modalTitle = "desconciliar vendas";
+                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " vendas?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
