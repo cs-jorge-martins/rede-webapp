@@ -82,6 +82,7 @@
         objVm.pvsModel = [];
         objVm.acquirersData = [];
         objVm.acquirersModel = [];
+        objVm.countButtonLabelPrefix = 'conciliar';
 
         Init();
 
