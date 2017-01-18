@@ -12,11 +12,20 @@
 		.module('Conciliador.salesController', [])
 		.controller('salesController', Sales);
 
-	Sales.$inject = [];
+	Sales.$inject = ['$scope', 'modalService'];
 
-	function Sales() {
+	function Sales($scope, modalService) {
 
 		var objVm = this;
+
+		$scope.openDetailsModal = function() {
+			modalService.openDetails(
+				'Vendas a conciliar',
+				'app/views/sales-details.html',
+				'salesDetailsController',
+				$scope
+			);
+		}
 
 		Init();
 
