@@ -34,8 +34,10 @@ angular.module('Conciliador.movementsModule',[])
     $scope.futureReleases = {};
 	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
 
-	var objFutureModelDateFirst = calendarFactory.getTomorrowFromTodayToDate();
-	var objFutureModelDateLast = calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
+    $scope.futureReleases.modelDate = [];
+    GetCachedData();
+    var objFutureModelDateFirst = $scope.futureReleases.modelDate[0] || calendarFactory.getTomorrowFromTodayToDate();
+	var objFutureModelDateLast = $scope.futureReleases.modelDate[1] || calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
     $scope.futureReleases.modelDate = [objFutureModelDateFirst, objFutureModelDateLast];
     $scope.futureReleases.objFutureMinDate = calendarFactory.getTomorrowFromTodayToDate();
     $scope.futureReleases.objFutureMaxDate = calendarFactory.addYearsToDate($scope.futureReleases.objFutureMinDate, 1, true);
@@ -1074,6 +1076,9 @@ angular.module('Conciliador.movementsModule',[])
 			$scope.shopsModel = cacheService.LoadFilter('shopIds');
 			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
 			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
+
+            $scope.futureReleases.modelDate[0] = null;
+            $scope.futureReleases.modelDate[1] = null;
 
 			if($rootScope.futureSelected) {
 				$scope.futureReleases.modelDate[0] = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
