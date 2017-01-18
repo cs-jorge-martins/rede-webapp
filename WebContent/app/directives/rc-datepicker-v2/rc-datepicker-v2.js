@@ -189,6 +189,15 @@
 				if (bolIsRange && (intRangeClickCounter === 0)) {
 					var intStartDate = objRangeStartDate.getTime();
 					var intEndDate = objRangeEndDate.getTime();
+					var bolConsecutiveDays = calendarFactory.isConsecutiveDays(objRangeStartDate, objRangeEndDate);
+
+					if(bolConsecutiveDays) {
+						if(calendarFactory.isInitialAndFinalWeekDays(objRangeStartDate, objRangeEndDate) === false) {
+							if(intDate == objRangeEndDate.getTime()) {
+								return 'bar consecutive-days';
+                            }
+						}
+					}
 
 					if ((intDate > intStartDate) && (intDate < intEndDate)) {
 

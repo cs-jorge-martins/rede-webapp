@@ -12,6 +12,10 @@
         border-right: 0;
     }
 
+    .dropdown-menu {
+        padding: 0;
+    }
+
     .input-group {
         position: relative;
 
@@ -53,8 +57,13 @@
         button {
             background-color: transparent;
             border: none;
-            color: #353230;
+            color: $darkGray;
             font-size: 1em;
+
+            &[disabled]:hover {
+                background: none;
+            }
+
         }
 
         thead {
@@ -66,13 +75,14 @@
                     padding-left: 1.4em;
                 }
                 th:last-of-type {
-                    padding-right: 1.4em;
+                    padding-right: 1.4em !important;
                 }
             }
 
             tr:first-of-type {
                 border-bottom: 1px solid #ddd;
                 height: inherit;
+                padding: 10px;
 
                 th {
                     padding: inherit;
@@ -104,7 +114,7 @@
             }
 
             .btn-sm {
-                padding: 1.2em 1.5em;
+                //padding: 1.2em 1.5em;
             }
         }
 
@@ -112,8 +122,14 @@
             position: relative;
 
             .btn-sm {
-                padding: 1.37em 2em;
+                padding: 1.37em 2em !important;
                 font-size: 1.1em;
+
+                span {
+                    padding: 0 !important;
+                    width: auto;
+                    text-decoration: none;
+                }
             }
 
             button {
@@ -169,6 +185,14 @@
                         top: 0.2em;
                         padding-right: 8em;
                         z-index: 10;
+                    }
+                }
+                &.consecutive-days {
+                    button {
+                        &:after {
+                            padding-right: 5.4em;
+                            border-radius: 0 40px 40px 0;
+                        }
                     }
                 }
             }
