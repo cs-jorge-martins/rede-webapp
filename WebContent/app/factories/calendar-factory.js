@@ -243,9 +243,18 @@ angular.module('Kaplen.CalendarFactory',[])
 		 return objResultMoment.toDate();
 	}
 
-    function AddYearsToDate(date, intQtd){
-		 var objResultMoment = moment(date, strFormat);
-		 var objResultAddMoment = objResultMoment.add(intQtd, 'year');
+    function AddYearsToDate(date, intQtd, bolFormatToDate){
+
+
+		var objResultMoment = moment(date, strFormat);
+		if(bolFormatToDate) {
+            objResultMoment = moment(date);
+		}
+		 var objResultAddMoment = objResultMoment.add(intQtd, 'years');
+
+		 if(bolFormatToDate && bolFormatToDate === true) {
+             return objResultAddMoment.tz(timeTimezone).toDate();
+		 }
 
 		 return objResultAddMoment.tz(timeTimezone);
 	}

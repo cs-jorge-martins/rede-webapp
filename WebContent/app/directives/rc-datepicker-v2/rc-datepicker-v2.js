@@ -160,6 +160,7 @@
 							}
 
 							$scope.pickerDate = objRangeStartDate;
+							$scope.date = [objRangeStartDate, objRangeEndDate];
 							$scope.status.opened = false;
 							break;
 						default:

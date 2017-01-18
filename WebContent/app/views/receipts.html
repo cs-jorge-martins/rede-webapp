@@ -166,10 +166,9 @@
             		<div class="filtersWrapper">
                         <div class="receipts_future_filters">
                             <div class="filter firstFilter">
-                                <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
-                                </rc-datepicker>
-                                <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
-                                </rc-datepicker>
+                                <div class="v2">
+                                    <rc-datepicker-v2 range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" label="'data'"></rc-datepicker-v2>
+                                </div>
                             </div>
                             <div class="filter">
                                 <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
