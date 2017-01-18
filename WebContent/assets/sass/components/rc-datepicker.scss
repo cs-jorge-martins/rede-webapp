@@ -239,7 +239,12 @@
     }
 
     .dateFilters {
+
         border-top: 1px solid #ddd;
+        font-size: 1.1em;
+        line-height: 1.3em;
+        margin-top: 18px;
+        width: 100%;
 
         .container {
             width: inherit;
@@ -250,6 +255,7 @@
         }
 
         a {
+            text-transform: none;
             &:hover {
                 text-decoration: none;
 
@@ -264,14 +270,15 @@
         }
 
         p {
+            font-family: $fontLight;
             margin: 0;
-            color: #b9b8b8;
+            color: $platinum;
             font-weight: 600;
         }
 
         .legend {
             p {
-                margin-left: 1.4em;
+                //margin-left: 1.4em;
             }
         }
     }

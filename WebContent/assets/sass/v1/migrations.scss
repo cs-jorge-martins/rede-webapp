@@ -169,6 +169,24 @@ body {
                 }
             }
 
+            .dateFilters {
+                border-top: 1px solid $mediumGray !important;
+                .row {
+                    border: 0 !important;
+                }
+                .col-xs-2, .col-xs-3 {
+                    padding-right: 6px;
+                }
+                a {
+                    font-size: 1em;
+                    line-height: 1.3em;
+                    padding-top: 0;
+                    height: auto;
+                    width: auto;
+                    padding-bottom: 0 !important;
+                }
+            }
+
         }
     }
 
