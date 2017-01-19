@@ -126,10 +126,19 @@
                 font-size: 1.1em;
 
                 span {
+
+                    font-family: $fontRegular;
                     padding: 0 !important;
                     width: auto;
                     text-decoration: none;
+
+                    &.text-info {
+                        color: $darkGray;
+                        font-family: $fontBold;
+                    }
+
                 }
+
             }
 
             button {
