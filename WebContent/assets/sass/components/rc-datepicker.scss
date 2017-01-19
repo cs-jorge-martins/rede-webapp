@@ -156,21 +156,17 @@
 
             }
 
-            &.ball {
-                button {
-                    &:after {
-                        content: '';
-                        position: absolute;
-                        background: #ff7800;
-                        border-radius: 50%;
-                        width: 2.2em;
-                        height: 2.2em;
-                        left: 0;
-                        z-index: 10;
-                        left: 1em;
-                        top: .2em;
-                    }
-                }
+            &.ball button:after, button.active:after {
+                content: '';
+                position: absolute;
+                background: #ff7800;
+                border-radius: 50%;
+                width: 2.2em;
+                height: 2.2em;
+                left: 0;
+                z-index: 10;
+                left: 1em;
+                top: .2em;
             }
 
             &.bar {
@@ -197,7 +193,7 @@
                 }
             }
 
-            &.ball, &.bar {
+            &.ball, &.bar, button.active {
                 span {
                     color: #fff;
                 }
