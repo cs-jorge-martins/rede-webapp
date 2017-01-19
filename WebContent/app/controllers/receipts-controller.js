@@ -33,14 +33,23 @@ angular.module('Conciliador.movementsModule',[])
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
     $scope.futureReleases = {};
 	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
-	$scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
-    $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
-    $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
-    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
-    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+
+    $scope.futureReleases.modelDate = [];
+    GetCachedData();
+    var objFutureModelDateFirst = $scope.futureReleases.modelDate[0] || calendarFactory.getTomorrowFromTodayToDate();
+	var objFutureModelDateLast = $scope.futureReleases.modelDate[1] || calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
+    $scope.futureReleases.modelDate = [objFutureModelDateFirst, objFutureModelDateLast];
+    $scope.futureReleases.objFutureMinDate = calendarFactory.getTomorrowFromTodayToDate();
+    $scope.futureReleases.objFutureMaxDate = calendarFactory.addYearsToDate($scope.futureReleases.objFutureMinDate, 1, true);
+
+	$scope.futureReleases.startDate = $scope.futureReleases.modelDate[0];
+    $scope.futureReleases.endDate = $scope.futureReleases.modelDate[1];
+    $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[0]);
+    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[0]);
+    $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
+    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
+    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
 
 	$scope.date = new Date();
 	$scope.minDate = new Date();
@@ -85,8 +94,8 @@ angular.module('Conciliador.movementsModule',[])
     var intFilterStatus = 0;
 
 	$scope.$watch('futureReleases.startDate', function(objResponse) {
-		if(moment($scope.futureReleases.endDate).isBefore(objResponse)) {
-			$scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
+		if(moment($scope.futureReleases.modelDate[1]).isBefore(objResponse)) {
+			$scope.futureReleases.modelDate[1] = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.modelDate[0], 1);
 		}
 	});
 
@@ -486,7 +495,7 @@ angular.module('Conciliador.movementsModule',[])
 			return "ajustes-debito";
 		}
 	}
-	
+
 	function GetDiscountedSignal(intDiscountedTotal) {
 		if (intDiscountedTotal > 0) {
 			return "+";
@@ -494,11 +503,11 @@ angular.module('Conciliador.movementsModule',[])
 			return "-";
 		}
 	}
-	
+
 	function GetDiscountedAbs(intDiscountedTotal) {
 		return Math.abs(intDiscountedTotal);
 	}
-	
+
 	function GetDateLabel(bolHasBr) {
 
 		var strBr = "";
@@ -516,20 +525,20 @@ angular.module('Conciliador.movementsModule',[])
 
 		arrFutureReleasesData = [];
 
-		var dateTestDate = $scope.futureReleases.startDate instanceof Date;
-		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
+		var dateTestDate = $scope.futureReleases.modelDate[0] instanceof Date;
+		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.modelDate[0]) : $scope.futureReleases.modelDate[0];
 
 		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
 		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));
 		$scope.futureReleases.startDateYear = calendarFactory.getYearOfDate(dateStartDate);
-		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
-		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
+		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
+		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
 		$scope.futureReleases.dateRange = GetDateLabel();
 		$scope.futureReleases.dateRangeWithBr = GetDateLabel(true);
 
-		var strInitialDay = moment($scope.futureReleases.startDate);
-		var strFinalDay = moment($scope.futureReleases.endDate);
+		var strInitialDay = moment($scope.futureReleases.modelDate[0]);
+		var strFinalDay = moment($scope.futureReleases.modelDate[1]);
 
 		$scope.countDiffDays = strFinalDay.diff(strInitialDay, 'days');
 
@@ -538,8 +547,8 @@ angular.module('Conciliador.movementsModule',[])
 		GetFutureAcquirers();
 
 		var objFilter = {
-			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
 			acquirerIds: GetAcquirersFilter(true),
@@ -569,8 +578,8 @@ angular.module('Conciliador.movementsModule',[])
 
 	function GetFutureAcquirers() {
 		var objFilter = {
-			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			groupBy: 'ACQUIRER',
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
@@ -602,8 +611,8 @@ angular.module('Conciliador.movementsModule',[])
 			var intAcquirerId = arrFutureReleasesData[intIndex].acquirer.id;
 
 			var objFilter = {
-				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 				groupBy: 'CARD_PRODUCT,STATUS',
 				bankAccountIds: GetAccountsFilter(true),
 				shopIds: GetShopsFilter(true),
@@ -1021,8 +1030,8 @@ angular.module('Conciliador.movementsModule',[])
 			case "future_details":
                 $rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
                 $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
-                $rootScope.receiptsDetails.startDate = $scope.futureReleases.startDate;
-                $rootScope.receiptsDetails.endDate = $scope.futureReleases.endDate;
+                $rootScope.receiptsDetails.startDate = $scope.futureReleases.modelDate[0];
+                $rootScope.receiptsDetails.endDate = $scope.futureReleases.modelDate[1];
 				$rootScope.futureReleases = {};
 				$rootScope.futureReleases.dates = {
 					startDateDay: $scope.futureReleases.startDateDay,
@@ -1051,8 +1060,8 @@ angular.module('Conciliador.movementsModule',[])
 			shopIds: $scope.shopsModel,
 			acquirerIds: $scope.acquirersModel,
 			cardProductIds: $scope.cardProductsModel,
-			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			futureBankAccountIds: $scope.accountsFutureModel,
 			futureShopIds: $scope.shopsFutureModel,
 			futureAcquirerIds: $scope.acquirersFutureModel,
@@ -1068,15 +1077,18 @@ angular.module('Conciliador.movementsModule',[])
 			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
 			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
 
+            $scope.futureReleases.modelDate[0] = null;
+            $scope.futureReleases.modelDate[1] = null;
+
 			if($rootScope.futureSelected) {
-				$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
-				$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.modelDate[0] = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.modelDate[1] = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
 				$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
 				$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
 				$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
 				$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
-				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
-				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
+				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
 			}
 		}
     }
