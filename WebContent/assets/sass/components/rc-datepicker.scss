@@ -178,6 +178,17 @@
                 top: .2em;
             }
 
+            &.non-current-month {
+                button{
+                    span:not(.text-muted) {
+                        color: $darkGray !important;
+                    }
+                    &:after {
+                        background: transparent !important;
+                    }
+                }
+            }
+
             &.bar {
                 button {
                     &:after {

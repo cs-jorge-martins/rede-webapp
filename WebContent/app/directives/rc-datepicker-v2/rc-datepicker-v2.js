@@ -183,9 +183,13 @@
 			 * @param {String} date Data
 			 * @return {String} nome da classe
 			 */
-			function GetDayClass(date, mode) {
+			function GetDayClass(date, mode, objActiveDate) {
+
 				var intDate = date.date.getTime();
 				var weekDay = date.date.getDay();
+
+                var objActiveMonth = new Date(objActiveDate).getMonth();
+                var objCurrentMonth = new Date().getMonth();
 
 				if (bolIsRange && (intRangeClickCounter === 0)) {
 					var intStartDate = objRangeStartDate.getTime();
@@ -216,6 +220,10 @@
 				if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
 					return 'ball';
 				}
+
+                if (objActiveMonth !== objCurrentMonth) {
+                    return 'non-current-month';
+                }
 
 				return '';
 			}
