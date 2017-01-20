@@ -21,7 +21,7 @@ $platinum: #b9b8b8;
 $oceanBlue: #00b9b5;
 $jade: #00b9b5;
 
-$positiveValueColor: #179ca0;
+$positiveValueColor: #00b9b5;
 $negativeValueColor: #f34235;
 
 $toConcilieColor: #f39c12;
@@ -69,7 +69,8 @@ $inputIconColor: $mediumGray;
 $inputIconFontSize: 1.5em;
 
 // font-family
-$fontBold: 'open_sanssemibold';
+$fontSemiBold: 'open_sanssemibold';
+$fontBold: 'open_sansbold';
 $fontLight: 'open_sanslight';
 $fontRegular: 'open_sansregular';
 $fontItau: 'itaufonts_master_24px_v1';
@@ -98,9 +99,11 @@ $panelSecondaryColor: $grafitteGray;
 // tables
 $tableLinkColor: $defaultOrange;
 
+// cards
+$cardBackgroundColor: #fff;
+
 // modal details
 $modalDetailsHeaderBackgroundColor: #fff;
-$modalDetailsContentBackgroundColor: #fff;
 $modalDetailsTitleColor: #4d4d4d;
 
  // loader

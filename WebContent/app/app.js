@@ -47,7 +47,8 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'Conciliador.currencyFilter',
                             'Conciliador.slugfyFilter',
                             'Conciliador.receiptsOtherDetailsController',
-                            'Conciliador.receiptsFutureDetailsController'
+                            'Conciliador.receiptsFutureDetailsController',
+                            'Conciliador.salesToConcileDetailsController'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;

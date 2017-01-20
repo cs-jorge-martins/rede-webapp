@@ -18,15 +18,6 @@
 
 		var objVm = this;
 
-		$scope.openDetailsModal = function() {
-			modalService.openDetails(
-				'Vendas a conciliar',
-				'app/views/sales-details.html',
-				'salesDetailsController',
-				$scope
-			);
-		}
-
 		Init();
 
 		function Init() {

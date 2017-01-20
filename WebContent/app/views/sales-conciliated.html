@@ -28,20 +28,23 @@
         </div>
     </div>
 
-    <div class="container box" style="padding-bottom: 1.5em !important">
+    <div class="container box">
         <div class="content-header">
-            <div class="date">
-                <span class="number">{{vm.dateModel.day}}</span>
-                <br>{{vm.dateModel.monthName}}
+            <div class="row">
+                <div class="col-xs-2 date">
+                    <p class="day">{{vm.dateModel.day}}</p>
+                    <p class="month">{{vm.dateModel.monthName}}</p>
+                </div>
+                <div class="col-xs-10">
+                    <rc-chips>
+                        <rc-chip label="vm.terminalLabel" show="vm.chipsConfig.show.terminals" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('terminals')" tooltip-text="vm.terminalFullLabel"></rc-chip>
+                        <rc-chip label="vm.cardProductLabel" show="vm.chipsConfig.show.cardProducts" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('cardProducts')" tooltip-text="vm.cardProductFullLabel"></rc-chip>
+                        <rc-chip label="vm.pvLabel" show="vm.chipsConfig.show.pvs" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('pvs')" tooltip-text="vm.pvFullLabel"></rc-chip>
+                        <rc-chip label="vm.acquirerLabel" show="vm.chipsConfig.show.acquirers" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('acquirers')" tooltip-text="vm.acquirerFullLabel"></rc-chip>
+                        <div class="clearfix"></div>
+                    </rc-chips>
+                </div>
             </div>
-            <rc-chips>
-                <rc-chip label="vm.terminalLabel" show="vm.chipsConfig.show.terminals" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('terminals')" tooltip-text="vm.terminalFullLabel"></rc-chip>
-                <rc-chip label="vm.cardProductLabel" show="vm.chipsConfig.show.cardProducts" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('cardProducts')" tooltip-text="vm.cardProductFullLabel"></rc-chip>
-                <rc-chip label="vm.pvLabel" show="vm.chipsConfig.show.pvs" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('pvs')" tooltip-text="vm.pvFullLabel"></rc-chip>
-                <rc-chip label="vm.acquirerLabel" show="vm.chipsConfig.show.acquirers" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('acquirers')" tooltip-text="vm.acquirerFullLabel"></rc-chip>
-                <div class="clearfix"></div>
-            </rc-chips>
-            <div class="clearfix"></div>
         </div>
         <div class="container">
             <rc-timeline

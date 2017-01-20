@@ -1,0 +1,113 @@
+<section class="card">
+    <div class="row">
+        <div class="col-xs-2 date">
+            <p class="day">{{vm.dateModel.day}}</p>
+            <p class="month">{{vm.dateModel.monthName}}</p>
+        </div>
+        <div class="col-xs-10">
+            <rc-chips>
+                <rc-chip label="vm.terminalLabel" show="vm.chipsConfig.show.terminals" closeable="false" on-clear="vm.resetFilter('terminals')" tooltip-text="vm.terminalFullLabel"></rc-chip>
+                <rc-chip label="vm.cardProductLabel" show="vm.chipsConfig.show.cardProducts" closeable="false" on-clear="vm.resetFilter('cardProducts')" tooltip-text="vm.cardProductFullLabel"></rc-chip>
+                <rc-chip label="vm.pvLabel" show="vm.chipsConfig.show.pvs" closeable="false" on-clear="vm.resetFilter('pvs')" tooltip-text="vm.pvFullLabel"></rc-chip>
+                <rc-chip label="vm.acquirerLabel" show="vm.chipsConfig.show.acquirers" closeable="false" on-clear="vm.resetFilter('acquirers')" tooltip-text="vm.acquirerFullLabel"></rc-chip>
+                <div class="clearfix"></div>
+            </rc-chips>
+        </div>
+    </div>
+    <div class="subheader shadow-top">
+        <div class="row">
+            <div class="col-xs-2 acquirer push-down">
+                {{ vm.transaction.acquirer.name | uppercase }}
+            </div>
+            <div class="col-xs-1 push-down">
+                <div class="card-product brand-{{ vm.transaction.cardProduct.id }}">{{ vm.transaction.cardProduct.name }}</div>
+            </div>
+            <div class="col-xs-2 push-down">
+                {{ vm.transaction.cardProduct.name | lowercase }}
+            </div>
+            <div class="col-xs-3">
+                <p>quantidade de vendas</p>
+                <p class="value positive">{{ vm.transaction.quantity }}</p>
+            </div>
+            <div class="col-xs-3">
+                <p>total de vendas</p>
+                <p class="value positive"><small>R$</small>{{ vm.transaction.amount | currency: "" }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<br /><br /><br /><br /><br /><br /><br /><br />
+
+<div class="content-header">
+
+    <div class="clearfix"></div>
+    <ul class="sales-details-header list-unstyled">
+        <li class="acquirer ng-binding">REDE</li>
+        <li class="brand">
+            <div class="card-product brand-1"></div>
+            <span class="ng-binding">Mastercard</span>
+        </li>
+        <li class="total-value">
+            <span class="label">quantidade de vendas</span>
+            <div class="value">
+                <span class="totalDiscounted ng-binding">{{'10000' | number}}</span>
+            </div>
+        </li>
+        <li class="total-value">
+            <span class="label">total recebido</span>
+            <div class="value">
+                <span>R$</span>
+                <span class="totalDiscounted ng-binding">2.608,75</span>
+            </div>
+        </li>
+    </ul>
+    <table class="table gray has-checkboxes">
+        <thead>
+        <tr>
+            <th class="checkbox-header">
+                <div class="checkbox">
+                    <div class="checkbox-left">
+                        <input type="checkbox" id="checkbox-reconcile-all" class="checkbox" ng-checked="result.transactionsModel.allChecked" ng-click="selectAll(result.transactionsModel)">
+                        <label for="checkbox-reconcile-all"></label>
+                    </div>
+                </div>
+            </th>
+            <th>tipo loja</th>
+            <th>data/hora</th>
+            <th>nsu</th>
+            <th>cód.aut.</th>
+            <th>valor bruto transação</th>
+            <th>MDR</th>
+            <th>n parcelas</th>
+            <th>n do lote(rv)</th>
+            <th>tid</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="x in teste">
+                <td scope="row">
+                    <div class="checkbox">
+                        <div class="checkbox-left">
+                            <input type="checkbox" id="checkbox-reconcile-{{$index + 1}}" class="checkbox" ng-checked="result.transactionsModel.checks[transaction.cardProduct.id]" ng-click="selectSingle(result.transactionsModel, transaction)">
+                            <label for="checkbox-reconcile-{{$index + 1}}"></label>
+                        </div>
+                    </div>
+                </td>
+                <td>e-commerce</td>
+                <td>16/09 22:00</td>
+                <td>999999999999</td>
+                <td>99999999</td>
+                <td>R$ 100.000.000.000,00</td>
+                <td>1,50%</td>
+                <td>6</td>
+                <td>99999999999</td>
+                <td>131232131231313123131</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
