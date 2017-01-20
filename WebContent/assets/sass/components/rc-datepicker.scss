@@ -179,9 +179,11 @@
             }
 
             &.non-current-month {
-                button{
-                    span:not(.text-muted) {
-                        color: $darkGray !important;
+                button.active {
+                    &:not(:disabled) {
+                        span:not(.text-muted) {
+                            color: $darkGray !important;
+                        }
                     }
                     &:after {
                         background: transparent !important;

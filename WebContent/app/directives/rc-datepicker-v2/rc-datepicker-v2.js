@@ -183,49 +183,58 @@
 			 * @param {String} date Data
 			 * @return {String} nome da classe
 			 */
-			function GetDayClass(date, mode, objActiveDate) {
+			function GetDayClass(date, mode) {
 
 				var intDate = date.date.getTime();
 				var weekDay = date.date.getDay();
-
-                var objActiveMonth = new Date(objActiveDate).getMonth();
+                var intStartDate = objRangeStartDate.getTime();
+                var intEndDate = objRangeEndDate.getTime();
+                var objActiveMonth = new Date(date.date).getMonth();
+                var objActiveYear = new Date(date.date).getYear();
                 var objCurrentMonth = new Date().getMonth();
+                var objCurrentYear = new Date().getYear();
+                var bolConsecutiveDays = calendarFactory.isConsecutiveDays(objRangeStartDate, objRangeEndDate);
 
-				if (bolIsRange && (intRangeClickCounter === 0)) {
-					var intStartDate = objRangeStartDate.getTime();
-					var intEndDate = objRangeEndDate.getTime();
-					var bolConsecutiveDays = calendarFactory.isConsecutiveDays(objRangeStartDate, objRangeEndDate);
+                var arrClasses = [];
 
-					if(bolConsecutiveDays) {
-						if(calendarFactory.isInitialAndFinalWeekDays(objRangeStartDate, objRangeEndDate) === false) {
-							if(intDate == objRangeEndDate.getTime()) {
-								return 'bar consecutive-days';
-                            }
-						}
-					}
-
-					if ((intDate > intStartDate) && (intDate < intEndDate)) {
-
-						if (weekDay === 0 || weekDay === 1) {
-							return 'ball';
-						}
-						return 'bar';
-					}
-
-					if ((intDate == intStartDate) || (intDate == intEndDate)) {
-						return 'ball';
-					}
-				}
-
-				if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
-					return 'ball';
-				}
-
-                if (objActiveMonth !== objCurrentMonth) {
-                    return 'non-current-month';
+				// se não for range o date foi selecionado
+                if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
+                    arrClasses.push('ball');
                 }
 
-				return '';
+                if(bolIsRange && intRangeClickCounter === 0) {
+
+                	// dias consecutivos selecionados
+                    if(bolConsecutiveDays) {
+					   if(calendarFactory.isInitialAndFinalWeekDays(objRangeStartDate, objRangeEndDate) === false) {
+						   if(intDate == objRangeEndDate.getTime()) {
+							   arrClasses.push('consecutive-days');
+						   }
+					   }
+				   	}
+
+				   	// data está dentro do range
+                    if ((intDate > intStartDate) && (intDate < intEndDate)) {
+
+                        if (weekDay === 0 || weekDay === 1) {
+                            arrClasses.push('ball');
+                        } else {
+                            arrClasses.push('bar');
+                        }
+
+                    }
+                    // se for data inicial ou final
+r                    else if ((intDate == intStartDate) || (intDate == intEndDate)) {
+                        arrClasses.push('ball');
+                    }
+                    // mês e ano atual da data selecionada não for igual a esse mês e ano
+                    else if ( !(objActiveMonth == objCurrentMonth && objActiveYear == objCurrentYear) ) {
+                        arrClasses.push('non-current-month');
+                    }
+
+                }
+
+				return arrClasses.join(" ");
 			}
 
 			/**
