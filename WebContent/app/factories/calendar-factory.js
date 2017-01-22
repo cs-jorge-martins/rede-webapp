@@ -405,6 +405,14 @@ angular.module('Kaplen.CalendarFactory',[])
 
     }
 
+	function IsGreaterThan(dateOne, dateTwo) {
+		var mommentDateOne = moment(dateOne);
+		var mommentDateTwo = moment(dateTwo);
+		console.log("mommentDateOne.diff(mommentDateTwo, 'days')", mommentDateOne.diff(mommentDateTwo, 'days'));
+		console.log("mommentDateOne.diff(mommentDateTwo, 'days') > 0", mommentDateOne.diff(mommentDateTwo, 'days') > 0);
+		return mommentDateOne.diff(mommentDateTwo, 'days') > 0 ;
+    }
+
 	function TransformBrDateIntoDate(date) {
 		var arrParts = date.split("/");
 		return new Date(arrParts[2], arrParts[1]-1, arrParts[0], 0, 0, 0, 0);
@@ -467,6 +475,7 @@ angular.module('Kaplen.CalendarFactory',[])
 		getYesterday: GetYesterday,
 		getActualDateOfNextYear: GetActualDateOfNextYear,
         isConsecutiveDays: IsConsecutiveDays,
-        isInitialAndFinalWeekDays: IsInitialAndFinalWeekDays
+        isInitialAndFinalWeekDays: IsInitialAndFinalWeekDays,
+        isGreaterThan: IsGreaterThan
 	};
 });

@@ -185,12 +185,16 @@
 			 */
 			function GetDayClass(date, mode) {
 
-				var intDate = date.date.getTime();
-				var weekDay = date.date.getDay();
+			    var objDateAdjusted = date.date;
+			    objDateAdjusted.setHours('23');
+                objDateAdjusted.setMinutes('59');
+                objDateAdjusted.setSeconds('59');
+				var intDate = objDateAdjusted.getTime();
+				var weekDay = objDateAdjusted.getDay();
                 var intStartDate = objRangeStartDate.getTime();
                 var intEndDate = objRangeEndDate.getTime();
-                var objActiveMonth = new Date(date.date).getMonth();
-                var objActiveYear = new Date(date.date).getYear();
+                var objActiveMonth = new Date(objDateAdjusted).getMonth();
+                var objActiveYear = new Date(objDateAdjusted).getYear();
                 var objCurrentMonth = new Date().getMonth();
                 var objCurrentYear = new Date().getYear();
                 var bolConsecutiveDays = calendarFactory.isConsecutiveDays(objRangeStartDate, objRangeEndDate);
@@ -203,6 +207,10 @@
                 }
 
                 if(bolIsRange && intRangeClickCounter === 0) {
+                    console.log("objRangeEndDate",objRangeEndDate);
+                    console.log("objDateAdjusted",objDateAdjusted);
+                    console.log("intEndDate",intEndDate);
+                    console.log("intDate", intDate);
 
                 	// dias consecutivos selecionados
                     if(bolConsecutiveDays) {
@@ -214,7 +222,8 @@
 				   	}
 
 				   	// data está dentro do range
-                    if ((intDate > intStartDate) && (intDate < intEndDate)) {
+                    if ((calendarFactory.isGreaterThan(objDateAdjusted,objRangeStartDate)) && !(calendarFactory.isGreaterThan(objDateAdjusted,objRangeEndDate))) {
+                        console.log("entrando no range")
 
                         if (weekDay === 0 || weekDay === 1) {
                             arrClasses.push('ball');
@@ -222,9 +231,11 @@
                             arrClasses.push('bar');
                         }
 
+                        console.log("saindo do range")
+
                     }
                     // se for data inicial ou final
-r                    else if ((intDate == intStartDate) || (intDate == intEndDate)) {
+                    else if ((objDateAdjusted == objRangeStartDate) || (objRangeEndDate == objDateAdjusted)) {
                         arrClasses.push('ball');
                     }
                     // mês e ano atual da data selecionada não for igual a esse mês e ano
