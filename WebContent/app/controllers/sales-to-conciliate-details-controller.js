@@ -13,16 +13,35 @@
         .controller('salesToConcileDetailsController', salesToConcileDetailsController);
 
 
-    salesToConcileDetailsController.$inject = ['$scope'];
+    salesToConcileDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService'];
 
-    function salesToConcileDetailsController($scope) {
+    function salesToConcileDetailsController($scope, calendarFactory, utilsFactory, TransactionService) {
 
-        var objVm = this;
+        var objVm = this.vm;
+        $scope.items = [];
 
-        console.log($scope.transaction)
-        console.log($scope.transaction)
+        Init();
 
-        $scope.teste = [[],[],[],[],[],[],[],[],[]];
+        function Init() {
+            GetDetails();
+        }
+
+        function GetDetails() {
+            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+
+            var objFilter = {
+                startDate: strDate,
+                endDate: strDate,
+                cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
+                conciliationStatus: 'TO_CONCILIE'
+            };
+
+            TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
+                $scope.items = objResponse.data.content;
+            }).catch(function(objResponse){
+
+            });
+        }
 
     }
 

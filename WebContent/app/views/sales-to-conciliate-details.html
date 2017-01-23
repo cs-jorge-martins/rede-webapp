@@ -35,40 +35,9 @@
             </div>
         </div>
     </div>
-</section>
 
-
-
-
-
-<br /><br /><br /><br /><br /><br /><br /><br />
-
-<div class="content-header">
-
-    <div class="clearfix"></div>
-    <ul class="sales-details-header list-unstyled">
-        <li class="acquirer ng-binding">REDE</li>
-        <li class="brand">
-            <div class="card-product brand-1"></div>
-            <span class="ng-binding">Mastercard</span>
-        </li>
-        <li class="total-value">
-            <span class="label">quantidade de vendas</span>
-            <div class="value">
-                <span class="totalDiscounted ng-binding">{{'10000' | number}}</span>
-            </div>
-        </li>
-        <li class="total-value">
-            <span class="label">total recebido</span>
-            <div class="value">
-                <span>R$</span>
-                <span class="totalDiscounted ng-binding">2.608,75</span>
-            </div>
-        </li>
-    </ul>
-    <table class="table gray has-checkboxes">
+    <table class="table primary" ng-show="items.length">
         <thead>
-        <tr>
             <th class="checkbox-header">
                 <div class="checkbox">
                     <div class="checkbox-left">
@@ -80,16 +49,15 @@
             <th>tipo loja</th>
             <th>data/hora</th>
             <th>nsu</th>
-            <th>cód.aut.</th>
+            <th>cód. aut.</th>
             <th>valor bruto transação</th>
             <th>MDR</th>
-            <th>n parcelas</th>
-            <th>n do lote(rv)</th>
+            <th>n&ordm; parcelas</th>
+            <th>n&ordm; do lote(rv)</th>
             <th>tid</th>
-        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="x in teste">
+            <tr ng-repeat="item in items">
                 <td scope="row">
                     <div class="checkbox">
                         <div class="checkbox-left">
@@ -99,15 +67,15 @@
                     </div>
                 </td>
                 <td>e-commerce</td>
-                <td>16/09 22:00</td>
-                <td>999999999999</td>
-                <td>99999999</td>
-                <td>R$ 100.000.000.000,00</td>
+                <td>{{ item.date | date: 'dd/MM/yyyy' }} {{ item.hour }}</td>
+                <td>{{ item.nsu }}</td>
+                <td>{{ item.authorization }}</td>
+                <td>{{ item.gross | currency: 'R$ ' }}</td>
                 <td>1,50%</td>
-                <td>6</td>
+                <td>{{ item.installment }}</td>
                 <td>99999999999</td>
-                <td>131232131231313123131</td>
+                <td>{{ item.tid }}</td>
             </tr>
         </tbody>
     </table>
-</div>
+</section>

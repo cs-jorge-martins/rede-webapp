@@ -77,6 +77,7 @@
                 backdrop: false,
                 scope: objScope,
                 bindToController: true,
+                controllerAs: 'objVm',
                 animation: false,
                 windowTopClass: 'modal-details'
             });
