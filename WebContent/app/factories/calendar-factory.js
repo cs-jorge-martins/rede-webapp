@@ -377,45 +377,34 @@ angular.module('Kaplen.CalendarFactory',[])
 		}
 	}
 
-	function IsConsecutiveDays(dateOne, dateTwo) {
+    function IsInBetweenHours(dateMin, dateMax, date, intHours) {
 
-		var objDateOne = moment(dateOne);
-		var objDateTwo = moment(dateTwo);
+        var objDateMin = moment(dateMin).startOf('day');
+        var objDateMax = moment(dateMax).startOf('day');
+        var objDate = moment(date).startOf('day');
 
-		return 1 == objDateOne.diff(objDateTwo, 'days') || -1 == objDateOne.diff(objDateTwo, 'days');
+        var hoursDiffMinDate = objDate.diff(objDateMin, 'hours');
+        var hoursDiffMaxDate = objDate.diff(objDateMax, 'hours');
 
-    }
-
-	function IsInitialAndFinalWeekDays(dateOne, dateTwo) {
-
-		var bolReturn = false;
-
-		var objDateOne = moment(dateOne);
-		var objDateTwo = moment(dateTwo);
-		var arrInitialAndFindalWeekDays = [0,1];
-
-        var intDateOneIsInitialOrFinalWeekDay = arrInitialAndFindalWeekDays.indexOf(objDateOne.day());
-        var intDateTwoIsInitialOrFinalWeekDay = arrInitialAndFindalWeekDays.indexOf(objDateTwo.day());
-
-        if(intDateOneIsInitialOrFinalWeekDay !== -1 && intDateTwoIsInitialOrFinalWeekDay !== -1) {
-        	bolReturn = true;
-		}
-
-		return bolReturn;
+        return hoursDiffMinDate >= intHours && hoursDiffMaxDate < 0;
 
     }
 
-	function IsGreaterThan(dateOne, dateTwo) {
-		var mommentDateOne = moment(dateOne);
-		var mommentDateTwo = moment(dateTwo);
-		console.log("mommentDateOne.diff(mommentDateTwo, 'days')", mommentDateOne.diff(mommentDateTwo, 'days'));
-		console.log("mommentDateOne.diff(mommentDateTwo, 'days') > 0", mommentDateOne.diff(mommentDateTwo, 'days') > 0);
-		return mommentDateOne.diff(mommentDateTwo, 'days') > 0 ;
+    function IsEqualDate(dateOne, dateTwo) {
+
+
+        var objDateOne = moment(dateOne).startOf('day');
+        var objDateTwo = moment(dateTwo).startOf('day');
+
+        return objDateOne.diff(objDateTwo, 'hours') === 0;
+
     }
 
 	function TransformBrDateIntoDate(date) {
+		if(date) {
 		var arrParts = date.split("/");
 		return new Date(arrParts[2], arrParts[1]-1, arrParts[0], 0, 0, 0, 0);
+        }
 	}
 
     return {
@@ -474,8 +463,7 @@ angular.module('Kaplen.CalendarFactory',[])
 		getNextYear: GetNextYear,
 		getYesterday: GetYesterday,
 		getActualDateOfNextYear: GetActualDateOfNextYear,
-        isConsecutiveDays: IsConsecutiveDays,
-        isInitialAndFinalWeekDays: IsInitialAndFinalWeekDays,
-        isGreaterThan: IsGreaterThan
+        isInBetweenHours: IsInBetweenHours,
+        isEqualDate: IsEqualDate
 	};
 });

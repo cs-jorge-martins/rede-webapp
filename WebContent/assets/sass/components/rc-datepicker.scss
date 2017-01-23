@@ -178,7 +178,11 @@
                 top: .2em;
             }
 
-            &.non-current-month {
+            button.active:disabled:after {
+                background: transparent;
+            }
+
+            &.non-current-month:not(.bar) {
                 button.active {
                     &:not(:disabled) {
                         span:not(.text-muted) {
@@ -206,6 +210,11 @@
                         z-index: 10;
                     }
                 }
+
+                button.active:after {
+                    border-radius: 0;
+                }
+
                 &.consecutive-days {
                     button {
                         &:after {

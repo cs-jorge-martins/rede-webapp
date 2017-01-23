@@ -186,66 +186,61 @@
 			function GetDayClass(date, mode) {
 
 			    var objDateAdjusted = date.date;
-			    objDateAdjusted.setHours('23');
-                objDateAdjusted.setMinutes('59');
-                objDateAdjusted.setSeconds('59');
 				var intDate = objDateAdjusted.getTime();
-				var weekDay = objDateAdjusted.getDay();
-                var intStartDate = objRangeStartDate.getTime();
-                var intEndDate = objRangeEndDate.getTime();
                 var objActiveMonth = new Date(objDateAdjusted).getMonth();
                 var objActiveYear = new Date(objDateAdjusted).getYear();
-                var objCurrentMonth = new Date().getMonth();
-                var objCurrentYear = new Date().getYear();
-                var bolConsecutiveDays = calendarFactory.isConsecutiveDays(objRangeStartDate, objRangeEndDate);
 
                 var arrClasses = [];
 
-				// se não for range o date foi selecionado
                 if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
                     arrClasses.push('ball');
                 }
 
                 if(bolIsRange && intRangeClickCounter === 0) {
-                    console.log("objRangeEndDate",objRangeEndDate);
-                    console.log("objDateAdjusted",objDateAdjusted);
-                    console.log("intEndDate",intEndDate);
-                    console.log("intDate", intDate);
 
-                	// dias consecutivos selecionados
-                    if(bolConsecutiveDays) {
-					   if(calendarFactory.isInitialAndFinalWeekDays(objRangeStartDate, objRangeEndDate) === false) {
-						   if(intDate == objRangeEndDate.getTime()) {
-							   arrClasses.push('consecutive-days');
-						   }
-					   }
-				   	}
+                    var weekDay = objDateAdjusted.getDay();
+                    var intStartDate = objRangeStartDate.getTime();
+                    var intEndDate = objRangeEndDate.getTime();
+                    var objCurrentMonth = new Date().getMonth();
+                    var objCurrentYear = new Date().getYear();
 
-				   	// data está dentro do range
-                    if ((calendarFactory.isGreaterThan(objDateAdjusted,objRangeStartDate)) && !(calendarFactory.isGreaterThan(objDateAdjusted,objRangeEndDate))) {
-                        console.log("entrando no range")
+                    if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
-                        if (weekDay === 0 || weekDay === 1) {
+                        if (weekDay === 1)  {
                             arrClasses.push('ball');
-                        } else {
+                        } else if (weekDay === 0) {
+                            arrClasses.push('bar');
+                            arrClasses.push('consecutive-days');
+                        } else{
                             arrClasses.push('bar');
                         }
 
-                        console.log("saindo do range")
+                    }
+                    else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
+                        arrClasses.push('ball');
+					}
+					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
+
+                    	if(weekDay !== 1) {
+							arrClasses.push('bar');
+							arrClasses.push('consecutive-days');
+                        } else {
+                    		arrClasses.push('ball');
+						}
 
                     }
-                    // se for data inicial ou final
-                    else if ((objDateAdjusted == objRangeStartDate) || (objRangeEndDate == objDateAdjusted)) {
-                        arrClasses.push('ball');
-                    }
-                    // mês e ano atual da data selecionada não for igual a esse mês e ano
-                    else if ( !(objActiveMonth == objCurrentMonth && objActiveYear == objCurrentYear) ) {
+
+                }
+
+                if ( !(objActiveMonth == objCurrentMonth && objActiveYear == objCurrentYear) ) {
+
+                	if(!calendarFactory.isEqualDate(objDateAdjusted,$scope.pickerDate)) {
                         arrClasses.push('non-current-month');
                     }
 
                 }
 
-				return arrClasses.join(" ");
+				return _.uniq(arrClasses).join(" ");
 			}
 
 			/**
@@ -255,10 +250,14 @@
 			 * parte inferior do componente de calendário. Ele adiciona ou subtrai
 			 * os dias e já atualiza a(s) data(s) de acordo com o parâmetro recebido
 			 * @param {Integer} days Dias a serem adicionados ou removidos da data
+			 * @param {String} strStartingDate 'tomorrow' para começar a contagem de amanhã
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
-			function DateFilter(days) {
+			function DateFilter(days, strStartingDate) {
 				var actualDate = new Date();
+				if(strStartingDate && strStartingDate === 'tomorrow') {
+					actualDate.setDate(actualDate.getDate() + 1);
+				}
 				var targetDate = new Date();
 				targetDate.setDate(targetDate.getDate() + days);
 
