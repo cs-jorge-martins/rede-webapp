@@ -70,8 +70,8 @@
         objVm.getSales = GetSales;
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
+        objVm.removeUnprocessed = RemoveUnprocessed;
         objVm.details = Details;
-
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -83,6 +83,7 @@
         objVm.pvsModel = [];
         objVm.acquirersData = [];
         objVm.acquirersModel = [];
+        objVm.countButtonLabelPrefix = 'conciliar';
 
         Init();
 
@@ -300,14 +301,47 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
-                $scope.count = objTransactionModel.count;
-                $scope.reconcileType = "conciliar";
+                $scope.reconcileType = "desconciliar";
+                $scope.modalTitle = "desconciliar vendas";
+                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " vendas?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
 
                 $scope.confirm = function Confirm() {
                     transactionService.ConcilieTransactions(objFilter).then(function(objResponse) {
+                        GetSales();
+                        $uibModalInstance.close();
+                    });
+                }
+            });
+
+        }
+
+        function RemoveUnprocessed(objTransactionModel, objAcquirer) {
+
+            var strDate = FormatDateForService();
+
+            var objFilter = {
+                currency: 'BRL',
+                startDate: strDate,
+                endDate: strDate,
+                cardProductIds: objTransactionModel.cardProductIds,
+                terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', false),
+                acquirerIds: [objAcquirer.id],
+                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
+            };
+
+            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+                $scope.reconcileType = "excluir";
+                $scope.modalTitle = "excluir vendas não processadas";
+                $scope.modalText = "Você deseja excluir " + objTransactionModel.count + " vendas não processadas?";
+                $scope.cancel = function Cancel() {
+                    $uibModalInstance.close();
+                };
+
+                $scope.confirm = function Confirm() {
+                    transactionService.RemoveUnprocessedTransactions(objFilter).then(function(objResponse) {
                         GetSales();
                         $uibModalInstance.close();
                     });

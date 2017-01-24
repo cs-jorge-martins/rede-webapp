@@ -59,6 +59,17 @@
 			});
 		};
 
+        this.RemoveUnprocessedTransactions = function(objFilter){
+            var objRequest = objFilter;
+
+            return $http({
+                url: app.endpoint + '/transactionsummaries/unprocessed',
+                method: "DELETE",
+                data: objRequest,
+                headers: Request.setHeaders()
+            });
+        };
+
         this.ExportTransactions = function(objFilter, success, error) {
             var objStartTime = new Date().getTime();
             var intTimeout = 30 * 1000;  // milisseconds
