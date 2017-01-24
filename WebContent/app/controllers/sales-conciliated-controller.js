@@ -80,6 +80,7 @@
         objVm.pvsModel = [];
         objVm.acquirersData = [];
         objVm.acquirersModel = [];
+        objVm.countButtonLabelPrefix = 'desconciliar';
 
         Init();
 
@@ -280,7 +281,8 @@
             var strDate = FormatDateForService();
 
             var objFilter = {
-                conciliationStatus: ['TO_CONCILIE'],
+                conciliationStatus: ['CONCILIED'],
+                newConciliationStatus: 'TO_CONCILIE',
                 currency: 'BRL',
                 startDate: strDate,
                 endDate: strDate,
@@ -291,8 +293,9 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
-                $scope.count = objTransactionModel.count;
-                $scope.reconcileType = "conciliar";
+                $scope.reconcileType = "desconciliar";
+                $scope.modalTitle = "desconciliar vendas";
+                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " vendas?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };

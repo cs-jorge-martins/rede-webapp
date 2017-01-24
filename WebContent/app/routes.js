@@ -102,11 +102,6 @@
 					title: 'vendas',
 					breadcrumb: ['vendas']
     			})
-                .when('/sales/details', {
-    				templateUrl: 'app/views/sales-details.html',
-    				controller: 'salesDetailsController',
-                    migrationId: 'v1'
-    			})
                 .otherwise({
                     redirectTo: '/login'
                 });

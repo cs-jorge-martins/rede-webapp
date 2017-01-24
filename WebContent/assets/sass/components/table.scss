@@ -1,31 +1,46 @@
 .table {
-  tbody>tr>td,
-  tbody>tr>th,
-  tfoot>tr>td,
-  tfoot>tr>th,
-  thead>tr>td,
-  thead>tr>th{
-    border-top-color: #eee;
-    border-bottom: none;
-    vertical-align: middle;
-  }
-
-  thead:first-child {
-    tr:first-child {
-      th {
-        padding-bottom: 10px;
-      }
+    tbody>tr>td,
+    tbody>tr>th,
+    tfoot>tr>td,
+    tfoot>tr>th,
+    thead>tr>td,
+    thead>tr>th{
+        border-top-color: #eee;
+        border-bottom: none;
+        //vertical-align: middle;
     }
-  }
 
-  td {
-    font-size: 1.1em;
-    a, button {
-      color: $tableLinkColor;
-      text-decoration: underline;
-      &:hover {
-        color: $tableLinkColor;
-      }
+    td {
+        font-size: 1.1em;
+
+        a, button {
+            color: $tableLinkColor;
+            text-decoration: underline;
+
+            &:hover {
+                color: $tableLinkColor;
+            }
+        }
     }
-  }
+
+    &.primary {
+        thead {
+            background: $tableHeadBackgroundColor;
+            color: $tableHeadFontColor;
+        }
+
+        th {
+            padding: 2.3em 0 1.8em;
+            font-size: .9em;
+        }
+
+        tbody {
+
+        }
+
+        td {
+            font-size: .95em;
+            padding: 2.3em 0 1.8em;
+        }
+    }
 }

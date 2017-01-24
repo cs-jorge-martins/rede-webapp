@@ -5,8 +5,43 @@
  */
 
 .page-title {
-  color:$pageTitle;
-  margin: 1.2em 0;
-  font-size: 2em;
-  font-family: $fontBold;
+    color:$pageTitle;
+    margin: 1.2em 0;
+    font-size: 2em;
+    font-family: $fontSemiBold;
+}
+
+.date {
+    color: $defaultOrange;
+    text-align: center;
+
+
+    .day {
+        font-size: 6em;
+        font-family: $fontLight;
+        margin-bottom: 0;
+    }
+
+    .month {
+        font-size: 2.1em;
+        font-family: $fontBold;
+        margin-top: -0.6em;
+    }
+}
+
+.positive {
+    color: $positiveValueColor;
+}
+
+.negative {
+    color: $negativeValueColor;
+}
+
+.date {
+    color: $defaultOrange;
+}
+
+small {
+    font-size: .5em;
+    margin-right: 0.4em;
 }
