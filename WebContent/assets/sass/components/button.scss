@@ -19,11 +19,11 @@
 
 // Cor principal
 .btn.btn-primary, .btn.btn-primary:hover {
-  //background: #F8DEOO !important;
-  background: $primaryButtomBackground;
-  color: #575757;
+  background: $primaryButtomBackgroundColor;
+  color: $primaryButtonFontColor;
   border: 0 !important;
   font-style: bold !important;
+  font-size: $primaryButtonFontSize;
   shadow-color: #000000;
   shadow-opacity: 24%;
   shadow-distance: 1px;
@@ -34,7 +34,7 @@
 
 .btn.btn-primary:active {
   color: #ad9c2a !important;
-  background: $primaryButtomBackground;
+  background: $primaryButtomBackgroundColor;
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }

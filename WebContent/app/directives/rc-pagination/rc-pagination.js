@@ -48,15 +48,13 @@
                 resultsPageModel: '=',
                 resultsPaginationTotalItens: '=',
                 maxSize: '=',
-                onChange: '&'
+                onChange: '='
 			},
 			controller: Controller,
             link: function(scope, element, attrs, ctrl) {
-
                 scope.$watch("resultsPaginationTotalItens",function(intNewValue,intOldValue) {
                     ctrl.MakeResultsPerPageOptions();
                 });
-
             }
 		};
 

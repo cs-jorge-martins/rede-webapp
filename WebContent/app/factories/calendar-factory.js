@@ -243,9 +243,18 @@ angular.module('Kaplen.CalendarFactory',[])
 		 return objResultMoment.toDate();
 	}
 
-    function AddYearsToDate(date, intQtd){
-		 var objResultMoment = moment(date, strFormat);
-		 var objResultAddMoment = objResultMoment.add(intQtd, 'year');
+    function AddYearsToDate(date, intQtd, bolFormatToDate){
+
+
+		var objResultMoment = moment(date, strFormat);
+		if(bolFormatToDate) {
+            objResultMoment = moment(date);
+		}
+		 var objResultAddMoment = objResultMoment.add(intQtd, 'years');
+
+		 if(bolFormatToDate && bolFormatToDate === true) {
+             return objResultAddMoment.tz(timeTimezone).toDate();
+		 }
 
 		 return objResultAddMoment.tz(timeTimezone);
 	}
@@ -368,6 +377,34 @@ angular.module('Kaplen.CalendarFactory',[])
 		}
 	}
 
+	function IsConsecutiveDays(dateOne, dateTwo) {
+
+		var objDateOne = moment(dateOne);
+		var objDateTwo = moment(dateTwo);
+
+		return 1 == objDateOne.diff(objDateTwo, 'days') || -1 == objDateOne.diff(objDateTwo, 'days');
+
+    }
+
+	function IsInitialAndFinalWeekDays(dateOne, dateTwo) {
+
+		var bolReturn = false;
+
+		var objDateOne = moment(dateOne);
+		var objDateTwo = moment(dateTwo);
+		var arrInitialAndFindalWeekDays = [0,1];
+
+        var intDateOneIsInitialOrFinalWeekDay = arrInitialAndFindalWeekDays.indexOf(objDateOne.day());
+        var intDateTwoIsInitialOrFinalWeekDay = arrInitialAndFindalWeekDays.indexOf(objDateTwo.day());
+
+        if(intDateOneIsInitialOrFinalWeekDay !== -1 && intDateTwoIsInitialOrFinalWeekDay !== -1) {
+        	bolReturn = true;
+		}
+
+		return bolReturn;
+
+    }
+
 	function TransformBrDateIntoDate(date) {
 		var arrParts = date.split("/");
 		return new Date(arrParts[2], arrParts[1]-1, arrParts[0], 0, 0, 0, 0);
@@ -428,6 +465,8 @@ angular.module('Kaplen.CalendarFactory',[])
         getDaySlashMonth: GetDaySlashMonth,
 		getNextYear: GetNextYear,
 		getYesterday: GetYesterday,
-		getActualDateOfNextYear: GetActualDateOfNextYear
+		getActualDateOfNextYear: GetActualDateOfNextYear,
+        isConsecutiveDays: IsConsecutiveDays,
+        isInitialAndFinalWeekDays: IsInitialAndFinalWeekDays
 	};
 });
