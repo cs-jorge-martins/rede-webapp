@@ -178,6 +178,7 @@ module.exports = function(grunt) {
                     "WebContent/app/service/movement-service.js",
                     "WebContent/app/service/adjust-service.js",
                     "WebContent/app/service/rc-message-service.js",
+                    "WebContent/app/service/rc-disclaimer-service.js",
                     "WebContent/app/service/modal-service.js",
 
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
@@ -189,6 +190,7 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-breadcrumb/rc-breadcrumb.js",
                     "WebContent/app/directives/rc-chips/rc-chips.js",
                     "WebContent/app/directives/rc-checkbox/rc-checkbox.js",
+                    "WebContent/app/directives/rc-pagination/rc-pagination.js",
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",

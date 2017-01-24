@@ -19,7 +19,6 @@
             scope: {
                 type: "=",
                 text: "=",
-                href: "=",
                 actionText: "=",
                 onClick: "&"
             },

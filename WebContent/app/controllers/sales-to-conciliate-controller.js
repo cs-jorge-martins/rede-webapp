@@ -299,7 +299,7 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
                 $scope.count = objTransactionModel.count;
                 $scope.reconcileType = "conciliar";
                 $scope.cancel = function Cancel() {

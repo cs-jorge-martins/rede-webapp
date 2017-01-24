@@ -42,4 +42,36 @@
         }
     }
 
+    .clear-filter {
+        color:$defaultOrange;
+        cursor: pointer;
+        font-size: 1.3em;
+        height:1em;
+        padding: 0.2em 0.9em 0 0;
+        position: absolute;
+        right: 0.7em;
+        text-align: center;
+        top: 0.2em;
+        width:1em;
+
+    }
+
+    .tooltip {
+
+        left: 0 !important;
+        position: relative;
+        top: 0 !important;
+        width: 100%;
+
+        .tooltip-inner {
+            line-height: 1.7em;
+            max-width: 100%;
+            min-width: 100%;
+            position: absolute !important;
+        }
+
+        .tooltip-arrow {
+            display: none;
+        }
+    }
 }

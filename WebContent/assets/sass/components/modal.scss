@@ -104,6 +104,10 @@
 
     .details-content {
         margin-top: 2em;
+
+        & > section {
+            margin-bottom: 8em;
+        }
     }
 
 }

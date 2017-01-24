@@ -62,7 +62,7 @@
         					<td>{{item.payedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>{{item.roDate | date: 'dd/MM/yyyy'}}</td>
                         	<td>{{item.description}}</td>
-                        	<td>{{item.amount | currency:""}}</td>
+                        	<td>{{item.amount | customCurrency:""}}</td>
         				</tr>
         			</tbody>
         		</table>
@@ -88,6 +88,5 @@
 				</div>
         	</div>
         </div>
-        <rc-disclaimer></rc-disclaimer>
     </div>
 </section>

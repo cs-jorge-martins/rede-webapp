@@ -6,6 +6,13 @@
 
 .rcMultiselect {
 
+  label span.visible:before {
+    font-family: $fontItau;
+    content: "\e960";
+    color: $rcMultiLabelColor;
+
+  }
+
   .dropdown-multiselect {
 
     position: relative;

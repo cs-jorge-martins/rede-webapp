@@ -66,8 +66,6 @@
             objScope.template = strTemplateUrl;
             objScope.close = Close;
 
-            console.log(objScope)
-
             var strClassName = 'modal-details-opened';
 
             var objModal = $uibModal.open({

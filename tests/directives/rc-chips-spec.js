@@ -47,14 +47,14 @@ describe('rc-chips directive', function() {
         xScope.visible = false;
         xScope.$digest();
 
-        var objChip = strTemplateNode.querySelector('div.chip');
+        var objChip = strTemplateNode.querySelector('div.chip-parent');
 
-        expect(objChip.classList.contains('hidden-chip')).toBe(true);
+        expect(objChip.classList.contains('hide')).toBe(true);
     });
 
     it ('should hide on clear', function() {
-        var objChip = strTemplateNode.querySelector('div.chip');
-        expect(objChip.classList.contains('hidden-chip')).toBe(false);
+        var objChip = strTemplateNode.querySelector('div.chip-parent');
+        expect(objChip.classList.contains('hide')).toBe(false);
 
         xScope.hide = function() {
             xScope.visible = false;
@@ -62,6 +62,6 @@ describe('rc-chips directive', function() {
         xScope.hide();
         xScope.$digest();
 
-        expect(objChip.classList.contains('hidden-chip')).toBe(true);
+        expect(objChip.classList.contains('hide')).toBe(true);
     });
 });

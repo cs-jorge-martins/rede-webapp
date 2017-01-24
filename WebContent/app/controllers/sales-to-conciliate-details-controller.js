@@ -18,6 +18,13 @@
     function salesToConcileDetailsController($scope, calendarFactory, utilsFactory, TransactionService) {
 
         var objVm = this.vm;
+
+        $scope.resultsPerPage = 10;
+        $scope.resultsPageModel = 0;
+        $scope.resultsTotalItens = 0;
+        $scope.maxSize = 4;
+        $scope.updatePagination = UpdatePagination;
+
         $scope.items = [];
 
         Init();
@@ -33,14 +40,24 @@
                 startDate: strDate,
                 endDate: strDate,
                 cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
-                conciliationStatus: 'TO_CONCILIE'
+                conciliationStatus: 'TO_CONCILIE',
+                page: $scope.resultsPageModel,
+                size: $scope.resultsPerPage
+                //sort:$scope.sort;
             };
 
             TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
                 $scope.items = objResponse.data.content;
+                $scope.resultsTotalItens = objResponse.data.page.totalElements;
+                $scope.resultsPageModel = objResponse.data.page.number;
+
             }).catch(function(objResponse){
 
             });
+        }
+
+        function UpdatePagination() {
+            GetDetails();
         }
 
     }

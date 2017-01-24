@@ -71,11 +71,27 @@
                 <td>{{ item.nsu }}</td>
                 <td>{{ item.authorization }}</td>
                 <td>{{ item.gross | currency: 'R$ ' }}</td>
-                <td>1,50%</td>
+                <td>{{ item.percentFee }}%</td>
                 <td>{{ item.installment }}</td>
-                <td>99999999999</td>
-                <td>{{ item.tid }}</td>
+                <td>{{ item.roNumber }}</td>
+                <td>{{ (item.tid || "-") }}</td>
             </tr>
         </tbody>
     </table>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <rc-pagination
+                results-per-page-model="resultsPerPage"
+                results-page-model="resultsPageModel"
+                results-pagination-total-itens="resultsTotalItens"
+                max-size="maxSize"
+                on-change="updatePagination">
+            </rc-pagination>
+
+            <div class="col-md-offset-9 col-md-3 reconcile-button">
+                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
+            </div>
+        </div>
+    </div>
 </section>

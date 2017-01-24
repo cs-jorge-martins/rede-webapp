@@ -11735,12 +11735,13 @@ section#integration .rcDatepicker tbody td {
     color:green;
 }
 
-#receipts_table .vendas {
+#receipts_table .vendas, 
+#receipts_table .ajustes-credito {
     color: #4d4d4d;
 }
 
 #receipts_table .cancelamentos,
-#receipts_table .ajustes,
+#receipts_table .ajustes-debito,
 #receipts_table .custo-de-antecipacao{
     color: #e84438;
 }
