@@ -13,7 +13,10 @@
     }
 
     .dropdown-menu {
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.24);
         padding: 0;
+        border: 0;
+
     }
 
     .input-group {
@@ -80,7 +83,7 @@
             }
 
             tr:first-of-type {
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid $rcDatepickerBorderColor;
                 height: inherit;
                 padding: 10px;
 
@@ -260,7 +263,7 @@
         .glyphicon {
             font-family: 'itaufonts_master_24px_v1';
             color: #ff7800;
-            font-size: 1.7em;
+            font-size: 32px;
 
             &.glyphicon-chevron-left:before {
                 content: '\e9b1';
@@ -274,7 +277,7 @@
 
     .dateFilters {
 
-        border-top: 1px solid #ddd;
+        border-top: 1px solid $rcDatepickerBorderColor;
         font-size: 1.1em;
         line-height: 1.3em;
         margin-top: 18px;
