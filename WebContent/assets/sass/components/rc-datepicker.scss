@@ -6,10 +6,17 @@
 
 .rcDatepicker {
 
-    font-family: $fontBold;
+    font-family: $fontSemiBold;
 
     .form-control {
         border-right: 0;
+    }
+
+    .dropdown-menu {
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.24);
+        padding: 0;
+        border: 0;
+
     }
 
     .input-group {
@@ -53,8 +60,13 @@
         button {
             background-color: transparent;
             border: none;
-            color: #353230;
+            color: $darkGray;
             font-size: 1em;
+
+            &[disabled]:hover {
+                background: none;
+            }
+
         }
 
         thead {
@@ -66,13 +78,14 @@
                     padding-left: 1.4em;
                 }
                 th:last-of-type {
-                    padding-right: 1.4em;
+                    padding-right: 1.4em !important;
                 }
             }
 
             tr:first-of-type {
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid $rcDatepickerBorderColor;
                 height: inherit;
+                padding: 10px;
 
                 th {
                     padding: inherit;
@@ -104,16 +117,31 @@
             }
 
             .btn-sm {
-                padding: 1.2em 1.5em;
+                //padding: 1.2em 1.5em;
             }
         }
 
         .uib-day {
             position: relative;
 
+            &:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
+                color: $darkGray;
+                font-family: $fontBold;
+            }
+
             .btn-sm {
-                padding: 1.37em 2em;
+                padding: 1.37em 2em !important;
                 font-size: 1.1em;
+
+                span {
+
+                    font-family: $fontRegular;
+                    padding: 0 !important;
+                    width: auto;
+                    text-decoration: none;
+
+                }
+
             }
 
             button {
@@ -140,24 +168,38 @@
 
             }
 
-            &.ball {
-                button {
+            &.ball button:after, button.active:after {
+                content: '';
+                position: absolute;
+                background: #ff7800;
+                border-radius: 50%;
+                width: 2.2em;
+                height: 2.2em;
+                left: 0;
+                z-index: 10;
+                left: 1em;
+                top: .2em;
+            }
+
+            button.active:disabled:after {
+                background: transparent;
+            }
+
+            &.non-current-month:not(.bar) {
+                button.active {
+                    &:not(:disabled) {
+                        span:not(.text-muted) {
+                            color: $darkGray !important;
+                        }
+                    }
                     &:after {
-                        content: '';
-                        position: absolute;
-                        background: #ff7800;
-                        border-radius: 50%;
-                        width: 2.2em;
-                        height: 2.2em;
-                        left: 0;
-                        z-index: 10;
-                        left: 1em;
-                        top: .2em;
+                        background: transparent !important;
                     }
                 }
             }
 
             &.bar {
+
                 button {
                     &:after {
                         content: '';
@@ -171,9 +213,28 @@
                         z-index: 10;
                     }
                 }
+
+                button.active:after {
+                    border-radius: 0;
+                }
+
+                &.consecutive-days {
+                    button {
+                        &:after {
+                            padding-right: 5.4em;
+                            border-radius: 0 40px 40px 0;
+                        }
+                    }
+                }
+
+                &.last button:after {
+                    left: -4em;
+                }
+
+
             }
 
-            &.ball, &.bar {
+            &.ball, &.bar, button.active {
                 span {
                     color: #fff;
                 }
@@ -202,7 +263,7 @@
         .glyphicon {
             font-family: 'itaufonts_master_24px_v1';
             color: #ff7800;
-            font-size: 1.7em;
+            font-size: 32px;
 
             &.glyphicon-chevron-left:before {
                 content: '\e9b1';
@@ -215,7 +276,12 @@
     }
 
     .dateFilters {
-        border-top: 1px solid #ddd;
+
+        border-top: 1px solid $rcDatepickerBorderColor;
+        font-size: 1.1em;
+        line-height: 1.3em;
+        margin-top: 18px;
+        width: 100%;
 
         .container {
             width: inherit;
@@ -226,6 +292,7 @@
         }
 
         a {
+            text-transform: none;
             &:hover {
                 text-decoration: none;
 
@@ -240,14 +307,15 @@
         }
 
         p {
+            font-family: $fontLight;
             margin: 0;
-            color: #b9b8b8;
+            color: $platinum;
             font-weight: 600;
         }
 
         .legend {
             p {
-                margin-left: 1.4em;
+                //margin-left: 1.4em;
             }
         }
     }

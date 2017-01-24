@@ -160,6 +160,7 @@
 							}
 
 							$scope.pickerDate = objRangeStartDate;
+							$scope.date = [objRangeStartDate, objRangeEndDate];
 							$scope.status.opened = false;
 							break;
 						default:
@@ -183,31 +184,63 @@
 			 * @return {String} nome da classe
 			 */
 			function GetDayClass(date, mode) {
-				var intDate = date.date.getTime();
-				var weekDay = date.date.getDay();
 
-				if (bolIsRange && (intRangeClickCounter === 0)) {
-					var intStartDate = objRangeStartDate.getTime();
-					var intEndDate = objRangeEndDate.getTime();
+			    var objDateAdjusted = date.date;
+				var intDate = objDateAdjusted.getTime();
+                var objActiveMonth = new Date(objDateAdjusted).getMonth();
+                var objActiveYear = new Date(objDateAdjusted).getYear();
 
-					if ((intDate > intStartDate) && (intDate < intEndDate)) {
+                var arrClasses = [];
 
-						if (weekDay === 0 || weekDay === 1) {
-							return 'ball';
+                if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
+                    arrClasses.push('ball');
+                }
+
+                if(bolIsRange && intRangeClickCounter === 0) {
+
+                    var weekDay = objDateAdjusted.getDay();
+                    var intStartDate = objRangeStartDate.getTime();
+                    var intEndDate = objRangeEndDate.getTime();
+                    var objCurrentMonth = new Date().getMonth();
+                    var objCurrentYear = new Date().getYear();
+
+                    if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
+
+                        if (weekDay === 1)  {
+                            arrClasses.push('ball');
+                        } else if (weekDay === 0) {
+                            arrClasses.push('bar');
+                            arrClasses.push('consecutive-days');
+                        } else{
+                            arrClasses.push('bar');
+                        }
+
+                    }
+                    else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
+                        arrClasses.push('ball');
+					}
+					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
+
+                    	if(weekDay !== 1) {
+							arrClasses.push('bar');
+							arrClasses.push('consecutive-days');
+                        } else {
+                    		arrClasses.push('ball');
 						}
-						return 'bar';
-					}
 
-					if ((intDate == intStartDate) || (intDate == intEndDate)) {
-						return 'ball';
-					}
-				}
+                    }
 
-				if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
-					return 'ball';
-				}
+                }
 
-				return '';
+                if ( !(objActiveMonth == objCurrentMonth && objActiveYear == objCurrentYear) ) {
+
+                	if(!calendarFactory.isEqualDate(objDateAdjusted,$scope.pickerDate)) {
+                        arrClasses.push('non-current-month');
+                    }
+
+                }
+
+				return _.uniq(arrClasses).join(" ");
 			}
 
 			/**
@@ -217,10 +250,14 @@
 			 * parte inferior do componente de calendário. Ele adiciona ou subtrai
 			 * os dias e já atualiza a(s) data(s) de acordo com o parâmetro recebido
 			 * @param {Integer} days Dias a serem adicionados ou removidos da data
+			 * @param {String} strStartingDate 'tomorrow' para começar a contagem de amanhã
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
-			function DateFilter(days) {
+			function DateFilter(days, strStartingDate) {
 				var actualDate = new Date();
+				if(strStartingDate && strStartingDate === 'tomorrow') {
+					actualDate.setDate(actualDate.getDate() + 1);
+				}
 				var targetDate = new Date();
 				targetDate.setDate(targetDate.getDate() + days);
 

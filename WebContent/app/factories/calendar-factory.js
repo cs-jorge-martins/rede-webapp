@@ -243,9 +243,18 @@ angular.module('Kaplen.CalendarFactory',[])
 		 return objResultMoment.toDate();
 	}
 
-    function AddYearsToDate(date, intQtd){
-		 var objResultMoment = moment(date, strFormat);
-		 var objResultAddMoment = objResultMoment.add(intQtd, 'year');
+    function AddYearsToDate(date, intQtd, bolFormatToDate){
+
+
+		var objResultMoment = moment(date, strFormat);
+		if(bolFormatToDate) {
+            objResultMoment = moment(date);
+		}
+		 var objResultAddMoment = objResultMoment.add(intQtd, 'years');
+
+		 if(bolFormatToDate && bolFormatToDate === true) {
+             return objResultAddMoment.tz(timeTimezone).toDate();
+		 }
 
 		 return objResultAddMoment.tz(timeTimezone);
 	}
@@ -368,9 +377,34 @@ angular.module('Kaplen.CalendarFactory',[])
 		}
 	}
 
+    function IsInBetweenHours(dateMin, dateMax, date, intHours) {
+
+        var objDateMin = moment(dateMin).startOf('day');
+        var objDateMax = moment(dateMax).startOf('day');
+        var objDate = moment(date).startOf('day');
+
+        var hoursDiffMinDate = objDate.diff(objDateMin, 'hours');
+        var hoursDiffMaxDate = objDate.diff(objDateMax, 'hours');
+
+        return hoursDiffMinDate >= intHours && hoursDiffMaxDate < 0;
+
+    }
+
+    function IsEqualDate(dateOne, dateTwo) {
+
+
+        var objDateOne = moment(dateOne).startOf('day');
+        var objDateTwo = moment(dateTwo).startOf('day');
+
+        return objDateOne.diff(objDateTwo, 'hours') === 0;
+
+    }
+
 	function TransformBrDateIntoDate(date) {
+		if(date) {
 		var arrParts = date.split("/");
 		return new Date(arrParts[2], arrParts[1]-1, arrParts[0], 0, 0, 0, 0);
+        }
 	}
 
     return {
@@ -428,6 +462,8 @@ angular.module('Kaplen.CalendarFactory',[])
         getDaySlashMonth: GetDaySlashMonth,
 		getNextYear: GetNextYear,
 		getYesterday: GetYesterday,
-		getActualDateOfNextYear: GetActualDateOfNextYear
+		getActualDateOfNextYear: GetActualDateOfNextYear,
+        isInBetweenHours: IsInBetweenHours,
+        isEqualDate: IsEqualDate
 	};
 });

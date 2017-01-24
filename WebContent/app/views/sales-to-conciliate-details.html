@@ -1,0 +1,97 @@
+<section class="card">
+    <div class="row">
+        <div class="col-xs-2 date">
+            <p class="day">{{vm.dateModel.day}}</p>
+            <p class="month">{{vm.dateModel.monthName}}</p>
+        </div>
+        <div class="col-xs-10">
+            <rc-chips>
+                <rc-chip label="vm.terminalLabel" show="vm.chipsConfig.show.terminals" closeable="false" on-clear="vm.resetFilter('terminals')" tooltip-text="vm.terminalFullLabel"></rc-chip>
+                <rc-chip label="vm.cardProductLabel" show="vm.chipsConfig.show.cardProducts" closeable="false" on-clear="vm.resetFilter('cardProducts')" tooltip-text="vm.cardProductFullLabel"></rc-chip>
+                <rc-chip label="vm.pvLabel" show="vm.chipsConfig.show.pvs" closeable="false" on-clear="vm.resetFilter('pvs')" tooltip-text="vm.pvFullLabel"></rc-chip>
+                <rc-chip label="vm.acquirerLabel" show="vm.chipsConfig.show.acquirers" closeable="false" on-clear="vm.resetFilter('acquirers')" tooltip-text="vm.acquirerFullLabel"></rc-chip>
+                <div class="clearfix"></div>
+            </rc-chips>
+        </div>
+    </div>
+    <div class="subheader shadow-top">
+        <div class="row">
+            <div class="col-xs-2 acquirer push-down">
+                {{ vm.transaction.acquirer.name | uppercase }}
+            </div>
+            <div class="col-xs-1 push-down">
+                <div class="card-product brand-{{ vm.transaction.cardProduct.id }}">{{ vm.transaction.cardProduct.name }}</div>
+            </div>
+            <div class="col-xs-2 push-down">
+                {{ vm.transaction.cardProduct.name | lowercase }}
+            </div>
+            <div class="col-xs-3">
+                <p>quantidade de vendas</p>
+                <p class="value positive">{{ vm.transaction.quantity }}</p>
+            </div>
+            <div class="col-xs-3">
+                <p>total de vendas</p>
+                <p class="value positive"><small>R$</small>{{ vm.transaction.amount | currency: "" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <table class="table primary" ng-show="items.length">
+        <thead>
+            <th class="checkbox-header">
+                <div class="checkbox">
+                    <div class="checkbox-left">
+                        <input type="checkbox" id="checkbox-reconcile-all" class="checkbox" ng-checked="result.transactionsModel.allChecked" ng-click="selectAll(result.transactionsModel)">
+                        <label for="checkbox-reconcile-all"></label>
+                    </div>
+                </div>
+            </th>
+            <th>tipo loja</th>
+            <th>data/hora</th>
+            <th>nsu</th>
+            <th>cód. aut.</th>
+            <th>valor bruto transação</th>
+            <th>MDR</th>
+            <th>n&ordm; parcelas</th>
+            <th>n&ordm; do lote(rv)</th>
+            <th>tid</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in items">
+                <td scope="row">
+                    <div class="checkbox">
+                        <div class="checkbox-left">
+                            <input type="checkbox" id="checkbox-reconcile-{{$index + 1}}" class="checkbox" ng-checked="result.transactionsModel.checks[transaction.cardProduct.id]" ng-click="selectSingle(result.transactionsModel, transaction)">
+                            <label for="checkbox-reconcile-{{$index + 1}}"></label>
+                        </div>
+                    </div>
+                </td>
+                <td>e-commerce</td>
+                <td>{{ item.date | date: 'dd/MM/yyyy' }} {{ item.hour }}</td>
+                <td>{{ item.nsu }}</td>
+                <td>{{ item.authorization }}</td>
+                <td>{{ item.gross | currency: 'R$ ' }}</td>
+                <td>{{ item.percentFee }}%</td>
+                <td>{{ item.installment }}</td>
+                <td>{{ item.roNumber }}</td>
+                <td>{{ (item.tid || "-") }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <rc-pagination
+                results-per-page-model="resultsPerPage"
+                results-page-model="resultsPageModel"
+                results-pagination-total-itens="resultsTotalItens"
+                max-size="maxSize"
+                on-change="updatePagination">
+            </rc-pagination>
+
+            <div class="col-md-offset-9 col-md-3 reconcile-button">
+                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
+            </div>
+        </div>
+    </div>
+</section>
