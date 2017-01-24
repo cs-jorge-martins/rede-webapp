@@ -143,6 +143,7 @@ module.exports = function(grunt) {
                     "WebContent/app/controllers/sales-controller.js",
                     "WebContent/app/controllers/sales-conciliated-controller.js",
                     "WebContent/app/controllers/sales-to-conciliate-controller.js",
+                    "WebContent/app/controllers/sales-to-conciliate-details-controller.js",
                     "WebContent/app/controllers/relatorio-vendas-controller.js",
                     "WebContent/app/controllers/relatorio-financeiro-controller.js",
                     "WebContent/app/controllers/relatorio-ajustes-controller.js",
