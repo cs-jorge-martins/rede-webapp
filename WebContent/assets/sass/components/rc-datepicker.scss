@@ -124,6 +124,11 @@
         .uib-day {
             position: relative;
 
+            &:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
+                color: $darkGray;
+                font-family: $fontBold;
+            }
+
             .btn-sm {
                 padding: 1.37em 2em !important;
                 font-size: 1.1em;
@@ -134,11 +139,6 @@
                     padding: 0 !important;
                     width: auto;
                     text-decoration: none;
-
-                    &.text-info {
-                        color: $darkGray;
-                        font-family: $fontBold;
-                    }
 
                 }
 
