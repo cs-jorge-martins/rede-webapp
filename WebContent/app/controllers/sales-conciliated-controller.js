@@ -293,10 +293,15 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
+                var strPluralized = "vendas";
+                if (objTransactionModel.count > 1) {
+                    strPluralized = "venda"
+                }
+
                 $scope.reconcileType = "desconciliar";
                 $scope.modalTitle = "desconciliar vendas";
-                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " vendas?";
+                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
