@@ -9,13 +9,11 @@
     'use strict';
 
     angular
-        .module('Conciliador.salesToConcileDetailsController', [])
-        .controller('salesToConcileDetailsController', salesToConcileDetailsController);
+        .module('Conciliador.salesToConciliateDetailsController', [])
+        .controller('salesToConciliateDetailsController', salesToConciliateDetailsController);
 
-
-    salesToConcileDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService', 'modalService'];
-
-    function salesToConcileDetailsController($scope, calendarFactory, utilsFactory, TransactionService, modalService) {
+    salesToConciliateDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService', 'modalService'];
+    function salesToConciliateDetailsController($scope, calendarFactory, utilsFactory, TransactionService, modalService) {
 
         var objVm = this.vm;
 
@@ -81,7 +79,6 @@
                 $scope.itemsCounter = 0;
             }
         }
-
 
         function UpdatePagination() {
             GetDetails();
