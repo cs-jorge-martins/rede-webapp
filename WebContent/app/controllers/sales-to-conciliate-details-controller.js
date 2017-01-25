@@ -43,7 +43,7 @@
             var objFilter = {
                 startDate: strDate,
                 endDate: strDate,
-                cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
+                cardProductIds: [objVm.transaction.cardProduct.id],
                 conciliationStatus: 'TO_CONCILIE',
                 page: $scope.resultsPageModel,
                 size: $scope.resultsPerPage
