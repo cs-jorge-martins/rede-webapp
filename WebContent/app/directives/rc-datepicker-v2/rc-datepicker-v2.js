@@ -34,9 +34,9 @@
 		.module('Conciliador')
 		.directive('rcDatepickerV2', RcDatepickerV2);
 
-	RcDatepickerV2.$inject = ['calendarFactory']
+	RcDatepickerV2.$inject = ['calendarFactory', 'TransactionConciliationService']
 
-	function RcDatepickerV2(calendarFactory) {
+	function RcDatepickerV2(calendarFactory, TransactionConciliationService) {
 
 		return {
 			restrict: 'E',
@@ -48,8 +48,9 @@
 				minDate: '=',
 				maxDate: '=',
 				showNextDatesFilter: '=',
-				showPreviousDatesFilter: '='
-			},
+				showPreviousDatesFilter: '=',
+                statusType: '=?'
+            },
 			controller: Controller,
 			link: function(scope, element, attrs) {
 			}
@@ -63,10 +64,13 @@
 			var objRangeStartDate;
 			var objRangeEndDate;
 			var intRangeClickCounter;
+			var bolFirstDayOfMonth;
+			var arrMonthFirstDay = [];
 
 			Init();
 
 			function Init() {
+                $scope.daysWithStatus = [];
 				$scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
@@ -186,23 +190,118 @@
 			function GetDayClass(date, mode) {
 
 			    var objDateAdjusted = date.date;
-				var intDate = objDateAdjusted.getTime();
-                var objActiveMonth = new Date(objDateAdjusted).getMonth();
-                var objActiveYear = new Date(objDateAdjusted).getYear();
-
                 var arrClasses = [];
+                var arrRangeClasses;
+                var arrNoCurrent;
+                var arrBallClass;
 
-                if (!bolIsRange && ($scope.date.getTime() == intDate) ) {
+                bolFirstDayOfMonth = calendarFactory.isFirstDayOfMonth(objDateAdjusted);
+
+                if($scope.statusType && bolFirstDayOfMonth) {
+
+                    arrMonthFirstDay.push(true);
+
+                    if(arrMonthFirstDay.length === 1) {
+
+                        $scope.daysWithStatus = [];
+                        var objLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDateAdjusted);
+                        var service = GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
+                        service.then(function (objResponse) {
+
+                            var response = objResponse.data.content;
+                            var intIndex;
+                            
+                            
+                            console.log("response", response)
+                            
+
+                            for(intIndex in response) {
+
+                                if(response[intIndex].transctionConciliedQuantity > 0) {
+
+                                    var objToConciliateDay = {
+                                        date: response[intIndex]['date'],
+                                        type: 'jade'
+                                    };
+
+                                    $scope.daysWithStatus.push(objToConciliateDay);
+                                }
+
+                            }
+
+                            arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
+                            arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
+                            arrNoCurrent= GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
+
+                            arrRangeClasses.forEach(function (strRangeClass) {
+                                arrClasses.push(strRangeClass);
+                            });
+
+                            arrNoCurrent.forEach(function (strNonCurrentClass) {
+                                arrClasses.push(strNonCurrentClass);
+                            });
+
+                            arrBallClass.forEach(function (strBallClass) {
+                                arrClasses.push(strBallClass);
+                            });
+
+                        });
+
+                    } else {
+                        arrMonthFirstDay = [];
+                    }
+
+                } else {
+
+                	arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
+                    arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
+                    arrNoCurrent= GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
+
+                    arrRangeClasses.forEach(function (strRangeClass) {
+                        arrClasses.push(strRangeClass);
+                    });
+
+                    arrNoCurrent.forEach(function (strNonCurrentClass) {
+                        arrClasses.push(strNonCurrentClass);
+                    });
+
+                    arrBallClass.forEach(function (strBallClass) {
+                        arrClasses.push(strBallClass);
+                    });
+
+				}
+
+
+                console.log("-----");
+                console.log("objDateAdjusted", objDateAdjusted)
+                console.log("$scope.daysWithStatus", $scope.daysWithStatus)
+                console.log("-----");
+
+
+				return _.uniq(arrClasses).join(" ");
+			}
+
+			function GetBallClass(bolIsRange, objDateAdjusted) {
+
+				var arrClasses = [];
+
+                if (!bolIsRange && ($scope.date.getTime() == objDateAdjusted.getTime()) ) {
                     arrClasses.push('ball');
                 }
 
-                if(bolIsRange && intRangeClickCounter === 0) {
+                return arrClasses;
+
+            }
+
+			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
+
+				var arrClasses = [];
+
+				if(bolIsRange && intRangeClickCounter === 0) {
 
                     var weekDay = objDateAdjusted.getDay();
                     var intStartDate = objRangeStartDate.getTime();
                     var intEndDate = objRangeEndDate.getTime();
-                    var objCurrentMonth = new Date().getMonth();
-                    var objCurrentYear = new Date().getYear();
 
                     if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
@@ -218,30 +317,42 @@
                     }
                     else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
                         arrClasses.push('ball');
-					}
-					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
+                    }
+                    else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
 
-                    	if(weekDay !== 1) {
-							arrClasses.push('bar');
-							arrClasses.push('consecutive-days');
+                        if(weekDay !== 1) {
+                            arrClasses.push('bar');
+                            arrClasses.push('consecutive-days');
                         } else {
-                    		arrClasses.push('ball');
-						}
+                            arrClasses.push('ball');
+                        }
 
                     }
 
                 }
 
-                if ( !(objActiveMonth == objCurrentMonth && objActiveYear == objCurrentYear) ) {
+                return arrClasses;
 
-                	if(!calendarFactory.isEqualDate(objDateAdjusted,$scope.pickerDate)) {
-                        arrClasses.push('non-current-month');
-                    }
+            }
 
-                }
+            function GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate) {
 
-				return _.uniq(arrClasses).join(" ");
-			}
+				var arrClasses = [];
+				var bolCurrentDate;
+
+				if(bolIsRange) {
+                    bolCurrentDate = calendarFactory.isInBetween(objDateAdjusted, objRangeStartDate, objRangeEndDate);
+                } else {
+					bolCurrentDate = calendarFactory.isEqualDate(objDateAdjusted, $scope.pickerDate);
+				}
+
+				if (!bolCurrentDate) {
+                    arrClasses.push('no-current');
+				}
+
+                return arrClasses;
+
+            }
 
 			/**
 			 * @method DateFilter
@@ -274,6 +385,54 @@
 				$scope.status.opened = false;
 				$scope.datePlaceholder = GetPlaceholder();
 			}
+
+			function GetDaysPerStatus(strStatusType, objStartDate, objEndDate) {
+
+                var objFilter = {
+                    currency: 'BRL',
+                    groupBy: 'DAY',
+                    size: 31,
+                    page: 0,
+                    startDate: calendarFactory.formatDateForService(objStartDate),
+                    endDate: calendarFactory.formatDateForService(objEndDate)
+                };
+
+				switch (strStatusType) {
+                    case "sales-to-conciliate":
+                        return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter);
+                        break;
+					case "conciliated-sales":
+                        // GetConciliatedSalesDays();
+						break;
+				}
+
+            }
+
+            function GetSalesToConciliateDays(objResponse) {
+
+				var response = objResponse.data.content;
+                var intIndex;
+
+				for(intIndex in response) {
+					
+					if(response[intIndex].transctionConciliedQuantity > 0) {
+
+						var objToConciliateDay = {
+							date: response[intIndex]['date'],
+							type: 'jade'
+						};
+
+                        $scope.daysWithStatus.push(objToConciliateDay);
+					}
+
+				}
+
+            }
+
+            function GetConciliatedSalesDays() {
+				$scope.daysWithStatus = new Date();
+            }
+
 		}
 	}
 

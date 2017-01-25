@@ -144,6 +144,9 @@ angular.module('Kaplen.CalendarFactory',[])
 
 	function GetLastDayOfMonth(date, raw) {
         if( date ) {
+        	if(date instanceof Date) {
+        		return moment(date).endOf('month').toDate();
+			}
             var objFinalDateMoment = moment(date, strFormat).endOf('month');
         } else {
             var objFinalDateMoment = objMomentjs.endOf('month');
@@ -200,6 +203,9 @@ angular.module('Kaplen.CalendarFactory',[])
 
 
     function FormatDateForService(date) {
+        if(date instanceof Date) {
+            return moment(date).format("YYYYMMDD");
+        }
         var dateMomentTemp = moment(date, strFormat).tz(timeTimezone);
 		return dateMomentTemp.format("YYYYMMDD");
     }
@@ -390,6 +396,21 @@ angular.module('Kaplen.CalendarFactory',[])
 
     }
 
+    function IsInBetween(date, dateStart, dateEnd) {
+
+        var objDate = moment(date).startOf('day');
+
+        var objDateStart = moment(dateStart).startOf('day');
+        var objDateEnd = moment(dateEnd).startOf('day');
+
+		var bolIsBetween = objDate.isAfter(objDateStart) && objDate.isBefore(objDateEnd);
+		var bolisSameAsStart = objDate.isSame(objDateStart);
+		var bolisSameAsEnd = objDate.isSame(objDateEnd);
+
+        return  bolIsBetween || bolisSameAsStart || bolisSameAsEnd;
+
+    }
+
     function IsEqualDate(dateOne, dateTwo) {
 
 
@@ -397,6 +418,14 @@ angular.module('Kaplen.CalendarFactory',[])
         var objDateTwo = moment(dateTwo).startOf('day');
 
         return objDateOne.diff(objDateTwo, 'hours') === 0;
+
+    }
+
+    function IsFirstDayOfMonth(date) {
+
+		var objMomentDate = moment(date).startOf('day');
+		var objMomentMonthDate = moment(date).startOf('month');
+        return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
 
     }
 
@@ -464,6 +493,8 @@ angular.module('Kaplen.CalendarFactory',[])
 		getYesterday: GetYesterday,
 		getActualDateOfNextYear: GetActualDateOfNextYear,
         isInBetweenHours: IsInBetweenHours,
-        isEqualDate: IsEqualDate
+        isInBetween: IsInBetween,
+        isEqualDate: IsEqualDate,
+        isFirstDayOfMonth: IsFirstDayOfMonth
 	};
 });

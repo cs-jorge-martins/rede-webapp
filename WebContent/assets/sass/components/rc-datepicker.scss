@@ -185,7 +185,7 @@
                 background: transparent;
             }
 
-            &.non-current-month:not(.bar) {
+            &.no-current:not(.bar), &.no-current:not(.ball){
                 button.active {
                     &:not(:disabled) {
                         span:not(.text-muted) {
