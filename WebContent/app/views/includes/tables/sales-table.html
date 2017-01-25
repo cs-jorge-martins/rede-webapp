@@ -45,7 +45,7 @@
                     </td>
                     <td>{{transaction.amount | currency: ''}}</td>
                     <td>{{transaction.quantity}} vendas</td>
-                    <td><button class="btn-link" ng-click="vm.details(transaction)">detalhes</button></td>
+                    <td><button class="btn-link" ng-click="vm.details(transaction, 'processed')">detalhes</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -80,7 +80,7 @@
                     <td>{{transaction.cardProduct.name}}</td>
                     <td>{{transaction.amount | currency: ''}}</td>
                     <td>{{transaction.quantity}} vendas</td>
-                    <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
+                    <td><button class="btn-link" ng-click="vm.details(transaction, 'unprocessed')">detalhes</button></td>
                 </tr>
                 </tbody>
             </table>

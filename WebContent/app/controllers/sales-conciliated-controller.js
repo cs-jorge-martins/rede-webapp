@@ -69,6 +69,7 @@
         objVm.getSales = GetSales;
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
+        objVm.details = Details;
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -321,6 +322,21 @@
         function ResetFilter(strModel) {
             objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
             GetSales();
+        }
+
+        /**
+         * @method Details
+         * Abre modal de detalhes
+         *
+         */
+        function Details(objTransaction) {
+            objVm.transaction = objTransaction;
+            modalService.openDetails(
+                'Vendas conciliadas',
+                'app/views/sales-conciliated-details.html',
+                'salesConciliatedDetailsController',
+                $scope
+            );
         }
 
     }

@@ -9,13 +9,13 @@
     'use strict';
 
     angular
-        .module('Conciliador.salesToConciliateDetailsController', [])
-        .controller('salesToConciliateDetailsController', salesToConciliateDetailsController);
+        .module('Conciliador.unprocessedSalesDetailsController', [])
+        .controller('unprocessedSalesDetailsController', unprocessedSalesDetailsController);
 
 
-    salesToConciliateDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService'];
+    unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService'];
 
-    function salesToConciliateDetailsController($scope, calendarFactory, utilsFactory, TransactionService) {
+    function unprocessedSalesDetailsController($scope, calendarFactory, utilsFactory, TransactionService) {
 
         var objVm = this.vm;
 
@@ -27,7 +27,7 @@
         $scope.updatePagination = UpdatePagination;
         $scope.toggleCheckbox = ToggleCheckbox;
         $scope.toggleCheckboxAll = ToggleCheckboxAll;
-        $scope.conciliate = Conciliate;
+        $scope.delete = Delete;
         $scope.itemsCounter = 0;
 
         Init();
@@ -43,7 +43,7 @@
                 startDate: strDate,
                 endDate: strDate,
                 cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
-                conciliationStatus: 'TO_CONCILIE',
+                conciliationStatus: 'UNPROCESSED',
                 page: $scope.resultsPageModel,
                 size: $scope.resultsPerPage
                 //sort:$scope.sort;
@@ -81,11 +81,12 @@
             }
         }
 
+
         function UpdatePagination() {
             GetDetails();
         }
 
-        function Conciliate() {
+        function Delete() {
             var arrItems = [];
 
             for(var index in $scope.items) {

@@ -368,15 +368,28 @@
          * Abre modal de detalhes
          *
          */
-        function Details(objTransaction) {
-
+        function Details(objTransaction, strType) {
             objVm.transaction = objTransaction;
-            modalService.openDetails(
-				'Vendas a conciliar',
-				'app/views/sales-to-conciliate-details.html',
-				'salesToConcileDetailsController',
-				$scope
-			);
+
+            switch (strType) {
+                case 'processed':
+                    modalService.openDetails(
+                        'Vendas a conciliar',
+                        'app/views/sales-to-conciliate-details.html',
+                        'salesToConciliateDetailsController',
+                        $scope
+                    );
+                    break;
+                case 'unprocessed':
+                    modalService.openDetails(
+                        'Vendas não processadas',
+                        'app/views/unprocessed-sales-details.html',
+                        'unprocessedSalesDetailsController',
+                        $scope
+                    );
+                    break;
+                default:
+            }
         }
 
     }
