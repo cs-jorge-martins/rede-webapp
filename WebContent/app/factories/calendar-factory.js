@@ -202,10 +202,13 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
 
-    function FormatDateForService(date) {
+    function FormatDateForService(date, strNewFormat) {
         if(date instanceof Date) {
             return moment(date).format("YYYYMMDD");
         }
+        if(strNewFormat) {
+            return moment(date, strFormat).tz(timeTimezone).format("YYYYMMDD");
+		}
         var dateMomentTemp = moment(date, strFormat).tz(timeTimezone);
 		return dateMomentTemp.format("YYYYMMDD");
     }
