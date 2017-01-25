@@ -36,12 +36,15 @@
         </div>
     </div>
 
+
+itens selecionados: {{itemsCounter}}
+
     <table class="table primary" ng-show="items.length">
         <thead>
             <th class="checkbox-header">
                 <div class="checkbox">
                     <div class="checkbox-left">
-                        <input type="checkbox" id="checkbox-reconcile-all" class="checkbox" ng-checked="result.transactionsModel.allChecked" ng-click="selectAll(result.transactionsModel)">
+                        <input type="checkbox" class="checkbox" id="checkbox-reconcile-all" ng-model="master" ng-change="toggleCheckboxAll(master)">
                         <label for="checkbox-reconcile-all"></label>
                     </div>
                 </div>
@@ -61,7 +64,7 @@
                 <td scope="row">
                     <div class="checkbox">
                         <div class="checkbox-left">
-                            <input type="checkbox" id="checkbox-reconcile-{{$index + 1}}" class="checkbox" ng-checked="result.transactionsModel.checks[transaction.cardProduct.id]" ng-click="selectSingle(result.transactionsModel, transaction)">
+                            <input type="checkbox" id="checkbox-reconcile-{{$index + 1}}" class="checkbox" ng-checked="item.checked" ng-click="toggleCheckbox(item)">
                             <label for="checkbox-reconcile-{{$index + 1}}"></label>
                         </div>
                     </div>
@@ -90,7 +93,7 @@
             </rc-pagination>
 
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <rc-count-button label-prefix="'conciliar'" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
+                <input type="submit" value="conciliar {{itemsCounter}} vendas" class="btn btn-primary btn-block" ng-click="" ng-disabled="itemsCounter <= 0" />
             </div>
         </div>
     </div>
