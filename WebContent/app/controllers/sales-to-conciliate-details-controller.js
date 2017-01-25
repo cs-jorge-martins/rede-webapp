@@ -23,9 +23,11 @@
         $scope.resultsPageModel = 0;
         $scope.resultsTotalItens = 0;
         $scope.maxSize = 4;
-        $scope.updatePagination = UpdatePagination;
-
         $scope.items = [];
+        $scope.updatePagination = UpdatePagination;
+        $scope.toggleCheckbox = ToggleCheckbox;
+        $scope.toggleCheckboxAll = ToggleCheckboxAll;
+        $scope.itemsCounter = 0;
 
         Init();
 
@@ -56,10 +58,37 @@
             });
         }
 
+        function ToggleCheckbox(objItem) {
+            if (objItem.checked) {
+                objItem.checked = false;
+                $scope.itemsCounter--;
+            } else {
+                objItem.checked = true;
+                $scope.itemsCounter++;
+            }
+        }
+
+        function ToggleCheckboxAll(bolIsSelected) {
+            for(var index in $scope.items) {
+                $scope.items[index].checked = bolIsSelected;
+            }
+
+            if (bolIsSelected) {
+                $scope.itemsCounter = $scope.items.length;
+            } else {
+                $scope.itemsCounter = 0;
+            }
+        }
+
+
         function UpdatePagination() {
             GetDetails();
         }
 
+        function UpdateCheckboxCounter() {
+            console.log('updatecounter');
+            console.log($scope.items)
+        }
     }
 
 })();
