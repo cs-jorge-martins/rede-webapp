@@ -13,9 +13,9 @@
         .controller('salesToConcileDetailsController', salesToConcileDetailsController);
 
 
-    salesToConcileDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService'];
+    salesToConcileDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService', 'modalService'];
 
-    function salesToConcileDetailsController($scope, calendarFactory, utilsFactory, TransactionService) {
+    function salesToConcileDetailsController($scope, calendarFactory, utilsFactory, TransactionService, modalService) {
 
         var objVm = this.vm;
 
@@ -23,16 +23,18 @@
         $scope.resultsPageModel = 0;
         $scope.resultsTotalItens = 0;
         $scope.maxSize = 4;
-        $scope.items = [];
+        $scope.detailSelection = {};
         $scope.updatePagination = UpdatePagination;
         $scope.toggleCheckbox = ToggleCheckbox;
         $scope.toggleCheckboxAll = ToggleCheckboxAll;
-        $scope.itemsCounter = 0;
+        $scope.reconcileItems = ReconcileItems;
+        $scope.items = [];
 
         Init();
 
         function Init() {
             GetDetails();
+            ResetSelection();
         }
 
         function GetDetails() {
@@ -41,7 +43,7 @@
             var objFilter = {
                 startDate: strDate,
                 endDate: strDate,
-                cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
+                cardProductIds: [objVm.transaction.cardProduct.id],
                 conciliationStatus: 'TO_CONCILIE',
                 page: $scope.resultsPageModel,
                 size: $scope.resultsPerPage
@@ -85,10 +87,88 @@
             GetDetails();
         }
 
-        function UpdateCheckboxCounter() {
-            console.log('updatecounter');
-            console.log($scope.items)
+        function ToggleCheckbox(objItemSelected) {
+            var intItemIndex = $scope.detailSelection.items.indexOf(objItemSelected.id);
+            if (intItemIndex > -1) {
+                $scope.detailSelection.items.splice(intItemIndex, 1);
+                $scope.detailSelection.count--;
+                $scope.detailSelection.checks[objItemSelected.id] = false;
+            } else {
+                $scope.detailSelection.count++;
+                $scope.detailSelection.items.push(objItemSelected.id);
+                $scope.detailSelection.checks[objItemSelected.id] = true;
+            }
+
+            UpdateSelection();
         }
+
+        function ToggleCheckboxAll() {
+            $scope.detailSelection.items.splice(0);
+            if ($scope.detailSelection.allChecked === false) {
+                $scope.detailSelection.count = $scope.items.length;
+                $scope.items.forEach(function HandleItem(objItem) {
+                    $scope.detailSelection.items.push(objItem.id);
+                    $scope.detailSelection.checks[objItem.id] = true;
+                });
+            } else {
+                $scope.detailSelection.count = 0;
+                $scope.items.forEach(function HandleItem(objItem) {
+                    $scope.detailSelection.checks[objItem.id] = false;
+                })
+            }
+
+            UpdateSelection();
+        }
+
+        function UpdateSelection() {
+            $scope.detailSelection.allChecked = $scope.detailSelection.count === $scope.items.length;
+            $scope.detailSelection.labelSuffix = Pluralize('venda', $scope.detailSelection.count);
+        }
+
+        function ReconcileItems() {
+            var objFilter = {
+                ids: $scope.detailSelection.items,
+                newConciliationStatus: 'CONCILIED'
+            };
+
+            var intSelectionCount = $scope.detailSelection.count;
+            var strPluralized = $scope.detailSelection.labelSuffix;
+
+            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
+                $scope.reconcileType = "conciliar";
+                $scope.modalTitle = "conciliar vendas";
+                $scope.modalText = "Você deseja conciliar " + intSelectionCount + " " + strPluralized + "?";
+                $scope.cancel = function Cancel() {
+                    $uibModalInstance.close();
+                };
+
+                $scope.confirm = function Confirm() {
+                    TransactionService.ConcilieTransaction(objFilter).then(function(objResponse) {
+                        GetDetails();
+                        ResetSelection();
+                        objVm.getSales();
+                        $uibModalInstance.close();
+                    });
+                }
+            });
+        }
+
+        function ResetSelection() {
+            $scope.detailSelection.count = 0;
+            $scope.detailSelection.items = [];
+            $scope.detailSelection.checks = {};
+            $scope.detailSelection.allChecked = false;
+            $scope.detailSelection.labelSuffix = 'venda';
+        }
+
+        function Pluralize(strText, intCount) {
+            if (intCount > 1) {
+                return strText + "s";
+            }
+
+            return strText;
+        }
+
     }
 
 })();

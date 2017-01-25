@@ -77,7 +77,7 @@
                 bindToController: true,
                 controllerAs: 'objVm',
                 animation: false,
-                windowTopClass: 'modal-details'
+                windowClass: 'modal-details'
             });
 
             objModal.opened.then(function() {
