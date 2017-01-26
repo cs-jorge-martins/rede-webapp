@@ -81,7 +81,8 @@
 					startingDay: 1,
 					maxMode: 'day',
 					customClass: GetDayClass,
-					dateFilter: DateFilter
+					dateFilter: DateFilter,
+                    activeDateFilter: 0
 				};
 
 				if ($scope.minDate) {
@@ -149,6 +150,7 @@
 					switch (intRangeClickCounter) {
 						case 1:
 							objRangeStartDate = $scope.pickerDate;
+                            $scope.dateOptions.activeDateFilter = 0;
 							break;
 						case 2:
 
@@ -253,7 +255,11 @@
 			 * @param {String} strStartingDate 'tomorrow' para começar a contagem de amanhã
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
-			function DateFilter(days, strStartingDate) {
+			function DateFilter(days, strStartingDate, intActiveDateFilter) {
+				
+				if(intActiveDateFilter) {
+                    $scope.dateOptions.activeDateFilter = intActiveDateFilter;
+				}
 
 				var actualDate = new Date();
 				if(strStartingDate && strStartingDate === 'tomorrow') {
