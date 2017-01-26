@@ -7,7 +7,7 @@
 angular.module('Conciliador.dashboardController',[])
 
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, RcDisclaimerService){
 
 	menuFactory.setActiveDashboard();
 
@@ -111,7 +111,20 @@ angular.module('Conciliador.dashboardController',[])
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
 		SetTransactionConciliationBox();
+        InitDisclaimer();
 	}
+
+	function InitDisclaimer() {
+
+        var objDisclaimer = {
+            type: 'warning',
+            text: 'Os termos de uso e política de privacidade foram atualizados e ao continuar navegando neste você aceita suas condições.',
+            actionText: 'Saiba Mais.',
+            onClick: 'assets/files/contrato-control-rede.pdf'
+        };
+
+        RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
+    }
 
 	/********************************* TRANSACTION SUMMARY BOX *************************************/
 	function SetTransactionSummaryBox(){
