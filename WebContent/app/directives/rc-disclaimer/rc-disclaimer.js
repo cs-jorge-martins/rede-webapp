@@ -12,7 +12,9 @@
         .module('Conciliador')
         .directive('rcDisclaimer', RcDisclaimer);
 
-    function RcDisclaimer() {
+    RcDisclaimer.$inject = ['$timeout'];
+
+    function RcDisclaimer($timeout) {
 
         return {
             restrict: 'E',
@@ -24,12 +26,13 @@
                 onClick: "="
             },
             controller: Controller,
-            link: function(scope, element, attrs) {
-                scope.$on('$routeChangeSuccess', function() {
-                    scope.type = "";
-                    scope.text = "";
-                    scope.actionText = "";
-                    scope.onClick = "";
+            link: function($scope, element, attrs) {
+                $scope.$on('$routeChangeSuccess', function(event, current, previous) {
+                    if(current.$$route.originalPath.match("/home")) {
+                        $scope.loadedClass = "loaded";
+                    } else {
+                        $scope.loadedClass = "";
+                    }
                 });
             }
 
@@ -42,6 +45,7 @@
             function Init() {
                 if($scope.type) {
                     $scope.icon = VerifyIconType($scope.type);
+                    $scope.loadedClass = "loaded";
                 }
             }
 
@@ -59,4 +63,3 @@
     }
 
 })();
-
