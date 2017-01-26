@@ -54,114 +54,22 @@
 			controller: Controller,
 			link: function(scope, element, attrs, ctrl) {
 
-				// console.log("controller", controller[0]);
-
 				element.ready(function () {
 
-                    scope.$watch('daysWithStatus', function(status) {
+                    scope.$watch('daysWithStatus', function(arrDaysWithStatus) {
 
-						if(status && status.date) {
-                            ctrl.addStatusCLass(status);
+						if(arrDaysWithStatus && arrDaysWithStatus.length) {
+                            ctrl.addStatusCLass(arrDaysWithStatus, element);
                         }
 
                     });
 
-
-                    // buttonPrevMonth.addEventListener('click', function(){
-                    //     // months--;
-                    //     console.log("clicou no esquerdo");
-                    // });
-                    //
-                    // buttonNextMonth.addEventListener('click', function(){
-                    //     // months--;
-                    //     console.log("clicou no direito");
-                    // });
-
                 });
 
-				/*
-				 var months = 0;
-				 element.ready(function(){
-				 var buttonPrevMonth = element[0].querySelector('thead button.pull-left');
-				 var buttonNextMonth = element[0].querySelector('thead button.pull-right');
-
-				 buttonPrevMonth.addEventListener('click', function(){
-				 months--;
-				 getDays();
-				 });
-
-				 buttonNextMonth.addEventListener('click', function(){
-				 months++;
-				 getDays();
-				 });
-
-				 });
-
-				 scope.$watch('status.opened', function(status) {
-				 if(status) {
-				 getDays();
-				 }
-				 })
-
-				 function getDays() {
-				 var days = element[0].querySelectorAll('tbody td .btn');
-				 var date = formatDate();
-				 var firstDayOfMonth = calendarFactory.getFirstDayOfMonth(date);
-				 var lastDayOfMonth = calendarFactory.getLastDayOfMonth(date);
-
-				 resumoConciliacaoService.listTransactionConciliationCalendarMonth({
-				 currency: 'BRL',
-				 startDate: calendarFactory.formatDateForService(firstDayOfMonth),
-				 endDate: calendarFactory.formatDateForService(lastDayOfMonth),
-				 groupBy: 'DAY',
-				 size: 31
-				 }).then(function(response) {
-				 var data = response.data.content;
-
-				 for(var index in data) {
-				 var day = parseInt(data[index].date.slice(-2));
-
-				 var className = false;
-
-				 if(data[index].transctionConciliedQuantity) {
-				 className = 'concilied';
-				 }
-
-				 if(data[index].transctionToConcilieQuantity) {
-				 className = 'toConcilie';
-				 }
-
-				 if(data[index].transctionUnprocessedQuantity) {
-				 className = 'unprocessed';
-				 }
-
-				 if(className) {
-				 days[day - 1].classList.add(className);
-				 }
-				 }
-
-				 }).catch(function(response) {
-				 //console.log('error');
-				 });
-				 }
-				 function formatDate(date) {
-				 var date = moment(scope.date);
-				 date.add(months, 'months')
-
-				 return date.format('DD/MM/YYYY');
-				 }
-				 */
 			}
 		};
 
 		function Controller($scope) {
-
-			this.addStatusCLass = function(objStatus) {
-
-                var strClassDate = calendarFactory.FormatDateForService(objStatus.date, 'YYYY-MM-DD');
-                console.log(strClassDate);
-
-            };
 
 			var strDirectiveId = 'rc-datepicker-v2-' + (new Date()).getTime();
 			var bolIsRange = $scope.range || false;
@@ -177,7 +85,7 @@
 			Init();
 
 			function Init() {
-                $scope.daysWithStatus = {};
+                $scope.daysWithStatus = [];
 				$scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
@@ -285,6 +193,25 @@
 				$scope.datePlaceholder = GetPlaceholder();
 			}
 
+            this.addStatusCLass = function(arrDaysWithStatus, objElement) {
+
+                var strClassDate;
+                var objDateButton;
+
+                arrDaysWithStatus.forEach(function (objDay) {
+
+					strClassDate = objDay.dateClass;
+					objDateButton = objElement[0].getElementsByClassName(strClassDate)[0];
+
+					if(objDateButton) {
+						objDateButton.classList.add("has-status");
+						objDateButton.classList.add(objDay.type);
+                    }
+
+                });
+
+            };
+
 			/**
 			 * @method GetDayClass
 			 * @alias getDayClass
@@ -313,28 +240,9 @@
 
                     if(arrMonthFirstDay.length === 1) {
 
-                        $scope.daysWithStatus = {};
+                        $scope.daysWithStatus = [];
                         var objLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDateAdjusted);
-                        var service = GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
-                        service.then(function (objResponse) {
-
-                            var response = objResponse.data.content;
-                            var intIndex;
-                            
-                            for(intIndex in response) {
-
-                                if(response[intIndex].transctionConciliedQuantity > 0) {
-
-                                    $scope.daysWithStatus = {
-                                        date: response[intIndex]['date'],
-                                        type: 'jade'
-                                    };
-
-                                }
-
-                            }
-
-                        });
+                        GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
 
                     } else {
                         arrMonthFirstDay = [];
@@ -417,11 +325,11 @@
 
             }
 
-            function GetCurrentDateClass(arrCurrentDate) {
+            function GetCurrentDateClass(objCurrentDate) {
 
 				var arrClasses = [];
 
-				var strClass = 'date-' + calendarFactory.formatDateForService(arrCurrentDate);
+				var strClass = 'date-' + calendarFactory.getFirstHourFromDate(objCurrentDate).getTime();
 				arrClasses.push(strClass);
 
 				return arrClasses;
@@ -492,10 +400,10 @@
 
 				switch (strStatusType) {
                     case "sales-to-conciliate":
-                        return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter);
+                        return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesToConciliateDays);
                         break;
 					case "conciliated-sales":
-                        // GetConciliatedSalesDays();
+                        return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesConciliatedDays);
 						break;
 				}
 
@@ -504,21 +412,46 @@
             function GetSalesToConciliateDays(objResponse) {
 
 				var response = objResponse.data.content;
-                var intIndex;
+				var intIndex;
+				var arrDays = [];
 
 				for(intIndex in response) {
-					
-					if(response[intIndex].transctionConciliedQuantity > 0) {
 
-						var objToConciliateDay = {
-							date: response[intIndex]['date'],
-							type: 'jade'
-						};
+					if(response[intIndex].transctionToConcilieQuantity > 0) {
 
-                        $scope.daysWithStatus.push(objToConciliateDay);
+                        arrDays.push({
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(response[intIndex]['date'], true).getTime(),
+							type: 'to-conciliate'
+						});
+
 					}
 
 				}
+
+                $scope.daysWithStatus = arrDays;
+
+            }
+
+            function GetSalesConciliatedDays(objResponse) {
+
+				var response = objResponse.data.content;
+				var intIndex;
+                var arrDays = [];
+
+                for(intIndex in response) {
+
+                    if(response[intIndex].transctionConciliedQuantity > 0) {
+
+                        arrDays.push({
+                            dateClass: 'date-' + calendarFactory.getFirstHourFromDate(response[intIndex]['date'], true).getTime(),
+                            type: 'conciliated'
+                        });
+
+                    }
+
+                }
+
+                $scope.daysWithStatus = arrDays;
 
             }
 

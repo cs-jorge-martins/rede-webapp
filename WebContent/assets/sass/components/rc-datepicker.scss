@@ -124,6 +124,39 @@
         .uib-day {
             position: relative;
 
+            &.has-status {
+
+                &:before {
+                    content: '';
+                    display: block;
+                    border-radius: 50%;
+                    width: 7px;
+                    height: 7px;
+                    position: absolute;
+                    bottom: 5px;
+                    left: 30px;
+                }
+
+                &.conciliated {
+                    &:before {
+                        background: $conciliedColor;
+                    }
+                }
+
+                &.to-conciliate {
+                    &:before {
+                        background: $toConcilieColor;
+                    }
+                }
+
+                &.bar, &.ball {
+                    &:before {
+                        display: none;
+                    }
+                }
+
+            }
+
             &:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
                 color: $darkGray;
                 font-family: $fontBold;
@@ -154,7 +187,7 @@
                     background: none;
                     border: none;
 
-                    span {
+                    span:not(.text-muted) {
                         color: #ff7800;
                     }
                 }
@@ -249,7 +282,8 @@
 
         .uib-weeks {
             td:first-of-type {
-                padding-left: 1.4em;
+                margin-left: 1.4em;
+                display: inline-block;
             }
             td:last-of-type {
                 padding-right: 1.4em;

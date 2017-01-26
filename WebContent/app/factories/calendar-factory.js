@@ -193,8 +193,11 @@ angular.module('Kaplen.CalendarFactory',[])
 		return year + "1201";
 	}
 
-	function FormatDate(date, isDiferentFormat) {
+	function FormatDate(date, isDiferentFormat, bolReturnDate) {
 		if(isDiferentFormat){
+			if(bolReturnDate) {
+				return moment(date).tz(timeTimezone).toDate();
+			}
 			return moment(date).tz(timeTimezone).format("DD/MM/YYYY");
 		}else{
 			return moment(date, strFormat).tz(timeTimezone).format(strFormat);
@@ -202,13 +205,10 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
 
-    function FormatDateForService(date, strNewFormat) {
+    function FormatDateForService(date) {
         if(date instanceof Date) {
             return moment(date).format("YYYYMMDD");
         }
-        if(strNewFormat) {
-            return moment(date, strFormat).tz(timeTimezone).format("YYYYMMDD");
-		}
         var dateMomentTemp = moment(date, strFormat).tz(timeTimezone);
 		return dateMomentTemp.format("YYYYMMDD");
     }
@@ -413,6 +413,10 @@ angular.module('Kaplen.CalendarFactory',[])
         return  bolIsBetween || bolisSameAsStart || bolisSameAsEnd;
 
     }
+    
+    function GetFirstHourFromDate(date) {
+		return moment(date).startOf('day').toDate();
+    }
 
     function IsEqualDate(dateOne, dateTwo) {
 
@@ -498,6 +502,7 @@ angular.module('Kaplen.CalendarFactory',[])
         isInBetweenHours: IsInBetweenHours,
         isInBetween: IsInBetween,
         isEqualDate: IsEqualDate,
-        isFirstDayOfMonth: IsFirstDayOfMonth
+        isFirstDayOfMonth: IsFirstDayOfMonth,
+        getFirstHourFromDate: GetFirstHourFromDate
 	};
 });
