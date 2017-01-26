@@ -165,8 +165,6 @@
                 objVm.transaction.quantity = response.quantity;
                 objVm.transaction.amount = response.amount;
             }).catch(function(objResponse){
-                $uibModalInstance.close();
-                objVm.getSales();
             });
         }
 
