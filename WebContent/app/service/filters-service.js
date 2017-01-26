@@ -40,6 +40,18 @@ angular.module('Conciliador.filtersService', [])
 		});
 	};
 
+	this.GetAccountsOrdered = function(objDate) {
+		var objRequest = {
+		};
+
+		return $http({
+			url: strUrlAccounts + '/ordered-in/' + objDate,
+			method: "GET",
+			data: objRequest,
+			headers: Request.setHeaders()
+		});
+	};
+
 	this.GetShops = function() {
 		var objRequest = {
 		};
