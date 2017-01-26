@@ -58,28 +58,6 @@
             });
         }
 
-        function ToggleCheckbox(objItem) {
-            if (objItem.checked) {
-                objItem.checked = false;
-                $scope.itemsCounter--;
-            } else {
-                objItem.checked = true;
-                $scope.itemsCounter++;
-            }
-        }
-
-        function ToggleCheckboxAll(bolIsSelected) {
-            for(var index in $scope.items) {
-                $scope.items[index].checked = bolIsSelected;
-            }
-
-            if (bolIsSelected) {
-                $scope.itemsCounter = $scope.items.length;
-            } else {
-                $scope.itemsCounter = 0;
-            }
-        }
-
         function UpdatePagination() {
             GetDetails();
         }
