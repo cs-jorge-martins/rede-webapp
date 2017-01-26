@@ -207,6 +207,14 @@
 				$scope.datePlaceholder = GetPlaceholder();
 			}
 
+            /**
+             * @method addStatusCLass
+             * Contém a lógica para adicionar as classes referentes aos dias que
+             * contém status
+             *
+             * @param {Array} arrDaysWithStatus Array de objetos com dias + status
+             * @param {Object} objElement Elemento datepicker
+             */
             this.addStatusCLass = function(arrDaysWithStatus, objElement) {
 
                 var strClassDate;
@@ -233,11 +241,10 @@
 			 * por todos os dias do mês corrente e adiciona as respectivas classes
 			 * aos dias. Este método é padrão do componente ui.bootstrap.datepicker
 			 * do angular-ui-bootstrap. E é passado para a diretiva.
-			 * @param {Integer} date Data
-			 * @param {String} date Data
-			 * @return {String} nome da classe
+			 * @param {Date} date Data
+			 * @return {Array} nome da classe
 			 */
-			function GetDayClass(date, mode) {
+			function GetDayClass(date) {
 
                 var objDateAdjusted = date.date;
                 var arrClasses = [];
@@ -285,6 +292,15 @@
 				return _.uniq(arrClasses).join(" ");
 			}
 
+            /**
+             * @method GetBallClass
+             * Contém a lógica para validar a data atual se é do tipo ball
+             * as datas do tipo ball, são as única selecionadas, segunda, domingo
+			 * e ultimas datas selecionadas
+             * @param {Boolean} bolIsRange Verifica se a diretiva é range
+             * @param {Object} objDateAdjusted Data que será validada
+			 * @return {Array} arrClasses Retorna a classe ball ou array vazio
+             */
 			function GetBallClass(bolIsRange, objDateAdjusted) {
 
 				var arrClasses = [];
@@ -297,6 +313,18 @@
 
             }
 
+            /**
+             * @method GetRangeClasses
+             * Contém a lógica para validar as datas selecionadas se for range. Retorna um array
+             * que será usado para renderizar cada data, com as possíveis respostas:
+             * ball, bar, consecutive-days.
+             * @param {Boolean} bolIsRange Verifica se a diretiva é range
+             * @param {Number} intRangeClickCounter Quantidade de clicks registrado na função Update()
+             * @param {Date} objRangeStartDate Primeira data selecionada (range)
+             * @param {Date} objRangeEndDate Segunda data selecionada (range)
+             * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
+             * @return {Array} arrClasses Pode retornar as classes: ball, bar, consecutive-days ou array vazio.
+             */
 			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
 
 				var arrClasses = [];
@@ -339,6 +367,15 @@
 
             }
 
+            /**
+             * @method GetCurrentDateClass
+             * Contém a lógica para criar o nome de classe com o nome:
+			 * date-xxxxxxxxxxx, sendo o xx sendo substituido por timestamp,
+			 * para a data que está sendo percorrida pelo GetDayClass.
+             * @param {Date} objCurrentDate Data atual sendo tratada pela função GetDayClass
+             * @return {Array} arrClasses deve retornar a classe com o nome date-xxxx
+			 * e o timestamp específico dela.
+             */
             function GetCurrentDateClass(objCurrentDate) {
 
 				var arrClasses = [];
@@ -350,6 +387,17 @@
 
             }
 
+            /**
+             * @method GetNoCurrentClass
+             * Contém a lógica para adicionar a classe no-current para
+			 * datas que não foram selecionadas
+             *
+             * @param {Boolean} bolIsRange Verifica se a diretiva é range
+             * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
+             * @param {Date} objRangeStartDate Primeira data selecionada (range)
+             * @param {Date} objRangeEndDate Segunda data selecionada (range)
+             * @return {Array} arrClasses pode retornar o array com no-current ou vazio
+             */
             function GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate) {
 
 				var arrClasses = [];
@@ -375,8 +423,9 @@
 			 * Método resopnsável por fazer os filtros de dias, localizado na
 			 * parte inferior do componente de calendário. Ele adiciona ou subtrai
 			 * os dias e já atualiza a(s) data(s) de acordo com o parâmetro recebido
-			 * @param {Integer} days Dias a serem adicionados ou removidos da data
+			 * @param {Number} days Dias a serem adicionados ou removidos da data
 			 * @param {String} strStartingDate 'tomorrow' para começar a contagem de amanhã
+			 * @param {Number} intActiveDateFilter, numero de controle para chavear opção clicada
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
 			function DateFilter(days, strStartingDate, intActiveDateFilter) {
@@ -410,6 +459,15 @@
 				$scope.datePlaceholder = GetPlaceholder();
 			}
 
+            /**
+             * @method GetDaysPerStatus
+             * Contém a lógica para redirecionar para a função certa
+             * dependendo do strStatusType
+             *
+             * @param {String} strStatusType Nome do status informado por $scope.statusType
+             * @param {Date} objStartDate Primeira data selecionada (range)
+             * @param {Date} objEndDate Segunda data selecionada (range)
+             */
 			function GetDaysPerStatus(strStatusType, objStartDate, objEndDate) {
 
                 var objFilter = {
@@ -432,6 +490,17 @@
 
             }
 
+            /**
+             * @method GetSalesToConciliateDays
+			 * Cria objeto com dias com datas a conciliar
+			 *
+             * Contém a lógica para gravar no array $scope.daysWithStatus
+             * ele recebe a resposta de uma chamada na api, passada pela função
+			 * GetDaysPerStatus e parsea os dados para inserir um objeto, se passar
+			 * pela validação.
+             *
+             * @param {Object} objResponse Objeto de resposta da API.
+             */
             function GetSalesToConciliateDays(objResponse) {
 
 				var response = objResponse.data.content;
@@ -455,6 +524,17 @@
 
             }
 
+            /**
+             * @method GetSalesConciliatedDays
+			 * Cria objeto com dias com datas conciliadas
+			 *
+             * Contém a lógica para gravar no array $scope.daysWithStatus
+             * ele recebe a resposta de uma chamada na api, passada pela função
+             * GetDaysPerStatus e parsea os dados para inserir um objeto, se passar
+             * pela validação.
+             *
+             * @param {Object} objResponse Objeto de resposta da API.
+             */
             function GetSalesConciliatedDays(objResponse) {
 
 				var response = objResponse.data.content;
