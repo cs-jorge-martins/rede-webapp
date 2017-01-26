@@ -293,7 +293,7 @@
 
         a {
             text-transform: none;
-            &:hover {
+            &:hover, &.active {
                 text-decoration: none;
 
                 p {
