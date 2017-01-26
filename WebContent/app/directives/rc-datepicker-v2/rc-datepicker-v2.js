@@ -52,6 +52,18 @@
 			},
 			controller: Controller,
 			link: function(scope, element, attrs) {
+
+                scope.$watch("status.opened",function(bolNewValue) {
+                	if(bolNewValue === false && scope.range) {
+                		
+						if(scope.pickerDate > scope.date[1]) {
+							scope.pickerDate = scope.initialDate[0];
+							scope.update();
+						}
+
+					}
+                });
+
 			}
 		};
 
@@ -73,6 +85,7 @@
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
 				$scope.getDayClass = GetDayClass;
+				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
 				};
