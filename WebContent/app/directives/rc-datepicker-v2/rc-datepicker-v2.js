@@ -254,6 +254,7 @@
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
 			function DateFilter(days, strStartingDate) {
+
 				var actualDate = new Date();
 				if(strStartingDate && strStartingDate === 'tomorrow') {
 					actualDate.setDate(actualDate.getDate() + 1);
@@ -269,6 +270,10 @@
 					objRangeStartDate = targetDate;
 					objRangeEndDate = actualDate;
 					$scope.pickerDate = targetDate;
+				}
+
+				if(bolIsRange) {
+                    $scope.date = [actualDate, targetDate];
 				}
 
 				$scope.status.opened = false;
