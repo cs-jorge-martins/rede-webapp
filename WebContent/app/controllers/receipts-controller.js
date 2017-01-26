@@ -756,7 +756,7 @@ angular.module('Conciliador.movementsModule',[])
 
   	function GetFilters() {
 		// conta
-		filtersService.GetAccounts().then(function(objResponse){
+		filtersService.GetAccountsOrdered(moment().tz("America/Brasilia").format("YYYY-MM-DD")).then(function(objResponse){
 			var arrFilterConfig = [];
 			var objData = objResponse.data;
 
@@ -769,16 +769,17 @@ angular.module('Conciliador.movementsModule',[])
 				obj.accountNumber = objData[x].accountNumber;
 				obj.bankId = objData[x].bankId;
 
+				if (objData[x].defaultSelection) {
+					$scope.accountsModel.id = obj.id;
+					$scope.accountsModel.label = obj.label;
+					$scope.accountsFutureModel.id = obj.id;
+					$scope.accountsFutureModel.label = obj.label;
+				}
+
 				arrFilterConfig.push(obj);
 			}
 
-			$scope.accountsData = $filter('orderBy')(arrFilterConfig, "bankId");
-			var objAccount = $scope.accountsData[0];
-			$scope.accountsModel.id = objAccount.id;
-			$scope.accountsModel.label = objAccount.label;
-			$scope.accountsFutureModel.id = objAccount.id;
-			$scope.accountsFutureModel.label = objAccount.label;
-
+			$scope.accountsData = arrFilterConfig;
 			intFilterStatus++;
 
             HandleTabs();

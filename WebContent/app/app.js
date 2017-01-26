@@ -49,7 +49,9 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'Conciliador.slugfyFilter',
                             'Conciliador.receiptsOtherDetailsController',
                             'Conciliador.receiptsFutureDetailsController',
-                            'Conciliador.salesToConcileDetailsController'
+                            'Conciliador.salesToConciliateDetailsController',
+                            'Conciliador.unprocessedSalesDetailsController',
+                            'Conciliador.salesConciliatedDetailsController'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
@@ -124,21 +126,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		WatchRouteChange();
         RemoveLoader();
 		InitiateRootVariables();
-		InitDisclaimer();
 	}
-
-	function InitDisclaimer() {
-
-		var objDisclaimer = {
-			type: 'warning',
-            text: 'Os termos de uso e política de privacidade foram atualizados e ao continuar navegando neste você aceita suas condições.',
-            actionText: 'Saiba Mais.',
-            onClick: 'http://userede.com.br'
-		};
-
-		RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
-
-    }
 
 	function WatchRouteChange() {
 		$rootScope.$on('$routeChangeSuccess', function() {

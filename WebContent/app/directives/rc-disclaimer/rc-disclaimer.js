@@ -23,7 +23,16 @@
                 actionText: "=",
                 onClick: "="
             },
-            controller: Controller
+            controller: Controller,
+            link: function(scope, element, attrs) {
+                scope.$on('$routeChangeSuccess', function() {
+                    scope.type = "";
+                    scope.text = "";
+                    scope.actionText = "";
+                    scope.onClick = "";
+                });
+            }
+
         };
 
         function Controller($scope) {

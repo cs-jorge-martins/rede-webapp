@@ -47,6 +47,10 @@
   .modal-body {
     font-size: 1.2em;
   }
+
+  &:not(:first-child) {
+    filter: blur(2px);
+  }
 }
 
 .modal-details {

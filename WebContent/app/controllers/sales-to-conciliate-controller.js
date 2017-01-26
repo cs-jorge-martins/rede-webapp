@@ -301,9 +301,14 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
-                $scope.reconcileType = "desconciliar";
-                $scope.modalTitle = "desconciliar vendas";
-                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " vendas?";
+                var strPluralized = "vendas";
+                if (objTransactionModel.count > 1) {
+                    strPluralized = "venda";
+                }
+
+                $scope.reconcileType = "conciliar";
+                $scope.modalTitle = "conciliar vendas";
+                $scope.modalText = "Você deseja conciliar " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
@@ -333,9 +338,14 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+                var strPluralized = "vendas não processadas";
+                if (objTransactionModel.count > 1) {
+                    strPluralized = "venda não processada"
+                }
+
                 $scope.reconcileType = "excluir";
                 $scope.modalTitle = "excluir vendas não processadas";
-                $scope.modalText = "Você deseja excluir " + objTransactionModel.count + " vendas não processadas?";
+                $scope.modalText = "Você deseja excluir " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
@@ -368,15 +378,28 @@
          * Abre modal de detalhes
          *
          */
-        function Details(objTransaction) {
-
+        function Details(objTransaction, strType) {
             objVm.transaction = objTransaction;
-            modalService.openDetails(
-				'Vendas a conciliar',
-				'app/views/sales-to-conciliate-details.html',
-				'salesToConcileDetailsController',
-				$scope
-			);
+
+            switch (strType) {
+                case 'processed':
+                    modalService.openDetails(
+                        'Vendas a conciliar',
+                        'app/views/sales-to-conciliate-details.html',
+                        'salesToConciliateDetailsController',
+                        $scope
+                    );
+                    break;
+                case 'unprocessed':
+                    modalService.openDetails(
+                        'Vendas não processadas',
+                        'app/views/unprocessed-sales-details.html',
+                        'unprocessedSalesDetailsController',
+                        $scope
+                    );
+                    break;
+                default:
+            }
         }
 
     }
