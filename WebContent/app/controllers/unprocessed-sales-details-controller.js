@@ -13,9 +13,9 @@
         .controller('unprocessedSalesDetailsController', unprocessedSalesDetailsController);
 
 
-    unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'TransactionService', 'modalService'];
+    unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'TransactionService', 'modalService', '$uibModalInstance', 'utilsFactory', 'TransactionSummaryService'];
 
-    function unprocessedSalesDetailsController($scope, calendarFactory, TransactionService, modalService) {
+    function unprocessedSalesDetailsController($scope, calendarFactory, TransactionService, modalService, $uibModalInstance, utilsFactory, TransactionSummaryService) {
 
         var objVm = this.vm;
 
@@ -52,9 +52,14 @@
             };
 
             TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
-                $scope.items = objResponse.data.content;
-                $scope.resultsTotalItens = objResponse.data.page.totalElements;
-                $scope.resultsPageModel = objResponse.data.page.number;
+
+                if( objResponse.data.page.totalElements === 0 ) {
+                    $uibModalInstance.close();
+                } else {
+                    $scope.items = objResponse.data.content;
+                    $scope.resultsTotalItens = objResponse.data.page.totalElements;
+                    $scope.resultsPageModel = objResponse.data.page.number;
+                }
 
             }).catch(function(objResponse){
 
@@ -127,6 +132,7 @@
                     TransactionService.RemoveUnprocessedTransactionList(objFilter).then(function(objResponse) {
                         GetDetails();
                         ResetSelection();
+                        UpdateHeader();
                         objVm.getSales();
                         $uibModalInstance.close();
                     });
@@ -149,6 +155,25 @@
 
             return strText;
         }
-    }
 
+        function UpdateHeader() {
+            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var objFilter = {
+                conciliationStatus: 'UNPROCESSED',
+                startDate: strDate,
+                endDate: strDate,
+                cardProductIds: [objVm.transaction.cardProduct.id],
+                terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
+                acquirerIds: [objVm.transaction.acquirer.id],
+                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ',')
+            };
+
+            TransactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function(objResponse){
+                var response = objResponse.data.content[0];
+                objVm.transaction.quantity = response.quantity;
+                objVm.transaction.amount = response.amount;
+            }).catch(function(objResponse){
+            });
+        }
+    }
 })();
