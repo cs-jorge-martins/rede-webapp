@@ -52,6 +52,18 @@
 			},
 			controller: Controller,
 			link: function(scope, element, attrs) {
+
+                scope.$watch("status.opened",function(bolNewValue) {
+                	if(bolNewValue === false && scope.range) {
+                		
+						if(scope.pickerDate > scope.date[1]) {
+							scope.pickerDate = scope.initialDate[0];
+							scope.update();
+						}
+
+					}
+                });
+
 			}
 		};
 
@@ -73,6 +85,7 @@
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
 				$scope.getDayClass = GetDayClass;
+				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
 				};
@@ -81,7 +94,8 @@
 					startingDay: 1,
 					maxMode: 'day',
 					customClass: GetDayClass,
-					dateFilter: DateFilter
+					dateFilter: DateFilter,
+                    activeDateFilter: 0
 				};
 
 				if ($scope.minDate) {
@@ -149,6 +163,7 @@
 					switch (intRangeClickCounter) {
 						case 1:
 							objRangeStartDate = $scope.pickerDate;
+                            $scope.dateOptions.activeDateFilter = 0;
 							break;
 						case 2:
 
@@ -253,7 +268,12 @@
 			 * @param {String} strStartingDate 'tomorrow' para começar a contagem de amanhã
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
-			function DateFilter(days, strStartingDate) {
+			function DateFilter(days, strStartingDate, intActiveDateFilter) {
+				
+				if(intActiveDateFilter) {
+                    $scope.dateOptions.activeDateFilter = intActiveDateFilter;
+				}
+
 				var actualDate = new Date();
 				if(strStartingDate && strStartingDate === 'tomorrow') {
 					actualDate.setDate(actualDate.getDate() + 1);
@@ -269,6 +289,10 @@
 					objRangeStartDate = targetDate;
 					objRangeEndDate = actualDate;
 					$scope.pickerDate = targetDate;
+				}
+
+				if(bolIsRange) {
+                    $scope.date = [actualDate, targetDate];
 				}
 
 				$scope.status.opened = false;
