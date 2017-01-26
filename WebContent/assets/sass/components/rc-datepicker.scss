@@ -122,6 +122,7 @@
         }
 
         .uib-day {
+
             position: relative;
 
             &.has-status {
@@ -278,7 +279,7 @@
 
             }
 
-            &.ball, &.bar, button.active {
+            &.ball, &.bar, button.active:not(:disabled) {
                 span {
                     color: #fff;
                 }
@@ -289,6 +290,7 @@
                     }
                 }
             }
+
         }
 
         .uib-weeks {
