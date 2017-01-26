@@ -120,7 +120,7 @@ angular.module('Conciliador.dashboardController',[])
             type: 'warning',
             text: 'Os termos de uso e política de privacidade foram atualizados e ao continuar navegando neste você aceita suas condições.',
             actionText: 'Saiba Mais.',
-            onClick: 'http://userede.com.br'
+            onClick: 'assets/files/contrato-control-rede.pdf'
         };
 
         RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
