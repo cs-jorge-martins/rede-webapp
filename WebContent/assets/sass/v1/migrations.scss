@@ -80,6 +80,10 @@ body {
         border-radius: 4px;
         margin-right: 0 !important;
 
+        &:active {
+            top: -1px;
+        }
+
     }
 
     tbody td {
@@ -114,7 +118,7 @@ body {
         }
 
         span {
-            z-index: 2;
+            z-index: 3;
             right: 26px;
             font-size: 15.4px;
             color: $darkGray;

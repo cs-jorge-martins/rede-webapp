@@ -69,6 +69,7 @@
         objVm.getSales = GetSales;
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
+        objVm.details = Details;
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -292,10 +293,15 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
+            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
+                var strPluralized = "vendas";
+                if (objTransactionModel.count > 1) {
+                    strPluralized = "venda"
+                }
+
                 $scope.reconcileType = "desconciliar";
                 $scope.modalTitle = "desconciliar vendas";
-                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " vendas?";
+                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
                     $uibModalInstance.close();
                 };
@@ -321,6 +327,21 @@
         function ResetFilter(strModel) {
             objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
             GetSales();
+        }
+
+        /**
+         * @method Details
+         * Abre modal de detalhes
+         *
+         */
+        function Details(objTransaction) {
+            objVm.transaction = objTransaction;
+            modalService.openDetails(
+                'Vendas conciliadas',
+                'app/views/sales-conciliated-details.html',
+                'salesConciliatedDetailsController',
+                $scope
+            );
         }
 
     }

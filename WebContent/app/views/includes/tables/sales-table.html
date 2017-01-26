@@ -9,7 +9,15 @@
                 <thead>
                 <tr>
                     <th class="checkbox-header">
-                        <rc-checkbox-parent quantity-model="result.transactionsModel.count" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" checked="result.transactionsModel.allChecked" quantity-field="quantity"></rc-checkbox-parent>
+                        <rc-checkbox-parent
+                            complete-model="result.transactionsModel.transactions"
+                            check-model="result.transactionsModel.checks"
+                            quantity-model="result.transactionsModel.count"
+                            model-target="cardProduct.id"
+                            response-model="result.transactionsModel.cardProductIds"
+                            checked="result.transactionsModel.allChecked"
+                            quantity-field="quantity">
+                        </rc-checkbox-parent>
                     </th>
                     <th>lançamentos</th>
                     <th>valor bruto (R$)</th>
@@ -20,7 +28,16 @@
                 <tbody>
                 <tr ng-repeat="transaction in result.transactionsModel.transactions">
                     <th scope="row">
-                        <rc-checkbox quantity-model="result.transactionsModel.count" quantity-field="quantity" model="transaction" complete-model="result.transactionsModel.transactions" check-model="result.transactionsModel.checks" model-target="cardProduct.id" response-model="result.transactionsModel.cardProductIds" parent-checked="result.transactionsModel.allChecked"></rc-checkbox>
+                        <rc-checkbox
+                            quantity-model="result.transactionsModel.count"
+                            quantity-field="quantity"
+                            model="transaction"
+                            complete-model="result.transactionsModel.transactions"
+                            check-model="result.transactionsModel.checks"
+                            model-target="cardProduct.id"
+                            response-model="result.transactionsModel.cardProductIds"
+                            parent-checked="result.transactionsModel.allChecked">
+                        </rc-checkbox>
                     </th>
                     <td>
                         <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
@@ -28,7 +45,7 @@
                     </td>
                     <td>{{transaction.amount | currency: ''}}</td>
                     <td>{{transaction.quantity}} vendas</td>
-                    <td><button class="btn-link" ng-click="vm.details(transaction)">detalhes</button></td>
+                    <td><button class="btn-link" ng-click="vm.details(transaction, 'processed')">detalhes</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -63,7 +80,7 @@
                     <td>{{transaction.cardProduct.name}}</td>
                     <td>{{transaction.amount | currency: ''}}</td>
                     <td>{{transaction.quantity}} vendas</td>
-                    <td><button class="btn-link" ng-click="onClick()">detalhes</button></td>
+                    <td><button class="btn-link" ng-click="vm.details(transaction, 'unprocessed')">detalhes</button></td>
                 </tr>
                 </tbody>
             </table>
