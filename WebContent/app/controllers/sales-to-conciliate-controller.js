@@ -301,9 +301,9 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
-                var strPluralized = "vendas";
+                var strPluralized = "venda";
                 if (objTransactionModel.count > 1) {
-                    strPluralized = "venda";
+                    strPluralized = "vendas";
                 }
 
                 $scope.reconcileType = "conciliar";
@@ -337,10 +337,10 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
-                var strPluralized = "vendas não processadas";
+            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
+                var strPluralized = "venda não processada";
                 if (objTransactionModel.count > 1) {
-                    strPluralized = "venda não processada"
+                    strPluralized = "vendas não processadas"
                 }
 
                 $scope.reconcileType = "excluir";
