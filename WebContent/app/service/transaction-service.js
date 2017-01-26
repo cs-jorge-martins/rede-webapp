@@ -70,6 +70,17 @@
             });
         };
 
+        this.RemoveUnprocessedTransactionList = function(objFilter){
+            var objRequest = objFilter;
+
+            return $http({
+                url: app.endpoint + '/transactions/unprocessed',
+                method: "DELETE",
+                data: objRequest,
+                headers: Request.setHeaders()
+            });
+        }
+
         this.ExportTransactions = function(objFilter, success, error) {
             var objStartTime = new Date().getTime();
             var intTimeout = 30 * 1000;  // milisseconds
