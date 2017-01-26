@@ -192,6 +192,17 @@
                     }
                 }
 
+                &:disabled {
+                    &:hover {
+                        span {
+                            color: $darkGray;
+                            &.text-muted {
+                                color: $mediumGray;
+                            }
+                        }
+                    }
+                }
+
                 span {
                     position: absolute;
                     z-index: 11;
