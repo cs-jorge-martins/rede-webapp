@@ -90,7 +90,7 @@
     <div class="panel panel-secondary" ng-if="result.unprocessedModel">
         <div class="panel-body">
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <input type="submit" value="excluir vendas não processadas" class="btn btn-primary btn-block" ng-href='#here' ng-click="vm.removeUnprocessed(result.unprocessedModel, result.acquirer)" />
+                <input type="submit" value="excluir vendas não processadas" class="btn btn-primary btn-block" ng-href='#here' ng-click="vm.removeUnprocessed(result.unprocessedModel, result.acquirer)" ng-disabled="result.unprocessedModel.count < 1" />
             </div>
         </div>
     </div>

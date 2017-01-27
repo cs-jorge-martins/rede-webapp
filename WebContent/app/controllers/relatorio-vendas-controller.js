@@ -64,6 +64,12 @@
         $scope.totalItensPageChangedDuplicate = TotalItensPageChangedDuplicate;
         $scope.sortResults = SortResults;
 
+        $scope.dateOptions = {
+            showWeeks: false,
+            startingDay: 1,
+            maxMode: 'day'
+        };
+
         function HandleResponse(objResponse) {
 			var arrItems = [];
 
