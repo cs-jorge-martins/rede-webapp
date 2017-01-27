@@ -170,6 +170,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
+		$rootScope.hideHeaderAndFooter = false;
 
 		$window.sessionStorage.token = token;
 		$window.sessionStorage.pvList = JSON.stringify(user.pvList);
