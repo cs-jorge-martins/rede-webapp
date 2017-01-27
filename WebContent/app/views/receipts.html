@@ -142,7 +142,7 @@
                                     <th></th>
                                 </tr>
                             </tbody>
-                            <tr class="card-product-line" ng-show="item.otherReleases">
+                            <tr class="card-product-line" ng-show="item.otherReleases.length">
                                 <th></th>
                                 <th>outros lançamentos</th>
                                 <th>{{ item.otherReleasesTotal | customCurrency }}</th>
@@ -150,7 +150,7 @@
                                     <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'other_details')">detalhes</a>
                                 </th>
                             </tr>
-                             <tbody ng-show="item.otherReleases">
+                             <tbody ng-show="item.otherReleases.length">
                                 <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
                                     <th></th>
                                     <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
@@ -208,12 +208,18 @@
                                         {{ shopsFutureLabel }}
                                     </label>
                                     <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter(true)"></div>
+                                    <span class="rc-tooltip">
+                                        {{ shopsFutureFullLabel }}
+                                    </span>                                    
                                 </div>
                                 <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                     <label>
                                         {{ cardProductsFutureLabel }}
                                     </label>
                                     <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter(true)"></div>
+                                    <span class="rc-tooltip">
+                                        {{ cardProductsFutureFullLabel }}
+                                    </span>                                    
                                 </div>
                             </div>
                         </div>

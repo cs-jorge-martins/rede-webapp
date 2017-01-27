@@ -268,7 +268,12 @@
             this.transactions = [];
             this.checks = {};
             this.cardProductIds = [];
-            this.allChecked = false
+            this.allChecked = false;
+            this.resetSelection = function ResetSelection() {
+                this.count = 0;
+                this.checks = {};
+                this.allChecked = false;
+            }
         }
 
         /**
@@ -303,6 +308,11 @@
                 $scope.modalTitle = "desconciliar vendas";
                 $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
+                    objTransactionModel.resetSelection();
+                    $scope.close();
+                };
+
+                $scope.close = function Close() {
                     $uibModalInstance.close();
                 };
 
