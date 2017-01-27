@@ -1,4 +1,5 @@
 <div class="timeline-wrapper">
+    {{timeLinePercentage=0.4}}
     <ul class="timeline-head">
         <li>
             {{labelInitialValue}} <br>
@@ -25,7 +26,7 @@
         <div class="percent" style="width:{{timeLinePercentage}}%">
             <article ng-class="{small: initialValue <= 0}">
                 <aside ng-class="{gray: initialValue == 0}" style="width:10px{{timeLinePercentage==0 ? ';right:-10px' : ''}}">
-                    {{ timeLinePercentage | number: 0 }}%
+                    {{timeLinePercentage > 0 && timeLinePercentage < 1 ? "<1" : timeLinePercentage}}%
                 </aside>
             </article>
         </div>
