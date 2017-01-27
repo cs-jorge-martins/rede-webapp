@@ -10291,11 +10291,13 @@ div.checkbox-toggle-right {
     color: #e84438;
 }
 
-.data-cards .numbers-data .discount i{
+.data-cards .numbers-data .discount i,
+.data-cards .numbers-data .addition i {
     position: relative;
 }
 
-.data-cards .numbers-data .discount i:hover .rc-tooltip {
+.data-cards .numbers-data .discount i:hover .rc-tooltip,
+.data-cards .numbers-data .addition i:hover .rc-tooltip {
     display: block;
 }
 
@@ -10429,7 +10431,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue {
     position: absolute;
-    right: 135px;
+    right: 235px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue span.valor-liquido {
