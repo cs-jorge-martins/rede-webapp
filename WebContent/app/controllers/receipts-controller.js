@@ -468,7 +468,7 @@ angular.module('Conciliador.movementsModule',[])
 					$scope.totalToReceive = intTotalToReceive;
 					$scope.discountedTotal = intDiscount;
 					$scope.antecipatedTotal = intAntecipatedTotal;
-					$scope.totalReceived = intTotalToReceive - intDiscount + intAntecipatedTotal;
+					$scope.totalReceived = intTotalToReceive + intDiscount + intAntecipatedTotal;
 					$scope.getDiscountedSignal = GetDiscountedSignal;
 					$scope.getDiscountedAbs = GetDiscountedAbs;
 					$scope.getClassByType = GetClassByType;
