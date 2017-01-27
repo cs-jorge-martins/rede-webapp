@@ -200,6 +200,7 @@ module.exports = function(grunt) {
 
                     "WebContent/app/filters/currency-filter.js",
                     "WebContent/app/filters/slugfy-filter.js",
+                    "WebContent/app/filters/text-filter.js",
 
                     "WebContent/app/libs/videogular.min.js",
                     "WebContent/app/libs/vg-controls.min.js",

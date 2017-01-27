@@ -1,53 +1,81 @@
 .table {
-    tbody>tr>td,
-    tbody>tr>th,
-    tfoot>tr>td,
-    tfoot>tr>th,
-    thead>tr>td,
-    thead>tr>th{
-        border-top-color: #eee;
-        border-bottom: none;
-        //vertical-align: middle;
-    }
 
-    td {
-        font-size: 1.1em;
+    font-size: 1em;
 
-        a, button {
-            color: $tableLinkColor;
-            text-decoration: underline;
-
-            &:hover {
-                color: $tableLinkColor;
-            }
-        }
-    }
-
-    &.primary {
-        thead {
-            background: $tableHeadBackgroundColor;
-            color: $tableHeadFontColor;
-        }
+    &.primary, &.secondary {
 
         th {
-            padding: 2.3em 0 1.8em;
-            font-size: .96em;
+            border-bottom: none;
+            font-size: 1.29em;
+            padding: 1.3em 0;
+        }
+
+        td {
+            font-size: 1.3em;
+            padding: 1.3em 0;
+            border-bottom: 1px solid $tableRowBorderColor;
+
+            &:first-of-type {
+                border-top: 1px solid $tableRowBorderColor;
+            }
+        }
+
+        th, td {
+            text-align: center;
+        }
+
+        thead {
+            color: $tableHeadFontColor;
         }
 
         tbody {
 
         }
 
-        td {
-            font-size: .96em;
-            padding: 2.3em 0 1.8em;
+        thead th:first-of-type,
+        tbody td:first-of-type {
+            padding-left: 0.5em;
+            padding-right: 2em;
+        }
+
+        .card-product {
+            top: 0.3em;
+            position: relative;
+        }
+    }
+
+    &.secondary {
+        thead th:first-of-type,
+        tbody td:first-of-type {
+            padding-left: 3.1em;
+            padding-right: 1.2em;
+        }
+    }
+
+    &.details {
+        thead {
+            font-size: 0.75em;
+            background: #f9f9f9;
+        }
+
+        tbody {
+            font-size: 0.75em;
         }
 
         thead th:first-of-type,
         tbody td:first-of-type {
-            padding-left: 3em;
-            padding-right: 2em;
-            display: block;
+            padding-left: 0;
+            padding-right: 0;
         }
+
+        td, th {
+            padding: 2em 1em;
+        }
+    }
+
+    .btn-details {
+        color: $defaultOrange;
+        text-decoration: underline;
+        font-family: $fontSemiBold;
     }
 }
