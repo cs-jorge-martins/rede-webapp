@@ -46,6 +46,12 @@
 		$scope.sort = 'adjustDate,ASC';
         $scope.sortResults = SortResults;
 
+        $scope.dateOptions = {
+            showWeeks: false,
+            startingDay: 1,
+            maxMode: 'day'
+        };
+
 		Init();
 
 		function Init(){

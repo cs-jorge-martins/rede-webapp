@@ -34,6 +34,12 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 		$scope.totalItens = 0;
         $scope.sortResults = SortResults;
 
+		$scope.dateOptions = {
+			showWeeks: false,
+			startingDay: 1,
+			maxMode: 'day'
+		};
+
 		Init();
 
 		function Init(){
@@ -85,8 +91,8 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();;
+			$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 		}
 
 		function Search() {
