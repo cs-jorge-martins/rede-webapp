@@ -117,6 +117,11 @@
                 $scope.modalTitle = "conciliar vendas";
                 $scope.modalText = "Você deseja conciliar " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
+                    ResetSelection();
+                    $scope.close();
+                };
+
+                $scope.close = function Close() {
                     $uibModalInstance.close();
                 };
 
