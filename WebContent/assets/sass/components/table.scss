@@ -2,7 +2,7 @@
 
     font-size: 1em;
 
-    &.primary {
+    &.primary, &.secondary {
 
         th {
             border-bottom: none;
@@ -12,12 +12,16 @@
 
         td {
             font-size: 1.3em;
-            padding: 1em 0;
+            padding: 1.3em 0;
             border-bottom: 1px solid $tableRowBorderColor;
 
             &:first-of-type {
                 border-top: 1px solid $tableRowBorderColor;
             }
+        }
+
+        th, td {
+            text-align: center;
         }
 
         thead {
@@ -33,10 +37,40 @@
             padding-left: 0.5em;
             padding-right: 2em;
         }
+
+        .card-product {
+            top: 0.3em;
+            position: relative;
+        }
+    }
+
+    &.secondary {
+        thead th:first-of-type,
+        tbody td:first-of-type {
+            padding-left: 3.1em;
+            padding-right: 1.2em;
+        }
     }
 
     &.details {
+        thead {
+            font-size: 0.75em;
+            background: #f9f9f9;
+        }
 
+        tbody {
+            font-size: 0.75em;
+        }
+
+        thead th:first-of-type,
+        tbody td:first-of-type {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        td, th {
+            padding: 2em 1em;
+        }
     }
 
     .btn-details {

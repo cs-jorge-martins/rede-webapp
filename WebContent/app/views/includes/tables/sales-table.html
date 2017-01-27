@@ -6,9 +6,16 @@
         </div>
     </div>
     <table class="table primary" ng-if="result.transactionsModel.transactions">
+        <colgroup>
+            <col width="10%" />
+            <col width="15%" />
+            <col width="25%" />
+            <col width="30%" />
+            <col width="20%" />
+        </colgroup>
         <thead>
             <tr>
-                <th class="checkbox-header alignc">
+                <th class="checkbox-header">
                     <rc-checkbox-parent
                         complete-model="result.transactionsModel.transactions"
                         check-model="result.transactionsModel.checks"
@@ -19,7 +26,7 @@
                         quantity-field="quantity">
                     </rc-checkbox-parent>
                 </th>
-                <th>lançamentos</th>
+                <th class="alignl">lançamentos</th>
                 <th class="alignr">valor bruto (R$)</th>
                 <th>quantidade</th>
                 <th></th>
@@ -27,7 +34,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="transaction in result.transactionsModel.transactions">
-                <td class="alignc">
+                <td>
                     <rc-checkbox
                         quantity-model="result.transactionsModel.count"
                         quantity-field="quantity"
@@ -39,7 +46,7 @@
                         parent-checked="result.transactionsModel.allChecked">
                     </rc-checkbox>
                 </td>
-                <td>
+                <td class="alignl">
                     <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
                     {{transaction.cardProduct.name}}
                 </td>
@@ -63,14 +70,21 @@
             <span>valor total: R$ {{ result.unprocessedModel.totalAmount | currency: ""}}</span>
         </div>
     </div>
-    <table class="table">
+    <table class="table primary secondary">
+        <colgroup>
+            <col width="15%" />
+            <col width="15%" />
+            <col width="20%" />
+            <col width="30%" />
+            <col width="20%" />
+        </colgroup>
         <thead>
             <tr>
                 <th class="checkbox-header">
                     <rc-checkbox-parent quantity-model="result.unprocessedModel.count" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" checked="result.unprocessedModel.allChecked" quantity-field="quantity"></rc-checkbox-parent>
                 </th>
-                <th>lançamentos</th>
-                <th>valor bruto (R$)</th>
+                <th class="alignl">lançamentos</th>
+                <th class="alignr">valor bruto (R$)</th>
                 <th>quantidade</th>
                 <th></th>
             </tr>
@@ -80,8 +94,11 @@
                 <td scope="row">
                     <rc-checkbox quantity-model="result.unprocessedModel.count" quantity-field="quantity" model="transaction" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" parent-checked="result.unprocessedModel.allChecked"></rc-checkbox>
                 </td>
-                <td>{{transaction.cardProduct.name}}</td>
-                <td>{{transaction.amount | currency: ''}}</td>
+                <td class="alignl">
+                    <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
+                    {{transaction.cardProduct.name}}
+                </td>
+                <td class="alignr">{{transaction.amount | currency: ''}}</td>
                 <td>{{transaction.quantity}} vendas</td>
                 <td><button class="btn-link btn-details" ng-click="vm.details(transaction, 'unprocessed')">detalhes</button></td>
             </tr>
