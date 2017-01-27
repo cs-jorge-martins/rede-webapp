@@ -125,6 +125,11 @@
                 $scope.modalTitle = "excluir vendas";
                 $scope.modalText = "Você deseja excluir " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
+                    ResetSelection();
+                    $scope.close();
+                };
+
+                $scope.close = function Close() {
                     $uibModalInstance.close();
                 };
 
