@@ -1,6 +1,6 @@
 .timeline-wrapper {
 
-    height: 12.5em;
+    height: 14.5em;
     margin: 1em 0;
 
     li {
@@ -130,18 +130,18 @@
         }
 
         &:before {
-            content: "0%";
+            content: "";
             left: 0;
         }
 
         &:after {
-            content: "100%";
+            content: "";
             right: 0;
         }
 
         &:before, &:after {
             position: absolute;
-            top: -20px;
+            top: 10px;
             color: $rcTimelineSecondaryColor;
             font-weight: bolder;
         }
