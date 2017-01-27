@@ -47,6 +47,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'Conciliador.appConfig',
                             'Conciliador.currencyFilter',
                             'Conciliador.slugfyFilter',
+                            'Conciliador.textFilter',
                             'Conciliador.receiptsOtherDetailsController',
                             'Conciliador.receiptsFutureDetailsController',
                             'Conciliador.salesToConciliateDetailsController',
