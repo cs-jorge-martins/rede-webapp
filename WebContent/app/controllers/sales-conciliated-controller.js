@@ -179,11 +179,11 @@
                 objContent.forEach(function(objItem) {
                     if (objItem.conciliationStatus === 'TO_CONCILIE') {
                         objVm.timelineModel.toReconcile = objItem.quantity;
+                        objVm.timelineModel.total += objItem.quantity;
                     } else if (objItem.conciliationStatus === 'CONCILIED') {
                         objVm.timelineModel.concilied = objItem.quantity;
+                        objVm.timelineModel.total += objItem.quantity;
                     }
-
-                    objVm.timelineModel.total += objItem.quantity;
                 });
 
             });
