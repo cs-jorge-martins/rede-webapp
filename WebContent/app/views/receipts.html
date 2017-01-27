@@ -151,7 +151,7 @@
                                 </th>
                             </tr>
                              <tbody ng-show="item.otherReleases.length">
-                                <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
+                                <tr ng-repeat="otherRelease in item.otherReleases" class="inset" ng-class="otherRelease.amount > 0 ? 'vendas' : 'cancelamentos'">
                                     <th></th>
                                     <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
                                     <th>{{ otherRelease.amount | customCurrency }} </th>
