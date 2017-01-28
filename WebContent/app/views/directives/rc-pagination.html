@@ -2,7 +2,7 @@
     <div class="results-per-page">
         <label for="total-itens-{{$id}}">resultados por página</label>
         <div class="select-wrapper">
-            <select ng-model="resultsPerPageModel"
+            <select ng-model="$parent.resultsPerPageModel"
                     ng-change="onChange()"
                     ng-options="option for option in resultsPerPageOptions"
                     id="total-itens-{{$id}}">
@@ -12,7 +12,7 @@
     <div class="results-pagination">
         <ul uib-pagination
             total-items="resultsPaginationTotalItens"
-            ng-model="resultsPageModel"
+            ng-model="$parent.resultsPageModel"
             ng-change="onChange()"
             max-size="maxSize"
             items-per-page="resultsPerPageModel"

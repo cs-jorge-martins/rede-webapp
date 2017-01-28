@@ -12,21 +12,25 @@
         .module('Conciliador.salesToConciliateDetailsController', [])
         .controller('salesToConciliateDetailsController', salesToConciliateDetailsController);
 
-    salesToConciliateDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService', 'modalService', 'TransactionSummaryService', '$uibModalInstance'];
-    function salesToConciliateDetailsController($scope, calendarFactory, utilsFactory, TransactionService, modalService, TransactionSummaryService, $uibModalInstance) {
+    salesToConciliateDetailsController.$inject = ['$scope', 'calendarFactory', 'utilsFactory', 'TransactionService', 'modalService', 'TransactionSummaryService', '$uibModalInstance', '$timeout'];
+    function salesToConciliateDetailsController($scope, calendarFactory, utilsFactory, TransactionService, modalService, TransactionSummaryService, $uibModalInstance, $timeout) {
 
         var objVm = this.vm;
 
-        $scope.resultsPerPage = 10;
-        $scope.resultsPageModel = 0;
-        $scope.resultsTotalItens = 0;
-        $scope.maxSize = 4;
+        $scope.pagination = {
+            maxSize: 4,
+            resultsPageModel: 0,
+            resultsPerPage: 10,
+            resultsTotalItens: 0,
+            updateDetails: UpdatePagination
+        };
+
         $scope.detailSelection = {};
-        $scope.updatePagination = UpdatePagination;
         $scope.toggleCheckbox = ToggleCheckbox;
         $scope.toggleCheckboxAll = ToggleCheckboxAll;
         $scope.reconcileItems = ReconcileItems;
         $scope.items = [];
+
 
         Init();
 
@@ -35,34 +39,38 @@
             ResetSelection();
         }
 
+        function UpdatePagination() {
+            GetDetails();
+            ResetSelection();
+        }
+
         function GetDetails() {
             var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
 
-            var objFilter = {
-                startDate: strDate,
-                endDate: strDate,
-                cardProductIds: [objVm.transaction.cardProduct.id],
-                conciliationStatus: 'TO_CONCILIE',
-                page: $scope.resultsPageModel,
-                size: $scope.resultsPerPage
-            };
+            $timeout(function () {
 
-            TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
+                var objFilter = {
+                    startDate: strDate,
+                    endDate: strDate,
+                    cardProductIds: [objVm.transaction.cardProduct.id],
+                    conciliationStatus: 'TO_CONCILIE',
+                    page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
+                    size: $scope.pagination.resultsPerPage
+                };
 
-                if( objResponse.data.page.totalElements === 0 ) {
-                    $uibModalInstance.close();
-                } else {
-                    $scope.items = objResponse.data.content;
-                    $scope.resultsTotalItens = objResponse.data.page.totalElements;
-                    $scope.resultsPageModel = objResponse.data.page.number;
-                }
+                TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
 
-            }).catch(function(objResponse){
-            });
-        }
+                    if( objResponse.data.page.totalElements === 0 ) {
+                        $uibModalInstance.close();
+                    } else {
+                        $scope.items = objResponse.data.content;
+                        $scope.pagination.resultsTotalItens = objResponse.data.page.totalElements;
+                    }
 
-        function UpdatePagination() {
-            GetDetails();
+                }).catch(function(objResponse){
+                });
+            }, 0);
+
         }
 
         function ToggleCheckbox(objItemSelected) {
