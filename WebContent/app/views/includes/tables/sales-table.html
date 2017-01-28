@@ -47,8 +47,10 @@
                     </rc-checkbox>
                 </td>
                 <td class="alignl">
-                    <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
-                    {{transaction.cardProduct.name}}
+                    <div class="card-product-wrapper">
+                        <div class="card-product brand-{{transaction.cardProduct.id}}">{{transaction.cardProduct.name}}</div>
+                        <p>{{transaction.cardProduct.name}}</p>
+                    </div>
                 </td>
                 <td class="alignr">{{transaction.amount | currency: ''}}</td>
                 <td>{{transaction.quantity}} vendas</td>
@@ -67,6 +69,8 @@
     <div class="panel panel-secondary" ng-if="result.unprocessedModel">
         <div class="panel-heading">
             vendas não processadas
+            <span uib-tooltip="somente estabelecimentos que possuem ao menos uma transação processada aparecem na listagem" tooltip-placement="auto top-left"></span>
+
             <span>valor total: R$ {{ result.unprocessedModel.totalAmount | currency: ""}}</span>
         </div>
     </div>
@@ -95,8 +99,10 @@
                     <rc-checkbox quantity-model="result.unprocessedModel.count" quantity-field="quantity" model="transaction" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" parent-checked="result.unprocessedModel.allChecked"></rc-checkbox>
                 </td>
                 <td class="alignl">
-                    <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
-                    {{transaction.cardProduct.name}}
+                    <div class="card-product-wrapper">
+                        <div class="card-product brand-{{transaction.cardProduct.id}}">{{transaction.cardProduct.name}}</div>
+                        <p>{{transaction.cardProduct.name}}</p>
+                    </div>
                 </td>
                 <td class="alignr">{{transaction.amount | currency: ''}}</td>
                 <td>{{transaction.quantity}} vendas</td>

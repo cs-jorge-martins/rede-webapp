@@ -94,3 +94,16 @@
   }
 
 }
+
+.card-product-wrapper {
+    position: relative;
+
+    p {
+        text-indent: 4em;
+        margin: 0;
+    }
+
+    .card-product {
+        position: absolute !important;
+    }
+}
