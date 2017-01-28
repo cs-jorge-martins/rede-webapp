@@ -299,9 +299,9 @@
             };
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
-                var strPluralized = "vendas";
+                var strPluralized = "venda";
                 if (objTransactionModel.count > 1) {
-                    strPluralized = "venda"
+                    strPluralized = "vendas"
                 }
 
                 $scope.reconcileType = "desconciliar";
