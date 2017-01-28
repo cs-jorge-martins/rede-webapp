@@ -26,7 +26,8 @@
         '$uibModal',
         '$rootScope',
         'utilsFactory',
-        'modalService'
+        'modalService',
+        '$location'
     ];
 
     function SalesToConciliateController(
@@ -38,7 +39,9 @@
         $uibModal,
         $rootScope,
         utilsFactory,
-        modalService) {
+        modalService,
+        $location
+    ) {
 
         var objVm = this;
 
@@ -92,6 +95,7 @@
          * inicializa as funções principais deste controller ao carregar a página
          */
         function Init() {
+            ResolveDateFromDashboard();
             GetFilters(GetSales);
             UpdateDateModel();
         }
@@ -186,7 +190,7 @@
                         objVm.timelineModel.total += objItem.quantity;
                     } else if (objItem.conciliationStatus === 'CONCILIED') {
                         objVm.timelineModel.concilied = objItem.quantity;
-                        objVm.timelineModel.total += objItem.quantity; 
+                        objVm.timelineModel.total += objItem.quantity;
                     }
                 });
 
@@ -417,5 +421,15 @@
             }
         }
 
+        /**
+         * @method ResolveDateFromDashboard
+         * Verifica se uma data foi passada via query parameter e aplica a mesma
+         */
+        function ResolveDateFromDashboard() {
+            var strDate = $location.search().date || false;
+            if(strDate) {
+                objVm.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
+            }
+        }
     }
 })();

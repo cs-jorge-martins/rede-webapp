@@ -2,10 +2,10 @@
     <div class="panel panel-success">
         <div class="panel-heading">
             {{ result.acquirer.name | capitalize }}
-            <span>valor total: R$ {{ result.transactionsModel.totalAmount | currency: ""}}</span>
+            <span ng-if="result.transactionsModel">valor total: R$ {{ result.transactionsModel.totalAmount | currency: ""}}</span>
         </div>
     </div>
-    <table class="table primary" ng-if="result.transactionsModel.transactions">
+    <table class="table primary" ng-if="result.transactionsModel">
         <colgroup>
             <col width="10%" />
             <col width="15%" />
@@ -47,8 +47,10 @@
                     </rc-checkbox>
                 </td>
                 <td class="alignl">
-                    <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
-                    {{transaction.cardProduct.name}}
+                    <div class="card-product-wrapper">
+                        <div class="card-product brand-{{transaction.cardProduct.id}}">{{transaction.cardProduct.name}}</div>
+                        <p>{{transaction.cardProduct.name}}</p>
+                    </div>
                 </td>
                 <td class="alignr">{{transaction.amount | currency: ''}}</td>
                 <td>{{transaction.quantity}} vendas</td>
@@ -56,10 +58,10 @@
             </tr>
         </tbody>
     </table>
-    <div class="panel panel-success">
+    <div class="panel panel-success" ng-if="result.transactionsModel">
         <div class="panel-body">
             <div class="col-md-offset-9 col-md-3 reconcile-button">
-                <rc-count-button label-prefix="vm.countButtonLabelPrefix" label-suffix="'vendas'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
+                <rc-count-button label-prefix="vm.countButtonLabelPrefix" label-suffix="'venda'" item-count="result.transactionsModel.count" on-click="vm.reconcile(result.transactionsModel, result.acquirer)"></rc-count-button>
             </div>
         </div>
     </div>
@@ -70,7 +72,7 @@
             <span>valor total: R$ {{ result.unprocessedModel.totalAmount | currency: ""}}</span>
         </div>
     </div>
-    <table class="table primary secondary">
+    <table class="table primary secondary" ng-if="result.unprocessedModel">
         <colgroup>
             <col width="15%" />
             <col width="15%" />
@@ -95,8 +97,10 @@
                     <rc-checkbox quantity-model="result.unprocessedModel.count" quantity-field="quantity" model="transaction" complete-model="result.unprocessedModel.transactions" check-model="result.unprocessedModel.checks" model-target="cardProduct.id" response-model="result.unprocessedModel.cardProductIds" parent-checked="result.unprocessedModel.allChecked"></rc-checkbox>
                 </td>
                 <td class="alignl">
-                    <div class="card-product brand-{{transaction.cardProduct.id}}"></div>
-                    {{transaction.cardProduct.name}}
+                    <div class="card-product-wrapper">
+                        <div class="card-product brand-{{transaction.cardProduct.id}}">{{transaction.cardProduct.name}}</div>
+                        <p>{{transaction.cardProduct.name}}</p>
+                    </div>
                 </td>
                 <td class="alignr">{{transaction.amount | currency: ''}}</td>
                 <td>{{transaction.quantity}} vendas</td>

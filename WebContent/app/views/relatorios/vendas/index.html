@@ -52,7 +52,7 @@
 						</div>
 					</div>
 
-					<div id="chartRelatorioSinteticoContainer" ng-show="synthetic.items.length">
+					<div id="chartRelatorioSinteticoContainer" ng-if="synthetic.items.length > 0">
 						<canvas id="line" class="chart chart-pie chartRelatorioSintetico" chart-data="chartjs.data"
 		                	chart-labels="chartjs.labels" chart-series="chartjs.series"
 		                	chart-options="chartOptions">
