@@ -7,16 +7,20 @@
         th {
             border-bottom: none;
             font-size: 1.29em;
-            padding: 1.3em 0;
+            padding: 1.5em 0;
         }
 
         td {
             font-size: 1.3em;
-            padding: 1.3em 0;
+            padding: 1.5em 0;
             border-bottom: 1px solid $tableRowBorderColor;
 
             &:first-of-type {
                 border-top: 1px solid $tableRowBorderColor;
+            }
+
+            .checkbox {
+                top: -0.7em;
             }
         }
 
@@ -39,7 +43,7 @@
         }
 
         .card-product {
-            top: 0.3em;
+            top: -0.3em;
             position: relative;
         }
     }
@@ -77,5 +81,7 @@
         color: $defaultOrange;
         text-decoration: underline;
         font-family: $fontSemiBold;
+        padding: 0;
+        border: none;
     }
 }
