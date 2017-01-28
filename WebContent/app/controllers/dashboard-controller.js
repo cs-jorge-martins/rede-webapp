@@ -7,7 +7,8 @@
 angular.module('Conciliador.dashboardController',[])
 
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, RcDisclaimerService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, RcDisclaimerService,
+	$httpParamSerializer){
 
 	menuFactory.setActiveDashboard();
 
@@ -451,8 +452,7 @@ angular.module('Conciliador.dashboardController',[])
 			objDate = objDate.split('/');
 			objDate[0] = intDay;
 			objDate = objDate.join('/');
-			$rootScope.salesFromDashDate = objDate;
-			$location.path('/sales');
+			$location.path('/sales').search({ date: objDate });
 		}
 	}
 
