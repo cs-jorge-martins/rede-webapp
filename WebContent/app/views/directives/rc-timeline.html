@@ -26,7 +26,7 @@
             <div class="percent {{fullClass}}" style="width:{{timeLinePercentage}}%">
                 <article ng-class="{small: initialValue <= 0}">
                     <aside ng-class="{gray: initialValue == 0}" style="width:10px{{timeLinePercentage==0 ? ';right:-10px' : ''}}">
-                        {{ timeLinePercentage }}%
+                        {{ timeLinePercentageLabel }}%
                     </aside>
                 </article>
             </div>
