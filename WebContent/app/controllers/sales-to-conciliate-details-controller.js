@@ -22,7 +22,7 @@
             resultsPageModel: 0,
             resultsPerPage: 10,
             resultsTotalItens: 0,
-            updateDetails: GetDetails
+            updateDetails: UpdatePagination
         };
 
         $scope.detailSelection = {};
@@ -35,6 +35,11 @@
         Init();
 
         function Init() {
+            GetDetails();
+            ResetSelection();
+        }
+
+        function UpdatePagination() {
             GetDetails();
             ResetSelection();
         }

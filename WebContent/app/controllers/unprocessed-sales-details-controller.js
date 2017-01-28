@@ -13,18 +13,21 @@
         .controller('unprocessedSalesDetailsController', unprocessedSalesDetailsController);
 
 
-    unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'TransactionService', 'modalService', '$uibModalInstance', 'utilsFactory', 'TransactionSummaryService'];
+    unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'TransactionService', 'modalService', '$uibModalInstance', 'utilsFactory', 'TransactionSummaryService', '$timeout'];
 
-    function unprocessedSalesDetailsController($scope, calendarFactory, TransactionService, modalService, $uibModalInstance, utilsFactory, TransactionSummaryService) {
+    function unprocessedSalesDetailsController($scope, calendarFactory, TransactionService, modalService, $uibModalInstance, utilsFactory, TransactionSummaryService, $timeout) {
 
         var objVm = this.vm;
 
-        $scope.resultsPerPage = 10;
-        $scope.resultsPageModel = 0;
-        $scope.resultsTotalItens = 0;
-        $scope.maxSize = 4;
+        $scope.pagination = {
+            maxSize: 4,
+            resultsPageModel: 0,
+            resultsPerPage: 10,
+            resultsTotalItens: 0,
+            updateDetails: UpdatePagination
+        };
+
         $scope.items = [];
-        $scope.updatePagination = UpdatePagination;
         $scope.toggleCheckbox = ToggleCheckbox;
         $scope.toggleCheckboxAll = ToggleCheckboxAll;
         $scope.delete = Delete;
@@ -41,29 +44,32 @@
         function GetDetails() {
             var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
 
-            var objFilter = {
-                startDate: strDate,
-                endDate: strDate,
-                cardProductIds: [objVm.transaction.cardProduct.id],
-                conciliationStatus: 'UNPROCESSED',
-                page: $scope.resultsPageModel,
-                size: $scope.resultsPerPage
-                //sort:$scope.sort;
-            };
+            $timeout(function () {
 
-            TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
+                var objFilter = {
+                    startDate: strDate,
+                    endDate: strDate,
+                    cardProductIds: [objVm.transaction.cardProduct.id],
+                    conciliationStatus: 'UNPROCESSED',
+                    page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
+                    size: $scope.pagination.resultsPerPage
+                    //sort:$scope.sort;
+                };
 
-                if( objResponse.data.page.totalElements === 0 ) {
-                    $uibModalInstance.close();
-                } else {
-                    $scope.items = objResponse.data.content;
-                    $scope.resultsTotalItens = objResponse.data.page.totalElements;
-                    $scope.resultsPageModel = objResponse.data.page.number;
-                }
+                TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
 
-            }).catch(function(objResponse){
+                    if( objResponse.data.page.totalElements === 0 ) {
+                        $uibModalInstance.close();
+                    } else {
+                        $scope.items = objResponse.data.content;
+                        $scope.pagination.resultsTotalItens = objResponse.data.page.totalElements;
+                    }
 
-            });
+                }).catch(function(objResponse){
+
+                });
+
+            }, 0);
         }
 
         function ToggleCheckbox(objItemSelected) {
