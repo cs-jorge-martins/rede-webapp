@@ -69,8 +69,6 @@
     <div class="panel panel-secondary" ng-if="result.unprocessedModel">
         <div class="panel-heading">
             vendas não processadas
-            <span uib-tooltip="somente estabelecimentos que possuem ao menos uma transação processada aparecem na listagem" tooltip-placement="auto top-left"></span>
-
             <span>valor total: R$ {{ result.unprocessedModel.totalAmount | currency: ""}}</span>
         </div>
     </div>
