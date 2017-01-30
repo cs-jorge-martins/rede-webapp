@@ -75,6 +75,10 @@
                     strPercentage = "" + intPercentage;
                 }
 
+                if($scope.monetaryValues) {
+                    strPercentage = strPercentage + " do valor";
+                }
+
                 $scope.timeLinePercentage = intPercentage;
                 $scope.timeLinePercentageLabel = strPercentage;
             }

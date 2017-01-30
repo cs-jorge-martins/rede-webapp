@@ -10027,6 +10027,11 @@ div.checkbox-toggle-right {
     color: #575758;
 }
 
+.data-cards .timeline-wrapper article aside {
+    right: initial;
+    min-width: 111px;
+}
+
 .data-cards .timeline-wrapper .total li {
     font-size: 40px;
     font-weight: lighter;
