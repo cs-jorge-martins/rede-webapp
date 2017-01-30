@@ -105,16 +105,16 @@ $rcPaginationDefaultColor: $grafitteGray;
 // rc-datepicker
 $rcDatepickerBorderColor: $backgroundColor;
 
-// panels
-$panelSucessBackgroundColor: $jade;
-$panelSecondaryBackgroundColor: $lightGray;
-$panelSecondaryColor: $grafitteGray;
-
 // tables
 $tableLinkColor: $defaultOrange;
 $tableHeadBackgroundColor: #f9f9f9;
 $tableHeadFontColor: #4d4d4d;
 $tableRowBorderColor: #f1eeee;
+
+// panels
+$panelSucessBackgroundColor: $jade;
+$panelSecondaryBackgroundColor: $tableHeadBackgroundColor;
+$panelSecondaryColor: $grafitteGray;
 
 // cards
 $cardBackgroundColor: #fff;
