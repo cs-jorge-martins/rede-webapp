@@ -70,6 +70,8 @@
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
         objVm.details = Details;
+        objVm.acquirersFilterExpression = AcquirersFilterExpression;
+        objVm.pvsFilterExpression = PvsFilterExpression;
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -102,20 +104,20 @@
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
                 objVm.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
-                objVm.cardProductsModel = angular.copy(objVm.cardProductsData);
+
+                filterService.GetTerminalDeferred().then(function (objTerminals) {
+                    objVm.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code', 'pvId');
+                    
+                    filterService.GetPvsDeferred().then(function (objPvs) {
+                        objVm.pvsData = filterService.TransformDeferredDataInArray(objPvs, 'code', 'acquirerId');
+
+                        filterService.GetAcquirersDeferred().then(function (objAcquirers) {
+                            objVm.acquirersData = filterService.TransformDeferredDataInArray(objAcquirers, 'name');
+                        });
+                    });
+                });
             });
-            filterService.GetTerminalDeferred().then(function (objTerminals) {
-                objVm.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code');
-                objVm.terminalsModel = angular.copy(objVm.terminalsData);
-            });
-            filterService.GetPvsDeferred().then(function (objPvs) {
-                objVm.pvsData = filterService.TransformDeferredDataInArray(objPvs, 'code');
-                objVm.pvsModel = angular.copy(objVm.pvsData);
-            });
-            filterService.GetAcquirersDeferred().then(function (objAcquirers) {
-                objVm.acquirersData = filterService.TransformDeferredDataInArray(objAcquirers, 'name');
-                objVm.acquirersModel = angular.copy(objVm.acquirersData);
-            });
+            
         }
 
         /**
@@ -352,6 +354,26 @@
                 'salesConciliatedDetailsController',
                 $scope
             );
+        }
+
+        /**
+        * @method AcquirersFilterExpression
+        * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos em outras listas
+        */
+        function AcquirersFilterExpression(pv) {
+            return !objVm.acquirersModel.length 
+                    || (((index = objVm.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
+                        || !objVm.pvsModel.splice(index, 1));
+        }
+
+        /**
+        * @method PvsFilterExpression
+        * Trata as alteracoes na selecao na lista de pvs e seus efeitos em outras listas
+        */
+        function PvsFilterExpression(terminal) {
+            return (!objVm.pvsModel.length && !objVm.acquirersModel.length)
+                    || (((index = objVm.pvsModel.map(a => a.id).indexOf(terminal.pvId)) !== -1)
+                        || !objVm.terminalsModel.splice(index, 1));
         }
 
     }

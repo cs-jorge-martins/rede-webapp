@@ -13,16 +13,16 @@
             </rc-datepicker-v2>
         </div>
         <div class="col-xs-4">
-            <rc-multiselect label="'terminal'" model="vm.terminalsModel" data="vm.terminalsData" placeholder="'todos os terminais'" single-selection="2"> </rc-multiselect>
+            <rc-multiselect label="'adquirente'" model="vm.acquirersModel" data="vm.acquirersData" placeholder="'todos os adquirentes'" single-selection="2"> </rc-multiselect>
+        </div>
+        <div class="col-xs-4">
+            <rc-multiselect label="'número do estabelecimento'" tooltip-text="'somente estabelecimentos que possuem ao menos uma transação processada aparecem na listagem'" model="vm.pvsModel" data="vm.pvsData" placeholder="'todos os estabelecimentos'" single-selection="2" search-filter="vm.acquirersFilterExpression"> </rc-multiselect>
+        </div>
+        <div class="col-xs-4">
+            <rc-multiselect label="'terminal'" model="vm.terminalsModel" data="vm.terminalsData" placeholder="'todos os terminais'" single-selection="2" search-filter="vm.pvsFilterExpression"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
             <rc-multiselect label="'bandeira'" model="vm.cardProductsModel" data="vm.cardProductsData" placeholder="'todas as bandeiras'" single-selection="2"> </rc-multiselect>
-        </div>
-        <div class="col-xs-4">
-            <rc-multiselect label="'número do estabelecimento'" model="vm.pvsModel" data="vm.pvsData" placeholder="'todos os estabelecimentos'" single-selection="2"> </rc-multiselect>
-        </div>
-        <div class="col-xs-4">
-            <rc-multiselect label="'adquirente'" model="vm.acquirersModel" data="vm.acquirersData" placeholder="'todos os adquirentes'" single-selection="2"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
             <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="vm.getSales()" />

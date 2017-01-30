@@ -70,11 +70,14 @@
             total: 0,
             percentage: 100
         };
+
         objVm.getSales = GetSales;
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
         objVm.removeUnprocessed = RemoveUnprocessed;
         objVm.details = Details;
+        objVm.acquirersFilterExpression = AcquirersFilterExpression;
+        objVm.pvsFilterExpression = PvsFilterExpression;
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -107,22 +110,20 @@
         function GetFilters(callback) {
             filtersService.GetCardProductDeferred().then(function (objCardProducts) {
                 objVm.cardProductsData = filtersService.TransformDeferredDataInArray(objCardProducts, 'name');
-                objVm.cardProductsModel = angular.copy(objVm.cardProductsData);
 
                 filtersService.GetTerminalDeferred().then(function (objTerminals) {
-                    objVm.terminalsData = filtersService.TransformDeferredDataInArray(objTerminals, 'code');
-                    objVm.terminalsModel = angular.copy(objVm.terminalsData);
+                    objVm.terminalsData = filtersService.TransformDeferredDataInArray(objTerminals, 'code', 'pvId');
 
                     filtersService.GetPvsDeferred().then(function (objPvs) {
-                        objVm.pvsData = filtersService.TransformDeferredDataInArray(objPvs, 'code');
-                        objVm.pvsModel = angular.copy(objVm.pvsData);
+                        objVm.pvsData = filtersService.TransformDeferredDataInArray(objPvs, 'code', 'acquirerId');
+                        
+                        filtersService.GetAcquirersDeferred().then  (function (objAcquirers) {
+                            objVm.acquirersData = filtersService.TransformDeferredDataInArray(objAcquirers, 'name');
+                            objVm.acquirersData[1] = {"id": 2, "label": 'CIELO'};
+                            callback();
+                        });
                     });
-                    filtersService.GetAcquirersDeferred().then(function (objAcquirers) {
-                        objVm.acquirersData = filtersService.TransformDeferredDataInArray(objAcquirers, 'name');
-                        objVm.acquirersModel = angular.copy(objVm.acquirersData);
 
-                        callback();
-                    });
                 });
             });
         }
@@ -430,6 +431,26 @@
             if(strDate) {
                 objVm.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
             }
+        }
+
+        /**
+        * @method AcquirersFilterExpression
+        * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos em outras listas
+        */
+        function AcquirersFilterExpression(pv) {
+            return !objVm.acquirersModel.length 
+                    || ((index = objVm.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
+                        || !objVm.pvsModel.splice(index, 1);
+        }
+
+        /**
+        * @method PvsFilterExpression
+        * Trata as alteracoes na selecao na lista de pvs e seus efeitos em outras listas
+        */
+        function PvsFilterExpression(terminal) {
+            return (!objVm.pvsModel.length && !objVm.acquirersModel.length)
+                    || ((index = objVm.pvsModel.map(a => a.id).indexOf(terminal.pvId)) !== -1)
+                        || !objVm.terminalsModel.splice(index, 1);
         }
     }
 })();
