@@ -51,6 +51,7 @@
                     startDate: strDate,
                     endDate: strDate,
                     cardProductIds: [objVm.transaction.cardProduct.id],
+                    acquirerIds: [objVm.transaction.acquirer.id],
                     conciliationStatus: 'CONCILIED',
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage

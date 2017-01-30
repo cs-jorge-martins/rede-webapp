@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </td>
-                <td class="alignl">e-commerce</td>
+                <td class="alignl">{{item.ecommerce ? 'e-commerce' : 'loja física'}}</td>
                 <td class="alignl">{{ item.date | date: 'dd/MM' }} {{ item.hour | limitTo: 5 }}</td>
                 <td class="alignl">{{ item.nsu }}</td>
                 <td class="alignl">{{ item.authorization }}</td>
