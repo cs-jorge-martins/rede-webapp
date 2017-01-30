@@ -119,7 +119,6 @@
                         
                         filtersService.GetAcquirersDeferred().then  (function (objAcquirers) {
                             objVm.acquirersData = filtersService.TransformDeferredDataInArray(objAcquirers, 'name');
-                            objVm.acquirersData[1] = {"id": 2, "label": 'CIELO'};
                             callback();
                         });
                     });
