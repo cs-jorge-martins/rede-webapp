@@ -10,7 +10,7 @@ angular.module('Conciliador.filtersService', [])
 
 .service('filtersService', function(app, $http, Request, $q, utilsFactory) {
 
-	var strUrlAcquirers = app.endpoint + '/acquirers?name=REDE';
+	var strUrlAcquirers = app.endpoint + '/pvs/acquirers';
 	var strUrlAccounts = app.endpoint + '/pvs/bankaccounts';
 	var strUrlShops = app.endpoint + '/pvs/shops';
 	var strUrlCardProducts = app.endpoint + '/cardproducts';
@@ -105,13 +105,18 @@ angular.module('Conciliador.filtersService', [])
 	 * @param {String} strField Nome do campo que deve ser adicionado no parametro label de cada objeto
 	 * @return {Array} arrResponse
 	 */
-	this.TransformDeferredDataInArray = function (objDeferredData, strField) {
+	this.TransformDeferredDataInArray = function (objDeferredData, strField/*, args[2...] */) {
 		var arrResponse = [];
 		for(var x in objDeferredData) {
 			if(x) {
 				var obj = {};
 				obj.id = objDeferredData[x].id;
 				obj.label = objDeferredData[x][strField];
+				if (arguments.length > 2) {
+					for (var arg in argumentsSliced = Array.prototype.slice.call(arguments, 2)) {
+						obj[argumentsSliced[arg]] = objDeferredData[x][argumentsSliced[arg]];
+					}
+				}
 				arrResponse.push(obj);
 			}
 		}
