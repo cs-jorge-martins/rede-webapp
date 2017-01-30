@@ -3,13 +3,26 @@
 		{{ label }}
 		<span nf-if="tooltipText" ng-class="tooltipText ? 'visible' : ''" uib-tooltip="{{tooltipText}}" tooltip-placement="auto top-left"></span>
 	</label>
-	<div class="form-group">
-		<div 
+	<div class="form-group">		
+		<div ng-if="groupBy"
 			ng-dropdown-multiselect="" 
 			options="data"
 			selected-model="model"
 			extra-settings="settings" 
 			translation-texts="customText"
+			events="events"
+			search-filter="searchFilter"
+			group-by="{{ groupBy }}"
+			>
+		</div>
+		<div ng-if="!groupBy"
+			ng-dropdown-multiselect="" 
+			options="data"
+			selected-model="model"
+			extra-settings="settings" 
+			translation-texts="customText"
+			events="events"
+			search-filter="searchFilter"
 			>
 		</div>
 	</div>

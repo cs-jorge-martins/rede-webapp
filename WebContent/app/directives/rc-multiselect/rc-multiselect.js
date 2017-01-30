@@ -23,7 +23,9 @@
 				placeholder: '=',
 				singleSelection: '=',
 				buttonMaxItems: '=',
-                tooltipText: '=?'
+                tooltipText: '=?',
+                searchFilter: '=?',
+                groupBy: '@?'
 			},
 			controller: Controller
 		};
@@ -39,19 +41,30 @@
 					showUncheckAll: true,
 					smartButtonMaxItems: 3,
 					displayProp: 'label',
-					smartButtonTextConverter: function(itemText, originalItem) {
-						if (itemText === 'Jhon') {
-							return 'Jhonny!';
-						}
-						return itemText;
-					},
-					externalIdProp: ""
+					externalIdProp: ''
 				};
 
 				if ($scope.placeholder) {
 					$scope.customText = {
 						buttonDefaultText: $scope.placeholder
 					};
+				}
+
+				if ($scope.label === "número do estabelecimento") {
+					$scope.settings = {
+						showCheckAll: true,
+						showUncheckAll: true,
+						smartButtonMaxItems: 3,
+						displayProp: 'label',
+						externalIdProp: '',
+						groupByTextProvider: function (group) {
+							if (group === 1) {
+								return 'Rede';
+							} else {
+								return 'Cielo';
+							}
+						}
+					}
 				}
 
 				if ($scope.label === "conta") {
@@ -61,10 +74,7 @@
 						showCheckAll: true,
 						showUncheckAll: false,
 						displayProp: 'label',
-						externalIdProp: "",
-						onItemSelect: function() {
-							//console.log("selecionou")
-						}
+						externalIdProp: ''
 					}
 				}
 				if ($scope.label === "tipo de relatório") {
@@ -74,7 +84,7 @@
 						showCheckAll: false,
 						showUncheckAll: false,
 						displayProp: 'label',
-						externalIdProp: ""
+						externalIdProp: ''
 					}
 				}
 
@@ -83,6 +93,7 @@
 				} else {
 					$scope.settings.smartButtonMaxItems = 3;
 				}
+
 			}
 		}
 	}
