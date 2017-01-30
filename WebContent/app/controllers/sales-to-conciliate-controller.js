@@ -119,6 +119,7 @@
                         
                         filtersService.GetAcquirersDeferred().then  (function (objAcquirers) {
                             objVm.acquirersData = filtersService.TransformDeferredDataInArray(objAcquirers, 'name');
+                            objVm.acquirersData[1] = {"id": 2, "label": 'CIELO'};
                             callback();
                         });
                     });
@@ -439,7 +440,7 @@
         function AcquirersFilterExpression(pv) {
             return !objVm.acquirersModel.length 
                     || ((index = objVm.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
-                        || !objVm.pvsModel.splice(index, 1);
+                        || (objVm.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !objVm.pvsModel.splice(objVm.pvsModel.map(a => a.id).indexOf(pv.id), 1));
         }
 
         /**
@@ -449,7 +450,7 @@
         function PvsFilterExpression(terminal) {
             return (!objVm.pvsModel.length && !objVm.acquirersModel.length)
                     || ((index = objVm.pvsModel.map(a => a.id).indexOf(terminal.pvId)) !== -1)
-                        || !objVm.terminalsModel.splice(index, 1);
+                        || (objVm.terminalsModel.map(a => a.id).indexOf(terminal.id) !== -1 && !objVm.terminalsModel.splice(objVm.terminalsModel.map(a => a.id).indexOf(terminal.id), 1));
         }
     }
 })();
