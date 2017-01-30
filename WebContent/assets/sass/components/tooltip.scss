@@ -4,6 +4,20 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+.rc-tooltip-wrapper {
+  display: inline;
+  position: relative;
+}
+
+.rc-tooltip {
+  &:before {
+    font-family: $fontItau;
+    content: "\e960";
+    color: $rcMultiLabelColor;
+
+  }
+}
+
 .tooltip {
 
   font-family: $fontLight;
@@ -11,8 +25,9 @@
 
   &.top-left {
 
-    left: 215px !important;
-    top: -125px !important;
+    top: initial !important;
+    bottom: 31px !important;
+    left: -23px !important;
 
     .tooltip-arrow {
 
@@ -30,8 +45,8 @@
 
   &.bottom-left {
 
-    left: 222px !important;
-    top: 27px !important;
+    left: -14px !important;
+    top: 25px !important;
 
     .tooltip-arrow {
 
@@ -51,7 +66,7 @@
 
     @include border-radius(0,0,0,0);
     background: $lightGray;
-    box-shadow: 0 4px 4px 0 rgba(183, 179, 179, 0.36);
+    box-shadow: 0 0 6px 0 rgba(183, 179, 179, 0.36);
     color: $grafitteGray;
     font-weight: bolder;
     line-height: 1.5em;

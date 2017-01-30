@@ -1,7 +1,7 @@
 <div class="rcMultiselect">
 	<label for="account">
 		{{ label }}
-		<span nf-if="tooltipText" ng-class="tooltipText ? 'visible' : ''" uib-tooltip="{{tooltipText}}" tooltip-placement="auto top-left"></span>
+		<rc-tooltip tooltip-text="{{tooltipText}}"></rc-tooltip>
 	</label>
 	<div class="form-group">		
 		<div ng-if="groupBy"
