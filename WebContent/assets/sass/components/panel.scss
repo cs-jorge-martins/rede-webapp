@@ -37,10 +37,13 @@
 
         span {
             display: inline-block;
-            float: right;
             font-weight: normal;
             margin-top: 3px;
+            &.total-value {
+                float: right;
+            }
         }
+
     }
 
     .panel-footer {
