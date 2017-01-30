@@ -28,7 +28,18 @@
                 totalValue: "=?",
                 labelTotalValue: "="
             },
-            controller: Controller
+            controller: Controller,
+            link: function (scope, element, attrs, ctrl) {
+
+                element.ready(function () {
+                    scope.$watch("initialValue", function (intNewValue) {
+                        if(!intNewValue) {
+                            scope.initialValue = 0;
+                        }
+                    });
+                });
+
+            }
         };
 
         function Controller($scope) {
