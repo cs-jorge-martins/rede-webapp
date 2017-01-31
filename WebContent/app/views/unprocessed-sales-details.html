@@ -59,7 +59,7 @@
                 </div>
             </th>
             <th class="alignl">tipo loja</th>
-            <th class="alignl">data/hora</th>
+            <th class="alignl">data</th>
             <th class="alignl">nsu</th>
             <th class="alignl">cód. aut.</th>
             <th class="alignr">valor bruto transação</th>
@@ -79,7 +79,7 @@
                     </div>
                 </td>
                 <td class="alignl">e-commerce</td>
-                <td class="alignl">{{ item.date | date: 'dd/MM' }} {{ item.hour | limitTo: 5 }}</td>
+                <td class="alignl">{{ item.date | date: 'dd/MM' }}</td>
                 <td class="alignl">{{ item.nsu }}</td>
                 <td class="alignl">{{ item.authorization }}</td>
                 <td class="alignr">{{ item.gross | currency: 'R$ ' }}</td>
