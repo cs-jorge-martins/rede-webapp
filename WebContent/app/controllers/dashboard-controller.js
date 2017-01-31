@@ -149,6 +149,7 @@ angular.module('Conciliador.dashboardController',[])
 			objTransactionSummaryFilterPrevMonth.currency =  $rootScope.currency;
 			objTransactionSummaryFilterPrevMonth.startDate = $scope.lastMonthPerid.firstDate;
 			objTransactionSummaryFilterPrevMonth.endDate = $scope.lastMonthPerid.lastDate;
+			objTransactionSummaryFilterPrevMonth.conciliationStatus = 'TO_CONCILIE,CONCILIED';
 
 			// Consulta do mes anterior
 			dashboardService.GetTransactionSummaryBox(objTransactionSummaryFilterPrevMonth).then(function(objItem){
