@@ -49,7 +49,8 @@
 				maxDate: '=',
 				showNextDatesFilter: '=',
 				showPreviousDatesFilter: '=',
-                statusType: '=?'
+                statusType: '=?',
+				isOpen: '=?'
             },
 			controller: Controller,
 			link: function(scope, element, attrs, ctrl) {
@@ -65,10 +66,11 @@
                     });
 
                     scope.$watch("status.opened", function (bolNewValue) {
+                    	scope.isOpen = bolNewValue;
                         if (bolNewValue === false && scope.range) {
 
-                            if (scope.pickerDate > scope.date[1]) {
-                                scope.pickerDate = scope.initialDate[0];
+                            if (scope.intRangeClickCounter === 1) {
+                                scope.date = [scope.pickerDate, scope.pickerDate];
                                 scope.update();
                             }
 
@@ -200,6 +202,8 @@
 							break;
 						default:
 					}
+
+					$scope.intRangeClickCounter = intRangeClickCounter;
 				} else {
 					$scope.date = $scope.pickerDate;
 				}

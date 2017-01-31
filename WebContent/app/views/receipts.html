@@ -169,7 +169,7 @@
                         <div class="receipts_future_filters">
                             <div class="filter firstFilter">
                                 <div class="v2">
-                                    <rc-datepicker-v2 range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" show-next-dates-filter="true"  label="'data'"></rc-datepicker-v2>
+                                    <rc-datepicker-v2 range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" show-next-dates-filter="true"  label="'data'" is-open="futureReleases.datepickerIsOpen"></rc-datepicker-v2>
                                 </div>
                             </div>
                             <div class="filter">
@@ -186,7 +186,7 @@
                                 <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
+                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" ng-disabled="futureReleases.datepickerIsOpen" />
                             </div>
                         </div>
             		</div>
