@@ -82,6 +82,8 @@
 
                 if($scope.monetaryValues) {
                     strPercentage = strPercentage + "% do valor";
+                } else {
+                    strPercentage = strPercentage + "%";
                 }
 
                 $scope.timeLinePercentage = intPercentage;
