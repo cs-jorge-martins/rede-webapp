@@ -33,6 +33,7 @@ angular.module('Conciliador.movementsModule',[])
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
     $scope.futureReleases = {};
 	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
+	$scope.futureReleases.datepickerIsOpen = false;
 
     $scope.futureReleases.modelDate = [];
     GetCachedData();

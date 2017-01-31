@@ -11069,7 +11069,9 @@ tr.card-product-line {
     border-radius: 50%;
 
 }
-#integration .upload-file-wrapper ul li button.disabled {
+#integration .upload-file-wrapper ul li button.disabled,
+.receipts_future_filters input[type=submit]:disabled
+{
     background:#ddd;
     cursor:not-allowed;
 }
