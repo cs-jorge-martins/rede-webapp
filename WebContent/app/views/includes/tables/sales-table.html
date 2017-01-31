@@ -2,7 +2,7 @@
     <div class="panel panel-success">
         <div class="panel-heading">
             {{ result.acquirer.name | capitalize }}
-            <span ng-if="result.transactionsModel">valor total: R$ {{ result.transactionsModel.totalAmount | currency: ""}}</span>
+            <span ng-if="result.transactionsModel" class="total-value">valor total: R$ {{ result.transactionsModel.totalAmount | currency: ""}}</span>
         </div>
     </div>
     <table class="table primary" ng-if="result.transactionsModel">
