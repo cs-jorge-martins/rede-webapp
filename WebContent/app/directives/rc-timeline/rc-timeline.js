@@ -28,7 +28,23 @@
                 totalValue: "=?",
                 labelTotalValue: "="
             },
-            controller: Controller
+            controller: Controller,
+            link: function (scope, element, attrs, ctrl) {
+
+                element.ready(function () {
+                    scope.$watch("initialValue", function (intNewValue) {
+                        if(!intNewValue) {
+                            scope.initialValue = 0;
+                        }
+                    });
+                    scope.$watch("finalValue", function (intNewValue) {
+                        if(!intNewValue) {
+                            scope.finalValue = 0;
+                        }
+                    });
+                });
+
+            }
         };
 
         function Controller($scope) {
@@ -62,6 +78,10 @@
                 } else {
                     intPercentage = Math.floor(intPercentage);
                     strPercentage = "" + intPercentage;
+                }
+
+                if($scope.monetaryValues) {
+                    strPercentage = strPercentage + "% do valor";
                 }
 
                 $scope.timeLinePercentage = intPercentage;
