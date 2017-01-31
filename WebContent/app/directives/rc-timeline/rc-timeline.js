@@ -37,6 +37,11 @@
                             scope.initialValue = 0;
                         }
                     });
+                    scope.$watch("finalValue", function (intNewValue) {
+                        if(!intNewValue) {
+                            scope.finalValue = 0;
+                        }
+                    });
                 });
 
             }
@@ -76,7 +81,7 @@
                 }
 
                 if($scope.monetaryValues) {
-                    strPercentage = strPercentage + " do valor";
+                    strPercentage = strPercentage + "% do valor";
                 }
 
                 $scope.timeLinePercentage = intPercentage;

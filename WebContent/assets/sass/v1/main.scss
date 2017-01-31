@@ -9969,7 +9969,7 @@ div.checkbox-toggle-right {
     position: relative;
     padding:0 25px;
     box-sizing:border-box;
-    margin: 32px 0 55px;
+    margin: 32px 0 97px;
 }
 
 .data-cards .timeline-wrapper .timeline-head {
@@ -10123,6 +10123,12 @@ div.checkbox-toggle-right {
     margin-top: 11px;
     font-family: 'open_sansbold';
     font-size: 16px;
+    text-align: right;
+}
+
+.data-cards .timeline-wrapper article aside.minimum-value {
+    left: 0;
+    text-align: left;
 }
 
 .receiptsExpectedDetails .data-cards .header-datas {
