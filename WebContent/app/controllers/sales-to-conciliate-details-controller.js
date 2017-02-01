@@ -49,8 +49,6 @@
 
             $timeout(function () {
 
-                console.log(objVm);
-
                 var objFilter = {
                     startDate: strDate,
                     endDate: strDate,

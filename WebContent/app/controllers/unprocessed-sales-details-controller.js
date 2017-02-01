@@ -51,6 +51,8 @@
                     endDate: strDate,
                     cardProductIds: [objVm.transaction.cardProduct.id],
                     conciliationStatus: 'UNPROCESSED',
+                    terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
+                    shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ','),
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage
                     //sort:$scope.sort;
