@@ -56,8 +56,8 @@
                     acquirerIds: [objVm.transaction.acquirer.id],
                     conciliationStatus: 'CONCILIED',
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
-                    size: $scope.pagination.resultsPerPage
-                    //sort:$scope.sort;
+                    size: $scope.pagination.resultsPerPage,
+                    sort: 'gross,desc'
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function (objResponse) {
