@@ -168,7 +168,7 @@
 				if (bolIsRange) {
 					intRangeClickCounter = 0;
 				}
-				
+
             }
 
 			/**
@@ -433,7 +433,7 @@
 			 * atual. Passando valores negativos, o método faz a subtração dos dias.
 			 */
 			function DateFilter(days, strStartingDate, intActiveDateFilter) {
-				
+
 				if(intActiveDateFilter) {
                     $scope.dateOptions.activeDateFilter = intActiveDateFilter;
 				}
@@ -490,6 +490,8 @@
 					case "conciliated-sales":
                         return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesConciliatedDays);
 						break;
+					default:
+                        console.log("error");
 				}
 
             }
@@ -507,16 +509,16 @@
              */
             function GetSalesToConciliateDays(objResponse) {
 
-				var response = objResponse.data.content;
+				var objResponse = objResponse.data.content;
 				var intIndex;
 				var arrDays = [];
 
-				for(intIndex in response) {
+				for(intIndex in objResponse) {
 
-					if(response[intIndex].transctionToConcilieQuantity > 0) {
+					if(objResponse[intIndex].transctionToConcilieQuantity > 0) {
 
                         arrDays.push({
-							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(response[intIndex]['date'], true).getTime(),
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
 							type: 'to-conciliate'
 						});
 
@@ -541,16 +543,16 @@
              */
             function GetSalesConciliatedDays(objResponse) {
 
-				var response = objResponse.data.content;
+				var objResponse = objResponse.data.content;
 				var intIndex;
                 var arrDays = [];
 
-                for(intIndex in response) {
+                for(intIndex in objResponse) {
 
-                    if(response[intIndex].transctionConciliedQuantity > 0) {
+                    if(objResponse[intIndex].transctionConciliedQuantity > 0) {
 
                         arrDays.push({
-                            dateClass: 'date-' + calendarFactory.getFirstHourFromDate(response[intIndex]['date'], true).getTime(),
+                            dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
                             type: 'conciliated'
                         });
 

@@ -107,14 +107,14 @@ angular.module('Conciliador.filtersService', [])
 	 */
 	this.TransformDeferredDataInArray = function (objDeferredData, strField/*, args[2...] */) {
 		var arrResponse = [];
-		for(var x in objDeferredData) {
-			if(x) {
+		for(var intX in objDeferredData) {
+			if(intX) {
 				var obj = {};
-				obj.id = objDeferredData[x].id;
-				obj.label = objDeferredData[x][strField];
+				obj.id = objDeferredData[intX].id;
+				obj.label = objDeferredData[intX][strField];
 				if (arguments.length > 2) {
 					for (var arg in argumentsSliced = Array.prototype.slice.call(arguments, 2)) {
-						obj[argumentsSliced[arg]] = objDeferredData[x][argumentsSliced[arg]];
+						obj[argumentsSliced[arg]] = objDeferredData[intX][argumentsSliced[arg]];
 					}
 				}
 				arrResponse.push(obj);

@@ -10,9 +10,9 @@
 
     angular
         .module('Conciliador')
-        .directive('rcTooltip', rcTooltip);
+        .directive('rcTooltip', RcTooltip);
 
-    function rcTooltip() {
+    function RcTooltip() {
 
         return {
             restrict: 'E',

@@ -33,30 +33,31 @@
          *
          * @param {Array} arrJoinable array base
          * @param {String} strField nome do índice a ser procurado no array
-         * @param {String} xJoin string para juntar os arrays
+         * @param {String} strJoin string para juntar os arrays
          * @param {Number} intMaxNumber quantidade máxima de arrays a serem retornados
-         * @return {Array} array simples | {String} array juntado por uma string definida em xJoin
+         * @return {Array} array simples | {String} array juntado por uma string definida em strJoin
          */
-        function JoinMappedArray(arrJoinable, strField, xJoin, intMaxNumber) {
+        function JoinMappedArray(arrJoinable, strField, strJoin, intMaxNumber) {
 
-            var xMapped
-            xMapped = arrJoinable.map(function(objItem, intIndex) {
+            var objMapped;
+
+            objMapped = arrJoinable.map(function(objItem, intIndex) {
                 if(!intMaxNumber || (intIndex < intMaxNumber) ) {
                     return objItem[strField];
                 }
             });
 
-            if (xJoin !== false) {
+            if (strJoin !== false) {
 
-                xMapped = _.compact(xMapped).join(xJoin);
+                objMapped = _.compact(objMapped).join(strJoin);
 
                 if(arrJoinable.length > intMaxNumber) {
-                    xMapped = xMapped + " ...";
+                    objMapped = objMapped + " ...";
                 }
 
             }
 
-            return xMapped;
+            return objMapped;
         }
 
         /**
@@ -64,17 +65,17 @@
          * transforma uma coleção de objetos em um label
          *
          * @param {String} strName primeiro nome e palavra a ser utilizada em plural
-         * @param {Object} xModel model com todos os objetos a serem analisados
+         * @param {Object} arrModel model com todos os objetos a serem analisados
          * @param {String} strSuffix sufixo a ser utilizado, caso seja + de 2 objetos
          * @param {Number} intRemoveLast quantidade de casas a serem retirados para aplicar o plural
          * @return {String} label final, parseado conforme a quantidade de objetos
          */
-        function BuildLabel(strName, xModel, strSuffix, intRemoveLast) {
+        function BuildLabel(strName, arrModel, strSuffix, intRemoveLast) {
             var intLength = 0;
-            var objEntity = xModel;
-            if (xModel.length) {
-                intLength = xModel.length;
-                objEntity = xModel[0];
+            var objEntity = arrModel;
+            if (arrModel.length) {
+                intLength = arrModel.length;
+                objEntity = arrModel[0];
             }
 
             if (intLength > 0) {

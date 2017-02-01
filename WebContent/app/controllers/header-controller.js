@@ -15,12 +15,12 @@
 
 	function Header($scope, $location, $route, $window, $rootScope) {
 
-		var vm = this;
-		vm.isActive = IsActive;
-		vm.logout = Logout;
-		//vm.showMenu = Session.isAuthenticated();
-		vm.showMenu = IsAuthenticated();
-        vm.showMenu = true;
+		var objVm = this;
+		objVm.isActive = IsActive;
+		objVm.logout = Logout;
+		//objVm.showMenu = Session.isAuthenticated();
+		objVm.showMenu = IsAuthenticated();
+        objVm.showMenu = true;
 
 		Init();
 
@@ -44,8 +44,8 @@
 
 		function WatchMenuState() {
 			$scope.$on('$routeChangeSuccess', function() {
-				//vm.showMenu = Session.isAuthenticated();
-                vm.showMenu = IsAuthenticated();
+				//objVm.showMenu = Session.isAuthenticated();
+                objVm.showMenu = IsAuthenticated();
 			});
 		}
 
