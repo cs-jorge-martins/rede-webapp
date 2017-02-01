@@ -119,8 +119,8 @@ angular.module('Conciliador.dashboardController',[])
 
         var objDisclaimer = {
             type: 'warning',
-            text: 'Os termos de uso e política de privacidade foram atualizados e ao continuar navegando neste você aceita suas condições.',
-            actionText: 'Saiba Mais.',
+            text: 'Os nossos termos de uso e política de privacidade foram atualizados e ao continuar navegando neste site você aceita suas condições.',
+            actionText: 'Saiba Mais',
             onClick: 'assets/files/contrato-control-rede.pdf'
         };
 
