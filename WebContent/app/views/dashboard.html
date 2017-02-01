@@ -25,7 +25,7 @@
               <strong>
                 {{transactionSummaryBoxPrevMonth.quantity}}
               </strong>
-              <p>{{ percentOfQuantityTransactionsBetweenMonths | number:1 }}%</p>
+              <p><span ng-bind="percentOfQuantityTransactionsBetweenMonths ? (percentOfQuantityTransactionsBetweenMonths | number:1) : '0,0'"></span>%</p>
             </div>
       	</div>
       </li>
@@ -44,9 +44,9 @@
             </div>
             <div class="values">
             <strong>
-              <i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : 0"></span>
+              <i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : '0,00'"></span>
             </strong>
-       		  <p>{{ percentOfTotalsAmountTransactionsBetweenMonths | number:1}}%</p>
+            <p><span ng-bind="percentOfTotalsAmountTransactionsBetweenMonths ? (percentOfTotalsAmountTransactionsBetweenMonths | number:1) : '0,0'"></span>%</p>
             </div>
        	</div>
       </li>
