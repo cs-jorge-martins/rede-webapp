@@ -275,6 +275,7 @@
                 this.count = 0;
                 this.checks = {};
                 this.allChecked = false;
+                this.cardProductIds.splice(0);
             }
         }
 
