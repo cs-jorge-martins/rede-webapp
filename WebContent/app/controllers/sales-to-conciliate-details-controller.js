@@ -49,11 +49,15 @@
 
             $timeout(function () {
 
+                console.log(objVm);
+
                 var objFilter = {
                     startDate: strDate,
                     endDate: strDate,
                     cardProductIds: [objVm.transaction.cardProduct.id],
                     conciliationStatus: 'TO_CONCILIE',
+                    terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
+                    shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ','),
                     acquirerIds: [objVm.transaction.acquirer.id],
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage
