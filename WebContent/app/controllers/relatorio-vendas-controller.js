@@ -170,6 +170,7 @@
 		};
 
         function ExportAnalytical() {
+        	$rootScope.alerts.splice(0);
 			var objFilter = GetFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
@@ -186,7 +187,9 @@
 
                 if(objResponse.status === 408){
                     strMsg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
-                }
+                } else if (objResponse.status === 500) {
+                	strMsg = "Não foi possível gerar o relatório. Tente novamente.";
+				}
                 $rootScope.alerts =  [ { type: "danger", msg: strMsg} ];
             });
 		};
