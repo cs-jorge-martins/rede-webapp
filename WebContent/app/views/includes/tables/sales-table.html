@@ -53,7 +53,7 @@
                     </div>
                 </td>
                 <td class="alignr">{{transaction.amount | currency: ''}}</td>
-                <td>{{transaction.quantity}} vendas</td>
+                <td>{{transaction.quantity}} venda<ng-show ng-show="transaction.quantity > 1">s</ng-show></td>
                 <td><button class="btn-link btn-details" ng-click="vm.details(transaction, 'processed')">detalhes</button></td>
             </tr>
         </tbody>
@@ -104,7 +104,7 @@
                     </div>
                 </td>
                 <td class="alignr">{{transaction.amount | currency: ''}}</td>
-                <td>{{transaction.quantity}} vendas</td>
+                <td>{{transaction.quantity}} venda<ng-show ng-show="transaction.quantity > 1">s</ng-show></td>
                 <td><button class="btn-link btn-details" ng-click="vm.details(transaction, 'unprocessed')">detalhes</button></td>
             </tr>
         </tbody>
