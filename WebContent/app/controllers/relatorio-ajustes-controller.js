@@ -46,6 +46,7 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 			$scope.clearFilter = ClearFilter;
 			$scope.search = Search;
 
+			ClearFilter();
 			GetReport();
 		}
 
@@ -114,7 +115,4 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
 		};
-
-		ClearFilter();
-
     });
