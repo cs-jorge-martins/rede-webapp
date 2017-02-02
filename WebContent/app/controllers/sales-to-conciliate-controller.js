@@ -77,7 +77,6 @@
         objVm.removeUnprocessed = RemoveUnprocessed;
         objVm.details = Details;
         objVm.acquirersFilterExpression = AcquirersFilterExpression;
-        objVm.pvsFilterExpression = PvsFilterExpression;
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -443,14 +442,5 @@
                         || (objVm.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !objVm.pvsModel.splice(objVm.pvsModel.map(a => a.id).indexOf(pv.id), 1));
         }
 
-        /**
-        * @method PvsFilterExpression
-        * Trata as alteracoes na selecao na lista de pvs e seus efeitos em outras listas
-        */
-        function PvsFilterExpression(terminal) {
-            return (!objVm.pvsModel.length && !objVm.acquirersModel.length)
-                    || ((index = objVm.pvsModel.map(a => a.id).indexOf(terminal.pvId)) !== -1)
-                        || (objVm.terminalsModel.map(a => a.id).indexOf(terminal.id) !== -1 && !objVm.terminalsModel.splice(objVm.terminalsModel.map(a => a.id).indexOf(terminal.id), 1));
-        }
     }
 })();
