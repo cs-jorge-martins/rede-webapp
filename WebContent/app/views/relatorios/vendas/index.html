@@ -5,7 +5,7 @@
 	</div>
 	<br />
 
-	<div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
+	<div uib-alert ng-repeat="alert in alerts" ng-class="'alert-'+alert.type">{{alert.msg}}</div>
 	<div id="primaryContent">
 		<!-- relatorio sintetico -->
 		<uib-tabset>
