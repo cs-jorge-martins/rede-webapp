@@ -1,5 +1,8 @@
 <ul role="presentation" class="uib-datepicker-popup dropdown-menu uib-position-measure" dropdown-nested ng-if="isOpen" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
     <li ng-transclude></li>
+    <li ng-if="datepickerOptions.legendType() && datepickerOptions.legendLabel()" class="datepicker-legend" ng-class="datepickerOptions.legendType()">
+        {{datepickerOptions.legendLabel()}}
+    </li>
     <li ng-if="datepickerOptions.showNextDatesFilter" class="dateFilters">
         <div class="container">
             <div class="row">

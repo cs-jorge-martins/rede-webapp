@@ -130,6 +130,10 @@
 				if ($scope.showPreviousDatesFilter) {
 					$scope.dateOptions.showPreviousDatesFilter = true;
 				}
+				if($scope.statusType) {
+                    $scope.dateOptions.legendType = GetStatusClassType;
+                    $scope.dateOptions.legendLabel = GetStatusLabel;
+				}
 
 				if (bolIsRange) {
 					$scope.pickerDate = new Date($scope.date[0]);
@@ -519,7 +523,7 @@
 
                         arrDays.push({
 							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
-							type: 'to-conciliate'
+							type: GetStatusClassType()
 						});
 
 					}
@@ -553,7 +557,7 @@
 
                         arrDays.push({
                             dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
-                            type: 'conciliated'
+                            type: GetStatusClassType()
                         });
 
                     }
@@ -561,6 +565,56 @@
                 }
 
                 $scope.daysWithStatus = arrDays;
+
+            }
+
+            /**
+             * @method GetStatusClassType
+             * Retorna a classe css certa para o statusType da diretiva
+             *
+             * @return {String} strCssClass Classe css correta para o statusType
+             */
+            function GetStatusClassType() {
+
+            	var strCssClass;
+
+				switch ($scope.statusType) {
+                    case "sales-to-conciliate":
+                        strCssClass = 'to-conciliate';
+                        break;
+                    case "conciliated-sales":
+                        strCssClass = 'conciliated';
+                        break;
+                    default:
+                        console.log("error");
+				}
+
+				return strCssClass;
+
+            }
+
+            /**
+             * @method GetStatusLabel
+             * Retorna a label certa para o statusType da diretiva
+             *
+             * @return {String} strStatusLabel label correta para o statusType
+             */
+            function GetStatusLabel() {
+
+            	var strStatusLabel;
+
+				switch ($scope.statusType) {
+                    case "sales-to-conciliate":
+                        strStatusLabel = 'vendas a conciliar';
+                        break;
+                    case "conciliated-sales":
+                        strStatusLabel = 'vendas conciliadas';
+                        break;
+                    default:
+                        console.log("error");
+				}
+
+				return strStatusLabel;
 
             }
 
