@@ -20,11 +20,11 @@ angular.module('Conciliador.dashboardController',[])
 	$scope.currentPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getActualDayOfCurrentMonthForDashboard());
 
 	$scope.prevPeriodStartDateDay = calendarFactory.getDayOfMonth(calendarFactory.getFirstDayOfLastMonthForDashboard());
-	$scope.prevPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getLastDayOfLastMonthForDashboard());
+	$scope.prevPeriodEndDateDay = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfLastMonthForDashboard());
 	$scope.prevPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 	$scope.prevPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 
-	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getLastDayOfLastMonthForDashboard());
+	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfLastMonthForDashboard());
 
 	$scope.sales = Sales;
 
