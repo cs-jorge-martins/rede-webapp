@@ -61,6 +61,10 @@
       top: 3em;
       width: 100%;
 
+      li:nth-child(1) a span, li:nth-child(2) a span {
+        display: none;
+      }
+
       a {
         cursor: pointer;
         color: $rcMultiLabelColor;
