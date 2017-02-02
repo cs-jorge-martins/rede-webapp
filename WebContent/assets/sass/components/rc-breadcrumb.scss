@@ -5,10 +5,16 @@
  */
 
 .breadcrumb {
+
   font-size: 1.1em;
   background: none;
   margin-bottom: 0;
   padding: 25px 0 8px;
+
+  & > li + li:before {
+    content: "";
+    left: 4px;
+  }
 
   li {
 
