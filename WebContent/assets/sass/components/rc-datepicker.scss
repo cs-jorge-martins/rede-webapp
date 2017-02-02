@@ -395,6 +395,41 @@
         }
     }
 
+    .datepicker-legend {
+
+        padding: 3px 0 0 61px;
+        position: relative;
+        margin: 10px 0 20px;
+        font-family: $fontRegular;
+
+        &:before {
+
+            content: '';
+            display: block;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 6px;
+            left: 35px;
+            background: #fff;
+
+        }
+
+        &.conciliated {
+            &:before {
+                background: $conciliedColor;
+            }
+        }
+
+        &.to-conciliate {
+            &:before {
+                background: $toConcilieColor;
+            }
+        }
+
+    }
+
     & *:focus {
         outline: 0 !important;
     }
