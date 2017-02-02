@@ -111,14 +111,14 @@
                                     <th class="except">
                                     <th>{{ item.acquirer.name | uppercase }}</th>
                                     <th></th>
-                                    <th>valor total: {{ item.payedAmount | currency }}</th>
+                                    <th>valor total: R$ {{ item.payedAmount | currency: '' }}</th>
                                 </tr>
                             </thead>
                             <tbody ng-if="item.cardProducts.length">
                                 <tr class="group">
                                     <th></th>
                                     <th>lançamentos</th>
-                                    <th>valor líquido (R$)</th>
+                                    <th class="taright">valor líquido (R$)</th>
                                     <th></th>
                                 </tr>
                             </tbody>
@@ -128,7 +128,7 @@
                                     <th>
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }}
                                     </th>
-                                    <th>{{ cardProduct.total | customCurrency }}</th>
+                                    <th class="taright">{{ cardProduct.total | currency: '' }}</th>
                                     <th>
                                          <a ng-hide="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a>
                                         <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought_details')">detalhes</a>
@@ -137,15 +137,15 @@
                                 <tr ng-repeat="release in cardProduct.releases" class="inset {{ getClassByType(release.type, release.payedAmount) | slugify }}">
                                     <th></th>
                                     <th class="inset-1">{{ release.type }}</th>
-                                    <th>
-                                        {{ release.payedAmount | customCurrency }} </th>
+                                    <th class="taright">
+                                        {{ release.payedAmount | currency: '' }} </th>
                                     <th></th>
                                 </tr>
                             </tbody>
                             <tr class="card-product-line" ng-show="item.otherReleases.length">
                                 <th></th>
                                 <th>outros lançamentos</th>
-                                <th>{{ item.otherReleasesTotal | customCurrency }}</th>
+                                <th class="taright">{{ item.otherReleasesTotal | currency: '' }}</th>
                                 <th>
                                     <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'other_details')">detalhes</a>
                                 </th>
@@ -154,7 +154,7 @@
                                 <tr ng-repeat="otherRelease in item.otherReleases" class="inset" ng-class="otherRelease.amount > 0 ? 'vendas' : 'cancelamentos'">
                                     <th></th>
                                     <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
-                                    <th>{{ otherRelease.amount | customCurrency }} </th>
+                                    <th class="taright">{{ otherRelease.amount | currency: '' }} </th>
                                     <th></th>
                                 </tr>
                             </tbody>
@@ -239,7 +239,7 @@
                                     <th>{{ item.acquirer.name | uppercase }}</th>
                                     <th></th>
                                     <!-- /* Todo: alterar por adquirente */ -->
-                                    <th colspan="3">valor total: {{ item.expectedAmount | customCurrency }}</th>
+                                    <th colspan="3">valor total: R$ {{ item.expectedAmount | currency: '' }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -247,7 +247,7 @@
                                     <th></th>
                                     <th>lançamentos</th>
                                     <th></th>
-                                    <th>valor líquido (R$)</th>
+                                    <th class="taright">valor líquido (R$)</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -258,7 +258,7 @@
                                     <th>
                                     <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
                                     <th></th>
-                                    <th>{{ cardProduct.releases[0].expectedAmount | customCurrency }}</th>
+                                    <th class="taright">{{ cardProduct.releases[0].expectedAmount | currency: '' }}</th>
                                     <th></th>
                                     <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'future_details')">detalhes</a></th>
                                 </tr>
