@@ -373,7 +373,7 @@
          */
         function AcquirersCardProductFilterExpression(objCard) {
             return  !objVm.acquirersModel.length 
-                    || compareArrayAcquirers(objVm.acquirersModel, objCard.acquirers) 
+                    || CompareArrayAcquirers(objVm.acquirersModel, objCard.acquirers) 
                         || (objVm.cardProductsModel.map(a => a.id).indexOf(objCard.id) !== -1 
                             && !objVm.cardProductsModel.splice(objVm.cardProductsModel.map(a => a.id).indexOf(objCard.id), 1));
         }
