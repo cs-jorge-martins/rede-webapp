@@ -58,7 +58,8 @@
                     shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ','),
                     acquirerIds: [objVm.transaction.acquirer.id],
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
-                    size: $scope.pagination.resultsPerPage
+                    size: $scope.pagination.resultsPerPage,
+                    sort: 'gross,desc'
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
