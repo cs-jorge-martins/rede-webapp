@@ -93,8 +93,8 @@
             }
 
             function GetModelValue() {
-                var xGetModelValue = DoGetModelValue($scope.model, $scope.modelTarget);
-                return xGetModelValue;
+                var objGetModelValue = DoGetModelValue($scope.model, $scope.modelTarget);
+                return objGetModelValue;
             }
 
             /**
@@ -103,8 +103,8 @@
              */
             function SelectSingle() {
 
-                var xModelValue = DoGetModelValue($scope.model, $scope.modelTarget);
-                DoSelectSingle($scope.model, xModelValue, $scope);
+                var objModelValue = DoGetModelValue($scope.model, $scope.modelTarget);
+                DoSelectSingle($scope.model, objModelValue, $scope);
                 $scope.parentChecked = $scope.responseModel.length === $scope.completeModel.length;
             }
         }
@@ -146,10 +146,10 @@
                  $scope.checked = !bolOldValue;
 
                  $scope.completeModel.forEach(function (objItem) {
-                     var xModelValue = DoGetModelValue(objItem, $scope.modelTarget);
-                     var bolCurrent = $scope.checkModel[xModelValue];
+                     var objModelValue = DoGetModelValue(objItem, $scope.modelTarget);
+                     var bolCurrent = $scope.checkModel[objModelValue];
                      if (bolCurrent !== $scope.checked) {
-                         DoSelectSingle(objItem, xModelValue, $scope);
+                         DoSelectSingle(objItem, objModelValue, $scope);
                      }
                  });
              }
@@ -187,29 +187,29 @@
      * @param {Object} objSelected, objeto com um parametro id
      * função responsável pela lógica de marcar o checkbox && colocar na model
      */
-    function DoSelectSingle(objSelected, xSelectedVal, objScope) {
+    function DoSelectSingle(objSelected, strSelectedVal, objScope) {
 
         var intQuantity = objScope.completeModel.length;
         if (objScope.quantityField !== undefined) {
             intQuantity = objSelected[objScope.quantityField];
         }
 
-        if (objScope.checkModel[xSelectedVal] === true) {
-            var intItemIndex = objScope.responseModel.indexOf(xSelectedVal);
-            objScope.checkModel[xSelectedVal] = false;
+        if (objScope.checkModel[strSelectedVal] === true) {
+            var intItemIndex = objScope.responseModel.indexOf(strSelectedVal);
+            objScope.checkModel[strSelectedVal] = false;
             objScope.responseModel.splice(intItemIndex, 1);
             objScope.quantityModel -= intQuantity;
         } else {
-            objScope.checkModel[xSelectedVal] = true;
-            objScope.responseModel.push(xSelectedVal);
+            objScope.checkModel[strSelectedVal] = true;
+            objScope.responseModel.push(strSelectedVal);
             objScope.quantityModel += intQuantity;
         }
 
     }
 
     function DoGetModelValue(objItem, objTargetField) {
-        var xModelValue = eval('objItem.' + objTargetField);
-        return xModelValue;
+        var objModelValue = eval('objItem.' + objTargetField);
+        return objModelValue;
     }
 
 })();

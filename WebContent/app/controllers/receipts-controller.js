@@ -541,7 +541,7 @@ angular.module('Conciliador.movementsModule',[])
         $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
         $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
         $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
-		
+
 		$scope.futureReleases.dateRange = GetDateLabel();
 		$scope.futureReleases.dateRangeWithBr = GetDateLabel(true);
 
@@ -768,16 +768,16 @@ angular.module('Conciliador.movementsModule',[])
 			var arrFilterConfig = [];
 			var objData = objResponse.data;
 
-			for(var x in objData){
+			for(var intX in objData){
 				var obj = {};
-				obj.id = objData[x].id;
-				obj.label = objData[x].bankName + ' | ' + objData[x].agencyNumber + ' | ' +  objData[x].accountNumber;
-				obj.bankName = objData[x].bankName;
-				obj.agencyNumber = objData[x].agencyNumber;
-				obj.accountNumber = objData[x].accountNumber;
-				obj.bankId = objData[x].bankId;
+				obj.id = objData[intX].id;
+				obj.label = objData[intX].bankName + ' | ' + objData[intX].agencyNumber + ' | ' +  objData[intX].accountNumber;
+				obj.bankName = objData[intX].bankName;
+				obj.agencyNumber = objData[intX].agencyNumber;
+				obj.accountNumber = objData[intX].accountNumber;
+				obj.bankId = objData[intX].bankId;
 
-				if (objData[x].defaultSelection) {
+				if (objData[intX].defaultSelection) {
 					$scope.accountsModel.id = obj.id;
 					$scope.accountsModel.label = obj.label;
 					$scope.accountsFutureModel.id = obj.id;
@@ -799,10 +799,10 @@ angular.module('Conciliador.movementsModule',[])
 		// bandeira
 		filtersService.GetCardProducts().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
+			for(var intX in objResponse.data){
 				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].name;
+				obj.id = objResponse.data[intX].id;
+				obj.label = objResponse.data[intX].name;
 				arrFilterConfig.push(obj);
 			}
 			$scope.cardProductsData = arrFilterConfig;
@@ -819,10 +819,10 @@ angular.module('Conciliador.movementsModule',[])
 		// estabelecimento
 		filtersService.GetShops().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
+			for(var intX in objResponse.data){
 				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].code;
+				obj.id = objResponse.data[intX].id;
+				obj.label = objResponse.data[intX].code;
 				arrFilterConfig.push(obj);
 			}
 			$scope.shopsData = arrFilterConfig;
@@ -839,10 +839,10 @@ angular.module('Conciliador.movementsModule',[])
 		// adquirente
 		filtersService.GetAcquirers().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
+			for(var intX in objResponse.data){
 				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].name;
+				obj.id = objResponse.data[intX].id;
+				obj.label = objResponse.data[intX].name;
 				arrFilterConfig.push(obj);
 			}
 			$scope.acquirersData = arrFilterConfig;
