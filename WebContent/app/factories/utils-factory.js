@@ -39,7 +39,8 @@
          */
         function JoinMappedArray(arrJoinable, strField, xJoin, intMaxNumber) {
 
-            var xMapped
+            var xMapped;
+            
             xMapped = arrJoinable.map(function(objItem, intIndex) {
                 if(!intMaxNumber || (intIndex < intMaxNumber) ) {
                     return objItem[strField];

@@ -13,27 +13,27 @@
 
 	function Session() {
 
-		var SESSION_NAME = 'control-session';
-		var COMPANIES_NAME = 'companies';
+		var STR_SESSION_NAME = 'control-session';
+		var STR_COMPANIES_NAME = 'companies';
 
 		var strSessionToken;
 		var objCompanies;
 
 		return {
-			create: create,
-			destroy: destroy,
-			getToken: getToken,
-			isAuthenticated: isAuthenticated,
-			getCompanies: getCompanies
+			create: Create,
+			destroy: Destroy,
+			getToken: GetToken,
+			isAuthenticated: IsAuthenticated,
+			getCompanies: GetCompanies
 		};
 
-		function create(strToken, companyDTOs) {
+		function Create(strToken, companyDTOs) {
 			if (strToken) {
-				storage.setItem(SESSION_NAME, strToken);
+				storage.setItem(STR_SESSION_NAME, strToken);
 				strSessionToken = strToken;
 
 				if (companyDTOs) {
-					storage.setItem(COMPANIES_NAME, JSON.stringify(companyDTOs));
+					storage.setItem(STR_COMPANIES_NAME, JSON.stringify(companyDTOs));
 					objCompanies = companyDTOs;
 				}
 
@@ -43,23 +43,23 @@
 			return false;
 		}
 
-		function destroy() {
-			storage.removeItem(SESSION_NAME);
-			storage.removeItem(COMPANIES_NAME);
+		function Destroy() {
+			storage.removeItem(STR_SESSION_NAME);
+			storage.removeItem(STR_COMPANIES_NAME);
 			strSessionToken = null;
 			objCompanies = null;
 		}
 
-		function getToken() {
-			return strSessionToken || storage.getItem(SESSION_NAME);
+		function GetToken() {
+			return strSessionToken || storage.getItem(STR_SESSION_NAME);
 		}
 
-		function getCompanies() {
-			return objCompanies || JSON.parse(storage.getItem(COMPANIES_NAME));
+		function GetCompanies() {
+			return objCompanies || JSON.parse(storage.getItem(STR_COMPANIES_NAME));
 		}
 
-		function isAuthenticated() {
-			return !!getToken();
+		function IsAuthenticated() {
+			return !!GetToken();
 		}
 	}
 
