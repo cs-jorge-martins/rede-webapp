@@ -378,14 +378,14 @@
                             && !objVm.cardProductsModel.splice(objVm.cardProductsModel.map(a => a.id).indexOf(objCard.id), 1));
         }
 
-        function compareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
-            for(i=0; i<arrAcquirers.length;i++){
-                for(j=0; j<arrAcquirersCard.length;j++){
-                    if(arrAcquirers[i].id === arrAcquirersCard[j].id){
-                        return true;
-                    }
-                }
-            }
+        function CompareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
+            var bolResponse = false;
+            angular.forEach(arrAcquirers, function(objAcq, keyAcq) {
+                angular.forEach(arrAcquirersCard, function(objAcqCard, keyCard) {
+                    bolResponse = bolResponse || (objAcq.id === objAcqCard.id);
+                });
+            });
+            return bolResponse;
         }
     }
 })();
