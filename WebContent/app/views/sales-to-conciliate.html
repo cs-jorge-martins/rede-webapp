@@ -22,7 +22,7 @@
             <rc-multiselect label="'terminal'" model="vm.terminalsModel" data="vm.terminalsData" placeholder="'todos os terminais'" single-selection="2"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
-            <rc-multiselect label="'bandeira'" model="vm.cardProductsModel" data="vm.cardProductsData" placeholder="'todas as bandeiras'" single-selection="2"> </rc-multiselect>
+            <rc-multiselect label="'bandeira'" model="vm.cardProductsModel" data="vm.cardProductsData" placeholder="'todas as bandeiras'" single-selection="2" search-filter="vm.acquirersCardProductFilterExpression"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
             <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="vm.getSales()" />

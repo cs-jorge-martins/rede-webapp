@@ -71,6 +71,7 @@
         objVm.reconcile = Reconcile;
         objVm.details = Details;
         objVm.acquirersFilterExpression = AcquirersFilterExpression;
+        objVm.acquirersCardProductFilterExpression = AcquirersCardProductFilterExpression;
 
         objVm.filterMaxDate = calendarFactory.getYesterday();
         objVm.dateModel.date = calendarFactory.getYesterday();
@@ -102,7 +103,7 @@
          */
         function GetFilters() {
             filterService.GetCardProductDeferred().then(function (objCardProducts) {
-                objVm.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
+                objVm.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name', 'acquirers');
 
                 filterService.GetTerminalDeferred().then(function (objTerminals) {
                     objVm.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code', 'pvId');
@@ -365,6 +366,26 @@
                     || ((index = objVm.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
                         || (objVm.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !objVm.pvsModel.splice(objVm.pvsModel.map(a => a.id).indexOf(pv.id), 1));
         }
+        
+        /**
+         * @method AcquirersCardProductFilterExpression
+         * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos na lista de bandeira
+         */
+        function AcquirersCardProductFilterExpression(objCard) {
+            return  !objVm.acquirersModel.length 
+                    || compareArrayAcquirers(objVm.acquirersModel, objCard.acquirers) 
+                        || (objVm.cardProductsModel.map(a => a.id).indexOf(objCard.id) !== -1 
+                            && !objVm.cardProductsModel.splice(objVm.cardProductsModel.map(a => a.id).indexOf(objCard.id), 1));
+        }
 
+        function compareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
+            for(i=0; i<arrAcquirers.length;i++){
+                for(j=0; j<arrAcquirersCard.length;j++){
+                    if(arrAcquirers[i].id === arrAcquirersCard[j].id){
+                        return true;
+                    }
+                }
+            }
+        }
     }
 })();
