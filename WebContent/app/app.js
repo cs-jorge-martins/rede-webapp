@@ -4,7 +4,7 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
+var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
                             'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
                             'com.2fdevs.videogular.plugins.controls',
@@ -68,7 +68,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
    $httpProvider.defaults.headers.patch = {};
 
 	$httpProvider.interceptors.push(function ($q, $rootScope, $location, $window) {
-		$rootScope.baseUrl = app.endpoint;
+		$rootScope.baseUrl = objApp.endpoint;
 
         return {
         	'request': function(config) {
@@ -319,61 +319,61 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 }])
 .factory('menuFactory', function($rootScope) {
 
-	function setActiveDashboard() {
+	function SetActiveDashboard() {
         this.deactivate();
 		$rootScope.activeDashboard = true;
 	}
 
-	function setActiveGestao() {
+	function SetActiveGestao() {
         this.deactivate();
 		$rootScope.activeGestao = true;
 	}
 
-	function setActiveMovements() {
+	function SetActiveMovements() {
         this.deactivate();
 		$rootScope.activeMovements = true;
 	}
 
-	function setActiveResumoConciliacao() {
+	function SetActiveResumoConciliacao() {
         this.deactivate();
 		$rootScope.activeResumoConciliacao = true;
 	}
 
-	function setActiveReports() {
+	function SetActiveReports() {
         this.deactivate();
 		$rootScope.activeReports = true;
 	}
 
-    function setActiveReportsFinancial() {
+    function SetActiveReportsFinancial() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsFinancial = true;
 	}
 
-    function setActiveReportsChargebacks() {
+    function SetActiveReportsChargebacks() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsChargebacks = true;
 	}
 
-    function setActiveReportsSales() {
+    function SetActiveReportsSales() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsSales = true;
 	}
 
-    function setActiveReportsAdjustments() {
+    function SetActiveReportsAdjustments() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsAdjustments = true;
 	}
 
-    function setActiveIntegration() {
+    function SetActiveIntegration() {
         this.deactivate();
 		$rootScope.activeIntegration = true;
 	}
 
-    function deactivate() {
+    function Deactivate() {
         $rootScope.activeResumoConciliacao = false;
 		$rootScope.activeDashboard = false;
 		$rootScope.activeGestao = false;
@@ -387,40 +387,34 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
     }
 
 	return {
-		setActiveDashboard: setActiveDashboard,
-		setActiveGestao: setActiveGestao,
-		setActiveMovements: setActiveMovements,
-		setActiveResumoConciliacao: setActiveResumoConciliacao,
-		setActiveReports: setActiveReports,
-        setActiveReportsSales: setActiveReportsSales,
-        setActiveReportsFinancial: setActiveReportsFinancial,
-        setActiveReportsAdjustments: setActiveReportsAdjustments,
-        setActiveReportsChargebacks: setActiveReportsChargebacks,
-        setActiveIntegration: setActiveIntegration,
-        deactivate: deactivate
+		setActiveDashboard: SetActiveDashboard,
+		setActiveGestao: SetActiveGestao,
+		setActiveMovements: SetActiveMovements,
+		setActiveResumoConciliacao: SetActiveResumoConciliacao,
+		setActiveReports: SetActiveReports,
+        setActiveReportsSales: SetActiveReportsSales,
+        setActiveReportsFinancial: SetActiveReportsFinancial,
+        setActiveReportsAdjustments: SetActiveReportsAdjustments,
+        setActiveReportsChargebacks: SetActiveReportsChargebacks,
+        setActiveIntegration: SetActiveIntegration,
+        deactivate: Deactivate
 	};
 })
 
-app.filter('utc', function(){
-  return function(val){
-    var date = new Date(val);
-     return new Date(date.getUTCFullYear(),
-                     date.getUTCMonth(),
-                     date.getUTCDate(),
-                     date.getUTCHours(),
-                     date.getUTCMinutes(),
-                     date.getUTCSeconds());
+objApp.filter('utc', function(){
+	return function(val){
+    var objDate = new Date(val);
+    return new Date(objDate.getUTCFullYear(),
+					objDate.getUTCMonth(),
+					objDate.getUTCDate(),
+					objDate.getUTCHours(),
+					objDate.getUTCMinutes(),
+					objDate.getUTCSeconds());
   };
 });
 
-app.filter('brst', function(){
+objApp.filter('brst', function(){
   return function(val){
     return new Date(val);
   };
 });
-
-function getDominio(strExtension) {
-	var strUrl = location.href;
-	strUrl = strUrl.split("/#/");
-	return strUrl[0]+ '/' + strExtension+ '/';
-};

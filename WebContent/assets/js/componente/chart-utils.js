@@ -4,14 +4,12 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-
-
-var chartUtils = window.chartUtil || {};
+var objChartUtils = window.chartUtil || {};
 
 /**
  * proxy para traduzir dados vindos da API, do modelo do hicharts para o charts.js
  */
-chartUtils.Proxy = function( objDataSource ) {
+objChartUtils.Proxy = function( objDataSource ) {
 	var objChart = {
 		labels: [],
 		series: [],
@@ -37,7 +35,7 @@ chartUtils.Proxy = function( objDataSource ) {
 	return objChart;
 };
 
-chartUtils.Tooltip = function(tooltip) {
+objChartUtils.Tooltip = function(tooltip) {
 	var divTooltipEl = jQuery('#chartjs-tooltip');
 
    if (!tooltip) {
@@ -65,7 +63,7 @@ chartUtils.Tooltip = function(tooltip) {
    });
 };
 
-chartUtils.Formatters = {
+objChartUtils.Formatters = {
 	currency: function( value ) {
 
 		var fltFormatted = value.toFixed(2);
@@ -80,7 +78,7 @@ chartUtils.Formatters = {
 	}
 };
 
-chartUtils.Options = {
+objChartUtils.Options = {
 	vendas: {
 		scaleShowVerticalLines: false,
 		bezierCurve : false,
@@ -92,7 +90,7 @@ chartUtils.Options = {
 		tooltipXPadding: 8,
 		tooltipFontSize: 12,
 		tooltipTitleFontSize: 13,
-		multiTooltipTemplate: '<%= datasetLabel + ": " + chartUtils.Formatters.currency(value) %>'
+		multiTooltipTemplate: '<%= datasetLabel + ": " + objChartUtils.Formatters.currency(value) %>'
 	},
 	relatorioSintetico: {
 		scaleFontSize: 11,
