@@ -7,7 +7,8 @@
 angular.module('Conciliador.dashboardController',[])
 
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, RcDisclaimerService,
+	$httpParamSerializer){
 
 	menuFactory.setActiveDashboard();
 
@@ -23,7 +24,7 @@ angular.module('Conciliador.dashboardController',[])
 	$scope.prevPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 	$scope.prevPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 
-	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDateOfLastMonth());
+	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfLastMonthForDashboard());
 
 	$scope.sales = Sales;
 
@@ -111,7 +112,20 @@ angular.module('Conciliador.dashboardController',[])
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
 		SetTransactionConciliationBox();
+        InitDisclaimer();
 	}
+
+	function InitDisclaimer() {
+
+        var objDisclaimer = {
+            type: 'warning',
+            text: 'Os nossos termos de uso e política de privacidade foram atualizados e ao continuar navegando neste site você aceita suas condições.',
+            actionText: 'Saiba Mais',
+            onClick: 'assets/files/contrato-control-rede.pdf'
+        };
+
+        RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
+    }
 
 	/********************************* TRANSACTION SUMMARY BOX *************************************/
 	function SetTransactionSummaryBox(){
@@ -135,6 +149,7 @@ angular.module('Conciliador.dashboardController',[])
 			objTransactionSummaryFilterPrevMonth.currency =  $rootScope.currency;
 			objTransactionSummaryFilterPrevMonth.startDate = $scope.lastMonthPerid.firstDate;
 			objTransactionSummaryFilterPrevMonth.endDate = $scope.lastMonthPerid.lastDate;
+			objTransactionSummaryFilterPrevMonth.conciliationStatus = 'TO_CONCILIE,CONCILIED';
 
 			// Consulta do mes anterior
 			dashboardService.GetTransactionSummaryBox(objTransactionSummaryFilterPrevMonth).then(function(objItem){
@@ -438,8 +453,7 @@ angular.module('Conciliador.dashboardController',[])
 			objDate = objDate.split('/');
 			objDate[0] = intDay;
 			objDate = objDate.join('/');
-			$rootScope.salesFromDashDate = objDate;
-			$location.path('/sales');
+			$location.path('/sales').search({ date: objDate });
 		}
 	}
 
@@ -452,21 +466,6 @@ angular.module('Conciliador.dashboardController',[])
 		var objModalInstance = $uibModal.open({
 			templateUrl: 'video.html',
 			controller: function ($scope, $uibModalInstance, $sce) {
-				$scope.video = {
-					sources: [
-						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.mp4"), type: "video/mp4"},
-						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.webm"), type: "video/webm"},
-						{src: $sce.trustAsResourceUrl("http://dev-conciliation-webapp.s3-website-us-east-1.amazonaws.com/app/videos/video-treinamento.ogg"), type: "video/ogg"}
-					],
-					theme: "assets/css/videogular.min.css",
-					plugins: {
-						poster: "/assets/img/videoPoster.jpg",
-						controls: {
-							autoHide: true,
-							autoHideTime: 1000
-						}
-					}
-				};
 
 				$scope.ok = Ok;
 				$scope.cancel = Cancel;

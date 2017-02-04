@@ -1,5 +1,37 @@
 /*
-	Projeto: conciliation-webapp
+	Projeto: conciliation
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+.alignl {
+	text-align: left !important;
+}
+
+.alignr {
+	text-align: right !important;
+}
+
+.alignc {
+	text-align: center !important;
+}
+
+.lowercase {
+	text-transform: lowercase;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.strike {
+	text-decoration: line-through;
+}
+
+.clean-bg {
+	background: #fff;
+}

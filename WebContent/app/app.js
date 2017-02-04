@@ -10,6 +10,8 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
                             'com.2fdevs.videogular.plugins.controls',
                             'com.2fdevs.videogular.plugins.overlayplay',
                             'com.2fdevs.videogular.plugins.poster',
+                            'Conciliador.HeaderController',
+                            'Conciliador.FooterController',
                             'Conciliador.dashboardController', 'Conciliador.dashboardService',
                             'Conciliador.loginController', 'Conciliador.loginService',
                             'Conciliador.filtersService',
@@ -22,13 +24,18 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 							'chieffancypants.loadingBar',
 							'Conciliador.integrationService', 'Conciliador.advancedFilterService',
 							'Conciliador.calendarService', 'Kaplen.CalendarFactory',
+							'Conciliador.UtilsFactory',
 							'Conciliador.Request', 'Conciliador.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
+                            'Conciliador.salesToConciliateController', 'Conciliador.salesConciliatedController',
                             'Conciliador.FinancialService',
                             'Conciliador.MovementSummaryService',
+                            'Conciliador.ModalService',
                             'Conciliador.AdjustSummaryService', 'Conciliador.TransactionService',
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
                             'Conciliador.AdjustService',
+                            'Conciliador.RcMessageService',
+                            'Conciliador.RcDisclaimerService',
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.MovementService',
@@ -40,8 +47,12 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
                             'Conciliador.appConfig',
                             'Conciliador.currencyFilter',
                             'Conciliador.slugfyFilter',
+                            'Conciliador.textFilter',
                             'Conciliador.receiptsOtherDetailsController',
-                            'Conciliador.receiptsFutureDetailsController'
+                            'Conciliador.receiptsFutureDetailsController',
+                            'Conciliador.salesToConciliateDetailsController',
+                            'Conciliador.unprocessedSalesDetailsController',
+                            'Conciliador.salesConciliatedDetailsController'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
@@ -108,7 +119,37 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService, calendarFactory) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout, RcMessageService, RcDisclaimerService) {
+
+	init();
+
+	function init() {
+		WatchRouteChange();
+        RemoveLoader();
+		InitiateRootVariables();
+	}
+
+	function WatchRouteChange() {
+		$rootScope.$on('$routeChangeSuccess', function() {
+			$rootScope.migrationId = $route.current.$$route.migrationId;
+			$rootScope.pageTitle = $route.current.$$route.title;
+			RcMessageService.clear();
+		});
+	}
+
+    function RemoveLoader() {
+        var loader = angular.element(document.querySelector('#loader'));
+        $timeout(function() {
+            loader.addClass('loaderHide');
+            $timeout(function() {
+                loader.remove();
+            }, 1000);
+        }, 1000);
+    }
+
+    function InitiateRootVariables() {
+		$rootScope.hideHeaderAndFooter = false;
+	}
 
     $rootScope.loading = true;
     $rootScope.$on("cfpLoadingBar:loading",function(){
@@ -127,10 +168,10 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
     $rootScope.sortResults = SortResults;
     $rootScope.showAlert = ShowAlert;
     $rootScope.modalOpen = false;
-    $rootScope.year = calendarFactory.getYear(calendarFactory.getActualDate());
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
+		$rootScope.hideHeaderAndFooter = false;
 
 		$window.sessionStorage.token = token;
 		$window.sessionStorage.pvList = JSON.stringify(user.pvList);
@@ -139,7 +180,6 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 		}
 
 		$rootScope.alerts = [];
-		$rootScope.bodyId = "";
 
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
 			$location.path("/home");
@@ -189,6 +229,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 		var objModal = $uibModal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
+			appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 			size:'sm',
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {

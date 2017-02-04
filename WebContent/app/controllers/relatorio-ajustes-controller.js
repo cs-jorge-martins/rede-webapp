@@ -29,18 +29,24 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		$scope.maxSize = 4;
 		$scope.totalItensPageOptions = [10,20,50];
-		$scope.totalItensPage = $scope.totalItensPageOptions[1];
+		$scope.totalItensPage = $scope.totalItensPageOptions[0];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
         $scope.sortResults = SortResults;
+
+		$scope.dateOptions = {
+			showWeeks: false,
+			startingDay: 1,
+			maxMode: 'day'
+		};
 
 		Init();
 
 		function Init(){
 			$scope.clearFilter = ClearFilter;
 			$scope.search = Search;
-            
-            ClearFilter();
+
+			ClearFilter();
 			GetReport();
 		}
 

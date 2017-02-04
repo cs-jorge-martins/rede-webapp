@@ -1,0 +1,8 @@
+<div class="chip-parent" ng-class="{'hide': !show}">
+    <div class="chip" ng-show="label != undefined && show" ng-class="{'can-close': closeable }" uib-tooltip="{{tooltipText}}" tooltip-placement="bottom-left">
+        <span>
+            {{ label }}
+        </span>
+        <a class="clear-filter icon_fechar" ng-click="onClear()" ng-if="closeable"></a>
+    </div>
+</div>

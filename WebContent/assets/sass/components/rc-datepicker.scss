@@ -3,3 +3,434 @@
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+.rcDatepicker {
+
+    font-family: $fontSemiBold;
+
+    .form-control {
+        border-right: 0;
+    }
+
+    .dropdown-menu {
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.24);
+        padding: 0;
+        border: 0;
+
+    }
+
+    .input-group {
+        position: relative;
+
+        input {
+            background-color: $inputBackgroundColor;
+            color: $inputBackgroundColor;
+            border-color: $inputBorderColor;
+            border-radius: 0;
+            height: 40px;
+        }
+
+        span {
+            border-color: $inputBorderColor;
+            border-radius: 0;
+        }
+
+        .placeholder {
+            position: absolute;
+            left: 0;
+            color: $inputColor;
+            font-size: 1em;
+            z-index: 5;
+            padding: 1em;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .uib-datepicker-popup {
+        top: 3em !important;
+    }
+
+    .uib-datepicker {
+        font-size: 1em;
+        font-family: 'open_sansregular';
+
+        button {
+            background-color: transparent;
+            border: none;
+            color: $darkGray;
+            font-size: 1em;
+
+            &[disabled]:hover {
+                background: none;
+            }
+
+        }
+
+        thead {
+
+            tr {
+                height: 4em;
+
+                th:first-of-type {
+                    padding-left: 1.4em;
+                }
+                th:last-of-type {
+                    padding-right: 1.4em !important;
+                }
+            }
+
+            tr:first-of-type {
+                border-bottom: 1px solid $rcDatepickerBorderColor;
+                height: inherit;
+                padding: 10px;
+
+                th {
+                    padding: inherit;
+                }
+            }
+
+            small {
+                text-transform: uppercase;
+                color: #575758;
+                font-size: 1.1em;
+            }
+
+            strong {
+                color: #575758;
+                color: rgba(87, 87, 88, 1);
+                font-size: 1.3em;
+                font-weight: 600;
+            }
+
+            button {
+                opacity: 1;
+
+                &:active:focus {
+                    background: none;
+                    box-shadow: none;
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                }
+            }
+
+            .btn-sm {
+                //padding: 1.2em 1.5em;
+            }
+        }
+
+        .uib-day {
+
+            position: relative;
+
+            &.has-status {
+
+                &:before {
+                    content: '';
+                    display: block;
+                    border-radius: 50%;
+                    width: 7px;
+                    height: 7px;
+                    position: absolute;
+                    bottom: 5px;
+                    left: 30px;
+                }
+
+                &.conciliated {
+                    &:before {
+                        background: $conciliedColor;
+                    }
+                }
+
+                &.to-conciliate {
+                    &:before {
+                        background: $toConcilieColor;
+                    }
+                }
+
+                &.bar, &.ball {
+                    &:before {
+                        display: none;
+                    }
+                }
+
+            }
+
+            &:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
+                color: $darkGray;
+                font-family: $fontBold;
+            }
+
+            .btn-sm {
+                padding: 1.37em 2em !important;
+                font-size: 1.1em;
+
+                span {
+
+                    font-family: $fontRegular;
+                    padding: 0 !important;
+                    width: auto;
+                    text-decoration: none;
+
+                }
+
+            }
+
+            button {
+                position: relative;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+
+                &:hover {
+                    background: none;
+                    border: none;
+
+                    span:not(.text-muted) {
+                        color: #ff7800;
+                    }
+                }
+
+                &:disabled {
+                    &:hover {
+                        span {
+                            color: $darkGray;
+                            &.text-muted {
+                                color: $mediumGray;
+                            }
+                        }
+                    }
+                }
+
+                span {
+                    position: absolute;
+                    z-index: 11;
+                    left: 1.6em;
+                    top: 0.6em;
+                }
+
+            }
+
+
+
+            &.ball button:after, button.active:after {
+                content: '';
+                position: absolute;
+                background: #ff7800;
+                border-radius: 50%;
+                width: 2.2em;
+                height: 2.2em;
+                left: 0;
+                z-index: 10;
+                left: 1em;
+                top: .2em;
+            }
+
+            button.active:disabled:after {
+                background: transparent;
+            }
+
+            &.no-current:not(.bar), &.no-current:not(.ball){
+                button.active {
+                    &:not(:disabled) {
+                        span:not(.text-muted) {
+                            color: $darkGray !important;
+                        }
+                    }
+                    &:after {
+                        background: transparent !important;
+                    }
+                }
+            }
+
+            &.bar {
+
+                button {
+
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        background: #ff7800;
+                        width: 100%;
+                        height: 2.2em;
+                        left: -2em;
+                        top: 0.2em;
+                        padding-right: 8em;
+                        z-index: 10;
+                    }
+
+                    &:hover {
+                        span {
+                            color: #fff;
+                        }
+                    }
+
+                }
+
+                button.active:after {
+                    border-radius: 0;
+                }
+
+                &.consecutive-days {
+                    button {
+                        &:after {
+                            padding-right: 5.4em;
+                            border-radius: 0 40px 40px 0;
+                        }
+                    }
+                }
+
+                &.last button:after {
+                    left: -4em;
+                }
+
+
+            }
+
+            &.ball {
+
+                button {
+
+                    &:hover {
+
+                        span {
+                            color: #fff;
+                        }
+
+                    }
+
+                }
+
+            }
+
+            &.ball, &.bar, button.active:not(:disabled) {
+
+                span {
+                    color: #fff;
+                }
+
+                &:hover {
+                    span {
+                        color: #fff;
+                    }
+                }
+
+            }
+
+        }
+
+        .uib-weeks {
+            td:first-of-type {
+                margin-left: 1.4em;
+                display: inline-block;
+            }
+            td:last-of-type {
+                padding-right: 1.4em;
+            }
+        }
+
+        .text-muted {
+            color: #ddd;
+        }
+
+        .glyphicon {
+            font-family: 'itaufonts_master_24px_v1';
+            color: #ff7800;
+            font-size: 32px;
+
+            &.glyphicon-chevron-left:before {
+                content: '\e9b1';
+            }
+
+            &.glyphicon-chevron-right:before {
+                content: '\e9cd';
+            }
+        }
+    }
+
+    .dateFilters {
+
+        border-top: 1px solid $rcDatepickerBorderColor;
+        font-size: 1.1em;
+        line-height: 1.3em;
+        margin-top: 18px;
+        width: 100%;
+
+        .container {
+            width: inherit;
+        }
+
+        .row {
+            padding: 1em 0;
+        }
+
+        a {
+            text-transform: none;
+            &:hover, &.active {
+                text-decoration: none;
+
+                p {
+                    color: #ff7800;
+                }
+            }
+
+            p {
+                color: #575758;
+            }
+        }
+
+        p {
+            font-family: $fontLight;
+            margin: 0;
+            color: $platinum;
+            font-weight: 600;
+        }
+
+        .legend {
+            p {
+                //margin-left: 1.4em;
+            }
+        }
+    }
+
+    .datepicker-legend {
+
+        padding: 3px 0 0 61px;
+        position: relative;
+        margin: 10px 0 20px;
+        font-family: $fontRegular;
+
+        &:before {
+
+            content: '';
+            display: block;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            top: 6px;
+            left: 35px;
+            background: #fff;
+
+        }
+
+        &.conciliated {
+            &:before {
+                background: $conciliedColor;
+            }
+        }
+
+        &.to-conciliate {
+            &:before {
+                background: $toConcilieColor;
+            }
+        }
+
+    }
+
+    & *:focus {
+        outline: 0 !important;
+    }
+}

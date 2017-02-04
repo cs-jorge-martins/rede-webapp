@@ -1,0 +1,55 @@
+.panel {
+
+    @include border-radius(0,0,0,0);
+    border: 0;
+
+    &.panel-success {
+        .panel-heading {
+            background: $panelSucessBackgroundColor;
+            color:#fff;
+        }
+    }
+
+    &.panel-secondary {
+        .panel-heading {
+            background: $panelSecondaryBackgroundColor;
+            color:$panelSecondaryColor;
+            padding-left: 6.6em;
+            font-family: $fontBold;
+            font-size: 1.3em;
+
+            span {
+                font-family: $fontSemiBold;
+            }
+        }
+
+        .panel-body tr td:first-child, .panel-body tr th:first-child {
+            padding-left: 5em;
+        }
+    }
+
+    .panel-heading {
+        @include border-radius(0,0,0,0);
+        border: 0;
+        font-size: 1.6em;
+        font-family: $fontSemiBold;
+        padding: 1.1em 4.1em 1.1em 2em;
+
+        span {
+            display: inline-block;
+            font-weight: normal;
+            margin-top: 3px;
+            &.total-value {
+                float: right;
+            }
+        }
+
+    }
+
+    .panel-footer {
+        @include border-radius(0,0,0,0);
+        background: transparent;
+        padding: 0;
+        border: 0;
+    }
+}

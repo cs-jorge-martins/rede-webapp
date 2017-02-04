@@ -1,5 +1,34 @@
 /*
-	Projeto: conciliation-webapp
+	Projeto: conciliation
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+.imageReplacement {
+	text-indent: 200%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+@mixin border-radius($topleft, $topright, $bottomright, $bottomleft) {
+	border-top-left-radius: $topleft;
+	border-top-right-radius: $topright;
+	border-bottom-right-radius: $bottomright;
+	border-bottom-left-radius: $bottomleft;
+	-webkit-border-top-left-radius: $topleft;
+	-webkit-border-top-right-radius: $topright;
+	-webkit-border-bottom-right-radius: $bottomright;
+	-webkit-border-bottom-left-radius: $bottomleft;
+	-moz-border-radius-topleft: $topleft;
+	-moz-border-radius-topright: $topright;
+	-moz-border-radius-bottomright: $bottomright;
+	-moz-border-radius-bottomleft: $bottomleft;
+}
+
+@mixin transition($seconds, $type) {
+	-webkit-transition: all $seconds $type;
+	-moz-transition: all $seconds $type;
+	-o-transition: all $seconds $type;
+	-ms-transition: all $seconds $type;
+	transition: all $seconds $type;
+}

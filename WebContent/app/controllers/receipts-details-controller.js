@@ -13,9 +13,9 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 		Init();
 
 		function Init(){
-			$rootScope.bodyId = "receiptsDetailsPage";
+			$rootScope.hideHeaderAndFooter = true;
 			$scope.$on("$routeChangeStart", function(next, current){
-				$rootScope.bodyId = null;
+				$rootScope.hideHeaderAndFooter = false;
 			});
 
 			if(!$rootScope.receiptsDetails) {
@@ -63,6 +63,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				objFilter = {
 					cardProductIds: $scope.cardProduct.cardProductId,
 					acquirerIds: $scope.acquirer.id,
+					shopIds: GetShopsFilter($scope.shopIds),
 					startDate: calendarFactory.formatDateTimeForService($scope.startDate),
 					endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 					bankAccountIds: $scope.bankAccount.id
@@ -77,22 +78,25 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				$scope.maxSize = 4;
 
 				$scope.salesData = [];
-				$scope.salesTotalItensPage = "10";
+				$scope.totalItensPageOptionsSales = [10,20,50];
+				$scope.salesTotalItensPage = $scope.totalItensPageOptionsSales[0];
 				$scope.salesTotalItens = 0;
 				$scope.salesCurrentPage = 0;
 
         		$scope.adjustsData = [];
-        		$scope.adjustsTotalItensPage = "10";
+				$scope.totalItensPageOptionsAdjusts = [10,20,50];
+        		$scope.adjustsTotalItensPage = $scope.totalItensPageOptionsAdjusts[0];
         		$scope.adjustsTotalItens = 0;
 				$scope.adjustsCurrentPage = 0;
 
         		$scope.cancellationsData = [];
-        		$scope.cancellationsTotalItensPage = "10";
+				$scope.totalItensPageOptionsCancellations = [10,20,50];
+        		$scope.cancellationsTotalItensPage = $scope.totalItensPageOptionsCancellations[0];
         		$scope.cancellationsTotalItens = 0;
 				$scope.cancellationsCurrentPage = 0;
 
         		$scope.ecommerceData = [];
-        		$scope.ecommerceTotalItensPage = "10";
+        		$scope.ecommerceTotalItensPage = 10;
         		$scope.ecommerceTotalItens = 0;
 				$scope.ecommerceCurrentPage = 0;
 
@@ -107,6 +111,12 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
                 $scope.pageChangedCancellations = PageChangedCancellations;
                 $scope.totalItensPageChangedCancellations = TotalItensPageChangedCancellations;
 			}
+		}
+
+		function GetShopsFilter(arrModel) {
+			return arrModel.map(function(objItem){
+				return objItem.id;
+			}).join(",");
 		}
 
 		function GetShopsLabel() {

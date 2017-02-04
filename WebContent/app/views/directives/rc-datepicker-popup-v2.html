@@ -1,0 +1,81 @@
+<ul role="presentation" class="uib-datepicker-popup dropdown-menu uib-position-measure" dropdown-nested ng-if="isOpen" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
+    <li ng-transclude></li>
+    <li ng-if="datepickerOptions.legendType() && datepickerOptions.legendLabel()" class="datepicker-legend" ng-class="datepickerOptions.legendType()">
+        {{datepickerOptions.legendLabel()}}
+    </li>
+    <li ng-if="datepickerOptions.showNextDatesFilter" class="dateFilters">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3 legend">
+                    <p>Filtrar por</p>
+                    <p>período:</p>
+                </div>
+                <div class="col-xs-2">
+                    <a ng-click="datepickerOptions.dateFilter(7, 'tomorrow', 1)" ng-class="datepickerOptions.activeDateFilter === 1 ? 'active' : ''">
+                        <p>Próx.</p>
+                        <p>7 dias</p>
+                    </a>
+                </div>
+                <div class="col-xs-2">
+                    <a ng-click="datepickerOptions.dateFilter(15, 'tomorrow', 2)" ng-class="datepickerOptions.activeDateFilter === 2 ? 'active' : ''">
+                        <p>Próx.</p>
+                        <p>15 dias</p>
+                    </a>
+                </div>
+                <div class="col-xs-2">
+                    <a ng-click="datepickerOptions.dateFilter(30, 'tomorrow', 3)" ng-class="datepickerOptions.activeDateFilter === 3 ? 'active' : ''">
+                        <p>Próx.</p>
+                        <p>30 dias</p>
+                    </a>
+                </div>
+                <div class="col-xs-3">
+                    <a ng-click="datepickerOptions.dateFilter(365, 'tomorrow', 4)" ng-class="datepickerOptions.activeDateFilter === 4 ? 'active' : ''">
+                        <p>Próx.</p>
+                        <p>365 dias</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    <li>
+    <li ng-if="datepickerOptions.showPreviousDatesFilter" class="dateFilters">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3 legend">
+                    <p>Filtrar por</p>
+                    <p>período:</p>
+                </div>
+                <div class="col-xs-2">
+                    <a ng-click="datepickerOptions.dateFilter(-3, 'today', 1)" ng-class="datepickerOptions.activeDateFilter === 1 ? 'active' : ''">
+                        <p>Ultm.</p>
+                        <p>3 dias</p>
+                    </a>
+                </div>
+                <div class="col-xs-2">
+                    <a ng-click="datepickerOptions.dateFilter(-4, 'today', 2)" ng-class="datepickerOptions.activeDateFilter === 2 ? 'active' : ''">
+                        <p>Ultm.</p>
+                        <p>4 dias</p>
+                    </a>
+                </div>
+                <div class="col-xs-2">
+                    <a ng-click="datepickerOptions.dateFilter(-5, 'today', 3)" ng-class="datepickerOptions.activeDateFilter === 3 ? 'active' : ''">
+                        <p>Ultm.</p>
+                        <p>5 dias</p>
+                    </a>
+                </div>
+                <div class="col-xs-3">
+                    <a ng-click="datepickerOptions.dateFilter(-7, 'today', 4)" ng-class="datepickerOptions.activeDateFilter === 4 ? 'active' : ''">
+                        <p>Ultm.</p>
+                        <p>7 dias</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li ng-if="showButtonBar" class="uib-button-bar">
+        <span class="btn-group pull-left">
+            <button type="button" class="btn btn-sm btn-info uib-datepicker-current" ng-click="select('today', $event)" ng-disabled="isDisabled('today')">{{ getText('current') }}</button>
+            <button type="button" class="btn btn-sm btn-danger uib-clear" ng-click="select(null, $event)">{{ getText('clear') }}</button>
+        </span>
+        <button type="button" class="btn btn-sm btn-success pull-right uib-close" ng-click="close($event)">{{ getText('close') }}</button>
+    </li>
+</ul>

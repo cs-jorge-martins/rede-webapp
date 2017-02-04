@@ -1,10 +1,4 @@
 <section class="relatorio" id="relatorio">
-    <ol class="breadCrumb">
-        <li>você está em:</li>
-        <li><a href="#/home">home</a></li>
-        <li><a href="#/relatorio/vendas">relatórios</a></li>
-        <li><a href="#/relatorio/chargebacks">cancelamentos e chargebacks</a></li>
-    </ol>
 
     <div class="date">
         <h2>cancelamentos e chargebacks</h2>
@@ -54,12 +48,12 @@
                                         <div class="filterShiny">
                                             <ul>
                                                 <li class="itauicon-itaufonts_calendario">
-                                                    <input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirst" datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true" datepicker-append-to-body="true" />
+                                                    <input type="text" class="disabled input-date" uib-datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirst" datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(initialDate)" close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirst = true" datepicker-append-to-body="false" readonly="true" />
                                                     <label for="" class="at">Até</label>
                                                     <input type="text" class="disabled input-date"
                                                         uib-datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLast"
                                                         datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(finalDate)"
-                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"  style="background:transparent;margin-left:-35px;padding-left:40px!important;" datepicker-append-to-body="true"/>
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLast = true"  style="background:transparent;margin-left:-35px;padding-left:40px!important;" datepicker-append-to-body="false" readonly="true"/>
                                                 </li>
                                                 <li class="itauicon-itaufonts_para_empresa">
                                                     <input id="buscaTerminal" name="buscaSettlement" type="text" placeholder="{{GetPlaceholder(settlementsSelected)}}"
@@ -146,6 +140,5 @@
 				</div>
 			</div>
 		</div>
-        <rc-disclaimer></rc-disclaimer>
     </div>
 </section>

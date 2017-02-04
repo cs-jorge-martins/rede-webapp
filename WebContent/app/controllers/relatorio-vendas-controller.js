@@ -64,6 +64,17 @@
         $scope.totalItensPageChangedDuplicate = TotalItensPageChangedDuplicate;
         $scope.sortResults = SortResults;
 
+        var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
+
+        var objResetInitialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
+        var objResetFinalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
+
+        $scope.dateOptions = {
+            showWeeks: false,
+            startingDay: 1,
+            maxMode: 'day'
+        };
+
         function HandleResponse(objResponse) {
 			var arrItems = [];
 
@@ -159,6 +170,7 @@
 		};
 
         function ExportAnalytical() {
+        	$rootScope.alerts.splice(0);
 			var objFilter = GetFilterOptions($scope.analytical);
 
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
@@ -175,7 +187,9 @@
 
                 if(objResponse.status === 408){
                     strMsg = "O período escolhido não pôde ser processado devido ao grande número de transações. Por favor escolha um período menor.";
-                }
+                } else if (objResponse.status === 500) {
+                	strMsg = "Não foi possível gerar o relatório. Tente novamente.";
+				}
                 $rootScope.alerts =  [ { type: "danger", msg: strMsg} ];
             });
 		};
@@ -234,29 +248,28 @@
 		};
 
         function ClearFilter() {
-			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 
 			$scope.synthetic = {};
 			$scope.synthetic.items = [];
 
-			$scope.synthetic.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
-			$scope.synthetic.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
+			$scope.synthetic.initialDate = objResetInitialDate;
+			$scope.synthetic.finalDate = objResetFinalDate;
 
 			$scope.analytical = {};
 			$scope.analytical.items = [];
-			$scope.analytical.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
-			$scope.analytical.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
+			$scope.analytical.initialDate = objResetInitialDate;
+			$scope.analytical.finalDate = objResetFinalDate;
 
 			$scope.duplicate = {};
 			$scope.duplicate.items = [];
-			$scope.duplicate.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
-			$scope.duplicate.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
+			$scope.duplicate.initialDate = objResetInitialDate;
+			$scope.duplicate.finalDate = objResetFinalDate;
 		};
 
 		function ClearSyntheticFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.synthetic.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.synthetic.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.synthetic.initialDate = objResetInitialDate;
+			$scope.synthetic.finalDate = objResetFinalDate;
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
 			document.getElementById('buscaTerminal').value = '';
@@ -264,8 +277,8 @@
 
 		function ClearAnalyticalFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.analytical.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.analytical.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.analytical.initialDate = objResetInitialDate;
+			$scope.analytical.finalDate = objResetFinalDate;
 			$scope.productsSelected = this.productsSelected = [];
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];
@@ -276,8 +289,8 @@
 
 		function ClearDuplicateFilter () {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.duplicate.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.duplicate.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.duplicate.initialDate = objResetInitialDate;
+			$scope.duplicate.finalDate = objResetFinalDate;
 			$scope.productsSelected = this.productsSelected = [];
 			$scope.productsSearch = this.productsSearch = [];
 			$scope.settlementsSelected = this.settlementsSelected = [];

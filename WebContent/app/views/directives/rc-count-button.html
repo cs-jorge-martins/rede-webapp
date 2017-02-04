@@ -1,0 +1,8 @@
+<input
+        type="submit"
+        value="{{labelPrefix}} {{itemCount}} {{labelSuffix}}{{itemCount>1?'s':''}}"
+        class="btn btn-primary btn-block"
+        ng-disabled="itemCount === 0"
+        ng-href="#"
+        ng-click="onClick()"
+        href="#">

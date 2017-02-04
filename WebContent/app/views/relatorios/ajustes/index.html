@@ -1,10 +1,4 @@
 <section class="relatorio ajustes">
-    <ol class="breadCrumb">
-        <li>você está em:</li>
-        <li><a href="#/home">home</a></li>
-        <li><a href="#/relatorio/vendas">relatórios</a></li>
-        <li><a href="#/relatorio/ajustes">relatório de tarifas e ajustes</a></li>
-    </ol>
 
     <div class="date">
         <h2>relatório ajustes</h2>
@@ -29,15 +23,15 @@
                                                 <li>
                                                     <input type="text" class="disabled input-date"
                                                         uib-datepicker-popup="{{format}}" ng-model="initialDate" is-open="openFirstFinanceiro"
-                                                        datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(initialDate)"
-                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstFinanceiro = true" datepicker-append-to-body="true" />
+                                                        readonly="true" datepicker-options="dateOptions" ng-required="true" ng-change="ChangeInitialDate(initialDate)"
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openFirstFinanceiro = true" datepicker-append-to-body="false" />
                                                 </li>
                                                 <li>
                                                     <label for="" class="at">Até</label>
                                                     <input type="text" class="disabled input-date"
                                                         uib-datepicker-popup="{{format}}" ng-model="finalDate" is-open="openLastFinanceiro"
-                                                        datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(finalDate)"
-                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastFinanceiro = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" datepicker-append-to-body="true" />
+                                                           readonly="true" datepicker-options="dateOptions" ng-required="true" ng-change="ChangeFinalDate(finalDate)"
+                                                        close-text="Fechar" clear-text="Limpar" current-text="Data atual" ng-click="openLastFinanceiro = true" style="background:transparent;margin-left:-30px;padding-left:40px!important;" datepicker-append-to-body="false" />
                                                 </li>
                                   </ul>
                                 </li>
@@ -68,7 +62,7 @@
         					<td>{{item.payedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>{{item.roDate | date: 'dd/MM/yyyy'}}</td>
                         	<td>{{item.description}}</td>
-                        	<td>{{item.amount | currency:""}}</td>
+                        	<td>{{item.amount | customCurrency:""}}</td>
         				</tr>
         			</tbody>
         		</table>
@@ -94,6 +88,5 @@
 				</div>
         	</div>
         </div>
-        <rc-disclaimer></rc-disclaimer>
     </div>
 </section>

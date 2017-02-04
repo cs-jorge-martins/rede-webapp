@@ -60,6 +60,12 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		$scope.pageChanged = PageChanged;
 		$scope.totalItensPageChanged = TotalItensPageChanged;
 
+		// adicionado para corrigir erro ao tentar fazer upload do mesmo arquivo em sequencia
+		// ver https://github.com/nervgh/angular-file-upload/wiki/FAQ#4-no-file-chosen-or-re-add-same-file
+		FileUploader.FileSelect.prototype.isEmptyAfterSelection = function() {
+			return true;
+		};
+
 		$scope.uploader = new FileUploader({
 			disableMultipart: true,
 			url: app.endpoint + "/integration/files",
@@ -80,6 +86,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				scope: $scope,
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
+				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 				controller: function($uibModalInstance, $timeout){
                     $scope.cancel = Cancel;
 					function Cancel() {
@@ -93,14 +100,21 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			})
 		};
 
+		$scope.uploader.onCompleteItem = function() {
+            objModal.close();
+            $scope.uploader.clearQueue();
+            $scope.inProgress = false;
+            $scope.labelFindFile = true;
+            $scope.fileName = '';
+		};
+
 		$scope.uploader.onSuccessItem = function() {
-			objModal.close();
-			$scope.uploader.clearQueue();
 			var objModalInstance = $uibModal.open({
 				templateUrl: "app/views/vendas/enviado-com-sucesso.html",
 				scope: $scope,
 				size: 'lg',
 				windowClass: 'integrationModalWrapper',
+				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
 				controller: function($scope, $uibModalInstance){
                     $scope.cancel = Cancel;
                     function Cancel() {
@@ -108,17 +122,10 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
                     }
 				}
 			});
-			$scope.inProgress = false;
-			$scope.labelFindFile = true;
 		};
 
 		$scope.uploader.onErrorItem = function onError(item, response, status) {
 			if (status === 403) {
-                $scope.uploader.clearQueue();
-                objModal.close();
-                $scope.inProgress = false;
-                $scope.labelFindFile = true;
-                $scope.sendFile = true;
                 $rootScope.showAlert('app/views/action-forbidden.html');
             }
 		};

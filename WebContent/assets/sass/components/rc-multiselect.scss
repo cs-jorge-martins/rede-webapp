@@ -1,0 +1,107 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+.rcMultiselect {
+
+  label span.visible:before {
+    font-family: $fontItau;
+    content: "\e960";
+    color: $rcMultiLabelColor;
+
+  }
+
+  .dropdown-multiselect {
+
+    position: relative;
+    width: 100%;
+
+    .dropdown-toggle {
+
+      border: 1px solid $rcMultiBorderColor;
+      color: $rcMultiLabelColor;
+      font-size: 12px;
+      padding: 0.6em 0 0.6em 1.1em;
+      position: relative;
+      text-align: left;
+      width: 100%;
+      &:hover, &:active, &:focus {
+        background: #fff;
+        border-color: $rcMultiBorderColor;
+        box-shadow: none;
+      }
+
+      .caret {
+        border: none;
+        font-size: 1.4em;
+        position: absolute;
+        right: 1.3em;
+        top: 0.3em;
+        vertical-align: middle;
+        &:before {
+          color: $rcMultiBorderColor;
+          content: '\e9cc';
+          display: block;
+          font-family: $fontItau;
+        }
+      }
+    }
+
+    .dropdown-menu {
+
+      background: #fff;
+      border: 1px solid $rcMultiBorderColor;
+      border-radius: 0;
+      box-shadow: none;
+      box-sizing: border-box;
+      max-height: 150px;
+      overflow: auto !important;
+      top: 3em;
+      width: 100%;
+
+      li:nth-child(1) a span, li:nth-child(2) a span {
+        display: none;
+      }
+
+      a {
+        cursor: pointer;
+        color: $rcMultiLabelColor;
+        display: block;
+        font-size: 1em;
+        padding: 0.5em 0 0.5em 2.9em;
+        position: relative;
+        text-transform: none;
+
+        span {
+          left: 0;
+          position: absolute;
+          top: 0;
+          &.glyphicon-ok{
+            &:before {
+              color: $rcMultiIconColor;
+              content: '\e927' !important;
+            }
+          }
+        }
+
+      }
+
+    }
+
+    a span:before {
+      color: $rcMultiLabelColor;
+      content: '\e964';
+      display: block;
+      font-family: $fontItau;
+      font-size: 1.2em;
+      left: 10px;
+      line-height: 22px !important;
+      position: absolute;
+      top: 7px;
+    }
+
+  }
+
+}

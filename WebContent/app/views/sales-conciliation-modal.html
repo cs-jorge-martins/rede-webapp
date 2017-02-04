@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <span class="modal-header-text">{{modalTitle}}</span>
+        <button class="close" ng-click="close()">
+            <i class="icon_fechar"></i>
+        </button>
+    </h3>
+</div>
+<div>
+    <div class="modal-body">
+        <p>{{modalText}}</p>
+    </div>
+    <div class="modal-footer">
+        <div class="modal-button">
+            <button class="btn btn-cancel btn-block" ng-click="cancel()">não, cancelar seleção</button>
+        </div>
+        <div class="modal-button">
+            <button class="btn btn-primary" ng-click="confirm()">sim, {{reconcileType}} vendas</button>
+        </div>
+    </div>
+</div>

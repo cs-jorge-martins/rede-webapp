@@ -1,5 +1,13 @@
 /*
-	Projeto: conciliation-webapp
+	Projeto: conciliation
 	Author/Empresa: Rede
 	Copyright (C) 2016 Redecard S.A.
  */
+
+header {
+	&.login {
+		&:before {
+			display: none;
+		}
+	}
+}

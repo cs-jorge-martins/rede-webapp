@@ -1,0 +1,167 @@
+.timeline-wrapper {
+
+    height: 14.5em;
+    margin: 1em 0;
+
+    li {
+        list-style: none;
+    }
+
+    .timeline-head {
+
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        width: 100%;
+
+        li {
+
+            color: $rcTimelineSecondaryColor;
+            font-size: 1.4em;
+            font-weight: bolder;
+
+            span {
+                color: $rcTimelineMainColor;
+                display: inline-block;
+                margin-top: 0.250em;
+            }
+
+            &:first-child {
+                color: $rcTimelineTitleColor;
+            }
+
+            &:nth-child(2) {
+                text-align: right;
+            }
+        }
+    }
+
+    .total {
+
+        color: $rcTimelineMainColor;
+        display: flex;
+        float: left;
+        justify-content: space-between;
+        margin-top: 0.2em;
+        margin-bottom: 0;
+        padding: 0;
+        width: 100%;
+
+        li {
+
+            font-family: $fontLight;
+            font-size: 4.3em;
+
+            .gray {
+                color: $rcTimelineSecondaryColor;
+            }
+
+            span.money {
+                float: left;
+                font-family: $fontRegular;
+                font-size: 0.350em;
+                height: 3.125em;
+                line-height: 5.2em;
+                margin-right: 0.317em;
+            }
+
+        }
+
+        .gray {
+            color: $rcTimelineSecondaryColor;
+        }
+
+        &.success {
+            color: $rcTimelineSuccessColor;
+        }
+    }
+
+    .timeline-block {
+
+        background: $rcTimelineTimelineBackgroundColor;
+        float: left;
+        height: 1.2em;
+        margin-top: 1.7em;
+        position: relative;
+        width: 100%;
+
+        &.success {
+
+            article aside {
+                color: $rcTimelineSuccessColor;
+            }
+
+            .percent:before {
+                background: $rcTimelineSuccessColor;
+            }
+        }
+
+        .percent {
+
+            -webkit-transition: width 1s;
+            transition: width 1s;
+            max-width: 100%;
+            position: relative;
+
+            &:before {
+                background: $rcTimelineMainColor;
+                content: "";
+                height: 1.2em;
+                left: 0;
+                position: absolute;
+                top: 0;
+                width: 100%;
+            }
+        }
+
+        .full {
+            article {
+                aside {
+                    left: 96%;
+                }
+            }
+        }
+
+        article {
+
+            float: left;
+            margin: 0.833em 0;
+            min-width: 7.833em;
+            width: 100%;
+
+            aside {
+                color: $rcTimelineMainColor;
+                right: 0;
+                position: absolute;
+                margin-top: 0.667em;
+                font-family: $fontSemiBold;
+                font-size: 1.6em;
+            }
+        }
+
+        &:before {
+            content: "";
+            left: 0;
+        }
+
+        &:after {
+            content: "";
+            right: 0;
+        }
+
+        &:before, &:after {
+            position: absolute;
+            top: 10px;
+            color: $rcTimelineSecondaryColor;
+            font-weight: bolder;
+        }
+    }
+
+    .timeline-footer {
+        color: $rcTimelineTitleColor;
+        float: left;
+        font-size: 1.4em;
+        margin-top: 3.5em;
+        margin-bottom: 1.6em;
+    }
+}

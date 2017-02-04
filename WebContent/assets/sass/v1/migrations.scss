@@ -1,0 +1,231 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+// V1 migrations
+.v1 .uib-datepicker-popup.dropdown-menu,
+.v2 .uib-datepicker-popup.dropdown-menu{
+    display:block;
+    float:none;
+    margin:0;
+}
+.v1 .uib-button-bar{
+    padding:10px 0 0;
+}
+
+.v1 [uib-typeahead-popup].dropdown-menu{
+    display:block;
+}
+
+#migrationContainer {
+    width: 1200px;
+    margin: 0 auto;
+    min-height: 575px;
+    transition: all .2s ease-in-out;
+}
+
+body {
+    background: $backgroundColor;
+    font-size: 0.75em;
+    font-family: 'open_sansregular';
+}
+
+.newHeaderAndFooter {
+    background: #fff;
+
+    .btn-primary {
+        background-color: $primaryButtomBackgroundColor;
+        color: $menuFontColor;
+        padding: 13px 46px;
+        font-weight: 700;
+    }
+}
+
+.receiptsDetailsPage header,
+.receiptsDetailsPage footer,
+.redirectPage header,
+.redirectPage footer {
+    display: none !important;
+}
+
+.v1 #relatorio_sintetico,
+.v1 #relatorio_analitico,
+.v1 #relatorio_duplicado,
+.v1 #relatorio_financeiro,
+.v1 #relatorio_chargeback {
+
+    input + div {
+        display: inline-block;
+    }
+
+    form .dropdown-menu {
+
+        thead th {
+            text-align: center;
+            text-indent: 0;
+            padding: 6px 16px !important;
+        }
+
+        max-height: 373px;
+        overflow-x: hidden;
+        width: 357px;
+        background: #fff;
+    }
+
+}
+
+.v1 #relatorio_financeiro form .dropdown-menu {
+    width: 339px;
+}
+
+.v1 .v2 .rcDatepicker {
+
+        .btn {
+            font-family: 'open_sanssemibold';
+            width: 100%;
+            position: relative;
+            top: -1px;
+            height: 40px;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            display: inline-block;
+            padding: 5px 0;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border-radius: 4px;
+            margin-right: 0 !important;
+
+            &:active {
+                top: -1px;
+            }
+
+        }
+
+        tbody td {
+            padding: 0 !important;
+
+        }
+
+        .dropdown-menu small {
+            color: $grafitteGray !important;
+        }
+
+        .glyphicon {
+            color: $defaultOrange;
+            font-size: 1.7em;
+            &:before {
+                font-family: $fontItau;
+                content: '\e9b1';
+            }
+        }
+
+
+        .input-group {
+            display: block;
+
+            a {
+                font-family: $fontRegular;
+            }
+
+            input {
+                height: auto;
+                padding: 7.3px 0;
+            }
+
+            span {
+                z-index: 3;
+                right: 26px;
+                font-size: 15.4px;
+                color: $darkGray;
+            }
+
+        }
+
+        .uib-datepicker-popup {
+
+            &.dropdown-menu {
+
+                top: 37px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                padding-bottom: 0 !important;
+                height: auto;
+
+                thead tr:first-child th {
+                    top: 0;
+                    position: inherit;
+                    padding: inherit !important;
+                }
+
+                thead tr:first-child th:nth-child(1) {
+                    padding: inherit;
+                }
+
+                thead tr:first-child th:nth-child(2) {
+                    button {
+                        position: initial;
+                        text-transform: lowercase;
+                        padding-top: 6px;
+                    }
+                }
+
+                .pull-left, .pull-right {
+                    background: none !important;
+                    text-indent: 0;
+                    width: 100% !important;
+                    height: 40px !important;
+                }
+
+                .pull-left .glyphicon:before {
+                    content: '\e9b1';
+                }
+
+                .pull-right {
+                    left:0 !important;
+                    .glyphicon:before {
+                        content: '\e9cd';
+                    }
+                }
+
+                .dateFilters {
+                    border-top: 1px solid $rcDatepickerBorderColor !important;
+                    .row {
+                        border: 0 !important;
+                    }
+                    .col-xs-2, .col-xs-3 {
+                        padding-right: 6px;
+                    }
+                    a {
+                        font-size: 1em;
+                        line-height: 1.3em;
+                        padding-top: 0;
+                        height: auto;
+                        width: auto;
+                        padding-bottom: 0 !important;
+                    }
+                }
+
+            }
+        }
+
+        .form-control {
+            border-right: 1px solid $rcMultiBorderColor;
+        }
+
+
+    }

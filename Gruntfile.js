@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 
     var API_URLS = {
         local: 'http://localhost:8080/conciliation-api',
-        dev: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/dev',
+        dev: 'https://va4f0tsgxh.execute-api.us-east-1.amazonaws.com/dev',
         hml: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml',
         prod: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
     };
@@ -129,13 +129,23 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/angularjs-dropdown-multiselect.min.js",
                     "WebContent/assets/js/componente/max-size-pagination.js",
                     "WebContent/assets/js/componente/chart-utils.js",
+                    "WebContent/assets/js/bootstrap.min.js",
 
                     "WebContent/app/app.js",
                     "WebContent/app/routes.js",
+
+                    "WebContent/app/controllers/header-controller.js",
+                    "WebContent/app/controllers/footer-controller.js",
+
                     "WebContent/app/controllers/dashboard-controller.js",
                     "WebContent/app/controllers/login-controller.js",
                     "WebContent/app/controllers/sales-details-controller.js",
                     "WebContent/app/controllers/sales-controller.js",
+                    "WebContent/app/controllers/sales-conciliated-controller.js",
+                    "WebContent/app/controllers/sales-conciliated-details-controller.js",
+                    "WebContent/app/controllers/sales-to-conciliate-controller.js",
+                    "WebContent/app/controllers/sales-to-conciliate-details-controller.js",
+                    "WebContent/app/controllers/unprocessed-sales-details-controller.js",
                     "WebContent/app/controllers/relatorio-vendas-controller.js",
                     "WebContent/app/controllers/relatorio-financeiro-controller.js",
                     "WebContent/app/controllers/relatorio-ajustes-controller.js",
@@ -169,17 +179,29 @@ module.exports = function(grunt) {
                     "WebContent/app/service/transaction-service.js",
                     "WebContent/app/service/movement-service.js",
                     "WebContent/app/service/adjust-service.js",
+                    "WebContent/app/service/rc-message-service.js",
+                    "WebContent/app/service/rc-disclaimer-service.js",
+                    "WebContent/app/service/modal-service.js",
 
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
                     "WebContent/app/directives/rc-datepicker/rc-datepicker.js",
+                    "WebContent/app/directives/rc-datepicker-v2/rc-datepicker-v2.js",
                     "WebContent/app/directives/rc-timeline/rc-timeline.js",
+                    "WebContent/app/directives/rc-message/rc-message.js",
+                    "WebContent/app/directives/rc-breadcrumb/rc-breadcrumb.js",
+                    "WebContent/app/directives/rc-chips/rc-chips.js",
+                    "WebContent/app/directives/rc-checkbox/rc-checkbox.js",
+                    "WebContent/app/directives/rc-pagination/rc-pagination.js",
+                    "WebContent/app/directives/rc-tooltip/rc-tooltip.js",
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",
+                    "WebContent/app/factories/utils-factory.js",
 
                     "WebContent/app/filters/currency-filter.js",
                     "WebContent/app/filters/slugfy-filter.js",
+                    "WebContent/app/filters/text-filter.js",
 
                     "WebContent/app/libs/videogular.min.js",
                     "WebContent/app/libs/vg-controls.min.js",
@@ -207,7 +229,26 @@ module.exports = function(grunt) {
                     'WebContent/assets/css/main-v2.css': 'WebContent/assets/sass/main.scss'
                 }
             }
+        },
+
+        jsduck: {
+            main: {
+                src: [
+                    'WebContent/app/directives/**/*.js'
+                    //'WebContent/app/factories/**/*.js',
+                    //'WebContent/app/filters/**/*.js',
+                    //'WebContent/app/service/**/*.js'
+                ],
+                dest: 'docs',
+                options: {
+                    'title': 'Conciliador Webapp',
+                    'builtin-classes': false,
+                    'warnings': ['-no_doc', '-dup_member', '-link_ambiguous'],
+                    'external': ['XMLHttpRequest']
+                }
+            }
         }
+
 
     });
 
@@ -221,4 +262,5 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
     grunt.registerTask('hml', ['build:hml', 'serve']);
     grunt.registerTask('prod', ['build:prod', 'serve']);
+    grunt.registerTask('docs', ['jsduck:main']);
 };

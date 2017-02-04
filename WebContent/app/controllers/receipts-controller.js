@@ -28,19 +28,30 @@ angular.module('Conciliador.movementsModule',[])
     $scope.getReceipt = GetReceipt;
     $scope.getFutureReceipt = GetFutureReceipt;
     $scope.actualReleases = {};
-    $scope.actualReleases.date = new Date();
+    $scope.actualReleases.date = $scope.actualReleases.date || new Date();
     $scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
     $scope.futureReleases = {};
 	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
-	$scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
-    $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
-    $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
-    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
-    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+	$scope.futureReleases.datepickerIsOpen = false;
+
+    $scope.futureReleases.modelDate = [];
+    GetCachedData();
+
+    var objFutureModelDateFirst = $scope.futureReleases.modelDate[0] || calendarFactory.getTomorrowFromTodayToDate();
+    var objFutureModelDateLast = $scope.futureReleases.modelDate[1] || calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
+    $scope.futureReleases.modelDate = [objFutureModelDateFirst, objFutureModelDateLast];
+    $scope.futureReleases.objFutureMinDate = calendarFactory.getTomorrowFromTodayToDate();
+    $scope.futureReleases.objFutureMaxDate = calendarFactory.addYearsToDate($scope.futureReleases.objFutureMinDate, 1, true);
+
+    $scope.futureReleases.startDate = $scope.futureReleases.modelDate[0];
+    $scope.futureReleases.endDate = $scope.futureReleases.modelDate[1];
+    $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[0]);
+    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[0]);
+    $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
+    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
+    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
 
 	$scope.date = new Date();
 	$scope.minDate = new Date();
@@ -85,8 +96,8 @@ angular.module('Conciliador.movementsModule',[])
     var intFilterStatus = 0;
 
 	$scope.$watch('futureReleases.startDate', function(objResponse) {
-		if(moment($scope.futureReleases.endDate).isBefore(objResponse)) {
-			$scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
+		if(moment($scope.futureReleases.modelDate[1]).isBefore(objResponse)) {
+			$scope.futureReleases.modelDate[1] = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.modelDate[0], 1);
 		}
 	});
 
@@ -94,7 +105,7 @@ angular.module('Conciliador.movementsModule',[])
 
 	function Init() {
 		$scope.todayDate = calendarFactory.getToday();
-		$scope.actualReleases.date = calendarFactory.getToday();
+		$scope.actualReleases.date = $scope.actualReleases.date || calendarFactory.getToday();
         GetFilters();
 	}
 
@@ -441,7 +452,7 @@ angular.module('Conciliador.movementsModule',[])
 				for(var intIndex in objData) {
 					if(objData[intIndex].description == 'vendas') {
 						intAntecipatedTotal = objData[intIndex].payedAmount;
-						intDiscountedTotal += (objData[intIndex].expectedAmount - objData[intIndex].payedAmount);
+						intDiscountedTotal += (objData[intIndex].expectedAmount - objData[intIndex].payedAmount) *-1;
 					}
 				}
 
@@ -459,7 +470,10 @@ angular.module('Conciliador.movementsModule',[])
 					$scope.totalToReceive = intTotalToReceive;
 					$scope.discountedTotal = intDiscount;
 					$scope.antecipatedTotal = intAntecipatedTotal;
-					$scope.totalReceived = intTotalToReceive - intDiscount + intAntecipatedTotal;
+					$scope.totalReceived = intTotalToReceive + intDiscount + intAntecipatedTotal;
+					$scope.getDiscountedSignal = GetDiscountedSignal;
+					$scope.getDiscountedAbs = GetDiscountedAbs;
+					$scope.getClassByType = GetClassByType;
 
 				}).catch(function(objResponse) {
 					console.log('[receiptsController:getAdjusts] error');
@@ -472,6 +486,28 @@ angular.module('Conciliador.movementsModule',[])
 		}).catch(function(objResponse) {
 			console.log('[receiptsController:getFinancials] error');
 		});
+	}
+
+	function GetClassByType(strType, intAmount) {
+		if(strType != "ajustes") {
+			return strType;
+		} else if (intAmount > 0) {
+			return "ajustes-credito";
+		} else {
+			return "ajustes-debito";
+		}
+	}
+
+	function GetDiscountedSignal(intDiscountedTotal) {
+		if (intDiscountedTotal > 0) {
+			return "+";
+		} else {
+			return "-";
+		}
+	}
+
+	function GetDiscountedAbs(intDiscountedTotal) {
+		return Math.abs(intDiscountedTotal);
 	}
 
 	function GetDateLabel(bolHasBr) {
@@ -491,20 +527,26 @@ angular.module('Conciliador.movementsModule',[])
 
 		arrFutureReleasesData = [];
 
-		var objTestDate = $scope.futureReleases.startDate instanceof Date;
-		var objStartDate = !objTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
+        var objFutureModelDateFirst = $scope.futureReleases.modelDate[0] || calendarFactory.getTomorrowFromTodayToDate();
+        var objFutureModelDateLast = $scope.futureReleases.modelDate[1] || calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
+        $scope.futureReleases.modelDate = [objFutureModelDateFirst, objFutureModelDateLast];
+        $scope.futureReleases.objFutureMinDate = calendarFactory.getTomorrowFromTodayToDate();
+        $scope.futureReleases.objFutureMaxDate = calendarFactory.addYearsToDate($scope.futureReleases.objFutureMinDate, 1, true);
 
-		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(objStartDate);
-		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(objStartDate));
-		$scope.futureReleases.startDateYear = calendarFactory.getYearOfDate(objStartDate);
-		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
-		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+        $scope.futureReleases.startDate = $scope.futureReleases.modelDate[0];
+        $scope.futureReleases.endDate = $scope.futureReleases.modelDate[1];
+        $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[0]);
+        $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+        $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[0]);
+        $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
+        $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
+        $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
+
 		$scope.futureReleases.dateRange = GetDateLabel();
 		$scope.futureReleases.dateRangeWithBr = GetDateLabel(true);
 
-		var strInitialDay = moment($scope.futureReleases.startDate);
-		var strFinalDay = moment($scope.futureReleases.endDate);
+		var strInitialDay = moment($scope.futureReleases.modelDate[0]);
+		var strFinalDay = moment($scope.futureReleases.modelDate[1]);
 
 		$scope.countDiffDays = strFinalDay.diff(strInitialDay, 'days');
 
@@ -513,8 +555,8 @@ angular.module('Conciliador.movementsModule',[])
 		GetFutureAcquirers();
 
 		var objFilter = {
-			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
 			acquirerIds: GetAcquirersFilter(true),
@@ -544,8 +586,8 @@ angular.module('Conciliador.movementsModule',[])
 
 	function GetFutureAcquirers() {
 		var objFilter = {
-			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			groupBy: 'ACQUIRER',
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
@@ -577,8 +619,8 @@ angular.module('Conciliador.movementsModule',[])
 			var intAcquirerId = arrFutureReleasesData[intIndex].acquirer.id;
 
 			var objFilter = {
-				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 				groupBy: 'CARD_PRODUCT,STATUS',
 				bankAccountIds: GetAccountsFilter(true),
 				shopIds: GetShopsFilter(true),
@@ -722,29 +764,30 @@ angular.module('Conciliador.movementsModule',[])
 
   	function GetFilters() {
 		// conta
-		filtersService.GetAccounts().then(function(objResponse){
+		filtersService.GetAccountsOrdered(moment().tz("America/Brasilia").format("YYYY-MM-DD")).then(function(objResponse){
 			var arrFilterConfig = [];
 			var objData = objResponse.data;
 
-			for(var x in objData){
+			for(var intX in objData){
 				var obj = {};
-				obj.id = objData[x].id;
-				obj.label = objData[x].bankName + ' | ' + objData[x].agencyNumber + ' | ' +  objData[x].accountNumber;
-				obj.bankName = objData[x].bankName;
-				obj.agencyNumber = objData[x].agencyNumber;
-				obj.accountNumber = objData[x].accountNumber;
-				obj.bankId = objData[x].bankId;
+				obj.id = objData[intX].id;
+				obj.label = objData[intX].bankName + ' | ' + objData[intX].agencyNumber + ' | ' +  objData[intX].accountNumber;
+				obj.bankName = objData[intX].bankName;
+				obj.agencyNumber = objData[intX].agencyNumber;
+				obj.accountNumber = objData[intX].accountNumber;
+				obj.bankId = objData[intX].bankId;
+
+				if (objData[intX].defaultSelection) {
+					$scope.accountsModel.id = obj.id;
+					$scope.accountsModel.label = obj.label;
+					$scope.accountsFutureModel.id = obj.id;
+					$scope.accountsFutureModel.label = obj.label;
+				}
 
 				arrFilterConfig.push(obj);
 			}
 
-			$scope.accountsData = $filter('orderBy')(arrFilterConfig, "bankId");
-			var objAccount = $scope.accountsData[0];
-			$scope.accountsModel.id = objAccount.id;
-			$scope.accountsModel.label = objAccount.label;
-			$scope.accountsFutureModel.id = objAccount.id;
-			$scope.accountsFutureModel.label = objAccount.label;
-
+			$scope.accountsData = arrFilterConfig;
 			intFilterStatus++;
 
             HandleTabs();
@@ -756,10 +799,10 @@ angular.module('Conciliador.movementsModule',[])
 		// bandeira
 		filtersService.GetCardProducts().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
+			for(var intX in objResponse.data){
 				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].name;
+				obj.id = objResponse.data[intX].id;
+				obj.label = objResponse.data[intX].name;
 				arrFilterConfig.push(obj);
 			}
 			$scope.cardProductsData = arrFilterConfig;
@@ -776,10 +819,10 @@ angular.module('Conciliador.movementsModule',[])
 		// estabelecimento
 		filtersService.GetShops().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
+			for(var intX in objResponse.data){
 				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].code;
+				obj.id = objResponse.data[intX].id;
+				obj.label = objResponse.data[intX].code;
 				arrFilterConfig.push(obj);
 			}
 			$scope.shopsData = arrFilterConfig;
@@ -796,10 +839,10 @@ angular.module('Conciliador.movementsModule',[])
 		// adquirente
 		filtersService.GetAcquirers().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
+			for(var intX in objResponse.data){
 				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].name;
+				obj.id = objResponse.data[intX].id;
+				obj.label = objResponse.data[intX].name;
 				arrFilterConfig.push(obj);
 			}
 			$scope.acquirersData = arrFilterConfig;
@@ -966,7 +1009,7 @@ angular.module('Conciliador.movementsModule',[])
         $rootScope.receiptsDetails.currency = "BRL";
         $rootScope.receiptsDetails.startDate = dateSelected;
         $rootScope.receiptsDetails.endDate = dateSelected;
-        $rootScope.receiptsDetails.shopIds = $scope.settlementsSelected;
+        $rootScope.receiptsDetails.shopIds = $scope.shopsModel;
         $rootScope.receiptsDetails.products = $scope.productsSearch;
         $rootScope.receiptsDetails.shops = $scope.shopsModel;
         $rootScope.receiptsDetails.cardProduct = intCardProduct;
@@ -994,11 +1037,11 @@ angular.module('Conciliador.movementsModule',[])
 				strRedirectUrl = "receipts/forethought_details";
 				break;
 			case "future_details":
-				$rootScope.futureReleases = {};
-				$rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
+                $rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
                 $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
-                $rootScope.receiptsDetails.startDate = $scope.futureReleases.startDate;
-                $rootScope.receiptsDetails.endDate = $scope.futureReleases.endDate;
+                $rootScope.receiptsDetails.startDate = $scope.futureReleases.modelDate[0];
+                $rootScope.receiptsDetails.endDate = $scope.futureReleases.modelDate[1];
+				$rootScope.futureReleases = {};
 				$rootScope.futureReleases.dates = {
 					startDateDay: $scope.futureReleases.startDateDay,
 					startDateMonth: $scope.futureReleases.startDateMonth,
@@ -1026,8 +1069,8 @@ angular.module('Conciliador.movementsModule',[])
 			shopIds: $scope.shopsModel,
 			acquirerIds: $scope.acquirersModel,
 			cardProductIds: $scope.cardProductsModel,
-			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			futureBankAccountIds: $scope.accountsFutureModel,
 			futureShopIds: $scope.shopsFutureModel,
 			futureAcquirerIds: $scope.acquirersFutureModel,
@@ -1043,15 +1086,18 @@ angular.module('Conciliador.movementsModule',[])
 			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
 			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
 
+            $scope.futureReleases.modelDate[0] = null;
+            $scope.futureReleases.modelDate[1] = null;
+
 			if($rootScope.futureSelected) {
-				$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
-				$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.modelDate[0] = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.modelDate[1] = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
 				$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
 				$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
 				$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
 				$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
-				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
-				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
+				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
 			}
 		}
     }

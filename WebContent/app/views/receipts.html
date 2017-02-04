@@ -1,9 +1,4 @@
 <section class="financas" id="financeiro">
-    <ol class="breadCrumb">
-        <li>você está em:</li>
-        <li><a href="#/home">home</a></li>
-        <li><a href="#/receipts">recebimentos</a></li>
-    </ol>
 
     <div class="date">
         <h2>
@@ -18,7 +13,9 @@
                     <div class="filtersWrapper">
                         <div class="receipts_present_filters">
                             <div class="filter">
-                                <rc-datepicker date="actualReleases.date" max-date="todayDate" label="'data'"></rc-datepicker>
+                                <div class="v2">
+                                    <rc-datepicker-v2 date="actualReleases.date" max-date="todayDate" label="'data'"></rc-datepicker-v2>
+                                </div>
                             </div>
                             <div class="filter">
                                 <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
@@ -86,15 +83,15 @@
                                     <strong>total a receber</strong>
                                     <span class="big-number"><span>R$</span> {{ totalToReceive | currency: "" }}</span>
                                 </li>
-                                <li class="math-symbol"><strong>-</strong></li>
-                                <li class="discount">
+                                <li class="math-symbol"><strong>{{ getDiscountedSignal(discountedTotal) }}</strong></li>
+                                <li ng-class="discountedTotal > 0 ? 'addition' : 'discount'">
                                     <strong>
-                                        total descontado
+                                        total ajustes a crédito/débito
                                         <i class="itauicon-itaufonts_informacao">
-                                            <span class="rc-tooltip up">valor total descontado refere-se a valores debitados, tais como cancelamentos, chargebacks, ajustes e tarifas</span>
+                                            <span class="rc-tooltip up">Valor de ajustes a crédito/débito referem-se a valores creditados ou debitados provenientes de cancelamentos, chargebacks, tarifas, ajustes a crédito ou débito.</span>
                                         </i>
                                     </strong>
-                                    <span class="big-number"><span>R$</span> {{ discountedTotal | currency: ""}}</span>
+                                    <span class="big-number"><span>R$</span> {{ getDiscountedAbs(discountedTotal) | currency: ""}}</span>
                                 </li>
                                 <li class="math-symbol"><strong>+</strong></li>
                                 <li class="addition">
@@ -114,14 +111,14 @@
                                     <th class="except">
                                     <th>{{ item.acquirer.name | uppercase }}</th>
                                     <th></th>
-                                    <th>valor total: {{ item.payedAmount | currency }}</th>
+                                    <th>valor total: R$ {{ item.payedAmount | currency: '' }}</th>
                                 </tr>
                             </thead>
                             <tbody ng-if="item.cardProducts.length">
                                 <tr class="group">
                                     <th></th>
                                     <th>lançamentos</th>
-                                    <th>valor líquido (R$)</th>
+                                    <th class="taright">valor líquido (R$)</th>
                                     <th></th>
                                 </tr>
                             </tbody>
@@ -131,34 +128,33 @@
                                     <th>
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }}
                                     </th>
-                                    <th>{{ cardProduct.total | number: 02 }}</th>
+                                    <th class="taright">{{ cardProduct.total | currency: '' }}</th>
                                     <th>
                                          <a ng-hide="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a>
                                         <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought_details')">detalhes</a>
                                     </th>
                                 </tr>
-                                <tr ng-repeat="release in cardProduct.releases" class="inset {{ release.type | slugify }}">
+                                <tr ng-repeat="release in cardProduct.releases" class="inset {{ getClassByType(release.type, release.payedAmount) | slugify }}">
                                     <th></th>
                                     <th class="inset-1">{{ release.type }}</th>
-                                    <th>
-                                        <ng-show ng-show="{{ release.type === 'cancelamentos' || release.type === 'ajustes' || release.type === 'custo de antecipação'}}"> - </ng-show>
-                                        {{ release.payedAmount | number: 02}} </th>
+                                    <th class="taright">
+                                        {{ release.payedAmount | currency: '' }} </th>
                                     <th></th>
                                 </tr>
                             </tbody>
-                            <tr class="card-product-line" ng-show="item.otherReleases">
+                            <tr class="card-product-line" ng-show="item.otherReleases.length">
                                 <th></th>
                                 <th>outros lançamentos</th>
-                                <th>{{ item.otherReleasesTotal | currency}}</th>
+                                <th class="taright">{{ item.otherReleasesTotal | currency: '' }}</th>
                                 <th>
                                     <a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'other_details')">detalhes</a>
                                 </th>
                             </tr>
-                             <tbody ng-show="item.otherReleases">
-                                <tr ng-repeat="otherRelease in item.otherReleases" class="inset cancelamentos">
+                             <tbody ng-show="item.otherReleases.length">
+                                <tr ng-repeat="otherRelease in item.otherReleases" class="inset" ng-class="otherRelease.amount > 0 ? 'vendas' : 'cancelamentos'">
                                     <th></th>
                                     <th class="inset-1">{{ otherRelease.description | lowercase}}</th>
-                                    <th>- {{ otherRelease.amount | number: 02}} </th>
+                                    <th class="taright">{{ otherRelease.amount | currency: '' }} </th>
                                     <th></th>
                                 </tr>
                             </tbody>
@@ -172,10 +168,9 @@
             		<div class="filtersWrapper">
                         <div class="receipts_future_filters">
                             <div class="filter firstFilter">
-                                <rc-datepicker class="halfSize" date="futureReleases.startDate" min-date="futureReleases.inicialStartDate" label="'data inicial'">
-                                </rc-datepicker>
-                                <rc-datepicker class="halfSize" date="futureReleases.endDate" min-date="futureReleases.startDate" label="'data final'">
-                                </rc-datepicker>
+                                <div class="v2">
+                                    <rc-datepicker-v2 range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" show-next-dates-filter="true"  label="'data'" is-open="futureReleases.datepickerIsOpen"></rc-datepicker-v2>
+                                </div>
                             </div>
                             <div class="filter">
                                 <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
@@ -191,7 +186,7 @@
                                 <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" />
+                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" ng-disabled="futureReleases.datepickerIsOpen" />
                             </div>
                         </div>
             		</div>
@@ -213,16 +208,25 @@
                                         {{ shopsFutureLabel }}
                                     </label>
                                     <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter(true)"></div>
+                                    <span class="rc-tooltip">
+                                        {{ shopsFutureFullLabel }}
+                                    </span>                                    
                                 </div>
                                 <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                     <label>
                                         {{ cardProductsFutureLabel }}
                                     </label>
                                     <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter(true)"></div>
+                                    <span class="rc-tooltip">
+                                        {{ cardProductsFutureFullLabel }}
+                                    </span>                                    
                                 </div>
                             </div>
                         </div>
                         <rc-timeline
+                                label-initial-value="'Lançamentos no período selecionado'"
+                                label-final-value="'Total de lançamentos previstos no próximo ano'"
+                                monetary-values="true"
                                 date-range="futureReleases.dateRange"
                                 max-date-range="customTimelineExpectedAmount.maxDateRange"
                                 initial-value="customTimelineExpectedAmount.expectedAmount"
@@ -235,7 +239,7 @@
                                     <th>{{ item.acquirer.name | uppercase }}</th>
                                     <th></th>
                                     <!-- /* Todo: alterar por adquirente */ -->
-                                    <th colspan="3">valor total: {{ item.expectedAmount | currency }}</th>
+                                    <th colspan="3">valor total: R$ {{ item.expectedAmount | currency: '' }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -243,7 +247,7 @@
                                     <th></th>
                                     <th>lançamentos</th>
                                     <th></th>
-                                    <th>valor líquido (R$)</th>
+                                    <th class="taright">valor líquido (R$)</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -254,7 +258,7 @@
                                     <th>
                                     <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }} </th>
                                     <th></th>
-                                    <th>{{ cardProduct.releases[0].expectedAmount | number: 02 }}</th>
+                                    <th class="taright">{{ cardProduct.releases[0].expectedAmount | currency: '' }}</th>
                                     <th></th>
                                     <th><a ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'future_details')">detalhes</a></th>
                                 </tr>
@@ -268,5 +272,4 @@
             </uib-tabset>
         </div>
     </div>
-    <rc-disclaimer></rc-disclaimer>
 </section>

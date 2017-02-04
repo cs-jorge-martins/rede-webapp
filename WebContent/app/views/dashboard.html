@@ -1,11 +1,5 @@
 <section id="dashboard">
-  <div>  
-    <ol class="breadCrumb">
-        <li>você está em:</li>
-        <li><a href="#/home">home</a></li>
-    </ol>
-  </div>
-  
+
 	<div class="date">
 		<h2>
 			<time>{{currentPeriodStartDateDay}} a {{currentPeriodEndDateDay}} {{currentPeriodStartDateMonth}} {{currentPeriodStartDateYear}}</time>
@@ -31,7 +25,7 @@
               <strong>
                 {{transactionSummaryBoxPrevMonth.quantity}}
               </strong>
-              <p>{{ percentOfQuantityTransactionsBetweenMonths | number:1 }}%</p>
+              <p><span ng-bind="percentOfQuantityTransactionsBetweenMonths ? (percentOfQuantityTransactionsBetweenMonths | number:1) : '0,0'"></span>%</p>
             </div>
       	</div>
       </li>
@@ -50,9 +44,9 @@
             </div>
             <div class="values">
             <strong>
-              <i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : 0"></span>
+              <i ng-bind-html="currencySymbol"></i> <span ng-bind="transactionSummaryBoxPrevMonth.amount ? (transactionSummaryBoxPrevMonth.amount | currency:'') : '0,00'"></span>
             </strong>
-       		  <p>{{ percentOfTotalsAmountTransactionsBetweenMonths | number:1}}%</p>
+            <p><span ng-bind="percentOfTotalsAmountTransactionsBetweenMonths ? (percentOfTotalsAmountTransactionsBetweenMonths | number:1) : '0,0'"></span>%</p>
             </div>
        	</div>
       </li>
@@ -181,40 +175,6 @@
           </tfoot>
         </table>
       </aside>
-      <rc-disclaimer></rc-disclaimer>
   </div>
 	<br />
 </section>
-
-<script type="text/ng-template" id="video.html">
-    <div class="tabelaDetalhamentoModal gestaoModal">
-	<div class="modal-header">
-        <h3>Vídeo tutorial</h3>
-		<button class="icon-close" ng-click="cancel()"></button>
-    </div>
-    <div class="modal-body">
-        <videogular vg-theme="video.theme">
-            <vg-media vg-src="video.sources"
-                vg-tracks="video.tracks">
-            </vg-media>
-            <vg-controls
-                vg-autohide="video.plugins.controls.autoHide"
-                vg-autohide-time="video.plugins.controls.autoHideTime">
-                <vg-play-pause-button></vg-play-pause-button>
-                <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-                <vg-scrub-bar>
-                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                </vg-scrub-bar>
-                <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-                <vg-volume>
-                    <vg-mute-button></vg-mute-button>
-                    <vg-volume-bar></vg-volume-bar>
-                </vg-volume>
-                <vg-fullscreen-button></vg-fullscreen-button>
-            </vg-controls>
-            <vg-overlay-play></vg-overlay-play>
-            <vg-poster vg-url='video.plugins.poster'></vg-poster>
-        </videogular>
-	</div>
-	</div>
-</script>
