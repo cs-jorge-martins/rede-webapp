@@ -29,13 +29,21 @@ angular.module('Conciliador.loginService',[])
 	this.SingleSignOn = function(strToken) {
 		var strUrl = app.login.endpoint + '/singlesignon';
 
+		var header = {
+				'Content-type': 'application/json',
+				'authorization': strToken
+		};
+		
+		//hotfix/623674
+		//No caso do singlesignon, o "authorization" já esta setado
+		if(angular.isDefined($window.sessionStorage.token)){
+			header = {'Content-type': 'application/json'};
+		}
+
 		return $http({
 			method: "POST",
 			url: strUrl,
-			headers: {
-				'Content-type': 'application/json',
-				'authorization': strToken
-			}
+			headers: header
 		});
 	};
 });
