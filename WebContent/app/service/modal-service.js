@@ -34,11 +34,12 @@
          *      ModalService.open('view/template.html', 'ModalController');
          *
          */
-        this.open = function(strTemplate, objController) {
+        this.open = function(strTemplate, objController, objScope) {
             $uibModal.open({
                 templateUrl: strTemplate,
                 appendTo:  angular.element(document.querySelector('#modalWrapperV2')),
-                controller: objController
+                controller: objController,
+                scope: objScope
             }).closed.then(function() {
                 $rootScope.modalOpen = false;
             });

@@ -59,7 +59,7 @@
 
                     scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
 
-                        if (arrDaysWithStatus && arrDaysWithStatus.length) {
+                        if (arrDaysWithStatus && arrDaysWithStatus.length && scope.status.opened) {
                             ctrl.addStatusCLass(arrDaysWithStatus, element);
                         }
 
@@ -75,6 +75,15 @@
                             }
 
                         }
+                    });
+
+                    scope.$watch("date", function () {
+
+                    	if(!scope.range) {
+							scope.pickerDate = scope.date;
+							scope.datePlaceholder = scope.getPlaceholder();
+                        }
+
                     });
 
                 });
@@ -105,6 +114,7 @@
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
 				$scope.getDayClass = GetDayClass;
+				$scope.getPlaceholder = GetPlaceholder;
 				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
