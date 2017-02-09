@@ -67,14 +67,25 @@
 
                     scope.$watch("status.opened", function (bolNewValue) {
                     	scope.isOpen = bolNewValue;
-                        if (bolNewValue === false && scope.range) {
+                        if (bolNewValue === false) {
 
-                            if (scope.intRangeClickCounter === 1) {
+                        	scope.clicked = false;
+
+                            if (scope.range && scope.intRangeClickCounter === 1) {
                                 scope.date = [scope.pickerDate, scope.pickerDate];
                                 scope.update();
                             }
 
                         }
+                    });
+
+                    scope.$watch("date", function () {
+
+                    	if(!scope.range) {
+							scope.pickerDate = scope.date;
+							scope.datePlaceholder = scope.getPlaceholder();
+                        }
+
                     });
 
                 });
@@ -104,7 +115,9 @@
 				$scope.open = Open;
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
+                $scope.clicked = false;
 				$scope.getDayClass = GetDayClass;
+				$scope.getPlaceholder = GetPlaceholder;
 				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
@@ -182,7 +195,7 @@
 			 *
 			 * Método também faz o update do placeholder, chamando o método GetPlaceholder.
 			 */
-			function Update() {
+			function Update(bolWasClicked) {
 				if (bolIsRange) {
 					intRangeClickCounter++;
 
@@ -210,6 +223,7 @@
 					$scope.intRangeClickCounter = intRangeClickCounter;
 				} else {
 					$scope.date = $scope.pickerDate;
+                    $scope.clicked = bolWasClicked;
 				}
 
 				$scope.datePlaceholder = GetPlaceholder();
@@ -271,7 +285,10 @@
 
                         $scope.daysWithStatus = [];
                         var objLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDateAdjusted);
-                        GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
+
+                        if( $scope.status.opened && !$scope.clicked) {
+                        	GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
+                        }
 
                     } else {
                         arrMonthFirstDay = [];

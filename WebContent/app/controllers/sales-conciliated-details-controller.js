@@ -43,7 +43,8 @@
         }
 
         function GetDetails() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
 
             $timeout(function () {
 
@@ -154,7 +155,7 @@
                         GetDetails();
                         ResetSelection();
                         UpdateHeader();
-                        objVm.getSales();
+                        objVm.search();
                         $uibModalInstance.close();
                     });
                 }
@@ -170,7 +171,7 @@
         }
 
         function UpdateHeader() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
             var objFilter = {
                 conciliationStatus: 'CONCILIED',
                 startDate: strDate,
