@@ -40,7 +40,7 @@
          */
         function GetFilters() {
             filtersService.GetCardProductDeferred().then(function (objCardProducts) {
-                $scope.filter.cardProductsData = filtersService.TransformDeferredDataInArray(objCardProducts, 'name');
+                $scope.filter.cardProductsData = filtersService.TransformDeferredDataInArray(objCardProducts, 'name', 'acquirers');
 
                 filtersService.GetTerminalDeferred().then(function (objTerminals) {
                     $scope.filter.terminalsData = filtersService.TransformDeferredDataInArray(objTerminals, 'code', 'pvId');

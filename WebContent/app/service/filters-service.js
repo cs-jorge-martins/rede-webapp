@@ -13,7 +13,7 @@ angular.module('Conciliador.filtersService', [])
 	var strUrlAcquirers = app.endpoint + '/pvs/acquirers';
 	var strUrlAccounts = app.endpoint + '/pvs/bankaccounts';
 	var strUrlShops = app.endpoint + '/pvs/shops';
-	var strUrlCardProducts = app.endpoint + '/cardproducts';
+	var strUrlCardProducts = app.endpoint + '/pvs/cardproducts';
 	var strUrlTerminals = app.endpoint + '/pvs/terminals';
 
 	this.GetAcquirers = function() {

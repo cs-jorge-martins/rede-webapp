@@ -78,6 +78,7 @@
         objVm.removeUnprocessed = RemoveUnprocessed;
         objVm.details = Details;
         objVm.acquirersFilterExpression = AcquirersFilterExpression;
+        objVm.acquirersCardProductFilterExpression = AcquirersCardProductFilterExpression;
 
         objVm.countButtonLabelPrefix = 'conciliar';
 
@@ -420,6 +421,26 @@
                     || ((index = $scope.filter.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
                         || ($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id), 1));
         }
+        
+        /**
+         * @method AcquirersCardProductFilterExpression
+         * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos na lista de bandeira
+         */
+        function AcquirersCardProductFilterExpression(objCard) {
+            return  !$scope.filter.acquirersModel.length
+                    || CompareArrayAcquirers($scope.filter.acquirersModel, objCard.acquirers)
+                        || ($scope.filter.cardProductsModel.map(a => a.id).indexOf(objCard.id) !== -1
+                            && !$scope.filter.cardProductsModel.splice($scope.filter.cardProductsModel.map(a => a.id).indexOf(objCard.id), 1));
+        }
 
+        function CompareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
+            var bolResponse = false;
+            angular.forEach(arrAcquirers, function(objAcq, keyAcq) {
+                angular.forEach(arrAcquirersCard, function(objAcqCard, keyCard) {
+                    bolResponse = bolResponse || (objAcq.id === objAcqCard.id);
+                });
+            });
+            return bolResponse;
+        }
     }
 })();
