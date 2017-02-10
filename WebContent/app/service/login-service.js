@@ -9,7 +9,7 @@ angular.module('Conciliador.loginService',[])
 
 }])
 
-.service('loginService', function(app, $http, Request) {
+.service('loginService', function(app, $http, Request, $window) {
 
 	this.ValidarLogin = function(objUser) {
         var strUrl = app.login.endpoint + '/login';
@@ -33,7 +33,7 @@ angular.module('Conciliador.loginService',[])
 				'Content-type': 'application/json',
 				'authorization': strToken
 		};
-		
+
 		//hotfix/623674
 		//No caso do singlesignon, o "authorization" já esta setado
 		if(angular.isDefined($window.sessionStorage.token)){
