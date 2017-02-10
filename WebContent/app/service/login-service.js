@@ -35,9 +35,9 @@ angular.module('Conciliador.loginService',[])
 		};
 
 		//hotfix/623674
-		//No caso do singlesignon, o "authorization" já esta setado
+		//No caso do singlesignon, remove o token antigo
 		if(angular.isDefined($window.sessionStorage.token)){
-			header = {'Content-type': 'application/json'};
+			delete $window.sessionStorage.token;
 		}
 
 		return $http({
