@@ -1,0 +1,249 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+ .rc-downloader-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+ }
+
+.rc-downloader {
+    position: absolute;
+    width: 30.8em;
+    right: 6.2em;
+    top: 0;
+    background: #fff;
+    box-shadow: 0 0 6px 0 rgba(183, 179, 179, 0.36);
+    margin-top: -4em;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+
+    &.closed {
+        .header {
+            &:after {
+                content: '\e9ce';
+            }
+        }
+
+        &:hover {
+            margin-top: -4.3em;
+        }
+
+        &.flick {
+            -webkit-animation: .3s flick ease-in;
+            animation: .3s flick ease-in;
+        }
+    }
+
+    &.opened {
+        .header {
+            &:after {
+                content: '\e9cc';
+            }
+        }
+    }
+
+    &.no-itens {
+        top: 4.2em !important;
+    }
+
+    .header {
+        color: #fff;
+        font-size: 1.13em;
+        font-family: $fontSemiBold;
+        color: #fff;
+        padding: 1.1em 4em 1.1em 4.7em;
+        position: relative;
+        display: block;
+        text-decoration: none;
+
+        transition: background .2s ease-out;
+        -webkit-transition: background .2s ease-out;
+
+        &:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        &:before, &:after {
+            content: '';
+            display: block;
+            font-family: $fontItau;
+            position: absolute;
+        }
+
+        &:before {
+            float: left;
+            left: .5em;
+            top: .3em;
+            font-size: 2.2em;
+        }
+
+        &:after {
+            float: right;
+            right: 1.3em;
+            top: .5em;
+            font-size: 1.7em;
+        }
+
+        &.error {
+            background: $rcDownloaderErrorColor;
+
+            &:before {
+                content: "\e94f";
+            }
+        }
+
+        &.warning {
+            background: $rcDownloaderWarningColor;
+
+            &:before {
+                content: "\e927";
+            }
+        }
+
+        &.loading {
+            background: $rcDownloaderLoadingColor;
+
+            &:before {
+                content: "\e993";
+            }
+        }
+    }
+
+    .footer {
+        color: #575758;
+        font-size: .9em;
+        padding: 0 1.5em 1.5em 1.5em;
+    }
+
+    .content-scroll {
+        margin: 1em .5em 1em .5em;
+        max-height: 13em;
+        position: relative;
+    }
+
+    .content {
+        min-height: 14.7em;
+    }
+
+    .item {
+
+        position: relative;
+        margin-bottom: 1.5em;
+        overflow: hidden;
+
+        &:last-of-type {
+            margin-bottom: 0;
+
+            .actions {
+                margin-bottom: 0;
+            }
+        }
+
+        &.ng-leave {
+            -webkit-animation:0.5s delete ease-in-out;
+            animation:0.5s delete ease-in-out;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin: 1.1em 0;
+            padding-left: 5em;
+
+            strong {
+                color: #b9b8b8;
+                padding-right: 0.6em;
+            }
+        }
+
+        &:before {
+            font-family: $fontItau;
+            display: block;
+            color: #b9b8b8;
+            position: absolute;
+            font-size: 2.8em;
+            left: .2em;
+            top: .5em;
+        }
+
+        &.processing,
+        &.initialized {
+            &:before {
+                content: '\e914';
+                -webkit-animation: spin 2.5s linear infinite;
+                animation: spin 2.5s linear infinite;
+            }
+        }
+
+        &.done {
+            &:before {
+                content: '\e9ca';
+            }
+        }
+
+        &.error {
+            &:before {
+                content: '\e956';
+            }
+        }
+
+        .actions {
+            margin: 1.2em 0 0;
+
+            [class*="col-"] {
+                padding: 0.9em;
+            }
+        }
+    }
+
+    .btn-block + .btn-block {
+        margin-top: 0;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes delete {
+    from {
+        opacity: 1;
+        height: 13.1em;
+        top: 0;
+    }
+    to {
+        opacity: 0;
+        height: 0;
+        top: -20em;
+    }
+}
+
+@keyframes flick {
+    0% {
+        margin-top: -4em;
+    }
+    35% {
+        margin-top: -4.7em;
+    }
+    60% {
+        margin-top: -4em;
+    }
+    80% {
+        margin-top: -4.3em;
+    }
+    100% {
+        margin-top: -4em;
+    }
+}
