@@ -7,27 +7,19 @@
 
 /**
  * @class Conciliador.RcSort
- * @extends ui.bootstrap.uib-pagination
- * Diretiva de paginação
+ * Diretiva de ordenaçao
  *
- * Essa diretiva é usada para fazer a paginação de dados.
- * O retorno principal desta diretiva é o model: resultsPerPageModel && resultsPageModel
- * utilizados como size && page nas chamadas, respectivamente.
- * @param {Number} resultsPerPageModel model que retorna o size das chamadas na api
- * @param {Number} resultsPageModel model que retorna o page das chamadas na api
- * @param {Number} resultsPaginationTotalItens número total de itens da chamada
- * @param {Number} maxSize quantidade máxima de números visíveis para paginação
- * @param {Function} onChange método a ser executado ao realizar alguma ação no bloco de paginação
+ * Essa diretiva é usada para fazer a ordenação de dados.
+ * O retorno principal desta diretiva é o model: sortBy.
+ * O objeto sortBy deve ter 2 argumentos: type && order, onde type é o nome do campo de sorte e order é ASC ou DESC.
+ * @param {Object} sortBy objeto de 2 vias para ser alterado o resultado
+ * @param {String} sortType nome do campo para alterar no objeto sortBy ao ser clicado
+ * @param {Function} sortOnClick método a ser executado ao realizar quando a ordenação for clicada
  *
  * Exemplo:
  *
  *     @example
- *     <rc-pagination
- *     		results-per-page-model="vm.testeResultsPerPageModel"
- *     		results-page-model="vm.testeResultsPageModel"
- *     		results-pagination-total-itens="vm.testeResultsTotalItens"
- *     		max-size="'4'"
- *     		on-change="vm.myMethod" ></rc-pagination>
+ *     <th rc-sort sort-type="hour" sort-by="sort" sort-on-click="getDetails()">
  */
 (function() {
 
@@ -42,36 +34,46 @@
 	function RcSort() {
 
 		return {
-			restrict: 'E',
-			templateUrl: 'app/views/directives/rc-sort.html',
+			restrict: 'A',
 			scope: {
                 sortBy: '=',
-				type: '@',
-				text: '@',
-				onClick: '&'
+				sortType: '@',
+				sortOnClick: '&'
 			},
-			controller: Controller,
-            link: function(scope, element, attrs, ctrl, transclude) {
-                element.ready(function () {
-
-                	console.log("dentro do elemento")
-
-                    scope.$watch('sortBy', function (strNewValue) {
-
-                        // se tiver classe sort-desc ou sort-asc && sortBy !== type
-						if(1+1==2) {
-                            // retira a classe específica do th
-						}
-
-                    });
-
-                });
-            }
+            link: Link
 		};
 
-		function Controller($scope) {
+		function Link(scope, element) {
 
-			/** TODO: Verificar como trabalhar com o sortBy.value no CheckSortType **/
+            var objTh = element[0];
+            objTh.classList.add('rc-sort');
+
+            var strDescClass = 'sort-desc';
+            var strAscClass = 'sort-asc';
+            var bolHasDescClass = objTh.classList.contains(strDescClass);
+            var bolHasAscClass = objTh.classList.contains(strAscClass);
+
+            element.ready(function () {
+
+                scope.$watch('sortBy.type', function (strNewValue) {
+
+                    bolHasDescClass = objTh.classList.contains(strDescClass);
+                    bolHasAscClass = objTh.classList.contains(strAscClass);
+
+                    if((bolHasAscClass || bolHasDescClass) && scope.sortBy.type !== scope.sortType) {
+                        objTh.classList.remove(strAscClass);
+                        objTh.classList.remove(strDescClass);
+                    }
+
+                });
+
+                element.on('click', function() {
+                    ChangeSortObject();
+                    CheckSortType();
+                    scope.sortOnClick();
+                });
+
+            });
 
             Init();
 
@@ -81,15 +83,28 @@
 
             function CheckSortType() {
 
-				if($scope.sortBy && $scope.sortBy.type === $scope.type) {
+                bolHasDescClass = element[0].classList.contains(strDescClass);
 
-					// checa se existe a classe sort-desc || sort-asc e faz a troca entre eles
-					if(1+1===2) {
+				if(scope.sortBy && scope.sortBy.type === scope.sortType) {
 
+					if(bolHasDescClass) {
+						objTh.classList.remove(strDescClass);
+						objTh.classList.add(strAscClass);
+					} else {
+                        objTh.classList.remove(strAscClass);
+                        objTh.classList.add(strDescClass);
 					}
 
-				}
+				} else {
+                    objTh.classList.remove(strDescClass);
+                    objTh.classList.remove(strAscClass);
+                }
 
+            }
+
+            function ChangeSortObject() {
+                scope.sortBy.type = scope.sortType;
+                scope.sortBy.order = bolHasDescClass ? 'DESC' : 'ASC';
             }
 
 		}
