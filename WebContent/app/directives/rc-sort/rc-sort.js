@@ -40,79 +40,136 @@
 				sortType: '@',
 				sortOnClick: '&'
 			},
+            controller: Controller,
             link: Link
 		};
 
 		function Link(scope, element) {
 
-            var objTh = element[0];
-            objTh.classList.add('rc-sort');
-
-            var strDescClass = 'sort-desc';
-            var strAscClass = 'sort-asc';
-            var bolHasDescClass = objTh.classList.contains(strDescClass);
-            var bolHasAscClass = objTh.classList.contains(strAscClass);
+            scope.sortElement = element[0];
+            scope.sortElement.classList.add('rc-sort');
 
             element.ready(function () {
 
-                var strInitialClass;
-
-                if(scope.sortBy.type === scope.sortType) {
-                    strInitialClass = scope.sortBy.order === "DESC" ? strDescClass : strAscClass;
-                    objTh.classList.add(strInitialClass);
-                }
+                scope.verifyActiveSortBy();
 
                 scope.$watch('sortBy.type', function (strNewValue) {
 
-                    bolHasDescClass = objTh.classList.contains(strDescClass);
-                    bolHasAscClass = objTh.classList.contains(strAscClass);
-
-                    if((bolHasAscClass || bolHasDescClass) && scope.sortBy.type !== scope.sortType) {
-                        objTh.classList.remove(strAscClass);
-                        objTh.classList.remove(strDescClass);
+                    if(
+                        (scope.hasClassOnElement(scope.strDescClass) || scope.hasClassOnElement(scope.strAscClass))
+                        && scope.sortBy.type !== scope.sortType
+                    ) {
+                        scope.removeClassFromElement(scope.strAscClass);
+                        scope.removeClassFromElement(scope.strDescClass);
                     }
 
                 });
 
                 element.on('click', function() {
-                    ChangeSortObject();
-                    CheckSortType();
+                    scope.changeSortObject();
+                    scope.checkSortType();
                     scope.sortOnClick();
                 });
 
             });
 
-			function Init() {
+		}
+		
+		function Controller($scope) {
+
+            $scope.checkSortType = CheckSortType;
+            $scope.changeSortObject = ChangeSortObject;
+            $scope.hasClassOnElement = HasClassOnElement;
+            $scope.removeClassFromElement = RemoveClassFromElement;
+            $scope.addClassOnElement = AddClassOnElement;
+            $scope.verifyActiveSortBy = VerifyActiveSortBy;
+            $scope.strDescClass = 'sort-desc';
+            $scope.strAscClass = 'sort-asc';
+
+		    Init();
+
+            function Init() {
+
             }
 
+            /**
+             * @method CheckSortType
+             * Verifica se é o Sort ativo e adiciona ou remove as classes de sort.
+             */
             function CheckSortType() {
 
-                bolHasDescClass = element[0].classList.contains(strDescClass);
+                if($scope.sortBy && $scope.sortBy.type === $scope.sortType) {
 
-				if(scope.sortBy && scope.sortBy.type === scope.sortType) {
+                    if(HasClassOnElement($scope.strDescClass)) {
+                        RemoveClassFromElement($scope.strDescClass);
+                        AddClassOnElement($scope.strAscClass);
+                    } else {
+                        RemoveClassFromElement($scope.strAscClass);
+                        AddClassOnElement($scope.strDescClass);
+                    }
 
-					if(bolHasDescClass) {
-						objTh.classList.remove(strDescClass);
-						objTh.classList.add(strAscClass);
-					} else {
-                        objTh.classList.remove(strAscClass);
-                        objTh.classList.add(strDescClass);
-					}
-
-				} else {
-                    objTh.classList.remove(strDescClass);
-                    objTh.classList.remove(strAscClass);
+                } else {
+                    RemoveClassFromElement($scope.strDescClass);
+                    RemoveClassFromElement($scope.strAscClass);
                 }
 
             }
 
+            /**
+             * @method ChangeSortObject
+             * Modifica o objeto na camada da diretiva e na camada de origem.
+             */
             function ChangeSortObject() {
-                bolHasDescClass = element[0].classList.contains(strDescClass);
-                scope.sortBy.type = scope.sortType;
-                scope.sortBy.order = bolHasDescClass ? 'DESC' : 'ASC';
+                $scope.sortBy.type = $scope.sortType;
+                $scope.sortBy.order = HasClassOnElement($scope.strDescClass) ? 'DESC' : 'ASC';
             }
 
-		}
+            /**
+             * @method VerifyActiveSortBy
+             * Verifica se é o sortBy ativo
+             */
+            function VerifyActiveSortBy() {
+
+                var strInitialClass;
+
+                if($scope.sortBy.type === $scope.sortType) {
+                    strInitialClass = $scope.sortBy.order === "DESC" ? $scope.strDescClass : $scope.strAscClass;
+                    AddClassOnElement(strInitialClass);
+                }
+
+            }
+
+            /**
+             * @method HasClassOnElement
+             * Verifica se existe a classe no elemento principal
+             *
+             * @param {String} strClass nome da classe para verificar a existência
+             */
+            function HasClassOnElement(strClass) {
+                return $scope.sortElement.classList.contains(strClass);
+            }
+
+            /**
+             * @method RemoveClassFromElement
+             * Remove a classe do elemento principal
+             *
+             * @param {String} strClass nome da classe para deletar do elemento
+             */
+            function RemoveClassFromElement(strClass) {
+                $scope.sortElement.classList.remove(strClass);
+            }
+
+            /**
+             * @method AddClassOnElement
+             * Adiciona a classe do elemento principal
+             *
+             * @param {String} strClass nome da classe para adicionar no elemento
+             */
+            function AddClassOnElement(strClass) {
+                $scope.sortElement.classList.add(strClass);
+            }
+            
+        }
 
 	}
 
