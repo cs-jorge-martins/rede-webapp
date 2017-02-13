@@ -55,6 +55,13 @@
 
             element.ready(function () {
 
+                var strInitialClass;
+
+                if(scope.sortBy.type === scope.sortType) {
+                    strInitialClass = scope.sortBy.order === "DESC" ? strDescClass : strAscClass;
+                    objTh.classList.add(strInitialClass);
+                }
+
                 scope.$watch('sortBy.type', function (strNewValue) {
 
                     bolHasDescClass = objTh.classList.contains(strDescClass);
@@ -75,10 +82,7 @@
 
             });
 
-            Init();
-
 			function Init() {
-                CheckSortType();
             }
 
             function CheckSortType() {
@@ -103,6 +107,7 @@
             }
 
             function ChangeSortObject() {
+                bolHasDescClass = element[0].classList.contains(strDescClass);
                 scope.sortBy.type = scope.sortType;
                 scope.sortBy.order = bolHasDescClass ? 'DESC' : 'ASC';
             }
