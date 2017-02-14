@@ -78,9 +78,9 @@
                         }
                     });
 
-                    scope.$watch('ready', function (GetDayClass) {
+                    scope.$watch('ready', function (bolReady) {
 
-                        if(GetDayClass) {
+                        if(bolReady) {
                             scope.hideLineCalendar();
                         }
 
@@ -631,40 +631,41 @@
 
             function HideLineCalendar() {
 
-                var arrowElement1 = $scope.elem.querySelector('.pull-left');
-                var arrowElement2 = $scope.elem.querySelector('.pull-right');
+                var objArrowElementLeft = $scope.elem.querySelector('.pull-left');
+                var objArrowElementRight = $scope.elem.querySelector('.pull-right');
 
-                function calcHideLine() {
+                function CalcHideLine() {
 
-                    var count 		= 0;
-                    // var lastLine 	= $scope.elem.querySelector('.uib-weeks:last-of-type');
-                    var lastLine 	= $scope.elem.querySelector('.uib-weeks');
-                    var tds 		= lastLine.querySelectorAll(".uib-day");
+                    var intCount 		= 0;
+                    var objLastLine 	= $scope.elem.querySelector('.uib-weeks:last-of-type');
+                    var objTds 		= objLastLine.querySelectorAll(".uib-day");
 
-                    tds.forEach(function (td) {
-                    	var qtdTD = td.querySelector("span");
-                        if (qtdTD.classList.contains('text-muted') ) {
-                        	count++;
-                            // console.log(">>>>>>>", count);
+                    objTds.forEach(function (objTd) {
+
+                    	var objSpan = objTd.querySelector("span");
+                        var intDay = parseInt(objSpan.innerHTML);
+
+                        
+                        console.log("intDay", intDay)
+                        
+                        console.log("intDay > 15", intDay > 15)
+                        
+                        if ( intDay < 15 ) {
+                            intCount++;
                         }
+
                     });
 
-					if (count === 7) {
-                        console.log("É IGUAL" ,count);
-					} else if (count > 7) {
-                        console.log("É MAIOR" ,count);
+					if (intCount === 7) {
+                        console.log("igual a 7")
 					} else {
-                        console.log("É MENOR" ,count);
+                    	console.log("diferente de 7")
 					}
 
-                    // if(count === 7) {
-                        // console.log("CONSOLE" ,count);
-                        // lastLine.classList.toggle("not_visible");
-                    // }
                 }
 
-                arrowElement1.addEventListener("click", calcHideLine, true);
-                arrowElement2.addEventListener("click", calcHideLine, true);
+                objArrowElementLeft.addEventListener("click", CalcHideLine, true);
+                objArrowElementRight.addEventListener("click", CalcHideLine, true);
 
 			}
 		}
