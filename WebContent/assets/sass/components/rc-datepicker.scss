@@ -321,7 +321,19 @@
 
         }
 
+        .not_visible:last-of-type {
+            display: none;
+        }
         .uib-weeks {
+
+            .uib-day {
+                .btn {
+                    .text-muted {
+                        display: none;
+                    }
+                }
+            }
+
             td:first-of-type {
                 margin-left: 1.4em;
                 display: inline-block;
@@ -329,10 +341,6 @@
             td:last-of-type {
                 padding-right: 1.4em;
             }
-        }
-
-        .text-muted {
-            color: #ddd;
         }
 
         .glyphicon {

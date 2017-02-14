@@ -57,6 +57,8 @@
 
 				element.ready(function () {
 
+                    scope.elem = element[0];
+
                     scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
 
                         if (arrDaysWithStatus && arrDaysWithStatus.length) {
@@ -73,12 +75,17 @@
                                 scope.date = [scope.pickerDate, scope.pickerDate];
                                 scope.update();
                             }
-
                         }
                     });
 
-                });
+                    scope.$watch('ready', function (GetDayClass) {
 
+                        if(GetDayClass) {
+                            scope.hideLineCalendar();
+                        }
+
+                    });
+                });
 			}
 		};
 
@@ -102,9 +109,11 @@
 				$scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
+                $scope.ready = false;
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
 				$scope.getDayClass = GetDayClass;
+				$scope.hideLineCalendar = HideLineCalendar;
 				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
@@ -172,7 +181,6 @@
 				if (bolIsRange) {
 					intRangeClickCounter = 0;
 				}
-
             }
 
 			/**
@@ -260,6 +268,8 @@
                 var arrNoCurrent;
                 var arrBallClass;
                 var arrCurrentDate;
+
+                $scope.ready = true;
 
                 bolFirstDayOfMonth = calendarFactory.isFirstDayOfMonth(objDateAdjusted);
 
@@ -618,6 +628,45 @@
 
             }
 
+
+            function HideLineCalendar() {
+
+                var arrowElement1 = $scope.elem.querySelector('.pull-left');
+                var arrowElement2 = $scope.elem.querySelector('.pull-right');
+
+                function calcHideLine() {
+
+                    var count 		= 0;
+                    // var lastLine 	= $scope.elem.querySelector('.uib-weeks:last-of-type');
+                    var lastLine 	= $scope.elem.querySelector('.uib-weeks');
+                    var tds 		= lastLine.querySelectorAll(".uib-day");
+
+                    tds.forEach(function (td) {
+                    	var qtdTD = td.querySelector("span");
+                        if (qtdTD.classList.contains('text-muted') ) {
+                        	count++;
+                            // console.log(">>>>>>>", count);
+                        }
+                    });
+
+					if (count === 7) {
+                        console.log("É IGUAL" ,count);
+					} else if (count > 7) {
+                        console.log("É MAIOR" ,count);
+					} else {
+                        console.log("É MENOR" ,count);
+					}
+
+                    // if(count === 7) {
+                        // console.log("CONSOLE" ,count);
+                        // lastLine.classList.toggle("not_visible");
+                    // }
+                }
+
+                arrowElement1.addEventListener("click", calcHideLine, true);
+                arrowElement2.addEventListener("click", calcHideLine, true);
+
+			}
 		}
 	}
 
