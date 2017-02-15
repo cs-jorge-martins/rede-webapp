@@ -436,6 +436,19 @@ angular.module('Kaplen.CalendarFactory',[])
 
     }
 
+    function IsFirstDayOrLastDayOfMonth(date) {
+
+		var objMomentDate = moment(date).startOf('day');
+		var objMomentMonthDate = moment(date).startOf('month');
+		var objMomentLastDate = moment(date).endOf('day');
+		var objMomentLastMonthDate = moment(date).endOf('month');
+		
+        return objMomentDate.diff(objMomentMonthDate, 'hours') === 0 ||
+            objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
+
+
+    }
+
 	function TransformBrDateIntoDate(date) {
 		if(date) {
 		var arrParts = date.split("/");
@@ -503,6 +516,7 @@ angular.module('Kaplen.CalendarFactory',[])
         isInBetween: IsInBetween,
         isEqualDate: IsEqualDate,
         isFirstDayOfMonth: IsFirstDayOfMonth,
+        isFirstDayOrLastDayOfMonth: IsFirstDayOrLastDayOfMonth,
         getFirstHourFromDate: GetFirstHourFromDate
 	};
 });

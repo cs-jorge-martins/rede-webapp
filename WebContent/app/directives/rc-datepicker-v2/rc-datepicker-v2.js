@@ -77,14 +77,6 @@
                             }
                         }
                     });
-
-                    scope.$watch('ready', function (bolReady) {
-
-                        if(bolReady) {
-                            scope.hideLineCalendar();
-                        }
-
-                    });
                 });
 			}
 		};
@@ -98,9 +90,10 @@
 			var objRangeEndDate;
 			var intRangeClickCounter;
 			var bolFirstDayOfMonth;
-			var objLeftArrow;
-			var objRightArrow;
 			var arrMonthFirstDay = [];
+			var bolCurrentMonth = false;
+			var countFirstDay = 0;
+			var countGetDayClass = 0;
 
 			Init();
 
@@ -109,11 +102,9 @@
 				$scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
-                $scope.ready = false;
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
 				$scope.getDayClass = GetDayClass;
-				$scope.hideLineCalendar = HideLineCalendar;
 				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
@@ -267,14 +258,14 @@
                 var arrRangeClasses;
                 var arrNoCurrent;
                 var arrBallClass;
-                var arrCurrentDate;
+                var arrInvisibleClass;
 
-                $scope.ready = true;
+                countGetDayClass++;
 
                 bolFirstDayOfMonth = calendarFactory.isFirstDayOfMonth(objDateAdjusted);
 
                 if($scope.statusType && bolFirstDayOfMonth) {
-
+                    
                     arrMonthFirstDay.push(true);
 
                     if(arrMonthFirstDay.length === 1) {
@@ -289,11 +280,31 @@
 
                 }
 
+                if(bolFirstDayOfMonth) {
+                	countFirstDay++;
+                    bolCurrentMonth = true;
+				}
+
+                if(bolFirstDayOfMonth && bolCurrentMonth === true && countFirstDay > 1) {
+                    bolCurrentMonth = false;
+                    countFirstDay = 0;
+                }
+
+                arrInvisibleClass = GetInvisibleClass(bolCurrentMonth, countGetDayClass);
+
+                if(countGetDayClass === 42) {
+                    countGetDayClass = 0;
+                }
+
                 arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
                 arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
                 arrNoCurrent= GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
 
                 arrClasses.push(GetCurrentDateClass(objDateAdjusted));
+
+                arrInvisibleClass.forEach(function (strInvisibleClass) {
+                    arrClasses.push(strInvisibleClass);
+                });
 
                 arrRangeClasses.forEach(function (strRangeClass) {
                     arrClasses.push(strRangeClass);
@@ -309,6 +320,22 @@
 
 				return _.uniq(arrClasses).join(" ");
 			}
+			
+			function GetInvisibleClass(bolCurrentMonth, countGetDayClass) {
+				
+				var arrClasses = [];
+
+                if(!bolCurrentMonth) {
+                    if(countGetDayClass < 20) {
+                        arrClasses.push('invisible');
+                    } else {
+                        arrClasses.push('hidden');
+                    }
+                }
+                
+                return arrClasses;
+                
+            }
 
             /**
              * @method GetBallClass
@@ -350,18 +377,19 @@
 				if(bolIsRange && intRangeClickCounter === 0) {
 
                     var weekDay = objDateAdjusted.getDay();
-                    var intStartDate = objRangeStartDate.getTime();
-                    var intEndDate = objRangeEndDate.getTime();
-
+                    var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
+                    
                     if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
-                        if (weekDay === 1)  {
+                        if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2)  {
                             arrClasses.push('ball');
-                        } else if (weekDay === 0) {
+                        } else if (weekDay === 0 || bolFirstOrLastDay && weekDay === 2) {
                             arrClasses.push('bar');
                             arrClasses.push('consecutive-days');
                         } else{
-                            arrClasses.push('bar');
+                        	if(!bolFirstOrLastDay) {
+                            	arrClasses.push('bar');
+                            }
                         }
 
                     }
@@ -628,46 +656,6 @@
 
             }
 
-
-            function HideLineCalendar() {
-
-                var objArrowElementLeft = $scope.elem.querySelector('.pull-left');
-                var objArrowElementRight = $scope.elem.querySelector('.pull-right');
-
-                function CalcHideLine() {
-
-                    var intCount 		= 0;
-                    var objLastLine 	= $scope.elem.querySelector('.uib-weeks:last-of-type');
-                    var objTds 		= objLastLine.querySelectorAll(".uib-day");
-
-                    objTds.forEach(function (objTd) {
-
-                    	var objSpan = objTd.querySelector("span");
-                        var intDay = parseInt(objSpan.innerHTML);
-
-                        
-                        console.log("intDay", intDay)
-                        
-                        console.log("intDay > 15", intDay > 15)
-                        
-                        if ( intDay < 15 ) {
-                            intCount++;
-                        }
-
-                    });
-
-					if (intCount === 7) {
-                        console.log("igual a 7")
-					} else {
-                    	console.log("diferente de 7")
-					}
-
-                }
-
-                objArrowElementLeft.addEventListener("click", CalcHideLine, true);
-                objArrowElementRight.addEventListener("click", CalcHideLine, true);
-
-			}
 		}
 	}
 
