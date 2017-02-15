@@ -1,7 +1,7 @@
 /*
-	Projeto: conciliation
-	Author/Empresa: Rede
-	Copyright (C) 2016 Redecard S.A.
+ Projeto: conciliation
+ Author/Empresa: Rede
+ Copyright (C) 2016 Redecard S.A.
  */
 
 
@@ -49,47 +49,45 @@
 				maxDate: '=',
 				showNextDatesFilter: '=',
 				showPreviousDatesFilter: '=',
-                statusType: '=?',
+				statusType: '=?',
 				isOpen: '=?'
-            },
+			},
 			controller: Controller,
 			link: function(scope, element, attrs, ctrl) {
 
 				element.ready(function () {
 
-                    scope.elem = element[0];
+					scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
 
-                    scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
+						if (arrDaysWithStatus && arrDaysWithStatus.length) {
+							ctrl.addStatusCLass(arrDaysWithStatus, element);
+						}
 
-                        if (arrDaysWithStatus && arrDaysWithStatus.length) {
-                            ctrl.addStatusCLass(arrDaysWithStatus, element);
-                        }
+					});
 
-                    });
+					scope.$watch("status.opened", function (bolNewValue) {
+						scope.isOpen = bolNewValue;
+						if (bolNewValue === false) {
 
-                    scope.$watch("status.opened", function (bolNewValue) {
-                    	scope.isOpen = bolNewValue;
-                        if (bolNewValue === false) {
+							scope.clicked = false;
 
-                        	scope.clicked = false;
+							if (scope.range && scope.intRangeClickCounter === 1) {
+								scope.date = [scope.pickerDate, scope.pickerDate];
+								scope.update();
+							}
+						}
+					});
 
-                            if (scope.range && scope.intRangeClickCounter === 1) {
-                                scope.date = [scope.pickerDate, scope.pickerDate];
-                                scope.update();
-                            }
-                        }
-                    });
+					scope.$watch("date", function () {
 
-                    scope.$watch("date", function () {
-
-                    	if(!scope.range) {
+						if(!scope.range) {
 							scope.pickerDate = scope.date;
 							scope.datePlaceholder = scope.getPlaceholder();
-                        }
+						}
 
-                    });
+					});
 
-                });
+				});
 			}
 		};
 
@@ -110,13 +108,13 @@
 			Init();
 
 			function Init() {
-                $scope.daysWithStatus = [];
+				$scope.daysWithStatus = [];
 				$scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
 				$scope.update = Update;
 				$scope.closeOnSelection = true;
-                $scope.clicked = false;
+				$scope.clicked = false;
 				$scope.getDayClass = GetDayClass;
 				$scope.getPlaceholder = GetPlaceholder;
 				$scope.initialDate = angular.copy($scope.date);
@@ -129,7 +127,7 @@
 					maxMode: 'day',
 					customClass: GetDayClass,
 					dateFilter: DateFilter,
-                    activeDateFilter: 0
+					activeDateFilter: 0
 				};
 
 				if ($scope.minDate) {
@@ -145,8 +143,8 @@
 					$scope.dateOptions.showPreviousDatesFilter = true;
 				}
 				if($scope.statusType) {
-                    $scope.dateOptions.legendType = GetStatusClassType;
-                    $scope.dateOptions.legendLabel = GetStatusLabel;
+					$scope.dateOptions.legendType = GetStatusClassType;
+					$scope.dateOptions.legendLabel = GetStatusLabel;
 				}
 
 				if (bolIsRange) {
@@ -181,17 +179,17 @@
 			 */
 			function Open() {
 
-	    		$scope.status.opened = true;
+				$scope.status.opened = true;
 
 				if (bolIsRange) {
 					intRangeClickCounter = 0;
 				}
-            }
+			}
 
 			/**
 			 * @method Update
 			 * Contém a lógica para atualizar as datas do calendário (já faz o
-		 	 * tratamento diferenciando os tipos de calendário [normal, range]).
+			 * tratamento diferenciando os tipos de calendário [normal, range]).
 			 *
 			 * Método também faz o update do placeholder, chamando o método GetPlaceholder.
 			 */
@@ -202,7 +200,7 @@
 					switch (intRangeClickCounter) {
 						case 1:
 							objRangeStartDate = $scope.pickerDate;
-                            $scope.dateOptions.activeDateFilter = 0;
+							$scope.dateOptions.activeDateFilter = 0;
 							break;
 						case 2:
 
@@ -223,26 +221,26 @@
 					$scope.intRangeClickCounter = intRangeClickCounter;
 				} else {
 					$scope.date = $scope.pickerDate;
-                    $scope.clicked = bolWasClicked;
+					$scope.clicked = bolWasClicked;
 				}
 
 				$scope.datePlaceholder = GetPlaceholder();
 			}
 
-            /**
-             * @method addStatusCLass
-             * Contém a lógica para adicionar as classes referentes aos dias que
-             * contém status
-             *
-             * @param {Array} arrDaysWithStatus Array de objetos com dias + status
-             * @param {Object} objElement Elemento datepicker
-             */
-            this.addStatusCLass = function(arrDaysWithStatus, objElement) {
+			/**
+			 * @method addStatusCLass
+			 * Contém a lógica para adicionar as classes referentes aos dias que
+			 * contém status
+			 *
+			 * @param {Array} arrDaysWithStatus Array de objetos com dias + status
+			 * @param {Object} objElement Elemento datepicker
+			 */
+			this.addStatusCLass = function(arrDaysWithStatus, objElement) {
 
-                var strClassDate;
-                var objDateButton;
+				var strClassDate;
+				var objDateButton;
 
-                arrDaysWithStatus.forEach(function (objDay) {
+				arrDaysWithStatus.forEach(function (objDay) {
 
 					strClassDate = objDay.dateClass;
 					objDateButton = objElement[0].getElementsByClassName(strClassDate)[0];
@@ -250,11 +248,11 @@
 					if(objDateButton) {
 						objDateButton.classList.add("has-status");
 						objDateButton.classList.add(objDay.type);
-                    }
+					}
 
-                });
+				});
 
-            };
+			};
 
 			/**
 			 * @method GetDayClass
@@ -268,179 +266,187 @@
 			 */
 			function GetDayClass(date) {
 
-                var objDateAdjusted = date.date;
-                var arrClasses = [];
-                var arrRangeClasses;
-                var arrNoCurrent;
-                var arrBallClass;
-                var arrInvisibleClass;
+				var objDateAdjusted = date.date;
+				var arrClasses = [];
+				var arrRangeClasses;
+				var arrNoCurrent;
+				var arrBallClass;
+				var arrInvisibleClass;
 
-                countGetDayClass++;
+				countGetDayClass++;
 
-                bolFirstDayOfMonth = calendarFactory.isFirstDayOfMonth(objDateAdjusted);
+				bolFirstDayOfMonth = calendarFactory.isFirstDayOfMonth(objDateAdjusted);
 
-                if($scope.statusType && bolFirstDayOfMonth) {
-                    
-                    arrMonthFirstDay.push(true);
+				if($scope.statusType && bolFirstDayOfMonth) {
 
-                    if(arrMonthFirstDay.length === 1) {
+					arrMonthFirstDay.push(true);
 
-                        $scope.daysWithStatus = [];
-                        var objLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDateAdjusted);
+					if(arrMonthFirstDay.length === 1) {
 
-                        if( $scope.status.opened && !$scope.clicked) {
-                        	GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
-                        }
+						$scope.daysWithStatus = [];
+						var objLastDayOfMonth = calendarFactory.getLastDayOfMonth(objDateAdjusted);
 
-                    } else {
-                        arrMonthFirstDay = [];
-                    }
+						if( $scope.status.opened && !$scope.clicked) {
+							GetDaysPerStatus($scope.statusType, objDateAdjusted, objLastDayOfMonth);
+						}
 
-                }
+					} else {
+						arrMonthFirstDay = [];
+					}
 
-                if(bolFirstDayOfMonth) {
-                	countFirstDay++;
-                    bolCurrentMonth = true;
 				}
 
-                if(bolFirstDayOfMonth && bolCurrentMonth === true && countFirstDay > 1) {
-                    bolCurrentMonth = false;
-                    countFirstDay = 0;
-                }
+				if(bolFirstDayOfMonth) {
+					countFirstDay++;
+					bolCurrentMonth = true;
+				}
 
-                arrInvisibleClass = GetInvisibleClass(bolCurrentMonth, countGetDayClass);
+				if(bolFirstDayOfMonth && bolCurrentMonth === true && countFirstDay > 1) {
+					bolCurrentMonth = false;
+					countFirstDay = 0;
+				}
 
-                if(countGetDayClass === 42) {
-                    countGetDayClass = 0;
-                }
+				arrInvisibleClass = GetInvisibleClass(bolCurrentMonth, countGetDayClass);
 
-                arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
-                arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
-                arrNoCurrent= GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
+				if(countGetDayClass === 42) {
+					countGetDayClass = 0;
+				}
 
-                arrClasses.push(GetCurrentDateClass(objDateAdjusted));
+				arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
+				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
+				arrNoCurrent= GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
 
-                arrInvisibleClass.forEach(function (strInvisibleClass) {
-                    arrClasses.push(strInvisibleClass);
-                });
+				arrClasses.push(GetCurrentDateClass(objDateAdjusted));
 
-                arrRangeClasses.forEach(function (strRangeClass) {
-                    arrClasses.push(strRangeClass);
-                });
+				arrInvisibleClass.forEach(function (strInvisibleClass) {
+					arrClasses.push(strInvisibleClass);
+				});
 
-                arrNoCurrent.forEach(function (strNonCurrentClass) {
-                    arrClasses.push(strNonCurrentClass);
-                });
+				arrRangeClasses.forEach(function (strRangeClass) {
+					arrClasses.push(strRangeClass);
+				});
 
-                arrBallClass.forEach(function (strBallClass) {
-                    arrClasses.push(strBallClass);
-                });
+				arrNoCurrent.forEach(function (strNonCurrentClass) {
+					arrClasses.push(strNonCurrentClass);
+				});
+
+				arrBallClass.forEach(function (strBallClass) {
+					arrClasses.push(strBallClass);
+				});
 
 				return _.uniq(arrClasses).join(" ");
 			}
-			
+
+
+			/**
+			 * @method GetInvisibleClass
+			 * Método responsável por adicionar a classes de invisible / hidden nos tds do calendário.
+			 * @param {Boolean} bolCurrentMonth Verifica se a data específica é do mês corrente
+			 * @param {Number} countGetDayClass Numero do dia corrido no calendário, máximo 42
+			 * @return {Array} nome da classe
+			 */
 			function GetInvisibleClass(bolCurrentMonth, countGetDayClass) {
-				
+
 				var arrClasses = [];
 
-                if(!bolCurrentMonth) {
-                    if(countGetDayClass < 20) {
-                        arrClasses.push('invisible');
-                    } else {
-                        arrClasses.push('hidden');
-                    }
-                }
-                
-                return arrClasses;
-                
-            }
+				if(!bolCurrentMonth) {
+					if(countGetDayClass < 20) {
+						arrClasses.push('invisible');
+					} else {
+						arrClasses.push('hidden');
+					}
+				}
 
-            /**
-             * @method GetBallClass
-             * Contém a lógica para validar a data atual se é do tipo ball
-             * as datas do tipo ball, são as única selecionadas, segunda, domingo
+				return arrClasses;
+
+			}
+
+			/**
+			 * @method GetBallClass
+			 * Contém a lógica para validar a data atual se é do tipo ball
+			 * as datas do tipo ball, são as única selecionadas, segunda, domingo
 			 * e ultimas datas selecionadas
-             * @param {Boolean} bolIsRange Verifica se a diretiva é range
-             * @param {Object} objDateAdjusted Data que será validada
+			 * @param {Boolean} bolIsRange Verifica se a diretiva é range
+			 * @param {Object} objDateAdjusted Data que será validada
 			 * @return {Array} arrClasses Retorna a classe ball ou array vazio
-             */
+			 */
 			function GetBallClass(bolIsRange, objDateAdjusted) {
 
 				var arrClasses = [];
 
-                if (!bolIsRange && ($scope.date.getTime() == objDateAdjusted.getTime()) ) {
-                    arrClasses.push('ball');
-                }
+				if (!bolIsRange && ($scope.date.getTime() == objDateAdjusted.getTime()) ) {
+					arrClasses.push('ball');
+				}
 
-                return arrClasses;
+				return arrClasses;
 
-            }
+			}
 
-            /**
-             * @method GetRangeClasses
-             * Contém a lógica para validar as datas selecionadas se for range. Retorna um array
-             * que será usado para renderizar cada data, com as possíveis respostas:
-             * ball, bar, consecutive-days.
-             * @param {Boolean} bolIsRange Verifica se a diretiva é range
-             * @param {Number} intRangeClickCounter Quantidade de clicks registrado na função Update()
-             * @param {Date} objRangeStartDate Primeira data selecionada (range)
-             * @param {Date} objRangeEndDate Segunda data selecionada (range)
-             * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
-             * @return {Array} arrClasses Pode retornar as classes: ball, bar, consecutive-days ou array vazio.
-             */
+			/**
+			 * @method GetRangeClasses
+			 * Contém a lógica para validar as datas selecionadas se for range. Retorna um array
+			 * que será usado para renderizar cada data, com as possíveis respostas:
+			 * ball, bar, consecutive-days.
+			 * @param {Boolean} bolIsRange Verifica se a diretiva é range
+			 * @param {Number} intRangeClickCounter Quantidade de clicks registrado na função Update()
+			 * @param {Date} objRangeStartDate Primeira data selecionada (range)
+			 * @param {Date} objRangeEndDate Segunda data selecionada (range)
+			 * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
+			 * @return {Array} arrClasses Pode retornar as classes: ball, bar, consecutive-days ou array vazio.
+			 */
 			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
 
 				var arrClasses = [];
 
 				if(bolIsRange && intRangeClickCounter === 0) {
 
-                    var weekDay = objDateAdjusted.getDay();
-                    var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
-                    
-                    if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
+					var weekDay = objDateAdjusted.getDay();
+					var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
 
-                        if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2)  {
-                            arrClasses.push('ball');
-                        } else if (weekDay === 0 || bolFirstOrLastDay && weekDay === 2) {
-                            arrClasses.push('bar');
-                            arrClasses.push('consecutive-days');
-                        } else{
-                        	if(!bolFirstOrLastDay) {
-                            	arrClasses.push('bar');
-                            }
-                        }
+					if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
-                    }
-                    else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
-                        arrClasses.push('ball');
-                    }
-                    else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
+						if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2)  {
+							arrClasses.push('ball');
+						} else if (weekDay === 0 || bolFirstOrLastDay && weekDay === 2) {
+							arrClasses.push('bar');
+							arrClasses.push('consecutive-days');
+						} else{
+							if(!bolFirstOrLastDay) {
+								arrClasses.push('bar');
+							}
+						}
 
-                        if(weekDay !== 1) {
-                            arrClasses.push('bar');
-                            arrClasses.push('consecutive-days');
-                        } else {
-                            arrClasses.push('ball');
-                        }
+					}
+					else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
+						arrClasses.push('ball');
+					}
+					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
 
-                    }
+						if(weekDay !== 1) {
+							arrClasses.push('bar');
+							arrClasses.push('consecutive-days');
+						} else {
+							arrClasses.push('ball');
+						}
 
-                }
+					}
 
-                return arrClasses;
+				}
 
-            }
+				return arrClasses;
 
-            /**
-             * @method GetCurrentDateClass
-             * Contém a lógica para criar o nome de classe com o nome:
+			}
+
+			/**
+			 * @method GetCurrentDateClass
+			 * Contém a lógica para criar o nome de classe com o nome:
 			 * date-xxxxxxxxxxx, sendo o xx sendo substituido por timestamp,
 			 * para a data que está sendo percorrida pelo GetDayClass.
-             * @param {Date} objCurrentDate Data atual sendo tratada pela função GetDayClass
-             * @return {Array} arrClasses deve retornar a classe com o nome date-xxxx
+			 * @param {Date} objCurrentDate Data atual sendo tratada pela função GetDayClass
+			 * @return {Array} arrClasses deve retornar a classe com o nome date-xxxx
 			 * e o timestamp específico dela.
-             */
-            function GetCurrentDateClass(objCurrentDate) {
+			 */
+			function GetCurrentDateClass(objCurrentDate) {
 
 				var arrClasses = [];
 
@@ -449,37 +455,37 @@
 
 				return arrClasses;
 
-            }
+			}
 
-            /**
-             * @method GetNoCurrentClass
-             * Contém a lógica para adicionar a classe no-current para
+			/**
+			 * @method GetNoCurrentClass
+			 * Contém a lógica para adicionar a classe no-current para
 			 * datas que não foram selecionadas
-             *
-             * @param {Boolean} bolIsRange Verifica se a diretiva é range
-             * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
-             * @param {Date} objRangeStartDate Primeira data selecionada (range)
-             * @param {Date} objRangeEndDate Segunda data selecionada (range)
-             * @return {Array} arrClasses pode retornar o array com no-current ou vazio
-             */
-            function GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate) {
+			 *
+			 * @param {Boolean} bolIsRange Verifica se a diretiva é range
+			 * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
+			 * @param {Date} objRangeStartDate Primeira data selecionada (range)
+			 * @param {Date} objRangeEndDate Segunda data selecionada (range)
+			 * @return {Array} arrClasses pode retornar o array com no-current ou vazio
+			 */
+			function GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate) {
 
 				var arrClasses = [];
 				var bolCurrentDate;
 
 				if(bolIsRange) {
-                    bolCurrentDate = calendarFactory.isInBetween(objDateAdjusted, objRangeStartDate, objRangeEndDate);
-                } else {
+					bolCurrentDate = calendarFactory.isInBetween(objDateAdjusted, objRangeStartDate, objRangeEndDate);
+				} else {
 					bolCurrentDate = calendarFactory.isEqualDate(objDateAdjusted, $scope.pickerDate);
 				}
 
 				if (!bolCurrentDate) {
-                    arrClasses.push('no-current');
+					arrClasses.push('no-current');
 				}
 
-                return arrClasses;
+				return arrClasses;
 
-            }
+			}
 
 			/**
 			 * @method DateFilter
@@ -495,7 +501,7 @@
 			function DateFilter(days, strStartingDate, intActiveDateFilter) {
 
 				if(intActiveDateFilter) {
-                    $scope.dateOptions.activeDateFilter = intActiveDateFilter;
+					$scope.dateOptions.activeDateFilter = intActiveDateFilter;
 				}
 
 				var actualDate = new Date();
@@ -516,58 +522,58 @@
 				}
 
 				if(bolIsRange) {
-                    $scope.date = [actualDate, targetDate];
+					$scope.date = [actualDate, targetDate];
 				}
 
 				$scope.status.opened = false;
 				$scope.datePlaceholder = GetPlaceholder();
 			}
 
-            /**
-             * @method GetDaysPerStatus
-             * Contém a lógica para redirecionar para a função certa
-             * dependendo do strStatusType
-             *
-             * @param {String} strStatusType Nome do status informado por $scope.statusType
-             * @param {Date} objStartDate Primeira data selecionada (range)
-             * @param {Date} objEndDate Segunda data selecionada (range)
-             */
+			/**
+			 * @method GetDaysPerStatus
+			 * Contém a lógica para redirecionar para a função certa
+			 * dependendo do strStatusType
+			 *
+			 * @param {String} strStatusType Nome do status informado por $scope.statusType
+			 * @param {Date} objStartDate Primeira data selecionada (range)
+			 * @param {Date} objEndDate Segunda data selecionada (range)
+			 */
 			function GetDaysPerStatus(strStatusType, objStartDate, objEndDate) {
 
-                var objFilter = {
-                    currency: 'BRL',
-                    groupBy: 'DAY',
-                    size: 31,
-                    page: 0,
-                    startDate: calendarFactory.formatDateForService(objStartDate),
-                    endDate: calendarFactory.formatDateForService(objEndDate)
-                };
+				var objFilter = {
+					currency: 'BRL',
+					groupBy: 'DAY',
+					size: 31,
+					page: 0,
+					startDate: calendarFactory.formatDateForService(objStartDate),
+					endDate: calendarFactory.formatDateForService(objEndDate)
+				};
 
 				switch (strStatusType) {
-                    case "sales-to-conciliate":
-                        return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesToConciliateDays);
-                        break;
+					case "sales-to-conciliate":
+						return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesToConciliateDays);
+						break;
 					case "conciliated-sales":
-                        return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesConciliatedDays);
+						return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesConciliatedDays);
 						break;
 					default:
-                        console.log("error");
+						console.log("error");
 				}
 
-            }
+			}
 
-            /**
-             * @method GetSalesToConciliateDays
+			/**
+			 * @method GetSalesToConciliateDays
 			 * Cria objeto com dias com datas a conciliar
 			 *
-             * Contém a lógica para gravar no array $scope.daysWithStatus
-             * ele recebe a resposta de uma chamada na api, passada pela função
+			 * Contém a lógica para gravar no array $scope.daysWithStatus
+			 * ele recebe a resposta de uma chamada na api, passada pela função
 			 * GetDaysPerStatus e parsea os dados para inserir um objeto, se passar
 			 * pela validação.
-             *
-             * @param {Object} objResponse Objeto de resposta da API.
-             */
-            function GetSalesToConciliateDays(objResponse) {
+			 *
+			 * @param {Object} objResponse Objeto de resposta da API.
+			 */
+			function GetSalesToConciliateDays(objResponse) {
 
 				var objResponse = objResponse.data.content;
 				var intIndex;
@@ -577,7 +583,7 @@
 
 					if(objResponse[intIndex].transctionToConcilieQuantity > 0) {
 
-                        arrDays.push({
+						arrDays.push({
 							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
 							type: GetStatusClassType()
 						});
@@ -586,93 +592,93 @@
 
 				}
 
-                $scope.daysWithStatus = arrDays;
+				$scope.daysWithStatus = arrDays;
 
-            }
+			}
 
-            /**
-             * @method GetSalesConciliatedDays
+			/**
+			 * @method GetSalesConciliatedDays
 			 * Cria objeto com dias com datas conciliadas
 			 *
-             * Contém a lógica para gravar no array $scope.daysWithStatus
-             * ele recebe a resposta de uma chamada na api, passada pela função
-             * GetDaysPerStatus e parsea os dados para inserir um objeto, se passar
-             * pela validação.
-             *
-             * @param {Object} objResponse Objeto de resposta da API.
-             */
-            function GetSalesConciliatedDays(objResponse) {
+			 * Contém a lógica para gravar no array $scope.daysWithStatus
+			 * ele recebe a resposta de uma chamada na api, passada pela função
+			 * GetDaysPerStatus e parsea os dados para inserir um objeto, se passar
+			 * pela validação.
+			 *
+			 * @param {Object} objResponse Objeto de resposta da API.
+			 */
+			function GetSalesConciliatedDays(objResponse) {
 
 				var objResponse = objResponse.data.content;
 				var intIndex;
-                var arrDays = [];
+				var arrDays = [];
 
-                for(intIndex in objResponse) {
+				for(intIndex in objResponse) {
 
-                    if(objResponse[intIndex].transctionConciliedQuantity > 0) {
+					if(objResponse[intIndex].transctionConciliedQuantity > 0) {
 
-                        arrDays.push({
-                            dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
-                            type: GetStatusClassType()
-                        });
+						arrDays.push({
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
+							type: GetStatusClassType()
+						});
 
-                    }
+					}
 
-                }
+				}
 
-                $scope.daysWithStatus = arrDays;
+				$scope.daysWithStatus = arrDays;
 
-            }
+			}
 
-            /**
-             * @method GetStatusClassType
-             * Retorna a classe css certa para o statusType da diretiva
-             *
-             * @return {String} strCssClass Classe css correta para o statusType
-             */
-            function GetStatusClassType() {
+			/**
+			 * @method GetStatusClassType
+			 * Retorna a classe css certa para o statusType da diretiva
+			 *
+			 * @return {String} strCssClass Classe css correta para o statusType
+			 */
+			function GetStatusClassType() {
 
-            	var strCssClass;
+				var strCssClass;
 
 				switch ($scope.statusType) {
-                    case "sales-to-conciliate":
-                        strCssClass = 'to-conciliate';
-                        break;
-                    case "conciliated-sales":
-                        strCssClass = 'conciliated';
-                        break;
-                    default:
-                        console.log("error");
+					case "sales-to-conciliate":
+						strCssClass = 'to-conciliate';
+						break;
+					case "conciliated-sales":
+						strCssClass = 'conciliated';
+						break;
+					default:
+						console.log("error");
 				}
 
 				return strCssClass;
 
-            }
+			}
 
-            /**
-             * @method GetStatusLabel
-             * Retorna a label certa para o statusType da diretiva
-             *
-             * @return {String} strStatusLabel label correta para o statusType
-             */
-            function GetStatusLabel() {
+			/**
+			 * @method GetStatusLabel
+			 * Retorna a label certa para o statusType da diretiva
+			 *
+			 * @return {String} strStatusLabel label correta para o statusType
+			 */
+			function GetStatusLabel() {
 
-            	var strStatusLabel;
+				var strStatusLabel;
 
 				switch ($scope.statusType) {
-                    case "sales-to-conciliate":
-                        strStatusLabel = 'vendas a conciliar';
-                        break;
-                    case "conciliated-sales":
-                        strStatusLabel = 'vendas conciliadas';
-                        break;
-                    default:
-                        console.log("error");
+					case "sales-to-conciliate":
+						strStatusLabel = 'vendas a conciliar';
+						break;
+					case "conciliated-sales":
+						strStatusLabel = 'vendas conciliadas';
+						break;
+					default:
+						console.log("error");
 				}
 
 				return strStatusLabel;
 
-            }
+			}
 
 		}
 	}
