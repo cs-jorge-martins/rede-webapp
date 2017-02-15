@@ -232,7 +232,7 @@
                 background: transparent;
             }
 
-            &.no-current:not(.bar), &.no-current:not(.ball){
+            &.not-selected-date:not(.bar), &.not-selected-date:not(.ball){
                 button.active {
                     &:not(:disabled) {
                         span:not(.text-muted) {

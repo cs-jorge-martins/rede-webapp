@@ -59,9 +59,9 @@
 
 					scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
 
-						if (arrDaysWithStatus && arrDaysWithStatus.length) {
-							ctrl.addStatusCLass(arrDaysWithStatus, element);
-						}
+                        if (arrDaysWithStatus && arrDaysWithStatus.length && scope.status.opened) {
+                            ctrl.addStatusCLass(arrDaysWithStatus, element);
+                        }
 
 					});
 
@@ -230,7 +230,7 @@
 			/**
 			 * @method addStatusCLass
 			 * Contém a lógica para adicionar as classes referentes aos dias que
-			 * contém status
+			 * contém status de conciliação
 			 *
 			 * @param {Array} arrDaysWithStatus Array de objetos com dias + status
 			 * @param {Object} objElement Elemento datepicker
@@ -269,7 +269,7 @@
 				var objDateAdjusted = date.date;
 				var arrClasses = [];
 				var arrRangeClasses;
-				var arrNoCurrent;
+				var arrNotSelectedDateClass;
 				var arrBallClass;
 				var arrInvisibleClass;
 
@@ -314,7 +314,7 @@
 
 				arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
 				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
-				arrNoCurrent= GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
+                arrNotSelectedDateClass= GetNotSelectedDateClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
 
 				arrClasses.push(GetCurrentDateClass(objDateAdjusted));
 
@@ -326,7 +326,7 @@
 					arrClasses.push(strRangeClass);
 				});
 
-				arrNoCurrent.forEach(function (strNonCurrentClass) {
+                arrNotSelectedDateClass.forEach(function (strNonCurrentClass) {
 					arrClasses.push(strNonCurrentClass);
 				});
 
@@ -341,6 +341,7 @@
 			/**
 			 * @method GetInvisibleClass
 			 * Método responsável por adicionar a classes de invisible / hidden nos tds do calendário.
+			 * É o responsável por esconder os dias do mês não corrente.
 			 * @param {Boolean} bolCurrentMonth Verifica se a data específica é do mês corrente
 			 * @param {Number} countGetDayClass Numero do dia corrido no calendário, máximo 42
 			 * @return {Array} nome da classe
@@ -363,9 +364,9 @@
 
 			/**
 			 * @method GetBallClass
-			 * Contém a lógica para validar a data atual se é do tipo ball
-			 * as datas do tipo ball, são as única selecionadas, segunda, domingo
-			 * e ultimas datas selecionadas
+			 * Contém a lógica para validar a data atual se deve ter a classe ball
+			 * A classe ball é responsável por deixar o dia no datepicker com as bordas redondas.
+			 * Esses dias são segunda, domingo, data inicial e data final.
 			 * @param {Boolean} bolIsRange Verifica se a diretiva é range
 			 * @param {Object} objDateAdjusted Data que será validada
 			 * @return {Array} arrClasses Retorna a classe ball ou array vazio
@@ -385,8 +386,8 @@
 			/**
 			 * @method GetRangeClasses
 			 * Contém a lógica para validar as datas selecionadas se for range. Retorna um array
-			 * que será usado para renderizar cada data, com as possíveis respostas:
-			 * ball, bar, consecutive-days.
+			 * que será usado para renderizar cada data, com as possíveis classes:
+			 * ball, bar, consecutive-days. Essas classes são responsáveis pela aparência das datas no datepicker.
 			 * @param {Boolean} bolIsRange Verifica se a diretiva é range
 			 * @param {Number} intRangeClickCounter Quantidade de clicks registrado na função Update()
 			 * @param {Date} objRangeStartDate Primeira data selecionada (range)
@@ -458,9 +459,11 @@
 			}
 
 			/**
-			 * @method GetNoCurrentClass
-			 * Contém a lógica para adicionar a classe no-current para
-			 * datas que não foram selecionadas
+			 * @method GetNotSelectedDateClass
+             * Contém a lógica para adicionar a classe not-selected-date
+			 * nas datas que não foram selecionadas no datepicker.
+			 * Esta classe é adicionada para tirar um comportamento da diretiva ui.bootstrap.datepickerPopup
+			 * sobre o primeiro dia, ao mudar de mês.
 			 *
 			 * @param {Boolean} bolIsRange Verifica se a diretiva é range
 			 * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
@@ -468,7 +471,7 @@
 			 * @param {Date} objRangeEndDate Segunda data selecionada (range)
 			 * @return {Array} arrClasses pode retornar o array com no-current ou vazio
 			 */
-			function GetNoCurrentClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate) {
+			function GetNotSelectedDateClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate) {
 
 				var arrClasses = [];
 				var bolCurrentDate;
@@ -480,7 +483,7 @@
 				}
 
 				if (!bolCurrentDate) {
-					arrClasses.push('no-current');
+					arrClasses.push('not-selected-date');
 				}
 
 				return arrClasses;
@@ -532,7 +535,7 @@
 			/**
 			 * @method GetDaysPerStatus
 			 * Contém a lógica para redirecionar para a função certa
-			 * dependendo do strStatusType
+			 * dependendo do strStatusType, que é a string que diferencia o tipo de requisição.
 			 *
 			 * @param {String} strStatusType Nome do status informado por $scope.statusType
 			 * @param {Date} objStartDate Primeira data selecionada (range)
@@ -564,9 +567,9 @@
 
 			/**
 			 * @method GetSalesToConciliateDays
-			 * Cria objeto com dias com datas a conciliar
+			 * Cria objeto com as datas a conciliar
 			 *
-			 * Contém a lógica para gravar no array $scope.daysWithStatus
+			 * Contém a lógica para inserir no array $scope.daysWithStatus,
 			 * ele recebe a resposta de uma chamada na api, passada pela função
 			 * GetDaysPerStatus e parsea os dados para inserir um objeto, se passar
 			 * pela validação.
@@ -598,7 +601,7 @@
 
 			/**
 			 * @method GetSalesConciliatedDays
-			 * Cria objeto com dias com datas conciliadas
+			 * Cria objeto com as datas  conciliadas
 			 *
 			 * Contém a lógica para gravar no array $scope.daysWithStatus
 			 * ele recebe a resposta de uma chamada na api, passada pela função
