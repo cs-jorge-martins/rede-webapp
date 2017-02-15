@@ -59,7 +59,7 @@
 
                     scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
 
-                        if (arrDaysWithStatus && arrDaysWithStatus.length) {
+                        if (arrDaysWithStatus && arrDaysWithStatus.length && scope.status.opened) {
                             ctrl.addStatusCLass(arrDaysWithStatus, element);
                         }
 

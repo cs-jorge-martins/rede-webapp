@@ -1,9 +1,9 @@
 <section class="clean-bg sales">
 	<uib-tabset active="activeTab" class="rc-tabset" justified="true">
-		<uib-tab index="0" heading="vendas a conciliar">
+		<uib-tab index="0" heading="vendas a conciliar" id="tab-sales-to-conciliate">
 			<div ng-include="'app/views/sales-to-conciliate.html'" ng-controller="salesToConciliateController as vm"></div>
 		</uib-tab>
-		<uib-tab index="1" heading="vendas conciliadas">
+		<uib-tab index="1" heading="vendas conciliadas" id="tab-sales-conciliated">
 			<div ng-include="'app/views/sales-conciliated.html'" ng-controller="salesConciliatedController as vm"></div>
 		</uib-tab>
 	</uib-tabset>
