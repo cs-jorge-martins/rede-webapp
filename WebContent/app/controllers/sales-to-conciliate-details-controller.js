@@ -29,9 +29,16 @@
         $scope.toggleCheckbox = ToggleCheckbox;
         $scope.toggleCheckboxAll = ToggleCheckboxAll;
         $scope.reconcileItems = ReconcileItems;
+        $scope.getDetails = GetDetails;
         $scope.items = [];
 
+        $scope.sort = {
+            type: 'gross',
+            order: 'desc'
+        };
+
         Init();
+
 
         function Init() {
             GetDetails();
@@ -59,7 +66,7 @@
                     acquirerIds: [objVm.transaction.acquirer.id],
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage,
-                    sort: 'gross,desc'
+                    sort: $scope.sort.type + ',' + $scope.sort.order
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
