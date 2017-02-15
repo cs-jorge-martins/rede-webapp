@@ -34,6 +34,12 @@
         $scope.unconciliate = Unconciliate;
         $scope.itemsCounter = 0;
         $scope.detailSelection = {};
+        $scope.getDetails = GetDetails;
+
+        $scope.sort = {
+            type: 'gross',
+            order: 'desc'
+        };
 
         Init();
 
@@ -58,7 +64,7 @@
                     conciliationStatus: 'CONCILIED',
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage,
-                    sort: 'gross,desc'
+                    sort: $scope.sort.type + ',' + $scope.sort.order
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function (objResponse) {
