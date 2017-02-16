@@ -275,11 +275,13 @@ angular.module('Conciliador.movementsModule',[])
 										payedAmount: objData[intIndex].expectedAmount
 									});
 								} else if(strDescription == "cancelamentos") {
+                                    objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'cancelamentos',
 										payedAmount: objData[intIndex].payedAmount
 									});
 								} else if(strDescription == "ajustes") {
+                                    objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'ajustes',
 										payedAmount: objData[intIndex].payedAmount
@@ -311,11 +313,13 @@ angular.module('Conciliador.movementsModule',[])
 								payedAmount: objData[intIndex].expectedAmount
 							});
 						} else if(strDescription == "cancelamentos") {
+                            objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'cancelamentos',
 								payedAmount: objData[intIndex].payedAmount
 							});
 						} else if(strDescription == "ajustes") {
+                            objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'ajustes',
 								payedAmount: objData[intIndex].payedAmount
