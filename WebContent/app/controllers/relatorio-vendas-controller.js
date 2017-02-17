@@ -176,12 +176,7 @@
             $scope.monthSelected = calendarFactory.getNameOfMonth($scope.dateSelected);
 
             TransactionService.ExportTransactions(objFilter, function ok(objResponse){
-                if (objResponse.data.url.indexOf("http") === 0){
-                    $window.location = objResponse.data.url;
-                } else {
-                    $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
-                }
-
+                $rootScope.$broadcast('download-init', objResponse.data);
             }, function error(objResponse){
                 var strMsg;
 

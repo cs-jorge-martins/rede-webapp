@@ -23,6 +23,8 @@
     -webkit-transition: all .3s ease-in-out;
 
     &.closed {
+        top: 0;
+
         .header {
             &:after {
                 content: '\e9ce';
@@ -44,6 +46,26 @@
             &:after {
                 content: '\e9cc';
             }
+        }
+    }
+
+    &.single {
+        .content-scroll {
+            height: 13em;
+        }
+
+        &.opened {
+            top: -18.7em;
+        }
+    }
+
+    &.double {
+        .content-scroll {
+            height: 26em;
+        }
+
+        &.opened {
+            top: -31.7em;
         }
     }
 
@@ -123,7 +145,6 @@
 
     .content-scroll {
         margin: 1em .5em 1em .5em;
-        max-height: 13em;
         position: relative;
     }
 
@@ -134,16 +155,7 @@
     .item {
 
         position: relative;
-        margin-bottom: 1.5em;
         overflow: hidden;
-
-        &:last-of-type {
-            margin-bottom: 0;
-
-            .actions {
-                margin-bottom: 0;
-            }
-        }
 
         &.ng-leave {
             -webkit-animation:0.5s delete ease-in-out;
@@ -152,8 +164,12 @@
 
         p {
             font-size: 1.1em;
-            margin: 1.1em 0;
+            margin: 1em 0;
             padding-left: 5em;
+            padding-right: 1em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
 
             strong {
                 color: #b9b8b8;
@@ -193,8 +209,6 @@
         }
 
         .actions {
-            margin: 1.2em 0 0;
-
             [class*="col-"] {
                 padding: 0.9em;
             }

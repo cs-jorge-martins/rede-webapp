@@ -4,13 +4,6 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
- /*
- 	Projeto: conciliation
- 	Author/Empresa: Rede
- 	Copyright (C) 2016 Redecard S.A.
-  */
-
-
  /**
   * @class Conciliador.rcDownloader
   * Diretiva de gerenciamento de downloads
@@ -19,13 +12,13 @@
   * As ações nos botões de exportar arquivos, resultam na criação da fila de downloads,
   * que é representada por uma barra fixa, responsável por listar os downloads e
   * seus respectivos status.
-  * @param {Number} param param desc
   *
   * Exemplo:
   *
-  *     @example
+    *     @example
   *     <rc-downloader></rc-downloader>
   */
+
 (function() {
     'use strict';
 
@@ -44,23 +37,19 @@
             },
             controller: Controller,
             link: function($scope, element, attrs) {
+
                 var header = angular.element(document.querySelector('.rc-downloader .header'));
                 Ps.initialize(document.querySelector('.rc-downloader .content-scroll'));
 
                 header.bind('click', function() {
                     var component = document.querySelector('.rc-downloader');
-                    var wrapper = document.querySelector('.rc-downloader .content-wrapper');
-                    var wrapperHeight = wrapper.offsetHeight + 10;
 
                     if(component.classList.contains('opened')) {
                         component.classList.remove('opened');
                         component.classList.add('closed');
-                        component.style.top = 0;
-
                     } else {
                         component.classList.remove('closed');
                         component.classList.add('opened');
-                        component.style.top = -(wrapperHeight)  + "px";
                     }
                 });
             }
@@ -72,10 +61,12 @@
             $scope.cancel = Cancel;
             $scope.download = Download;
             $scope.delete = Delete;
+            $scope.parseRemainingTime = ParseRemainingTime;
             $scope.hideClass = "no-itens";
-            $scope.flickClass = "";
+            $scope.blinkClass = "";
             $scope.headerClass = "loading";
             $scope.headerTitle = "preparando arquivo...";
+            $scope.heightClass = "single";
             $scope.headerCounter = 0;
             $scope.totals = {
                 processing: 0,
@@ -98,9 +89,9 @@
 
             /**
              * @method Listen
-             * Dispara a função de polling para pegar a lista de downloads ativas,
+             * Dispara a função de polling para pegar a lista de downloads ativos,
              * e também é responsável pela lógica de quando é necessário parar esse
-             * polling, para evitar requeste desnecessários.
+             * polling, para evitar requests desnecessários.
              */
             function Listen() {
                 objPool = PollingFactory.pool(DownloadService.getQueue, function( objResponse ) {
@@ -146,6 +137,7 @@
              * @method Cancel
              * Cancela download da fila.
              * Este método dispara um modal de confirmação da ação.
+             *
              * @param {Object} objItem objeto da fila de downloads que será cancelado
              * @param {Integer} intIndex índice do objeto a ser cancelado na fila de
              * download. O índice é necessário para a remoção do objeto na fila, feito
@@ -183,6 +175,7 @@
             /**
              * @method Delete
              * Deleta download da fila.
+             *
              * @param {Object} objItem objeto da fila de downloads que será deletado
              * @param {Integer} intIndex índice do objeto a ser deletado na fila de
              * download. O índice é necessário para a remoção do objeto na fila
@@ -193,10 +186,24 @@
             }
 
             /**
+             * @method ShowLimitExceededMessage
+             * Abre um modal para informar o usuário que o limite máximo de
+             * downloads foi atingido.
+             */
+            function ShowLimitExceededMessage() {
+                modalService.open("app/views/directives/rc-downloader-modal-limit-exceeded.html", function ModalController($scope, $uibModalInstance) {
+                    $scope.close = function Close() {
+                        $uibModalInstance.close();
+                    };
+                });
+            }
+
+            /**
              * @method IsAuthenticated
              * Verifica se usuário está autenticado, para exibir o componente ou não.
              * Futuramente seria bom mudar a implementação deste método para utilizar
              * a session factory
+             *
              * @return {Boolean} retorna se usuário está autenticado ou não
              */
             function IsAuthenticated() {
@@ -282,10 +289,10 @@
                 }
 
                 if( ($scope.headerClass !== strClass) || ($scope.headerCounter !== intCounter)  ) {
-                    $scope.flickClass = "flick";
+                    $scope.blinkClass = "flick";
 
                     $timeout(function(){
-                        $scope.flickClass = "";
+                        $scope.blinkClass = "";
                     }, 1000);
                 }
 
@@ -295,15 +302,61 @@
 
             }
 
+            /**
+             * @method GetHeightClass
+             * Responsável por definir a classe css que será definirá a altura
+             * do componente.
+             * Pode ser "single" (quando existe pelo menos um downlaod ativo na
+             * lista de downloads) ou "double" (quando existe mais de um download
+             * ativo na lista).
+             * A classe "single" fará com que o componente tenha altura suficiente
+             * para exibir 1 item, enquanto "double" fará com que o componente
+             * tenha altura para exibir 2 itens.
+             */
+            function GetHeightClass() {
+                if ($scope.queue.length > 1) {
+                    $scope.heightClass = "double";
+                } else {
+                    $scope.heightClass = "single";
+                }
+            }
+
+            /**
+             * @method ParseRemainingTime
+             * Faz o parse do tempo estimado para download, que vem da API.
+             * A API retorna uma String com o tempo estimado, essa string precisa
+             * ser parseada para fazer sentido para o usuário.
+             * O Retorno da API é algo como 'PT5M10S'.
+             */
+            function ParseRemainingTime (strRemainingTime) {
+                var intMinutes,
+                    intSeconds;
+
+                if (strRemainingTime) {
+                    strRemainingTime = strRemainingTime.substring(-2);
+
+                    if (strRemainingTime.match('M')) {
+
+                    }
+                }
+
+                return '';
+            }
+
             $scope.$on('download-init', function(event, objData) {
                 $scope.queue.push(objData);
                 Init();
+            });
+
+            $scope.$on('download-limit-exceeded', function(event, objData) {
+                ShowLimitExceededMessage();
             });
 
 
             $scope.$watch('queue', function(objNew) {
                 UpdateTotals(objNew);
                 UpdateHeader();
+                GetHeightClass();
     		}, true);
 
             $scope.$watch(function (){ return window.sessionStorage.token },function(strValue){
@@ -316,5 +369,4 @@
             })
         }
     }
-
 })();

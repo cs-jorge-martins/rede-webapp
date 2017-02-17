@@ -34,11 +34,18 @@
          * service
          * @param {Integer} intTime intervalo entre os requests em milisegundos
          */
-        function Pool( objService, objCallback, intTime ) {
+        function Pool( objService, objCallback, intTime, bolCallImmediately ) {
             var intTime = intTime || 10000;
             var objPool;
 
             if( objService && objCallback ) {
+
+                if (bolCallImmediately) {
+                    objService().then(function(objData){
+                        objCallback(objData);
+                    });
+                }
+
                 objPool = $interval(function(){
                     objService().then(function(objData){
                         objCallback(objData);
