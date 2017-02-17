@@ -51,7 +51,7 @@
 
     &.single {
         .content-scroll {
-            height: 13em;
+            height: 13.3em;
         }
 
         &.opened {
@@ -61,7 +61,7 @@
 
     &.double {
         .content-scroll {
-            height: 26em;
+            height: 26.6em;
         }
 
         &.opened {
@@ -149,7 +149,7 @@
     }
 
     .content {
-        min-height: 14.7em;
+        //min-height: 13em;
     }
 
     .item {

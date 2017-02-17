@@ -326,24 +326,47 @@
              * Faz o parse do tempo estimado para download, que vem da API.
              * A API retorna uma String com o tempo estimado, essa string precisa
              * ser parseada para fazer sentido para o usuário.
+             * Caso esse tempo estimado não seja passado, retorna string com mensagem
+             * informando que o tempo está sendo calculado
+             *
+             * @param {String} strRemainingTime Tempo estimado para download retornado
+             * pela API
              * O Retorno da API é algo como 'PT5M10S'.
              */
             function ParseRemainingTime (strRemainingTime) {
-                var intMinutes,
-                    intSeconds;
+                var intMinutes = 0,
+                    intSeconds = 0
+                    strRemainingTimeConsolidated = '';
 
                 if (strRemainingTime) {
-                    strRemainingTime = strRemainingTime.substring(-2);
+                    strRemainingTime = strRemainingTime.substring(2);
 
-                    if (strRemainingTime.match('M')) {
-
+                    if (strRemainingTime.match('M') && strRemainingTime.match('S')) {
+                        intMinutes = strRemainingTime.split('M')[0];
+                        intSeconds = strRemainingTime.split('M')[1].split('S')[0];
+                    } else {
+                        if (strRemainingTime.match('M')) {
+                            intMinutes = strRemainingTime.split('M')[0];
+                        } else if (strRemainingTime.match('S')) {
+                            intMinutes = strRemainingTime.split('S')[0];
+                        }
                     }
+
+                    if( intMinutes ) {
+                        strRemainingTimeConsolidated += parseInt(intMinutes) + ' min ';
+                    }
+                    if( intSeconds ) {
+                        strRemainingTimeConsolidated += parseInt(intSeconds) + ' sec ';
+                    }
+
+                    return strRemainingTimeConsolidated;
                 }
 
-                return '';
+                return 'calculando...';
             }
 
             $scope.$on('download-init', function(event, objData) {
+                console.log(objData)
                 $scope.queue.push(objData);
                 Init();
             });
