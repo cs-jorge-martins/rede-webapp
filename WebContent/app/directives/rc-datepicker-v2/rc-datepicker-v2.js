@@ -66,9 +66,12 @@
 					});
 
 					scope.$watch("status.opened", function (bolNewValue) {
+
 						scope.isOpen = bolNewValue;
 						if (bolNewValue === false) {
 
+                            scope.ready = false;
+                            scope.intRangeClickCounter = 0;
 							scope.clicked = false;
 
 							if (scope.range && scope.intRangeClickCounter === 1) {
@@ -76,6 +79,7 @@
 								scope.update();
 							}
 						}
+
 					});
 
 					scope.$watch("date", function () {
@@ -86,6 +90,81 @@
 						}
 
 					});
+
+					scope.$watch("ready", function (bolNewValue) {
+
+						if(bolNewValue) {
+
+							if(scope.range) {
+
+								element[0].querySelector(".uib-daypicker").addEventListener("mouseover", function(e) {
+									
+									var strTag = e.target.tagName.toLowerCase();
+									var objTd;
+									
+									if(strTag === 'span') {
+										objTd = e.target.parentNode.parentNode;
+									} else if(strTag === 'button') {
+										objTd = e.target.parentNode;
+									}
+
+									if(
+										objTd &&
+										objTd.tagName.toLowerCase() === 'td'&&
+										scope.intRangeClickCounter === 1
+									) {
+
+                                        var arrTdClasses = objTd.classList;
+									    var bolValidTd = true;
+									    var bolIsOnRegex = false;
+									    var strDateClass;
+                                        var intClassIndex;
+
+                                        var patt = new RegExp("^date-*");
+                                        
+                                        for(intClassIndex in arrTdClasses) {
+                                            
+                                            if(arrTdClasses[intClassIndex] === 'hidden'|| arrTdClasses[intClassIndex] === 'invisible') {
+                                                bolValidTd = false;
+                                            }
+                                            
+                                            if(patt.test(arrTdClasses[intClassIndex])) {
+                                                bolIsOnRegex = true;
+                                                strDateClass = arrTdClasses[intClassIndex];
+                                            }
+                                            
+                                        }
+                                        
+                                        
+                                        console.log("bolValidTd", bolValidTd)
+                                        console.log("bolIsOnRegex", bolIsOnRegex)
+                                        console.log("strDateClass", strDateClass)
+                                        
+                                        
+                                        
+                                        
+                                        if(bolValidTd && bolIsOnRegex && strDateClass) {
+                                            var objDate = new Date(parseInt(strDateClass.substring(5)));
+                                            var objButton = objTd.querySelector('button');
+                                            
+                                            console.log("objButton", objButton);
+                                            
+                                            objButton.classList.add('active');
+                                            objTd.classList.add('ASDASDASDAS');
+                                        }
+									
+
+									}
+
+								});
+
+                            }
+                        }
+
+					});
+
+
+
 
 				});
 			}
@@ -109,7 +188,8 @@
 
 			function Init() {
 				$scope.daysWithStatus = [];
-				$scope.directiveId = strDirectiveId;
+                $scope.ready = false;
+                $scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
 				$scope.update = Update;
@@ -273,6 +353,10 @@
 				var arrBallClass;
 				var arrInvisibleClass;
 
+				if(!$scope.ready && $scope.status.opened === true) {
+					$scope.ready = true;
+                }
+
 				countGetDayClass++;
 
 				bolFirstDayOfMonth = calendarFactory.isFirstDayOfMonth(objDateAdjusted);
@@ -310,7 +394,7 @@
 
 				if(countGetDayClass === 42) {
 					countGetDayClass = 0;
-				}
+                }
 
 				arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
 				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
