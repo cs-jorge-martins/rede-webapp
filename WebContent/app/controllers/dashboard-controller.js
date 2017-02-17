@@ -289,7 +289,7 @@ angular.module('Conciliador.dashboardController',[])
 				objChartData.data.push(ProccessChartDays(arrLastMonthData));
 
 				$scope.chartjs = objChartData;
-				$scope.chartOptions = chartUtils.Options.vendas;
+				$scope.chartOptions = objChartUtils.Options.vendas;
 
 			}).catch(function(error){
 			});

@@ -932,15 +932,15 @@ angular.module('Conciliador.movementsModule',[])
 			} else if ( arrModel.length === $scope.shopsData.length) {
 				strLabel = 'todos os estabelecimentos';
 			} else {
-				var over = arrModel.length - 1;
-				strLabel = arrModel[0].label + ' + ' +  over + ' estabelecimento';
+				var intOver = arrModel.length - 1;
+				strLabel = arrModel[0].label + ' + ' +  intOver + ' estabelecimento';
 
-				if(over > 1) {
+				if(intOver > 1) {
 					strLabel = strLabel + 's';
 				}
 			}
 		} else {
-			strLabel = null
+			strLabel = null;
 		}
 
 		if(bolIsFuture) {

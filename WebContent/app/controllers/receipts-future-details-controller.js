@@ -84,15 +84,15 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 		}
 
 		function DateTitle() {
-			var string = "";
+			var strDate = "";
 
 			if($scope.startDate && $scope.endDate) {
-				string = calendarFactory.getDayAndMonthFromDate($scope.startDate);
-				string += " a ";
-				string += calendarFactory.getDayAndMonthFromDate($scope.endDate);
+				strDate = calendarFactory.getDayAndMonthFromDate($scope.startDate);
+				strDate += " a ";
+				strDate += calendarFactory.getDayAndMonthFromDate($scope.endDate);
 			}
 
-			return string;
+			return strDate;
 		}
 
 		function GetShopsLabel() {
