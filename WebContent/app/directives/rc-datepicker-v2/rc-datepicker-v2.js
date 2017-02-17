@@ -101,11 +101,14 @@
 									
 									var strTag = e.target.tagName.toLowerCase();
 									var objTd;
-									
+									var objTbody;
+
 									if(strTag === 'span') {
 										objTd = e.target.parentNode.parentNode;
+										objTbody = e.target.parentNode.parentNode.parentNode.parentNode;
 									} else if(strTag === 'button') {
 										objTd = e.target.parentNode;
+                                        objTbody = e.target.parentNode.parentNode.parentNode;
 									}
 
 									if(
@@ -120,7 +123,7 @@
 									    var strDateClass;
                                         var intClassIndex;
 
-                                        var patt = new RegExp("^date-*");
+                                        var objPatt = new RegExp("^date-*[0-9]+$");
                                         
                                         for(intClassIndex in arrTdClasses) {
                                             
@@ -128,35 +131,80 @@
                                                 bolValidTd = false;
                                             }
                                             
-                                            if(patt.test(arrTdClasses[intClassIndex])) {
+                                            if(objPatt.test(arrTdClasses[intClassIndex])) {
                                                 bolIsOnRegex = true;
                                                 strDateClass = arrTdClasses[intClassIndex];
                                             }
                                             
                                         }
-                                        
-                                        
-                                        console.log("bolValidTd", bolValidTd)
-                                        console.log("bolIsOnRegex", bolIsOnRegex)
-                                        console.log("strDateClass", strDateClass)
-                                        
-                                        
-                                        
-                                        
+
                                         if(bolValidTd && bolIsOnRegex && strDateClass) {
                                             var objDate = new Date(parseInt(strDateClass.substring(5)));
                                             var objButton = objTd.querySelector('button');
-                                            
-                                            console.log("objButton", objButton);
-                                            
+
+                                            objTd.classList.add('in-range');
+                                            objTd.classList.add('last');
                                             objButton.classList.add('active');
-                                            objTd.classList.add('ASDASDASDAS');
+
+                                            var objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
+                                            var objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
+
+                                            var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
+
+                                            arrDaysInBetween.forEach(function(objDateDay){
+                                            	var strClassName = "date-" + objDateDay.getTime();
+                                            	var objTdSelected = objTbody.getElementsByClassName(strClassName);
+
+                                            	var arrClasses = scope.getRangeClasses(scope.range, scope.intRangeClickCounter, scope.pickerDate, objDate, objDateDay);
+
+                                            	arrClasses.forEach(function (strClass) {
+                                                    objTdSelected[0].classList.add(strClass);
+                                                });
+
+                                                objTdSelected[0].classList.add("in-range");
+											});
+                                            
+
+
+                                            // adiciona classe in-range de datas que não estão entre scope.pickerDate && hover.
+
                                         }
 									
 
 									}
 
 								});
+
+                                element[0].querySelector(".uib-daypicker").addEventListener("mouseout", function(e) {
+
+                                    var strTag = e.target.tagName.toLowerCase();
+                                    var objTd;
+
+                                    if (strTag === 'span') {
+                                        objTd = e.target.parentNode.parentNode;
+                                    } else if (strTag === 'button') {
+                                        objTd = e.target.parentNode;
+                                    }
+
+                                    if (
+                                        objTd &&
+                                        objTd.tagName.toLowerCase() === 'td' &&
+                                        scope.intRangeClickCounter === 1
+                                    ) {
+                                        var objButton = objTd.querySelector('button');
+
+										var strClassInitialName = "date-" + calendarFactory.getFirstHourFromDate(scope.pickerDate).getTime();
+										
+										if(!objTd.classList.contains(strClassInitialName)) {
+                                            objButton.classList.remove('active');
+                                            objTd.classList.remove('in-range');
+                                            objTd.classList.remove('last');
+										}
+
+										// retira classe in-range de datas que não estão entre scope.pickerDate && hover.
+
+                                    }
+                                });
 
                             }
                         }
@@ -197,6 +245,7 @@
 				$scope.clicked = false;
 				$scope.getDayClass = GetDayClass;
 				$scope.getPlaceholder = GetPlaceholder;
+				$scope.getRangeClasses = GetRangeClasses;
 				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false

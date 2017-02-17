@@ -245,6 +245,30 @@
                 }
             }
 
+            &.in-range {
+
+                button {
+                    &:not(:disabled) {
+                        &:after {
+                            background: #f00 !important;
+                        }
+                    }
+                }
+
+                &.not-selected-date {
+                    button.active {
+                        &:not(:disabled) {
+                            span:not(.text-muted) {
+                                color: #fff !important;
+                            }
+                        }
+                        &:after {
+                            background: #ff7800 !important;
+                        }
+                    }
+                }
+            }
+
             &.bar {
 
                 button {
