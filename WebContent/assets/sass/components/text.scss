@@ -5,10 +5,13 @@
  */
 
 .page-title {
-    color:$pageTitle;
+    color: $pageTitle;
     margin: 1.2em 0;
-    font-size: 2em;
+    font-size: 17px;
     font-family: $fontSemiBold;
+    font-weight: bolder;
+    width: 100%;
+    display: inline-block;
 }
 
 .date {
