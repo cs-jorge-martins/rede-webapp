@@ -33,6 +33,12 @@
         $scope.delete = Delete;
         $scope.itemsCounter = 0;
         $scope.detailSelection = {};
+        $scope.getDetails = GetDetails;
+
+        $scope.sort = {
+            type: 'gross',
+            order: 'desc'
+        };
 
         Init();
 
@@ -42,7 +48,7 @@
         }
 
         function GetDetails() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
 
             $timeout(function () {
 
@@ -55,7 +61,7 @@
                     shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ','),
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage,
-                    sort: 'gross,desc'
+                    sort: $scope.sort.type + ',' + $scope.sort.order
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
@@ -146,7 +152,7 @@
                         GetDetails();
                         ResetSelection();
                         UpdateHeader();
-                        objVm.getSales();
+                        objVm.search();
                         $uibModalInstance.close();
                     });
                 }
@@ -170,7 +176,7 @@
         }
 
         function UpdateHeader() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
             var objFilter = {
                 conciliationStatus: 'UNPROCESSED',
                 startDate: strDate,

@@ -48,7 +48,7 @@
 		$scope.clearAnalyticalFilter = ClearAnalyticalFilter;
 		$scope.clearDuplicateFilter = ClearDuplicateFilter;
 
-        $scope.chartOptions = chartUtils.Options.relatorioSintetico;
+        $scope.chartOptions = objChartUtils.Options.relatorioSintetico;
         $scope.getSynthetic = GetSynthetic;
         $scope.getAnalytical = GetAnalytical;
         $scope.exportAnalytical = ExportAnalytical;

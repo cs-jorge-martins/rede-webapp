@@ -197,6 +197,7 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-pagination/rc-pagination.js",
                     "WebContent/app/directives/rc-tooltip/rc-tooltip.js",
                     "WebContent/app/directives/rc-downloader/rc-downloader.js",
+                    "WebContent/app/directives/rc-sort/rc-sort.js",
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",

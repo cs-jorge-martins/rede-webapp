@@ -8,29 +8,29 @@
     <div id="receipts">
         <div id="headerTabs" class="filter-depth container">
             <uib-tabset active="activeReceipts">
-                <uib-tab heading="últimos lançamentos" select="changeTab(0)">
+                <uib-tab id="tab-receipts-lasts" heading="últimos lançamentos" select="changeTab(0)">
                     <h3>utilize os campos abaixo para filtrar sua busca:</h3>
                     <div class="filtersWrapper">
-                        <div class="receipts_present_filters">
+                        <div class="receipts_present_filters" id="filter-receipts-lasts">
                             <div class="filter">
                                 <div class="v2">
-                                    <rc-datepicker-v2 date="actualReleases.date" max-date="todayDate" label="'data'"></rc-datepicker-v2>
+                                    <rc-datepicker-v2 class="filter-date" date="actualReleases.date" max-date="todayDate" label="'data'"></rc-datepicker-v2>
                                 </div>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
+                                <rc-multiselect class="filter-account" label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2" ></rc-multiselect>
+                                <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2" ></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"></rc-multiselect>
+                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"></rc-multiselect>
+                                <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getReceipt()" />
+                                <input type="submit" value="buscar" class="btn btn-primary btn-block filter-search" ng-href='#here' ng-click="getReceipt()" />
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                                     <span class="big-number"><span>R$</span> {{ totalToReceive | currency: "" }}</span>
                                 </li>
                                 <li class="math-symbol"><strong>{{ getDiscountedSignal(discountedTotal) }}</strong></li>
-                                <li ng-class="discountedTotal > 0 ? 'addition' : 'discount'">
+                                <li ng-class="discountedTotal > 0 ? 'addition' : 'discount'" id="total-adjusts">
                                     <strong>
                                         total ajustes a crédito/débito
                                         <i class="itauicon-itaufonts_informacao">
@@ -94,12 +94,12 @@
                                     <span class="big-number"><span>R$</span> {{ getDiscountedAbs(discountedTotal) | currency: ""}}</span>
                                 </li>
                                 <li class="math-symbol"><strong>+</strong></li>
-                                <li class="addition">
+                                <li class="addition" id="total-antecipated">
                                     <strong>total antecipado</strong>
                                     <span class="big-number"><span>R$</span> {{ antecipatedTotal | currency: ""}}</span>
                                 </li>
                                 <li class="math-symbol"><strong>=</strong></li>
-                                <li>
+                                <li id="total-receipt">
                                     <strong>total recebido</strong>
                                     <span class="big-number"><span>R$</span> {{ totalReceived | customCurrency: ""}}</span>
                                 </li>
@@ -128,7 +128,7 @@
                                     <th>
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }}
                                     </th>
-                                    <th class="taright">{{ cardProduct.total | currency: '' }}</th>
+                                    <th class="taright {{cardProduct.total >= 0 ? 'ajustes-credito': 'ajustes-debito'}}">{{ cardProduct.total | currency: '' }}</th>
                                     <th>
                                          <a ng-hide="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a>
                                         <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought_details')">detalhes</a>
@@ -163,30 +163,30 @@
                     </article>
                     <!-- LANCAMENTOS ATUAIS: END -->
                 </uib-tab>
-                <uib-tab heading="lançamentos futuros" select="changeTab(1)">
+                <uib-tab id="tab-receipts-future" heading="lançamentos futuros" select="changeTab(1)">
             		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
             		<div class="filtersWrapper">
-                        <div class="receipts_future_filters">
+                        <div class="receipts_future_filters" id="filter-receipts-future">
                             <div class="filter firstFilter">
                                 <div class="v2">
-                                    <rc-datepicker-v2 range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" show-next-dates-filter="true"  label="'data'" is-open="futureReleases.datepickerIsOpen"></rc-datepicker-v2>
+                                    <rc-datepicker-v2 class="filter-date" range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" show-next-dates-filter="true"  label="'data'" is-open="futureReleases.datepickerIsOpen"></rc-datepicker-v2>
                                 </div>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
+                                <rc-multiselect class="filter-account" label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
+                                <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
                             </div>
                             <br>
                             <div class="filter">
-                                <rc-multiselect label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                                <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="getFutureReceipt()" ng-disabled="futureReleases.datepickerIsOpen" />
+                                <input type="submit" value="buscar" class="btn btn-primary btn-block filter-search" ng-href='#here' ng-click="getFutureReceipt()" ng-disabled="futureReleases.datepickerIsOpen" />
                             </div>
                         </div>
             		</div>
