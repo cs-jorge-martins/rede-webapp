@@ -128,7 +128,7 @@
                                     <th>
                                         <div class="cardFlag brand_{{ cardProduct.cardProductId }}"></div> {{ cardProduct.cardProductName | capitalize }}
                                     </th>
-                                    <th class="taright">{{ cardProduct.total | currency: '' }}</th>
+                                    <th class="taright {{cardProduct.total >= 0 ? 'ajustes-credito': 'ajustes-debito'}}">{{ cardProduct.total | currency: '' }}</th>
                                     <th>
                                          <a ng-hide="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status)">detalhes</a>
                                         <a ng-show="cardProduct.forethought" ng-click="showDetails(item.acquirer, cardProduct, cardProduct.total, cardProduct.status, 'forethought_details')">detalhes</a>
