@@ -249,6 +249,7 @@
 
                 &.start button:not(:disabled):after {
                     background: #ff7800 !important;
+                    z-index: 11;
                 }
 
                 button {
@@ -337,6 +338,7 @@
 
                 span {
                     color: #fff;
+                    z-index: 12;
                 }
 
                 &:hover {

@@ -18124,10 +18124,19 @@ body {
           top: .2em; }
         .v2 .rcDatepicker .uib-datepicker .uib-day button.active:disabled:after {
           background: transparent; }
-        .v2 .rcDatepicker .uib-datepicker .uib-day.no-current:not(.bar) button.active:not(:disabled) span:not(.text-muted), .v2 .rcDatepicker .uib-datepicker .uib-day.no-current:not(.ball) button.active:not(:disabled) span:not(.text-muted) {
+        .v2 .rcDatepicker .uib-datepicker .uib-day.not-selected-date:not(.bar) button.active:not(:disabled) span:not(.text-muted), .v2 .rcDatepicker .uib-datepicker .uib-day.not-selected-date:not(.ball) button.active:not(:disabled) span:not(.text-muted) {
           color: #353230 !important; }
-        .v2 .rcDatepicker .uib-datepicker .uib-day.no-current:not(.bar) button.active:after, .v2 .rcDatepicker .uib-datepicker .uib-day.no-current:not(.ball) button.active:after {
+        .v2 .rcDatepicker .uib-datepicker .uib-day.not-selected-date:not(.bar) button.active:after, .v2 .rcDatepicker .uib-datepicker .uib-day.not-selected-date:not(.ball) button.active:after {
           background: transparent !important; }
+        .v2 .rcDatepicker .uib-datepicker .uib-day.in-range.start button:not(:disabled):after {
+          background: #ff7800 !important;
+          z-index: 11; }
+        .v2 .rcDatepicker .uib-datepicker .uib-day.in-range button:not(:disabled):after {
+          background: #ffae66 !important; }
+        .v2 .rcDatepicker .uib-datepicker .uib-day.in-range.not-selected-date button.active:not(:disabled) span:not(.text-muted) {
+          color: #fff !important; }
+        .v2 .rcDatepicker .uib-datepicker .uib-day.in-range.not-selected-date button.active:after {
+          background: #ff7800 !important; }
         .v2 .rcDatepicker .uib-datepicker .uib-day.bar button:after {
           content: '';
           position: absolute;
@@ -18150,7 +18159,8 @@ body {
         .v2 .rcDatepicker .uib-datepicker .uib-day.ball button:hover span {
           color: #fff; }
         .v2 .rcDatepicker .uib-datepicker .uib-day.ball span, .v2 .rcDatepicker .uib-datepicker .uib-day.bar span, .v2 .rcDatepicker .uib-datepicker .uib-day button.active:not(:disabled) span {
-          color: #fff; }
+          color: #fff;
+          z-index: 12; }
         .v2 .rcDatepicker .uib-datepicker .uib-day.ball:hover span, .v2 .rcDatepicker .uib-datepicker .uib-day.bar:hover span, .v2 .rcDatepicker .uib-datepicker .uib-day button.active:not(:disabled):hover span {
           color: #fff; }
       .v2 .rcDatepicker .uib-datepicker .not_visible:last-of-type {
@@ -18802,6 +18812,19 @@ body {
         cursor: default;
         font-family: "open_sansbold";
         text-decoration: underline; }
+  .v2 .rc-sort:after {
+    background: url(../img/icons/order_arrows.png) no-repeat -5px -26px;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    margin-left: 7px;
+    top: 2px;
+    content: ""; }
+  .v2 .rc-sort.sort-asc:after {
+    background-position: -26px -5px; }
+  .v2 .rc-sort.sort-desc:after {
+    background-position: -5px -5px; }
   .v2 .sales {
     margin-bottom: 7em; }
     .v2 .sales .reconcile-button {
