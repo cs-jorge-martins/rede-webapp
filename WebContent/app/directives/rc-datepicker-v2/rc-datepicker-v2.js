@@ -155,6 +155,22 @@
                                             var objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
                                             var objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
 
+                                            // console.log("objTbody", objTbody);
+
+                                            // var arrDaysWithInRange = objTbody.getElementsByClassName('in-range');
+                                            
+                                            // console.log("arrDaysWithInRange", arrDaysWithInRange)
+                                            
+
+                                            // arrDaysWithInRange.forEach(function(objDateDay) {
+                                            	
+                                                // objDateDay.classList.remove("in-range");
+                                                // objDateDay.classList.remove("ball");
+                                                // objDateDay.classList.remove("consecutive-days");
+                                                // objDateDay.classList.remove("bar");
+                                            // });
+
+
                                             var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
 
                                             arrDaysInBetween.forEach(function(objDateDay){
@@ -538,18 +554,6 @@
 
 				var arrClasses = [];
 				
-				
-				console.log("bolIsRange", bolIsRange)
-				console.log("intRangeClickCounter", intRangeClickCounter)
-				console.log("objDateAdjusted", objDateAdjusted)
-				console.log("objRangeEndDate", objRangeEndDate)
-				console.log("objRangeStartDate", objRangeStartDate)
-				
-				
-				
-				
-				
-
 				if(bolIsRange && intRangeClickCounter === 0) {
 
 					var weekDay = objDateAdjusted.getDay();
