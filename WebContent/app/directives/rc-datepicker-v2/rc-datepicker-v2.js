@@ -145,50 +145,47 @@
                                         }
 
                                         if(bolValidTd && bolIsOnRegex && strDateClass) {
+
+                                            var arrDaysWithInRange = objTbody.querySelectorAll('.uib-day');
+
+                                            arrDaysWithInRange.forEach(function(objDateDay) {
+
+                                            	if(!objDateDay.classList.contains('last')) {
+													objDateDay.classList.remove("in-range");
+													objDateDay.classList.remove("ball");
+													objDateDay.classList.remove("consecutive-days");
+													objDateDay.classList.remove("bar");
+                                                }
+
+                                            });
+
                                             var objDate = new Date(parseInt(strDateClass.substring(5)));
                                             var objButton = objTd.querySelector('button');
 
                                             objTd.classList.add('in-range');
                                             objTd.classList.add('last');
                                             objButton.classList.add('active');
-
+                                            
                                             var objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
                                             var objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
 
-                                            // console.log("objTbody", objTbody);
-
-                                            // var arrDaysWithInRange = objTbody.getElementsByClassName('in-range');
-                                            
-                                            // console.log("arrDaysWithInRange", arrDaysWithInRange)
-                                            
-
-                                            // arrDaysWithInRange.forEach(function(objDateDay) {
-                                            	
-                                                // objDateDay.classList.remove("in-range");
-                                                // objDateDay.classList.remove("ball");
-                                                // objDateDay.classList.remove("consecutive-days");
-                                                // objDateDay.classList.remove("bar");
-                                            // });
-
-
                                             var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
 
-                                            arrDaysInBetween.forEach(function(objDateDay){
+                                            arrDaysInBetween.forEach(function(objDateDay) {
+
                                             	var strClassName = "date-" + objDateDay.getTime();
                                             	var objTdSelected = objTbody.getElementsByClassName(strClassName);
 
-                                            	var arrClasses = scope.getRangeClasses(scope.range, 0, scope.pickerDate, objDate, objDateDay);
-
+                                            	var arrClasses = scope.getRangeClasses(scope.range, 0, objStartDate, objEndDate, objDateDay);
+                                            	
                                             	arrClasses.forEach(function (strClass) {
                                                     objTdSelected[0].classList.add(strClass);
                                                 });
 
                                                 objTdSelected[0].classList.add("in-range");
+
 											});
-                                            
 
-
-                                            // adiciona classe in-range de datas que não estão entre scope.pickerDate && hover.
 
                                         }
 									
@@ -553,8 +550,12 @@
 			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
 
 				var arrClasses = [];
-				
+
 				if(bolIsRange && intRangeClickCounter === 0) {
+
+                    if(calendarFactory.isEqualDate(objDateAdjusted,objRangeStartDate)) {
+                        arrClasses.push('start');
+                    }
 
 					var weekDay = objDateAdjusted.getDay();
 					var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
@@ -589,11 +590,6 @@
 
 				}
 				
-				
-				console.log("arrClasses", arrClasses)
-				
-				
-
 				return arrClasses;
 
 			}
