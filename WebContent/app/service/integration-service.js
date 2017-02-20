@@ -29,8 +29,8 @@ angular.module('Conciliador.integrationService',[])
 			params: objParams,
 			headers: Request.setHeaders()
 		}).then(success, function(response){
-            var dateRespTime = new Date().getTime() - objStartTime;
-            if (dateRespTime >= intTimeout){
+            var objRespTime = new Date().getTime() - objStartTime;
+            if (objRespTime >= intTimeout){
                 response.status = 408;
             }
             error(response);

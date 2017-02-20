@@ -92,7 +92,7 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();;
+			$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
 			$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 		}
 
