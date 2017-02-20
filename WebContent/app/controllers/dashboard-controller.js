@@ -446,14 +446,15 @@ angular.module('Conciliador.dashboardController',[])
 		});
 	}
 
-	function Sales(intDay) {
+	function Sales(intDay, intConcilied, intToReconcile, intToProcess) {
+		var bolIsTabConcilied = intConcilied && !intToReconcile && !intToProcess;
 		if(intDay){
 			intDay = intDay < 10 ? 0 + String(intDay) : intDay;
 			var objDate = $scope.dateSelected;
 			objDate = objDate.split('/');
 			objDate[0] = intDay;
 			objDate = objDate.join('/');
-			$location.path('/sales').search({ date: objDate });
+			$location.path('/sales').search({ date: objDate, conciliedTab: bolIsTabConcilied });
 		}
 	}
 

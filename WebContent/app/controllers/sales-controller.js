@@ -12,9 +12,9 @@
 		.module('Conciliador.salesController', [])
 		.controller('salesController', Sales);
 
-	Sales.$inject = ['$scope', 'modalService', 'calendarFactory', 'filtersService'];
+	Sales.$inject = ['$scope', 'modalService', 'calendarFactory', 'filtersService', '$location'];
 
-	function Sales($scope, modalService, calendarFactory, filtersService) {
+	function Sales($scope, modalService, calendarFactory, filtersService, $location) {
 
 		var objVmSales = this;
         $scope.filter = {};
@@ -33,6 +33,22 @@
         $scope.search = function () {
             $scope.$broadcast('search');
         };
+
+        /**
+         * @method ResolveDateFromDashboard
+         * Verifica se uma data foi passada via query parameter e aplica a mesma
+         */
+        function ResolveDateFromDashboard() {
+            var strDate = $location.search().date || false;
+            if(strDate) {
+                $scope.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
+            }
+
+            var bolConciliedTab = $location.search().conciliedTab || false;
+            if(bolConciliedTab) {
+                $scope.activeTab = 1;
+            }
+        }
 
         /**
          * @method GetFilters
@@ -60,6 +76,7 @@
 		Init();
 
 		function Init() {
+            ResolveDateFromDashboard();
             GetFilters();
 		}
 
