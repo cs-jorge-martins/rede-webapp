@@ -93,6 +93,12 @@
 
 					scope.$watch("ready", function (bolNewValue) {
 
+						var funAddOrRemoveClasses = function (bolAdd) {
+							if(bolAdd) {
+								/* TODO: continuar logica do add | remove */
+							}
+                        };
+
 						if(bolNewValue) {
 
 							if(scope.range) {
@@ -155,7 +161,7 @@
                                             	var strClassName = "date-" + objDateDay.getTime();
                                             	var objTdSelected = objTbody.getElementsByClassName(strClassName);
 
-                                            	var arrClasses = scope.getRangeClasses(scope.range, scope.intRangeClickCounter, scope.pickerDate, objDate, objDateDay);
+                                            	var arrClasses = scope.getRangeClasses(scope.range, 0, scope.pickerDate, objDate, objDateDay);
 
                                             	arrClasses.forEach(function (strClass) {
                                                     objTdSelected[0].classList.add(strClass);
@@ -531,6 +537,18 @@
 			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
 
 				var arrClasses = [];
+				
+				
+				console.log("bolIsRange", bolIsRange)
+				console.log("intRangeClickCounter", intRangeClickCounter)
+				console.log("objDateAdjusted", objDateAdjusted)
+				console.log("objRangeEndDate", objRangeEndDate)
+				console.log("objRangeStartDate", objRangeStartDate)
+				
+				
+				
+				
+				
 
 				if(bolIsRange && intRangeClickCounter === 0) {
 
@@ -566,6 +584,11 @@
 					}
 
 				}
+				
+				
+				console.log("arrClasses", arrClasses)
+				
+				
 
 				return arrClasses;
 
