@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </th>
-                <th class="alignl">
+                <th class="alignl" rc-sort sort-type="shopType" sort-by="sort" sort-on-click="getDetails()">
                     tipo loja
                 </th>
                 <th class="alignl" rc-sort sort-type="hour" sort-by="sort" sort-on-click="getDetails()">
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                 </td>
-                <td class="alignl">{{item.ecommerce ? 'e-commerce' : 'loja física'}}</td>
+                <td class="alignl">{{ item.shopType == 'ECOMMERCE' ? 'e-commerce' : 'loja física' }}</td>
                 <td class="alignl">{{ item.date | date: 'dd/MM' }} {{ item.hour | limitTo: 5 }}</td>
                 <td class="alignl">{{ item.nsu }}</td>
                 <td class="alignl">{{ item.authorization }}</td>
