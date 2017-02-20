@@ -247,10 +247,14 @@
 
             &.in-range {
 
+                &.start button:not(:disabled):after {
+                    background: #ff7800 !important;
+                }
+
                 button {
                     &:not(:disabled) {
                         &:after {
-                            background: #f00 !important;
+                            background: #ffae66 !important;
                         }
                     }
                 }
