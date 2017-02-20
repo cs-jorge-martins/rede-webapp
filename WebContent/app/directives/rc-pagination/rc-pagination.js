@@ -53,10 +53,6 @@
 			controller: Controller,
             link: function(scope, element, attrs, ctrl, transclude) {
 
-                scope.$watch("resultsPaginationTotalItens",function(intNewValue,intOldValue) {
-                    ctrl.MakeResultsPerPageOptions();
-                });
-
             }
 		};
 
@@ -68,6 +64,7 @@
 
 			function Init() {
                 CheckResultsPerPageModel();
+                $scope.resultsPerPageOptions = [10,20,50];
             }
 
             /**
