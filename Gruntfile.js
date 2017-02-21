@@ -110,6 +110,7 @@ module.exports = function(grunt) {
                     "WebContent/app/libs/loading-bar.min.js",
                     "WebContent/app/libs/angular-cache.min.js",
                     "WebContent/app/libs/angular-sanitize.min.js",
+                    "WebContent/app/libs/angular-scroll.min.js",
                     "WebContent/app/libs/angular-animate.min.js",
                     "WebContent/app/libs/angular-touch.min.js",
                     "WebContent/app/libs/ui-bootstrap-tpls-2.2.0.min.js",
