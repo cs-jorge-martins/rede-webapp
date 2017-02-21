@@ -134,6 +134,15 @@
             }
 
             /**
+             * @method RemoveFromQueue
+             * remove item do escopo que contém lista de downloads do usuário.
+             * Utilizado pelos metodos Cancel e Delete.
+             */
+            function RemoveFromQueue(intIndex) {
+                $scope.queue.splice(intIndex, 1);
+            }
+
+            /**
              * @method Cancel
              * Cancela download da fila.
              * Este método dispara um modal de confirmação da ação.
@@ -155,8 +164,9 @@
                     };
 
                     $scope.confirm = function Confirm() {
-                        Delete(objItem, intIndex);
+                        RemoveFromQueue(intIndex);
                         $uibModalInstance.close();
+                        DownloadService.cancelFromQueue(objItem.id);
                     }
                 });
             }
@@ -181,8 +191,22 @@
              * download. O índice é necessário para a remoção do objeto na fila
              */
             function Delete(objItem, intIndex) {
-                DownloadService.deleteFromQueue(objItem.id);
-                $scope.queue.splice(intIndex, 1);
+                modalService.open("app/views/directives/rc-downloader-modal-delete.html", function ModalController($scope, $uibModalInstance) {
+
+                    $scope.cancel = function Cancel() {
+                        $scope.close();
+                    };
+
+                    $scope.close = function Close() {
+                        $uibModalInstance.close();
+                    };
+
+                    $scope.confirm = function Confirm() {
+                        RemoveFromQueue(intIndex);
+                        $uibModalInstance.close();
+                        DownloadService.deleteFromQueue(objItem.id);
+                    }
+                });
             }
 
             /**
@@ -241,7 +265,7 @@
                     }
                 }
 
-                if ( !objTotals.processing ) {
+                if (!objTotals.processing) {
                     if (objPool) {
                         objPool.cancel();
                     }
@@ -366,15 +390,14 @@
             }
 
             $scope.$on('download-init', function(event, objData) {
-                console.log(objData)
-                $scope.queue.push(objData);
-                Init();
+                if (objData.status === "REJECTED") {
+                    ShowLimitExceededMessage();
+                } else {
+                    $scope.queue.push(objData);
+                    objPool.cancel();
+                    Init();
+                }
             });
-
-            $scope.$on('download-limit-exceeded', function(event, objData) {
-                ShowLimitExceededMessage();
-            });
-
 
             $scope.$watch('queue', function(objNew) {
                 UpdateTotals(objNew);

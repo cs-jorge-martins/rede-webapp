@@ -22,7 +22,8 @@
 
         return {
             getQueue: GetQueue,
-            deleteFromQueue: DeleteFromQueue
+            deleteFromQueue: DeleteFromQueue,
+            cancelFromQueue: CancelFromQueue
         }
 
         /**
@@ -42,12 +43,24 @@
 
         /**
          * @method DeleteFromQueue
-         * Delete um download da fila de downloads
+         * Delete um download já feito da fila de downloads
          */
         function DeleteFromQueue(strId) {
             return $http({
                 url: app.endpoint + "/downloads/" + strId,
                 method: "DELETE",
+                headers: Request.setHeaders()
+            });
+        }
+
+        /**
+         * @method DeleteFromQueue
+         * Cancela um download em progresso da fila de downloads
+         */
+        function CancelFromQueue(strId) {
+            return $http({
+                url: app.endpoint + "/downloads/" + strId + "/cancel",
+                method: "POST",
                 headers: Request.setHeaders()
             });
         }
