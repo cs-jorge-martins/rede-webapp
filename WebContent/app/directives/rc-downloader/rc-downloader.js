@@ -188,25 +188,32 @@
              *
              * @param {Object} objItem objeto da fila de downloads que será deletado
              * @param {Integer} intIndex índice do objeto a ser deletado na fila de
-             * download. O índice é necessário para a remoção do objeto na fila
+             * download. O índice é necessário para a remoção do objeto na fila.
+             * Se o dowload estiver com status 'ERROR', não pede a confirmação via
+             * modal.
              */
             function Delete(objItem, intIndex) {
-                modalService.open("app/views/directives/rc-downloader-modal-delete.html", function ModalController($scope, $uibModalInstance) {
+                if (objItem.status === "ERROR") {
+                    RemoveFromQueue(intIndex);
+                    DownloadService.deleteFromQueue(objItem.id);
+                } else {
+                    modalService.open("app/views/directives/rc-downloader-modal-delete.html", function ModalController($scope, $uibModalInstance) {
 
-                    $scope.cancel = function Cancel() {
-                        $scope.close();
-                    };
+                        $scope.cancel = function Cancel() {
+                            $scope.close();
+                        };
 
-                    $scope.close = function Close() {
-                        $uibModalInstance.close();
-                    };
+                        $scope.close = function Close() {
+                            $uibModalInstance.close();
+                        };
 
-                    $scope.confirm = function Confirm() {
-                        RemoveFromQueue(intIndex);
-                        $uibModalInstance.close();
-                        DownloadService.deleteFromQueue(objItem.id);
-                    }
-                });
+                        $scope.confirm = function Confirm() {
+                            RemoveFromQueue(intIndex);
+                            $uibModalInstance.close();
+                            DownloadService.deleteFromQueue(objItem.id);
+                        }
+                    });
+                }
             }
 
             /**
