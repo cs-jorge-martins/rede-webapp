@@ -76,9 +76,9 @@
 		Init();
 
 		function Init() {
-            ResolveDateFromDashboard();
             GetFilters();
-		}
+            ResolveDateFromDashboard();
+        }
 
 	}
 

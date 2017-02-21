@@ -421,6 +421,8 @@
             if(strDate) {
                 $scope.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
             }
+
+            $scope.search();
         }
 
         /**
