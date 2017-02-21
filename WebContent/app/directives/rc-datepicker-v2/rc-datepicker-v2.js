@@ -151,15 +151,14 @@
 
                                                 if(!objDateDay.classList.contains(strClassInitialName)) {
                                                     objDateDay.querySelector('button').classList.remove('active');
+                                                    objDateDay.classList.remove("start");
+                                                    objDateDay.classList.remove("in-range");
+                                                    objDateDay.classList.remove("ball");
+                                                    objDateDay.classList.remove("consecutive-days");
+                                                    objDateDay.classList.remove("bar");
                                                 }
 
-                                            	if(!objDateDay.classList.contains('last')) {
-													objDateDay.classList.remove("in-range");
-													objDateDay.classList.remove("ball");
-													objDateDay.classList.remove("consecutive-days");
-													objDateDay.classList.remove("bar");
-                                                }
-
+                                                objDateDay.classList.remove("bar-single");
                                                 objDateDay.classList.remove('last');
 
                                             });
@@ -174,12 +173,17 @@
                                             var objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
                                             var objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
                                             var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
+                                            
+                                            
+											
+                                            
+                                            arrDaysInBetween.push(objEndDate);
 
                                             arrDaysInBetween.forEach(function(objDateDay) {
 
                                             	var strClassName = "date-" + objDateDay.getTime();
                                             	var objTdSelected = objTbody.getElementsByClassName(strClassName);
-                                            	var arrClasses = scope.getRangeClasses(scope.range, 0, objStartDate, objEndDate, objDateDay);
+                                            	var arrClasses = scope.getRangeClasses(scope.range, 0, objStartDate, objEndDate, objDateDay, arrDaysInBetween);
 
                                             	if(objTdSelected.length) {
 													arrClasses.forEach(function (strClass) {
@@ -392,6 +396,7 @@
 				var arrNotSelectedDateClass;
 				var arrBallClass;
 				var arrInvisibleClass;
+				var arrDatesBetween;
 
 				if(!$scope.ready && $scope.status.opened === true) {
 					$scope.ready = true;
@@ -437,7 +442,13 @@
                 }
 
 				arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
-				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
+
+				if(bolIsRange) {
+					arrDatesBetween = calendarFactory.getArrayDatesBetween(objRangeStartDate, objRangeEndDate);
+					arrDatesBetween.push(objRangeEndDate);
+				}
+
+				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted, arrDatesBetween);
                 arrNotSelectedDateClass= GetNotSelectedDateClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
 
 				arrClasses.push(GetCurrentDateClass(objDateAdjusted));
@@ -517,29 +528,39 @@
 			 * @param {Date} objRangeStartDate Primeira data selecionada (range)
 			 * @param {Date} objRangeEndDate Segunda data selecionada (range)
 			 * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
+			 * @param {Array} arrDaysInBetween Conjunto com todas as datas que serão parseadas
 			 * @return {Array} arrClasses Pode retornar as classes: ball, bar, consecutive-days ou array vazio.
 			 */
-			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
+			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted, arrDaysInBetween) {
 
 				var arrClasses = [];
 
-				if(bolIsRange && intRangeClickCounter === 0) {
+				if(bolIsRange) {
 
                     if(calendarFactory.isEqualDate(objDateAdjusted,objRangeStartDate)) {
+                    	console.log("entrei")
                         arrClasses.push('start');
+                        arrClasses.push('ball');
                     }
 
 					var weekDay = objDateAdjusted.getDay();
 					var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
 
+                    if(calendarFactory.isEqualDate(objDateAdjusted,objRangeEndDate)) {
+                        if(weekDay === 1) {
+                            arrClasses.push('start');
+                            arrClasses.push('consecutive-days');
+                        }
+                    }
+
 					if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
-						if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2)  {
+						if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2 )  {
 							arrClasses.push('ball');
 						} else if (weekDay === 0 || bolFirstOrLastDay && weekDay === 2) {
 							arrClasses.push('bar');
 							arrClasses.push('consecutive-days');
-						} else{
+						} else {
 							if(!bolFirstOrLastDay) {
 								arrClasses.push('bar');
 							}
@@ -551,14 +572,22 @@
 					}
 					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
 
-						if(weekDay !== 1) {
-							arrClasses.push('bar');
+						if(weekDay !== 2) {
+							arrClasses.push('ball');
 							arrClasses.push('consecutive-days');
 						} else {
 							arrClasses.push('ball');
+                            arrClasses.push('consecutive-days');
+                            arrClasses.push('bar');
 						}
 
 					}
+
+                    if(arrDaysInBetween && arrDaysInBetween.length === 2) {
+                        if(calendarFactory.isEqualDate(objDateAdjusted, objRangeStartDate)) {
+                            arrClasses.push("bar-single");
+                        }
+                    }
 
 				}
 				
