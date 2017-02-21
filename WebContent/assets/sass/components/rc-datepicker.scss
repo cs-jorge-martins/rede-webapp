@@ -152,7 +152,7 @@
 
                 &.bar, &.ball {
                     &:before {
-                        display: none;
+                        //display: none;
                     }
                 }
 
@@ -216,9 +216,7 @@
 
             }
 
-
-
-            &.ball button:after, button.active:after {
+            &.ball button:before, button.active:after {
                 content: '';
                 position: absolute;
                 background: #ff7800;
@@ -250,15 +248,24 @@
 
             &.in-range {
 
-                &.start button:not(:disabled):after {
+                &.start button:not(:disabled):before,
+                &.last button:not(:disabled):before {
                     background: #ff7800 !important;
                     z-index: 11;
                 }
 
                 button {
                     &:not(:disabled) {
-                        &:after {
+                        &:after, &:before {
                             background: #ffae66 !important;
+                        }
+                    }
+                }
+
+                &.last.bar.ball {
+                    button:not(:disabled) {
+                        &:after {
+                            left: -2.1em;
                         }
                     }
                 }
@@ -274,6 +281,25 @@
                             background: #ff7800 !important;
                         }
                     }
+
+                    &.last button:after {
+                        background-color: #ffae66 !important;
+                    }
+                }
+            }
+
+            &.bar-single {
+                button:after {
+                    content: '';
+                    position: absolute;
+                    background: #ff7800;
+                    width: 5%;
+                    height: 2.2em;
+                    left: 1.8em;
+                    top: 0.2em;
+                    padding-right: 4.2em;
+                    z-index: 10;
+                    border-radius: 0;
                 }
             }
 
@@ -312,10 +338,6 @@
                             border-radius: 0 40px 40px 0;
                         }
                     }
-                }
-
-                &.last button:after {
-                    left: -4em;
                 }
 
 
