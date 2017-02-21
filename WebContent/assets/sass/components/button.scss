@@ -6,54 +6,53 @@
 
 // CSS base
 .btn,.btn:hover {
-  font-family: 'open_sanssemibold';
-  font-size: 16px ;
-  width: 100%;
-  position: relative;
-  top: -1px;
-  height: 40px;
-  -webkit-border-radius:0;
-  -moz-border-radius:0;
-  border-radius:0;
+    font-family: $fontSemiBold;
+    font-size: 16px;
+    position: relative;
+    top: -1px;
+    height: 40px;
+    -webkit-border-radius:0;
+    -moz-border-radius:0;
+    border-radius:0;
+    border: 0;
 }
 
-// Cor principal
-.btn.btn-primary, .btn.btn-primary:hover {
-  background: $primaryButtomBackgroundColor;
-  color: $primaryButtonFontColor;
-  border: 0 !important;
-  font-style: bold !important;
-  font-size: $primaryButtonFontSize;
-  shadow-color: #000000;
-  shadow-opacity: 24%;
-  shadow-distance: 1px;
-  shadow-expansion: 0%;
-  shadow-size: 2px;
-  shadow-angle:90;
+
+.btn.btn-primary, .btn.btn-primary:hover,
+.btn.btn-cancel {
+    background: $primaryButtomBackgroundColor;
+    color: $primaryButtonFontColor;
+    font-size: $primaryButtonFontSize;
 }
 
 .btn.btn-primary:active {
-  color: #ad9c2a !important;
-  background: $primaryButtomBackgroundColor;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+    color: #ad9c2a !important;
+    background: $primaryButtomBackgroundColor;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 // Desabilitado
 .btn.disabled, .btn.disabled:hover, .btn:disabled, .btn:disabled:hover {
-  background: #ddd;
-  cursor: not-allowed;
+    background: #ddd;
+    cursor: not-allowed;
 }
 
 .btn-link:focus, .btn.btn-link:focus {
-  outline: none
+    outline: none
 }
 
 .btn.btn-cancel {
-  background: $grafitteGray;
-  color: white;
+    background: $grafitteGray;
+    color: white;
 
-  :focus {
-    border:none;
-  }
+    &:focus {
+        border:none;
+    }
+}
+
+.btn-sm,
+.btn-sm:hover {
+    height: auto;
+    padding: 0.3em 0em;
 }

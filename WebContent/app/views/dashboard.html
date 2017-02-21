@@ -2,7 +2,7 @@
 
 	<div class="date">
 		<h2>
-			<time>{{currentPeriodStartDateDay}} a {{currentPeriodEndDateDay}} {{currentPeriodStartDateMonth}} {{currentPeriodStartDateYear}}</time>
+			<time>{{currentPeriodStartDateMonth}} {{currentPeriodStartDateYear}}</time>
 		</h2>
 	</div>
 
@@ -137,7 +137,7 @@
           </thead>
           <tbody class="dates">
             <tr ng-repeat="week in weeks">
-              <td ng-repeat="day in week" ng-click="sales(day.date)"
+              <td ng-repeat="day in week" ng-click="sales(day.date, day.concilied, day.toReconcile, day.toProcess)"
               	ng-class="{'naoConciliado': day.toProcess, 'divergencias': day.toReconcile,
               			   'conciliado': day.concilied && !day.toReconcile && !day.toProcess, 'weekend': day.weekend }" class="oneItem">
                         {{ day.date }}

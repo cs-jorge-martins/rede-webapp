@@ -6,439 +6,443 @@
 
 .rcDatepicker {
 
-    font-family: $fontSemiBold;
+	font-family: $fontSemiBold;
 
-    .form-control {
-        border-right: 0;
-    }
+	.form-control {
+		border-right: 0;
+	}
 
-    .dropdown-menu {
-        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.24);
-        padding: 0;
-        border: 0;
+	.dropdown-menu {
+		box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.24);
+		padding: 0;
+		border: 0;
 
-    }
+	}
 
-    .input-group {
-        position: relative;
+	.input-group {
+		position: relative;
 
-        input {
-            background-color: $inputBackgroundColor;
-            color: $inputBackgroundColor;
-            border-color: $inputBorderColor;
-            border-radius: 0;
-            height: 40px;
-        }
+		input {
+			background-color: $inputBackgroundColor;
+			color: $inputBackgroundColor;
+			border-color: $inputBorderColor;
+			border-radius: 0;
+			height: 40px;
+		}
 
-        span {
-            border-color: $inputBorderColor;
-            border-radius: 0;
-        }
+		span {
+			border-color: $inputBorderColor;
+			border-radius: 0;
+		}
 
-        .placeholder {
-            position: absolute;
-            left: 0;
-            color: $inputColor;
-            font-size: 1em;
-            z-index: 5;
-            padding: 1em;
+		.placeholder {
+			position: absolute;
+			left: 0;
+			color: $inputColor;
+			font-size: 1em;
+			z-index: 5;
+			padding: 1em;
 
-            &:hover {
-                text-decoration: none;
-            }
-        }
-    }
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
 
-    .uib-datepicker-popup {
-        top: 3em !important;
-    }
+	.uib-datepicker-popup {
+		top: 3em !important;
+	}
 
-    .uib-datepicker {
-        font-size: 1em;
-        font-family: 'open_sansregular';
+	.uib-datepicker {
+		font-size: 1em;
+		font-family: 'open_sansregular';
 
-        button {
-            background-color: transparent;
-            border: none;
-            color: $darkGray;
-            font-size: 1em;
+		button {
+			background-color: transparent;
+			border: none;
+			color: $darkGray;
+			font-size: 1em;
 
-            &[disabled]:hover {
-                background: none;
-            }
+			&[disabled]:hover {
+				background: none;
+			}
 
-        }
+		}
 
-        thead {
+		thead {
 
-            tr {
-                height: 4em;
+			tr {
+				height: 4em;
 
-                th:first-of-type {
-                    padding-left: 1.4em;
-                }
-                th:last-of-type {
-                    padding-right: 1.4em !important;
-                }
-            }
+				th:first-of-type {
+					padding-left: 1.4em;
+				}
+				th:last-of-type {
+					padding-right: 1.4em !important;
+				}
+			}
 
-            tr:first-of-type {
-                border-bottom: 1px solid $rcDatepickerBorderColor;
-                height: inherit;
-                padding: 10px;
+			tr:first-of-type {
+				border-bottom: 1px solid $rcDatepickerBorderColor;
+				height: inherit;
+				padding: 10px;
 
-                th {
-                    padding: inherit;
-                }
-            }
+				th {
+					padding: inherit;
+				}
+			}
 
-            small {
-                text-transform: uppercase;
-                color: #575758;
-                font-size: 1.1em;
-            }
+			small {
+				text-transform: uppercase;
+				color: #575758;
+				font-size: 1.1em;
+			}
 
-            strong {
-                color: #575758;
-                color: rgba(87, 87, 88, 1);
-                font-size: 1.3em;
-                font-weight: 600;
-            }
+			strong {
+				color: #575758;
+				color: rgba(87, 87, 88, 1);
+				font-size: 1.3em;
+				font-weight: 600;
+			}
 
-            button {
-                opacity: 1;
+			button {
+				opacity: 1;
 
-                &:active:focus {
-                    background: none;
-                    box-shadow: none;
-                    -webkit-box-shadow: none;
-                    -moz-box-shadow: none;
-                }
-            }
+				&:active:focus {
+					background: none;
+					box-shadow: none;
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+				}
+			}
 
-            .btn-sm {
-                //padding: 1.2em 1.5em;
-            }
-        }
+			.btn-sm {
+				//padding: 1.2em 1.5em;
+			}
+		}
 
-        .uib-day {
+		.uib-day {
 
-            position: relative;
+			position: relative;
 
-            &.has-status {
+			&.has-status {
 
-                &:before {
-                    content: '';
-                    display: block;
-                    border-radius: 50%;
-                    width: 7px;
-                    height: 7px;
-                    position: absolute;
-                    bottom: 5px;
-                    left: 30px;
-                }
+				&:before {
+					content: '';
+					display: block;
+					border-radius: 50%;
+					width: 7px;
+					height: 7px;
+					position: absolute;
+					bottom: 5px;
+					left: 30px;
+				}
 
-                &.conciliated {
-                    &:before {
-                        background: $conciliedColor;
-                    }
-                }
+				&.conciliated {
+					&:before {
+						background: $conciliedColor;
+					}
+				}
 
-                &.to-conciliate {
-                    &:before {
-                        background: $toConcilieColor;
-                    }
-                }
+				&.to-conciliate {
+					&:before {
+						background: $toConcilieColor;
+					}
+				}
 
-                &.bar, &.ball {
-                    &:before {
-                        display: none;
-                    }
-                }
+				&.bar, &.ball {
+					&:before {
+						display: none;
+					}
+				}
 
-            }
+			}
 
-            &:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
-                color: $darkGray;
-                font-family: $fontBold;
-            }
+			&:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
+				color: $darkGray;
+				font-family: $fontBold;
+			}
 
-            .btn-sm {
-                padding: 1.37em 2em !important;
-                font-size: 1.1em;
+			.btn-sm {
+				padding: 1.37em 2em !important;
+				font-size: 1.1em;
 
-                span {
+				span {
 
-                    font-family: $fontRegular;
-                    padding: 0 !important;
-                    width: auto;
-                    text-decoration: none;
+					font-family: $fontRegular;
+					padding: 0 !important;
+					width: auto;
+					text-decoration: none;
 
-                }
+				}
 
-            }
+			}
 
-            button {
-                position: relative;
-                box-shadow: none;
-                -moz-box-shadow: none;
-                -webkit-box-shadow: none;
+			button {
+				position: relative;
+				box-shadow: none;
+				-moz-box-shadow: none;
+				-webkit-box-shadow: none;
 
-                &:hover {
-                    background: none;
-                    border: none;
+				&:hover {
+					background: none;
+					border: none;
 
-                    span:not(.text-muted) {
-                        color: #ff7800;
-                    }
-                }
+					span:not(.text-muted) {
+						color: #ff7800;
+					}
+				}
 
-                &:disabled {
-                    &:hover {
-                        span {
-                            color: $darkGray;
-                            &.text-muted {
-                                color: $mediumGray;
-                            }
-                        }
-                    }
-                }
+				&:disabled {
+					&:hover {
+						span {
+							color: $darkGray;
+							&.text-muted {
+								color: $mediumGray;
+							}
+						}
+					}
+				}
 
-                span {
-                    position: absolute;
-                    z-index: 11;
-                    left: 1.6em;
-                    top: 0.6em;
-                }
+				span {
+					position: absolute;
+					z-index: 11;
+					left: 1.6em;
+					top: 0.6em;
+				}
+			}
 
-            }
+			&.ball button:after, button.active:after {
+				content: '';
+				position: absolute;
+				background: #ff7800;
+				border-radius: 50%;
+				width: 2.2em;
+				height: 2.2em;
+				left: 0;
+				z-index: 10;
+				left: 1em;
+				top: .2em;
+			}
 
+			button.active:disabled:after {
+				//background: transparent;
+			}
 
+			&.not-selected-date:not(.bar), &.not-selected-date:not(.ball){
+				button.active {
+					&:not(:disabled) {
+						span:not(.text-muted) {
+							color: $darkGray !important;
+						}
+					}
+					&:after {
+						background: transparent !important;
+					}
+				}
+			}
 
-            &.ball button:after, button.active:after {
-                content: '';
-                position: absolute;
-                background: #ff7800;
-                border-radius: 50%;
-                width: 2.2em;
-                height: 2.2em;
-                left: 0;
-                z-index: 10;
-                left: 1em;
-                top: .2em;
-            }
+			&.bar {
 
-            button.active:disabled:after {
-                background: transparent;
-            }
+				button {
 
-            &.not-selected-date:not(.bar), &.not-selected-date:not(.ball){
-                button.active {
-                    &:not(:disabled) {
-                        span:not(.text-muted) {
-                            color: $darkGray !important;
-                        }
-                    }
-                    &:after {
-                        background: transparent !important;
-                    }
-                }
-            }
-
-            &.bar {
-
-                button {
-
-                    &:after {
-                        content: '';
-                        position: absolute;
-                        background: #ff7800;
-                        width: 100%;
-                        height: 2.2em;
-                        left: -2em;
-                        top: 0.2em;
-                        padding-right: 8em;
-                        z-index: 10;
-                    }
-
-                    &:hover {
-                        span {
-                            color: #fff;
-                        }
-                    }
-
-                }
-
-                button.active:after {
-                    border-radius: 0;
-                }
-
-                &.consecutive-days {
-                    button {
+					span {
                         &:after {
-                            padding-right: 5.4em;
-                            border-radius: 0 40px 40px 0;
-                        }
-                    }
-                }
+                            content: '';
+                            position: absolute;
+                            //background: #ff7800;
+                            background: #FFAE66;
+                            width: 100%;
+                            height: 2.2em;
+                            left: -2em;
+                            top: 0.2em;
+                            padding-right: 8em;
+                            z-index: 10;
+					    }
+					}
 
-                &.last button:after {
-                    left: -4em;
-                }
+					&:hover {
+						span {
+							color: #fff;
+
+                            &:after {
+                                background-color: red;
+                            }
+						}
+					}
+
+				}
+
+				button.active:after {
+					border-radius: 0;
+				}
+
+				&.consecutive-days {
+					button {
+						&:after {
+							padding-right: 5.4em;
+							border-radius: 0 40px 40px 0;
+						}
+					}
+				}
+
+				&.last button:after {
+					left: -4em;
+				}
 
 
-            }
+			}
 
-            &.ball {
+			&.ball {
 
-                button {
+				button {
 
-                    &:hover {
+					&:hover {
 
-                        span {
-                            color: #fff;
-                        }
+						span {
+							color: #fff;
+						}
 
-                    }
+					}
 
-                }
+				}
 
-            }
+			}
 
-            &.ball, &.bar, button.active:not(:disabled) {
+			&.ball, &.bar, button.active:not(:disabled) {
 
-                span {
-                    color: #fff;
-                }
+				span {
+					color: #fff;
+				}
 
-                &:hover {
-                    span {
-                        color: #fff;
-                    }
-                }
+				&:hover {
+					span {
+						color: #fff;
+					}
+				}
 
-            }
+			}
 
-        }
+		}
 
-        .not_visible:last-of-type {
-            display: none;
-        }
-        .uib-weeks {
+		.not_visible:last-of-type {
+			display: none;
+		}
+		.uib-weeks {
 
-            .uib-day {
-                .btn {
-                    .text-muted {
-                        display: none;
-                    }
-                }
-            }
+			.uib-day {
+				.btn {
+					.text-muted {
+						display: none;
+					}
+				}
+			}
 
-            td:first-of-type {
-                margin-left: 1.4em;
-                display: inline-block;
-            }
-            td:last-of-type {
-                padding-right: 1.4em;
-            }
-        }
+			td:first-of-type {
+				margin-left: 1.4em;
+				display: inline-block;
+			}
+			td:last-of-type {
+				padding-right: 1.4em;
+			}
+		}
 
-        .glyphicon {
-            font-family: 'itaufonts_master_24px_v1';
-            color: #ff7800;
-            font-size: 32px;
+		.glyphicon {
+			font-family: 'itaufonts_master_24px_v1';
+			color: #ff7800;
+			font-size: 32px;
 
-            &.glyphicon-chevron-left:before {
-                content: '\e9b1';
-            }
+			&.glyphicon-chevron-left:before {
+				content: '\e9b1';
+			}
 
-            &.glyphicon-chevron-right:before {
-                content: '\e9cd';
-            }
-        }
-    }
+			&.glyphicon-chevron-right:before {
+				content: '\e9cd';
+			}
+		}
+	}
 
-    .dateFilters {
+	.dateFilters {
 
-        border-top: 1px solid $rcDatepickerBorderColor;
-        font-size: 1.1em;
-        line-height: 1.3em;
-        margin-top: 18px;
-        width: 100%;
+		border-top: 1px solid $rcDatepickerBorderColor;
+		font-size: 1.1em;
+		line-height: 1.3em;
+		margin-top: 18px;
+		width: 100%;
 
-        .container {
-            width: inherit;
-        }
+		.container {
+			width: inherit;
+		}
 
-        .row {
-            padding: 1em 0;
-        }
+		.row {
+			padding: 1em 0;
+		}
 
-        a {
-            text-transform: none;
-            &:hover, &.active {
-                text-decoration: none;
+		a {
+			text-transform: none;
+			&:hover, &.active {
+				text-decoration: none;
 
-                p {
-                    color: #ff7800;
-                }
-            }
+				p {
+					color: #ff7800;
+				}
+			}
 
-            p {
-                color: #575758;
-            }
-        }
+			p {
+				color: #575758;
+			}
+		}
 
-        p {
-            font-family: $fontLight;
-            margin: 0;
-            color: $platinum;
-            font-weight: 600;
-        }
+		p {
+			font-family: $fontLight;
+			margin: 0;
+			color: $platinum;
+			font-weight: 600;
+		}
 
-        .legend {
-            p {
-                //margin-left: 1.4em;
-            }
-        }
-    }
+		.legend {
+			p {
+				//margin-left: 1.4em;
+			}
+		}
+	}
 
-    .datepicker-legend {
+	.datepicker-legend {
 
-        padding: 3px 0 0 61px;
-        position: relative;
-        margin: 10px 0 20px;
-        font-family: $fontRegular;
+		padding: 3px 0 0 61px;
+		position: relative;
+		margin: 10px 0 20px;
+		font-family: $fontRegular;
 
-        &:before {
+		&:before {
 
-            content: '';
-            display: block;
-            border-radius: 50%;
-            width: 15px;
-            height: 15px;
-            position: absolute;
-            top: 6px;
-            left: 35px;
-            background: #fff;
+			content: '';
+			display: block;
+			border-radius: 50%;
+			width: 15px;
+			height: 15px;
+			position: absolute;
+			top: 6px;
+			left: 35px;
+			background: #fff;
 
-        }
+		}
 
-        &.conciliated {
-            &:before {
-                background: $conciliedColor;
-            }
-        }
+		&.conciliated {
+			&:before {
+				background: $conciliedColor;
+			}
+		}
 
-        &.to-conciliate {
-            &:before {
-                background: $toConcilieColor;
-            }
-        }
+		&.to-conciliate {
+			&:before {
+				background: $toConcilieColor;
+			}
+		}
 
-    }
+	}
 
-    & *:focus {
-        outline: 0 !important;
-    }
+	& *:focus {
+		outline: 0 !important;
+	}
 }

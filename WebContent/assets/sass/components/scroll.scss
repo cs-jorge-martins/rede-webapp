@@ -1,0 +1,29 @@
+/*
+	Projeto: conciliation-webapp
+	Author/Empresa: Rede
+	Copyright (C) 2016 Redecard S.A.
+ */
+
+ // Perfect Scrollbar plugin (http://noraesae.github.io/perfect-scrollbar/)
+.ps-container {
+    &:hover {
+        .ps-scrollbar-y-rail,
+        .ps-scrollbar-x-rail {
+            background: #f8f8f8 !important;
+            width: 0.7em;
+            opacity: 1 !important;
+        }
+
+        .ps-scrollbar-y,
+        .ps-scrollbar-x {
+            width: 0.5em !important;
+            background-color: #b9b8b8 !important;
+        }
+    }
+
+    .ps-scrollbar-y-rail,
+    .ps-scrollbar-x-rail {
+        transition: none !important;
+        -webkit-transition: none !important;
+    }
+}

@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     var API_URLS = {
-        local: 'http://localhost:8080/conciliation-api',
+        local: 'http://localhost:8080',
         dev: 'https://va4f0tsgxh.execute-api.us-east-1.amazonaws.com/dev',
         hml: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml',
         prod: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
@@ -130,6 +130,7 @@ module.exports = function(grunt) {
                     "WebContent/assets/js/componente/max-size-pagination.js",
                     "WebContent/assets/js/componente/chart-utils.js",
                     "WebContent/assets/js/bootstrap.min.js",
+                    "WebContent/assets/js/perfect-scrollbar.min.js",
 
                     "WebContent/app/app.js",
                     "WebContent/app/routes.js",
@@ -182,6 +183,7 @@ module.exports = function(grunt) {
                     "WebContent/app/service/rc-message-service.js",
                     "WebContent/app/service/rc-disclaimer-service.js",
                     "WebContent/app/service/modal-service.js",
+                    "WebContent/app/service/download-service.js",
 
                     "WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
                     "WebContent/app/directives/rc-multiselect/rc-multiselect.js",
@@ -194,11 +196,13 @@ module.exports = function(grunt) {
                     "WebContent/app/directives/rc-checkbox/rc-checkbox.js",
                     "WebContent/app/directives/rc-pagination/rc-pagination.js",
                     "WebContent/app/directives/rc-tooltip/rc-tooltip.js",
+                    "WebContent/app/directives/rc-downloader/rc-downloader.js",
                     "WebContent/app/directives/rc-sort/rc-sort.js",
 
                     "WebContent/app/factories/request-factory.js",
                     "WebContent/app/factories/calendar-factory.js",
                     "WebContent/app/factories/utils-factory.js",
+                    "WebContent/app/factories/polling-factory.js",
 
                     "WebContent/app/filters/currency-filter.js",
                     "WebContent/app/filters/slugfy-filter.js",
