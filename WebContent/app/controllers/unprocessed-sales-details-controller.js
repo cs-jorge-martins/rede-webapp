@@ -12,7 +12,6 @@
         .module('Conciliador.unprocessedSalesDetailsController', [])
         .controller('unprocessedSalesDetailsController', unprocessedSalesDetailsController);
 
-
     unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'TransactionService', 'modalService', '$uibModalInstance', 'utilsFactory', 'TransactionSummaryService', '$timeout'];
 
     function unprocessedSalesDetailsController($scope, calendarFactory, TransactionService, modalService, $uibModalInstance, utilsFactory, TransactionSummaryService, $timeout) {
@@ -36,8 +35,8 @@
         $scope.getDetails = GetDetails;
 
         $scope.sort = {
-            type: 'gross',
-            order: 'desc'
+            type: 'hour',
+            order: 'asc'
         };
 
         Init();

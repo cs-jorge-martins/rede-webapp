@@ -33,12 +33,11 @@
         $scope.items = [];
 
         $scope.sort = {
-            type: 'gross',
-            order: 'desc'
+            type: 'hour',
+            order: 'asc'
         };
 
         Init();
-
 
         function Init() {
             GetDetails();
