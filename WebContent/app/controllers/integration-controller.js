@@ -232,13 +232,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			};
 
 			integrationService.DownloadFiles(objFilter, function success(objResponse){
-
-                var strUrl = objResponse.data;
-                if (strUrl.indexOf("http") === 0){
-                    $window.location = objResponse.data;
-                } else {
-                    $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
-                }
+				// dispara evento para rc-downloader adicionar download na fila
+				$rootScope.$broadcast('download-init', objResponse.data);
 			}, function error(objResponse){
                 var strMsg;
 

@@ -285,14 +285,20 @@
             modalService.open(
                 "app/views/sales-conciliation-modal.html",
                 function ModalController($scope, $uibModalInstance) {
-                var strPluralized = "venda";
-                if (objTransactionModel.count > 1) {
+
+                var strPluralized = "";
+
+                if (objTransactionModel.count === 1) {
+                    strPluralized = "venda";
+                } else {
                     strPluralized = "vendas";
                 }
 
+                $scope.countObjTransactionModel = objTransactionModel.count;
                 $scope.reconcileType = "conciliar";
                 $scope.modalTitle = "conciliar vendas";
                 $scope.modalText = "Você deseja conciliar " + objTransactionModel.count + " " + strPluralized + "?";
+
                 $scope.cancel = function Cancel() {
                     objTransactionModel.resetSelection();
                     $scope.close();
@@ -421,7 +427,7 @@
                     || ((index = $scope.filter.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
                         || ($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id), 1));
         }
-        
+
         /**
          * @method AcquirersCardProductFilterExpression
          * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos na lista de bandeira

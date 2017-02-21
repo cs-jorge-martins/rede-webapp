@@ -343,7 +343,7 @@
                     || ((index = $scope.filter.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
                         || ($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id), 1));
         }
-        
+
         /**
          * @method AcquirersCardProductFilterExpression
          * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos na lista de bandeira

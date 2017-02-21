@@ -24,6 +24,7 @@
     <!-- end not login -->
     <link rel="stylesheet" href="assets/css/angular-chart.min.css?v=0.0.1">
     <link rel="stylesheet" href="assets/css/loading-bar.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/perfect-scrollbar.min.css">
     <script type="text/javascript" src="app/build.js"></script>
 </head>
 
@@ -72,8 +73,13 @@
             <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>
+
     <div class="v2" ng-if="!hideHeaderAndFooter">
         <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm" ng-class="{'modal-blur': $root.modalOpen}"></footer>
+    </div>
+
+    <div class="v2">
+        <rc-downloader></rc-downloader>
     </div>
 
     <div class="v1">
