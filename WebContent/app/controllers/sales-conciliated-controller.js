@@ -340,8 +340,8 @@
         */
         function AcquirersFilterExpression(pv) {
             return !$scope.filter.acquirersModel.length
-                    || ((index = $scope.filter.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
-                        || ($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(a => a.id).indexOf(pv.id), 1));
+                    || ((index = $scope.filter.acquirersModel.map(function(a){ return a.id }).indexOf(pv.acquirerId)) !== -1)
+                        || ($scope.filter.pvsModel.map(function(a){ return a.id }).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(function(a){ return a.id }).indexOf(pv.id), 1));
         }
 
         /**
@@ -351,8 +351,8 @@
         function AcquirersCardProductFilterExpression(objCard) {
             return  !$scope.filter.acquirersModel.length
                     || CompareArrayAcquirers($scope.filter.acquirersModel, objCard.acquirers)
-                        || ($scope.filter.cardProductsModel.map(a => a.id).indexOf(objCard.id) !== -1
-                            && !$scope.filter.cardProductsModel.splice($scope.filter.cardProductsModel.map(a => a.id).indexOf(objCard.id), 1));
+                        || ($scope.filter.cardProductsModel.map(function(a){ return a.id }).indexOf(objCard.id) !== -1
+                            && !$scope.filter.cardProductsModel.splice($scope.filter.cardProductsModel.map(function(a){ return a.id }).indexOf(objCard.id), 1));
         }
 
         function CompareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
