@@ -111,13 +111,15 @@
 
 									if(strTag === 'span') {
 										objTd = e.target.parentNode.parentNode;
+										var bolDisabledButton = objTd.querySelector("button").disabled;
 										objTbody = e.target.parentNode.parentNode.parentNode.parentNode;
 									}
 
 									if(
 										objTd &&
 										objTd.tagName.toLowerCase() === 'td'&&
-										scope.intRangeClickCounter === 1
+										scope.intRangeClickCounter === 1 &&
+                                        !bolDisabledButton
 									) {
 
                                         var arrTdClasses = objTd.classList;
