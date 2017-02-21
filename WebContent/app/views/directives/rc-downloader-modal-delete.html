@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <span class="modal-header-text">limpar download?</span>
+        <button class="close" ng-click="close()">
+            <i class="icon_fechar"></i>
+        </button>
+    </h3>
+</div>
+<div>
+    <div class="modal-body">
+        <p>
+            Após limpar o download, não será possível recuperar histórico ou filtros que foram feitos para gerar o arquivo.
+        </p>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-6">
+                    <button class="btn btn-cancel btn-block" ng-click="cancel()">não, manter download</button>
+            </div>
+            <div class="col-xs-6">
+                    <button class="btn btn-primary btn-block" ng-click="confirm()">sim, limpar adownload</button>
+            </div>
+        </div>
+    </div>
+</div>
