@@ -18,8 +18,6 @@
 
         var objVm = this.vm;
 
-
-
         $scope.pagination = {
             maxSize: 4,
             resultsPageModel: 0,
@@ -37,8 +35,8 @@
         $scope.getDetails = GetDetails;
 
         $scope.sort = {
-            type: 'gross',
-            order: 'desc'
+            type: 'hour',
+            order: 'asc'
         };
 
         Init();
