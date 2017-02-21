@@ -187,10 +187,6 @@
                 &:hover {
                     background: none;
                     border: none;
-
-                    span:not(.text-muted) {
-                        color: #ff7800;
-                    }
                 }
 
                 &:disabled {
@@ -209,6 +205,13 @@
                     z-index: 11;
                     left: 1.6em;
                     top: 0.6em;
+
+                    &:hover {
+                        &:not(.text-muted) {
+                            color: #ff7800;
+                        }
+                    }
+
                 }
 
             }
