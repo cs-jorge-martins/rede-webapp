@@ -14,7 +14,7 @@
     'use strict';
 
     angular
-        .module('Conciliador.salesConciliatedController', [])
+        .module('Conciliador.salesConciliatedController', ['duScroll'])
         .controller('salesConciliatedController', SalesConciliated);
 
     SalesConciliated.$inject = [
@@ -26,7 +26,8 @@
         '$uibModal',
         '$rootScope',
         'utilsFactory',
-        'modalService'
+        'modalService',
+        '$document'
     ];
 
     function SalesConciliated(
@@ -38,7 +39,9 @@
         $uibModal,
         $rootScope,
         utilsFactory,
-        modalService) {
+        modalService,
+        $document
+    ) {
 
         var objVm = this;
 
@@ -231,6 +234,9 @@
                 objModelFound[strModel].transactions.push(objItem);
                 objModelFound[strModel].totalAmount += objItem.amount;
             });
+
+            var objElement = angular.element(document.getElementById("salesConciliatedAnchor"));
+            $document.scrollToElementAnimated(objElement);
         }
 
         /**
