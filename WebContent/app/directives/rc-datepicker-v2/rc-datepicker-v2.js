@@ -66,9 +66,12 @@
 					});
 
 					scope.$watch("status.opened", function (bolNewValue) {
+
 						scope.isOpen = bolNewValue;
 						if (bolNewValue === false) {
 
+                            scope.ready = false;
+                            scope.intRangeClickCounter = 0;
 							scope.clicked = false;
 
 							if (scope.range && scope.intRangeClickCounter === 1) {
@@ -76,6 +79,7 @@
 								scope.update();
 							}
 						}
+
 					});
 
 					scope.$watch("date", function () {
@@ -86,6 +90,121 @@
 						}
 
 					});
+
+					scope.$watch("ready", function (bolNewValue) {
+
+						if(bolNewValue) {
+
+							if(scope.range) {
+
+								element[0].querySelector(".uib-daypicker").addEventListener("mouseover", function(e) {
+									
+									var strTag = e.target.tagName.toLowerCase();
+									var objTd;
+									var objTbody;
+                                    var bolDisabledButton
+
+									if(strTag === 'span') {
+										objTd = e.target.parentNode.parentNode;
+										bolDisabledButton = objTd.querySelector("button").disabled;
+										objTbody = e.target.parentNode.parentNode.parentNode.parentNode;
+									}
+
+									if(
+										objTd &&
+										objTd.tagName.toLowerCase() === 'td'&&
+										scope.intRangeClickCounter === 1 &&
+                                        !bolDisabledButton
+									) {
+
+                                        var arrTdClasses = objTd.classList;
+									    var bolValidTd = true;
+									    var bolIsOnRegex = false;
+									    var strDateClass;
+                                        var intClassIndex;
+
+                                        var objPatt = new RegExp("^date-*[0-9]+$");
+                                        
+                                        for(intClassIndex in arrTdClasses) {
+                                            
+                                            if(arrTdClasses[intClassIndex] === 'hidden'|| arrTdClasses[intClassIndex] === 'invisible') {
+                                                bolValidTd = false;
+                                            }
+                                            
+                                            if(objPatt.test(arrTdClasses[intClassIndex])) {
+                                                bolIsOnRegex = true;
+                                                strDateClass = arrTdClasses[intClassIndex];
+                                            }
+                                            
+                                        }
+
+                                        if(bolValidTd && bolIsOnRegex && strDateClass) {
+
+                                            var arrDaysWithInRange = objTbody.querySelectorAll('.uib-day');
+
+                                            var strClassInitialName = "date-" + calendarFactory.getFirstHourFromDate(scope.pickerDate).getTime();
+
+                                            arrDaysWithInRange.forEach(function(objDateDay) {
+
+                                                if(!objDateDay.classList.contains(strClassInitialName)) {
+                                                    objDateDay.querySelector('button').classList.remove('active');
+                                                    objDateDay.classList.remove("start");
+                                                    objDateDay.classList.remove("in-range");
+                                                    objDateDay.classList.remove("ball");
+                                                    objDateDay.classList.remove("consecutive-days");
+                                                    objDateDay.classList.remove("bar");
+                                                }
+
+                                                objDateDay.classList.remove("bar-single");
+                                                objDateDay.classList.remove('last');
+
+                                            });
+
+                                            var objDate = new Date(parseInt(strDateClass.substring(5)));
+                                            var objButton = objTd.querySelector('button');
+
+                                            objTd.classList.add('in-range');
+                                            objTd.classList.add('last');
+                                            objButton.classList.add('active');
+                                            
+                                            var objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
+                                            var objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
+                                            var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
+                                            
+                                            
+											
+                                            
+                                            arrDaysInBetween.push(objEndDate);
+
+                                            arrDaysInBetween.forEach(function(objDateDay) {
+
+                                            	var strClassName = "date-" + objDateDay.getTime();
+                                            	var objTdSelected = objTbody.getElementsByClassName(strClassName);
+                                            	var arrClasses = scope.getRangeClasses(scope.range, 0, objStartDate, objEndDate, objDateDay, arrDaysInBetween);
+
+                                            	if(objTdSelected.length) {
+													arrClasses.forEach(function (strClass) {
+														objTdSelected[0].classList.add(strClass);
+													});
+
+													objTdSelected[0].classList.add("in-range");
+                                                }
+
+											});
+
+                                        }
+
+									}
+
+								});
+
+                            }
+                        }
+
+					});
+
+
+
 
 				});
 			}
@@ -109,7 +228,8 @@
 
 			function Init() {
 				$scope.daysWithStatus = [];
-				$scope.directiveId = strDirectiveId;
+                $scope.ready = false;
+                $scope.directiveId = strDirectiveId;
 				$scope.dateFormat = 'dd/MM/yyyy';
 				$scope.open = Open;
 				$scope.update = Update;
@@ -117,6 +237,7 @@
 				$scope.clicked = false;
 				$scope.getDayClass = GetDayClass;
 				$scope.getPlaceholder = GetPlaceholder;
+				$scope.getRangeClasses = GetRangeClasses;
 				$scope.initialDate = angular.copy($scope.date);
 				$scope.status = {
 					opened: false
@@ -272,6 +393,11 @@
 				var arrNotSelectedDateClass;
 				var arrBallClass;
 				var arrInvisibleClass;
+				var arrDatesBetween;
+
+				if(!$scope.ready && $scope.status.opened === true) {
+					$scope.ready = true;
+                }
 
 				countGetDayClass++;
 
@@ -310,10 +436,16 @@
 
 				if(countGetDayClass === 42) {
 					countGetDayClass = 0;
-				}
+                }
 
 				arrBallClass = GetBallClass(bolIsRange, objDateAdjusted);
-				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted);
+
+				if(bolIsRange) {
+					arrDatesBetween = calendarFactory.getArrayDatesBetween(objRangeStartDate, objRangeEndDate);
+					arrDatesBetween.push(objRangeEndDate);
+				}
+
+				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted, arrDatesBetween);
                 arrNotSelectedDateClass= GetNotSelectedDateClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
 
 				arrClasses.push(GetCurrentDateClass(objDateAdjusted));
@@ -393,29 +525,46 @@
 			 * @param {Date} objRangeStartDate Primeira data selecionada (range)
 			 * @param {Date} objRangeEndDate Segunda data selecionada (range)
 			 * @param {Date} objDateAdjusted Data atual sendo tratada pela função GetDayClass
+			 * @param {Array} arrDaysInBetween Conjunto com todas as datas que serão parseadas
 			 * @return {Array} arrClasses Pode retornar as classes: ball, bar, consecutive-days ou array vazio.
 			 */
-			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted) {
+			function GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted, arrDaysInBetween) {
 
 				var arrClasses = [];
 
-				if(bolIsRange && intRangeClickCounter === 0) {
+				if(bolIsRange) {
+
+                    if(calendarFactory.isEqualDate(objDateAdjusted,objRangeStartDate)) {
+                        arrClasses.push('start');
+                        arrClasses.push('ball');
+                    }
 
 					var weekDay = objDateAdjusted.getDay();
 					var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
 
+                    if(calendarFactory.isEqualDate(objDateAdjusted,objRangeEndDate)) {
+                        if(weekDay === 1) {
+                            arrClasses.push('start');
+                            arrClasses.push('consecutive-days');
+                        }
+                    }
+
 					if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
-						if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2)  {
+						if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2 )  {
 							arrClasses.push('ball');
 						} else if (weekDay === 0 || bolFirstOrLastDay && weekDay === 2) {
 							arrClasses.push('bar');
 							arrClasses.push('consecutive-days');
-						} else{
+						} else {
 							if(!bolFirstOrLastDay) {
 								arrClasses.push('bar');
 							}
 						}
+
+                        if(weekDay === 1) {
+                            arrClasses.push('bar-single');
+                        }
 
 					}
 					else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
@@ -423,17 +572,25 @@
 					}
 					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
 
-						if(weekDay !== 1) {
-							arrClasses.push('bar');
+						if(weekDay !== 2) {
+							arrClasses.push('ball');
 							arrClasses.push('consecutive-days');
 						} else {
 							arrClasses.push('ball');
+                            arrClasses.push('consecutive-days');
+                            arrClasses.push('bar');
 						}
 
 					}
 
-				}
+                    if(arrDaysInBetween && arrDaysInBetween.length === 2) {
+                        if(calendarFactory.isEqualDate(objDateAdjusted, objRangeStartDate)) {
+                            arrClasses.push("bar-single");
+                        }
+                    }
 
+				}
+				
 				return arrClasses;
 
 			}
