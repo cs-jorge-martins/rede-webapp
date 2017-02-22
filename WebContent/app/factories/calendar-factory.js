@@ -455,12 +455,20 @@ angular.module('Kaplen.CalendarFactory',[])
 
     }
 
-    function IsFirstDayOrLastDayOfMonth(date) {
+    function IsFirstDayOrLastDayOfMonth(date, strFirstOrLast) {
 
 		var objMomentDate = moment(date).startOf('day');
 		var objMomentMonthDate = moment(date).startOf('month');
 		var objMomentLastDate = moment(date).endOf('day');
 		var objMomentLastMonthDate = moment(date).endOf('month');
+
+		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'last') {
+			return objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
+		}
+
+		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'first') {
+			return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
+		}
 		
         return objMomentDate.diff(objMomentMonthDate, 'hours') === 0 ||
             objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;

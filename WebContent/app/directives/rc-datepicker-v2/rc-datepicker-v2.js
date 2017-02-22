@@ -71,13 +71,15 @@
 						if (bolNewValue === false) {
 
 							scope.ready = false;
-							scope.intRangeClickCounter = 0;
 							scope.clicked = false;
 
 							if (scope.range && scope.intRangeClickCounter === 1) {
 								scope.date = [scope.pickerDate, scope.pickerDate];
 								scope.update();
 							}
+
+							scope.intRangeClickCounter = 0;
+
 						}
 
 					});
@@ -170,10 +172,6 @@
 											var objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
 											var objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
 											var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
-
-
-											
-
 											arrDaysInBetween.push(objEndDate);
 
 											arrDaysInBetween.forEach(function(objDateDay) {
@@ -315,7 +313,9 @@
 			 * Método também faz o update do placeholder, chamando o método GetPlaceholder.
 			 */
 			function Update(bolWasClicked) {
+				
 				if (bolIsRange) {
+					
 					intRangeClickCounter++;
 
 					switch (intRangeClickCounter) {
@@ -340,6 +340,7 @@
 					}
 
 					$scope.intRangeClickCounter = intRangeClickCounter;
+					
 				} else {
 					$scope.date = $scope.pickerDate;
 					$scope.clicked = bolWasClicked;
@@ -541,6 +542,8 @@
 
 					var weekDay = objDateAdjusted.getDay();
 					var bolFirstOrLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted);
+					var bolFirstDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted, 'first');
+					var bolLastDay = calendarFactory.isFirstDayOrLastDayOfMonth(objDateAdjusted, 'last');
 
 					if(calendarFactory.isEqualDate(objDateAdjusted,objRangeEndDate)) {
 						if(weekDay === 1) {
@@ -551,7 +554,7 @@
 
 					if (calendarFactory.isInBetweenHours(objRangeStartDate, objRangeEndDate, objDateAdjusted, 24)) {
 
-						if (weekDay === 1 || bolFirstOrLastDay && weekDay !== 2 )  {
+						if (weekDay === 1 || bolFirstOrLastDay) {
 							arrClasses.push('ball');
 						} else if (weekDay === 0 || bolFirstOrLastDay && weekDay === 2) {
 							arrClasses.push('bar');
@@ -562,13 +565,24 @@
 							}
 						}
 
-						if(weekDay !== 7) {
+						if((weekDay !== 0 && !bolFirstOrLastDay) || bolFirstDay && weekDay !== 0 ) {
 							arrClasses.push('bar-single');
 						}
 
 					}
 					else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
+
 						arrClasses.push('ball');
+						var bolIsASingleSelection = arrDaysInBetween && arrDaysInBetween.length === 2 && calendarFactory.isEqualDate(arrDaysInBetween[0], arrDaysInBetween[1]);
+
+						if(weekDay !== 0 && !bolLastDay && !arrClasses.indexOf("start") && !bolIsASingleSelection) {
+							console.log("entrou nesse karalho de merda");
+							
+							console.log("objDateAdjusted", objDateAdjusted)
+							
+							arrClasses.push('bar-single');
+						}
+
 					}
 					else if (calendarFactory.isEqualDate(objRangeEndDate, objDateAdjusted)) {
 
