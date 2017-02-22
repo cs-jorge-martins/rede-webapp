@@ -93,12 +93,6 @@
 
 					scope.$watch("ready", function (bolNewValue) {
 
-						var funAddOrRemoveClasses = function (bolAdd) {
-							if(bolAdd) {
-								/* TODO: continuar logica do add | remove */
-							}
-                        };
-
 						if(bolNewValue) {
 
 							if(scope.range) {
@@ -108,10 +102,11 @@
 									var strTag = e.target.tagName.toLowerCase();
 									var objTd;
 									var objTbody;
+                                    var bolDisabledButton
 
 									if(strTag === 'span') {
 										objTd = e.target.parentNode.parentNode;
-										var bolDisabledButton = objTd.querySelector("button").disabled;
+										bolDisabledButton = objTd.querySelector("button").disabled;
 										objTbody = e.target.parentNode.parentNode.parentNode.parentNode;
 									}
 
@@ -540,7 +535,6 @@
 				if(bolIsRange) {
 
                     if(calendarFactory.isEqualDate(objDateAdjusted,objRangeStartDate)) {
-                    	console.log("entrei")
                         arrClasses.push('start');
                         arrClasses.push('ball');
                     }
@@ -567,6 +561,10 @@
 								arrClasses.push('bar');
 							}
 						}
+
+                        if(weekDay === 1) {
+                            arrClasses.push('bar-single');
+                        }
 
 					}
 					else if (calendarFactory.isEqualDate(objRangeStartDate,objDateAdjusted)) {
