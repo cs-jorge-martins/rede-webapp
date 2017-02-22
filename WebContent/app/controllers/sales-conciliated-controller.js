@@ -288,6 +288,7 @@
                     strPluralized = "vendas"
                 }
 
+                $scope.countObjTransactionModel = objTransactionModel.count;
                 $scope.reconcileType = "desconciliar";
                 $scope.modalTitle = "desconciliar vendas";
                 $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " " + strPluralized + "?";
