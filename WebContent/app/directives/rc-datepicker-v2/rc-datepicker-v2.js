@@ -562,7 +562,7 @@
 							}
 						}
 
-						if(weekDay === 1) {
+						if(weekDay !== 7) {
 							arrClasses.push('bar-single');
 						}
 
