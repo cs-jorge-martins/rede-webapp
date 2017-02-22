@@ -810,8 +810,6 @@ angular.module('Conciliador.movementsModule',[])
 				arrFilterConfig.push(obj);
 			}
 			$scope.cardProductsData = arrFilterConfig;
-            $scope.cardProductsModel = angular.copy($scope.cardProductsData);
-            $scope.cardProductsFutureModel = angular.copy($scope.cardProductsData);
 
             intFilterStatus++;
             HandleTabs();
@@ -830,8 +828,6 @@ angular.module('Conciliador.movementsModule',[])
 				arrFilterConfig.push(obj);
 			}
 			$scope.shopsData = arrFilterConfig;
-            $scope.shopsModel = angular.copy($scope.shopsData);
-            $scope.shopsFutureModel = angular.copy($scope.shopsData);
 
             intFilterStatus++;
             HandleTabs();
@@ -850,8 +846,6 @@ angular.module('Conciliador.movementsModule',[])
 				arrFilterConfig.push(obj);
 			}
 			$scope.acquirersData = arrFilterConfig;
-            $scope.acquirersModel = angular.copy($scope.acquirersData);
-            $scope.acquirersFutureModel = angular.copy($scope.acquirersData);
 
             intFilterStatus++;
 			HandleTabs();
