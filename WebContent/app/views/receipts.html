@@ -21,13 +21,13 @@
                                 <rc-multiselect class="filter-account" label="'conta'" model="accountsModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2" ></rc-multiselect>
+                                <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'todas as adquirentes'" button-max-items="3"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'selecione os estabelecimentos'"></rc-multiselect>
+                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'todos os estabelecimentos'"></rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"></rc-multiselect>
+                                <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'todas as bandeiras'" button-max-items="2" ></rc-multiselect>
                             </div>
                             <div class="filter">
                                 <input type="submit" value="buscar" class="btn btn-primary btn-block filter-search" ng-href='#here' ng-click="getReceipt()" />
@@ -167,7 +167,7 @@
             		<h3>utilize os campos abaixo para filtrar sua busca:</h3>
             		<div class="filtersWrapper">
                         <div class="receipts_future_filters" id="filter-receipts-future">
-                            <div class="filter firstFilter">
+                            <div class="filter">
                                 <div class="v2">
                                     <rc-datepicker-v2 class="filter-date" range="true" date="futureReleases.modelDate" max-date="futureReleases.objFutureMaxDate" min-date="futureReleases.objFutureMinDate" show-next-dates-filter="true"  label="'data'" is-open="futureReleases.datepickerIsOpen"></rc-datepicker-v2>
                                 </div>
@@ -176,14 +176,13 @@
                                 <rc-multiselect class="filter-account" label="'conta'" model="accountsFutureModel" data="accountsData" placeholder="'selecione a conta'" single-selection="2"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'selecione as bandeiras'" button-max-items="2"> </rc-multiselect>
-                            </div>
-                            <br>
-                            <div class="filter">
-                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'selecione os estabelecimentos'"> </rc-multiselect>
+                                <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'todas as adquirentes'" button-max-items="3"> </rc-multiselect>
                             </div>
                             <div class="filter">
-                                <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'selecione as adquirentes'" button-max-items="3"> </rc-multiselect>
+                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'todos os estabelecimentos'"> </rc-multiselect>
+                            </div>
+                            <div class="filter">
+                                <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'todas as bandeiras'" button-max-items="2"> </rc-multiselect>
                             </div>
                             <div class="filter">
                                 <input type="submit" value="buscar" class="btn btn-primary btn-block filter-search" ng-href='#here' ng-click="getFutureReceipt()" ng-disabled="futureReleases.datepickerIsOpen" />

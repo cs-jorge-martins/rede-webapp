@@ -413,6 +413,25 @@ angular.module('Kaplen.CalendarFactory',[])
         return  bolIsBetween || bolisSameAsStart || bolisSameAsEnd;
 
     }
+
+    function GetArrayDatesBetween(dateStart, dateEnd) {
+
+        var objDateStart = moment(dateStart).startOf('day');
+        var objDateEnd = moment(dateEnd).startOf('day');
+        var intDaysQuantity = objDateStart.diff(objDateEnd, 'days') > 0 ? objDateStart.diff(objDateEnd, 'days') : objDateStart.diff(objDateEnd, 'days') * -1;
+        var intCountFor = 0;
+        var arrDates = [];
+        var objAuxDate;
+
+
+        for(intCountFor; intCountFor < intDaysQuantity; intCountFor ++) {
+            objAuxDate =  moment(new Date(objDateStart.toDate().valueOf()));
+            arrDates.push(objAuxDate.add(intCountFor, 'days').toDate());
+		}
+
+        return  arrDates;
+
+    }
     
     function GetFirstHourFromDate(date) {
 		return moment(date).startOf('day').toDate();
@@ -517,6 +536,7 @@ angular.module('Kaplen.CalendarFactory',[])
         isEqualDate: IsEqualDate,
         isFirstDayOfMonth: IsFirstDayOfMonth,
         isFirstDayOrLastDayOfMonth: IsFirstDayOrLastDayOfMonth,
-        getFirstHourFromDate: GetFirstHourFromDate
+        getFirstHourFromDate: GetFirstHourFromDate,
+        getArrayDatesBetween: GetArrayDatesBetween
 	};
 });
