@@ -46,6 +46,7 @@
     ) {
 
         var objVm = this;
+        var autoScroll = false;
 
         objVm.closeableChips = true;
         objVm.chipsConfig = {
@@ -243,8 +244,12 @@
                 objModelFound[strModel].totalAmount += objItem.amount;
             });
 
-            var objElement = angular.element(document.getElementById("salesToConciliateAnchor"));
-            $document.scrollToElementAnimated(objElement);
+            if (autoScroll === true) {
+                var objElement = angular.element(document.getElementById("salesToConciliateAnchor"));
+                $document.scrollToElementAnimated(objElement);
+            } else {
+                autoScroll = true;
+            }
         }
 
         /**
