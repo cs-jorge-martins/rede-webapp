@@ -80,26 +80,6 @@
 							</tbody>
 						</table>
 
-						<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="synthetic.items.length">
-							<thead>
-								<tr class="taleft">
-									<rc-sort text="produto"></rc-sort>
-									<th width="250" ng-click="sortResults($event,'id', 'sintetico')">cupons</th>
-									<th width="260" ng-click="sortResults($event,'gross', 'sintetico')">faturamento (R$)</th>
-									<th width="120" ng-click="sortResults($event,'id', 'sintetico')">percentual</th>
-								</tr>
-							</thead>
-
-							<tbody id="cupomVendasTour" class="taleft">
-								<tr ng-repeat="item in synthetic.items" ng-class-odd="'odd'">
-									<td>{{item.cardProduct.name}}</td>
-									<td>{{item.quantity}}</td>
-									<td>{{item.amount | currency:''}}</td>
-									<td>{{item.percentage | currency:''}}%</td>
-								</tr>
-							</tbody>
-						</table>
-
 						<span class="alert" ng-show="synthetic.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
 					</div>
 				</article>
