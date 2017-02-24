@@ -26,9 +26,9 @@
         .module('Conciliador')
         .directive('rcDownloader', RcDownloader);
 
-    RcDownloader.$inject = ['modalService', '$timeout', 'DownloadService', 'PollingFactory'];
+    RcDownloader.$inject = ['modalService', '$timeout', 'DownloadService', 'PollingFactory', '$filter'];
 
-    function RcDownloader(modalService, $timeout, DownloadService, PollingFactory) {
+    function RcDownloader(modalService, $timeout, DownloadService, PollingFactory, $filter) {
         return {
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-downloader.html',
@@ -101,7 +101,7 @@
                     if(!arrData.length) {
                         objPool.cancel();
                     }
-                }, 3000);
+                }, 3000, true);
             }
 
             /**
@@ -113,6 +113,35 @@
              * pela API.
              */
             function UpdateQueue(arrData) {
+
+                /*
+                console.log('update queue');
+                if (!$scope.queue.length) {
+                    console.log('lista vazia, adicionar retorno da api');
+                    $scope.queue = arrData;
+                } else {
+                    console.log('lista existe, verificar cada item da resposta e buscar o id');
+                    for (var intIndex in arrData) {
+                        var arrFilter = $filter('filter')($scope.queue, {'id': arrData.id});
+
+                        if (arrFilter.length) {
+                            console.log('id encontrado! update dos dados');
+                            for (var strKey in arrData[intIndex]) {
+                                console.log(arrFilter[0][strKey]);
+                                console.log(arrData[intIndex][strKey]);
+                                console.log('---');
+                                arrFilter[0][strKey] = arrData[intIndex][strKey];
+                            }
+
+                        } else {
+                            console.log('id não encontrado, adicionar ao array');
+                            $scope.queue.push(arrData[intIndex]);
+                        }
+                    }
+                }
+                */
+
+
                 if( $scope.queue.length === arrData.length ) {
                     for(var intIndex in arrData) {
                         if( arrData[intIndex].status !== $scope.queue[intIndex].status ) {
@@ -400,7 +429,6 @@
                 if (objData.status === "REJECTED") {
                     ShowLimitExceededMessage();
                 } else {
-                    $scope.queue.push(objData);
                     objPool.cancel();
                     Init();
                 }
