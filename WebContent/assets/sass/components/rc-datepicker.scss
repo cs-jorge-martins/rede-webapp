@@ -77,9 +77,6 @@
                 th:first-of-type {
                     padding-left: 1.4em;
                 }
-                th:last-of-type {
-                    padding-right: 1.4em !important;
-                }
             }
 
             tr:first-of-type {
@@ -114,10 +111,6 @@
                     -webkit-box-shadow: none;
                     -moz-box-shadow: none;
                 }
-            }
-
-            .btn-sm {
-                //padding: 1.2em 1.5em;
             }
         }
 
@@ -384,13 +377,6 @@
                     }
                 }
             }
-
-            td:first-of-type {
-                display: inline-block;
-            }
-            td:last-of-type {
-                padding-right: 1.4em;
-            }
         }
 
         .glyphicon {
@@ -444,12 +430,6 @@
             margin: 0;
             color: $platinum;
             font-weight: 600;
-        }
-
-        .legend {
-            p {
-                //margin-left: 1.4em;
-            }
         }
     }
 
