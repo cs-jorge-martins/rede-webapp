@@ -46,7 +46,7 @@
     ) {
 
         var objVm = this;
-        var autoScroll = false;
+        var autoScroll = $scope.autoScroll;
 
         objVm.closeableChips = true;
         objVm.chipsConfig = {

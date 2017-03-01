@@ -29,6 +29,7 @@
         $scope.filter.terminalsData = [];
         $scope.filter.cardProductsData = [];
         $scope.filter.cardProductsModel = [];
+        $scope.autoScroll = false;
 
         $scope.search = function () {
             $scope.$broadcast('search');
@@ -41,6 +42,7 @@
         function ResolveDateFromDashboard() {
             var strDate = $location.search().date || false;
             if(strDate) {
+                $scope.autoScroll = true;
                 $scope.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
             }
 
