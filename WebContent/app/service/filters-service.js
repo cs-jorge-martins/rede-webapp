@@ -114,7 +114,7 @@ angular.module('Conciliador.filtersService', [])
 				obj.label = objDeferredData[intX][strField];
 				// Adicionado para evitar quebra de layout no componente multi select.
 				if (obj.label === '') {
-					obj.label = '--'
+					obj.label = '-'
 				}
 
 				if (arguments.length > 2) {
