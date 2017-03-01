@@ -71,7 +71,7 @@
                 <th class="alignl" rc-sort sort-type="authorization" sort-by="sort" sort-on-click="getDetails()">
                     cód. aut.
                 </th>
-                <th class="alignr" rc-sort sort-type="gross" sort-by="sort" sort-on-click="getDetails()">
+                <th class="alignl" rc-sort sort-type="gross" sort-by="sort" sort-on-click="getDetails()">
                     valor bruto transação
                 </th>
                 <th class="alignl" rc-sort sort-type="percentFee" sort-by="sort" sort-on-click="getDetails()">
@@ -102,7 +102,7 @@
                 <td class="alignl">{{ item.date | date: 'dd/MM' }} {{ item.hour | limitTo: 5 }}</td>
                 <td class="alignl">{{ item.nsu }}</td>
                 <td class="alignl">{{ item.authorization }}</td>
-                <td class="alignr">{{ item.gross | currency: 'R$ ' }}</td>
+                <td class="alignl">{{ item.gross | currency: 'R$ ' }}</td>
                 <td class="alignl">-</td>
                 <td class="alignl">{{ item.installment }}</td>
                 <td class="alignl">{{ item.roNumber }}</td>
