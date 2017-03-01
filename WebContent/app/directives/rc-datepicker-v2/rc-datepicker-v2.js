@@ -694,8 +694,9 @@
 
 					}
 
+
 					if(arrDaysInBetween && arrDaysInBetween.length === 2) {
-						if(calendarFactory.isEqualDate(objDateAdjusted, objRangeStartDate)) {
+						if(calendarFactory.isEqualDate(objDateAdjusted, objRangeStartDate) && weekDay !== 0) {
 							arrClasses.push("bar-single");
 						}
 					}

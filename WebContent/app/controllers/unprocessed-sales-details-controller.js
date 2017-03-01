@@ -135,6 +135,7 @@
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
                 $scope.reconcileType = "excluir";
+                $scope.countObjTransactionModel = intSelectionCount;
                 $scope.modalTitle = "excluir vendas";
                 $scope.modalText = "Você deseja excluir " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {

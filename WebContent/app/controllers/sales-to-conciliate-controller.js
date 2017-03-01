@@ -352,6 +352,7 @@
                 }
 
                 $scope.reconcileType = "excluir";
+                $scope.countObjTransactionModel = objTransactionModel.count;
                 $scope.modalTitle = "excluir vendas não processadas";
                 $scope.modalText = "Você deseja excluir " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
