@@ -112,6 +112,11 @@ angular.module('Conciliador.filtersService', [])
 				var obj = {};
 				obj.id = objDeferredData[intX].id;
 				obj.label = objDeferredData[intX][strField];
+				// Adicionado para evitar quebra de layout no componente multi select.
+				if (obj.label === '') {
+					obj.label = '--'
+				}
+
 				if (arguments.length > 2) {
 					for (var arg in argumentsSliced = Array.prototype.slice.call(arguments, 2)) {
 						obj[argumentsSliced[arg]] = objDeferredData[intX][argumentsSliced[arg]];
