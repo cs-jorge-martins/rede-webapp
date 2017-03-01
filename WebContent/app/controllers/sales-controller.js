@@ -42,6 +42,7 @@
         function ResolveDateFromDashboard() {
             var strDate = $location.search().date || false;
             if(strDate) {
+                $scope.autoScroll = true;
                 $scope.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
             }
 
@@ -49,9 +50,6 @@
             if(bolConciliedTab) {
                 $scope.activeTab = 1;
             }
-
-            $scope.autoScroll = true;
-
         }
 
         /**
