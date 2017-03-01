@@ -29,6 +29,7 @@
         $scope.filter.terminalsData = [];
         $scope.filter.cardProductsData = [];
         $scope.filter.cardProductsModel = [];
+        $scope.autoScroll = false;
 
         $scope.search = function () {
             $scope.$broadcast('search');
@@ -48,6 +49,9 @@
             if(bolConciliedTab) {
                 $scope.activeTab = 1;
             }
+
+            $scope.autoScroll = true;
+
         }
 
         /**
