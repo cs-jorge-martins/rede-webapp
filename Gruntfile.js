@@ -221,11 +221,13 @@ module.exports = function(grunt) {
         },
 
         watch: {
-            files: ['<%= concat.dist.src %>', 'WebContent/assets/sass/**/*.scss'],
-            tasks: ['concat', 'sass'],
-            options: {
-                atBegin: true,
-                livereload: true
+            sass: {
+	            files: ['WebContent/assets/sass/**/*.scss'],
+	            tasks: ["sass"]
+            },
+            js: {
+	            files: ['<%= concat.dist.src %>'],
+                tasks: ["concat"]
             }
         },
 
