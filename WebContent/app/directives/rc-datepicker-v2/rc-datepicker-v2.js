@@ -102,7 +102,7 @@
 							if(scope.range) {
 
 								element[0].querySelector(".uib-daypicker").addEventListener("mouseover", function(e) {
-									
+
 									var strTag = e.target.tagName.toLowerCase();
 									var objTd;
 									var objTbody;
@@ -113,12 +113,6 @@
 										bolDisabledButton = objTd.querySelector("button").disabled;
 										objTbody = e.target.parentNode.parentNode.parentNode.parentNode;
 									}
-
-									// if(strTag === 'button') {
-									// 	objTd = e.target.parentNode;
-									// 	bolDisabledButton = objTd.querySelector("button").disabled;
-									// 	objTbody = e.target.parentNode.parentNode.parentNode;
-									// }
 
 									if(
 										objTd &&
@@ -149,9 +143,7 @@
 										}
 
 										if(bolValidTd && bolIsOnRegex && strDateClass) {
-
 											ParseClasses(objTbody, objTd, strDateClass);
-
 										}
 
 									}
@@ -163,6 +155,12 @@
 
 					});
 
+					/**
+					 * @method RemoveClassFromTds
+					 * remove as classes dos tds do tbody passado para a função
+					 *
+					 * @param {Object} objTbody Elemento tbody do datepicker
+					 */
 					function RemoveClassFromTds(objTbody) {
 
 						var arrDaysWithInRange = objTbody.querySelectorAll('.uib-day');
@@ -172,12 +170,12 @@
 
 							if(!objDateDay.classList.contains(strClassInitialName)) {
 								objDateDay.querySelector('button').classList.remove('active');
+								objDateDay.classList.remove("ball");
 							}
 
 							objDateDay.classList.remove("start");
 							objDateDay.classList.remove("consecutive-days");
 							objDateDay.classList.remove("bar");
-							objDateDay.classList.remove("ball");
 							objDateDay.classList.remove("bar-single");
 							objDateDay.classList.remove('last');
 							objDateDay.classList.remove("in-range");
@@ -186,7 +184,15 @@
 
 					}
 
-					function ParseClasses(objTbody, objTd, strDateClass, bolClickParse) {
+					/**
+					 * @method ParseClasses
+					 * adiciona as classes corretas para cada td do tbody, utilizando o método GetRangeClasses
+					 *
+					 * @param {Object} objTbody Elemento tbody do datepicker
+					 * @param {Object} objTd um único elemento tbody
+					 * @param {String} strDateClass nome da classe date-*****
+					 */
+					function ParseClasses(objTbody, objTd, strDateClass) {
 
 						RemoveClassFromTds(objTbody);
 
@@ -200,25 +206,17 @@
 						var objStartDate;
 						var objEndDate;
 
-						if(bolClickParse) {
-							objStartDate = scope.pickerDate;
-							objEndDate = scope.pickerDate;
-						} else {
-							objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
-							objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
-						}
-						
-						var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
+						objStartDate = scope.pickerDate < objDate ? scope.pickerDate : objDate;
+						objEndDate = scope.pickerDate > objDate ? scope.pickerDate : objDate;
 
-						if(!bolClickParse) {
-							arrDaysInBetween.push(objEndDate);
-						}
+						var arrDaysInBetween = calendarFactory.getArrayDatesBetween(objStartDate, objEndDate);
+						arrDaysInBetween.push(objEndDate);
 
 						arrDaysInBetween.forEach(function(objDateDay) {
 
 							var strClassName = "date-" + objDateDay.getTime();
 							var objTdSelected = objTbody.getElementsByClassName(strClassName);
-							
+
 							var arrClasses = scope.getRangeClasses(scope.range, 0, objStartDate, objEndDate, objDateDay, arrDaysInBetween);
 
 							if(objTdSelected.length) {
@@ -341,9 +339,9 @@
 			 * Método também faz o update do placeholder, chamando o método GetPlaceholder.
 			 */
 			function Update(bolWasClicked) {
-				
+
 				if (bolIsRange) {
-					
+
 					intRangeClickCounter++;
 
 					switch (intRangeClickCounter) {
@@ -368,7 +366,7 @@
 					}
 
 					$scope.intRangeClickCounter = intRangeClickCounter;
-					
+
 				} else {
 					$scope.date = $scope.pickerDate;
 					$scope.clicked = bolWasClicked;
@@ -475,17 +473,16 @@
 						arrDatesBetween = calendarFactory.getArrayDatesBetween(objRangeStartDate, objRangeEndDate);
 						arrDatesBetween.push(objRangeEndDate);
 					} else {
-						// ClearClasses();
 						objRangeEndDate = $scope.pickerDate;
 						arrDatesBetween = [];
 						arrDatesBetween.push(objRangeStartDate);
 					}
 
 				}
-				
-				
-				
-				
+
+
+
+
 				arrRangeClasses = GetRangeClasses(bolIsRange, intRangeClickCounter, objRangeStartDate, objRangeEndDate, objDateAdjusted, arrDatesBetween);
 				arrNotSelectedDateClass= GetNotSelectedDateClass(bolIsRange, objDateAdjusted, objRangeStartDate, objRangeEndDate);
 
@@ -510,7 +507,6 @@
 				return _.uniq(arrClasses).join(" ");
 			}
 
-
 			/**
 			 * @method GetInvisibleClass
 			 * Método responsável por adicionar a classes de invisible / hidden nos tds do calendário.
@@ -532,63 +528,6 @@
 				}
 
 				return arrClasses;
-
-			}
-
-			function ClearClasses() {
-
-				if($scope.range) {
-
-					var objTbody = $document[0].querySelector(".uib-daypicker tbody");
-					var arrTds = objTbody.querySelectorAll("td.uib-day");
-					var intClassIndex;
-
-					var objPatt = new RegExp("^date-*[0-9]+$");
-
-					arrTds.forEach(function(objElement) {
-
-						var bolValidTd = true;
-						var bolIsOnRegex = false;
-						var strDateClass;
-
-						var arrTdClasses = objElement.classList;
-
-						for (intClassIndex in arrTdClasses) {
-
-							if (arrTdClasses[intClassIndex] === 'hidden' || arrTdClasses[intClassIndex] === 'invisible') {
-								bolValidTd = false;
-							}
-
-							if (objPatt.test(arrTdClasses[intClassIndex])) {
-								bolIsOnRegex = true;
-								strDateClass = arrTdClasses[intClassIndex];
-							}
-
-						}
-
-						var bolDisabledButton = objElement.querySelector("button").disabled;
-
-						if (bolValidTd && bolIsOnRegex && strDateClass && !bolDisabledButton) {
-
-							var strClassInitialName = "date-" + calendarFactory.getFirstHourFromDate($scope.pickerDate).getTime();
-
-							if(!objElement.classList.contains(strClassInitialName)) {
-								objElement.querySelector('button').classList.remove('active');
-							}
-
-							objElement.classList.remove("start");
-							objElement.classList.remove("consecutive-days");
-							objElement.classList.remove("bar");
-							objElement.classList.remove("ball");
-							objElement.classList.remove("bar-single");
-							objElement.classList.remove('last');
-							objElement.classList.remove("in-range");
-
-						}
-
-					});
-
-				}
 
 			}
 
