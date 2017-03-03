@@ -41,20 +41,26 @@
             if( objService && objCallback ) {
 
                 if (bolCallImmediately) {
-                    objService().then(function(objData){
-                        objCallback(objData);
-                    });
+                    Execute();
                 }
 
-                objPool = $interval(function(){
-                    objService().then(function(objData){
-                        objCallback(objData);
-                    });
-                }, intTime);
+                objPool = $interval(Execute, intTime);
+            }
+
+            function Execute() {
+                objService().then(function(objData){
+                    objCallback(objData);
+                }, HandleError);
             }
 
             function Cancel() {
                 $interval.cancel(objPool);
+            }
+
+            function HandleError(objResponse) {
+                if (objResponse.status === 403) {
+                    Cancel();
+                }
             }
 
             return {
