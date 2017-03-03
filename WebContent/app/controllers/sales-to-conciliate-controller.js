@@ -386,7 +386,7 @@
          */
 		function ResetFilter(strModel) {
 			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
-			GetSales();
+			$scope.search();
 		}
 
         /**
