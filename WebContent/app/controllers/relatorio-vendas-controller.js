@@ -185,7 +185,10 @@
                 } else if (objResponse.status === 500) {
                 	strMsg = "Não foi possível gerar o relatório. Tente novamente.";
 				}
-                $rootScope.alerts =  [ { type: "danger", msg: strMsg} ];
+
+				if (objResponse.status !== 403) {
+                    $rootScope.alerts = [{type: "danger", msg: strMsg}];
+                }
             });
 		};
 
