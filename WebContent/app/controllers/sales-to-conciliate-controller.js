@@ -384,10 +384,10 @@
          * o ResetFilter deve ser acionado para fazer a ação na view
          * @param {String} strModel primeiro nome da Model
          */
-        function ResetFilter(strModel) {
-            objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
-            GetSales();
-        }
+		function ResetFilter(strModel) {
+			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
+			$scope.search();
+		}
 
         /**
          * @method Details
