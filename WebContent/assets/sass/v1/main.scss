@@ -2359,7 +2359,7 @@ section .date:after {
 }
 /* main */
 #dashboard main {
-	width: 892px;
+	width: 889px;
 	float: left;
 }
 #dashboard aside>h2, #dashboard caption {
@@ -2514,7 +2514,8 @@ section .date:after {
 	text-decoration: none;
 }
 #dashboard aside {
-	width: 280px;
+	width: 279px;
+    margin-right: 8px;
 	float: right;
 	position: relative;
 }

@@ -12,7 +12,6 @@
         .module('Conciliador.unprocessedSalesDetailsController', [])
         .controller('unprocessedSalesDetailsController', unprocessedSalesDetailsController);
 
-
     unprocessedSalesDetailsController.$inject = ['$scope', 'calendarFactory', 'TransactionService', 'modalService', '$uibModalInstance', 'utilsFactory', 'TransactionSummaryService', '$timeout'];
 
     function unprocessedSalesDetailsController($scope, calendarFactory, TransactionService, modalService, $uibModalInstance, utilsFactory, TransactionSummaryService, $timeout) {
@@ -33,6 +32,12 @@
         $scope.delete = Delete;
         $scope.itemsCounter = 0;
         $scope.detailSelection = {};
+        $scope.getDetails = GetDetails;
+
+        $scope.sort = {
+            type: 'hour',
+            order: 'asc'
+        };
 
         Init();
 
@@ -42,7 +47,7 @@
         }
 
         function GetDetails() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
 
             $timeout(function () {
 
@@ -55,7 +60,7 @@
                     shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ','),
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage,
-                    sort: 'gross,desc'
+                    sort: $scope.sort.type + ',' + $scope.sort.order
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
@@ -130,6 +135,7 @@
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
                 $scope.reconcileType = "excluir";
+                $scope.countObjTransactionModel = intSelectionCount;
                 $scope.modalTitle = "excluir vendas";
                 $scope.modalText = "Você deseja excluir " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
@@ -146,7 +152,7 @@
                         GetDetails();
                         ResetSelection();
                         UpdateHeader();
-                        objVm.getSales();
+                        objVm.search();
                         $uibModalInstance.close();
                     });
                 }
@@ -170,7 +176,7 @@
         }
 
         function UpdateHeader() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
             var objFilter = {
                 conciliationStatus: 'UNPROCESSED',
                 startDate: strDate,

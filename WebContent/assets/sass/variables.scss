@@ -15,6 +15,7 @@ $backgroundColor: #f0f0f0;
 $defaultYellow: #f8DE00;
 $defaultOrange: #ff7800;
 $lightGray: #f8f8f8;
+$lighterGray: #b8b2b8;
 $mediumGray: #ddd;
 $darkGray: #353230;
 $grafitteGray: #575758;
@@ -122,6 +123,12 @@ $cardBackgroundColor: #fff;
 // modal details
 $modalDetailsHeaderBackgroundColor: #fff;
 $modalDetailsTitleColor: #4d4d4d;
+
+// rc-downloader
+$rcDownloaderWarningColor: $defaultOrange;
+$rcDownloaderErrorColor: #ea4230;
+$rcDownloaderLoadingColor: $grafitteGray;
+$rcDownloaderBackgroundColor: #fff;
 
  // loader
 // $spinnerColor: $menuActiveFontColor;

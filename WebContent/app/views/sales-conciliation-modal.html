@@ -15,7 +15,7 @@
             <button class="btn btn-cancel btn-block" ng-click="cancel()">não, cancelar seleção</button>
         </div>
         <div class="modal-button">
-            <button class="btn btn-primary" ng-click="confirm()">sim, {{reconcileType}} vendas</button>
+            <button class="btn btn-primary" ng-click="confirm()">sim, {{reconcileType}} venda<ng-show ng-show="countObjTransactionModel > 1">s</ng-show></button>
         </div>
     </div>
 </div>

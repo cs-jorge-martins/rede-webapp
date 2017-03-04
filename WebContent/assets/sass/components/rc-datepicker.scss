@@ -13,7 +13,7 @@
     }
 
     .dropdown-menu {
-        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.24);
+        box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.20);
         padding: 0;
         border: 0;
 
@@ -77,9 +77,6 @@
                 th:first-of-type {
                     padding-left: 1.4em;
                 }
-                th:last-of-type {
-                    padding-right: 1.4em !important;
-                }
             }
 
             tr:first-of-type {
@@ -115,10 +112,6 @@
                     -moz-box-shadow: none;
                 }
             }
-
-            .btn-sm {
-                //padding: 1.2em 1.5em;
-            }
         }
 
         .uib-day {
@@ -150,12 +143,6 @@
                     }
                 }
 
-                &.bar, &.ball {
-                    &:before {
-                        display: none;
-                    }
-                }
-
             }
 
             &:not(.bar):not(.ball) .btn-sm:not(.active) span.text-info {
@@ -169,10 +156,14 @@
 
                 span {
 
+                    display: block;
                     font-family: $fontRegular;
-                    padding: 0 !important;
-                    width: auto;
+                    padding: 0.7em 0 !important;
+                    width: 100%;
                     text-decoration: none;
+                    border-radius: 0;
+                    top: 0;
+                    left: 0;
 
                 }
 
@@ -187,10 +178,6 @@
                 &:hover {
                     background: none;
                     border: none;
-
-                    span:not(.text-muted) {
-                        color: #ff7800;
-                    }
                 }
 
                 &:disabled {
@@ -207,15 +194,18 @@
                 span {
                     position: absolute;
                     z-index: 11;
-                    left: 1.6em;
-                    top: 0.6em;
+
+                    &:hover {
+                        &:not(.text-muted) {
+                            color: #ff7800;
+                        }
+                    }
+
                 }
 
             }
 
-
-
-            &.ball button:after, button.active:after {
+            &.ball button:before, button.active:after {
                 content: '';
                 position: absolute;
                 background: #ff7800;
@@ -224,15 +214,16 @@
                 height: 2.2em;
                 left: 0;
                 z-index: 10;
-                left: 1em;
-                top: .2em;
+                left: .9em;
+                top: .35em;;
             }
+
 
             button.active:disabled:after {
                 background: transparent;
             }
 
-            &.no-current:not(.bar), &.no-current:not(.ball){
+            &.not-selected-date:not(.bar), &.not-selected-date:not(.ball){
                 button.active {
                     &:not(:disabled) {
                         span:not(.text-muted) {
@@ -242,6 +233,63 @@
                     &:after {
                         background: transparent !important;
                     }
+                }
+            }
+
+            &.in-range {
+
+                &.start button:not(:disabled):before,
+                &.last button:not(:disabled):before {
+                    background: #ff7800 !important;
+                    z-index: 11;
+                }
+
+                button {
+                    &:not(:disabled) {
+                        &:after, &:before {
+                            background: #ffae66 !important;
+                        }
+                    }
+                }
+
+                &.last.bar.ball {
+                    button:not(:disabled) {
+                        &:after {
+                            left: -2.1em;
+                        }
+                    }
+                }
+
+                &.not-selected-date {
+                    button.active {
+                        &:not(:disabled) {
+                            span:not(.text-muted) {
+                                color: #fff !important;
+                            }
+                        }
+                        &:after {
+                            background: #ff7800 !important;
+                        }
+                    }
+
+                    &.last button:after {
+                        background-color: #ffae66 !important;
+                    }
+                }
+            }
+
+            &.bar-single {
+                button:after {
+                    content: '';
+                    position: absolute;
+                    background: #ff7800;
+                    width: 5%;
+                    height: 2.2em;
+                    left: 1.8em;
+                    top: .35em;
+                    padding-right: 4.2em;
+                    z-index: 10;
+                    border-radius: 0;
                 }
             }
 
@@ -256,7 +304,7 @@
                         width: 100%;
                         height: 2.2em;
                         left: -2em;
-                        top: 0.2em;
+                        top: .35em;
                         padding-right: 8em;
                         z-index: 10;
                     }
@@ -282,10 +330,6 @@
                     }
                 }
 
-                &.last button:after {
-                    left: -4em;
-                }
-
 
             }
 
@@ -309,6 +353,7 @@
 
                 span {
                     color: #fff;
+                    z-index: 12;
                 }
 
                 &:hover {
@@ -321,18 +366,18 @@
 
         }
 
-        .uib-weeks {
-            td:first-of-type {
-                margin-left: 1.4em;
-                display: inline-block;
-            }
-            td:last-of-type {
-                padding-right: 1.4em;
-            }
+        .not_visible:last-of-type {
+            display: none;
         }
+        .uib-weeks {
 
-        .text-muted {
-            color: #ddd;
+            .uib-day {
+                .btn {
+                    .text-muted {
+                        display: none;
+                    }
+                }
+            }
         }
 
         .glyphicon {
@@ -386,12 +431,6 @@
             margin: 0;
             color: $platinum;
             font-weight: 600;
-        }
-
-        .legend {
-            p {
-                //margin-left: 1.4em;
-            }
         }
     }
 

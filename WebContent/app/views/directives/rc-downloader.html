@@ -1,0 +1,32 @@
+<div class="rc-downloader-container">
+    <div class="rc-downloader closed {{ hideClass }} {{ blinkClass }} {{ heightClass }}">
+        <a ng-click="" class="header {{ headerClass }}">
+            {{ headerTitle }} <span ng-if="headerCounter">({{ headerCounter }})</span>
+        </a>
+        <div class="content-wrapper">
+            <div class="content-scroll">
+                <div class="content">
+                    <div class="item {{ item.status | lowercase }}" ng-repeat="item in queue">
+                        <p><strong>nome:</strong> {{ item.fileName }}</p>
+                        <p><strong>qtd. de registros:</strong> {{ item.lineCount }}</p>
+                        <p ng-show="item.status.toLowerCase() === 'processing' || item.status.toLowerCase() === 'initialized'"><strong>tempo estimado:</strong> {{ parseRemainingTime(item.timeRemaining) }}</p>
+                        <p ng-show="item.status.toLowerCase() === 'done' || item.status.toLowerCase() === 'error'"><strong>ID:</strong> {{ item.id }}</p>
+                        <div class="actions row">
+                            <div class="col-xs-6">
+                                <input type="submit" value="cancelar" class="btn btn-cancel btn-block btn-sm" ng-click="cancel(item, $index)" ng-show="item.status.toLowerCase() === 'processing' || item.status.toLowerCase() === 'initialized'" />
+                                <input type="submit" value="limpar" class="btn btn-cancel btn-block btn-sm" ng-click="delete(item, $index)" ng-show="item.status.toLowerCase() === 'done'" />
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="submit" value="download" class="btn btn-primary btn-block btn-sm" ng-click="download(item, $index)" ng-disabled="item.status.toLowerCase() != 'done'" ng-hide="item.status.toLowerCase() == 'error'" />
+                                <input type="submit" value="limpar" class="btn btn-cancel btn-block btn-sm" ng-click="delete(item, $index)" ng-show="item.status.toLowerCase() === 'error'" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                você pode minimizar essa janela sem preocupação e continuar navegando, quando o arquivos estiver pronto, avisaremos.
+            </div>
+        </div>
+    </div>
+</div>

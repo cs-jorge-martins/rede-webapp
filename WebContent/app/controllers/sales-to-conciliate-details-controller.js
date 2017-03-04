@@ -29,8 +29,13 @@
         $scope.toggleCheckbox = ToggleCheckbox;
         $scope.toggleCheckboxAll = ToggleCheckboxAll;
         $scope.reconcileItems = ReconcileItems;
+        $scope.getDetails = GetDetails;
         $scope.items = [];
 
+        $scope.sort = {
+            type: 'hour',
+            order: 'asc'
+        };
 
         Init();
 
@@ -45,7 +50,8 @@
         }
 
         function GetDetails() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
 
             $timeout(function () {
 
@@ -59,7 +65,7 @@
                     acquirerIds: [objVm.transaction.acquirer.id],
                     page: $scope.pagination.resultsPageModel === 0 ?  0 : $scope.pagination.resultsPageModel - 1,
                     size: $scope.pagination.resultsPerPage,
-                    sort: 'gross,desc'
+                    sort: $scope.sort.type + ',' + $scope.sort.order
                 };
 
                 TransactionService.GetTransactionByFilter(objFilter).then(function(objResponse) {
@@ -126,6 +132,7 @@
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
                 $scope.reconcileType = "conciliar";
+                $scope.countObjTransactionModel = intSelectionCount;
                 $scope.modalTitle = "conciliar vendas";
                 $scope.modalText = "Você deseja conciliar " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
@@ -142,7 +149,7 @@
                         GetDetails();
                         ResetSelection();
                         UpdateHeader();
-                        objVm.getSales();
+                        objVm.search();
                         $uibModalInstance.close();
                     });
                 }
@@ -166,7 +173,7 @@
         }
 
         function UpdateHeader() {
-            var strDate = calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            var strDate = calendarFactory.formatDateTimeForService($scope.dateModel.date);
             var objFilter = {
                 conciliationStatus: 'TO_CONCILIE',
                 startDate: strDate,

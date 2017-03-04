@@ -25,6 +25,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 							'Conciliador.integrationService', 'Conciliador.advancedFilterService',
 							'Conciliador.calendarService', 'Kaplen.CalendarFactory',
 							'Conciliador.UtilsFactory',
+                            'Conciliador.PollingFactory',
 							'Conciliador.Request', 'Conciliador.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
                             'Conciliador.salesToConciliateController', 'Conciliador.salesConciliatedController',
@@ -39,6 +40,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.MovementService',
+                            'Conciliador.DownloadService',
                             'Conciliador.receiptsDetailsController',
 							'Conciliador.redirectController',
 							'Conciliador.receiptsExpectedDetailsController',
@@ -105,7 +107,10 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 						$location.path("/login");
 						break;
 					case 403 :
-                        $rootScope.showAlert('app/views/action-forbidden.html');
+						if (config.config.url.indexOf("/downloads") < 0) {
+                            $rootScope.showAlert('app/views/action-forbidden.html');
+                        }
+
 						break;
 					case 500 :
 					case 504 :

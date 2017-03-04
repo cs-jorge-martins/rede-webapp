@@ -24,7 +24,7 @@ angular.module('Conciliador.dashboardController',[])
 	$scope.prevPeriodStartDateMonth = calendarFactory.getMonthNameOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 	$scope.prevPeriodStartDateYear = calendarFactory.getYearOfDate(calendarFactory.getFirstDayOfLastMonthForDashboard());
 
-	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDayOfLastMonthForDashboard());
+	$scope.prevPeriodEndDateDayMovement = calendarFactory.getDayOfMonth(calendarFactory.getActualDateOfLastMonth());
 
 	$scope.sales = Sales;
 
@@ -112,20 +112,7 @@ angular.module('Conciliador.dashboardController',[])
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
 		SetTransactionConciliationBox();
-        InitDisclaimer();
 	}
-
-	function InitDisclaimer() {
-
-        var objDisclaimer = {
-            type: 'warning',
-            text: 'Os nossos termos de uso e política de privacidade foram atualizados e ao continuar navegando neste site você aceita suas condições.',
-            actionText: 'Saiba Mais',
-            onClick: 'assets/files/contrato-control-rede.pdf'
-        };
-
-        RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
-    }
 
 	/********************************* TRANSACTION SUMMARY BOX *************************************/
 	function SetTransactionSummaryBox(){
@@ -446,14 +433,15 @@ angular.module('Conciliador.dashboardController',[])
 		});
 	}
 
-	function Sales(intDay) {
+	function Sales(intDay, intConcilied, intToReconcile, intToProcess) {
+		var bolIsTabConcilied = intConcilied && !intToReconcile && !intToProcess;
 		if(intDay){
 			intDay = intDay < 10 ? 0 + String(intDay) : intDay;
 			var objDate = $scope.dateSelected;
 			objDate = objDate.split('/');
 			objDate[0] = intDay;
 			objDate = objDate.join('/');
-			$location.path('/sales').search({ date: objDate });
+			$location.path('/sales').search({ date: objDate, conciliedTab: bolIsTabConcilied });
 		}
 	}
 

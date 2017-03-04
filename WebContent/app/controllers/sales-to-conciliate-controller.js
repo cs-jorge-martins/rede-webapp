@@ -14,7 +14,7 @@
     'use strict';
 
     angular
-        .module('Conciliador.salesToConciliateController', [])
+        .module('Conciliador.salesToConciliateController', ['duScroll'])
         .controller('salesToConciliateController', SalesToConciliateController);
 
     SalesToConciliateController.$inject = [
@@ -27,7 +27,8 @@
         '$rootScope',
         'utilsFactory',
         'modalService',
-        '$location'
+        '$location',
+        '$document'
     ];
 
     function SalesToConciliateController(
@@ -40,10 +41,12 @@
         $rootScope,
         utilsFactory,
         modalService,
-        $location
+        $location,
+        $document
     ) {
 
         var objVm = this;
+        var autoScroll = $scope.autoScroll;
 
         objVm.closeableChips = true;
         objVm.chipsConfig = {
@@ -54,10 +57,10 @@
                 cardProducts: false
             },
             update: function() {
-                objVm.chipsConfig.show.terminals = objVm.terminalsData.length != objVm.filteredTerminals.length;
-                objVm.chipsConfig.show.pvs = objVm.pvsData.length != objVm.filteredPvs.length;
-                objVm.chipsConfig.show.acquirers = objVm.acquirersData.length != objVm.filteredAcquirers.length;
-                objVm.chipsConfig.show.cardProducts = objVm.cardProductsData.length != objVm.filteredCardProducts.length;
+                objVm.chipsConfig.show.terminals = $scope.filter.terminalsData.length != objVm.filteredTerminals.length;
+                objVm.chipsConfig.show.pvs = $scope.filter.pvsData.length != objVm.filteredPvs.length;
+                objVm.chipsConfig.show.acquirers = $scope.filter.acquirersData.length != objVm.filteredAcquirers.length;
+                objVm.chipsConfig.show.cardProducts = $scope.filter.cardProductsData.length != objVm.filteredCardProducts.length;
             },
             closeable: true
         };
@@ -72,23 +75,21 @@
         };
 
         objVm.getSales = GetSales;
+        objVm.search = $scope.search;
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
         objVm.removeUnprocessed = RemoveUnprocessed;
         objVm.details = Details;
         objVm.acquirersFilterExpression = AcquirersFilterExpression;
+        objVm.acquirersCardProductFilterExpression = AcquirersCardProductFilterExpression;
 
-        objVm.filterMaxDate = calendarFactory.getYesterday();
-        objVm.dateModel.date = calendarFactory.getYesterday();
-        objVm.cardProductsData = [];
-        objVm.cardProductsModel = [];
-        objVm.terminalsData = [];
-        objVm.terminalsModel = [];
-        objVm.pvsData = [];
-        objVm.pvsModel = [];
-        objVm.acquirersData = [];
-        objVm.acquirersModel = [];
         objVm.countButtonLabelPrefix = 'conciliar';
+
+        $scope.$on('search', function(event, data) {
+            GetSales();
+        });
+
+
 
         Init();
 
@@ -98,32 +99,7 @@
          */
         function Init() {
             ResolveDateFromDashboard();
-            GetFilters(GetSales);
             UpdateDateModel();
-        }
-
-        /**
-         * @method GetFilters
-         * faz as chamadas para serializar os dados de filtro e coloca-los em scopes, para manipula-los na view
-         */
-        function GetFilters(callback) {
-            filtersService.GetCardProductDeferred().then(function (objCardProducts) {
-                objVm.cardProductsData = filtersService.TransformDeferredDataInArray(objCardProducts, 'name');
-
-                filtersService.GetTerminalDeferred().then(function (objTerminals) {
-                    objVm.terminalsData = filtersService.TransformDeferredDataInArray(objTerminals, 'code', 'pvId');
-
-                    filtersService.GetPvsDeferred().then(function (objPvs) {
-                        objVm.pvsData = filtersService.TransformDeferredDataInArray(objPvs, 'code', 'acquirerId');
-                        
-                        filtersService.GetAcquirersDeferred().then  (function (objAcquirers) {
-                            objVm.acquirersData = filtersService.TransformDeferredDataInArray(objAcquirers, 'name');
-                            callback();
-                        });
-                    });
-
-                });
-            });
         }
 
         /**
@@ -146,8 +122,8 @@
          * atualiza o model da data no cabeçalho da página
          */
         function UpdateDateModel() {
-            objVm.dateModel.day = calendarFactory.getDayOfDate(objVm.dateModel.date);
-            objVm.dateModel.monthName = calendarFactory.getMonthNameOfDate(objVm.dateModel.date);
+            objVm.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
+            objVm.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
         }
 
         /**
@@ -156,7 +132,7 @@
          * @return data formatada para (YYYYMMDD)
          */
         function FormatDateForService() {
-            return calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            return calendarFactory.formatDateTimeForService($scope.dateModel.date);
         }
 
         /**
@@ -201,10 +177,10 @@
          * atualiza os resultados, utilizando os filtros para buscar na api e responder na view
          */
         function GetSales() {
-            objVm.filteredTerminals = angular.copy(objVm.terminalsModel);
-            objVm.filteredAcquirers = angular.copy(objVm.acquirersModel);
-            objVm.filteredPvs = angular.copy(objVm.pvsModel);
-            objVm.filteredCardProducts = angular.copy(objVm.cardProductsModel);
+            objVm.filteredTerminals = angular.copy($scope.filter.terminalsModel);
+            objVm.filteredAcquirers = angular.copy($scope.filter.acquirersModel);
+            objVm.filteredPvs = angular.copy($scope.filter.pvsModel);
+            objVm.filteredCardProducts = angular.copy($scope.filter.cardProductsModel);
             objVm.resultModel.splice(0);
 
             GetLabels();
@@ -267,6 +243,13 @@
                 objModelFound[strModel].transactions.push(objItem);
                 objModelFound[strModel].totalAmount += objItem.amount;
             });
+
+            if (autoScroll === true) {
+                var objElement = angular.element(document.getElementById("salesToConciliateAnchor"));
+                $document.scrollToElementAnimated(objElement);
+            } else {
+                autoScroll = true;
+            }
         }
 
         /**
@@ -309,15 +292,23 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
-                var strPluralized = "venda";
-                if (objTransactionModel.count > 1) {
+            modalService.open(
+                "app/views/sales-conciliation-modal.html",
+                function ModalController($scope, $uibModalInstance) {
+
+                var strPluralized = "";
+
+                if (objTransactionModel.count === 1) {
+                    strPluralized = "venda";
+                } else {
                     strPluralized = "vendas";
                 }
 
+                $scope.countObjTransactionModel = objTransactionModel.count;
                 $scope.reconcileType = "conciliar";
                 $scope.modalTitle = "conciliar vendas";
                 $scope.modalText = "Você deseja conciliar " + objTransactionModel.count + " " + strPluralized + "?";
+
                 $scope.cancel = function Cancel() {
                     objTransactionModel.resetSelection();
                     $scope.close();
@@ -329,11 +320,12 @@
 
                 $scope.confirm = function Confirm() {
                     transactionService.ConcilieTransactions(objFilter).then(function(objResponse) {
-                        GetSales();
+                        $scope.search();
                         $uibModalInstance.close();
                     });
                 }
-            });
+            },
+                $scope);
 
         }
 
@@ -351,13 +343,16 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
+            modalService.open(
+                "app/views/sales-conciliation-modal.html",
+                function ModalController($scope, $uibModalInstance) {
                 var strPluralized = "venda não processada";
                 if (objTransactionModel.count > 1) {
                     strPluralized = "vendas não processadas"
                 }
 
                 $scope.reconcileType = "excluir";
+                $scope.countObjTransactionModel = objTransactionModel.count;
                 $scope.modalTitle = "excluir vendas não processadas";
                 $scope.modalText = "Você deseja excluir " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
@@ -371,11 +366,13 @@
 
                 $scope.confirm = function Confirm() {
                     transactionService.RemoveUnprocessedTransactions(objFilter).then(function(objResponse) {
-                        GetSales();
+                        $scope.search();
                         $uibModalInstance.close();
                     });
                 }
-            });
+            },
+                $scope
+            );
 
         }
 
@@ -387,10 +384,10 @@
          * o ResetFilter deve ser acionado para fazer a ação na view
          * @param {String} strModel primeiro nome da Model
          */
-        function ResetFilter(strModel) {
-            objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
-            GetSales();
-        }
+		function ResetFilter(strModel) {
+			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
+			$scope.search();
+		}
 
         /**
          * @method Details
@@ -428,8 +425,10 @@
         function ResolveDateFromDashboard() {
             var strDate = $location.search().date || false;
             if(strDate) {
-                objVm.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
+                $scope.dateModel.date = calendarFactory.getMomentOfSpecificDate(strDate).toDate();
             }
+
+            $scope.search();
         }
 
         /**
@@ -437,10 +436,30 @@
         * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos em outras listas
         */
         function AcquirersFilterExpression(pv) {
-            return !objVm.acquirersModel.length 
-                    || ((index = objVm.acquirersModel.map(a => a.id).indexOf(pv.acquirerId)) !== -1)
-                        || (objVm.pvsModel.map(a => a.id).indexOf(pv.id) !== -1 && !objVm.pvsModel.splice(objVm.pvsModel.map(a => a.id).indexOf(pv.id), 1));
+            return !$scope.filter.acquirersModel.length
+                    || ((index = $scope.filter.acquirersModel.map(function(a){ return a.id }).indexOf(pv.acquirerId)) !== -1)
+                        || ($scope.filter.pvsModel.map(function(a){ return a.id }).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(function(a){ return a.id }).indexOf(pv.id), 1));
         }
 
+        /**
+         * @method AcquirersCardProductFilterExpression
+         * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos na lista de bandeira
+         */
+        function AcquirersCardProductFilterExpression(objCard) {
+            return  !$scope.filter.acquirersModel.length
+                    || CompareArrayAcquirers($scope.filter.acquirersModel, objCard.acquirers)
+                        || ($scope.filter.cardProductsModel.map(function(a){ return a.id }).indexOf(objCard.id) !== -1
+                            && !$scope.filter.cardProductsModel.splice($scope.filter.cardProductsModel.map(function(a){ return a.id }).indexOf(objCard.id), 1));
+        }
+
+        function CompareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
+            var bolResponse = false;
+            angular.forEach(arrAcquirers, function(objAcq, keyAcq) {
+                angular.forEach(arrAcquirersCard, function(objAcqCard, keyCard) {
+                    bolResponse = bolResponse || (objAcq.id === objAcqCard.id);
+                });
+            });
+            return bolResponse;
+        }
     }
 })();

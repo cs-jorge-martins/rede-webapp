@@ -21,7 +21,7 @@
 			</div>
 			<div class="chip-wrapper">
 				<p>
-					São considerados recebimentos não efetuados, lançamentos que possuíam a data agendada de pagamento para hoje e não ocorreram devido as possíveis causas: créditos que foram suspensos, penhoradas, antecipados, cancelados ou que simplesmente não foram pagos por alguma outra razão. (1) Para casos de créditos suspensos entre no Portal da Rede e verifique as suas informações bancárias. (2) Para mais informações sobre créditos penhorados ou não pagos entre em contato com a Central de Atendimento no telefone <strong>4001-4433</strong> (capitais e regiões metropolitanas) ou <strong>0800-728-4433</strong> (demais regiões).
+					São considerados recebimentos não efetuados, lançamentos que possuíam a data agendada de pagamento para hoje e não ocorreram devido as possíveis causas: créditos que foram suspensos, penhoradas, antecipados, cancelados ou que simplesmente não foram pagos por alguma outra razão. (1) Para casos de créditos suspensos entre no Portal da Rede e verifique as suas informações bancárias. (2) Para mais informações sobre créditos penhorados ou não pagos entre em contato com a Central de Atendimento no telefone <strong>4001-4433</strong> (capitais e regiões metropolitanas) ou <strong>0800-728-4433</strong> (demais regiões).
 				</p>
 				<div>
 					<div class="chip" ng-if="accountsLabel">
@@ -45,7 +45,7 @@
 						<table class="table sortTable">
 							<thead>
 							<tr>
-								<th ng-click="sortResults($event,'cardProductCode', tab.id)">bandeira</th>
+								<th ng-click="sortResults($event,'cardProductId', tab.id)">bandeira</th>
 								<th ng-click="sortResults($event,'cardProductType', tab.id)">tipo de venda</th>
 								<th ng-click="sortResults($event,'status', tab.id)">status do crédito</th>
 								<th ng-click="sortResults($event,'roDate', tab.id)">data do lote (RV)</th>
@@ -57,7 +57,7 @@
 							<tbody>
 							<tr ng-repeat="details in detailsData">
 								<td>
-									<div class="cardFlag brand_{{details.cardProductCode}}"></div>
+									<div class="cardFlag brand_{{details.cardProductId}}"></div>
 								</td>
 								<td class="toLowerCase">{{details.cardProductType}}</td>
 								<td>{{translateStatus(details.status, details.payedDate)}}</td>

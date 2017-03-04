@@ -9,7 +9,7 @@
 
 	angular
 		.module('Conciliador.Session')
-		.factory('Session', Session);
+		.factory('SessionFactory', Session);
 
 	function Session() {
 
@@ -62,5 +62,4 @@
 			return !!GetToken();
 		}
 	}
-
 })(window.localStorage);

@@ -413,6 +413,25 @@ angular.module('Kaplen.CalendarFactory',[])
         return  bolIsBetween || bolisSameAsStart || bolisSameAsEnd;
 
     }
+
+    function GetArrayDatesBetween(dateStart, dateEnd) {
+
+        var objDateStart = moment(dateStart).startOf('day');
+        var objDateEnd = moment(dateEnd).startOf('day');
+        var intDaysQuantity = objDateStart.diff(objDateEnd, 'days') > 0 ? objDateStart.diff(objDateEnd, 'days') : objDateStart.diff(objDateEnd, 'days') * -1;
+        var intCountFor = 0;
+        var arrDates = [];
+        var objAuxDate;
+
+
+        for(intCountFor; intCountFor < intDaysQuantity; intCountFor ++) {
+            objAuxDate =  moment(new Date(objDateStart.toDate().valueOf()));
+            arrDates.push(objAuxDate.add(intCountFor, 'days').toDate());
+		}
+
+        return  arrDates;
+
+    }
     
     function GetFirstHourFromDate(date) {
 		return moment(date).startOf('day').toDate();
@@ -433,6 +452,27 @@ angular.module('Kaplen.CalendarFactory',[])
 		var objMomentDate = moment(date).startOf('day');
 		var objMomentMonthDate = moment(date).startOf('month');
         return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
+
+    }
+
+    function IsFirstDayOrLastDayOfMonth(date, strFirstOrLast) {
+
+		var objMomentDate = moment(date).startOf('day');
+		var objMomentMonthDate = moment(date).startOf('month');
+		var objMomentLastDate = moment(date).endOf('day');
+		var objMomentLastMonthDate = moment(date).endOf('month');
+
+		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'last') {
+			return objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
+		}
+
+		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'first') {
+			return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
+		}
+		
+        return objMomentDate.diff(objMomentMonthDate, 'hours') === 0 ||
+            objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
+
 
     }
 
@@ -503,6 +543,8 @@ angular.module('Kaplen.CalendarFactory',[])
         isInBetween: IsInBetween,
         isEqualDate: IsEqualDate,
         isFirstDayOfMonth: IsFirstDayOfMonth,
-        getFirstHourFromDate: GetFirstHourFromDate
+        isFirstDayOrLastDayOfMonth: IsFirstDayOrLastDayOfMonth,
+        getFirstHourFromDate: GetFirstHourFromDate,
+        getArrayDatesBetween: GetArrayDatesBetween
 	};
 });

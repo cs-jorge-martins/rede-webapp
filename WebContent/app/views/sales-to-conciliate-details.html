@@ -38,16 +38,16 @@
 
     <table class="table primary details" ng-show="items.length">
         <colgroup>
-            <col width="8%" />
-            <col width="10%" />
-            <col width="8%" />
-            <col width="12%" />
-            <col width="10%" />
-            <col width="14%" />
-            <col width="8%" />
-            <col width="10%" />
-            <col width="10%" />
-            <col width="10%" />
+            <col width="60px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="100px" />
+            <col width="90px" />
+            <col width="165px" />
+            <col width="70px" />
+            <col width="100px" />
+            <col width="110px" />
+            <col width="175px" />
         </colgroup>
         <thead>
             <tr>
@@ -59,15 +59,33 @@
                         </div>
                     </div>
                 </th>
-                <th class="alignl">tipo loja</th>
-                <th class="alignl">data/hora</th>
-                <th class="alignl">nsu</th>
-                <th class="alignl">cód. aut.</th>
-                <th class="alignr">valor bruto transação</th>
-                <th class="alignl">MDR</th>
-                <th class="alignl">n&ordm; parcelas</th>
-                <th class="alignl">n&ordm; do lote(rv)</th>
-                <th class="alignl">tid</th>
+                <th class="alignl" rc-sort sort-type="shopType" sort-by="sort" sort-on-click="getDetails()">
+                    tipo loja
+                </th>
+                <th class="alignl" rc-sort sort-type="hour" sort-by="sort" sort-on-click="getDetails()">
+                    data/hora
+                </th>
+                <th class="alignl" rc-sort sort-type="nsu" sort-by="sort" sort-on-click="getDetails()">
+                    nsu
+                </th>
+                <th class="alignl" rc-sort sort-type="authorization" sort-by="sort" sort-on-click="getDetails()">
+                    cód. aut.
+                </th>
+                <th class="alignl" rc-sort sort-type="gross" sort-by="sort" sort-on-click="getDetails()">
+                    valor bruto transação
+                </th>
+                <th class="alignl" rc-sort sort-type="percentFee" sort-by="sort" sort-on-click="getDetails()">
+                    MDR
+                </th>
+                <th class="alignl" rc-sort sort-type="installment" sort-by="sort" sort-on-click="getDetails()">
+                    n&ordm; parcelas
+                </th>
+                <th class="alignl" rc-sort sort-type="roNumber" sort-by="sort" sort-on-click="getDetails()">
+                    n&ordm; do lote(rv)
+                </th>
+                <th class="alignl" rc-sort sort-type="tid" sort-by="sort" sort-on-click="getDetails()">
+                    tid
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -80,11 +98,11 @@
                         </div>
                     </div>
                 </td>
-                <td class="alignl">{{item.ecommerce ? 'e-commerce' : 'loja física'}}</td>
+                <td class="alignl">{{ item.shopType == 'ECOMMERCE' ? 'e-commerce' : 'loja física' }}</td>
                 <td class="alignl">{{ item.date | date: 'dd/MM' }} {{ item.hour | limitTo: 5 }}</td>
                 <td class="alignl">{{ item.nsu }}</td>
                 <td class="alignl">{{ item.authorization }}</td>
-                <td class="alignr">{{ item.gross | currency: 'R$ ' }}</td>
+                <td class="alignl">{{ item.gross | currency: 'R$ ' }}</td>
                 <td class="alignl">{{ item.percentFee | number }}%</td>
                 <td class="alignl">{{ item.installment }}</td>
                 <td class="alignl">{{ item.roNumber }}</td>

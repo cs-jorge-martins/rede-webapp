@@ -275,11 +275,13 @@ angular.module('Conciliador.movementsModule',[])
 										payedAmount: objData[intIndex].expectedAmount
 									});
 								} else if(strDescription == "cancelamentos") {
+                                    objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'cancelamentos',
 										payedAmount: objData[intIndex].payedAmount
 									});
 								} else if(strDescription == "ajustes") {
+                                    objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'ajustes',
 										payedAmount: objData[intIndex].payedAmount
@@ -311,11 +313,13 @@ angular.module('Conciliador.movementsModule',[])
 								payedAmount: objData[intIndex].expectedAmount
 							});
 						} else if(strDescription == "cancelamentos") {
+                            objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'cancelamentos',
 								payedAmount: objData[intIndex].payedAmount
 							});
 						} else if(strDescription == "ajustes") {
+                            objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'ajustes',
 								payedAmount: objData[intIndex].payedAmount
@@ -806,8 +810,6 @@ angular.module('Conciliador.movementsModule',[])
 				arrFilterConfig.push(obj);
 			}
 			$scope.cardProductsData = arrFilterConfig;
-            $scope.cardProductsModel = angular.copy($scope.cardProductsData);
-            $scope.cardProductsFutureModel = angular.copy($scope.cardProductsData);
 
             intFilterStatus++;
             HandleTabs();
@@ -826,8 +828,6 @@ angular.module('Conciliador.movementsModule',[])
 				arrFilterConfig.push(obj);
 			}
 			$scope.shopsData = arrFilterConfig;
-            $scope.shopsModel = angular.copy($scope.shopsData);
-            $scope.shopsFutureModel = angular.copy($scope.shopsData);
 
             intFilterStatus++;
             HandleTabs();
@@ -846,8 +846,6 @@ angular.module('Conciliador.movementsModule',[])
 				arrFilterConfig.push(obj);
 			}
 			$scope.acquirersData = arrFilterConfig;
-            $scope.acquirersModel = angular.copy($scope.acquirersData);
-            $scope.acquirersFutureModel = angular.copy($scope.acquirersData);
 
             intFilterStatus++;
 			HandleTabs();
