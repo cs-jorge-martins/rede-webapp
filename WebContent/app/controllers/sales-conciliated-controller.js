@@ -191,6 +191,7 @@
                 groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
                 startDate: strDate,
                 endDate: strDate,
+                sort: 'acquirer.id,ASC',
                 cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
                 terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
                 acquirerIds: utilsFactory.joinMappedArray(objVm.filteredAcquirers, 'id', ','),
