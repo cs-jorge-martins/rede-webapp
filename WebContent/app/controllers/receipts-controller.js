@@ -211,24 +211,24 @@ angular.module('Conciliador.movementsModule',[])
 	function GetReceiptReleases() {
 
 		for(var intIndex in arrActualReleasesData){
-			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
-
 			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				groupBy: 'CARD_PRODUCT,STATUS',
+				groupBy: 'ACQUIRER,CARD_PRODUCT,STATUS',
 				bankAccountIds: GetAccountsFilter(),
 				shopIds: GetShopsFilter(),
-				acquirerIds: intAcquirerId,
+				acquirerIds: arrActualReleasesData[intIndex].acquirer.id,
 				cardProductIds: GetCardProductsFilter(),
 				status: 'RECEIVED,FORETHOUGHT'
 			};
 
 			receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+				var intAcquirerId = null;
 				var objData = objResponse.data;
 				var arrReleases = [];
 
 				for( var intIndex in objData) {
+					intAcquirerId = objData[intIndex].acquirer.id;
 					var strStatus = objData[intIndex].status.toLowerCase(),
 						strDescription = objData[intIndex].description.toLowerCase(),
 						objCardProduct = objData[intIndex].cardProduct;
@@ -620,15 +620,15 @@ angular.module('Conciliador.movementsModule',[])
 	function GetFutureReceiptReleases() {
 
 		for(var intIndex in arrFutureReleasesData){
-			var intAcquirerId = arrFutureReleasesData[intIndex].acquirer.id;
+			var intAcquirerId = null;
 
 			var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
 				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
-				groupBy: 'CARD_PRODUCT,STATUS',
+				groupBy: 'ACQUIRER,CARD_PRODUCT,STATUS',
 				bankAccountIds: GetAccountsFilter(true),
 				shopIds: GetShopsFilter(true),
-				acquirerIds: intAcquirerId,
+				acquirerIds: arrFutureReleasesData[intIndex].acquirer.id,
 				cardProductIds: GetCardProductsFilter(true),
 				status: 'EXPECTED'
 			};
@@ -638,6 +638,7 @@ angular.module('Conciliador.movementsModule',[])
 				var arrReleases = [];
 
 				for( var intIndex in objData) {
+					intAcquirerId = objData[intIndex].acquirer.id;
 					var strStatus = objData[intIndex].status.toLowerCase(),
 						description = objData[intIndex].description.toLowerCase(),
 						cardProduct = objData[intIndex].cardProduct;
