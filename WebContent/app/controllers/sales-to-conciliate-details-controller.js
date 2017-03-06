@@ -46,7 +46,6 @@
 
         function UpdatePagination() {
             GetDetails();
-            ResetSelection();
         }
 
         function GetDetails() {
@@ -136,7 +135,6 @@
                 $scope.modalTitle = "conciliar vendas";
                 $scope.modalText = "Você deseja conciliar " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
-                    ResetSelection();
                     $scope.close();
                 };
 
