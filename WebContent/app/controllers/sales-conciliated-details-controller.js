@@ -121,7 +121,6 @@
 
         function UpdatePagination() {
             GetDetails();
-            ResetSelection();
         }
 
         function ResetSelection() {
@@ -147,7 +146,6 @@
                 $scope.modalTitle = "desconciliar vendas";
                 $scope.modalText = "Você deseja desconciliar " + intSelectionCount + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
-                    ResetSelection();
                     $scope.close();
                 };
 
