@@ -136,6 +136,7 @@
 						<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="analytical.items.length">
 							<thead>
 								<tr class="taleft">
+									<th ng-click="sortResults($event,'acquirer.name', 'analitico')">adquirente</th>
 									<th ng-click="sortResults($event,'date', 'analitico')">data</th>
 									<th ng-click="sortResults($event,'nsu', 'analitico')">NSU</th>
 									<th ng-click="sortResults($event,'authorization', 'analitico')">autorização</th>
@@ -148,6 +149,7 @@
 
 							<tbody id="cupomVendasTour">
 								<tr ng-repeat="item in analytical.items" ng-class-odd="'odd'">
+									<td>{{item.acquirer.name}}</td>
 									<td>{{item.date | date:'dd/MM/yyyy'}}</td>
 									<td>{{item.nsu}}</td>
 									<td>{{item.authorization}}</td>
@@ -262,6 +264,7 @@
 						<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="duplicate.items.length">
 							<thead>
 								<tr class="taleft">
+									<th ng-click="sortResults($event,'acquirer.name', 'duplicadas')">adquirente</th>
 									<th ng-click="sortResults($event,'date', 'duplicadas')">data</th>
 									<th ng-click="sortResults($event,'nsu', 'duplicadas')">NSU</th>
 									<th ng-click="sortResults($event,'authorization', 'duplicadas')">autorização</th>
@@ -274,6 +277,7 @@
 
 							<tbody class="cupomVendasTour" ng-repeat="item in duplicate.items">
 								<tr ng-class-odd="'odd'">
+									<td>{{item.acquirer.name}}</td>
 									<td>{{item.date | date:'dd/MM/yyyy'}}</td>
 									<td>{{item.nsu}}</td>
 									<td>{{item.authorization}}</td>
@@ -283,6 +287,7 @@
 									<td>{{item.gross | currency:''}}</td>
 								</tr>
 								<tr ng-show="item.duplicateFrom" ng-class-odd="'odd'">
+									<td>{{item.duplicateFrom.acquirer.name}}</td>
 									<td>{{item.duplicateFrom.date | date:'dd/MM/yyyy'}}</td>
 									<td>{{item.duplicateFrom.nsu}}</td>
 									<td>{{item.duplicateFrom.authorization}}</td>

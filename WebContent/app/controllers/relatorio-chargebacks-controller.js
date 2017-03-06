@@ -76,7 +76,7 @@
 				currency: 'BRL',
 				cancellationStartDate: HandleDate($scope.initialDate),
 				cancellationEndDate: HandleDate($scope.finalDate),
-                groupBy: 'CANCELLATION_DAY,CARD_PRODUCT,ADJUST_TYPE',
+                groupBy: 'CANCELLATION_DAY,ACQUIRER,CARD_PRODUCT,ADJUST_TYPE',
 				cardProductIds: $scope.productsSelected,
 				shopIds: arrShopIds,
 				status: 'CANCELLED',
