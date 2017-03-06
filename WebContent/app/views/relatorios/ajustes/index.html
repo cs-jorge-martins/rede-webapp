@@ -51,9 +51,10 @@
         		<table cellpadding="0" cellspacing="0" class="sortTable" ng-show="items.length">
         			<thead>
         				<tr class="taleft">
-        					<th width="250" ng-click="sortResults($event,'payedDate')">data do débito/crédito</th>
-                            <th width="250" ng-click="sortResults($event,'roDate')">data do ajuste</th>
-        					<th width="250" ng-click="sortResults($event,'description')">descrição</th>
+        					<th width="200" ng-click="sortResults($event,'payedDate')">data do débito/crédito</th>
+                            <th width="200" ng-click="sortResults($event,'roDate')">data do ajuste</th>
+        					<th width="200" ng-click="sortResults($event,'description')">descrição</th>
+                            <th width="200" ng-click="sortResults($event,'acquirer.name')">adquirente</th>
         					<th ng-click="sortResults($event,'amount')">valor (R$)</th>
         				</tr>
         			</thead>
@@ -62,6 +63,7 @@
         					<td>{{item.payedDate | date: 'dd/MM/yyyy'}}</td>
                             <td>{{item.roDate | date: 'dd/MM/yyyy'}}</td>
                         	<td>{{item.description}}</td>
+                            <td>{{item.acquirer.name}}</td>
                         	<td>{{item.amount | customCurrency:""}}</td>
         				</tr>
         			</tbody>
