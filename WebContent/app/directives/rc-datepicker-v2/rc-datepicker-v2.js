@@ -112,6 +112,10 @@
 										objTd = e.target.parentNode.parentNode;
 										bolDisabledButton = objTd.querySelector("button").disabled;
 										objTbody = e.target.parentNode.parentNode.parentNode.parentNode;
+									} else if(strTag === 'button') {
+										objTd = e.target.parentNode;
+										bolDisabledButton = objTd.querySelector("button").disabled;
+										objTbody = e.target.parentNode.parentNode.parentNode;
 									}
 
 									if(
