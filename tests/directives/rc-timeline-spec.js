@@ -53,15 +53,4 @@ describe('rc-timeline directive', function(){
         expect(strInitialValueHtml.classList.contains('gray')).toBe(true);
     });
 
-    it("should hide the percent string if finalValue <= 0 ", function () {
-        var strFinalValueHtml = strTemplateNode.querySelector('div.percent aside');
-
-        expect(strFinalValueHtml.classList.contains('hidden')).toBe(false);
-
-        scope.dblFinalValue = 0;
-        scope.$digest();
-
-        expect(strFinalValueHtml.classList.contains('hidden')).toBe(true);
-    });
-
 });

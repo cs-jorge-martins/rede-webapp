@@ -54,7 +54,6 @@
 			},
 			controller: Controller,
 			link: function(scope, element, attrs, ctrl) {
-
 				element.ready(function () {
 
 					scope.$watch('daysWithStatus', function (arrDaysWithStatus) {
@@ -92,8 +91,6 @@
 						}
 
 					});
-
-					// scope.$watch("int")
 
 					scope.$watch("ready", function (bolNewValue) {
 
@@ -327,7 +324,6 @@
 			 * Abre o popup com datepicker. Troca o status do datepicker para true.
 			 */
 			function Open() {
-
 				$scope.status.opened = true;
 
 				if (bolIsRange) {
@@ -364,7 +360,8 @@
 
 							$scope.pickerDate = objRangeStartDate;
 							$scope.date = [objRangeStartDate, objRangeEndDate];
-							$scope.status.opened = false;
+				
+			$scope.status.opened = false;
 							break;
 						default:
 					}
