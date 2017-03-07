@@ -115,6 +115,7 @@ angular.module('Conciliador.dashboardController',[])
 		InitDisclaimer();
 	}
 
+	/********************************* DISCLAIMER INITIALIZER *************************************/
 	function InitDisclaimer() {
 		var objDisclaimer = {
 			type: 'warning',
