@@ -4,9 +4,9 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
-(function() {
+"use strict";
 
-	'use strict';
+(function() {
 
 	angular
 		.module('Conciliador.salesDetailsController', [])

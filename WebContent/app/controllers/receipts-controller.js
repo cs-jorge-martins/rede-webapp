@@ -4,12 +4,14 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.movementsModule',[])
 
 .filter('capitalize', function() {
 	return function(input) {
 		return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-	}
+	};
 })
 
 .controller('receiptsController', function(menuFactory, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
@@ -22,7 +24,7 @@ angular.module('Conciliador.movementsModule',[])
 	menuFactory.setActiveMovements();
 
 	$scope.tabs = [{},{}];
-	$scope.to_trusted = ToTrusted;
+	$scope.toTrusted = ToTrusted;
     $scope.expected = [];
 	$scope.receipts = [];
     $scope.getReceipt = GetReceipt;
@@ -109,8 +111,8 @@ angular.module('Conciliador.movementsModule',[])
         GetFilters();
 	}
 
-	function ToTrusted(html_code) {
-		return $sce.trustAsHtml(html_code);
+	function ToTrusted(htmlCode) {
+		return $sce.trustAsHtml(htmlCode);
 	}
 
     function GetReceipt() {
@@ -155,9 +157,10 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.actualReleasesData = [];
 			}
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getSummaries] error');
-		})
+			// TODO: impleentar erro
+		});
 	}
 
 	function GetTimeline(objResponse) {
@@ -173,6 +176,7 @@ angular.module('Conciliador.movementsModule',[])
 			cardProductIds: GetCardProductsFilter(true),
 			status: 'EXPECTED'
 		};
+
 		receiptsService.getTimeline(objFilter).then(function(response){
 			$scope.timelineExpectedAmount = response.data.content[0];
 			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
@@ -181,7 +185,7 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.customTimelineExpectedAmount.percentage = 0;
 			}
 			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
-		})
+		});
 	}
 
 	function GetForethought() {
@@ -193,7 +197,6 @@ angular.module('Conciliador.movementsModule',[])
 			status: 'EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED'
 		};
 
-
 		receiptsService.GetFinancials(objFilter).then(function(objResponse) {
 			var objData = objResponse.data;
 
@@ -203,9 +206,10 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.existsForethought = false;
 			}
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getSummaries] error');
-		})
+			// TODO: implementar erro
+		});
 	}
 
 	function GetReceiptReleases() {
@@ -235,7 +239,7 @@ angular.module('Conciliador.movementsModule',[])
 						amount = objData[intIndex].payedAmount;
 						objCardProduct.forethought = false;
 
-					if (strStatus == "forethought") {
+					if (strStatus === "forethought") {
 						objCardProduct.name = "ANTECIPAÇÃO " + objCardProduct.name;
 						objCardProduct.forethought = true;
 					}
@@ -246,7 +250,7 @@ angular.module('Conciliador.movementsModule',[])
 							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === strStatus)){
 								arrReleases[intIndexb].releases.push({
 									type: strDescription,
-									payedAmount: strDescription == "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
+									payedAmount: strDescription === "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
 								});
 								bolInsert = false;
 								break;
@@ -263,24 +267,23 @@ angular.module('Conciliador.movementsModule',[])
 									cancellation: 0,
 									adjusts: 0,
 									releases: [],
-									total: 0,
-									status: strStatus
+									total: 0
 								};
 
-								if(strDescription == "vendas") {
+								if(strDescription === "vendas") {
 									objItem.total = objData[intIndex].payedAmount;
 
 									objItem.releases.push({
 										type: 'vendas',
 										payedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(strDescription == "cancelamentos") {
+								} else if(strDescription === "cancelamentos") {
                                     objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'cancelamentos',
 										payedAmount: objData[intIndex].payedAmount
 									});
-								} else if(strDescription == "ajustes") {
+								} else if(strDescription === "ajustes") {
                                     objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'ajustes',
@@ -302,23 +305,22 @@ angular.module('Conciliador.movementsModule',[])
 							cancellation: 0,
 							adjusts: 0,
 							releases: [],
-							total: 0,
-							status: strStatus
+							total: 0
 						};
 
-						if(strDescription == "vendas") {
+						if(strDescription === "vendas") {
 							objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'vendas',
 								payedAmount: objData[intIndex].expectedAmount
 							});
-						} else if(strDescription == "cancelamentos") {
+						} else if(strDescription === "cancelamentos") {
                             objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'cancelamentos',
 								payedAmount: objData[intIndex].payedAmount
 							});
-						} else if(strDescription == "ajustes") {
+						} else if(strDescription === "ajustes") {
                             objItem.total = objData[intIndex].payedAmount;
 							objItem.releases.push({
 								type: 'ajustes',
@@ -331,7 +333,7 @@ angular.module('Conciliador.movementsModule',[])
 				}
 
 				for(var intIndex in arrActualReleasesData) {
-					if(intAcquirerId == arrActualReleasesData[intIndex].acquirer.id){
+					if(intAcquirerId === arrActualReleasesData[intIndex].acquirer.id){
 						arrActualReleasesData[intIndex].cardProducts = arrReleases;
 						break;
 					}
@@ -368,7 +370,7 @@ angular.module('Conciliador.movementsModule',[])
 						intTotal += objData[objItem].amount;
 					}
 
-					arrActualReleasesData[intIndex].otherReleasesTotal = intTotal
+					arrActualReleasesData[intIndex].otherReleasesTotal = intTotal;
 					arrActualReleasesData[intIndex].otherReleases = objData;
 			}).catch(function(){
 				console.log('[receiptsController:getOtherReleases] error');
@@ -403,6 +405,7 @@ angular.module('Conciliador.movementsModule',[])
 					arrActualReleasesData[intIndex].expectedReleases = objData;
 			}).catch(function(){
 				console.log('[receiptsController:getExpectedReleases] error');
+				// TODO: implementar erro
 			});
 		}
 	}
@@ -438,12 +441,12 @@ angular.module('Conciliador.movementsModule',[])
 
 			for(var intIndex in objData) {
 
-				if(objData[intIndex].description == 'vendas') {
+				if(objData[intIndex].description === 'vendas') {
 					intTotalToReceive = objData[intIndex].expectedAmount;
 					intTotalReceived = objData[intIndex].payedAmount;
 				}
 
-				if(objData[intIndex].description == 'ajustes' || objData[intIndex].description == 'cancelamentos') {
+				if(objData[intIndex].description === 'ajustes' || objData[intIndex].description === 'cancelamentos') {
 					intDiscountedTotal += objData[intIndex].payedAmount;
 				}
 			}
@@ -454,7 +457,7 @@ angular.module('Conciliador.movementsModule',[])
 				var objData = objResponse.data;
 				var intAntecipatedTotal = 0;
 				for(var intIndex in objData) {
-					if(objData[intIndex].description == 'vendas') {
+					if(objData[intIndex].description === 'vendas') {
 						intAntecipatedTotal = objData[intIndex].payedAmount;
 						intDiscountedTotal += (objData[intIndex].expectedAmount - objData[intIndex].payedAmount) *-1;
 					}
@@ -479,21 +482,21 @@ angular.module('Conciliador.movementsModule',[])
 					$scope.getDiscountedAbs = GetDiscountedAbs;
 					$scope.getClassByType = GetClassByType;
 
-				}).catch(function(objResponse) {
+				}).catch(function() {
 					console.log('[receiptsController:getAdjusts] error');
 				});
 
-			}).catch(function(objResponse) {
+			}).catch(function() {
 				console.log('[receiptsController:getFinancials] status forethought error');
 			})
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getFinancials] error');
 		});
 	}
 
 	function GetClassByType(strType, intAmount) {
-		if(strType != "ajustes") {
+		if(strType !== "ajustes") {
 			return strType;
 		} else if (intAmount > 0) {
 			return "ajustes-credito";
@@ -660,17 +663,17 @@ angular.module('Conciliador.movementsModule',[])
 									releases: []
 								};
 
-								if(description == "vendas") {
+								if(description === "vendas") {
 									objItem.releases.push({
 										type: 'vendas',
 										expectedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(description == "cancelamentos") {
+								} else if(description === "cancelamentos") {
 									objItem.releases.push({
 										type: 'cancelamentos',
 										expectedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(description == "ajustes") {
+								} else if(description === "ajustes") {
 									objItem.releases.push({
 										type: 'ajustes',
 										expectedAmount: objData[intIndex].expectedAmount
@@ -694,17 +697,17 @@ angular.module('Conciliador.movementsModule',[])
 							releases: []
 						};
 
-						if(description == "vendas") {
+						if(description === "vendas") {
 							objItem.releases.push({
 								type: 'vendas',
 								expectedAmount: objData[intIndex].expectedAmount
 							});
-						} else if(description == "cancelamentos") {
+						} else if(description === "cancelamentos") {
 							objItem.releases.push({
 								type: 'cancelamentos',
 								expectedAmount: objData[intIndex].expectedAmount
 							});
-						} else if(description == "ajustes") {
+						} else if(description === "ajustes") {
 							objItem.releases.push({
 								type: 'ajustes',
 								expectedAmount: objData[intIndex].expectedAmount
@@ -716,7 +719,7 @@ angular.module('Conciliador.movementsModule',[])
 				}
 
 				for(var intIndex in arrFutureReleasesData) {
-					if(intAcquirerId == arrFutureReleasesData[intIndex].acquirer.id){
+					if(intAcquirerId === arrFutureReleasesData[intIndex].acquirer.id){
 						arrFutureReleasesData[intIndex].cardProducts = arrReleases;
 						break;
 					}
@@ -797,7 +800,7 @@ angular.module('Conciliador.movementsModule',[])
 
             HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 
@@ -815,7 +818,7 @@ angular.module('Conciliador.movementsModule',[])
             intFilterStatus++;
             HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 
@@ -833,7 +836,7 @@ angular.module('Conciliador.movementsModule',[])
             intFilterStatus++;
             HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 
@@ -851,7 +854,7 @@ angular.module('Conciliador.movementsModule',[])
             intFilterStatus++;
 			HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 	}
@@ -871,7 +874,7 @@ angular.module('Conciliador.movementsModule',[])
 	function GetAccountsFilter(bolIsFuture) {
 		var arrModel = (bolIsFuture ? $scope.accountsFutureModel : $scope.accountsModel);
 		return arrModel.id;
-	};
+	}
 
 	function GetShopsFilter(bolIsFuture) {
 		var arrModel = (bolIsFuture ? $scope.shopsFutureModel : $scope.shopsModel);
@@ -890,7 +893,7 @@ angular.module('Conciliador.movementsModule',[])
 	function GetCardProductsFilter(bolIsFuture) {
 		var arrModel = (bolIsFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 
-		if(arrModel.length == $scope.cardProductsData.length) {
+		if(arrModel.length === $scope.cardProductsData.length) {
 			return [];
 		}
 
@@ -926,7 +929,7 @@ angular.module('Conciliador.movementsModule',[])
 		var strLabel = (bolIsFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
 
 		if( arrModel.length ) {
-			if( arrModel.length == 1 ) {
+			if( arrModel.length === 1 ) {
 				strLabel = arrModel[0].label;
 			} else if ( arrModel.length === $scope.shopsData.length) {
 				strLabel = 'todos os estabelecimentos';
@@ -968,7 +971,7 @@ angular.module('Conciliador.movementsModule',[])
 			} else if ( arrModel.length === 1) {
 				strLabel = arrModel[0].label;
 			} else {
-				if(arrModel.length == 2) {
+				if(arrModel.length === 2) {
 					strLabel = arrModel[0].label + ' + ' +  (arrModel.length - 1) + " outra";
 				} else {
 					strLabel = arrModel[0].label + ' + ' +  (arrModel.length - 1) + " outras";
@@ -1078,7 +1081,7 @@ angular.module('Conciliador.movementsModule',[])
     }
 
     function GetCachedData() {
-		if(cacheService.LoadFilter('context') == 'receipts') {
+		if(cacheService.LoadFilter('context') === 'receipts') {
 			$scope.actualReleases.date = moment(cacheService.LoadFilter('startDate'), "YYYYMMDD").toDate();
 			$scope.accountsModel = cacheService.LoadFilter('bankAccountIds');
 			$scope.shopsModel = cacheService.LoadFilter('shopIds');

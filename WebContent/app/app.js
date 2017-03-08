@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
                             'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
@@ -89,7 +91,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
                         }
 
         			}
-        			config.headers['Authorization'] = $window.sessionStorage.token;
+        			config.headers.Authorization = $window.sessionStorage.token;
         		} else {
 					if(!window.location.hash.match(/#\/redirect/g)) {
                     	$location.path("/login");
@@ -124,7 +126,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
             }
         };
     });
-}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout, RcMessageService, RcDisclaimerService) {
+}]).run(function($location, $rootScope, $window, $uibModal, cacheService, $route, $timeout, RcMessageService) {
 
 	init();
 
@@ -189,14 +191,14 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
 			$location.path("/home");
 		}
-	};
+	}
 
 	function Logout() {
 		$rootScope.destroyVariablesSession();
 		$rootScope.login = 'login';
 		$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
 		$location.path("/login");
-	};
+	}
 
 	function DestroyVariablesSession(){
 		delete $window.sessionStorage.user;
@@ -224,14 +226,14 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 
 		cacheService.ClearFilter();
 		$rootScope.login = 'login';
-	};
+	}
 
 	function RestartAlerts(){
 		$rootScope.alerts = [];
-	};
+	}
 
 	function ShowAlert(templateUrl) {
-		var objModal = $uibModal.open({
+		$uibModal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
 			appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
@@ -239,7 +241,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {
                     $uibModalInstance.close();
-                }
+                };
 			}
 		}).closed.then(function() {
             $rootScope.modalOpen = false;
@@ -251,18 +253,18 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 		$window.sessionStorage.currency = currencyValue;
 
 		angular.forEach($rootScope.currencies, function(currency, index){
-			if(currency.value == currencyValue){
+			if(currency.value === currencyValue){
 				//Seta símbolo padrão de acordo com a moeda do usuário
 				$rootScope.currencySymbol = $window.sessionStorage.currencySymbol = currency.symbol;
 			}
 		});
 
 		$location.path("/dashboardNew");
-	};
+	}
 
 	function CloseAlert(index) {
 		$rootScope.alerts.splice(index, 1);
-	};
+	}
 
 	function SortResults(objElem, strKind) {
 		var strOrder, strOrderString;
@@ -300,12 +302,12 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 		strOrderString = strKind + "," + strOrder;
 
 		return strOrderString;
-	};
+	}
 
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function (scope, element) {
             $(element).fileupload({
                 dataType: 'text',
                 add: function (e, data) {
@@ -315,7 +317,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
                     var intProgress = parseInt(data.loaded / data.total * 100, 10);
                     uploadManager.setProgress(intProgress);
                 },
-                done: function (e, data) {
+                done: function () {
                     uploadManager.setProgress(0);
                 }
             });
@@ -404,7 +406,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
         setActiveIntegration: SetActiveIntegration,
         deactivate: Deactivate
 	};
-})
+});
 
 objApp.filter('utc', function(){
 	return function(val){
@@ -419,7 +421,7 @@ objApp.filter('utc', function(){
 });
 
 objApp.filter('brst', function(){
-  return function(val){
-    return new Date(val);
-  };
+    return function(val){
+        return new Date(val);
+    };
 });

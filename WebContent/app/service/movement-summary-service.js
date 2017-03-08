@@ -4,12 +4,13 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.MovementSummaryService', [])
-		.config(['$routeProvider', function ($routeProvider) {}])
+		.config([function () {}])
         .service('MovementSummaryService', MovementSummary);
 
     MovementSummary.$inject = ['app', '$window', '$http', 'Request'];

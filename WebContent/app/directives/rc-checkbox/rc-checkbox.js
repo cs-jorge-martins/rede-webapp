@@ -55,8 +55,10 @@
  * <rc-count-button label-prefix="labelPrefix" label-suffix="labelSuffix" item-count="itemCount" on-click="onClick()"></rc-count-button>
  */
 
+"use strict";
+
 (function() {
-    'use strict';
+
     angular
         .module('Conciliador')
         .directive('rcCheckbox', RcCheckbox)
@@ -171,14 +173,10 @@
             controller: Controller
         };
 
-        function Controller($scope) {
-
+        function Controller() {
             Init();
-
             function Init() {
-
             }
-
         }
     }
 

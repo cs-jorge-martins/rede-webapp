@@ -26,9 +26,9 @@
         .module('Conciliador')
         .directive('rcDownloader', RcDownloader);
 
-    RcDownloader.$inject = ['modalService', '$timeout', 'DownloadService', 'PollingFactory', '$filter'];
+    RcDownloader.$inject = ['modalService', '$timeout', 'DownloadService', 'PollingFactory'];
 
-    function RcDownloader(modalService, $timeout, DownloadService, PollingFactory, $filter) {
+    function RcDownloader(modalService, $timeout, DownloadService, PollingFactory) {
         return {
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-downloader.html',
@@ -36,7 +36,7 @@
                 type: "="
             },
             controller: Controller,
-            link: function($scope, element, attrs) {
+            link: function() {
 
                 var header = angular.element(document.querySelector('.rc-downloader .header'));
                 Ps.initialize(document.querySelector('.rc-downloader .content-scroll'));
@@ -196,7 +196,7 @@
                         RemoveFromQueue(intIndex);
                         $uibModalInstance.close();
                         DownloadService.cancelFromQueue(objItem.id);
-                    }
+                    };
                 });
             }
 
@@ -205,7 +205,7 @@
              * Faz o download do arquivo.
              * @param {Object} objItem objeto da fila de downloads que será baixado
              */
-            function Download(objItem, intIndex) {
+            function Download(objItem) {
                 if( objItem.url ) {
                     window.location = objItem.url;
                 }
@@ -240,7 +240,7 @@
                             RemoveFromQueue(intIndex);
                             $uibModalInstance.close();
                             DownloadService.deleteFromQueue(objItem.id);
-                        }
+                        };
                     });
                 }
             }
@@ -258,18 +258,7 @@
                 });
             }
 
-            /**
-             * @method IsAuthenticated
-             * Verifica se usuário está autenticado, para exibir o componente ou não.
-             * Futuramente seria bom mudar a implementação deste método para utilizar
-             * a session factory
-             *
-             * @return {Boolean} retorna se usuário está autenticado ou não
-             */
-            function IsAuthenticated() {
-                // Todo: Implementario SessionFactory e utilizar o mesmo aqui
-                return !!(window.sessionStorage.getItem('token') && window.sessionStorage.getItem('user'));
-            }
+            // TODO: Implementar método IsAuthenticated e usar SessionFactory para verificar se usuário está autenticado
 
             /**
              * @method UpdateTotals
@@ -395,7 +384,7 @@
              */
             function ParseRemainingTime (strRemainingTime) {
                 var intMinutes = 0,
-                    intSeconds = 0
+                    intSeconds = 0,
                     strRemainingTimeConsolidated = '';
 
                 if (strRemainingTime) {
@@ -440,14 +429,14 @@
                 GetHeightClass();
     		}, true);
 
-            $scope.$watch(function (){ return window.sessionStorage.token },function(strValue){
+            $scope.$watch(function (){ return window.sessionStorage.token; },function(strValue){
                 if (strValue === undefined) {
                     $scope.hideClass = "no-itens";
                     $scope.queue = [];
                 } else {
                     Init();
                 }
-            })
+            });
         }
     }
 })();

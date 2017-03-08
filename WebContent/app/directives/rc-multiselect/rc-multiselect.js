@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador')
@@ -64,7 +65,7 @@
 								return 'Cielo';
 							}
 						}
-					}
+					};
 				}
 
 				if ($scope.label === "conta") {
@@ -75,7 +76,7 @@
 						showUncheckAll: false,
 						displayProp: 'label',
 						externalIdProp: ''
-					}
+					};
 				}
 				if ($scope.label === "tipo de relatório") {
 					$scope.settings = {
@@ -85,7 +86,7 @@
 						showUncheckAll: false,
 						displayProp: 'label',
 						externalIdProp: ''
-					}
+					};
 				}
 
 				if ($scope.buttonMaxItems) {

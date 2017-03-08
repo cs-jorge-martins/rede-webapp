@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.integrationService',[])
-	.config(['$routeProvider', function ($routeProvider) {
+	.config([function () {
 }])
 
 .service('integrationService', function(app, $http, Request) {

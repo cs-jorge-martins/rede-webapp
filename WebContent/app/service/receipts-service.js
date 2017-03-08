@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.receiptsService', [])
-	.config(['$routeProvider', function ($routeProvider) {
+	.config([function () {
 }])
 
 .service('receiptsService', function(app, $http, Request) {

@@ -9,8 +9,9 @@
  * Factory para facilitar o processo de polling request
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.PollingFactory', [])
@@ -65,7 +66,7 @@
 
             return {
                 cancel: Cancel
-            }
+            };
         }
     }
 

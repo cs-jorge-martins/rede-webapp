@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.AdjustSummaryService',[])
-.config(['$routeProvider', function($routeProvider) {
+.config([function() {
 
 }]).service('AdjustSummaryService', function(app, $location, $window, $http, Request) {
 

@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.TransactionSummaryService',[])
-.config(['$routeProvider', function ($routeProvider) {
+.config([function () {
 
 }]).service('TransactionSummaryService', function(app, $location, $http, Request) {
 
@@ -29,5 +31,5 @@ angular.module('Conciliador.TransactionSummaryService',[])
 			data: objRequest,
 			headers: Request.setHeaders()
 		});
-	}
+	};
 });

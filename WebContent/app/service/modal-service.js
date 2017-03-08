@@ -10,16 +10,18 @@
   * @extends ui.bootstrap.datepickerPopup
   * Serviço para facilitar a utilização de modais
   */
+
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.ModalService', [])
         .service('modalService', ModalService);
 
-    ModalService.$inject = ['$rootScope', '$uibModal', '$parse'];
+    ModalService.$inject = ['$rootScope', '$uibModal'];
 
-    function ModalService($rootScope, $uibModal, $parse) {
+    function ModalService($rootScope, $uibModal) {
 
         /**
          * @method open
@@ -83,11 +85,11 @@
 
             objModal.opened.then(function() {
                 BlockContentScroll();
-            })
+            });
 
             objModal.closed.then(function() {
                 UnblockContentScroll();
-            })
+            });
 
             /**
              * @method Close

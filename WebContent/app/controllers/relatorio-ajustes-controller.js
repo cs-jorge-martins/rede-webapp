@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 .controller('relatorioAjustesController', function(menuFactory, $scope, calendarFactory, $rootScope,
@@ -52,7 +54,7 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		function GetReport() {
 
-            var intCurPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
+            var intCurPage = $scope.currentPage === 0 ? 0 : ($scope.currentPage - 1);
 
 			AdjustService.ListAdjusts({
 				currency: 'BRL',
@@ -82,7 +84,7 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 			}).then(function(objResponse) {
 				var objData = objResponse.data.content;
 
-				if(objResponse.status == 200) {
+				if(objResponse.status === 200) {
 					window.open(objData.uri);
 				} else {
 					// TODO Tratamento de erros
@@ -103,16 +105,16 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 		function PageChanged() {
 			$scope.currentPage = this.currentPage;
 			GetReport();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 1;
 			$scope.totalItensPage = this.totalItensPage;
 			GetReport();
-		};
+		}
 
 		function SortResults(objElem, strKind) {
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
-		};
+		}
     });

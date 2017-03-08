@@ -4,11 +4,13 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.filtersService', [])
-	.config(['$routeProvider',function ($routeProvider) {
+	.config([function () {
 }])
 
-.service('filtersService', function(app, $http, Request, $q, utilsFactory) {
+.service('filtersService', function(app, $http, Request, $q) {
 
 	var strUrlAcquirers = app.endpoint + '/pvs/acquirers';
 	var strUrlAccounts = app.endpoint + '/pvs/bankaccounts';
@@ -114,7 +116,7 @@ angular.module('Conciliador.filtersService', [])
 				obj.label = objDeferredData[intX][strField];
 				// Adicionado para evitar quebra de layout no componente multi select.
 				if (obj.label === '') {
-					obj.label = '-'
+					obj.label = '-';
 				}
 
 				if (arguments.length > 2) {

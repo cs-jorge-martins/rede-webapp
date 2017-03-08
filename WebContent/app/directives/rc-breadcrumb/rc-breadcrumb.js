@@ -18,8 +18,9 @@
  *     <rc-breadcrumb></rc-breadcrumb>
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador')

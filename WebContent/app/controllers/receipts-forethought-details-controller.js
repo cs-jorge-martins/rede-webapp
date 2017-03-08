@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap'])
 
 .controller('receiptsForethoughtDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
@@ -14,7 +16,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 
 		function Init(){
 			$rootScope.hideHeaderAndFooter = true;
-			$scope.$on("$routeChangeStart", function(next, current){
+			$scope.$on("$routeChangeStart", function(){
 				$rootScope.hideHeaderAndFooter = false;
 			});
 
@@ -84,7 +86,7 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				endDate: calendarFactory.formatDateTimeForService($scope.endDate),
 				bankAccountIds: $scope.bankAccount.id,
 				status: "FORETHOUGHT",
-				page:  $scope.currentPage ==  0 ? $scope.currentPage : $scope.currentPage - 1,
+				page:  $scope.currentPage ===  0 ? $scope.currentPage : $scope.currentPage - 1,
 				size:  $scope.currentSize
 			};
 
@@ -100,9 +102,8 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 
 				$scope.totalItens = objPagination.totalElements;
 
-	    	}).catch(function(objResponse) {
-
-	    	})
+	    	}).catch(function() {
+	    	});
 	    }
 
 		function GetShopsFilter(arrModel) {

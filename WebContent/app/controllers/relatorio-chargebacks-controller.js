@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+'use strict';
+
 (function() {
-    'use strict';
 
     angular
 		.module('Conciliador.relatorioChargebacksController', ['ui.bootstrap'])
@@ -100,7 +101,7 @@
 				$scope.items = objData;
 				$scope.noItensMsg = objData.length === 0 ? true : false;
 				$scope.totalItens = objPagination.totalElements;
-			}).catch(function(objResponse) {
+			}).catch(function() {
             });
 		}
 
@@ -141,20 +142,20 @@
 					}
 				}
 
-			}).catch(function(objResponse) {
+			}).catch(function() {
             });
 		}
 
 		function UpdateIndicator(strAdjustType){
 			$scope.adjustType = [strAdjustType];
-            if(strAdjustType == 'CANCELLATION') {
+            if(strAdjustType === 'CANCELLATION') {
                 $scope.tableName = 'cancelamento';
             } else {
                 $scope.tableName = 'chargeback';
             }
 			$scope.currentPage = 0;
 			GetReport();
-		};
+		}
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
@@ -222,17 +223,17 @@
 		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
 			GetReport();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			GetReport();
-		};
+		}
 
 		function SortResults(objElem, strKind) {
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
-		};
+		}
 	}
 })();

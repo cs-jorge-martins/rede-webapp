@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.calendarService',[])
-	.config(['$routeProvider', function($routeProvider) {
+	.config([function() {
 
 }])
 
@@ -46,14 +48,14 @@ angular.module('Conciliador.calendarService',[])
 	};
 
 	objCalendarService.ChangeInitialDate = function(data){
-		if(data != objCalendarService.dateDataInicial){
+		if(data !== objCalendarService.dateDataInicial){
 			objCalendarService.bolInitialDateChanged = this.bolInitialDateChanged = true;
 			objCalendarService.dateDataInicial = data;
 		}
 	};
 
 	objCalendarService.ChangeFinalDate = function(data){
-		if(data != objCalendarService.dateDataFinal){
+		if(data !== objCalendarService.dateDataFinal){
 			objCalendarService.bolFinalDateChanged = this.bolFinalDateChanged = true;
 			objCalendarService.dateDataFinal = data;
 		}

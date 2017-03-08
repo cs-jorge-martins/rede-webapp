@@ -6,6 +6,8 @@
 
 module.exports = function(grunt) {
 
+	"use strict";
+
 	require('load-grunt-tasks')(grunt);
 
 	var API_URLS = {
@@ -255,8 +257,37 @@ module.exports = function(grunt) {
 					'external': ['XMLHttpRequest']
 				}
 			}
-		}
+		},
 
+		jshint: {
+			options: {
+				jshintrc: true
+			},
+			all: [
+				'Gruntfile.js',
+				'WebContent/app/controllers/**/*.js',
+				'WebContent/app/directives/**/*.js',
+				'WebContent/app/factories/**/*.js',
+				'WebContent/app/filters/**/*.js',
+				'WebContent/app/service/**/*.js',
+				'WebContent/app/app.js',
+				'WebContent/app/routes.js'
+				//'!WebContent/assets/build.js',
+				//'!WebContent/assets/config.js'
+				//'WebContent/assets/js/**/*.js',
+			]
+		},
+
+		jscs: {
+			options: {
+				config: '.jscsrc'
+			},
+			src: [
+				'Gruntfile.js',
+				'WebContent/app/**/*.js'
+				//'WebContent/assets/js/**/*.js'
+			]
+		}
 
 	});
 
@@ -271,4 +302,5 @@ module.exports = function(grunt) {
 	grunt.registerTask('hml', ['build:hml', 'serve']);
 	grunt.registerTask('prod', ['build:prod', 'serve']);
 	grunt.registerTask('docs', ['jsduck:main']);
+	grunt.registerTask('codestyle', ['jshint', 'jscs']);
 };

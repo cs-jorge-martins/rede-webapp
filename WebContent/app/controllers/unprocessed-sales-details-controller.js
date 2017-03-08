@@ -4,9 +4,9 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
-(function() {
+"use strict";
 
-    'use strict';
+(function() {
 
     angular
         .module('Conciliador.unprocessedSalesDetailsController', [])
@@ -72,8 +72,8 @@
                         $scope.pagination.resultsTotalItens = objResponse.data.page.totalElements;
                     }
 
-                }).catch(function(objResponse){
-
+                }).catch(function(){
+                    // TODO: implementar erro
                 });
 
             }, 0);
@@ -106,7 +106,7 @@
                 $scope.detailSelection.count = 0;
                 $scope.items.forEach(function HandleItem(objItem) {
                     $scope.detailSelection.checks[objItem.id] = false;
-                })
+                });
             }
 
             UpdateSelection();
@@ -129,7 +129,7 @@
             var intSelectionCount = $scope.detailSelection.count;
             var strPluralized = "venda não processada";
             if (intSelectionCount > 1) {
-                strPluralized = "vendas não processadas"
+                strPluralized = "vendas não processadas";
             }
 
             modalService.open("app/views/sales-conciliation-modal.html", function ModalController($scope, $uibModalInstance) {
@@ -146,14 +146,14 @@
                 };
 
                 $scope.confirm = function Confirm() {
-                    TransactionService.RemoveUnprocessedTransactionList(objFilter).then(function(objResponse) {
+                    TransactionService.RemoveUnprocessedTransactionList(objFilter).then(function() {
                         GetDetails();
                         ResetSelection();
                         UpdateHeader();
                         objVm.search();
                         $uibModalInstance.close();
                     });
-                }
+                };
             });
         }
 
@@ -189,7 +189,8 @@
                 var response = objResponse.data.content[0];
                 objVm.transaction.quantity = response.quantity;
                 objVm.transaction.amount = response.amount;
-            }).catch(function(objResponse){
+            }).catch(function(){
+                // TODO: implementar erro
             });
         }
     }

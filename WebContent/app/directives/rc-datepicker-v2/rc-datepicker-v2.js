@@ -27,16 +27,18 @@
  *     @example
  *     <rc-datepicker-v2 range="true" date="dateModel" max-date="todayDate" label="'data'"></rc-datepicker-v2>
  */
+
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador')
 		.directive('rcDatepickerV2', RcDatepickerV2);
 
-	RcDatepickerV2.$inject = ['calendarFactory', 'TransactionConciliationService', '$q', '$http', 'app', '$document'];
+	RcDatepickerV2.$inject = ['calendarFactory', 'TransactionConciliationService'];
 
-	function RcDatepickerV2(calendarFactory, TransactionConciliationService, $q, $http, app, $document) {
+	function RcDatepickerV2(calendarFactory, TransactionConciliationService) {
 
 		return {
 			restrict: 'E',
@@ -242,7 +244,6 @@
 
 			var strDirectiveId = 'rc-datepicker-v2-' + (new Date()).getTime();
 			var bolIsRange = $scope.range || false;
-			var objDateSource = $scope.date;
 			var objRangeStartDate;
 			var objRangeEndDate;
 			var intRangeClickCounter;
@@ -548,7 +549,7 @@
 
 				var arrClasses = [];
 
-				if (!bolIsRange && ($scope.date.getTime() == objDateAdjusted.getTime()) ) {
+				if (!bolIsRange && ($scope.date.getTime() === objDateAdjusted.getTime()) ) {
 					arrClasses.push('ball');
 				}
 
@@ -767,10 +768,8 @@
 				switch (strStatusType) {
 					case "sales-to-conciliate":
 						return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesToConciliateDays);
-						break;
 					case "conciliated-sales":
 						return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesConciliatedDays);
-						break;
 					default:
 						console.log("error");
 				}

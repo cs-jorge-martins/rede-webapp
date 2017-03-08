@@ -9,9 +9,10 @@
  * Controller de vendas conciliadas
  *
  */
-(function() {
 
-    'use strict';
+"use strict";
+
+(function() {
 
     angular
         .module('Conciliador.salesConciliatedController', ['duScroll'])
@@ -54,10 +55,10 @@
                 cardProducts: false
             },
             update: function Update() {
-                objVm.chipsConfig.show.terminals = $scope.filter.terminalsData.length != objVm.filteredTerminals.length;
-                objVm.chipsConfig.show.pvs = $scope.filter.pvsData.length != objVm.filteredPvs.length;
-                objVm.chipsConfig.show.acquirers = $scope.filter.acquirersData.length != objVm.filteredAcquirers.length;
-                objVm.chipsConfig.show.cardProducts = $scope.filter.cardProductsData.length != objVm.filteredCardProducts.length;
+                objVm.chipsConfig.show.terminals = $scope.filter.terminalsData.length !== objVm.filteredTerminals.length;
+                objVm.chipsConfig.show.pvs = $scope.filter.pvsData.length !== objVm.filteredPvs.length;
+                objVm.chipsConfig.show.acquirers = $scope.filter.acquirersData.length !== objVm.filteredAcquirers.length;
+                objVm.chipsConfig.show.cardProducts = $scope.filter.cardProductsData.length !== objVm.filteredCardProducts.length;
             },
             closeable: true
         };
@@ -79,7 +80,7 @@
 
         objVm.countButtonLabelPrefix = 'desconciliar';
 
-        $scope.$on('search', function(event, data) {
+        $scope.$on('search', function() {
             GetSales();
         });
 
@@ -229,7 +230,7 @@
                 }
 
                 if (!objModelFound[strModel]) {
-                    objModelFound[strModel] = new TransactionModel()
+                    objModelFound[strModel] = new TransactionModel();
                 }
 
                 objModelFound[strModel].transactions.push(objItem);
@@ -256,7 +257,7 @@
                 this.checks = {};
                 this.allChecked = false;
                 this.cardProductIds.splice(0);
-            }
+            };
         }
 
         /**
@@ -286,7 +287,7 @@
                 function ModalController($scope, $uibModalInstance) {
                 var strPluralized = "venda";
                 if (objTransactionModel.count > 1) {
-                    strPluralized = "vendas"
+                    strPluralized = "vendas";
                 }
 
                 $scope.countObjTransactionModel = objTransactionModel.count;
@@ -303,11 +304,11 @@
                 };
 
                 $scope.confirm = function Confirm() {
-                    transactionService.ConcilieTransactions(objFilter).then(function(objResponse) {
+                    transactionService.ConcilieTransactions(objFilter).then(function() {
                         $scope.search();
                         $uibModalInstance.close();
                     });
-                }
+                };
             },
                 $scope
             );
@@ -365,8 +366,8 @@
 
         function CompareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
             var bolResponse = false;
-            angular.forEach(arrAcquirers, function(objAcq, keyAcq) {
-                angular.forEach(arrAcquirersCard, function(objAcqCard, keyCard) {
+            angular.forEach(arrAcquirers, function(objAcq) {
+                angular.forEach(arrAcquirersCard, function(objAcqCard) {
                     bolResponse = bolResponse || (objAcq.id === objAcqCard.id);
                 });
             });

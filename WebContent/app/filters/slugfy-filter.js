@@ -4,9 +4,11 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.slugfyFilter',[])
 
-.filter('slugify', ['$filter', function($filter){
+.filter('slugify', ['$filter', function(){
     return function (strToSlug) {
 
         if (!strToSlug) {
@@ -30,5 +32,5 @@ angular.module('Conciliador.slugfyFilter',[])
 
         return strHolder;
 
-    }
-}])
+    };
+}]);

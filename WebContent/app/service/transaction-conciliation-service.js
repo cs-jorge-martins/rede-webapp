@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.TransactionConciliationService',[])
-.config(['$routeProvider', function($routeProvider) {
+.config([function() {
 
 }]).service('TransactionConciliationService', function(app, $location, $http, Request) {
 

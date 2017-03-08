@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 	.module('Conciliador.relatorioFinanceiroController', ['ui.bootstrap'])
@@ -82,7 +83,7 @@
 					currency: 'BRL',
 					page: $scope.currentPage,
 					size: $scope.totalItensPage
-				}
+				};
 			}else{
 				objFilter = {
 					creditedShopIds: arrShopIds,
@@ -95,7 +96,7 @@
 					currency: 'BRL',
 					page: $scope.currentPage,
 					size: $scope.totalItensPage
-				}
+				};
 			}
 
 			if($scope.currentPage > 0 ) {
@@ -109,8 +110,7 @@
 				$scope.items = objData;
 				$scope.noItensMsg = objData.length ? false : true;
 				$scope.totalItens = objPagination.totalElements;
-			}).catch(function(objResponse) {
-
+			}).catch(function() {
 			});
 		}
 
@@ -125,7 +125,7 @@
 					endDate: HandleDate($scope.finalDate),
 					status: ['EXPECTED'],
 					currency: 'BRL'
-			}
+			};
 
 			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
 
@@ -143,8 +143,7 @@
 				else {
 					$scope.futureReleases = 0;
 				}
-			}).catch(function(objResponse) {
-
+			}).catch(function() {
 			});
 		}
 
@@ -158,7 +157,7 @@
 					endDate: HandleDate($scope.finalDate),
 					status: ['FORETHOUGHT','RECEIVED'],
 					currency: 'BRL'
-			}
+			};
 
 			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
 				objResponse = HandleResponse(objResponse.data);
@@ -174,7 +173,7 @@
 				else {
 					$scope.payedValues = 0;
 				}
-			}).catch(function(objResponse) {
+			}).catch(function() {
 			});
 		}
 
@@ -265,13 +264,13 @@
 		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
 			LoadPage();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			LoadPage();
-		};
+		}
 
 		function LoadPage() {
 			GetExpectedAmount();

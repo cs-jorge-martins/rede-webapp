@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.AdjustService',[])
-.config(['$routeProvider', function ($routeProvider) {
+.config([function () {
 
 }]).service('AdjustService', function(app, $location, $http, Request) {
 
@@ -17,8 +19,8 @@ angular.module('Conciliador.AdjustService',[])
 			method: "GET",
 			params: objRequest,
 			headers: Request.setHeaders()
-		})
-	}
+		});
+	};
 
 	this.GetOtherDetails = function(objFilter) {
 		var objRequest = objFilter;
@@ -28,6 +30,6 @@ angular.module('Conciliador.AdjustService',[])
 			method: "GET",
 			params: objRequest,
 			headers: Request.setHeaders()
-		})
-	}
+		});
+	};
 });

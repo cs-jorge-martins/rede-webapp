@@ -9,8 +9,10 @@
  * @extends rc-disclaimer
  * Serviço do Rc-disclaimer
  */
+
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.RcDisclaimerService', [])

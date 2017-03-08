@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Kaplen.CalendarFactory',[])
 .factory('calendarFactory', function() {
 
@@ -40,7 +42,7 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetYesterday() {
 		return moment().add(-1, 'day').tz(timeTimezone).toDate();
 	}
-	
+
 	function GetNextYear() {
 		return moment().add(1, 'years');
 	}
@@ -432,7 +434,7 @@ angular.module('Kaplen.CalendarFactory',[])
         return  arrDates;
 
     }
-    
+
     function GetFirstHourFromDate(date) {
 		return moment(date).startOf('day').toDate();
     }
@@ -469,7 +471,7 @@ angular.module('Kaplen.CalendarFactory',[])
 		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'first') {
 			return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
 		}
-		
+
         return objMomentDate.diff(objMomentMonthDate, 'hours') === 0 ||
             objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
 

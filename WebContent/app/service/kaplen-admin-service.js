@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.kaplenAdminService',[])
-	.config(['$routeProvider', function ($routeProvider) {
+	.config([function () {
 }])
 
 .service('kaplenAdminService', function(app, $window, $http, Request) {
