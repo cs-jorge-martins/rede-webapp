@@ -112,18 +112,6 @@ angular.module('Conciliador.dashboardController',[])
 		SetTransactionSummaryBox();
 		SetMovementSummaryBox();
 		SetTransactionConciliationBox();
-		InitDisclaimer();
-	}
-
-	/********************************* DISCLAIMER INITIALIZER *************************************/
-	function InitDisclaimer() {
-		var objDisclaimer = {
-			type: 'warning',
-			text: 'Os nossos termos de uso e política de privacidade foram atualizados e ao continuar navegando neste site você aceita suas condições.',
-			actionText: 'Saiba Mais',
-			onClick: 'assets/files/contrato-control-rede.pdf'
-		};
-		RcDisclaimerService.create(objDisclaimer.type, objDisclaimer.text, objDisclaimer.actionText, objDisclaimer.onClick);
 	}
 
 	/********************************* TRANSACTION SUMMARY BOX *************************************/
