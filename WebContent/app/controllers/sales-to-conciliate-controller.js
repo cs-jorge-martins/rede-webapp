@@ -201,7 +201,8 @@
                 cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
                 terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
                 acquirerIds: utilsFactory.joinMappedArray(objVm.filteredAcquirers, 'id', ','),
-                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ',')
+                shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', ','),
+                size: 500
             };
 
             transactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(ProcessResults);
