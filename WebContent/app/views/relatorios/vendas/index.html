@@ -9,7 +9,7 @@
 	<div id="primaryContent">
 		<!-- relatorio sintetico -->
 		<uib-tabset>
-			<uib-tab heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
+			<uib-tab id="tab-sales-reports-synthetic" heading="relatório sintético" active="tabs[0].active" select="changeTab(1)" id="botaoConciliacaoDiaTour">
 				<article id="relatorio_sintetico">
 					<div class="hiddenContentWrapper">
 						<a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
@@ -85,9 +85,8 @@
 				</article>
 			</uib-tab>
 
-
 			<!-- relatorio analitico -->
-			<uib-tab heading="relatório analítico" active="tabs[1].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
+			<uib-tab id="tab-sales-reports-analytical" heading="relatório analítico" active="tabs[1].active" select="changeTab(2)" id="botaoConciliacaoDiaTour">
 				<article id="relatorio_analitico">
 					<div class="hiddenContentWrapper">
 						<a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
@@ -207,7 +206,7 @@
 			</uib-tab>
 
 			<!-- relatorio de vendas duplicadas -->
-			<uib-tab heading="vendas duplicadas" active="tabs[2].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
+			<uib-tab id="tab-sales-reports-duplicated" heading="vendas duplicadas" active="tabs[2].active" select="changeTab(3)" id="botaoConciliacaoDiaTour">
 				<article id="relatorio_duplicado">
 					<div class="hiddenContentWrapper">
 						<a id="advancedButton" class="advancedButton active" href="javascript:void(0);" onclick="javascript:toggleReport();">filtrar</a>
