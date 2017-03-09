@@ -11,7 +11,9 @@
 	"globals": {
 		"angular": false,
 		"$": false,
-		"config": false
+		"config": false,
+		"moment": false,
+		"objChartUtils": false
 	},
 	"latedef": "nofunc",
 	"maxcomplexity": 8,
