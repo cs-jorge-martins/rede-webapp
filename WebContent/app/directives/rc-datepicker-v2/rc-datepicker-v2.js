@@ -103,6 +103,8 @@
 
 							if(scope.range) {
 
+								// removendo regra de jshint: esta diretiva será refeita
+								/* jshint -W074 */
 								element[0].querySelector(".uib-daypicker").addEventListener("mouseover", function(e) {
 
 									var strTag = e.target.tagName.toLowerCase();
@@ -136,16 +138,16 @@
 										var objPatt = new RegExp("^date-*[0-9]+$");
 
 										for(intClassIndex in arrTdClasses) {
+											if(arrTdClasses.hasOwnProperty(intClassIndex)) {
+												if(arrTdClasses[intClassIndex] === 'hidden'|| arrTdClasses[intClassIndex] === 'invisible') {
+													bolValidTd = false;
+												}
 
-											if(arrTdClasses[intClassIndex] === 'hidden'|| arrTdClasses[intClassIndex] === 'invisible') {
-												bolValidTd = false;
+												if(objPatt.test(arrTdClasses[intClassIndex])) {
+													bolIsOnRegex = true;
+													strDateClass = arrTdClasses[intClassIndex];
+												}
 											}
-
-											if(objPatt.test(arrTdClasses[intClassIndex])) {
-												bolIsOnRegex = true;
-												strDateClass = arrTdClasses[intClassIndex];
-											}
-
 										}
 
 										if(bolValidTd && bolIsOnRegex && strDateClass) {
@@ -417,6 +419,9 @@
 			 * @param {Date} date Data
 			 * @return {Array} nome da classe
 			 */
+			 // removendo regra de jshint: esta diretiva será refeita
+ 			/* jshint -W074 */
+			/* jshint -W071 */
 			function GetDayClass(date) {
 
 				var objDateAdjusted = date.date;
@@ -789,7 +794,7 @@
 			 */
 			function GetSalesToConciliateDays(objResponse) {
 
-				var objResponse = objResponse.data.content;
+				objResponse = objResponse.data.content;
 				var intIndex;
 				var arrDays = [];
 
@@ -798,7 +803,7 @@
 					if(objResponse[intIndex].transctionToConcilieQuantity > 0) {
 
 						arrDays.push({
-							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex].date, true).getTime(),
 							type: GetStatusClassType()
 						});
 
@@ -822,8 +827,7 @@
 			 * @param {Object} objResponse Objeto de resposta da API.
 			 */
 			function GetSalesConciliatedDays(objResponse) {
-
-				var objResponse = objResponse.data.content;
+				objResponse = objResponse.data.content;
 				var intIndex;
 				var arrDays = [];
 
@@ -832,7 +836,7 @@
 					if(objResponse[intIndex].transctionConciliedQuantity > 0) {
 
 						arrDays.push({
-							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex].date, true).getTime(),
 							type: GetStatusClassType()
 						});
 

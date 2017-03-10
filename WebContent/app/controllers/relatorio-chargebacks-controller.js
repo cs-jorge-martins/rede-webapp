@@ -6,6 +6,8 @@
 
 'use strict';
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 (function() {
 
     angular
@@ -66,7 +68,9 @@
 
     		if($scope.settlementsSelected) {
     			for(var objItem in $scope.settlementsSelected) {
-    				arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+                        arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    }
     			}
 				arrShopIds = arrShopIds.join(",");
     		}
@@ -111,7 +115,9 @@
 
     		if($scope.settlementsSelected) {
     			for(var objItem in $scope.settlementsSelected) {
-    				arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+                        arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    }
     			}
 				arrShopIds = arrShopIds.join(",");
     		}

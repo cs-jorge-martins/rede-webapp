@@ -120,8 +120,11 @@ angular.module('Conciliador.filtersService', [])
 				}
 
 				if (arguments.length > 2) {
-					for (var arg in argumentsSliced = Array.prototype.slice.call(arguments, 2)) {
-						obj[argumentsSliced[arg]] = objDeferredData[intX][argumentsSliced[arg]];
+					var argumentsSliced = Array.prototype.slice.call(arguments, 2);
+					for (var arg in argumentsSliced) {
+						if(argumentsSliced.hasOwnProperty(arg)) {
+							obj[argumentsSliced[arg]] = objDeferredData[intX][argumentsSliced[arg]];
+						}
 					}
 				}
 				arrResponse.push(obj);

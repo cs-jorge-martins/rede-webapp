@@ -6,8 +6,9 @@
 
 "use strict";
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
-
 .controller('receiptsExpectedDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService, MovementSummaryService){
 
@@ -121,7 +122,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 			GetExpectedDetails(intAcquirerId);
 	    }
 
-	    function TranslateStatus(strStatus, objDate) {
+        function TranslateStatus(strStatus, objDate) {
 			if(strStatus) {
 				strStatus = strStatus.toLowerCase();
 				switch (strStatus) {

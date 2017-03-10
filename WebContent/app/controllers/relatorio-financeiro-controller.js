@@ -6,6 +6,8 @@
 
 "use strict";
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 (function() {
 
 	angular
@@ -53,20 +55,27 @@
 			LoadPage();
 		}
 
+		// removendo regra de jshint: este controller será refeito
+		/* jshint -W074 */
 		function GetReport() {
 
 			var arrShopIds = [];
 			var arrCardProductIds = [];
+			var objItem;
 
 			if($scope.settlementsSelected) {
-				for(var objItem in $scope.settlementsSelected) {
-					arrShopIds.push($scope.settlementsSelected[objItem].id);
+				for(objItem in $scope.settlementsSelected) {
+					if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+						arrShopIds.push($scope.settlementsSelected[objItem].id);
+					}
 				}
 			}
 
 			if($scope.productsSelected) {
-				for(var objItem in $scope.productsSelected) {
-					arrCardProductIds.push($scope.productsSelected[objItem].id);
+				for(objItem in $scope.productsSelected) {
+					if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+						arrCardProductIds.push($scope.productsSelected[objItem].id);
+					}
 				}
 			}
 

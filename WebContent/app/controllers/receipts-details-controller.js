@@ -14,6 +14,8 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 		var objFilter = {};
 		Init();
 
+        // removendo regra de jshint: este controller será refeito
+        /* jshint -W071 */
 		function Init(){
 			$rootScope.hideHeaderAndFooter = true;
 			$scope.$on("$routeChangeStart", function(){

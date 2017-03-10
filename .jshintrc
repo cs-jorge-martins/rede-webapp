@@ -13,7 +13,9 @@
 		"$": false,
 		"config": false,
 		"moment": false,
-		"objChartUtils": false
+		"objChartUtils": false,
+		"_": false,
+		"Ps": false
 	},
 	"latedef": "nofunc",
 	"maxcomplexity": 8,

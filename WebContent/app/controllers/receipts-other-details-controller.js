@@ -14,6 +14,8 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 		var objFilter = {};
 		Init();
 
+        // removendo regra de jshint: este controller será refeito
+        /* jshint -W071 */
 		function Init(){
 			$rootScope.hideHeaderAndFooter = true;
 			$scope.$on("$routeChangeStart", function(){
@@ -108,7 +110,9 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 				var objData = objResponse.data.content;
 
 				for (var intIndex in objData) {
-					$scope.otherDetailsData.push(objData[intIndex]);
+                    if(objData.hasOwnProperty(intIndex)) {
+                        $scope.otherDetailsData.push(objData[intIndex]);
+                    }
 				}
 			}).catch(function() {
 			});

@@ -97,8 +97,10 @@ angular.module('Conciliador.receiptsForethoughtDetailsController',['ui.bootstrap
 				var objPagination = objResponse.data.page;
 
 	    		for (var intIndex in objData ) {
-	    			$scope.forethought.push(objData[intIndex]);
-	    		}
+                    if(objData.hasOwnProperty(intIndex)) {
+                        $scope.forethought.push(objData[intIndex]);
+                    }
+                }
 
 				$scope.totalItens = objPagination.totalElements;
 

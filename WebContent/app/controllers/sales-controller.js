@@ -16,7 +16,6 @@
 
 	function Sales($scope, modalService, calendarFactory, filtersService, $location) {
 
-		var objVmSales = this;
         $scope.filter = {};
         $scope.dateModel = {};
 		$scope.dateModel.date = calendarFactory.getYesterday();

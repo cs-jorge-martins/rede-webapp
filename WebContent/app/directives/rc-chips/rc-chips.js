@@ -48,8 +48,6 @@
             Init();
 
             function Init() {
-                //$scope.show = true;
-                //$scope.closeable = false;
             }
         }
     }

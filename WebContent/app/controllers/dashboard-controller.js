@@ -9,7 +9,7 @@
 angular.module('Conciliador.dashboardController',[])
 
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, RcDisclaimerService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
 
 	menuFactory.setActiveDashboard();
 
@@ -31,6 +31,8 @@ angular.module('Conciliador.dashboardController',[])
 
 	SetUpDashboard();
 
+	// removendo regra de jshint: este controller será refeito
+	/* jshint -W071 */
 	function SetUpDashboard(){
 		$scope.actualPeriod = {};
 		$scope.lastPeriod = {};
@@ -300,8 +302,10 @@ angular.module('Conciliador.dashboardController',[])
 			}
 
 			for(var objItem in objData) {
-				var intItemDay = parseInt(objData[objItem].date.split('-')[2]);
-				arrChartDays[intItemDay - 1] = objData[objItem].amount;
+				if(objData.hasOwnProperty(objItem)) {
+					var intItemDay = parseInt(objData[objItem].date.split('-')[2]);
+					arrChartDays[intItemDay - 1] = objData[objItem].amount;
+				}
 			}
 
 		}
@@ -362,6 +366,8 @@ angular.module('Conciliador.dashboardController',[])
 		$scope.weeks = arrWeeks;
 		$scope.calendarMonth = calendarFactory.getNameOfMonth(objDate);
 
+		// removendo regra de jshint: este controller será refeito
+		/* jshint -W074 */
 		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
 			startDate: calendarFactory.formatDateForService(intFirstDayOfMonth),
@@ -385,25 +391,27 @@ angular.module('Conciliador.dashboardController',[])
 			}
 
 			for(var objDay in arrDays) {
-				var intItemDay = parseInt(arrDays[objDay].date.split('-')[2]);
-				var intDaysOnWeek = 7;
-				var index = (intItemDay + intFirstWeekDay) - 1;
-				var intWeekIndex = Math.floor(index / intDaysOnWeek);
-				var arrWeek = arrWeeks[intWeekIndex];
+				if(arrDays.hasOwnProperty(objDay)){
+					var intItemDay = parseInt(arrDays[objDay].date.split('-')[2]);
+					var intDaysOnWeek = 7;
+					var index = (intItemDay + intFirstWeekDay) - 1;
+					var intWeekIndex = Math.floor(index / intDaysOnWeek);
+					var arrWeek = arrWeeks[intWeekIndex];
 
-				for(var intX in arrWeek) {
-					if(arrWeek[intX].date === intItemDay) {
+					for(var intX in arrWeek) {
+						if(arrWeek[intX].date === intItemDay) {
 
-						var bolOneItemFlag = Boolean(arrDays[objDay].transctionToConcilieQuantity) + Boolean(arrDays[objDay].transctionUnprocessedQuantity) + Boolean(arrDays[objDay].transctionConciliedQuantity);
+							var bolOneItemFlag = Boolean(arrDays[objDay].transctionToConcilieQuantity) + Boolean(arrDays[objDay].transctionUnprocessedQuantity) + Boolean(arrDays[objDay].transctionConciliedQuantity);
 
-						arrWeek[intX].toProcess = Boolean(arrDays[objDay].transctionUnprocessedQuantity) || false;
-						arrWeek[intX].toReconcile = Boolean(arrDays[objDay].transctionToConcilieQuantity) || false;
-						arrWeek[intX].concilied = Boolean(arrDays[objDay].transctionConciliedQuantity) || false;
+							arrWeek[intX].toProcess = Boolean(arrDays[objDay].transctionUnprocessedQuantity) || false;
+							arrWeek[intX].toReconcile = Boolean(arrDays[objDay].transctionToConcilieQuantity) || false;
+							arrWeek[intX].concilied = Boolean(arrDays[objDay].transctionConciliedQuantity) || false;
 
-						if(bolOneItemFlag > 1) {
-							arrWeek[intX].oneItem = false;
-						} else {
-							arrWeek[intX].oneItem = true;
+							if(bolOneItemFlag > 1) {
+								arrWeek[intX].oneItem = false;
+							} else {
+								arrWeek[intX].oneItem = true;
+							}
 						}
 					}
 				}

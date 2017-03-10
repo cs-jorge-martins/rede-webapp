@@ -7,7 +7,7 @@
 "use strict";
 
 angular.module('Conciliador.cacheService',[])
-.config([function($angularCacheFactoryProvider) {
+.config([function() {
 
 }])
 

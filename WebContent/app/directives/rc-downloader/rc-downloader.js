@@ -144,17 +144,19 @@
 
                 if( $scope.queue.length === arrData.length ) {
                     for(var intIndex in arrData) {
-                        if( arrData[intIndex].status !== $scope.queue[intIndex].status ) {
-                            $scope.queue[intIndex].status = arrData[intIndex].status;
-                        }
-                        if( arrData[intIndex].fileName !== $scope.queue[intIndex].fileName ) {
-                            $scope.queue[intIndex].fileName = arrData[intIndex].fileName;
-                        }
-                        if( arrData[intIndex].url !== $scope.queue[intIndex].url ) {
-                            $scope.queue[intIndex].url = arrData[intIndex].url;
-                        }
-                        if( arrData[intIndex].lineCount !== $scope.queue[intIndex].lineCount ) {
-                            $scope.queue[intIndex].lineCount = arrData[intIndex].lineCount;
+                        if(arrData.hasOwnProperty(intIndex)) {
+                            if( arrData[intIndex].status !== $scope.queue[intIndex].status ) {
+                                $scope.queue[intIndex].status = arrData[intIndex].status;
+                            }
+                            if( arrData[intIndex].fileName !== $scope.queue[intIndex].fileName ) {
+                                $scope.queue[intIndex].fileName = arrData[intIndex].fileName;
+                            }
+                            if( arrData[intIndex].url !== $scope.queue[intIndex].url ) {
+                                $scope.queue[intIndex].url = arrData[intIndex].url;
+                            }
+                            if( arrData[intIndex].lineCount !== $scope.queue[intIndex].lineCount ) {
+                                $scope.queue[intIndex].lineCount = arrData[intIndex].lineCount;
+                            }
                         }
                     }
                 } else {
@@ -274,19 +276,21 @@
                 };
 
                 for(var index in objNew) {
-                    switch (objNew[index].status) {
-                        case("PROCESSING"):
-                        case("INITIALIZED"):
-                            objTotals.processing++;
-                            break;
-                        case("DONE"):
-                            objTotals.done++;
-                            break;
-                        case("ERROR"):
-                            objTotals.error++;
-                            break;
-                        default:
-                            console.log("error");
+                    if(objNew.hasOwnProperty(index)) {
+                        switch (objNew[index].status) {
+                            case("PROCESSING"):
+                            case("INITIALIZED"):
+                                objTotals.processing++;
+                                break;
+                            case("DONE"):
+                                objTotals.done++;
+                                break;
+                            case("ERROR"):
+                                objTotals.error++;
+                                break;
+                            default:
+                                console.log("error");
+                        }
                     }
                 }
 

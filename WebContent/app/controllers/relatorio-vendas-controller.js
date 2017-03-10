@@ -6,6 +6,8 @@
 
 "use strict";
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 (function() {
 
     angular
@@ -14,6 +16,8 @@
 
     RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', 'calendarFactory', '$rootScope', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
 
+    // removendo regra de jshint: este controller será refeito
+    /* jshint -W071 */
     function RelatorioVendas(menuFactory, $scope, $window, calendarFactory, $rootScope,
     advancedFilterService, calendarService, TransactionSummaryService,TransactionService) {
     	//Extensao do servico para filtro avancado
@@ -96,20 +100,22 @@
                 data: []
             };
             for(var intIndex in objResponse) {
-				if(objResponse[intIndex].amount) {
-                	objChartData.labels.push(objResponse[intIndex].cardProduct.name);
-				}
-				else {
-					objChartData.labels.push('');
-				}
-                objChartData.data.push(objResponse[intIndex].percentage);
+                if(objResponse.hasOwnProperty(intIndex)) {
+    				if(objResponse[intIndex].amount) {
+                    	objChartData.labels.push(objResponse[intIndex].cardProduct.name);
+    				}
+    				else {
+    					objChartData.labels.push('');
+    				}
+                    objChartData.data.push(objResponse[intIndex].percentage);
+                }
             }
 
             $scope.chartjs = objChartData;
         }
 
         function GetFilterOptions(objReportScope, objExtraOptions){
-            var objExtraOptions = objExtraOptions || {};
+            objExtraOptions = objExtraOptions || {};
             var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService(objReportScope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService(objReportScope.finalDate),

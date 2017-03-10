@@ -13,6 +13,8 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
 		Init();
 
+        // removendo regra de jshint: este controller será refeito
+        /* jshint -W071 */
 		function Init() {
 			$rootScope.hideHeaderAndFooter = true;
 			$scope.$on("$routeChangeStart", function(){

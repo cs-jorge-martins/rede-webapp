@@ -63,8 +63,8 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 	}).config(function (uibDatepickerConfig) {
 		uibDatepickerConfig.showWeeks = false;
     })
-	.config(['$routeProvider', '$httpProvider','$angularCacheFactoryProvider',
-	         function ($routeProvider, $httpProvider, $angularCacheFactoryProvider) {
+	.config(['$routeProvider', '$httpProvider',
+	         function ($routeProvider, $httpProvider) {
 
    $httpProvider.defaults.headers.common = {};
    $httpProvider.defaults.headers.post = {};
@@ -252,7 +252,7 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
 	function CurrencySelected(currencyValue) {
 		$window.sessionStorage.currency = currencyValue;
 
-		angular.forEach($rootScope.currencies, function(currency, index){
+		angular.forEach($rootScope.currencies, function(currency){
 			if(currency.value === currencyValue){
 				//Seta símbolo padrão de acordo com a moeda do usuário
 				$rootScope.currencySymbol = $window.sessionStorage.currencySymbol = currency.symbol;

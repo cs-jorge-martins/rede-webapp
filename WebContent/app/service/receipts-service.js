@@ -34,7 +34,7 @@ angular.module('Conciliador.receiptsService', [])
 	};
 
 	this.getTimeline = function (objRequest) {
-		var objRequest = objRequest;
+		objRequest = objRequest;
 
 		return $http({
 			url: app.endpoint + '/movementsummaries',

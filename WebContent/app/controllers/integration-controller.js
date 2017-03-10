@@ -8,6 +8,8 @@
 
 angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFileUpload'])
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W071 */
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $uibModal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
 
@@ -206,7 +208,9 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					var objPagination = objResponse.data.page;
 
 					for (var intIndex in objData) {
-						$scope.listUploadedFiles.push(objData[intIndex]);
+						if(objData.hasOwnProperty(intIndex)) {
+							$scope.listUploadedFiles.push(objData[intIndex]);
+						}
 					}
 
 					$scope.totalItens = objPagination.totalElements;
