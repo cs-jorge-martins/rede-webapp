@@ -35,6 +35,14 @@
 		};
 
 		function Controller($scope) {
+
+			Init();
+
+			function Init() {
+				$scope.placeHolder = 'teste';
+				$scope.label = 'teste';
+			}
+
 		}
 
 	}

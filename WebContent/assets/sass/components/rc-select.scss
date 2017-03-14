@@ -1,0 +1,29 @@
+.rc-select {
+
+	position: relative;
+	width: 100%;
+
+	.dropdown-toggle {
+
+		border: 1px solid $rcMultiBorderColor;
+		color: $rcMultiLabelColor;
+		font-size: 1em;
+		padding: 0.6em 0 0.6em 1.1em;
+		position: relative;
+
+		&:after {
+
+			font-size: 2em;
+			position: absolute;
+			right: 0.4em;
+			top: 0.2em;
+			color: $platinum;
+			content: '\e9cc';
+			display: block;
+			font-family: $fontItau;
+
+		}
+
+	}
+
+}
