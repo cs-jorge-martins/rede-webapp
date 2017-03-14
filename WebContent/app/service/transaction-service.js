@@ -4,12 +4,13 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.TransactionService', [])
-		.config(['$routeProvider', function ($routeProvider) {}])
+		.config([function () {}])
         .service('TransactionService', Transaction);
 
     Transaction.$inject = ['app', '$http', 'Request'];
@@ -79,7 +80,7 @@
                 data: objRequest,
                 headers: Request.setHeaders()
             });
-        }
+        };
 
         this.ExportTransactions = function(objFilter, success, error) {
             var objStartTime = new Date().getTime();

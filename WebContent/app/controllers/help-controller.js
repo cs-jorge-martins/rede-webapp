@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.helpController',[])
 
 .controller('helpController', function($scope, $rootScope, menuFactory, $location, cacheService, $sce){

@@ -29,7 +29,7 @@
                 labelTotalValue: "="
             },
             controller: Controller,
-            link: function (scope, element, attrs, ctrl) {
+            link: function (scope, element) {
 
                 element.ready(function () {
                     scope.$watch("initialValue", function (intNewValue) {
@@ -57,7 +57,7 @@
                 GetPercentage();
             }
 
-            $scope.$watchGroup(['initialValue', 'finalValue'], function(newValues, oldValues) {
+            $scope.$watchGroup(['initialValue', 'finalValue'], function() {
                 GetPercentage();
             }, true);
 

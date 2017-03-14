@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.FinancialService',[])
-	.config(['$routeProvider' ,function ($routeProvider) {
+	.config([function () {
 }])
 
 .service('FinancialService', function(app, $http, Request) {
@@ -17,7 +19,7 @@ angular.module('Conciliador.FinancialService',[])
 			params: objRequest,
 			headers: Request.setHeaders()
 		});
-	}
+	};
 
 	this.GetFutureDetails = function (objRequest) {
 		return $http({
@@ -26,7 +28,7 @@ angular.module('Conciliador.FinancialService',[])
 			params: objRequest,
 			headers: Request.setHeaders()
 		});
-	}
+	};
 
 	this.GetReceipt = function(objFilter){
 		var objRequest = objFilter;
@@ -37,5 +39,5 @@ angular.module('Conciliador.FinancialService',[])
 			params: objRequest,
 			headers: Request.setHeaders()
 		});
-	}
+	};
 });

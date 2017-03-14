@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.currencyFilter',[])
 
 .filter('customCurrency', ['$filter', function($filter){
@@ -14,5 +16,5 @@ angular.module('Conciliador.currencyFilter',[])
 		}
 
 		return objFilterCurrency(intAmount, strCurrencySymbol);
-	}
-}])
+	};
+}]);

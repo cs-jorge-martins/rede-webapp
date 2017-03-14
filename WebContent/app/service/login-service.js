@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.loginService',[])
-	.config(['$routeProvider', function ($routeProvider) {
+	.config([function () {
 
 }])
 
@@ -34,8 +36,6 @@ angular.module('Conciliador.loginService',[])
 				'authorization': strToken
 		};
 
-		//hotfix/623674
-		//No caso do singlesignon, remove o token antigo
 		if(angular.isDefined($window.sessionStorage.token)){
 			delete $window.sessionStorage.token;
 		}

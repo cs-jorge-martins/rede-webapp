@@ -4,8 +4,11 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+'use strict';
+
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 (function() {
-    'use strict';
 
     angular
 		.module('Conciliador.relatorioChargebacksController', ['ui.bootstrap'])
@@ -65,7 +68,9 @@
 
     		if($scope.settlementsSelected) {
     			for(var objItem in $scope.settlementsSelected) {
-    				arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+                        arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    }
     			}
 				arrShopIds = arrShopIds.join(",");
     		}
@@ -100,7 +105,7 @@
 				$scope.items = objData;
 				$scope.noItensMsg = objData.length === 0 ? true : false;
 				$scope.totalItens = objPagination.totalElements;
-			}).catch(function(objResponse) {
+			}).catch(function() {
             });
 		}
 
@@ -110,7 +115,9 @@
 
     		if($scope.settlementsSelected) {
     			for(var objItem in $scope.settlementsSelected) {
-    				arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+                        arrShopIds.push($scope.settlementsSelected[objItem].id);
+                    }
     			}
 				arrShopIds = arrShopIds.join(",");
     		}
@@ -141,20 +148,20 @@
 					}
 				}
 
-			}).catch(function(objResponse) {
+			}).catch(function() {
             });
 		}
 
 		function UpdateIndicator(strAdjustType){
 			$scope.adjustType = [strAdjustType];
-            if(strAdjustType == 'CANCELLATION') {
+            if(strAdjustType === 'CANCELLATION') {
                 $scope.tableName = 'cancelamento';
             } else {
                 $scope.tableName = 'chargeback';
             }
 			$scope.currentPage = 0;
 			GetReport();
-		};
+		}
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
@@ -222,17 +229,17 @@
 		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
 			GetReport();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			GetReport();
-		};
+		}
 
 		function SortResults(objElem, strKind) {
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
-		};
+		}
 	}
 })();

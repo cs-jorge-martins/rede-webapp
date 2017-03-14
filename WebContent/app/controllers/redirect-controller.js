@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.redirectController',[])
 
 .controller('redirectController', function($rootScope, loginService, $routeParams) {
@@ -27,7 +29,7 @@ angular.module('Conciliador.redirectController',[])
 			setTimeout(function () {
 				window.location.href = strUrlRedirectError;
 			}, 5000);
-		};
+		}
 
 		if(!strAuthorization) {
 			return ErrorMessage();
@@ -35,7 +37,7 @@ angular.module('Conciliador.redirectController',[])
 
 		loginService.SingleSignOn(strAuthorization).then(function (objData) {
 
-			if(objData.status != 200) {
+			if(objData.status !== 200) {
 				return ErrorMessage();
 			}
 
@@ -47,7 +49,7 @@ angular.module('Conciliador.redirectController',[])
 
 			$rootScope.signIn(strAuthorization, objUser);
 
-		}).catch(function (objData) {
+		}).catch(function () {
 			console.log('error');
 		});
 

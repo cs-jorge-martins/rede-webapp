@@ -4,9 +4,9 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
-(function() {
+"use strict";
 
-    'use strict';
+(function() {
 
     angular
         .module('Conciliador')
@@ -23,7 +23,7 @@
             controller: Controller
         };
 
-        function Controller($scope) {
+        function Controller() {
 
             Init();
 

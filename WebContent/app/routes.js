@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
  (function() {
- 	'use strict';
 
  	angular
  		.module('Conciliador')

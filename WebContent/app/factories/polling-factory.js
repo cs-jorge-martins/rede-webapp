@@ -9,8 +9,9 @@
  * Factory para facilitar o processo de polling request
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.PollingFactory', [])
@@ -35,7 +36,7 @@
          * @param {Integer} intTime intervalo entre os requests em milisegundos
          */
         function Pool( objService, objCallback, intTime, bolCallImmediately ) {
-            var intTime = intTime || 10000;
+            intTime = intTime || 10000;
             var objPool;
 
             if( objService && objCallback ) {
@@ -65,7 +66,7 @@
 
             return {
                 cancel: Cancel
-            }
+            };
         }
     }
 

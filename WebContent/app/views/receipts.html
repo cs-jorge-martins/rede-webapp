@@ -194,7 +194,7 @@
                     <article class="data-cards">
                         <div class="header-datas">
                             <div class="date-wrapper">
-                                <div class="date future" ng-bind-html="to_trusted(futureReleases.dateRangeWithBr)"></div>
+                                <div class="date future" ng-bind-html="toTrusted(futureReleases.dateRangeWithBr)"></div>
                             </div>
                             <div class="chip-wrapper">
                                 <div class="chip" ng-show="accountsFutureLabel">
@@ -209,7 +209,7 @@
                                     <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearShopFilter(true)"></div>
                                     <span class="rc-tooltip">
                                         {{ shopsFutureFullLabel }}
-                                    </span>                                    
+                                    </span>
                                 </div>
                                 <div class="chip can-close" ng-show="cardProductsFutureLabel" ng-class="cardProductsFutureLabel.length < 1 ? 'hidden-chip' : '' ">
                                     <label>
@@ -218,7 +218,7 @@
                                     <div class="clear-filter itauicon-itaufonts_fechar" ng-click="clearCardProductsFilter(true)"></div>
                                     <span class="rc-tooltip">
                                         {{ cardProductsFutureFullLabel }}
-                                    </span>                                    
+                                    </span>
                                 </div>
                             </div>
                         </div>

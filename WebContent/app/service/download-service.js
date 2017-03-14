@@ -24,7 +24,7 @@
             getQueue: GetQueue,
             deleteFromQueue: DeleteFromQueue,
             cancelFromQueue: CancelFromQueue
-        }
+        };
 
         /**
          * @method GetQueue
@@ -32,9 +32,6 @@
          */
         function GetQueue() {
             var strUrl = app.endpoint + '/downloads/queue';
-    		var objQuery = {
-                ignoreLoadingBar: true
-            };
 
             return $http.get(strUrl, {
                 ignoreLoadingBar: true

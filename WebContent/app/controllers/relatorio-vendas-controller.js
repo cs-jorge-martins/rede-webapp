@@ -4,8 +4,11 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.relatorioVendasController', ['ui.bootstrap'])
@@ -13,6 +16,8 @@
 
     RelatorioVendas.$inject = ['menuFactory', '$scope', '$window', 'calendarFactory', '$rootScope', 'advancedFilterService', 'calendarService', 'TransactionSummaryService', 'TransactionService'];
 
+    // removendo regra de jshint: este controller será refeito
+    /* jshint -W071 */
     function RelatorioVendas(menuFactory, $scope, $window, calendarFactory, $rootScope,
     advancedFilterService, calendarService, TransactionSummaryService,TransactionService) {
     	//Extensao do servico para filtro avancado
@@ -87,7 +92,7 @@
 				}
 			}
 			return arrItems;
-		};
+		}
 
         function LoadChart(objResponse) {
             var objChartData = {
@@ -95,20 +100,22 @@
                 data: []
             };
             for(var intIndex in objResponse) {
-				if(objResponse[intIndex].amount) {
-                	objChartData.labels.push(objResponse[intIndex].cardProduct.name);
-				}
-				else {
-					objChartData.labels.push('');
-				}
-                objChartData.data.push(objResponse[intIndex].percentage);
+                if(objResponse.hasOwnProperty(intIndex)) {
+    				if(objResponse[intIndex].amount) {
+                    	objChartData.labels.push(objResponse[intIndex].cardProduct.name);
+    				}
+    				else {
+    					objChartData.labels.push('');
+    				}
+                    objChartData.data.push(objResponse[intIndex].percentage);
+                }
             }
 
             $scope.chartjs = objChartData;
-        };
+        }
 
         function GetFilterOptions(objReportScope, objExtraOptions){
-            var objExtraOptions = objExtraOptions || {};
+            objExtraOptions = objExtraOptions || {};
             var objFilter = {
 				startDate: calendarFactory.formatDateTimeForService(objReportScope.initialDate),
 				endDate: calendarFactory.formatDateTimeForService(objReportScope.finalDate),
@@ -123,7 +130,7 @@
 				sort: $scope.sort ? $scope.sort : 'date,ASC'
 			};
             return angular.extend(objFilter, objExtraOptions);
-        };
+        }
 
         function GetSynthetic() {
 			var objFilter = GetFilterOptions($scope.synthetic, {
@@ -151,7 +158,7 @@
 				$scope.totalItensSynthetic = objPagination.totalElements;
 				LoadChart(objData);
 			});
-        };
+        }
 
         function GetAnalytical() {
             var objFilter = GetFilterOptions($scope.analytical, {
@@ -166,8 +173,9 @@
                 $scope.analytical.items = objData;
 				$scope.analytical.noItensMsg = objData.length === 0 ? true : false;
 				$scope.totalItensAnalytical = objPagination.totalElements;
-			}).catch(function(objResponse) { });
-		};
+			}).catch(function() {
+            });
+		}
 
         function ExportAnalytical() {
         	$rootScope.alerts.splice(0);
@@ -190,7 +198,7 @@
                     $rootScope.alerts = [{type: "danger", msg: strMsg}];
                 }
             });
-		};
+		}
 
 		function GetDuplicate() {
             var objFilter = GetFilterOptions($scope.duplicate, {
@@ -205,8 +213,9 @@
 				$scope.duplicate.items = objData;
 				$scope.duplicate.noItensMsg = objData.length === 0 ? true : false;
 				$scope.totalItensDuplicate = objPagination.totalElements;
-			}).catch(function(objResponse) { });
-		};
+			}).catch(function() {
+            });
+		}
 
 		function ChangeTab(intTab) {
 			$scope.currentPage = 0;
@@ -243,7 +252,7 @@
                 default:
                     console.log("error");
 			}
-		};
+		}
 
         function ClearFilter() {
 
@@ -262,19 +271,17 @@
 			$scope.duplicate.items = [];
 			$scope.duplicate.initialDate = objResetInitialDate;
 			$scope.duplicate.finalDate = objResetFinalDate;
-		};
+		}
 
 		function ClearSyntheticFilter() {
-			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.synthetic.initialDate = objResetInitialDate;
 			$scope.synthetic.finalDate = objResetFinalDate;
 			$scope.settlementsSelected = this.settlementsSelected = [];
 			$scope.settlementsSearch = this.settlementsSearch = [];
 			document.getElementById('buscaTerminal').value = '';
-		};
+		}
 
 		function ClearAnalyticalFilter() {
-			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.analytical.initialDate = objResetInitialDate;
 			$scope.analytical.finalDate = objResetFinalDate;
 			$scope.productsSelected = this.productsSelected = [];
@@ -283,10 +290,9 @@
 			$scope.settlementsSearch = this.settlementsSearch = [];
 			document.getElementById('buscaTerminal2').value = '';
 			document.getElementById('naturezaProduto').value = '';
-		};
+		}
 
 		function ClearDuplicateFilter () {
-			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
 			$scope.duplicate.initialDate = objResetInitialDate;
 			$scope.duplicate.finalDate = objResetFinalDate;
 			$scope.productsSelected = this.productsSelected = [];
@@ -295,53 +301,53 @@
 			$scope.settlementsSearch = this.settlementsSearch = [];
 			document.getElementById('buscaTerminal3').value = '';
 			document.getElementById('naturezaProduto2').value = '';
-		};
+		}
 
 		/* pagination */
         function PageChangedSynthetic() {
             $scope.currentPageSynthetic = this.currentPageSynthetic - 1;
 			GetSynthetic();
-		};
+		}
 
 		function TotalItensPageChangedSynthetic() {
 			this.currentPageSynthetic = $scope.currentPageSynthetic = 0;
 			$scope.totalItensPageSynthetic = this.totalItensPageSynthetic;
 			GetSynthetic();
-		};
+		}
 
 		function PageChangedAnalytical() {
             $scope.currentPageAnalytical = this.currentPageAnalytical - 1;
 			GetAnalytical();
-		};
+		}
 
 		function TotalItensPageChangedAnalytical() {
 			this.currentPageAnalytical = $scope.currentPageAnalytical = 0;
 			$scope.totalItensPageAnalytical = this.totalItensPageAnalytical;
 			GetAnalytical();
-		};
+		}
 
 		function PageChangedDuplicate() {
 			$scope.currentPageDuplicate = this.currentPageDuplicate - 1;
 			GetDuplicate();
-		};
+		}
 
 		function TotalItensPageChangedDuplicate() {
 			this.currentPageDuplicate = $scope.currentPageDuplicate = 0;
 			$scope.totalItensPageDuplicate = this.totalItensPageDuplicate;
 			GetDuplicate();
-		};
+		}
 
 		function SortResults(objElem, strKind, strTipoRelatorio) {
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 
-			if(strTipoRelatorio == "sintetico") {
+			if(strTipoRelatorio === "sintetico") {
                 GetSynthetic();
-			} else if (strTipoRelatorio == "analitico") {
+			} else if (strTipoRelatorio === "analitico") {
                 GetAnalytical();
-			} else if(strTipoRelatorio == "duplicadas") {
+			} else if(strTipoRelatorio === "duplicadas") {
 				GetDuplicate();
 			}
-		};
+		}
 
         ClearFilter();
     }
