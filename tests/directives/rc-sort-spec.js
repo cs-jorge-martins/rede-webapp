@@ -6,41 +6,42 @@
 
 describe('rc-sort directive', function() {
 
-    var scope, template, strTemplateNode;
+    var $scope, element, html;
 
-    beforeEach(module('Conciliador'));
+	beforeEach(function() {
+		module('Conciliador');
 
-    beforeEach(inject(function ($compile, $rootScope, _$timeout_) {
+		html = angular.element([
+			"<table>",
+				"<thead>",
+					"<tr>",
+						"<th rc-sort sort-type=\"date\" sort-by=\"sort\" sort-on-click=\"funOnClick()\">",
+					"</tr>",
+				"</thead>",
+			"</table>"
+		].join(""));
 
-        scope = $rootScope.$new();
+		inject(function($rootScope, $compile) {
+			$scope = $rootScope.$new();
+			element = $compile(html)($scope);
+			th = element.find('th');
+			$scope.$digest();
+		});
+	});
 
-        var element = angular.element(
-            '<table><thead><tr><th rc-sort sort-type="date" sort-by="sort" sort-on-click="funOnClick()"></tr></thead></table>'
-        );
+	describe('on initialize', function() {
+		it('should add class "rc-sort"', function(){
+			$scope.sort = {
+				type: 'date',
+				order: 'asc'
+			};
 
-        template = $compile(element)(scope);
-
-        scope.sort = {
-			type: 'date',
-			order: 'asc'
-		};
-
-        scope.funOnClick = function () { };
-
-        scope.$digest();
-
-        strTemplateNode = template[0].parentNode;
-
-    }));
-
-    it("should change object order direction", function () {
-        var objTh = strTemplateNode.querySelector('.rc-sort');
-		// console.log("objTh.classList.contains('sort-asc')", objTh.classList.contains('sort-asc'))
-		expect(objTh.classList.contains('sort-asc')).toBe(false);
-		console.log("objTh.classList.contains('sort-asc')", objTh.classList.contains('sort-asc'))
-		console.log("objTh.classList", objTh.classList)
-
-
-    });
+			$scope.$digest();
+			expect(th.hasClass('rc-sort')).toBe(true);
+			//console.log($scope);
+			//console.log(element);
+			//console.log($scope.$$childHead.addClassOnElement);
+		});
+	});
 
 });

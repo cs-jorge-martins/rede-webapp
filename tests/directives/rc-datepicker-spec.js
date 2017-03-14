@@ -47,9 +47,6 @@ describe('rc-datepicker directive', function(){
 			scope.isOpen = true;
 			scope.$digest();
 			var strPlaceHolder = strTemplateNode.querySelector('.uib-datepicker-popup');
-
-			console.log("strPlaceHolder", strPlaceHolder);
-
 			// expect(strPlaceHolder).toEqual('21/02/2017 a 23/02/2017');
 
 		});
