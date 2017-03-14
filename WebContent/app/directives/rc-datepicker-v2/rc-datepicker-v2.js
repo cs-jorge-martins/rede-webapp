@@ -27,16 +27,18 @@
  *     @example
  *     <rc-datepicker-v2 range="true" date="dateModel" max-date="todayDate" label="'data'"></rc-datepicker-v2>
  */
+
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador')
 		.directive('rcDatepickerV2', RcDatepickerV2);
 
-	RcDatepickerV2.$inject = ['calendarFactory', 'TransactionConciliationService', '$q', '$http', 'app', '$document'];
+	RcDatepickerV2.$inject = ['calendarFactory', 'TransactionConciliationService'];
 
-	function RcDatepickerV2(calendarFactory, TransactionConciliationService, $q, $http, app, $document) {
+	function RcDatepickerV2(calendarFactory, TransactionConciliationService) {
 
 		return {
 			restrict: 'E',
@@ -98,6 +100,8 @@
 
 							if(scope.range) {
 
+								// removendo regra de jshint: esta diretiva será refeita
+								/* jshint -W074 */
 								element[0].querySelector(".uib-daypicker").addEventListener("mouseover", function(e) {
 
 									var strTag = e.target.tagName.toLowerCase();
@@ -131,16 +135,16 @@
 										var objPatt = new RegExp("^date-*[0-9]+$");
 
 										for(intClassIndex in arrTdClasses) {
+											if(arrTdClasses.hasOwnProperty(intClassIndex)) {
+												if(arrTdClasses[intClassIndex] === 'hidden'|| arrTdClasses[intClassIndex] === 'invisible') {
+													bolValidTd = false;
+												}
 
-											if(arrTdClasses[intClassIndex] === 'hidden'|| arrTdClasses[intClassIndex] === 'invisible') {
-												bolValidTd = false;
+												if(objPatt.test(arrTdClasses[intClassIndex])) {
+													bolIsOnRegex = true;
+													strDateClass = arrTdClasses[intClassIndex];
+												}
 											}
-
-											if(objPatt.test(arrTdClasses[intClassIndex])) {
-												bolIsOnRegex = true;
-												strDateClass = arrTdClasses[intClassIndex];
-											}
-
 										}
 
 										if(bolValidTd && bolIsOnRegex && strDateClass) {
@@ -239,7 +243,6 @@
 
 			var strDirectiveId = 'rc-datepicker-v2-' + (new Date()).getTime();
 			var bolIsRange = $scope.range || false;
-			var objDateSource = $scope.date;
 			var objRangeStartDate;
 			var objRangeEndDate;
 			var intRangeClickCounter;
@@ -413,6 +416,9 @@
 			 * @param {Date} date Data
 			 * @return {Array} nome da classe
 			 */
+			 // removendo regra de jshint: esta diretiva será refeita
+ 			/* jshint -W074 */
+			/* jshint -W071 */
 			function GetDayClass(date) {
 
 				var objDateAdjusted = date.date;
@@ -545,7 +551,7 @@
 
 				var arrClasses = [];
 
-				if (!bolIsRange && ($scope.date.getTime() == objDateAdjusted.getTime()) ) {
+				if (!bolIsRange && ($scope.date.getTime() === objDateAdjusted.getTime()) ) {
 					arrClasses.push('ball');
 				}
 
@@ -764,10 +770,8 @@
 				switch (strStatusType) {
 					case "sales-to-conciliate":
 						return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesToConciliateDays);
-						break;
 					case "conciliated-sales":
 						return TransactionConciliationService.ListTransactionConciliationByFilter(objFilter).then(GetSalesConciliatedDays);
-						break;
 					default:
 						console.log("error");
 				}
@@ -787,7 +791,7 @@
 			 */
 			function GetSalesToConciliateDays(objResponse) {
 
-				var objResponse = objResponse.data.content;
+				objResponse = objResponse.data.content;
 				var intIndex;
 				var arrDays = [];
 
@@ -796,7 +800,7 @@
 					if(objResponse[intIndex].transctionToConcilieQuantity > 0) {
 
 						arrDays.push({
-							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex].date, true).getTime(),
 							type: GetStatusClassType()
 						});
 
@@ -820,8 +824,7 @@
 			 * @param {Object} objResponse Objeto de resposta da API.
 			 */
 			function GetSalesConciliatedDays(objResponse) {
-
-				var objResponse = objResponse.data.content;
+				objResponse = objResponse.data.content;
 				var intIndex;
 				var arrDays = [];
 
@@ -830,7 +833,7 @@
 					if(objResponse[intIndex].transctionConciliedQuantity > 0) {
 
 						arrDays.push({
-							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex]['date'], true).getTime(),
+							dateClass: 'date-' + calendarFactory.getFirstHourFromDate(objResponse[intIndex].date, true).getTime(),
 							type: GetStatusClassType()
 						});
 

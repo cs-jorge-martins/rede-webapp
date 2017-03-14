@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.Request',[])
-	.config(['$routeProvider' ,function ($routeProvider) {
+	.config([function () {
 }])
 
 .factory('Request', function($window) {
@@ -21,7 +23,7 @@ angular.module('Conciliador.Request',[])
 		};
 
 		if($window.sessionStorage.token) {
-			objDefaultHeaders['Authorization'] = $window.sessionStorage.token;
+			objDefaultHeaders.Authorization = $window.sessionStorage.token;
 		}
 
 		return objDefaultHeaders;

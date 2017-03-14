@@ -4,16 +4,17 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador')
 		.directive('rcDatepicker', RcDatepicker);
 
-	RcDatepicker.$inject = ['calendarFactory']
+	RcDatepicker.$inject = [];
 
-	function RcDatepicker(calendarFactory) {
+	function RcDatepicker() {
 		return {
 			restrict: 'E',
 			templateUrl: 'app/views/directives/rc-datepicker.html',
@@ -24,7 +25,7 @@
 				maxDate: '='
 			},
 			controller: Controller,
-			link: function(scope, element, attrs) {
+			link: function(scope, element) {
 
 				var divCalendarIcon = element[0].querySelector('.icon_calendario');
 

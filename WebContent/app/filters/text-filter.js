@@ -4,6 +4,8 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.textFilter',[])
 
 .filter('capitalize', function() {
@@ -13,5 +15,5 @@ angular.module('Conciliador.textFilter',[])
         }
 
         return strInput.substring(0,1).toUpperCase()+strInput.substring(1);
-    }
+    };
 });

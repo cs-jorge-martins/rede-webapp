@@ -26,9 +26,9 @@
         .module('Conciliador')
         .directive('rcDownloader', RcDownloader);
 
-    RcDownloader.$inject = ['modalService', '$timeout', 'DownloadService', 'PollingFactory', '$filter'];
+    RcDownloader.$inject = ['modalService', '$timeout', 'DownloadService', 'PollingFactory'];
 
-    function RcDownloader(modalService, $timeout, DownloadService, PollingFactory, $filter) {
+    function RcDownloader(modalService, $timeout, DownloadService, PollingFactory) {
         return {
             restrict: 'E',
             templateUrl: 'app/views/directives/rc-downloader.html',
@@ -36,7 +36,7 @@
                 type: "="
             },
             controller: Controller,
-            link: function($scope, element, attrs) {
+            link: function() {
 
                 var header = angular.element(document.querySelector('.rc-downloader .header'));
                 Ps.initialize(document.querySelector('.rc-downloader .content-scroll'));
@@ -144,17 +144,19 @@
 
                 if( $scope.queue.length === arrData.length ) {
                     for(var intIndex in arrData) {
-                        if( arrData[intIndex].status !== $scope.queue[intIndex].status ) {
-                            $scope.queue[intIndex].status = arrData[intIndex].status;
-                        }
-                        if( arrData[intIndex].fileName !== $scope.queue[intIndex].fileName ) {
-                            $scope.queue[intIndex].fileName = arrData[intIndex].fileName;
-                        }
-                        if( arrData[intIndex].url !== $scope.queue[intIndex].url ) {
-                            $scope.queue[intIndex].url = arrData[intIndex].url;
-                        }
-                        if( arrData[intIndex].lineCount !== $scope.queue[intIndex].lineCount ) {
-                            $scope.queue[intIndex].lineCount = arrData[intIndex].lineCount;
+                        if(arrData.hasOwnProperty(intIndex)) {
+                            if( arrData[intIndex].status !== $scope.queue[intIndex].status ) {
+                                $scope.queue[intIndex].status = arrData[intIndex].status;
+                            }
+                            if( arrData[intIndex].fileName !== $scope.queue[intIndex].fileName ) {
+                                $scope.queue[intIndex].fileName = arrData[intIndex].fileName;
+                            }
+                            if( arrData[intIndex].url !== $scope.queue[intIndex].url ) {
+                                $scope.queue[intIndex].url = arrData[intIndex].url;
+                            }
+                            if( arrData[intIndex].lineCount !== $scope.queue[intIndex].lineCount ) {
+                                $scope.queue[intIndex].lineCount = arrData[intIndex].lineCount;
+                            }
                         }
                     }
                 } else {
@@ -196,7 +198,7 @@
                         RemoveFromQueue(intIndex);
                         $uibModalInstance.close();
                         DownloadService.cancelFromQueue(objItem.id);
-                    }
+                    };
                 });
             }
 
@@ -205,7 +207,7 @@
              * Faz o download do arquivo.
              * @param {Object} objItem objeto da fila de downloads que será baixado
              */
-            function Download(objItem, intIndex) {
+            function Download(objItem) {
                 if( objItem.url ) {
                     window.location = objItem.url;
                 }
@@ -240,7 +242,7 @@
                             RemoveFromQueue(intIndex);
                             $uibModalInstance.close();
                             DownloadService.deleteFromQueue(objItem.id);
-                        }
+                        };
                     });
                 }
             }
@@ -258,18 +260,7 @@
                 });
             }
 
-            /**
-             * @method IsAuthenticated
-             * Verifica se usuário está autenticado, para exibir o componente ou não.
-             * Futuramente seria bom mudar a implementação deste método para utilizar
-             * a session factory
-             *
-             * @return {Boolean} retorna se usuário está autenticado ou não
-             */
-            function IsAuthenticated() {
-                // Todo: Implementario SessionFactory e utilizar o mesmo aqui
-                return !!(window.sessionStorage.getItem('token') && window.sessionStorage.getItem('user'));
-            }
+            // TODO: Implementar método IsAuthenticated e usar SessionFactory para verificar se usuário está autenticado
 
             /**
              * @method UpdateTotals
@@ -285,19 +276,21 @@
                 };
 
                 for(var index in objNew) {
-                    switch (objNew[index].status) {
-                        case("PROCESSING"):
-                        case("INITIALIZED"):
-                            objTotals.processing++;
-                            break;
-                        case("DONE"):
-                            objTotals.done++;
-                            break;
-                        case("ERROR"):
-                            objTotals.error++;
-                            break;
-                        default:
-                            console.log("error");
+                    if(objNew.hasOwnProperty(index)) {
+                        switch (objNew[index].status) {
+                            case("PROCESSING"):
+                            case("INITIALIZED"):
+                                objTotals.processing++;
+                                break;
+                            case("DONE"):
+                                objTotals.done++;
+                                break;
+                            case("ERROR"):
+                                objTotals.error++;
+                                break;
+                            default:
+                                console.log("error");
+                        }
                     }
                 }
 
@@ -395,7 +388,7 @@
              */
             function ParseRemainingTime (strRemainingTime) {
                 var intMinutes = 0,
-                    intSeconds = 0
+                    intSeconds = 0,
                     strRemainingTimeConsolidated = '';
 
                 if (strRemainingTime) {
@@ -440,14 +433,14 @@
                 GetHeightClass();
     		}, true);
 
-            $scope.$watch(function (){ return window.sessionStorage.token },function(strValue){
+            $scope.$watch(function (){ return window.sessionStorage.token; },function(strValue){
                 if (strValue === undefined) {
                     $scope.hideClass = "no-itens";
                     $scope.queue = [];
                 } else {
                     Init();
                 }
-            })
+            });
         }
     }
 })();

@@ -14,7 +14,7 @@
 
     RcDisclaimer.$inject = ['$timeout'];
 
-    function RcDisclaimer($timeout) {
+    function RcDisclaimer() {
 
         return {
             restrict: 'E',
@@ -26,8 +26,8 @@
                 onClick: "="
             },
             controller: Controller,
-            link: function($scope, element, attrs) {
-                $scope.$on('$routeChangeSuccess', function(event, current, previous) {
+            link: function($scope) {
+                $scope.$on('$routeChangeSuccess', function(event, current) {
                     if(current.$$route.originalPath.match("/home")) {
                         $scope.loadedClass = "loaded";
                     } else {

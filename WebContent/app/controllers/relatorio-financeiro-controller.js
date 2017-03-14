@@ -4,8 +4,11 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
 (function() {
-	'use strict';
 
 	angular
 	.module('Conciliador.relatorioFinanceiroController', ['ui.bootstrap'])
@@ -52,20 +55,27 @@
 			LoadPage();
 		}
 
+		// removendo regra de jshint: este controller será refeito
+		/* jshint -W074 */
 		function GetReport() {
 
 			var arrShopIds = [];
 			var arrCardProductIds = [];
+			var objItem;
 
 			if($scope.settlementsSelected) {
-				for(var objItem in $scope.settlementsSelected) {
-					arrShopIds.push($scope.settlementsSelected[objItem].id);
+				for(objItem in $scope.settlementsSelected) {
+					if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+						arrShopIds.push($scope.settlementsSelected[objItem].id);
+					}
 				}
 			}
 
 			if($scope.productsSelected) {
-				for(var objItem in $scope.productsSelected) {
-					arrCardProductIds.push($scope.productsSelected[objItem].id);
+				for(objItem in $scope.productsSelected) {
+					if($scope.settlementsSelected.hasOwnProperty(objItem)) {
+						arrCardProductIds.push($scope.productsSelected[objItem].id);
+					}
 				}
 			}
 
@@ -82,7 +92,7 @@
 					currency: 'BRL',
 					page: $scope.currentPage,
 					size: $scope.totalItensPage
-				}
+				};
 			}else{
 				objFilter = {
 					creditedShopIds: arrShopIds,
@@ -95,7 +105,7 @@
 					currency: 'BRL',
 					page: $scope.currentPage,
 					size: $scope.totalItensPage
-				}
+				};
 			}
 
 			if($scope.currentPage > 0 ) {
@@ -109,8 +119,7 @@
 				$scope.items = objData;
 				$scope.noItensMsg = objData.length ? false : true;
 				$scope.totalItens = objPagination.totalElements;
-			}).catch(function(objResponse) {
-
+			}).catch(function() {
 			});
 		}
 
@@ -125,7 +134,7 @@
 					endDate: HandleDate($scope.finalDate),
 					status: ['EXPECTED'],
 					currency: 'BRL'
-			}
+			};
 
 			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
 
@@ -143,8 +152,7 @@
 				else {
 					$scope.futureReleases = 0;
 				}
-			}).catch(function(objResponse) {
-
+			}).catch(function() {
 			});
 		}
 
@@ -158,7 +166,7 @@
 					endDate: HandleDate($scope.finalDate),
 					status: ['FORETHOUGHT','RECEIVED'],
 					currency: 'BRL'
-			}
+			};
 
 			MovementSummaryService.ListMovementSummaryByFilter(HandleFilter(objFilter)).then(function(objResponse) {
 				objResponse = HandleResponse(objResponse.data);
@@ -174,7 +182,7 @@
 				else {
 					$scope.payedValues = 0;
 				}
-			}).catch(function(objResponse) {
+			}).catch(function() {
 			});
 		}
 
@@ -265,13 +273,13 @@
 		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
 			LoadPage();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			LoadPage();
-		};
+		}
 
 		function LoadPage() {
 			GetExpectedAmount();

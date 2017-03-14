@@ -4,9 +4,9 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
-(function() {
+"use strict";
 
-	'use strict';
+(function() {
 
 	angular
 		.module('Conciliador.salesController', [])
@@ -16,7 +16,6 @@
 
 	function Sales($scope, modalService, calendarFactory, filtersService, $location) {
 
-		var objVmSales = this;
         $scope.filter = {};
         $scope.dateModel = {};
 		$scope.dateModel.date = calendarFactory.getYesterday();
@@ -83,5 +82,4 @@
         }
 
 	}
-
 })();

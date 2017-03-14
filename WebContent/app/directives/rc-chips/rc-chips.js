@@ -4,8 +4,10 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-    'use strict';
+
     angular
         .module('Conciliador')
         .directive('rcChips', RcChips)
@@ -20,7 +22,7 @@
             controller: Controller
         };
 
-        function Controller($scope) {
+        function Controller() {
             Init();
 
             function Init() { }
@@ -41,13 +43,11 @@
             controller: Controller
         };
 
-        function Controller($scope) {
+        function Controller() {
 
             Init();
 
             function Init() {
-                //$scope.show = true;
-                //$scope.closeable = false;
             }
         }
     }

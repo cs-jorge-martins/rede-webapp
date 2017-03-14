@@ -9,8 +9,10 @@
  * @extends rc-message
  * Serviço do Rc-message
  */
+
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.RcMessageService', [])

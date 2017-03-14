@@ -29,8 +29,10 @@
  *     		max-size="'4'"
  *     		on-change="vm.myMethod" ></rc-pagination>
  */
+
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador')
@@ -51,7 +53,7 @@
                 onChange: '&'
 			},
 			controller: Controller,
-            link: function(scope, element, attrs, ctrl, transclude) {
+            link: function() {
 
             }
 		};

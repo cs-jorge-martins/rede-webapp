@@ -8,8 +8,8 @@
   margin-right: 10px;
   width: 45px;
 
-  /* mastercard */
-  &.brand-1 {
+  /* mastercard crédito, carnê, conversor, especializado e pedágio */
+  &.brand-1, &.brand-135, &.brand-136, &.brand-137, &.brand-138 {
     background-position: -720px 0;
   }
 
@@ -18,8 +18,8 @@
     background-position: -245px 0;
   }
 
-  /* visa e visa credito */
-  &.brand-3, &.brand-21 {
+  /* visa credito, vale, vale car, saque, capital, crediário, conversor, imobiliário, pedágio */
+  &.brand-3, &.brand-21, &.brand-117, &.brand-132, &.brand-133, &.brand-134, &.brand-140, &.brand-141, &.brand-142, &.brand-143,  &.brand-144, &.brand-145 {
     background-position: -1060px 0;
   }
 
@@ -38,8 +38,8 @@
     background-position: -631px 0;
   }
 
-  /* visa electron */
-  &.brand-7 {
+  /* visa electron e carnê*/
+  &.brand-7, &.brand-116 {
     background-position: -340px 1px;
   }
 
@@ -93,14 +93,43 @@
     background-position: -485px 0;
   }
 
+  /* agiplan */
+  &.brand-110 {
+    background-position: -1250px 0;
+  }
+
+  /* esplanada crédito - sem imagem */
+  &.brand-131 {
+    visibility: hidden;
+  }
+
+  /* alelo alimentação, refeição e auto */
+  &.brand-114, &.brand-115, &.brand-146 {
+    background-position: -1200px 0;
+  }
+
+  /* agro electron e agro investimento electron */
+  &.brand-111, &.brand-113 {
+    background-position: -340px 1px;
+  }
+
+  /* fco giro e investimento */
+  &.brand-132, &.brand-133 {
+    background-position: -1060px 0;
+  }
+
+  /* elo custeio débito, custeio, agro débito, investimento, investimento débito, carnê, construcard, crediário, crédito, especializado,  imobiliário, cultura, débito*/
+  &.brand-112, &.brand-118, &.brand-119, &.brand-120, &.brand-121, &.brand-122, &.brand-123, &.brand-124, &.brand-125, &.brand-126, &.brand-127, &.brand-128, &.brand-129, &.brand-130 {
+    background-position: -1153px 0;
+  }
 }
 
 .card-product-wrapper {
     position: relative;
+    min-width: 16.5em;
 
     p {
-        text-indent: 4em;
-        margin: 0;
+        margin-left: 4em;
     }
 
     .card-product {

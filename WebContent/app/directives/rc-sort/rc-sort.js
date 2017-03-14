@@ -53,7 +53,7 @@
 
 				scope.verifyActiveSortBy();
 
-				scope.$watch('sortBy.type', function (strNewValue) {
+				scope.$watch('sortBy.type', function () {
 					if((scope.hasClassOnElement(scope.strDescClass) || scope.hasClassOnElement(scope.strAscClass)) && scope.sortBy.type !== scope.sortType) {
 						scope.removeClassFromElement(scope.strAscClass);
 						scope.removeClassFromElement(scope.strDescClass);
