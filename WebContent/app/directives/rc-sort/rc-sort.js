@@ -54,14 +54,10 @@
 				scope.verifyActiveSortBy();
 
 				scope.$watch('sortBy.type', function () {
-
-					if(
-						(scope.hasClassOnElement(scope.strDescClass) || scope.hasClassOnElement(scope.strAscClass)) && scope.sortBy.type !== scope.sortType
-					) {
+					if((scope.hasClassOnElement(scope.strDescClass) || scope.hasClassOnElement(scope.strAscClass)) && scope.sortBy.type !== scope.sortType) {
 						scope.removeClassFromElement(scope.strAscClass);
 						scope.removeClassFromElement(scope.strDescClass);
 					}
-
 				});
 
 				element.on('click', function() {
@@ -88,7 +84,6 @@
 			Init();
 
 			function Init() {
-
 			}
 
 			/**
@@ -98,7 +93,6 @@
 			function CheckSortType() {
 
 				if($scope.sortBy && $scope.sortBy.type === $scope.sortType) {
-
 					if(HasClassOnElement($scope.strDescClass)) {
 						RemoveClassFromElement($scope.strDescClass);
 						AddClassOnElement($scope.strAscClass);
@@ -165,6 +159,7 @@
 			 * @param {String} strClass nome da classe para adicionar no elemento
 			 */
 			function AddClassOnElement(strClass) {
+				console.log(strClass);
 				$scope.sortElement.classList.add(strClass);
 			}
 
