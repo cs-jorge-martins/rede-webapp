@@ -159,7 +159,6 @@
 			 * @param {String} strClass nome da classe para adicionar no elemento
 			 */
 			function AddClassOnElement(strClass) {
-				console.log(strClass);
 				$scope.sortElement.classList.add(strClass);
 			}
 

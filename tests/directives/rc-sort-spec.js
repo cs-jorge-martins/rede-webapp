@@ -38,9 +38,6 @@ describe('rc-sort directive', function() {
 
 			$scope.$digest();
 			expect(th.hasClass('rc-sort')).toBe(true);
-			//console.log($scope);
-			//console.log(element);
-			//console.log($scope.$$childHead.addClassOnElement);
 		});
 	});
 
