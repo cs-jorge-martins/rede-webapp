@@ -520,7 +520,9 @@ angular.module('Conciliador.movementsModule',[])
 	}
 
 	function GetClassByType(strType, intAmount) {
-		if(strType !== "ajustes") {
+		if (strType.startsWith("cancelamentos")) {
+			return "cancelamentos";
+		} else if(strType !== "ajustes") {
 			return strType;
 		} else if (intAmount > 0) {
 			return "ajustes-credito";

@@ -60,7 +60,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 						title: 'ajustes'
 					},
 					{
-						title: 'cancelamentos'
+						title: 'cancelamentos / chargebacks'
 					}
 				];
 
