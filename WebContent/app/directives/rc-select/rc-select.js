@@ -53,6 +53,7 @@
 			vm.MakePlaceHolder = MakePlaceHolder;
 
 			Init();
+			OpenPlaceholder();
 
 			function Init() {
 			}
@@ -88,6 +89,16 @@
 			$scope.$watch('model', function (arrNewModel) {
 				$scope.placeHolder = MakePlaceHolder(arrNewModel);
 			});
+
+			function OpenPlaceholder() {
+
+				$scope.IsVisible = false;
+
+				$scope.ShowHidePlaceholder = function () {
+					$scope.IsVisible = $scope.IsVisible ? false : true;
+				};
+
+			}
 
 		}
 

@@ -1,8 +1,20 @@
 <div class="rc-select">
 	<div class="form-group">
 		<label for="rcSelect_{{$id}}">{{ label }}</label>
-		<button class="dropdown-toggle btn btn-default btn-block" id="rcSelect_{{$id}}">
+		<button class="dropdown-toggle btn btn-default btn-block" id="rcSelect_{{$id}}" ng-click="ShowHidePlaceholder()">
 			{{ placeHolder }}
 		</button>
+	</div>
+	<div class="list-group-pvs btn-block" ng-show="IsVisible">
+		<ul>
+			<li><a href=""><span></span>0001</a></li>
+			<li><a href=""><span></span>0002</a></li>
+
+			<li class="divider"></li>
+
+			<li><a href=""><span></span>0003</a></li>
+			<li><a href=""><span></span>0004</a></li>
+			<li><a href=""><span></span>0005</a></li>
+		</ul>
 	</div>
 </div>
