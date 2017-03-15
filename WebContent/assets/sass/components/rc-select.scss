@@ -12,7 +12,6 @@
 		position: relative;
 
 		&:after {
-
 			font-size: 2em;
 			position: absolute;
 			right: 0.4em;
@@ -21,9 +20,46 @@
 			content: '\e9cc';
 			display: block;
 			font-family: $fontItau;
-
 		}
 
+	}
+
+	.list-group-pvs {
+
+		position: absolute;
+		top: 6em;
+		background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+    max-height: 150px;
+    overflow: auto !important;
+    height: auto;
+    min-height: 100px;
+		max-height: 150px;
+    z-index: 1;
+
+		ul {
+			li {
+				list-style: none;
+				padding: 0.5em 0 0.5em 2.9em;
+				a {
+					cursor: pointer;
+			    color: #575758;
+			    display: block;
+			    font-size: 1em;
+			    position: relative;
+			    text-transform: none;
+					line-height: 1.42857143;
+
+					&:hover {
+						text-decoration: none;
+    				background-color: #f5f5f5;
+					}
+				}
+			}
+		}
 	}
 
 }

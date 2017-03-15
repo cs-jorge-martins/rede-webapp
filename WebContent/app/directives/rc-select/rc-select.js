@@ -37,10 +37,21 @@
 		function Controller($scope) {
 
 			Init();
+			OpenPlaceholder();
 
 			function Init() {
 				$scope.placeHolder = 'teste';
 				$scope.label = 'teste';
+			}
+
+			function OpenPlaceholder() {
+
+				$scope.IsVisible = false;
+
+        $scope.ShowHidePlaceholder = function () {
+            $scope.IsVisible = $scope.IsVisible ? false : true;
+        }
+
 			}
 
 		}
