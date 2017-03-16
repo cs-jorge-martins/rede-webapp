@@ -16,6 +16,7 @@
  * @param {String} place-holder-label nome principal do
  * @param {Array} model array com objetos selecionados que tenham os parâmetros: label e id
  * @param {Array} data array com todos os objetos possíveis para a seleção. Elas devem ter os parâmetros: label e id
+ * @param {*} checkAndUncheckAll objeto ou booleano para aparecer as opções de selecionar todos e deselecionar todos
  *
  * Exemplo:
  *
@@ -42,9 +43,11 @@
 				label: '@',
 				placeHolderLabel: '@',
 				model: '=',
-				data: '='
+				data: '=',
+				checkAndUncheckAll: '='
 			},
-			controller: Controller
+			controller: Controller,
+			controllerAs: 'vm'
 		};
 
 		function Controller($scope) {
@@ -52,11 +55,25 @@
 			var vm = this;
 			vm.MakePlaceHolder = MakePlaceHolder;
 			vm.OpenPlaceholder = OpenPlaceholder;
+			vm.checkAll = CheckAll;
+			vm.uncheckAll = UncheckAll;
 
 			Init();
 			OpenPlaceholder();
 
 			function Init() {
+
+				if($scope.checkAndUncheckAll && typeof($scope.checkAndUncheckAll) === "object") {
+					switch($scope.checkAndUncheckAll.defaultType) {
+						case 'checkAll':
+							CheckAll();
+							break;
+						default:
+							UncheckAll();
+							break;
+					}
+				}
+
 			}
 
 			/**
@@ -69,7 +86,7 @@
 			function MakePlaceHolder(arrModel) {
 
 				var intLength = 0;
-				var strLabel = 'nenhum ' + $scope.placeHolderLabel + ' selecionado';
+				var strLabel = 'todos os ' + $scope.placeHolderLabel + 's';
 
 				if (arrModel && arrModel.length) {
 
@@ -86,6 +103,26 @@
 
 				return strLabel;
 
+			}
+
+			/**
+			 * @method CheckAll
+			 * seleciona todos os itens disponíveis de data e coloca em model
+			 */
+			function CheckAll() {
+				UncheckAll();
+				$scope.data.forEach(function (objItem) {
+					$scope.model.push(objItem);
+				});
+
+			}
+
+			/**
+			 * @method UncheckAll
+			 * deseleciona todos os itens de model
+			 */
+			function UncheckAll() {
+				$scope.model = [];
 			}
 
 			// TODO: Analisar a possibilidade de remover esse watcher e colocar a lógica quando o usuário selecionar um item da lista

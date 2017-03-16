@@ -8,23 +8,17 @@
 
 	<div class="list-group-pvs btn-block" ng-show="IsVisible">
 		<ul>
-			<li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0">
-				<a data-ng-click="selectAll()">
-					<span class="glyphicon glyphicon-ok"></span>Marcar Todos
-				</a>
+			<li>
+				<ul class="header" ng-if="checkAndUncheckAll">
+					<li><a href="" ng-click="vm.checkAll()"><span></span>marcar todos</a></li>
+					<li><a href="" ng-click="vm.uncheckAll()"><span></span>desmarcar todos</a></li>
+					<li class="divider"></li>
+				</ul>
 			</li>
-			<li ng-show="settings.showUncheckAll">
-				<a data-ng-click="deselectAll();">
-					<span class="glyphicon glyphicon-remove"></span>Desmarcar Todos
-				</a>
-			</li>
-
-			<li class="divider"></li>
-
-			<li ng-repeat="option in options | filter: searchFilter">
+			<li ng-repeat="item in data">
 				<a ng-click="setSelectedItem(getPropertyForObject(option,settings.idProp))">
 					<span data-ng-class="{'glyphicon glyphicon-ok': isChecked(getPropertyForObject(option,settings.idProp))}"></span>
-					{{  }}
+					{{ item.label }}
 				</a>
 			</li>
 		</ul>
