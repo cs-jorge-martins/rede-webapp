@@ -51,6 +51,7 @@
 
 			var vm = this;
 			vm.MakePlaceHolder = MakePlaceHolder;
+			vm.OpenPlaceholder = OpenPlaceholder;
 
 			Init();
 			OpenPlaceholder();
@@ -92,12 +93,27 @@
 				$scope.placeHolder = MakePlaceHolder(arrNewModel);
 			});
 
+			/**
+			 * @method OpenPlaceholder
+			 * Após o click no input ele retorna a listagem de PVs.
+			 *
+			 */
 			function OpenPlaceholder() {
 
 				$scope.IsVisible = false;
 
 				$scope.ShowHidePlaceholder = function () {
+
 					$scope.IsVisible = $scope.IsVisible ? false : true;
+
+					// var body = angular.element(document.querySelector("body"));
+					// body.bind('click', function() {
+					//
+					// 			var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
+					// 					ListGroupPvs.addClass('alpha');
+					//
+					// });
+
 				};
 
 			}

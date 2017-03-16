@@ -5,16 +5,29 @@
 			{{ placeHolder }}
 		</button>
 	</div>
+
 	<div class="list-group-pvs btn-block" ng-show="IsVisible">
 		<ul>
-			<li><a href=""><span></span>0001</a></li>
-			<li><a href=""><span></span>0002</a></li>
+			<li ng-hide="!settings.showCheckAll || settings.selectionLimit > 0">
+				<a data-ng-click="selectAll()">
+					<span class="glyphicon glyphicon-ok"></span>Marcar Todos
+				</a>
+			</li>
+			<li ng-show="settings.showUncheckAll">
+				<a data-ng-click="deselectAll();">
+					<span class="glyphicon glyphicon-remove"></span>Desmarcar Todos
+				</a>
+			</li>
 
 			<li class="divider"></li>
 
-			<li><a href=""><span></span>0003</a></li>
-			<li><a href=""><span></span>0004</a></li>
-			<li><a href=""><span></span>0005</a></li>
+			<li ng-repeat="option in options | filter: searchFilter">
+				<a ng-click="setSelectedItem(getPropertyForObject(option,settings.idProp))">
+					<span data-ng-class="{'glyphicon glyphicon-ok': isChecked(getPropertyForObject(option,settings.idProp))}"></span>
+					{{  }}
+				</a>
+			</li>
 		</ul>
 	</div>
+
 </div>
