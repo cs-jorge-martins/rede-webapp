@@ -29,11 +29,11 @@
 
 	angular
 		.module('Conciliador')
-		.directive('rcSelect', rcSelect);
+		.directive('rcSelect', RcSelect);
 
-	rcSelect.$inject = [];
+	RcSelect.$inject = [];
 
-	function rcSelect() {
+	function RcSelect() {
 
 		return {
 			restrict: 'E',
@@ -60,9 +60,10 @@
 
 			/**
 			 * @method MakePlaceHolder
-			 * retorna a string correta para adicionar no placeHolder
+			 * retorna a string contendo a sumarização dos itens selecionados.
+			 * A string será usada como label do 'select' do componente.
 			 *
-			 * @param {Array} arrModel é o array que está dentro do model
+			 * @param {Array} arrModel model utilizado pelo componente.
 			 */
 			function MakePlaceHolder(arrModel) {
 
@@ -86,6 +87,7 @@
 
 			}
 
+			// TODO: Analisar a possibilidade de remover esse watcher e colocar a lógica quando o usuário selecionar um item da lista
 			$scope.$watch('model', function (arrNewModel) {
 				$scope.placeHolder = MakePlaceHolder(arrNewModel);
 			});
