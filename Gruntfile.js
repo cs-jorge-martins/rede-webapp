@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 	var API_URLS = {
 		local: 'http://localhost:8080',
 		dev: 'https://va4f0tsgxh.execute-api.us-east-1.amazonaws.com/dev',
-		hml: 'https://kuavd29apk.execute-api.us-east-1.amazonaws.com/hml',
+		hml: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml',
 		prod: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
 	};
 
