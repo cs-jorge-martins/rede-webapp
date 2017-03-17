@@ -140,17 +140,7 @@
 				$scope.IsVisible = false;
 
 				$scope.ShowHidePlaceholder = function () {
-
 					$scope.IsVisible = $scope.IsVisible ? false : true;
-
-					// var body = angular.element(document.querySelector("body"));
-					// body.bind('click', function() {
-					//
-					// 			var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
-					// 					ListGroupPvs.addClass('alpha');
-					//
-					// });
-
 				};
 
 			}
