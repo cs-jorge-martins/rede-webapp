@@ -32,7 +32,7 @@
 
 	.list-group-pvs {
 		position: absolute;
-		top: 5.7em;
+		top: 5.82em;
 		background: #fff;
     border: 1px solid #ddd;
     border-radius: 0;
@@ -45,13 +45,20 @@
 		max-height: 150px;
     z-index: 1;
 
+		.header {
+			padding: 0.5em 0 1em;
+
+			span {
+				display: none;
+			}
+		}
+
 		ul {
 			margin: 0;
     	padding: 0;
 
 			li {
 				list-style: none;
-				padding: 0.5em 0 0.5em 0;
 
 				a {
 					cursor: pointer;
@@ -89,6 +96,7 @@
 				background-color: #e5e5e5;
 		    height: 1px;
 		    padding: 0;
+				margin-top: 8px;
 			}
 		}
 	}
