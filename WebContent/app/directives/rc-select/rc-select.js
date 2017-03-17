@@ -108,29 +108,31 @@
 
 			/**
 			 * @method CheckItem
-			 * adiciona um objeto no $scope.model
+			 * adiciona um objeto no $scope.model e adiciona a propriedade
+			 * 'checked' ao item, para aplicar o CSS
 			 *
 			 * @param {Object} objItem objeto para ser adicionado no $scope.model
 			 */
 			function CheckItem(objItem) {
 				$scope.model.push({
 					label: objItem.label,
-					id: objItem.id,
-					checked: true
+					id: objItem.id
 				});
-				console.log("$scope.model====",$scope.model);
+				objItem.checked = true;
 			}
 
 			/**
 			 * @method UncheckItem
 			 * remove um objeto do $scope.model
 			 *
+			 * @param {Number} objItem objItem que será deselecionado
 			 * @param {Number} intIndex número do index do array a ser removido do $scope.model
 			 */
-			function UncheckItem(intIndex) {
+			function UncheckItem(objItem, intIndex) {
 				if(intIndex !== null && $scope.model.indexOf(intIndex)) {
 					$scope.model.splice(intIndex, 1);
 				}
+				objItem.checked = false;
 			}
 
 			/**
@@ -157,7 +159,7 @@
 				}
 
 				if(objCheckResponse.checked && objCheckResponse.index !== null) {
-					UncheckItem(objCheckResponse.index);
+					UncheckItem(objItem, objCheckResponse.index);
 				} else {
 					CheckItem(objItem);
 				}
