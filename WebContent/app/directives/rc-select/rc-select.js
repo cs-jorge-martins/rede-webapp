@@ -57,6 +57,7 @@
 			vm.OpenPlaceholder = OpenPlaceholder;
 			vm.checkAll = CheckAll;
 			vm.uncheckAll = UncheckAll;
+			vm.checkOrUncheckItem = CheckOrUncheckItem;
 
 			Init();
 			OpenPlaceholder();
@@ -106,6 +107,64 @@
 			}
 
 			/**
+			 * @method CheckItem
+			 * adiciona um objeto no $scope.model
+			 *
+			 * @param {Object} objItem objeto para ser adicionado no $scope.model
+			 */
+			function CheckItem(objItem) {
+				$scope.model.push({
+					label: objItem.label,
+					id: objItem.id
+				});
+			}
+
+			/**
+			 * @method UncheckItem
+			 * remove um objeto do $scope.model
+			 *
+			 * @param {Number} intIndex número do index do array a ser removido do $scope.model
+			 */
+			function UncheckItem(intIndex) {
+				if(intIndex !== null && $scope.model.indexOf(intIndex)) {
+					$scope.model.splice(intIndex, 1);
+				}
+			}
+
+			/**
+			 * @method CheckOrUncheckItem
+			 * verifica se deve adicionar ou remover o objeto do $scope.model
+			 *
+			 * @param {Object} objItem objeto para ser adicionado ou removido do $scope.model
+			 */
+			function CheckOrUncheckItem(objItem) {
+
+				var objCheckResponse = {
+					checked: false,
+					index: null
+				};
+
+				for(var intIndex = 0; intIndex<$scope.model.length; intIndex ++) {
+
+					if( $scope.model[intIndex].label === objItem.label &&
+						$scope.model[intIndex].id === objItem.id) {
+						objCheckResponse.checked = true;
+						objCheckResponse.index = intIndex;
+					}
+
+				}
+
+				if(objCheckResponse.checked && objCheckResponse.index !== null) {
+					UncheckItem(objCheckResponse.index);
+				} else {
+					CheckItem(objItem);
+				}
+
+				$scope.placeHolder = MakePlaceHolder($scope.model);
+
+			}
+
+			/**
 			 * @method CheckAll
 			 * seleciona todos os itens disponíveis de data e coloca em model
 			 */
@@ -114,7 +173,7 @@
 				$scope.data.forEach(function (objItem) {
 					$scope.model.push(objItem);
 				});
-
+				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
 
 			/**
@@ -123,12 +182,8 @@
 			 */
 			function UncheckAll() {
 				$scope.model = [];
+				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
-
-			// TODO: Analisar a possibilidade de remover esse watcher e colocar a lógica quando o usuário selecionar um item da lista
-			$scope.$watch('model', function (arrNewModel) {
-				$scope.placeHolder = MakePlaceHolder(arrNewModel);
-			});
 
 			/**
 			 * @method OpenPlaceholder
