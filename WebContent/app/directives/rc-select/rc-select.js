@@ -176,6 +176,7 @@
 				UncheckAll();
 				$scope.data.forEach(function (objItem) {
 					$scope.model.push(objItem);
+					objItem.checked = true;
 				});
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
@@ -185,6 +186,9 @@
 			 * deseleciona todos os itens de model
 			 */
 			function UncheckAll() {
+				$scope.data.forEach(function (objItem) {
+					objItem.checked = false;
+				});
 				$scope.model = [];
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
