@@ -12,8 +12,8 @@ angular.module('Conciliador.dashboardController',[])
 	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, modalService){
 
 	$scope.showPVGrouping = function() {
-		modalService.openDetails(
-			'agrupamento de PVs',
+		modalService.openFull(
+			'agrupamento de estabelecimentos',
 			'app/views/pv-grouping.html',
 			'PVGroupingController',
 			$scope

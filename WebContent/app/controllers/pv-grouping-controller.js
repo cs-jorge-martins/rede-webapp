@@ -38,6 +38,8 @@
 		objVm.addPVToWorkspace = AddPVToWorkspace;
 		objVm.removePVFromWorkspace = RemovePVFromWorkspace;
 		objVm.updateScrollContainers = UpdateScrollContainers;
+		objVm.validateGroup = ValidateGroup;
+		objVm.selectPV = SelectPV;
 
 		Init();
 
@@ -58,12 +60,11 @@
 		 * contém as informações do PV como: nome, id e adquirente.
 		 */
 		function AddPVToWorkspace(objPV) {
-			objVm.workspace.pvs.unshift(objPV);
-			for(var intIndex in objVm.pvList){
-				if(objVm.pvList.hasOwnProperty(intIndex)){
-					if(objVm.pvList[intIndex].code === objPV.code) {
-						objVm.pvList.splice(intIndex, 1);
-					}
+			var intIndex = objVm.pvList.length - 1;
+			for(intIndex; intIndex >= 0; intIndex--) {
+				if(objVm.pvList[intIndex].selected || (objVm.pvList[intIndex].code === objPV.code)) {
+					objVm.workspace.pvs.unshift(objVm.pvList[intIndex]);
+					objVm.pvList.splice(intIndex, 1);
 				}
 			}
 
@@ -82,6 +83,7 @@
 		 * contém as informações do PV como: nome, id e adquirente.
 		 */
 		function RemovePVFromWorkspace(objPV) {
+			objPV.selected = false;
 			objVm.pvList.unshift(objPV);
 
 			for(var intIndex in objVm.workspace.pvs){
@@ -129,6 +131,29 @@
 				Ps.update(objPvListScrollContainer);
 				Ps.update(objWorkspaceScrollContainer);
 			}, 500);
+		}
+
+		/**
+		 * Valida grupo de PVs antes de salvá-lo.
+		 * Verifica se o grupo tem nome e se existem pelo menos 2 pvs relacionados.
+		 */
+		function ValidateGroup() {
+			if (objVm.workspace.pvs.length < 2) {
+				return false;
+			}
+			if (!objVm.workspace.title ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		function SelectPV(objPV) {
+			if(!objPV.selected) {
+				objPV.selected = true;
+			} else {
+				objPV.selected = false;
+			}
 		}
 	}
 })();

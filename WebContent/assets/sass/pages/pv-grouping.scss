@@ -21,6 +21,12 @@
 				animation: .3s pv-add ease-in-out;
 			}
 		}
+
+		.empty-state {
+			&:before {
+				content: '\e956';
+			}
+		}
 	}
 
 	#pv-group-edit {
@@ -60,6 +66,29 @@
 				content: '\e958';
 			}
 		}
+
+		.validate-list {
+			list-style: none;
+			padding-left: 1.4em;
+			margin-bottom: 1.3em;
+
+			li {
+				font-size: 1.2em;
+				color: #00b9b6;
+				transition: .3s linear all;
+				margin-bottom: 0.3em;
+			}
+		}
+
+		&.not-valid {
+			#edit-container {
+				height: 21.2em;
+			}
+		}
+
+		.form-group {
+			margin-bottom: 0.6em;
+		}
 	}
 
 	#pv-list,
@@ -76,11 +105,16 @@
 		}
 	}
 
+	#edit-wrapper {
+		height: 28.1em;
+	}
+
 	#edit-container {
 		margin-bottom: 1em;
 		height: 26.6em;
 		position: relative;
 	}
+
 	#groups-container {
 		height: 35em;
 		position: relative;
@@ -148,7 +182,6 @@
 		&:last-of-type {
 			margin-bottom: 0;
 		}
-
 	}
 }
 

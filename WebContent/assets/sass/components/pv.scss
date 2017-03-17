@@ -30,4 +30,11 @@
 			text-decoration: none;
 		}
 	}
+
+	&.selected {
+		background: $defaultOrange;
+		p, .action {
+			color: #fff;
+		}
+	}
 }

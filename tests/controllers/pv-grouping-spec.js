@@ -72,6 +72,7 @@ describe('PV grouping controller', function() {
 				acquirerId : 1
 			}]);
 		});
+
 		it('Should remove PV from PV list', function() {
 			vm.pvList = [{
 				id: 1,
@@ -93,6 +94,7 @@ describe('PV grouping controller', function() {
 			vm.removePVFromWorkspace(vm.workspace.pvs[0]);
 			expect(vm.workspace.pvs).toEqual([]);
 		});
+
 		it('Should add PV back to PV list', function() {
 			vm.workspace.pvs = [{
 				id: 1,
@@ -105,6 +107,73 @@ describe('PV grouping controller', function() {
 				code: 1,
 				acquirerId: 1
 			}]);
+		});
+	});
+
+	describe('on validate group', function(){
+		it('should return false if group does not have a name', function(){
+			vm.workspace = {
+				title: "",
+				pvs: []
+			};
+			expect(vm.validateGroup()).toBe(false);
+		});
+
+		it('should return false if group does not have pvs', function(){
+			vm.workspace = {
+				title: "",
+				pvs: []
+			};
+			expect(vm.validateGroup()).toBe(false);
+		});
+
+		it('should return false if group has pvs but does not have title', function(){
+			vm.workspace = {
+				title: "",
+				pvs: [{
+					id: 1,
+					code: 1,
+					acquirerId: 1
+				}]
+			};
+			expect(vm.validateGroup()).toBe(false);
+		});
+
+		it('should return false if group has title but does not have pvs', function(){
+			vm.workspace = {
+				title: "group title",
+				pvs: []
+			};
+			expect(vm.validateGroup()).toBe(false);
+		});
+
+		it('should return false if group has title and only one pv', function(){
+			vm.workspace = {
+				title: "group title",
+				pvs: [{
+					id: 1,
+					code: 1,
+					acquirerId: 1
+				}]
+			};
+			expect(vm.validateGroup()).toBe(false);
+		});
+
+		it('should return true if group has title and more than one pv', function(){
+			vm.workspace = {
+				title: "group title",
+				pvs: [{
+					id: 1,
+					code: 1,
+					acquirerId: 1
+				},
+				{
+					id: 2,
+					code: 2,
+					acquirerId: 2
+				}]
+			};
+			expect(vm.validateGroup()).toBe(true);
 		});
 	});
 });
