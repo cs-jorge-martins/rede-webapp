@@ -49,7 +49,7 @@
 			padding: 0.5em 0 1em;
 
 			span {
-				display: none;
+				// display: none;
 			}
 		}
 
@@ -87,8 +87,10 @@
 					}
 
 					.glyphicon-ok::before {
-						color: #ff7800;
-						content: '\e927' !important;
+						background-color: $defaultOrange;
+				    color: $backgroundChecked;
+				    content: '\e927' !important;
+						border-radius: 4px;
 					}
 
 					&:hover {
