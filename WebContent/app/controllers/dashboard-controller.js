@@ -9,7 +9,16 @@
 angular.module('Conciliador.dashboardController',[])
 
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
-	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService){
+	calendarFactory, $location, dashboardService, cacheService, TransactionConciliationService, TransactionSummaryService, modalService){
+
+	$scope.showPVGrouping = function() {
+		modalService.openDetails(
+			'agrupamento de PVs',
+			'app/views/pv-grouping.html',
+			'PVGroupingController',
+			$scope
+		);
+	};
 
 	menuFactory.setActiveDashboard();
 

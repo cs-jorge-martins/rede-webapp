@@ -1,0 +1,77 @@
+<section id="pv-grouping-page">
+	<div class="row">
+		<div class="col-xs-8">
+			<p class="page-title">criar novo agrupamento</p>
+			<p class="page-description">
+				Utilize os dois primeiros campos abaixo para criar um novo agrupamento.<br />
+				No primeiro campo você pode buscar PVs e arrastar ou selecionar + para adicionar ao segundo campo.<br />
+				Para habilitar o botão <strong>salvar</strong> é necessário nomear o agrupamento e selecionar pelo menos dois PVs.
+			</p>
+		</div>
+		<div class="col-xs-4">
+			<p class="page-title">meus agrupamentos</p>
+			<p class="page-description">
+				Abaixo estão os agrupamentos criados.<br />
+				Para cada agrupamento é possível editar ou deletar.
+			</p>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="col-xs-4">
+			<div class="card card-padding" id="pv-list">
+				<div class="form-group icon-right">
+					<div class="input-group">
+						<input type="text" class="form-control borderless-right" required="" ng-model="pvFilter.code" placeholder="buscar PV" ng-change="objVm.updateScrollContainers()">
+						<span class="input-group-addon icon_busca_consulta"></span>
+					</div>
+				</div>
+				<div id="pvs-container" ng-class="{'has-scroll': objVm.pvList.length > 4}">
+					<div class="pv" ng-repeat="pv in objVm.pvList | filter:pvFilter">
+						<p>{{ pv.code }}</p>
+						<p>Rede {{ pv.id }}</p>
+						<a ng-click="objVm.addPVToWorkspace(pv)" class="action icon_mais"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-4">
+			<div class="card card-padding" id="pv-group-edit">
+				<div class="empty-state" ng-hide="objVm.workspace.pvs.length">
+					<p>Arraste o PV escolhido até aqui ou clique em + para adicioná-lo.</p>
+				</div>
+				<div class="form-group icon-right">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon borderless icon_educacao_uso_consc"></span>
+						<input type="text" class="form-control borderless" required="" placeholder="nomear agrupamento" ng-model="objVm.groupName">
+					</div>
+				</div>
+				<div id="edit-container" ng-class="{'has-scroll': objVm.workspace.pvs.length > 4}">
+					<div class="pv" ng-repeat="pv in objVm.workspace.pvs">
+						<p>{{ pv.code }}</p>
+						<p>Rede {{ pv.id }}</p>
+					<a ng-click="objVm.removePVFromWorkspace(pv)" class="action icon_minimizar"></a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-xs-offset-6">
+						<input type="submit" value="salvar" class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.workspace.pvs.length || !objVm.groupName " />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-4">
+			<div class="card card-padding" id="pv-groups">
+				<div class="empty-state" ng-hide="objVm.pvGroups.length">
+					<p class="title">Nenhum agrupamento disponível.</p>
+					<p>Utilize os campos ao lado para criar e salvar um novo agrupamento.</p>
+				</div>
+				<div id="groups-container">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
