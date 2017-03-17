@@ -17,7 +17,7 @@
 			</li>
 			<li ng-repeat="item in data">
 				<a ng-click="vm.checkOrUncheckItem(item)">
-					<span data-ng-class="{'glyphicon glyphicon-ok': isChecked(getPropertyForObject(option,settings.idProp))}"></span>
+					<span data-ng-class="{'glyphicon glyphicon-ok': item.checked}"></span>
 					{{ item.label }}
 				</a>
 			</li>

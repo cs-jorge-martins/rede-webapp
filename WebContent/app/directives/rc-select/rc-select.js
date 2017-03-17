@@ -115,8 +115,10 @@
 			function CheckItem(objItem) {
 				$scope.model.push({
 					label: objItem.label,
-					id: objItem.id
+					id: objItem.id,
+					checked: true
 				});
+				console.log("$scope.model====",$scope.model);
 			}
 
 			/**
