@@ -72,17 +72,23 @@
 					text-decoration: none;
 
 					span {
+						display: block;
+						font-family: "itaufonts_master_24px_v1";
+						font-size: 1.2em;
+						line-height: 22px !important;
+						position: absolute;
+						top: 7px;
+						left: 10px;
+
 						&::before {
-							display: block;
 							color: #575758;
 					    content: '\e964';
-					    font-family: "itaufonts_master_24px_v1";
-					    font-size: 1.2em;
-					    line-height: 22px !important;
-							position: absolute;
-							top: 7px;
-							left: 10px;
 						}
+					}
+
+					.glyphicon-ok::before {
+						color: #ff7800;
+						content: '\e927' !important;
 					}
 
 					&:hover {
