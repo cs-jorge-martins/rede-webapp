@@ -32,9 +32,9 @@
 		.module('Conciliador')
 		.directive('rcSelect', RcSelect);
 
-	RcSelect.$inject = [];
+	RcSelect.$inject = ['$document'];
 
-	function RcSelect() {
+	function RcSelect($document) {
 
 		return {
 			restrict: 'E',
@@ -44,10 +44,27 @@
 				placeHolderLabel: '@',
 				model: '=',
 				data: '=',
-				checkAndUncheckAll: '='
+				checkAndUncheckAll: '=',
+				pvList: '=?'
 			},
 			controller: Controller,
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+			link: function (scope, element) {
+
+				// $document.on('click', function (objClickedElement) {
+				// 	if (element !== objClickedElement.target && !element[0].contains(objClickedElement.target) && scope.IsVisible === true) {
+				// 		scope.ShowHidePlaceholder();
+				// 	}
+				// });
+
+				// element.bind('click', function (objClickedElement) {
+				// 	console.log("clicado")
+				// 	if (element !== objClickedElement.target && !element[0].contains(objClickedElement.target) && scope.IsVisible === true) {
+				// 		scope.ShowHidePlaceholder();
+				// 	}
+				// });
+
+			}
 		};
 
 		function Controller($scope) {
