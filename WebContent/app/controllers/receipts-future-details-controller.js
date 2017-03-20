@@ -4,17 +4,20 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 
 .controller('receiptsFutureDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location,FinancialService){
 
-		var objFilter = {};
 		Init();
 
-		function Init(){
+        // removendo regra de jshint: este controller será refeito
+        /* jshint -W071 */
+		function Init() {
 			$rootScope.hideHeaderAndFooter = true;
-			$scope.$on("$routeChangeStart", function(next, current){
+			$scope.$on("$routeChangeStart", function(){
 				$rootScope.hideHeaderAndFooter = false;
 			});
 
@@ -84,25 +87,25 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 		}
 
 		function DateTitle() {
-			var string = "";
+			var strDate = "";
 
 			if($scope.startDate && $scope.endDate) {
-				string = calendarFactory.getDayAndMonthFromDate($scope.startDate);
-				string += " a ";
-				string += calendarFactory.getDayAndMonthFromDate($scope.endDate);
+				strDate = calendarFactory.getDayAndMonthFromDate($scope.startDate);
+				strDate += " a ";
+				strDate += calendarFactory.getDayAndMonthFromDate($scope.endDate);
 			}
 
-			return string;
+			return strDate;
 		}
 
 		function GetShopsLabel() {
 			var strShops = "";
 
 			if($scope.shops.length > 1) {
-				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento';
 
 				if($scope.shops.length > 2) {
-					strShops += 's'
+					strShops += 's';
 				}
 			}
 
@@ -123,7 +126,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				shopIds: GetShopsFilter($scope.shopIds),
 				acquirerIds: $scope.acquirer.id,
 				cardProductIds: $scope.cardProduct.cardProductId,
-				page:  $scope.currentPage ==  0 ? $scope.currentPage : $scope.currentPage - 1,
+				page:  $scope.currentPage ===  0 ? $scope.currentPage : $scope.currentPage - 1,
 				size:  $scope.currentSize,
 				sort: $scope.sort,
 				status: 'EXPECTED'
@@ -137,7 +140,7 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 				$scope.detailsData = objData;
 				$scope.totalItens = objPagination.totalElements;
 
-			}).catch(function (objResponse) {
+			}).catch(function () {
 
 			});
 
@@ -153,12 +156,12 @@ angular.module('Conciliador.receiptsFutureDetailsController', ['ui.bootstrap'])
 			$scope.currentSize = this.totalItensPage;
 			$scope.currentPage = this.currentPage;
 			GetFutureDetails();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.totalItensPage = 0;
 			$scope.totalItensPage = this.currentPage;
 			GetFutureDetails();
-		};
+		}
 
 	});

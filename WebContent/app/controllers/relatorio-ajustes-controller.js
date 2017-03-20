@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 .controller('relatorioAjustesController', function(menuFactory, $scope, calendarFactory, $rootScope,
@@ -29,10 +31,16 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		$scope.maxSize = 4;
 		$scope.totalItensPageOptions = [10,20,50];
-		$scope.totalItensPage = $scope.totalItensPageOptions[1];
+		$scope.totalItensPage = $scope.totalItensPageOptions[0];
         $scope.currentPage = 0;
 		$scope.totalItens = 0;
         $scope.sortResults = SortResults;
+
+		$scope.dateOptions = {
+			showWeeks: false,
+			startingDay: 1,
+			maxMode: 'day'
+		};
 
 		Init();
 
@@ -40,12 +48,13 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 			$scope.clearFilter = ClearFilter;
 			$scope.search = Search;
 
+			ClearFilter();
 			GetReport();
 		}
 
 		function GetReport() {
 
-            var intCurPage = $scope.currentPage == 0 ? 0 : ($scope.currentPage - 1);
+            var intCurPage = $scope.currentPage === 0 ? 0 : ($scope.currentPage - 1);
 
 			AdjustService.ListAdjusts({
 				currency: 'BRL',
@@ -75,7 +84,7 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 			}).then(function(objResponse) {
 				var objData = objResponse.data.content;
 
-				if(objResponse.status == 200) {
+				if(objResponse.status === 200) {
 					window.open(objData.uri);
 				} else {
 					// TODO Tratamento de erros
@@ -85,8 +94,8 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 
 		function ClearFilter() {
 			var objInitialDate = calendarFactory.getMomentOfSpecificDate(calendarFactory.getActualDate());
-			$scope.initialDate = calendarFactory.getFirstDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
-			$scope.finalDate = calendarFactory.getLastDayOfSpecificMonth(objInitialDate.month(), objInitialDate.year());
+			$scope.initialDate = calendarFactory.getDateFromString(calendarFactory.getFirstDayOfMonth()).toDate();
+			$scope.finalDate = calendarFactory.getDateFromString(calendarFactory.getLastDayOfMonth(objInitialDate)).toDate();
 		}
 
 		function Search() {
@@ -96,19 +105,16 @@ angular.module('Conciliador.relatorioAjustesController',['ui.bootstrap'])
 		function PageChanged() {
 			$scope.currentPage = this.currentPage;
 			GetReport();
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 1;
 			$scope.totalItensPage = this.totalItensPage;
 			GetReport();
-		};
+		}
 
 		function SortResults(objElem, strKind) {
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
 			GetReport();
-		};
-
-		ClearFilter();
-
+		}
     });

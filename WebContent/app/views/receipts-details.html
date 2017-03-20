@@ -23,7 +23,7 @@
 				<div class="chip" ng-if="accountsLabel">
 					{{ accountsLabel }}
 				</div>
-				<div class="chip" ng-if="shops">
+				<div class="chip" ng-if="shopsLabel">
 					{{ shopsLabel }}
 				</div>
 			</div>
@@ -150,7 +150,7 @@
 							<tbody>
 								<tr ng-repeat="item in adjustsData">
 									<td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
-									<td>R$ {{ item.adjustAmount | currency: '' }}</td>
+									<td>R$ {{ item.adjustAmount | customCurrency: '' }}</td>
 									<td>{{ item.adjustDescription }}</td>
 									<td>{{ item.adjustRoNumber }}</td>
 								</tr>
@@ -194,9 +194,10 @@
 						<table class="table sortTable">
 							<thead>
 								<tr>
+									<th ng-click="sortResults($event,'type', 'cancellation')">cancelamento<br />/ chargeback</th>
 									<th ng-click="sortResults($event,'transactionDate', 'cancellation')">data da venda</th>
-									<th ng-click="sortResults($event,'transactionGross', 'cancellation')">valor total da transação</th>
-									<th ng-click="sortResults($event,'transactionCancellationAmount', 'cancellation')">valor total do cancelamento</th>
+									<th ng-click="sortResults($event,'transactionGross', 'cancellation')">valor total<br />da transação</th>
+									<th ng-click="sortResults($event,'transactionCancellationAmount', 'cancellation')">valor cancelado /<br />valor chargeback</th>
 									<th ng-click="sortResults($event,'amount', 'cancellation')">valor do débito</th>
 									<th ng-click="sortResults($event,'transactionNsu', 'cancellation')">nsu</th>
 									<th ng-click="sortResults($event,'transactionCardNumber', 'cancellation')">nº do cartão<!--<span class="orderby"></span>--></th>
@@ -205,6 +206,7 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="item in cancellationsData">
+									<td>{{ item.adjustType === 'CANCELLATION' ? 'cancelamento' : 'chargeback' }}</td>
 									<td>{{ item.date | date: 'dd/MM/yyyy h:mma' }}</td>
 									<td>R$ {{ item.transactionGross | currency:'' }}</td>
 									<td>R$ {{ item.adjustCancellationAmount | currency:'' }}</td>
@@ -258,6 +260,5 @@
 			</uib-tabset>
 		</div>
 	</div>
-  	<rc-disclaimer></rc-disclaimer>
 </section>
 </div>

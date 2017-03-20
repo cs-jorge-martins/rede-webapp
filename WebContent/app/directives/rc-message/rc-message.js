@@ -4,8 +4,9 @@
  Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador')
@@ -19,7 +20,6 @@
             scope: {
                 type: "=",
                 text: "=",
-                href: "=",
                 actionText: "=",
                 onClick: "&"
             },
@@ -35,7 +35,7 @@
                     $scope.icon = VerifyIconType($scope.type);
                 }
             }
-            
+
             function VerifyIconType(strType) {
                 var strIcon;
                 switch (strType) {

@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.receiptsOtherDetailsController', [])
 
 .controller('receiptsOtherDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
@@ -12,9 +14,11 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 		var objFilter = {};
 		Init();
 
+        // removendo regra de jshint: este controller será refeito
+        /* jshint -W071 */
 		function Init(){
 			$rootScope.hideHeaderAndFooter = true;
-			$scope.$on("$routeChangeStart", function(next, current){
+			$scope.$on("$routeChangeStart", function(){
 				$rootScope.hideHeaderAndFooter = false;
 			});
 
@@ -85,10 +89,10 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 			var strShops = "";
 
 			if($scope.shops.length > 1) {
-				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento';
 
 				if($scope.shops.length > 2) {
-					strShops += 's'
+					strShops += 's';
 				}
 			}
 
@@ -106,9 +110,11 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 				var objData = objResponse.data.content;
 
 				for (var intIndex in objData) {
-					$scope.otherDetailsData.push(objData[intIndex]);
+                    if(objData.hasOwnProperty(intIndex)) {
+                        $scope.otherDetailsData.push(objData[intIndex]);
+                    }
 				}
-			}).catch(function(objResponse) {
+			}).catch(function() {
 			});
 	    }
 
@@ -130,16 +136,16 @@ angular.module('Conciliador.receiptsOtherDetailsController', [])
 		function PageChangedSales() {
 			$scope.salesCurrentPage = this.salesCurrentPage;
 			GetOtherDetails();
-		};
+		}
 
 		function TotalItensPageChangedSales() {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
 			GetOtherDetails();
-		};
+		}
 
 		function PageChangedAdjusts() {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
 			GetOtherDetails();
-		};
+		}
 	});

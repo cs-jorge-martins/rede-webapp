@@ -43,10 +43,12 @@
 
         @include border-radius(0,0,0,0);
         border: none;
-        color: $darkGray;
+        color: #ababab;
+        background: $lightGray;
         display: block;
         padding: 0.9em 1.2em;
         text-align: left;
+        font-size: 17px;
 
         &:hover {
           background: none;

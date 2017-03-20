@@ -4,8 +4,12 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFileUpload'])
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W071 */
 .controller('integrationController', function(menuFactory, $scope, $http, FileUploader, $uibModal, $timeout,
 	calendarFactory, app, Request, FileSaver, Blob, $rootScope, $window, advancedFilterService, calendarService, integrationService){
 
@@ -32,7 +36,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			}
 		];
 
-		$scope.typeModel = {"id": 1, type: 'CURRENT'}
+		$scope.typeModel = {"id": 1, type: 'CURRENT'};
 		$scope.initialDate = [];
 		$scope.finishDate = [];
 
@@ -77,7 +81,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			$scope.inProgress = true;
 			$scope.fileName = fileItem.file.name;
 			fileItem.url += "?fileName=" + $scope.fileName;
-		}
+		};
 
 		var objModal;
 		$scope.uploader.onBeforeUploadItem = function(){
@@ -87,8 +91,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 				size: 'lg',
 				windowClass: "integrationModalWrapper",
 				appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
-				controller: function($uibModalInstance, $timeout){
-                    $scope.cancel = Cancel;
+				controller: function(){
+					$scope.cancel = Cancel;
 					function Cancel() {
 						$scope.uploader.clearQueue();
 						objModal.close();
@@ -97,7 +101,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 						$scope.sendFile = true;
 					}
 				}
-			})
+			});
 		};
 
 		$scope.uploader.onCompleteItem = function() {
@@ -109,7 +113,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		};
 
 		$scope.uploader.onSuccessItem = function() {
-			var objModalInstance = $uibModal.open({
+			$uibModal.open({
 				templateUrl: "app/views/vendas/enviado-com-sucesso.html",
 				scope: $scope,
 				size: 'lg',
@@ -131,7 +135,7 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		};
 
 		$scope.$watch('typeModel.type', function(objResponse) {
-			if(objResponse != 'FUTURE') {
+			if(objResponse !== 'FUTURE') {
 				SetCalendarLastReleases();
 			} else {
 				SetCalendarFutureReleases();
@@ -152,7 +156,6 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 		function SetCalendarLastReleases() {
 			var objToday = calendarFactory.getToday();
-			var objTomorrow = calendarFactory.getTomorrowFromTodayToDate();
 			$scope.initialDate = objToday;
 			$scope.finishDate = objToday;
 			$scope.initialMinDate = null;
@@ -205,14 +208,14 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 					var objPagination = objResponse.data.page;
 
 					for (var intIndex in objData) {
-						$scope.listUploadedFiles.push(objData[intIndex]);
+						if(objData.hasOwnProperty(intIndex)) {
+							$scope.listUploadedFiles.push(objData[intIndex]);
+						}
 					}
 
 					$scope.totalItens = objPagination.totalElements;
-				}).catch(function(objResponse){
-
-				}).finally(function(){
-
+				}).catch(function(){
+					// TODO: implementar erro
 				});
 			}
 		}
@@ -232,13 +235,8 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 			};
 
 			integrationService.DownloadFiles(objFilter, function success(objResponse){
-
-                var strUrl = objResponse.data;
-                if (strUrl.indexOf("http") === 0){
-                    $window.location = objResponse.data;
-                } else {
-                    $rootScope.alerts =  [ { type: "danger", msg: "Não foi possível gerar o relatório. Tente novamente."} ];
-                }
+				// dispara evento para rc-downloader adicionar download na fila
+				$rootScope.$broadcast('download-init', objResponse.data);
 			}, function error(objResponse){
                 var strMsg;
 
@@ -257,13 +255,13 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 		function PageChanged() {
 			$scope.currentPage = this.currentPage - 1;
 			GetUploadedFiles(true);
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			GetUploadedFiles(true);
-		};
+		}
 
         function SortResults(objElem, strKind) {
 			var strOrderString;
@@ -271,5 +269,5 @@ angular.module('Conciliador.integrationController',['ui.bootstrap', 'angularFile
 
 			$scope.sort = strOrderString;
 			GetUploadedFiles(true);
-		};
+		}
     });

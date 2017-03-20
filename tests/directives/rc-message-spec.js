@@ -51,9 +51,4 @@ describe('rc-message directive', function(){
         expect(objRcMessageActionP).toContain('ver detalhes');
     });
 
-    it("should contain href in a with the link: '/#/rc-unit-test' on action p", function () {
-        var objRcMessageActionP = strTemplateNode.querySelector('.rc-message .action a').outerHTML;
-        expect(objRcMessageActionP).toContain('/#/rc-unit-test');
-    });
-
 });

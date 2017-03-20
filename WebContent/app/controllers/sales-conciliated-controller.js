@@ -9,12 +9,13 @@
  * Controller de vendas conciliadas
  *
  */
+
+"use strict";
+
 (function() {
 
-    'use strict';
-
     angular
-        .module('Conciliador.salesConciliatedController', [])
+        .module('Conciliador.salesConciliatedController', ['duScroll'])
         .controller('salesConciliatedController', SalesConciliated);
 
     SalesConciliated.$inject = [
@@ -26,7 +27,8 @@
         '$uibModal',
         '$rootScope',
         'utilsFactory',
-        'modalService'
+        'modalService',
+        '$document'
     ];
 
     function SalesConciliated(
@@ -38,7 +40,9 @@
         $uibModal,
         $rootScope,
         utilsFactory,
-        modalService) {
+        modalService,
+        $document
+    ) {
 
         var objVm = this;
 
@@ -51,10 +55,10 @@
                 cardProducts: false
             },
             update: function Update() {
-                objVm.chipsConfig.show.terminals = objVm.terminalsData.length != objVm.filteredTerminals.length;
-                objVm.chipsConfig.show.pvs = objVm.pvsData.length != objVm.filteredPvs.length;
-                objVm.chipsConfig.show.acquirers = objVm.acquirersData.length != objVm.filteredAcquirers.length;
-                objVm.chipsConfig.show.cardProducts = objVm.cardProductsData.length != objVm.filteredCardProducts.length;
+                objVm.chipsConfig.show.terminals = $scope.filter.terminalsData.length !== objVm.filteredTerminals.length;
+                objVm.chipsConfig.show.pvs = $scope.filter.pvsData.length !== objVm.filteredPvs.length;
+                objVm.chipsConfig.show.acquirers = $scope.filter.acquirersData.length !== objVm.filteredAcquirers.length;
+                objVm.chipsConfig.show.cardProducts = $scope.filter.cardProductsData.length !== objVm.filteredCardProducts.length;
             },
             closeable: true
         };
@@ -67,19 +71,19 @@
             percentage: 100
         };
         objVm.getSales = GetSales;
+        objVm.search = $scope.search;
         objVm.resetFilter = ResetFilter;
         objVm.reconcile = Reconcile;
+        objVm.details = Details;
+        objVm.acquirersFilterExpression = AcquirersFilterExpression;
+        objVm.acquirersCardProductFilterExpression = AcquirersCardProductFilterExpression;
 
-        objVm.filterMaxDate = calendarFactory.getYesterday();
-        objVm.dateModel.date = calendarFactory.getYesterday();
-        objVm.cardProductsData = [];
-        objVm.cardProductsModel = [];
-        objVm.terminalsData = [];
-        objVm.terminalsModel = [];
-        objVm.pvsData = [];
-        objVm.pvsModel = [];
-        objVm.acquirersData = [];
-        objVm.acquirersModel = [];
+        objVm.countButtonLabelPrefix = 'desconciliar';
+
+        $scope.$on('search', function() {
+            GetSales();
+        });
+
 
         Init();
 
@@ -88,35 +92,12 @@
          * inicializa as funções principais deste controller ao carregar a página
          */
         function Init() {
-            GetFilters();
             UpdateDateModel();
             GetSales();
         }
 
         /**
-         * @method GetFilters
-         * faz as chamadas para serializar os dados de filtro e coloca-los em scopes, para manipula-los na view
-         */
-        function GetFilters() {
-            filterService.GetCardProductDeferred().then(function (objCardProducts) {
-                objVm.cardProductsData = filterService.TransformDeferredDataInArray(objCardProducts, 'name');
-                objVm.cardProductsModel = angular.copy(objVm.cardProductsData);
-            });
-            filterService.GetTerminalDeferred().then(function (objTerminals) {
-                objVm.terminalsData = filterService.TransformDeferredDataInArray(objTerminals, 'code');
-                objVm.terminalsModel = angular.copy(objVm.terminalsData);
-            });
-            filterService.GetPvsDeferred().then(function (objPvs) {
-                objVm.pvsData = filterService.TransformDeferredDataInArray(objPvs, 'code');
-                objVm.pvsModel = angular.copy(objVm.pvsData);
-            });
-            filterService.GetAcquirersDeferred().then(function (objAcquirers) {
-                objVm.acquirersData = filterService.TransformDeferredDataInArray(objAcquirers, 'name');
-                objVm.acquirersModel = angular.copy(objVm.acquirersData);
-            });
-        }
 
-        /**
          * @method GetLabels
          * serializa os dados dos filtros para strings correspondentes, que serão inseridas na view
          */
@@ -137,8 +118,8 @@
          * atualiza o model da data no cabeçalho da página
          */
         function UpdateDateModel() {
-            objVm.dateModel.day = calendarFactory.getDayOfDate(objVm.dateModel.date);
-            objVm.dateModel.monthName = calendarFactory.getMonthNameOfDate(objVm.dateModel.date);
+            objVm.dateModel.day = calendarFactory.getDayOfDate($scope.dateModel.date);
+            objVm.dateModel.monthName = calendarFactory.getMonthNameOfDate($scope.dateModel.date);
         }
 
         /**
@@ -147,7 +128,7 @@
          * @return data formatada para (YYYYMMDD)
          */
         function FormatDateForService() {
-            return calendarFactory.formatDateTimeForService(objVm.dateModel.date);
+            return calendarFactory.formatDateTimeForService($scope.dateModel.date);
         }
 
         /**
@@ -177,11 +158,11 @@
                 objContent.forEach(function(objItem) {
                     if (objItem.conciliationStatus === 'TO_CONCILIE') {
                         objVm.timelineModel.toReconcile = objItem.quantity;
+                        objVm.timelineModel.total += objItem.quantity;
                     } else if (objItem.conciliationStatus === 'CONCILIED') {
                         objVm.timelineModel.concilied = objItem.quantity;
+                        objVm.timelineModel.total += objItem.quantity;
                     }
-
-                    objVm.timelineModel.total += objItem.quantity;
                 });
 
             });
@@ -192,10 +173,10 @@
          * atualiza os resultados, utilizando os filtros para buscar na api e responder na view
          */
         function GetSales() {
-            objVm.filteredTerminals = angular.copy(objVm.terminalsModel);
-            objVm.filteredAcquirers = angular.copy(objVm.acquirersModel);
-            objVm.filteredPvs = angular.copy(objVm.pvsModel);
-            objVm.filteredCardProducts = angular.copy(objVm.cardProductsModel);
+            objVm.filteredTerminals = angular.copy($scope.filter.terminalsModel);
+            objVm.filteredAcquirers = angular.copy($scope.filter.acquirersModel);
+            objVm.filteredPvs = angular.copy($scope.filter.pvsModel);
+            objVm.filteredCardProducts = angular.copy($scope.filter.cardProductsModel);
             objVm.resultModel.splice(0);
 
             GetLabels();
@@ -211,6 +192,7 @@
                 groupBy: 'CARD_PRODUCT,CONCILIATION_STATUS,ACQUIRER',
                 startDate: strDate,
                 endDate: strDate,
+                sort: 'acquirer.id,ASC',
                 cardProductIds: utilsFactory.joinMappedArray(objVm.filteredCardProducts, 'id', ','),
                 terminalIds: utilsFactory.joinMappedArray(objVm.filteredTerminals, 'id', ','),
                 acquirerIds: utilsFactory.joinMappedArray(objVm.filteredAcquirers, 'id', ','),
@@ -248,12 +230,15 @@
                 }
 
                 if (!objModelFound[strModel]) {
-                    objModelFound[strModel] = new TransactionModel()
+                    objModelFound[strModel] = new TransactionModel();
                 }
 
                 objModelFound[strModel].transactions.push(objItem);
                 objModelFound[strModel].totalAmount += objItem.amount;
             });
+
+            var objElement = angular.element(document.getElementById("salesConciliatedAnchor"));
+            $document.scrollToElementAnimated(objElement);
         }
 
         /**
@@ -266,7 +251,13 @@
             this.transactions = [];
             this.checks = {};
             this.cardProductIds = [];
-            this.allChecked = false
+            this.allChecked = false;
+            this.resetSelection = function ResetSelection() {
+                this.count = 0;
+                this.checks = {};
+                this.allChecked = false;
+                this.cardProductIds.splice(0);
+            };
         }
 
         /**
@@ -280,7 +271,8 @@
             var strDate = FormatDateForService();
 
             var objFilter = {
-                conciliationStatus: ['TO_CONCILIE'],
+                conciliationStatus: ['CONCILIED'],
+                newConciliationStatus: 'TO_CONCILIE',
                 currency: 'BRL',
                 startDate: strDate,
                 endDate: strDate,
@@ -290,20 +282,36 @@
                 shopIds: utilsFactory.joinMappedArray(objVm.filteredPvs, 'id', false)
             };
 
-            modalService.open("app/views/sales-conciliation-modal", function ModalController($scope, $uibModalInstance) {
-                $scope.count = objTransactionModel.count;
-                $scope.reconcileType = "conciliar";
+            modalService.open(
+                "app/views/sales-conciliation-modal.html",
+                function ModalController($scope, $uibModalInstance) {
+                var strPluralized = "venda";
+                if (objTransactionModel.count > 1) {
+                    strPluralized = "vendas";
+                }
+
+                $scope.countObjTransactionModel = objTransactionModel.count;
+                $scope.reconcileType = "desconciliar";
+                $scope.modalTitle = "desconciliar vendas";
+                $scope.modalText = "Você deseja desconciliar " + objTransactionModel.count + " " + strPluralized + "?";
                 $scope.cancel = function Cancel() {
+                    objTransactionModel.resetSelection();
+                    $scope.close();
+                };
+
+                $scope.close = function Close() {
                     $uibModalInstance.close();
                 };
 
                 $scope.confirm = function Confirm() {
-                    transactionService.ConcilieTransactions(objFilter).then(function(objResponse) {
-                        GetSales();
+                    transactionService.ConcilieTransactions(objFilter).then(function() {
+                        $scope.search();
                         $uibModalInstance.close();
                     });
-                }
-            });
+                };
+            },
+                $scope
+            );
 
         }
 
@@ -315,12 +323,50 @@
          * o ResetFilter deve ser acionado para fazer a ação na view
          * @param {String} strModel primeiro nome da Model
          */
-        function ResetFilter(strModel) {
-            objVm[strModel+ 'Model'] = angular.copy(objVm[strModel + 'Data']);
-            GetSales();
+		function ResetFilter(strModel) {
+			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
+			$scope.search();
+		}
+
+        /**
+         * @method Details
+         * Abre modal de detalhes
+         *
+         */
+        function Details(objTransaction) {
+            objVm.transaction = objTransaction;
+            modalService.openFull(
+                'Vendas conciliadas | detalhes',
+                'app/views/sales-conciliated-details.html',
+                'salesConciliatedDetailsController',
+                $scope
+            );
         }
 
+        /**
+        * @method AcquirersFilterExpression
+        * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos em outras listas
+        */
+        function AcquirersFilterExpression(pv) {
+            return !$scope.filter.acquirersModel.length || (($scope.filter.acquirersModel.map(function(a){ return a.id; }).indexOf(pv.acquirerId)) !== -1) || ($scope.filter.pvsModel.map(function(a){ return a.id; }).indexOf(pv.id) !== -1 && !$scope.filter.pvsModel.splice($scope.filter.pvsModel.map(function(a){ return a.id; }).indexOf(pv.id), 1));
+        }
+
+        /**
+         * @method AcquirersCardProductFilterExpression
+         * Trata as alteracoes na selecao na lista de adquirentes e seus efeitos na lista de bandeira
+         */
+        function AcquirersCardProductFilterExpression(objCard) {
+            return  !$scope.filter.acquirersModel.length || CompareArrayAcquirers($scope.filter.acquirersModel, objCard.acquirers) || ($scope.filter.cardProductsModel.map(function(a){ return a.id; }).indexOf(objCard.id) !== -1 && !$scope.filter.cardProductsModel.splice($scope.filter.cardProductsModel.map(function(a){ return a.id; }).indexOf(objCard.id), 1));
+        }
+
+        function CompareArrayAcquirers(arrAcquirers, arrAcquirersCard) {
+            var bolResponse = false;
+            angular.forEach(arrAcquirers, function(objAcq) {
+                angular.forEach(arrAcquirersCard, function(objAcqCard) {
+                    bolResponse = bolResponse || (objAcq.id === objAcqCard.id);
+                });
+            });
+            return bolResponse;
+        }
     }
-
-
 })();

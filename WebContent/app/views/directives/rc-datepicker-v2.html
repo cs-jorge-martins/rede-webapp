@@ -9,7 +9,7 @@
 				id="{{directiveId}}"
                 uib-datepicker-popup="{{dateFormat}}"
     			ng-model="pickerDate"
-				ng-change="update()"
+				ng-change="update(true)"
     			is-open="status.opened"
 				datepicker-popup-template-url="app/views/directives/rc-datepicker-popup-v2.html"
 				close-on-date-selection="{{closeOnSelection}}"
@@ -18,7 +18,7 @@
     			show-button-bar="false"
     			readonly="readonly"
     			required />
-            <span class="input-group-addon icon_calendario"></span>
+            <span class="input-group-addon icon_calendario" ng-click="open()"></span>
         </div>
 	</div>
 </div>

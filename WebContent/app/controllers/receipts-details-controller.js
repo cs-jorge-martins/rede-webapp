@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 .controller('receiptsDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
@@ -12,9 +14,11 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 		var objFilter = {};
 		Init();
 
+        // removendo regra de jshint: este controller será refeito
+        /* jshint -W071 */
 		function Init(){
 			$rootScope.hideHeaderAndFooter = true;
-			$scope.$on("$routeChangeStart", function(next, current){
+			$scope.$on("$routeChangeStart", function(){
 				$rootScope.hideHeaderAndFooter = false;
 			});
 
@@ -56,7 +60,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 						title: 'ajustes'
 					},
 					{
-						title: 'cancelamentos'
+						title: 'cancelamentos / chargebacks'
 					}
 				];
 
@@ -70,9 +74,9 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				};
 
 				if($scope.status === 'forethought'){
-					objFilter.status = 'FORETHOUGHT'
+					objFilter.status = 'FORETHOUGHT';
 				} else {
-					objFilter.status = 'RECEIVED'
+					objFilter.status = 'RECEIVED';
 				}
 
 				$scope.maxSize = 4;
@@ -123,10 +127,10 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 			var strShops = "";
 
 			if($scope.shops.length > 1) {
-				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento'
+				strShops = $scope.shops[0].label + ' +' + ($scope.shops.length - 1) + ' estabelecimento';
 
 				if($scope.shops.length > 2) {
-					strShops += 's'
+					strShops += 's';
 				}
 			}
 
@@ -137,10 +141,10 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	        $location.path('/receipts');
 	    }
 
-	    function GetSales(bolCache) {
+	    function GetSales() {
 
 			objFilter.type = 'CREDIT';
-			objFilter.page =  $scope.salesCurrentPage ==  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
+			objFilter.page =  $scope.salesCurrentPage ===  0 ? $scope.salesCurrentPage : $scope.salesCurrentPage - 1;
 			objFilter.size =  $scope.salesTotalItensPage;
 			objFilter.sort = $scope.sort;
 
@@ -151,7 +155,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 				$scope.salesData = arrData;
 				$scope.salesTotalItens = objPagination.totalElements;
 
-			}).catch(function(objResponse) {
+			}).catch(function() {
 				$scope.salesData = [];
 				console.log('[receiptsDetailsController:getSales] error');
 			});
@@ -159,7 +163,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 	    function GetAdjusts(bolCache, strOrder) {
 			objFilter.type = 'ADJUST';
-			objFilter.page =  $scope.adjustsCurrentPage ==  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
+			objFilter.page =  $scope.adjustsCurrentPage ===  0 ? $scope.adjustsCurrentPage : $scope.adjustsCurrentPage - 1;
 			objFilter.size =  $scope.adjustsTotalItensPage;
 			objFilter.sort = $scope.sort;
 
@@ -173,7 +177,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 				$scope.adjustsData = arrData;
 				$scope.adjustsTotalItens = objPagination.totalElements;
-			}).catch(function(objResponse) {
+			}).catch(function() {
 				$scope.adjustsData = [];
 				console.log('[receiptsDetailsController:getAdjusts] error');
 			});
@@ -181,7 +185,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 	    function GetCancellations(bolCache, strOrder) {
 	    	objFilter.type = 'CANCELLATION';
-	    	objFilter.page =  $scope.cancellationsCurrentPage ==  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
+	    	objFilter.page =  $scope.cancellationsCurrentPage ===  0 ? $scope.cancellationsCurrentPage : $scope.cancellationsCurrentPage - 1;
 			objFilter.size =  $scope.cancellationsTotalItensPage;
 			objFilter.sort = $scope.sort;
 
@@ -195,7 +199,7 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 
 				$scope.cancellationsData = arrData;
 				$scope.cancellationsTotalItens = objPagination.totalElements;
-			}).catch(function(objResponse) {
+			}).catch(function() {
 				$scope.cancellationsData = [];
 				console.log('[receiptsDetailsController:getAdjusts] error');
 			});
@@ -215,17 +219,17 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 	    	} else if(intIndex === 2) {
 	    		GetCancellations();
 	    	} else if(intIndex === 0) {
-	    		getCommerce();
+	    		GetEcommerce();
 	    	}
 	    }
 
 	    function SortResults(objElem, strKind, strIipoRelatorio) {
 			$scope.sort = $rootScope.sortResults(objElem, strKind);
-            if(strIipoRelatorio == "sales") {
+            if(strIipoRelatorio === "sales") {
               GetSales(false);
-		  } else if(strIipoRelatorio == "adjusts") {
+		  } else if(strIipoRelatorio === "adjusts") {
               GetAdjusts();
-		  } else if(strIipoRelatorio == "cancellation") {
+		  } else if(strIipoRelatorio === "cancellation") {
               GetCancellations();
             }
 	    }
@@ -233,33 +237,33 @@ angular.module('Conciliador.receiptsDetailsController',['ui.bootstrap'])
 		function PageChangedSales() {
 			$scope.salesCurrentPage = this.salesCurrentPage;
 			GetSales();
-		};
+		}
 
 		function TotalItensPageChangedSales() {
 			this.salesCurrentPage = $scope.salesCurrentPage = 0;
 			$scope.salesTotalItensPage = this.salesTotalItensPage;
 			GetSales();
-		};
+		}
 
 		function PageChangedAdjusts() {
 			$scope.adjustsCurrentPage = this.adjustsCurrentPage;
 			GetAdjusts();
-		};
+		}
 
         function TotalItensPageChangedAdjusts() {
 			this.adjustsCurrentPage = $scope.adjustsCurrentPage = 0;
 			$scope.adjustsTotalItensPage = this.adjustsTotalItensPage;
 			GetAdjusts();
-		};
+		}
 
 		function PageChangedCancellations() {
 			$scope.cancellationsCurrentPage = this.cancellationsCurrentPage;
 			GetCancellations();
-		};
+		}
 
         function TotalItensPageChangedCancellations() {
 			this.cancellationsCurrentPage = $scope.cancellationsCurrentPage = 0;
 			$scope.cancellationsTotalItensPage = this.cancellationsTotalItensPage;
 			GetCancellations();
-		};
+		}
 	});

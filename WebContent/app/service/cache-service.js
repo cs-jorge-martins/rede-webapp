@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.cacheService',[])
-.config(['$routeProvider', function($routeProvider, $angularCacheFactoryProvider) {
+.config([function() {
 
 }])
 
@@ -14,17 +16,17 @@ angular.module('Conciliador.cacheService',[])
 	var objCache = $angularCacheFactory("kaplenCache"  ,{
 		maxAge: 1800000 ,
 		deleteOnExpire: 'aggressive',
-		onExpire: function (strKey, value, done) {
+		onExpire: function () {
 	        InitializeCache();
 	    }
 	});
 
 	function InitializeCache() {
-		if($window.sessionStorage.user != undefined){
+		if($window.sessionStorage.user !== undefined){
 			InitializeProducts();
 			InitializeSettlements();
 		}
-	};
+	}
 
 	InitializeCache();
 
@@ -81,7 +83,7 @@ angular.module('Conciliador.cacheService',[])
 		var arrEnabledKeys = this.enabledFilterKeys;
 
 		for(var strEnabledKey in arrEnabledKeys) {
-			if(arrEnabledKeys[strEnabledKey] == strKey) {
+			if(arrEnabledKeys[strEnabledKey] === strKey) {
 				return objCache.get(strKey);
 			}
 		}
@@ -98,12 +100,12 @@ angular.module('Conciliador.cacheService',[])
 		kaplenAdminService.GetProdutsAutoComplete().then(function(itens) {
 			objCache.put(strKey, itens.data);
 		});
-	};
+	}
 
 	function InitializeSettlements (){
 		var strKey = 'settlements';
 		kaplenAdminService.GetSettlementsAutoComplete().then(function(itens) {
 			objCache.put(strKey, itens.data);
 		});
-	};
+	}
 });

@@ -4,12 +4,13 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador.TransactionService', [])
-		.config(['$routeProvider', function ($routeProvider) {}])
+		.config([function () {}])
         .service('TransactionService', Transaction);
 
     Transaction.$inject = ['app', '$http', 'Request'];
@@ -59,6 +60,28 @@
 			});
 		};
 
+        this.RemoveUnprocessedTransactions = function(objFilter){
+            var objRequest = objFilter;
+
+            return $http({
+                url: app.endpoint + '/transactionsummaries/unprocessed',
+                method: "DELETE",
+                data: objRequest,
+                headers: Request.setHeaders()
+            });
+        };
+
+        this.RemoveUnprocessedTransactionList = function(objFilter){
+            var objRequest = objFilter;
+
+            return $http({
+                url: app.endpoint + '/transactions/unprocessed',
+                method: "DELETE",
+                data: objRequest,
+                headers: Request.setHeaders()
+            });
+        };
+
         this.ExportTransactions = function(objFilter, success, error) {
             var objStartTime = new Date().getTime();
             var intTimeout = 30 * 1000;  // milisseconds
@@ -70,8 +93,8 @@
                 timeout: intTimeout,
 				headers: Request.setHeaders()
 			}).then(success, function(response){
-                var dateRespTime = new Date().getTime() - objStartTime;
-                if (dateRespTime >= intTimeout){  //timeout status must be explicitly set
+                var objRespTime = new Date().getTime() - objStartTime;
+                if (objRespTime >= intTimeout){  //timeout status must be explicitly set
                     response.status = 408;
                 }
                 error(response);

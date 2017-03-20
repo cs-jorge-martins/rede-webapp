@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador')
@@ -22,7 +23,10 @@
 				events: '=',
 				placeholder: '=',
 				singleSelection: '=',
-				buttonMaxItems: '='
+				buttonMaxItems: '=',
+                tooltipText: '=?',
+                searchFilter: '=?',
+                groupBy: '@?'
 			},
 			controller: Controller
 		};
@@ -32,23 +36,35 @@
 			Init();
 
 			function Init() {
+
 				$scope.settings = {
 					showCheckAll: true,
 					showUncheckAll: true,
 					smartButtonMaxItems: 3,
 					displayProp: 'label',
-					smartButtonTextConverter: function(itemText, originalItem) {
-						if (itemText === 'Jhon') {
-							return 'Jhonny!';
-						}
-						return itemText;
-					},
-					externalIdProp: ""
+					externalIdProp: ''
 				};
 
 				if ($scope.placeholder) {
 					$scope.customText = {
 						buttonDefaultText: $scope.placeholder
+					};
+				}
+
+				if ($scope.label === "número do estabelecimento") {
+					$scope.settings = {
+						showCheckAll: true,
+						showUncheckAll: true,
+						smartButtonMaxItems: 3,
+						displayProp: 'label',
+						externalIdProp: '',
+						groupByTextProvider: function (group) {
+							if (group === 1) {
+								return 'Rede';
+							} else {
+								return 'Cielo';
+							}
+						}
 					};
 				}
 
@@ -59,11 +75,8 @@
 						showCheckAll: true,
 						showUncheckAll: false,
 						displayProp: 'label',
-						externalIdProp: "",
-						onItemSelect: function() {
-							//console.log("selecionou")
-						}
-					}
+						externalIdProp: ''
+					};
 				}
 				if ($scope.label === "tipo de relatório") {
 					$scope.settings = {
@@ -72,8 +85,8 @@
 						showCheckAll: false,
 						showUncheckAll: false,
 						displayProp: 'label',
-						externalIdProp: ""
-					}
+						externalIdProp: ''
+					};
 				}
 
 				if ($scope.buttonMaxItems) {
@@ -81,6 +94,7 @@
 				} else {
 					$scope.settings.smartButtonMaxItems = 3;
 				}
+
 			}
 		}
 	}

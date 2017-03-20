@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.loginController',[])
 
 .controller('loginController', function($scope, $uibModal, $rootScope, $window, $location, loginService){
@@ -32,17 +34,18 @@ angular.module('Conciliador.loginController',[])
 		};
 
 		loginService.ValidarLogin(objUser).then(function(objData) {
-			var objData = objData.data;
+			objData = objData.data;
 			var objUser = objData.user;
 			var strToken = objUser.token;
 
 			if(strToken && objUser) {
 				$rootScope.signIn(strToken, objUser);
 			}
-		}).catch(function(response) {
+		}).catch(function() {
 			console.log('error');
+			// TODO: implementar erro
 		});
-	};
+	}
 
 	function ModalChangePassword(objUser, bolIsManyCompanies) {
 		var objModalInstance = $uibModal.open({
@@ -60,27 +63,24 @@ angular.module('Conciliador.loginController',[])
 		});
 
 		objModalInstance.result.then(function(bolValidate) {
-			console.log('bolValidate',bolValidate)
 			if(bolValidate){
 				$rootScope.logout();
-				$scope.usuario = new Object();
+				$scope.usuario = {};
 			}
 		}, function() {
 			$location.path("/home");
 		});
-	};
+	}
 
-	function ModalTrocarSenha($scope, $window, $rootScope, objUser1, $uibModalInstance, $timeout, bolIsManyCompanies) {
+	function ModalTrocarSenha($scope, $window, $rootScope, objUser1, $uibModalInstance) {
 		$scope.password = "";
 		$scope.rewritePassword = "";
 		$scope.cancel = Cancel;
 
-		var objUser = objUser1;
-
 		function Cancel() {
 			$uibModalInstance.dismiss('cancel');
-		};
-	};
+		}
+	}
 
 	function Clear() {
 		$scope.alertsRenewPassword = undefined;

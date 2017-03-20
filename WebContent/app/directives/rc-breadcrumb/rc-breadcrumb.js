@@ -18,8 +18,9 @@
  *     <rc-breadcrumb></rc-breadcrumb>
  */
 
+"use strict";
+
 (function() {
-    'use strict';
 
     angular
         .module('Conciliador')
@@ -51,17 +52,19 @@
 
                 if (arrBreadcrumbSteps) {
                     for (intStepsIndex in arrBreadcrumbSteps) {
-                        strActualStep = arrBreadcrumbSteps[intStepsIndex];
+						if(arrBreadcrumbSteps.hasOwnProperty(intStepsIndex)) {
+	                        strActualStep = arrBreadcrumbSteps[intStepsIndex];
 
-                        for(var route in $route.routes) {
-                            if ($route.routes[route].breadcrumb) {
-                                objActualRoute = $route.routes[route];
+	                        for(var route in $route.routes) {
+	                            if ($route.routes[route].breadcrumb) {
+	                                objActualRoute = $route.routes[route];
 
-                                if (strActualStep === objActualRoute.breadcrumb[objActualRoute.breadcrumb.length - 1] ) {
-                                    objBreadcrumb[strActualStep] = '#' + objActualRoute.originalPath;
-                                }
-                            }
-                        }
+	                                if (strActualStep === objActualRoute.breadcrumb[objActualRoute.breadcrumb.length - 1] ) {
+	                                    objBreadcrumb[strActualStep] = '#' + objActualRoute.originalPath;
+	                                }
+	                            }
+	                        }
+						}
                     }
                 }
 

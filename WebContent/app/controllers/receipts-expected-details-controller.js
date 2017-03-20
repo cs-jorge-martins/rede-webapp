@@ -4,8 +4,11 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
+"use strict";
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W074 */
+angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 .controller('receiptsExpectedDetailsController', function(menuFactory, $scope, calendarFactory, $rootScope,
      advancedFilterService, $location, FinancialService, MovementSummaryService){
 
@@ -15,7 +18,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 
 		function Init(){
 			$rootScope.hideHeaderAndFooter = true;
-			$scope.$on("$routeChangeStart", function(next, current){
+			$scope.$on("$routeChangeStart", function(){
 				$rootScope.hideHeaderAndFooter = false;
 			});
 
@@ -44,7 +47,7 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.accountsLabel = $rootScope.receiptsDetails.accountsLabel;
 
 				$scope.back = Back;
-				$scope.changeTab = changeTab;
+				$scope.changeTab = ChangeTab;
 				$scope.tabs = [];
 				$scope.translateStatus = TranslateStatus;
 
@@ -84,13 +87,13 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 					$scope.tabs.push(objData);
 				}
 
-			}).catch(function (objResponse) {
+			}).catch(function() {
 			});
 		}
 
 	    function GetExpectedDetails(intAcquirerId) {
 
-			objFilter.page =  $scope.currentPage ==  0 ? $scope.currentPage : $scope.currentPage - 1;
+			objFilter.page =  $scope.currentPage ===  0 ? $scope.currentPage : $scope.currentPage - 1;
 			objFilter.size =  $scope.totalItensPage;
 			objFilter.status = $scope.filterStatus;
 			objFilter.startDate = $scope.date;
@@ -106,20 +109,20 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 				$scope.detailsData = objData;
 				$scope.totalItens = objPagination.totalElements;
 
-			}).catch(function(objResponse) {
+			}).catch(function() {
 				$scope.detailsData = [];
 				console.log('[receiptsDetailsController:getSales] error');
 			});
 
 	    }
 
-	    function changeTab(intIndex, intAcquirerId) {
+	    function ChangeTab(intIndex, intAcquirerId) {
 	    	$scope.tabs[intIndex].active = true;
 			$scope.sort = "";
 			GetExpectedDetails(intAcquirerId);
 	    }
 
-	    function TranslateStatus(strStatus, objDate) {
+        function TranslateStatus(strStatus, objDate) {
 			if(strStatus) {
 				strStatus = strStatus.toLowerCase();
 				switch (strStatus) {
@@ -158,13 +161,13 @@ angular.module('Conciliador.receiptsExpectedDetailsController',['ui.bootstrap'])
 		function PageChanged() {
 			$scope.currentPage = this.currentPage;
 			GetExpectedDetails(1);
-		};
+		}
 
 		function TotalItensPageChanged() {
 			this.currentPage = $scope.currentPage = 0;
 			$scope.totalItensPage = this.totalItensPage;
 			GetExpectedDetails(1);
-		};
+		}
 
 
 	});

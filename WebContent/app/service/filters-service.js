@@ -4,16 +4,18 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.filtersService', [])
-	.config(['$routeProvider',function ($routeProvider) {
+	.config([function () {
 }])
 
-.service('filtersService', function(app, $http, Request, $q, utilsFactory) {
+.service('filtersService', function(app, $http, Request, $q) {
 
-	var strUrlAcquirers = app.endpoint + '/acquirers?name=REDE';
+	var strUrlAcquirers = app.endpoint + '/pvs/acquirers';
 	var strUrlAccounts = app.endpoint + '/pvs/bankaccounts';
 	var strUrlShops = app.endpoint + '/pvs/shops';
-	var strUrlCardProducts = app.endpoint + '/cardproducts';
+	var strUrlCardProducts = app.endpoint + '/pvs/cardproducts';
 	var strUrlTerminals = app.endpoint + '/pvs/terminals';
 
 	this.GetAcquirers = function() {
@@ -34,6 +36,18 @@ angular.module('Conciliador.filtersService', [])
 
 		return $http({
 			url: strUrlAccounts,
+			method: "GET",
+			data: objRequest,
+			headers: Request.setHeaders()
+		});
+	};
+
+	this.GetAccountsOrdered = function(objDate) {
+		var objRequest = {
+		};
+
+		return $http({
+			url: strUrlAccounts + '/ordered-in/' + objDate,
 			method: "GET",
 			data: objRequest,
 			headers: Request.setHeaders()
@@ -93,13 +107,26 @@ angular.module('Conciliador.filtersService', [])
 	 * @param {String} strField Nome do campo que deve ser adicionado no parametro label de cada objeto
 	 * @return {Array} arrResponse
 	 */
-	this.TransformDeferredDataInArray = function (objDeferredData, strField) {
+	this.TransformDeferredDataInArray = function (objDeferredData, strField/*, args[2...] */) {
 		var arrResponse = [];
-		for(var x in objDeferredData) {
-			if(x) {
+		for(var intX in objDeferredData) {
+			if(intX) {
 				var obj = {};
-				obj.id = objDeferredData[x].id;
-				obj.label = objDeferredData[x][strField];
+				obj.id = objDeferredData[intX].id;
+				obj.label = objDeferredData[intX][strField];
+				// Adicionado para evitar quebra de layout no componente multi select.
+				if (obj.label === '') {
+					obj.label = '-';
+				}
+
+				if (arguments.length > 2) {
+					var argumentsSliced = Array.prototype.slice.call(arguments, 2);
+					for (var arg in argumentsSliced) {
+						if(argumentsSliced.hasOwnProperty(arg)) {
+							obj[argumentsSliced[arg]] = objDeferredData[intX][argumentsSliced[arg]];
+						}
+					}
+				}
 				arrResponse.push(obj);
 			}
 		}

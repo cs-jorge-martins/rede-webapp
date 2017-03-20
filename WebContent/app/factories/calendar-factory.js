@@ -4,6 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
+// removendo regra de jshint: esta factory será refeita
+/* jshint -W071 */
 angular.module('Kaplen.CalendarFactory',[])
 .factory('calendarFactory', function() {
 
@@ -14,11 +18,8 @@ angular.module('Kaplen.CalendarFactory',[])
 	var objMomentjs = moment();
 	var objMomentForDashboard = moment();
 	var objNowFormattedDashboard = objMomentForDashboard.tz(timeTimezone).subtract(1, 'd');
-	var objFirstDayOfMonth = moment(objMomentjs).startOf('M');
-	var objFirstDayOfMonthFormatted = objFirstDayOfMonth.tz(timeTimezone).format(strFormat);
-
 	var objFirstDayOfCurrentMonth = moment(moment()).startOf('M');
-	var objActualDayOfCurrentMonth = moment().date() == 1 ? moment().tz(timeTimezone) : moment().tz(timeTimezone).subtract(1, 'd');
+	var objActualDayOfCurrentMonth = moment().date() === 1 ? moment().tz(timeTimezone) : moment().tz(timeTimezone).subtract(1, 'd');
 
 	var objFirstDayOfLastMonth = moment(moment()).subtract(1, 'M').startOf('month');
 	var objActualDayOfLastMonth = objActualDayOfCurrentMonth.subtract(1, 'M');
@@ -40,7 +41,7 @@ angular.module('Kaplen.CalendarFactory',[])
 	function GetYesterday() {
 		return moment().add(-1, 'day').tz(timeTimezone).toDate();
 	}
-	
+
 	function GetNextYear() {
 		return moment().add(1, 'years');
 	}
@@ -134,19 +135,26 @@ angular.module('Kaplen.CalendarFactory',[])
 	}
 
 	function GetFirstDayOfMonth(date) {
+        var objInitialDateMoment;
+
         if( date ) {
-            var objInitialDateMoment = moment(date, strFormat).startOf('month');
+            objInitialDateMoment = moment(date, strFormat).startOf('month');
         } else {
-            var objInitialDateMoment = objMomentjs.startOf('month');
+            objInitialDateMoment = objMomentjs.startOf('month');
         }
 		return objInitialDateMoment.tz(timeTimezone).format(strFormat);
 	}
 
 	function GetLastDayOfMonth(date, raw) {
+        var objFinalDateMoment;
+
         if( date ) {
-            var objFinalDateMoment = moment(date, strFormat).endOf('month');
+        	if(date instanceof Date) {
+        		return moment(date).endOf('month').toDate();
+			}
+            objFinalDateMoment = moment(date, strFormat).endOf('month');
         } else {
-            var objFinalDateMoment = objMomentjs.endOf('month');
+            objFinalDateMoment = objMomentjs.endOf('month');
         }
 
         if(raw) {
@@ -190,8 +198,11 @@ angular.module('Kaplen.CalendarFactory',[])
 		return year + "1201";
 	}
 
-	function FormatDate(date, isDiferentFormat) {
+	function FormatDate(date, isDiferentFormat, bolReturnDate) {
 		if(isDiferentFormat){
+			if(bolReturnDate) {
+				return moment(date).tz(timeTimezone).toDate();
+			}
 			return moment(date).tz(timeTimezone).format("DD/MM/YYYY");
 		}else{
 			return moment(date, strFormat).tz(timeTimezone).format(strFormat);
@@ -200,6 +211,9 @@ angular.module('Kaplen.CalendarFactory',[])
 
 
     function FormatDateForService(date) {
+        if(date instanceof Date) {
+            return moment(date).format("YYYYMMDD");
+        }
         var dateMomentTemp = moment(date, strFormat).tz(timeTimezone);
 		return dateMomentTemp.format("YYYYMMDD");
     }
@@ -243,9 +257,18 @@ angular.module('Kaplen.CalendarFactory',[])
 		 return objResultMoment.toDate();
 	}
 
-    function AddYearsToDate(date, intQtd){
-		 var objResultMoment = moment(date, strFormat);
-		 var objResultAddMoment = objResultMoment.add(intQtd, 'year');
+    function AddYearsToDate(date, intQtd, bolFormatToDate){
+
+
+		var objResultMoment = moment(date, strFormat);
+		if(bolFormatToDate) {
+            objResultMoment = moment(date);
+		}
+		 var objResultAddMoment = objResultMoment.add(intQtd, 'years');
+
+		 if(bolFormatToDate && bolFormatToDate === true) {
+             return objResultAddMoment.tz(timeTimezone).toDate();
+		 }
 
 		 return objResultAddMoment.tz(timeTimezone);
 	}
@@ -368,9 +391,101 @@ angular.module('Kaplen.CalendarFactory',[])
 		}
 	}
 
+    function IsInBetweenHours(dateMin, dateMax, date, intHours) {
+
+        var objDateMin = moment(dateMin).startOf('day');
+        var objDateMax = moment(dateMax).startOf('day');
+        var objDate = moment(date).startOf('day');
+
+        var hoursDiffMinDate = objDate.diff(objDateMin, 'hours');
+        var hoursDiffMaxDate = objDate.diff(objDateMax, 'hours');
+
+        return hoursDiffMinDate >= intHours && hoursDiffMaxDate < 0;
+
+    }
+
+    function IsInBetween(date, dateStart, dateEnd) {
+
+        var objDate = moment(date).startOf('day');
+
+        var objDateStart = moment(dateStart).startOf('day');
+        var objDateEnd = moment(dateEnd).startOf('day');
+
+		var bolIsBetween = objDate.isAfter(objDateStart) && objDate.isBefore(objDateEnd);
+		var bolisSameAsStart = objDate.isSame(objDateStart);
+		var bolisSameAsEnd = objDate.isSame(objDateEnd);
+
+        return  bolIsBetween || bolisSameAsStart || bolisSameAsEnd;
+
+    }
+
+    function GetArrayDatesBetween(dateStart, dateEnd) {
+
+        var objDateStart = moment(dateStart).startOf('day');
+        var objDateEnd = moment(dateEnd).startOf('day');
+        var intDaysQuantity = objDateStart.diff(objDateEnd, 'days') > 0 ? objDateStart.diff(objDateEnd, 'days') : objDateStart.diff(objDateEnd, 'days') * -1;
+        var intCountFor = 0;
+        var arrDates = [];
+        var objAuxDate;
+
+
+        for(intCountFor; intCountFor < intDaysQuantity; intCountFor ++) {
+            objAuxDate =  moment(new Date(objDateStart.toDate().valueOf()));
+            arrDates.push(objAuxDate.add(intCountFor, 'days').toDate());
+		}
+
+        return  arrDates;
+
+    }
+
+    function GetFirstHourFromDate(date) {
+		return moment(date).startOf('day').toDate();
+    }
+
+    function IsEqualDate(dateOne, dateTwo) {
+
+
+        var objDateOne = moment(dateOne).startOf('day');
+        var objDateTwo = moment(dateTwo).startOf('day');
+
+        return objDateOne.diff(objDateTwo, 'hours') === 0;
+
+    }
+
+    function IsFirstDayOfMonth(date) {
+
+		var objMomentDate = moment(date).startOf('day');
+		var objMomentMonthDate = moment(date).startOf('month');
+        return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
+
+    }
+
+    function IsFirstDayOrLastDayOfMonth(date, strFirstOrLast) {
+
+		var objMomentDate = moment(date).startOf('day');
+		var objMomentMonthDate = moment(date).startOf('month');
+		var objMomentLastDate = moment(date).endOf('day');
+		var objMomentLastMonthDate = moment(date).endOf('month');
+
+		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'last') {
+			return objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
+		}
+
+		if(strFirstOrLast && strFirstOrLast.toLowerCase() === 'first') {
+			return objMomentDate.diff(objMomentMonthDate, 'hours') === 0;
+		}
+
+        return objMomentDate.diff(objMomentMonthDate, 'hours') === 0 ||
+            objMomentLastDate.diff(objMomentLastMonthDate, 'hours') === 0;
+
+
+    }
+
 	function TransformBrDateIntoDate(date) {
+		if(date) {
 		var arrParts = date.split("/");
 		return new Date(arrParts[2], arrParts[1]-1, arrParts[0], 0, 0, 0, 0);
+        }
 	}
 
     return {
@@ -428,6 +543,13 @@ angular.module('Kaplen.CalendarFactory',[])
         getDaySlashMonth: GetDaySlashMonth,
 		getNextYear: GetNextYear,
 		getYesterday: GetYesterday,
-		getActualDateOfNextYear: GetActualDateOfNextYear
+		getActualDateOfNextYear: GetActualDateOfNextYear,
+        isInBetweenHours: IsInBetweenHours,
+        isInBetween: IsInBetween,
+        isEqualDate: IsEqualDate,
+        isFirstDayOfMonth: IsFirstDayOfMonth,
+        isFirstDayOrLastDayOfMonth: IsFirstDayOrLastDayOfMonth,
+        getFirstHourFromDate: GetFirstHourFromDate,
+        getArrayDatesBetween: GetArrayDatesBetween
 	};
 });

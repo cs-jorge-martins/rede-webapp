@@ -1,5 +1,8 @@
 <ul role="presentation" class="uib-datepicker-popup dropdown-menu uib-position-measure" dropdown-nested ng-if="isOpen" ng-keydown="keydown($event)" ng-click="$event.stopPropagation()">
     <li ng-transclude></li>
+    <li ng-if="datepickerOptions.legendType() && datepickerOptions.legendLabel()" class="datepicker-legend" ng-class="datepickerOptions.legendType()">
+        {{datepickerOptions.legendLabel()}}
+    </li>
     <li ng-if="datepickerOptions.showNextDatesFilter" class="dateFilters">
         <div class="container">
             <div class="row">
@@ -8,25 +11,25 @@
                     <p>período:</p>
                 </div>
                 <div class="col-xs-2">
-                    <a ng-click="datepickerOptions.dateFilter(7)">
+                    <a ng-click="datepickerOptions.dateFilter(7, 'tomorrow', 1)" ng-class="datepickerOptions.activeDateFilter === 1 ? 'active' : ''">
                         <p>Próx.</p>
                         <p>7 dias</p>
                     </a>
                 </div>
                 <div class="col-xs-2">
-                    <a ng-click="datepickerOptions.dateFilter(15)">
+                    <a ng-click="datepickerOptions.dateFilter(15, 'tomorrow', 2)" ng-class="datepickerOptions.activeDateFilter === 2 ? 'active' : ''">
                         <p>Próx.</p>
                         <p>15 dias</p>
                     </a>
                 </div>
                 <div class="col-xs-2">
-                    <a ng-click="datepickerOptions.dateFilter(30)">
+                    <a ng-click="datepickerOptions.dateFilter(30, 'tomorrow', 3)" ng-class="datepickerOptions.activeDateFilter === 3 ? 'active' : ''">
                         <p>Próx.</p>
                         <p>30 dias</p>
                     </a>
                 </div>
                 <div class="col-xs-3">
-                    <a ng-click="datepickerOptions.dateFilter(365)">
+                    <a ng-click="datepickerOptions.dateFilter(365, 'tomorrow', 4)" ng-class="datepickerOptions.activeDateFilter === 4 ? 'active' : ''">
                         <p>Próx.</p>
                         <p>365 dias</p>
                     </a>
@@ -42,25 +45,25 @@
                     <p>período:</p>
                 </div>
                 <div class="col-xs-2">
-                    <a ng-click="datepickerOptions.dateFilter(-3)">
+                    <a ng-click="datepickerOptions.dateFilter(-3, 'today', 1)" ng-class="datepickerOptions.activeDateFilter === 1 ? 'active' : ''">
                         <p>Ultm.</p>
                         <p>3 dias</p>
                     </a>
                 </div>
                 <div class="col-xs-2">
-                    <a ng-click="datepickerOptions.dateFilter(-4)">
+                    <a ng-click="datepickerOptions.dateFilter(-4, 'today', 2)" ng-class="datepickerOptions.activeDateFilter === 2 ? 'active' : ''">
                         <p>Ultm.</p>
                         <p>4 dias</p>
                     </a>
                 </div>
                 <div class="col-xs-2">
-                    <a ng-click="datepickerOptions.dateFilter(-5)">
+                    <a ng-click="datepickerOptions.dateFilter(-5, 'today', 3)" ng-class="datepickerOptions.activeDateFilter === 3 ? 'active' : ''">
                         <p>Ultm.</p>
                         <p>5 dias</p>
                     </a>
                 </div>
                 <div class="col-xs-3">
-                    <a ng-click="datepickerOptions.dateFilter(-7)">
+                    <a ng-click="datepickerOptions.dateFilter(-7, 'today', 4)" ng-class="datepickerOptions.activeDateFilter === 4 ? 'active' : ''">
                         <p>Ultm.</p>
                         <p>7 dias</p>
                     </a>

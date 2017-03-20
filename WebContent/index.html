@@ -7,6 +7,13 @@
 <!--<![endif]-->
 
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PK7BZTT');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Rede - Conciliador</title>
@@ -17,10 +24,15 @@
     <!-- end not login -->
     <link rel="stylesheet" href="assets/css/angular-chart.min.css?v=0.0.1">
     <link rel="stylesheet" href="assets/css/loading-bar.css?v=0.0.1">
+    <link rel="stylesheet" href="assets/css/perfect-scrollbar.min.css">
     <script type="text/javascript" src="app/build.js"></script>
 </head>
 
 <body ng-class="{'newHeaderAndFooter': !initialized}" ng-cloak>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PK7BZTT"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!--[if lt IE 7]>
 	<p class="chromeframe">Você está utilizando um browser <strong>desatualizado</strong>. Por favor, <a href="http://browsehappy.com/">atualize o seu browser</a> ou <a href="http://www.google.com/chromeframe/?redirect=true">ative o Google Chrome Frame</a> para melhorar a sua experiência.</p>
 <![endif]-->
@@ -45,6 +57,9 @@
 
     <div id="modalWrapperV1" class="v1"></div>
     <div id="modalWrapperV2" class="v2"></div>
+    <div class="v2" ng-if="initialized">
+        <rc-disclaimer ng-if="rcDisclaimer.type" type="rcDisclaimer.type" text="rcDisclaimer.text" action-text="rcDisclaimer.actionText" on-click="rcDisclaimer.onClick"></rc-disclaimer>
+    </div>
     <div class="v2" ng-if="!hideHeaderAndFooter">
         <header ng-include="'app/views/header.html'" ng-controller="HeaderController as vm" ng-class="{'login': !vm.showMenu, 'modal-blur': $root.modalOpen}"></header>
     </div>
@@ -59,22 +74,19 @@
             <div ng-view class="{{migrationId}}"></div>
         </div>
     </div>
+
     <div class="v2" ng-if="!hideHeaderAndFooter">
         <footer ng-include="'app/views/footer.html'" ng-controller="FooterController as vm" ng-class="{'modal-blur': $root.modalOpen}"></footer>
     </div>
+
+    <div class="v2">
+        <rc-downloader></rc-downloader>
+    </div>
+
+    <div class="v1">
     <div id="blockr" class="fade" ng-show="loading"></div>
+    </div>
 
-    <!-- Google Analytics -->
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-72916551-2', 'auto');
-        ga('send', 'pageview');
-    </script>
-    <!-- End Google Analytics -->
 </body>
 
 </html>

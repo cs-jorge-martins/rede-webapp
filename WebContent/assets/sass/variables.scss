@@ -4,24 +4,26 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-$fontsPath: '/assets/fonts/';
-$imgPath: '/assets/img/';
+$fontsPath: '../fonts/';
+$imgPath: '../img/';
 $spritePath: '#{$imgPath}controlSprite.png';
 
 
 // default colors
 $backgroundColor: #f0f0f0;
 
+$defaultYellow: #f8DE00;
 $defaultOrange: #ff7800;
 $lightGray: #f8f8f8;
+$lighterGray: #b8b2b8;
 $mediumGray: #ddd;
-$darkGray: #ababab;
+$darkGray: #353230;
 $grafitteGray: #575758;
 $platinum: #b9b8b8;
 $oceanBlue: #00b9b5;
 $jade: #00b9b5;
 
-$positiveValueColor: #179ca0;
+$positiveValueColor: #00b9b5;
 $negativeValueColor: #f34235;
 
 $toConcilieColor: #f39c12;
@@ -40,6 +42,7 @@ $menuBorderColor: $menuActiveFontColor;
 $footerBackgroundColor: #ece6e2;
 $fontColor: #222;
 $pageTitle: $oceanBlue;
+$pageDescription: $grafitteGray;
 // $inverseFontColor: #fff;
 $lightText: #514F4F;
 
@@ -47,7 +50,9 @@ $lightText: #514F4F;
 $loaderBackgroundColor: #fff;
 
  // buttons
-$primaryButtomBackground: #ffc807;
+$primaryButtomBackgroundColor: #f8de00;
+$primaryButtonFontColor: #353230;
+$primaryButtonFontSize: 1.25em;
 // $buttonTextColor: #272727;
 // $secondaryButtomBackgroundColor: #d6d3cb;
 // $successButtomBackgroundColor: #449d44;
@@ -57,6 +62,8 @@ $primaryButtomBackground: #ffc807;
 
 // rc-colors
 $errorColor: #e84438;
+$warningBackgroundColor: $defaultYellow;
+$warningColor: $grafitteGray;
 
  // input
 $inputColor: $grafitteGray;
@@ -67,12 +74,15 @@ $inputBackgroundColor: #fff;
 $inputBorderColorFocus: #ccc;
 $inputIconColor: $mediumGray;
 $inputIconFontSize: 1.5em;
+$selectMainColor: $mediumGray;
 
 // font-family
-$fontBold: 'open_sanssemibold';
+$fontSemiBold: 'open_sanssemibold';
+$fontBold: 'open_sansbold';
 $fontLight: 'open_sanslight';
 $fontRegular: 'open_sansregular';
 $fontItau: 'itaufonts_master_24px_v1';
+$fontBootstrap: 'Glyphicons Halflings';
 
 // filter
 $filterLabelFontSize: 16px;
@@ -90,13 +100,36 @@ $rcTimelineSuccessColor: $jade;
 $rcTimelineTitleColor: $grafitteGray;
 $rcTimelineTimelineBackgroundColor: $mediumGray;
 
-// panels
-$panelSucessBackgroundColor: $jade;
-$panelSecondaryBackgroundColor: $lightGray;
-$panelSecondaryColor: $grafitteGray;
+// rc-pagination
+$rcPaginationLinkActiveColor: $defaultOrange;
+$rcPaginationDefaultColor: $grafitteGray;
+
+// rc-datepicker
+$rcDatepickerBorderColor: $backgroundColor;
 
 // tables
 $tableLinkColor: $defaultOrange;
+$tableHeadBackgroundColor: #f9f9f9;
+$tableHeadFontColor: #4d4d4d;
+$tableRowBorderColor: #f1eeee;
+
+// panels
+$panelSucessBackgroundColor: $jade;
+$panelSecondaryBackgroundColor: $tableHeadBackgroundColor;
+$panelSecondaryColor: $grafitteGray;
+
+// cards
+$cardBackgroundColor: #fff;
+
+// modal details
+$modalDetailsHeaderBackgroundColor: #fff;
+$modalDetailsTitleColor: #4d4d4d;
+
+// rc-downloader
+$rcDownloaderWarningColor: $defaultOrange;
+$rcDownloaderErrorColor: #ea4230;
+$rcDownloaderLoadingColor: $grafitteGray;
+$rcDownloaderBackgroundColor: #fff;
 
  // loader
 // $spinnerColor: $menuActiveFontColor;

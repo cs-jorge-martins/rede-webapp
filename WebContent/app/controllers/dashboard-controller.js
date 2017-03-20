@@ -4,6 +4,8 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.dashboardController',[])
 
 .controller('dashboardController', function($scope, $uibModal, $rootScope, menuFactory, $window,
@@ -29,6 +31,8 @@ angular.module('Conciliador.dashboardController',[])
 
 	SetUpDashboard();
 
+	// removendo regra de jshint: este controller será refeito
+	/* jshint -W071 */
 	function SetUpDashboard(){
 		$scope.actualPeriod = {};
 		$scope.lastPeriod = {};
@@ -80,7 +84,7 @@ angular.module('Conciliador.dashboardController',[])
 
 		SetTransactionConciliationCalendar();
 		SetTransactionSummaryLineChart();
-	};
+	}
 
 	SetUp();
 
@@ -88,7 +92,7 @@ angular.module('Conciliador.dashboardController',[])
 		var objToday = new Date();
 
 		// Se primeiro dia do mês exibe o anterior
-		if(objToday.getDate() == 1) {
+		if(objToday.getDate() === 1) {
 			objToday.setDate(objToday.getDate()-1);
 		}
 
@@ -135,6 +139,7 @@ angular.module('Conciliador.dashboardController',[])
 			objTransactionSummaryFilterPrevMonth.currency =  $rootScope.currency;
 			objTransactionSummaryFilterPrevMonth.startDate = $scope.lastMonthPerid.firstDate;
 			objTransactionSummaryFilterPrevMonth.endDate = $scope.lastMonthPerid.lastDate;
+			objTransactionSummaryFilterPrevMonth.conciliationStatus = 'TO_CONCILIE,CONCILIED';
 
 			// Consulta do mes anterior
 			dashboardService.GetTransactionSummaryBox(objTransactionSummaryFilterPrevMonth).then(function(objItem){
@@ -167,7 +172,7 @@ angular.module('Conciliador.dashboardController',[])
 				$scope.percentOfTicketAverageBetweenMonths = (($scope.ticketAverageCurrentMonth - $scope.ticketAveragePrevMonth) * 100) / ($scope.ticketAveragePrevMonth || 1);
 			});
 		});
-	};
+	}
 
 	/********************************* MOVEMENT SUMMARY BOX *************************************/
 	function SetMovementSummaryBox(){
@@ -233,7 +238,7 @@ angular.module('Conciliador.dashboardController',[])
 
 		// actual month data
 		TransactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function(objResponse){
-			var objResponse = objResponse.data.content;
+			objResponse = objResponse.data.content;
 
 			for(var objItem in objResponse){
 				if(typeof objResponse[objItem] === 'object') {
@@ -260,7 +265,7 @@ angular.module('Conciliador.dashboardController',[])
 
 			// last month data
 			TransactionSummaryService.ListTransactionSummaryByFilter(objFilter).then(function(objResponse){
-				var objResponse = objResponse.data.content;
+				objResponse = objResponse.data.content;
 
 				for(var objItem in objResponse){
 					if(typeof objResponse[objItem] === 'object') {
@@ -274,12 +279,14 @@ angular.module('Conciliador.dashboardController',[])
 				objChartData.data.push(ProccessChartDays(arrLastMonthData));
 
 				$scope.chartjs = objChartData;
-				$scope.chartOptions = chartUtils.Options.vendas;
+				$scope.chartOptions = objChartUtils.Options.vendas;
 
-			}).catch(function(error){
+			}).catch(function(){
+				// TODO: implementar erro
 			});
 
-		}).catch(function(error){
+		}).catch(function(){
+			// TODO: implementar erro
 		});
 
 	}
@@ -295,8 +302,10 @@ angular.module('Conciliador.dashboardController',[])
 			}
 
 			for(var objItem in objData) {
-				var intItemDay = parseInt(objData[objItem].date.split('-')[2]);
-				arrChartDays[intItemDay - 1] = objData[objItem].amount;
+				if(objData.hasOwnProperty(objItem)) {
+					var intItemDay = parseInt(objData[objItem].date.split('-')[2]);
+					arrChartDays[intItemDay - 1] = objData[objItem].amount;
+				}
 			}
 
 		}
@@ -357,6 +366,8 @@ angular.module('Conciliador.dashboardController',[])
 		$scope.weeks = arrWeeks;
 		$scope.calendarMonth = calendarFactory.getNameOfMonth(objDate);
 
+		// removendo regra de jshint: este controller será refeito
+		/* jshint -W074 */
 		TransactionConciliationService.ListTransactionConciliationByFilter({
 			currency: 'BRL',
 			startDate: calendarFactory.formatDateForService(intFirstDayOfMonth),
@@ -380,25 +391,27 @@ angular.module('Conciliador.dashboardController',[])
 			}
 
 			for(var objDay in arrDays) {
-				var intItemDay = parseInt(arrDays[objDay].date.split('-')[2]);
-				var intDaysOnWeek = 7;
-				var index = (intItemDay + intFirstWeekDay) - 1;
-				var intWeekIndex = Math.floor(index / intDaysOnWeek);
-				var arrWeek = arrWeeks[intWeekIndex];
+				if(arrDays.hasOwnProperty(objDay)){
+					var intItemDay = parseInt(arrDays[objDay].date.split('-')[2]);
+					var intDaysOnWeek = 7;
+					var index = (intItemDay + intFirstWeekDay) - 1;
+					var intWeekIndex = Math.floor(index / intDaysOnWeek);
+					var arrWeek = arrWeeks[intWeekIndex];
 
-				for(var intX in arrWeek) {
-					if(arrWeek[intX].date === intItemDay) {
+					for(var intX in arrWeek) {
+						if(arrWeek[intX].date === intItemDay) {
 
-						var bolOneItemFlag = Boolean(arrDays[objDay].transctionToConcilieQuantity) + Boolean(arrDays[objDay].transctionUnprocessedQuantity) + Boolean(arrDays[objDay].transctionConciliedQuantity);
+							var bolOneItemFlag = Boolean(arrDays[objDay].transctionToConcilieQuantity) + Boolean(arrDays[objDay].transctionUnprocessedQuantity) + Boolean(arrDays[objDay].transctionConciliedQuantity);
 
-						arrWeek[intX].toProcess = Boolean(arrDays[objDay].transctionUnprocessedQuantity) | false;
-						arrWeek[intX].toReconcile = Boolean(arrDays[objDay].transctionToConcilieQuantity) | false;
-						arrWeek[intX].concilied = Boolean(arrDays[objDay].transctionConciliedQuantity) | false;
+							arrWeek[intX].toProcess = Boolean(arrDays[objDay].transctionUnprocessedQuantity) || false;
+							arrWeek[intX].toReconcile = Boolean(arrDays[objDay].transctionToConcilieQuantity) || false;
+							arrWeek[intX].concilied = Boolean(arrDays[objDay].transctionConciliedQuantity) || false;
 
-						if(bolOneItemFlag > 1) {
-							arrWeek[intX].oneItem = false;
-						} else {
-							arrWeek[intX].oneItem = true;
+							if(bolOneItemFlag > 1) {
+								arrWeek[intX].oneItem = false;
+							} else {
+								arrWeek[intX].oneItem = true;
+							}
 						}
 					}
 				}
@@ -431,15 +444,15 @@ angular.module('Conciliador.dashboardController',[])
 		});
 	}
 
-	function Sales(intDay) {
+	function Sales(intDay, intConcilied, intToReconcile, intToProcess) {
+		var bolIsTabConcilied = intConcilied && !intToReconcile && !intToProcess;
 		if(intDay){
 			intDay = intDay < 10 ? 0 + String(intDay) : intDay;
 			var objDate = $scope.dateSelected;
 			objDate = objDate.split('/');
 			objDate[0] = intDay;
 			objDate = objDate.join('/');
-			$rootScope.salesFromDashDate = objDate;
-			$location.path('/sales');
+			$location.path('/sales').search({ date: objDate, conciliedTab: bolIsTabConcilied });
 		}
 	}
 
@@ -449,9 +462,9 @@ angular.module('Conciliador.dashboardController',[])
 	}
 
 	function ShowVideoModal() {
-		var objModalInstance = $uibModal.open({
+		$uibModal.open({
 			templateUrl: 'video.html',
-			controller: function ($scope, $uibModalInstance, $sce) {
+			controller: function ($scope, $uibModalInstance) {
 
 				$scope.ok = Ok;
 				$scope.cancel = Cancel;

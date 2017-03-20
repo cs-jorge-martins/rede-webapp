@@ -2359,7 +2359,7 @@ section .date:after {
 }
 /* main */
 #dashboard main {
-	width: 892px;
+	width: 889px;
 	float: left;
 }
 #dashboard aside>h2, #dashboard caption {
@@ -2514,7 +2514,8 @@ section .date:after {
 	text-decoration: none;
 }
 #dashboard aside {
-	width: 280px;
+	width: 279px;
+    margin-right: 8px;
 	float: right;
 	position: relative;
 }
@@ -8825,7 +8826,7 @@ canvas {
 	text-align: center;
 }
 .taright {
-	text-align: right;
+	text-align: right !important;
 }
 
 /* sales details */
@@ -9969,7 +9970,7 @@ div.checkbox-toggle-right {
     position: relative;
     padding:0 25px;
     box-sizing:border-box;
-    margin: 32px 0 55px;
+    margin: 32px 0 97px;
 }
 
 .data-cards .timeline-wrapper .timeline-head {
@@ -9978,6 +9979,7 @@ div.checkbox-toggle-right {
     width: 100%;
     display: flex;
     justify-content:space-between;
+    background: #fff;
 }
 
 .data-cards .timeline-wrapper .timeline-head li:first-child {
@@ -9991,7 +9993,7 @@ div.checkbox-toggle-right {
 .data-cards .timeline-wrapper .timeline-head li {
     color:#b9b8b8;
     font-weight: bolder;
-    font-size: 14px!important;
+    font-size: 16px!important;
     text-align: left!important;
 }
 .data-cards .timeline-wrapper .timeline-head li:nth-child(2) {
@@ -10014,6 +10016,7 @@ div.checkbox-toggle-right {
     justify-content: space-between;
     margin-top: 20px;
     font-weight: lighter;
+    margin-bottom: 30px;
 }
 
 .data-cards .timeline-wrapper .total .gray{
@@ -10025,6 +10028,11 @@ div.checkbox-toggle-right {
     color: #575758;
 }
 
+.data-cards .timeline-wrapper article aside {
+    right: initial;
+    min-width: 111px;
+}
+
 .data-cards .timeline-wrapper .total li {
     font-size: 40px;
     font-weight: lighter;
@@ -10032,18 +10040,23 @@ div.checkbox-toggle-right {
 }
 
 .data-cards .timeline-wrapper .total li > span {
-    font-size: 14px;
+    font-size: 46px;
     float: left;
     width: auto;
     height: 50px;
     line-height: 75px;
     margin-right: 5px;
-    font-family: 'open_sansregular';
+    font-family: 'open_sanslight';
+}
+
+.data-cards .timeline-wrapper .money {
+    font-size: 25px !important;
+    margin-top: 6px;
 }
 
 .data-cards .timeline-wrapper .timeline-block {
     width:100%;
-    height: 10px;
+    height: 16px;
     position: relative;
     float: left;
     margin-top: 25px;
@@ -10054,9 +10067,10 @@ div.checkbox-toggle-right {
 .data-cards .timeline-wrapper .timeline-block:before,
 .data-cards .timeline-wrapper .timeline-block:after {
     position: absolute;
-    top:-20px;
+    top:-23px;
     color:#b9b8b8;
     font-weight: bolder;
+    font-size: 16px;
 }
 
 .data-cards .timeline-wrapper .timeline-block:before {
@@ -10086,6 +10100,7 @@ div.checkbox-toggle-right {
     top: 0;
     left: 0;
     background: #ff7800;
+    height: 16px;
 }
 
 .data-cards .timeline-wrapper article {
@@ -10106,8 +10121,15 @@ div.checkbox-toggle-right {
     display: inline-block;
     right: 0;
     position: absolute;
-    margin-top: 8px;
+    margin-top: 11px;
     font-family: 'open_sansbold';
+    font-size: 16px;
+    text-align: right;
+}
+
+.data-cards .timeline-wrapper article aside.minimum-value {
+    left: 0;
+    text-align: left;
 }
 
 .receiptsExpectedDetails .data-cards .header-datas {
@@ -10176,7 +10198,7 @@ div.checkbox-toggle-right {
 }
 
 .rc-tooltip.up{
-    top: -149px;
+    top: -166px;
     width: 200px;
     color: #575758;
     padding: 22px 22px 16px 11px;
@@ -10192,7 +10214,8 @@ div.checkbox-toggle-right {
     display: block;
     position: absolute;
     left: 27px;
-    top: 122px;
+    top: 144px;
+
 }
 
 .chip .rc-tooltip {
@@ -10201,6 +10224,7 @@ div.checkbox-toggle-right {
 
 .chip:hover .rc-tooltip {
     display: block;
+    font-size: 10.8px;
 }
 
 #headerTabs div.numbers-data > ul > li.math-symbol > strong {
@@ -10270,7 +10294,7 @@ div.checkbox-toggle-right {
     color: #999;
     font-size: 22px;
     font-family: open_sanslight;
-    padding: 0 25px 0px 0px;
+    padding: 0 20px 0px 0px;
 }
 
 .data-cards .numbers-data ul strong{
@@ -10291,11 +10315,13 @@ div.checkbox-toggle-right {
     color: #e84438;
 }
 
-.data-cards .numbers-data .discount i{
+.data-cards .numbers-data .discount i,
+.data-cards .numbers-data .addition i {
     position: relative;
 }
 
-.data-cards .numbers-data .discount i:hover .rc-tooltip {
+.data-cards .numbers-data .discount i:hover .rc-tooltip,
+.data-cards .numbers-data .addition i:hover .rc-tooltip {
     display: block;
 }
 
@@ -10429,7 +10455,7 @@ section#receiptsDetails.receiptsExpectedDetails .data-cards .header-datas p:firs
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue {
     position: absolute;
-    right: 135px;
+    right: 235px;
 }
 
 #receiptsDetails .wrapperAcquirerSummary .totalValue span.valor-liquido {
@@ -11046,7 +11072,9 @@ tr.card-product-line {
     border-radius: 50%;
 
 }
-#integration .upload-file-wrapper ul li button.disabled {
+#integration .upload-file-wrapper ul li button.disabled,
+.receipts_future_filters input[type=submit]:disabled
+{
     background:#ddd;
     cursor:not-allowed;
 }
@@ -11735,12 +11763,13 @@ section#integration .rcDatepicker tbody td {
     color:green;
 }
 
-#receipts_table .vendas {
+#receipts_table .vendas,
+#receipts_table .ajustes-credito {
     color: #4d4d4d;
 }
 
 #receipts_table .cancelamentos,
-#receipts_table .ajustes,
+#receipts_table .ajustes-debito,
 #receipts_table .custo-de-antecipacao{
     color: #e84438;
 }

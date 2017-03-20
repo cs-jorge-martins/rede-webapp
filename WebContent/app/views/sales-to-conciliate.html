@@ -1,47 +1,52 @@
 <div>
-    <div class="container filter">
+    <div class="container filter" id="filter-sales-to-conciliate">
         <div class="col-xs-12">
             <h2>utilize os campos abaixo para filtrar sua busca</h2>
         </div>
         <div class="col-xs-4">
             <rc-datepicker-v2
-                    date="vm.dateModel.date"
+                    date="dateModel.date"
                     range="false"
-                    max-date="vm.filterMaxDate"
-                    label="'data'">
+                    max-date="dateModel.maxDate"
+                    label="'data'"
+                    status-type="'sales-to-conciliate'"
+                    class="filter-date" >
             </rc-datepicker-v2>
         </div>
         <div class="col-xs-4">
-            <rc-multiselect label="'terminal'" model="vm.terminalsModel" data="vm.terminalsData" placeholder="'todos os terminais'" single-selection="2"> </rc-multiselect>
+            <rc-multiselect class="filter-acquirer" label="'adquirente'" model="filter.acquirersModel" data="filter.acquirersData" placeholder="'todos os adquirentes'" single-selection="2"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
-            <rc-multiselect label="'bandeira'" model="vm.cardProductsModel" data="vm.cardProductsData" placeholder="'todas as bandeiras'" single-selection="2"> </rc-multiselect>
+            <rc-multiselect class="filter-pv" label="'número do estabelecimento'" tooltip-text="'somente estabelecimentos que possuem ao menos uma transação processada aparecem na listagem'" model="filter.pvsModel" data="filter.pvsData" group-by="acquirerId" placeholder="'todos os estabelecimentos'" single-selection="2" search-filter="vm.acquirersFilterExpression"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
-            <rc-multiselect label="'número do estabelecimento'" model="vm.pvsModel" data="vm.pvsData" placeholder="'todos os estabelecimentos'" single-selection="2"> </rc-multiselect>
+            <rc-multiselect class="filter-terminal" label="'terminal'" model="filter.terminalsModel" data="filter.terminalsData" placeholder="'todos os terminais'" single-selection="2"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
-            <rc-multiselect label="'adquirente'" model="vm.acquirersModel" data="vm.acquirersData" placeholder="'todos os adquirentes'" single-selection="2"> </rc-multiselect>
+            <rc-multiselect class="filter-card-product" label="'bandeira'" model="filter.cardProductsModel" data="filter.cardProductsData" placeholder="'todas as bandeiras'" single-selection="2" search-filter="vm.acquirersCardProductFilterExpression"> </rc-multiselect>
         </div>
         <div class="col-xs-4">
-            <input type="submit" value="buscar" class="btn btn-primary btn-block" ng-href='#here' ng-click="vm.getSales()" />
+            <input type="submit" value="buscar" class="btn btn-primary btn-block filter-search" ng-href='#here' ng-click="search()" />
         </div>
     </div>
 
-    <div class="container box" style="padding-bottom: 1.5em !important">
+    <div class="container box" id="salesToConciliateAnchor">
         <div class="content-header">
-            <div class="date">
-                <span class="number">{{vm.dateModel.day}}</span>
-                <br>{{vm.dateModel.monthName}}
+            <div class="row">
+                <div class="col-xs-2 date">
+                    <p class="day">{{vm.dateModel.day}}</p>
+                    <p class="month">{{vm.dateModel.monthName}}</p>
+                </div>
+                <div class="col-xs-10">
+                    <rc-chips>
+                        <rc-chip label="vm.terminalLabel" show="vm.chipsConfig.show.terminals" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('terminals')" tooltip-text="vm.terminalFullLabel"></rc-chip>
+                        <rc-chip label="vm.cardProductLabel" show="vm.chipsConfig.show.cardProducts" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('cardProducts')" tooltip-text="vm.cardProductFullLabel"></rc-chip>
+                        <rc-chip label="vm.pvLabel" show="vm.chipsConfig.show.pvs" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('pvs')" tooltip-text="vm.pvFullLabel"></rc-chip>
+                        <rc-chip label="vm.acquirerLabel" show="vm.chipsConfig.show.acquirers" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('acquirers')" tooltip-text="vm.acquirerFullLabel"></rc-chip>
+                        <div class="clearfix"></div>
+                    </rc-chips>
+                </div>
             </div>
-            <rc-chips>
-                <rc-chip label="vm.terminalLabel" show="vm.chipsConfig.show.terminals" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('terminals')" tooltip-text="vm.terminalFullLabel"></rc-chip>
-                <rc-chip label="vm.cardProductLabel" show="vm.chipsConfig.show.cardProducts" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('cardProducts')" tooltip-text="vm.cardProductFullLabel"></rc-chip>
-                <rc-chip label="vm.pvLabel" show="vm.chipsConfig.show.pvs" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('pvs')" tooltip-text="vm.pvFullLabel"></rc-chip>
-                <rc-chip label="vm.acquirerLabel" show="vm.chipsConfig.show.acquirers" closeable="vm.chipsConfig.closeable" on-clear="vm.resetFilter('acquirers')" tooltip-text="vm.acquirerFullLabel"></rc-chip>
-                <div class="clearfix"></div>
-            </rc-chips>
-            <div class="clearfix"></div>
         </div>
         <div class="container">
             <rc-timeline

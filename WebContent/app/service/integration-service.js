@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.integrationService',[])
-	.config(['$routeProvider', function ($routeProvider) {
+	.config([function () {
 }])
 
 .service('integrationService', function(app, $http, Request) {
@@ -29,8 +31,8 @@ angular.module('Conciliador.integrationService',[])
 			params: objParams,
 			headers: Request.setHeaders()
 		}).then(success, function(response){
-            var dateRespTime = new Date().getTime() - objStartTime;
-            if (dateRespTime >= intTimeout){
+            var objRespTime = new Date().getTime() - objStartTime;
+            if (objRespTime >= intTimeout){
                 response.status = 408;
             }
             error(response);

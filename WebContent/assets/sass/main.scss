@@ -23,6 +23,7 @@
 
 .v2 {
 	@import 'components/button';
+	@import 'components/cards';
 	@import 'components/content-header';
 	@import 'components/checkbox';
 	@import 'components/font';
@@ -31,7 +32,6 @@
 	@import 'components/header';
 	@import 'components/icon';
 	@import 'components/input';
-	@import 'components/link';
 	@import 'components/loader';
 	@import 'components/menu';
 	@import 'components/modal';
@@ -45,13 +45,23 @@
 	@import 'components/panel';
 	@import 'components/table';
 	@import 'components/card-product';
+	@import 'components/pv';
 	@import 'components/rc-breadcrumb';
 	@import 'components/rc-chips';
 	@import 'components/rc-multiselect';
 	@import 'components/rc-timeline';
+	@import 'components/rc-disclaimer';
+	@import 'components/rc-pagination';
+	@import 'components/rc-sort';
+
 	@import 'pages/login';
 	@import 'pages/sales';
+	@import 'pages/pv-grouping';
 }
+
+@import 'components/link';
+@import 'components/rc-downloader';
+@import 'components/scroll';
 
 @media only screen and (max-width : 1200px) {
 	@import 'mediaqueries/large';

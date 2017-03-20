@@ -17,7 +17,21 @@
  		-webkit-box-shadow: none;
  		box-shadow: none;
  	}
+
+    &.borderless-right {
+        border-right: 0;
+    }
  }
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus {
+	outline: 0;
+}
+
 
  .input-group {
 
@@ -26,6 +40,10 @@
         border-radius: $inputBorderRadius;
         -moz-border-radius: $inputBorderRadius;
         -webkit-border-radius: $inputBorderRadius;
+    }
+
+	.borderless{
+        border: 0;
     }
 
  	.input-group-addon {
@@ -50,3 +68,42 @@
  	font-size: 1.3em;
  	margin-bottom: 0.9em;
  }
+
+select:focus,
+input:focus,
+button:focus {
+	outline: none;
+}
+
+.select-wrapper {
+
+	overflow: hidden;
+	border: 1px solid $selectMainColor;
+	display: inline-block;
+	position: relative;
+
+	select {
+		padding: 0 .4em;
+        font-size: 1.3em;
+		border: none;
+		box-shadow: none;
+		background: transparent;
+		background-image: none;
+		-webkit-appearance: none;
+		cursor: pointer;
+		-moz-appearance: inherit;
+        text-indent: 0.4em;
+	}
+
+	&:after {
+		content: "\e9cc";
+		font-family: $fontItau;
+		color: $selectMainColor;
+		position: absolute;
+		right: 0.3em;
+		top: 0.7em;
+		font-size: 1.5em;
+		pointer-events: none;
+	}
+
+}

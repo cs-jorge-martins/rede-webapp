@@ -4,8 +4,10 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.advancedFilterService',[])
-	.config(['$routeProvider', function($routeProvider) {
+	.config([function() {
 
 }])
 
@@ -147,8 +149,8 @@ angular.module('Conciliador.advancedFilterService',[])
 		var bolValidate = false;
 
 		if (value !== "") {
-			if(listSelected.length != 0){
-				angular.forEach(listSelected, function(item, index){
+			if(listSelected.length !== 0){
+				angular.forEach(listSelected, function(item){
 					if(item.id === value.id){
 						bolValidate = true;
 					}
@@ -182,7 +184,7 @@ angular.module('Conciliador.advancedFilterService',[])
 		if (listSelected.length > 0) {
 			return listSelected.length + " bandeira(s) selecionada(s)";
 		} else {
-			return "Bandeira"
+			return "Bandeira";
 		}
 	};
 

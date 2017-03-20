@@ -21,16 +21,18 @@
             <span ng-if="!monetaryValues">{{ finalValue | number }}</span>
         </li>
     </ul>
-    <div class="timeline-block {{cssClass}}">
-        <div class="percent" style="width:{{timeLinePercentage}}%">
-            <article ng-class="{small: initialValue <= 0}">
-                <aside ng-class="{gray: initialValue <= 0, hidden: finalValue <= 0 || initialValue <= 0}">
-                    {{ timeLinePercentage | number: 0 }}% do valor
-                </aside>
-            </article>
+    <div class="row">
+        <div class="timeline-block {{cssClass}}">
+            <div class="percent {{fullClass}}" style="width:{{timeLinePercentage}}%">
+                <article ng-class="{small: initialValue <= 0}">
+                    <aside ng-if="initialValue !== 0 || finalValue !== 0" ng-class="{gray: initialValue == 0, 'minimum-value': timeLinePercentage <= 8}" style="width:10px{{timeLinePercentage==0 ? ';right:-10px' : ''}}">
+                        {{ timeLinePercentageLabel }}
+                    </aside>
+                </article>
+            </div>
         </div>
-    </div>
-    <div ng-if="totalValue && labelTotalValue" class="timeline-footer">
-        <p>{{labelTotalValue}}: {{totalValue | number}}</p>
+        <div ng-if="totalValue && labelTotalValue" class="timeline-footer">
+            <p>{{labelTotalValue}}: {{totalValue | number}}</p>
+        </div>
     </div>
 </div>

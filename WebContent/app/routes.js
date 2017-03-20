@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
  (function() {
- 	'use strict';
 
  	angular
  		.module('Conciliador')
@@ -103,11 +104,6 @@
                     migrationId: 'v2',
 					title: 'vendas',
 					breadcrumb: ['vendas']
-    			})
-                .when('/sales/details', {
-    				templateUrl: 'app/views/sales-details.html',
-    				controller: 'salesDetailsController',
-                    migrationId: 'v1'
     			})
                 .otherwise({
                     redirectTo: '/login'

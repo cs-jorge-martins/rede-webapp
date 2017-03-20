@@ -1,3 +1,8 @@
-<div class="disclaimer" ng-show="disclaimer">
-    {{ disclaimer }}
+<div class="rc-disclaimer {{ type }} {{ loadedClass }}">
+    <div class="container">
+        <p>
+            {{ text }}
+        </p>
+        <a class="btn-link pull-right" href="{{ onClick }}" target="_blank">{{ actionText }}</a>
+    </div>
 </div>

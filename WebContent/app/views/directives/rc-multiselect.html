@@ -1,12 +1,28 @@
 <div class="rcMultiselect">
-	<label for="account">{{ label }}</label>
-	<div class="form-group">
-		<div 
+	<label for="account">
+		{{ label }}
+		<rc-tooltip tooltip-text="{{tooltipText}}"></rc-tooltip>
+	</label>
+	<div class="form-group">		
+		<div ng-if="groupBy"
 			ng-dropdown-multiselect="" 
 			options="data"
 			selected-model="model"
 			extra-settings="settings" 
 			translation-texts="customText"
+			events="events"
+			search-filter="searchFilter"
+			group-by="{{ groupBy }}"
+			>
+		</div>
+		<div ng-if="!groupBy"
+			ng-dropdown-multiselect="" 
+			options="data"
+			selected-model="model"
+			extra-settings="settings" 
+			translation-texts="customText"
+			events="events"
+			search-filter="searchFilter"
 			>
 		</div>
 	</div>

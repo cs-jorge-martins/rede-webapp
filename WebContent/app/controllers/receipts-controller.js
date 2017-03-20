@@ -4,14 +4,18 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 angular.module('Conciliador.movementsModule',[])
 
 .filter('capitalize', function() {
 	return function(input) {
 		return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-	}
+	};
 })
 
+// removendo regra de jshint: este controller será refeito
+/* jshint -W071 */
 .controller('receiptsController', function(menuFactory, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
 		advancedFilterService, calendarService, filtersService, receiptsService, $filter, $sce){
 
@@ -22,25 +26,36 @@ angular.module('Conciliador.movementsModule',[])
 	menuFactory.setActiveMovements();
 
 	$scope.tabs = [{},{}];
-	$scope.to_trusted = ToTrusted;
+	$scope.toTrusted = ToTrusted;
     $scope.expected = [];
 	$scope.receipts = [];
     $scope.getReceipt = GetReceipt;
     $scope.getFutureReceipt = GetFutureReceipt;
     $scope.actualReleases = {};
-    $scope.actualReleases.date = new Date();
+    $scope.actualReleases.date = $scope.actualReleases.date || new Date();
     $scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     $scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
     $scope.futureReleases = {};
 	$scope.futureReleases.inicialStartDate = calendarFactory.getTomorrowFromTodayToDate();
-	$scope.futureReleases.startDate = calendarFactory.getTomorrowFromTodayToDate();
-    $scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
-    $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
-    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.startDate);
-    $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
-    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+	$scope.futureReleases.datepickerIsOpen = false;
+
+    $scope.futureReleases.modelDate = [];
+    GetCachedData();
+
+    var objFutureModelDateFirst = $scope.futureReleases.modelDate[0] || calendarFactory.getTomorrowFromTodayToDate();
+    var objFutureModelDateLast = $scope.futureReleases.modelDate[1] || calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
+    $scope.futureReleases.modelDate = [objFutureModelDateFirst, objFutureModelDateLast];
+    $scope.futureReleases.objFutureMinDate = calendarFactory.getTomorrowFromTodayToDate();
+    $scope.futureReleases.objFutureMaxDate = calendarFactory.addYearsToDate($scope.futureReleases.objFutureMinDate, 1, true);
+
+    $scope.futureReleases.startDate = $scope.futureReleases.modelDate[0];
+    $scope.futureReleases.endDate = $scope.futureReleases.modelDate[1];
+    $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[0]);
+    $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+    $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[0]);
+    $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
+    $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
+    $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
 
 	$scope.date = new Date();
 	$scope.minDate = new Date();
@@ -85,8 +100,8 @@ angular.module('Conciliador.movementsModule',[])
     var intFilterStatus = 0;
 
 	$scope.$watch('futureReleases.startDate', function(objResponse) {
-		if(moment($scope.futureReleases.endDate).isBefore(objResponse)) {
-			$scope.futureReleases.endDate = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.startDate, 1);
+		if(moment($scope.futureReleases.modelDate[1]).isBefore(objResponse)) {
+			$scope.futureReleases.modelDate[1] = calendarFactory.getLastDayOfPlusMonthToDate($scope.futureReleases.modelDate[0], 1);
 		}
 	});
 
@@ -94,12 +109,12 @@ angular.module('Conciliador.movementsModule',[])
 
 	function Init() {
 		$scope.todayDate = calendarFactory.getToday();
-		$scope.actualReleases.date = calendarFactory.getToday();
+		$scope.actualReleases.date = $scope.actualReleases.date || calendarFactory.getToday();
         GetFilters();
 	}
 
-	function ToTrusted(html_code) {
-		return $sce.trustAsHtml(html_code);
+	function ToTrusted(htmlCode) {
+		return $sce.trustAsHtml(htmlCode);
 	}
 
     function GetReceipt() {
@@ -134,7 +149,9 @@ angular.module('Conciliador.movementsModule',[])
 			if( objData.length ) {
 
 				for(var intIndex in objData) {
-					arrActualReleasesData.push(objData[intIndex]);
+					if(objData.hasOwnProperty(intIndex)){
+						arrActualReleasesData.push(objData[intIndex]);
+					}
 				}
 
 				GetReceiptReleases();
@@ -144,9 +161,10 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.actualReleasesData = [];
 			}
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getSummaries] error');
-		})
+			// TODO: impleentar erro
+		});
 	}
 
 	function GetTimeline(objResponse) {
@@ -162,6 +180,7 @@ angular.module('Conciliador.movementsModule',[])
 			cardProductIds: GetCardProductsFilter(true),
 			status: 'EXPECTED'
 		};
+
 		receiptsService.getTimeline(objFilter).then(function(response){
 			$scope.timelineExpectedAmount = response.data.content[0];
 			$scope.customTimelineExpectedAmount = objResponse.data.content[0];
@@ -170,7 +189,7 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.customTimelineExpectedAmount.percentage = 0;
 			}
 			$scope.customTimelineExpectedAmount.maxDateRange = GetFutureMaxDateRange();
-		})
+		});
 	}
 
 	function GetForethought() {
@@ -182,7 +201,6 @@ angular.module('Conciliador.movementsModule',[])
 			status: 'EXPECTED,SUSPENDED,PAWNED,BLOCKED,PAWNED_BLOCKED'
 		};
 
-
 		receiptsService.GetFinancials(objFilter).then(function(objResponse) {
 			var objData = objResponse.data;
 
@@ -192,57 +210,101 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.existsForethought = false;
 			}
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getSummaries] error');
-		})
+			// TODO: implementar erro
+		});
 	}
 
 	function GetReceiptReleases() {
 
 		for(var intIndex in arrActualReleasesData){
-			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
+			if(arrActualReleasesData.hasOwnProperty(intIndex)) {
+				var objFilter = {
+					startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+					endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+					groupBy: 'ACQUIRER,CARD_PRODUCT,STATUS',
+					bankAccountIds: GetAccountsFilter(),
+					shopIds: GetShopsFilter(),
+					acquirerIds: arrActualReleasesData[intIndex].acquirer.id,
+					cardProductIds: GetCardProductsFilter(),
+					status: 'RECEIVED,FORETHOUGHT'
+				};
 
-			var objFilter = {
-				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				groupBy: 'CARD_PRODUCT,STATUS',
-				bankAccountIds: GetAccountsFilter(),
-				shopIds: GetShopsFilter(),
-				acquirerIds: intAcquirerId,
-				cardProductIds: GetCardProductsFilter(),
-				status: 'RECEIVED,FORETHOUGHT'
-			};
+				// removendo regra de jshint: este controller será refeito
+				/* jshint -W074 */
+				receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+					var intAcquirerId = null;
+					var objData = objResponse.data;
+					var arrReleases = [];
+					var objItem = {};
+					var intIndex;
 
-			receiptsService.GetFinancials(objFilter).then(function(objResponse) {
-				var objData = objResponse.data;
-				var arrReleases = [];
+					for(intIndex in objData) {
+						if(objData.hasOwnProperty(intIndex)) {
+							intAcquirerId = objData[intIndex].acquirer.id;
+							var strStatus = objData[intIndex].status.toLowerCase(),
+								strDescription = objData[intIndex].description.toLowerCase(),
+								objCardProduct = objData[intIndex].cardProduct;
+								objCardProduct.forethought = false;
 
-				for( var intIndex in objData) {
-					var strStatus = objData[intIndex].status.toLowerCase(),
-						strDescription = objData[intIndex].description.toLowerCase(),
-						objCardProduct = objData[intIndex].cardProduct;
-						amount = objData[intIndex].payedAmount;
-						objCardProduct.forethought = false;
-
-					if (strStatus == "forethought") {
-						objCardProduct.name = "ANTECIPAÇÃO " + objCardProduct.name;
-						objCardProduct.forethought = true;
-					}
-
-					if(arrReleases.length) {
-						var bolInsert = true;
-						for(var intIndexb in arrReleases){
-							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === strStatus)){
-								arrReleases[intIndexb].releases.push({
-									type: strDescription,
-									payedAmount: strDescription == "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
-								});
-								bolInsert = false;
-								break;
+							if (strStatus === "forethought") {
+								objCardProduct.name = "ANTECIPAÇÃO " + objCardProduct.name;
+								objCardProduct.forethought = true;
 							}
-						}
-						if(bolInsert) {
-								var objItem = {
+
+							if(arrReleases.length) {
+								var bolInsert = true;
+								for(var intIndexb in arrReleases){
+									if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === strStatus)){
+										arrReleases[intIndexb].releases.push({
+											type: strDescription,
+											payedAmount: strDescription === "vendas" ? objData[intIndex].expectedAmount : objData[intIndex].payedAmount
+										});
+										bolInsert = false;
+										break;
+									}
+								}
+								if(bolInsert) {
+										objItem = {
+											cardProductName: objCardProduct.name,
+											cardProductId: objCardProduct.id,
+											forethought: objCardProduct.forethought,
+											status: strStatus,
+											description: strDescription,
+											sales: 0,
+											cancellation: 0,
+											adjusts: 0,
+											releases: [],
+											total: 0
+										};
+
+										if(strDescription === "vendas") {
+											objItem.total = objData[intIndex].payedAmount;
+
+											objItem.releases.push({
+												type: 'vendas',
+												payedAmount: objData[intIndex].expectedAmount
+											});
+										} else if(strDescription === "cancelamentos") {
+		                                    objItem.total = objData[intIndex].payedAmount;
+											objItem.releases.push({
+												type: 'cancelamentos',
+												payedAmount: objData[intIndex].payedAmount
+											});
+										} else if(strDescription === "ajustes") {
+		                                    objItem.total = objData[intIndex].payedAmount;
+											objItem.releases.push({
+												type: 'ajustes',
+												payedAmount: objData[intIndex].payedAmount
+											});
+										}
+
+										arrReleases.push(objItem);
+								}
+
+							} else {
+								objItem = {
 									cardProductName: objCardProduct.name,
 									cardProductId: objCardProduct.id,
 									forethought: objCardProduct.forethought,
@@ -252,23 +314,23 @@ angular.module('Conciliador.movementsModule',[])
 									cancellation: 0,
 									adjusts: 0,
 									releases: [],
-									total: 0,
-									status: strStatus
+									total: 0
 								};
 
-								if(strDescription == "vendas") {
+								if(strDescription === "vendas") {
 									objItem.total = objData[intIndex].payedAmount;
-
 									objItem.releases.push({
 										type: 'vendas',
 										payedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(strDescription == "cancelamentos") {
+								} else if(strDescription === "cancelamentos") {
+		                            objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'cancelamentos',
 										payedAmount: objData[intIndex].payedAmount
 									});
-								} else if(strDescription == "ajustes") {
+								} else if(strDescription === "ajustes") {
+		                            objItem.total = objData[intIndex].payedAmount;
 									objItem.releases.push({
 										type: 'ajustes',
 										payedAmount: objData[intIndex].payedAmount
@@ -276,119 +338,96 @@ angular.module('Conciliador.movementsModule',[])
 								}
 
 								arrReleases.push(objItem);
+							}
 						}
+					}
 
-					} else {
-						var objItem = {
-							cardProductName: objCardProduct.name,
-							cardProductId: objCardProduct.id,
-							forethought: objCardProduct.forethought,
-							status: strStatus,
-							description: strDescription,
-							sales: 0,
-							cancellation: 0,
-							adjusts: 0,
-							releases: [],
-							total: 0,
-							status: strStatus
-						};
-
-						if(strDescription == "vendas") {
-							objItem.total = objData[intIndex].payedAmount;
-							objItem.releases.push({
-								type: 'vendas',
-								payedAmount: objData[intIndex].expectedAmount
-							});
-						} else if(strDescription == "cancelamentos") {
-							objItem.releases.push({
-								type: 'cancelamentos',
-								payedAmount: objData[intIndex].payedAmount
-							});
-						} else if(strDescription == "ajustes") {
-							objItem.releases.push({
-								type: 'ajustes',
-								payedAmount: objData[intIndex].payedAmount
-							});
+					for(intIndex in arrActualReleasesData) {
+						if(arrActualReleasesData.hasOwnProperty(intIndex)) {
+							if(intAcquirerId === arrActualReleasesData[intIndex].acquirer.id){
+								arrActualReleasesData[intIndex].cardProducts = arrReleases;
+								break;
+							}
 						}
-
-						arrReleases.push(objItem);
 					}
-				}
 
-				for(var intIndex in arrActualReleasesData) {
-					if(intAcquirerId == arrActualReleasesData[intIndex].acquirer.id){
-						arrActualReleasesData[intIndex].cardProducts = arrReleases;
-						break;
-					}
-				}
-
-				$scope.actualReleasesData = arrActualReleasesData;
-			}).catch(function(){
-				console.log('[receiptsController:getSummaries] error');
-			});
+					$scope.actualReleasesData = arrActualReleasesData;
+				}).catch(function(){
+					console.log('[receiptsController:getSummaries] error');
+				});
+			}
 		}
 	}
 
 	function GetOtherReleases(intAcquirerId) {
 
 		for(var intIndex in arrActualReleasesData){
-			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
+			if(arrActualReleasesData.hasOwnProperty(intIndex)) {
+				intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
 
-			var objFilter = {
-				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				bankAccountIds: GetAccountsFilter(),
-				shopIds: GetShopsFilter(),
-				acquirerIds: intAcquirerId,
-				status: 'RECEIVED',
-				types: 'OTHER',
-				groupBy: 'TYPE,DESCRIPTION'
-			};
+				var objFilter = {
+					startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+					endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+					bankAccountIds: GetAccountsFilter(),
+					shopIds: GetShopsFilter(),
+					acquirerIds: intAcquirerId,
+					status: 'RECEIVED',
+					types: 'OTHER',
+					groupBy: 'TYPE,DESCRIPTION'
+				};
 
-			receiptsService.GetAdjusts(objFilter).then(function(objResponse){
-					var objData = objResponse.data.content;
-					var intTotal = 0;
+				receiptsService.GetAdjusts(objFilter).then(function(objResponse){
+						var objData = objResponse.data.content;
+						var intTotal = 0;
 
-					for(var objItem in objData) {
-						intTotal += objData[objItem].amount;
-					}
+						for(var objItem in objData) {
+							if(objData.hasOwnProperty(objItem)) {
+								intTotal += objData[objItem].amount;
+							}
+						}
 
-					arrActualReleasesData[intIndex].otherReleasesTotal = intTotal
-					arrActualReleasesData[intIndex].otherReleases = objData;
-			}).catch(function(){
-				console.log('[receiptsController:getOtherReleases] error');
-			});
+						arrActualReleasesData[intIndex].otherReleasesTotal = intTotal;
+						arrActualReleasesData[intIndex].otherReleases = objData;
+				}).catch(function(){
+					console.log('[receiptsController:getOtherReleases] error');
+				});
+			}
 		}
-	};
+	}
 
 	function GetExpectedReleases() {
 		for(var intIndex in arrActualReleasesData){
-			var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
+			if(arrActualReleasesData.hasOwnProperty(intIndex)) {
+				var intAcquirerId = arrActualReleasesData[intIndex].acquirer.id;
 
-			var objFilter = {
-				startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
-				bankAccountIds: GetAccountsFilter(),
-				shopIds: GetShopsFilter(),
-				acquirerIds: intAcquirerId,
-				cardProductIds: GetCardProductsFilter(),
-				status: 'EXPECTED',
-				groupBy: 'CARD_PRODUCT'
-			};
+				var objFilter = {
+					startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+					endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
+					bankAccountIds: GetAccountsFilter(),
+					shopIds: GetShopsFilter(),
+					acquirerIds: intAcquirerId,
+					cardProductIds: GetCardProductsFilter(),
+					status: 'EXPECTED',
+					groupBy: 'CARD_PRODUCT'
+				};
 
-			receiptsService.GetFinancials(objFilter).then(function(objResponse){
-					var objData = objResponse.data;
-					var intTotal = 0;
+				receiptsService.GetFinancials(objFilter).then(function(objResponse){
+						var objData = objResponse.data;
+						var intTotal = 0;
 
-					for(var objItem in objData) {
-						intTotal += objData[objItem].expectedAmount;
-					}
+						for(var objItem in objData) {
+							if(objData.hasOwnProperty(objItem)) {
+								intTotal += objData[objItem].expectedAmount;
+							}
+						}
 
-					arrActualReleasesData[intIndex].expectedReleasesTotal = intTotal;
-					arrActualReleasesData[intIndex].expectedReleases = objData;
-			}).catch(function(){
-				console.log('[receiptsController:getExpectedReleases] error');
-			});
+						arrActualReleasesData[intIndex].expectedReleasesTotal = intTotal;
+						arrActualReleasesData[intIndex].expectedReleases = objData;
+				}).catch(function(){
+					console.log('[receiptsController:getExpectedReleases] error');
+					// TODO: implementar erro
+				});
+			}
 		}
 	}
 
@@ -422,14 +461,15 @@ angular.module('Conciliador.movementsModule',[])
 			var intDiscount = 0;
 
 			for(var intIndex in objData) {
+				if(objData.hasOwnProperty(intIndex)) {
+					if(objData[intIndex].description === 'vendas') {
+						intTotalToReceive = objData[intIndex].expectedAmount;
+						intTotalReceived = objData[intIndex].payedAmount;
+					}
 
-				if(objData[intIndex].description == 'vendas') {
-					intTotalToReceive = objData[intIndex].expectedAmount;
-					intTotalReceived = objData[intIndex].payedAmount;
-				}
-
-				if(objData[intIndex].description == 'ajustes' || objData[intIndex].description == 'cancelamentos') {
-					intDiscountedTotal += objData[intIndex].payedAmount;
+					if(objData[intIndex].description === 'ajustes' || objData[intIndex].description === 'cancelamentos') {
+						intDiscountedTotal += objData[intIndex].payedAmount;
+					}
 				}
 			}
 
@@ -439,19 +479,21 @@ angular.module('Conciliador.movementsModule',[])
 				var objData = objResponse.data;
 				var intAntecipatedTotal = 0;
 				for(var intIndex in objData) {
-					if(objData[intIndex].description == 'vendas') {
+					if(objData[intIndex].description === 'vendas') {
 						intAntecipatedTotal = objData[intIndex].payedAmount;
-						intDiscountedTotal += (objData[intIndex].expectedAmount - objData[intIndex].payedAmount);
+						intDiscountedTotal += (objData[intIndex].expectedAmount - objData[intIndex].payedAmount) *-1;
 					}
 				}
 
 				receiptsService.GetAdjusts(objFilterOthers).then(function(objResponseAdjusts) {
-					var intOthers = 0;
+					intOthers = 0;
 
 					// amount soma em totais descontados
 					var objData = objResponseAdjusts.data.content;
 					for(var intIndex in objData) {
-						intOthers += objData[intIndex].amount;
+						if(objData.hasOwnProperty(intIndex)) {
+							intOthers += objData[intIndex].amount;
+						}
 					}
 
 					intDiscount = intDiscountedTotal + intOthers;
@@ -459,19 +501,46 @@ angular.module('Conciliador.movementsModule',[])
 					$scope.totalToReceive = intTotalToReceive;
 					$scope.discountedTotal = intDiscount;
 					$scope.antecipatedTotal = intAntecipatedTotal;
-					$scope.totalReceived = intTotalToReceive - intDiscount + intAntecipatedTotal;
+					$scope.totalReceived = intTotalToReceive + intDiscount + intAntecipatedTotal;
+					$scope.getDiscountedSignal = GetDiscountedSignal;
+					$scope.getDiscountedAbs = GetDiscountedAbs;
+					$scope.getClassByType = GetClassByType;
 
-				}).catch(function(objResponse) {
+				}).catch(function() {
 					console.log('[receiptsController:getAdjusts] error');
 				});
 
-			}).catch(function(objResponse) {
+			}).catch(function() {
 				console.log('[receiptsController:getFinancials] status forethought error');
-			})
+			});
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getFinancials] error');
 		});
+	}
+
+	function GetClassByType(strType, intAmount) {
+		if (strType.startsWith("cancelamentos")) {
+			return "cancelamentos";
+		} else if(strType !== "ajustes") {
+			return strType;
+		} else if (intAmount > 0) {
+			return "ajustes-credito";
+		} else {
+			return "ajustes-debito";
+		}
+	}
+
+	function GetDiscountedSignal(intDiscountedTotal) {
+		if (intDiscountedTotal > 0) {
+			return "+";
+		} else {
+			return "-";
+		}
+	}
+
+	function GetDiscountedAbs(intDiscountedTotal) {
+		return Math.abs(intDiscountedTotal);
 	}
 
 	function GetDateLabel(bolHasBr) {
@@ -491,20 +560,26 @@ angular.module('Conciliador.movementsModule',[])
 
 		arrFutureReleasesData = [];
 
-		var dateTestDate = $scope.futureReleases.startDate instanceof Date;
-		var dateStartDate = !dateTestDate ? calendarFactory.transformBrDateIntoDate($scope.futureReleases.startDate) : $scope.futureReleases.startDate;
+        var objFutureModelDateFirst = $scope.futureReleases.modelDate[0] || calendarFactory.getTomorrowFromTodayToDate();
+        var objFutureModelDateLast = $scope.futureReleases.modelDate[1] || calendarFactory.getLastDayOfPlusMonthToDate(objFutureModelDateFirst, 1);
+        $scope.futureReleases.modelDate = [objFutureModelDateFirst, objFutureModelDateLast];
+        $scope.futureReleases.objFutureMinDate = calendarFactory.getTomorrowFromTodayToDate();
+        $scope.futureReleases.objFutureMaxDate = calendarFactory.addYearsToDate($scope.futureReleases.objFutureMinDate, 1, true);
 
-		$scope.futureReleases.startDateDay = calendarFactory.getDayOfDate(dateStartDate);
-		$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment(dateStartDate));
-		$scope.futureReleases.startDateYear = calendarFactory.getYearOfDate(dateStartDate);
-		$scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.endDate);
-		$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
-		$scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.endDate);
+        $scope.futureReleases.startDate = $scope.futureReleases.modelDate[0];
+        $scope.futureReleases.endDate = $scope.futureReleases.modelDate[1];
+        $scope.futureReleases.startDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[0]);
+        $scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+        $scope.futureReleases.startDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[0]);
+        $scope.futureReleases.endDateDay = calendarFactory.getDayOfDate($scope.futureReleases.modelDate[1]);
+        $scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
+        $scope.futureReleases.endDateYear = calendarFactory.getYearOfDate($scope.futureReleases.modelDate[1]);
+
 		$scope.futureReleases.dateRange = GetDateLabel();
 		$scope.futureReleases.dateRangeWithBr = GetDateLabel(true);
 
-		var strInitialDay = moment($scope.futureReleases.startDate);
-		var strFinalDay = moment($scope.futureReleases.endDate);
+		var strInitialDay = moment($scope.futureReleases.modelDate[0]);
+		var strFinalDay = moment($scope.futureReleases.modelDate[1]);
 
 		$scope.countDiffDays = strFinalDay.diff(strInitialDay, 'days');
 
@@ -513,8 +588,8 @@ angular.module('Conciliador.movementsModule',[])
 		GetFutureAcquirers();
 
 		var objFilter = {
-			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			startDate:calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
 			acquirerIds: GetAcquirersFilter(true),
@@ -544,8 +619,8 @@ angular.module('Conciliador.movementsModule',[])
 
 	function GetFutureAcquirers() {
 		var objFilter = {
-			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			groupBy: 'ACQUIRER',
 			bankAccountIds: GetAccountsFilter(true),
 			shopIds: GetShopsFilter(true),
@@ -559,50 +634,94 @@ angular.module('Conciliador.movementsModule',[])
 
 			if( objData.length ) {
 				for(var intIndex in objData) {
-					arrFutureReleasesData.push(objData[intIndex]);
+					if(objData.hasOwnProperty(intIndex)) {
+						arrFutureReleasesData.push(objData[intIndex]);
+					}
 				}
 				GetFutureReceiptReleases();
 			} else {
 				$scope.futureReleasesData = [];
 			}
 
-		}).catch(function(objResponse) {
+		}).catch(function() {
 			console.log('[receiptsController:getFutureAcquirers] error');
-		})
+			// TODO: implementar erro
+		});
 	}
 
 	function GetFutureReceiptReleases() {
 
 		for(var intIndex in arrFutureReleasesData){
-			var intAcquirerId = arrFutureReleasesData[intIndex].acquirer.id;
+			if(arrFutureReleasesData.hasOwnProperty(intIndex)) {
+				var intAcquirerId = null;
 
-			var objFilter = {
-				startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-				endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
-				groupBy: 'CARD_PRODUCT,STATUS',
-				bankAccountIds: GetAccountsFilter(true),
-				shopIds: GetShopsFilter(true),
-				acquirerIds: intAcquirerId,
-				cardProductIds: GetCardProductsFilter(true),
-				status: 'EXPECTED'
-			};
+				var objFilter = {
+					startDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+					endDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
+					groupBy: 'ACQUIRER,CARD_PRODUCT,STATUS',
+					bankAccountIds: GetAccountsFilter(true),
+					shopIds: GetShopsFilter(true),
+					acquirerIds: arrFutureReleasesData[intIndex].acquirer.id,
+					cardProductIds: GetCardProductsFilter(true),
+					status: 'EXPECTED'
+				};
 
-			receiptsService.GetFinancials(objFilter).then(function(objResponse) {
-				var objData = objResponse.data;
-				var arrReleases = [];
+				// removendo regra de jshint: este controller será refeito
+				/* jshint -W074 */
+				receiptsService.GetFinancials(objFilter).then(function(objResponse) {
+					var objData = objResponse.data;
+					var arrReleases = [];
+					var objItem = {};
 
-				for( var intIndex in objData) {
-					var strStatus = objData[intIndex].status.toLowerCase(),
-						description = objData[intIndex].description.toLowerCase(),
-						cardProduct = objData[intIndex].cardProduct;
-						amount = objData[intIndex].expectedAmount;
+					for( var intIndex in objData) {
+						if(objData.hasOwnProperty(intIndex)) {
+							intAcquirerId = objData[intIndex].acquirer.id;
+							var strStatus = objData[intIndex].status.toLowerCase(),
+								description = objData[intIndex].description.toLowerCase(),
+								cardProduct = objData[intIndex].cardProduct;
 
-					if(arrReleases.length) {
-						for(var intIndexb in arrReleases){
-							if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === status)){
+							if(arrReleases.length) {
+								for(var intIndexb in arrReleases){
+									if((arrReleases[intIndexb].cardProductId === objData[intIndex].cardProduct.id) && (arrReleases[intIndexb].status === status)){
+
+									} else {
+										objItem = {
+											cardProductName: cardProduct.name,
+											cardProductId: cardProduct.id,
+											status: strStatus,
+											description: description,
+											sales: 0,
+											cancellation: 0,
+											adjusts: 0,
+											releases: []
+										};
+
+										// removendo regra de jshint: este controller será refeito
+										/* jshint -W073 */
+										if(description === "vendas") {
+											objItem.releases.push({
+												type: 'vendas',
+												expectedAmount: objData[intIndex].expectedAmount
+											});
+										} else if(description === "cancelamentos") {
+											objItem.releases.push({
+												type: 'cancelamentos',
+												expectedAmount: objData[intIndex].expectedAmount
+											});
+										} else if(description === "ajustes") {
+											objItem.releases.push({
+												type: 'ajustes',
+												expectedAmount: objData[intIndex].expectedAmount
+											});
+										}
+
+										arrReleases.push(objItem);
+										break;
+									}
+								}
 
 							} else {
-								var objItem = {
+								objItem = {
 									cardProductName: cardProduct.name,
 									cardProductId: cardProduct.id,
 									status: strStatus,
@@ -613,17 +732,17 @@ angular.module('Conciliador.movementsModule',[])
 									releases: []
 								};
 
-								if(description == "vendas") {
+								if(description === "vendas") {
 									objItem.releases.push({
 										type: 'vendas',
 										expectedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(description == "cancelamentos") {
+								} else if(description === "cancelamentos") {
 									objItem.releases.push({
 										type: 'cancelamentos',
 										expectedAmount: objData[intIndex].expectedAmount
 									});
-								} else if(description == "ajustes") {
+								} else if(description === "ajustes") {
 									objItem.releases.push({
 										type: 'ajustes',
 										expectedAmount: objData[intIndex].expectedAmount
@@ -631,54 +750,24 @@ angular.module('Conciliador.movementsModule',[])
 								}
 
 								arrReleases.push(objItem);
+							}
+						}
+					}
+
+					for(intIndex in arrFutureReleasesData) {
+						if(arrFutureReleasesData.hasOwnProperty(intIndex)) {
+							if(intAcquirerId === arrFutureReleasesData[intIndex].acquirer.id){
+								arrFutureReleasesData[intIndex].cardProducts = arrReleases;
 								break;
 							}
 						}
-
-					} else {
-						var objItem = {
-							cardProductName: cardProduct.name,
-							cardProductId: cardProduct.id,
-							status: strStatus,
-							description: description,
-							sales: 0,
-							cancellation: 0,
-							adjusts: 0,
-							releases: []
-						};
-
-						if(description == "vendas") {
-							objItem.releases.push({
-								type: 'vendas',
-								expectedAmount: objData[intIndex].expectedAmount
-							});
-						} else if(description == "cancelamentos") {
-							objItem.releases.push({
-								type: 'cancelamentos',
-								expectedAmount: objData[intIndex].expectedAmount
-							});
-						} else if(description == "ajustes") {
-							objItem.releases.push({
-								type: 'ajustes',
-								expectedAmount: objData[intIndex].expectedAmount
-							});
-						}
-
-						arrReleases.push(objItem);
 					}
-				}
 
-				for(var intIndex in arrFutureReleasesData) {
-					if(intAcquirerId == arrFutureReleasesData[intIndex].acquirer.id){
-						arrFutureReleasesData[intIndex].cardProducts = arrReleases;
-						break;
-					}
-				}
-
-				$scope.futureReleasesData = arrFutureReleasesData;
-			}).catch(function(){
-				console.log('[receiptsController:getSummaries] error');
-			});
+					$scope.futureReleasesData = arrFutureReleasesData;
+				}).catch(function(){
+					console.log('[receiptsController:getSummaries] error');
+				});
+			}
 		}
 	}
 
@@ -722,94 +811,97 @@ angular.module('Conciliador.movementsModule',[])
 
   	function GetFilters() {
 		// conta
-		filtersService.GetAccounts().then(function(objResponse){
+		filtersService.GetAccountsOrdered(moment().tz("America/Brasilia").format("YYYY-MM-DD")).then(function(objResponse){
 			var arrFilterConfig = [];
 			var objData = objResponse.data;
 
-			for(var x in objData){
-				var obj = {};
-				obj.id = objData[x].id;
-				obj.label = objData[x].bankName + ' | ' + objData[x].agencyNumber + ' | ' +  objData[x].accountNumber;
-				obj.bankName = objData[x].bankName;
-				obj.agencyNumber = objData[x].agencyNumber;
-				obj.accountNumber = objData[x].accountNumber;
-				obj.bankId = objData[x].bankId;
+			for(var intX in objData){
+				if(objData.hasOwnProperty(intX)) {
+					var obj = {};
+					obj.id = objData[intX].id;
+					obj.label = objData[intX].bankName + ' | ' + objData[intX].agencyNumber + ' | ' +  objData[intX].accountNumber;
+					obj.bankName = objData[intX].bankName;
+					obj.agencyNumber = objData[intX].agencyNumber;
+					obj.accountNumber = objData[intX].accountNumber;
+					obj.bankId = objData[intX].bankId;
 
-				arrFilterConfig.push(obj);
+					if (objData[intX].defaultSelection) {
+						$scope.accountsModel.id = obj.id;
+						$scope.accountsModel.label = obj.label;
+						$scope.accountsFutureModel.id = obj.id;
+						$scope.accountsFutureModel.label = obj.label;
+					}
+
+					arrFilterConfig.push(obj);
+				}
 			}
 
-			$scope.accountsData = $filter('orderBy')(arrFilterConfig, "bankId");
-			var objAccount = $scope.accountsData[0];
-			$scope.accountsModel.id = objAccount.id;
-			$scope.accountsModel.label = objAccount.label;
-			$scope.accountsFutureModel.id = objAccount.id;
-			$scope.accountsFutureModel.label = objAccount.label;
-
+			$scope.accountsData = arrFilterConfig;
 			intFilterStatus++;
 
             HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 
 		// bandeira
 		filtersService.GetCardProducts().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
-				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].name;
-				arrFilterConfig.push(obj);
+			for(var intX in objResponse.data){
+					if(objResponse.data.hasOwnProperty(intX)) {
+					var obj = {};
+					obj.id = objResponse.data[intX].id;
+					obj.label = objResponse.data[intX].name;
+					arrFilterConfig.push(obj);
+				}
 			}
 			$scope.cardProductsData = arrFilterConfig;
-            $scope.cardProductsModel = angular.copy($scope.cardProductsData);
-            $scope.cardProductsFutureModel = angular.copy($scope.cardProductsData);
 
             intFilterStatus++;
             HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 
 		// estabelecimento
 		filtersService.GetShops().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
-				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].code;
-				arrFilterConfig.push(obj);
+			for(var intX in objResponse.data){
+				if(objResponse.data.hasOwnProperty(intX)) {
+					var obj = {};
+					obj.id = objResponse.data[intX].id;
+					obj.label = objResponse.data[intX].code;
+					arrFilterConfig.push(obj);
+				}
 			}
 			$scope.shopsData = arrFilterConfig;
-            $scope.shopsModel = angular.copy($scope.shopsData);
-            $scope.shopsFutureModel = angular.copy($scope.shopsData);
 
             intFilterStatus++;
             HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 
 		// adquirente
 		filtersService.GetAcquirers().then(function(objResponse){
 			var arrFilterConfig = [];
-			for(var x in objResponse.data){
-				var obj = {};
-				obj.id = objResponse.data[x].id;
-				obj.label = objResponse.data[x].name;
-				arrFilterConfig.push(obj);
+			for(var intX in objResponse.data){
+				if(objResponse.data.hasOwnProperty(intX)) {
+					var obj = {};
+					obj.id = objResponse.data[intX].id;
+					obj.label = objResponse.data[intX].name;
+					arrFilterConfig.push(obj);
+				}
 			}
 			$scope.acquirersData = arrFilterConfig;
-            $scope.acquirersModel = angular.copy($scope.acquirersData);
-            $scope.acquirersFutureModel = angular.copy($scope.acquirersData);
 
             intFilterStatus++;
 			HandleTabs();
 
-		}).catch(function(objResponse){
+		}).catch(function(){
 			console.log('error');
 		});
 	}
@@ -829,7 +921,7 @@ angular.module('Conciliador.movementsModule',[])
 	function GetAccountsFilter(bolIsFuture) {
 		var arrModel = (bolIsFuture ? $scope.accountsFutureModel : $scope.accountsModel);
 		return arrModel.id;
-	};
+	}
 
 	function GetShopsFilter(bolIsFuture) {
 		var arrModel = (bolIsFuture ? $scope.shopsFutureModel : $scope.shopsModel);
@@ -848,7 +940,7 @@ angular.module('Conciliador.movementsModule',[])
 	function GetCardProductsFilter(bolIsFuture) {
 		var arrModel = (bolIsFuture ? $scope.cardProductsFutureModel : $scope.cardProductsModel);
 
-		if(arrModel.length == $scope.cardProductsData.length) {
+		if(arrModel.length === $scope.cardProductsData.length) {
 			return [];
 		}
 
@@ -884,20 +976,20 @@ angular.module('Conciliador.movementsModule',[])
 		var strLabel = (bolIsFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
 
 		if( arrModel.length ) {
-			if( arrModel.length == 1 ) {
+			if( arrModel.length === 1 ) {
 				strLabel = arrModel[0].label;
 			} else if ( arrModel.length === $scope.shopsData.length) {
 				strLabel = 'todos os estabelecimentos';
 			} else {
-				var over = arrModel.length - 1;
-				strLabel = arrModel[0].label + ' + ' +  over + ' estabelecimento';
+				var intOver = arrModel.length - 1;
+				strLabel = arrModel[0].label + ' + ' +  intOver + ' estabelecimento';
 
-				if(over > 1) {
+				if(intOver > 1) {
 					strLabel = strLabel + 's';
 				}
 			}
 		} else {
-			strLabel = null
+			strLabel = null;
 		}
 
 		if(bolIsFuture) {
@@ -926,7 +1018,7 @@ angular.module('Conciliador.movementsModule',[])
 			} else if ( arrModel.length === 1) {
 				strLabel = arrModel[0].label;
 			} else {
-				if(arrModel.length == 2) {
+				if(arrModel.length === 2) {
 					strLabel = arrModel[0].label + ' + ' +  (arrModel.length - 1) + " outra";
 				} else {
 					strLabel = arrModel[0].label + ' + ' +  (arrModel.length - 1) + " outras";
@@ -996,8 +1088,8 @@ angular.module('Conciliador.movementsModule',[])
 			case "future_details":
                 $rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
                 $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
-                $rootScope.receiptsDetails.startDate = $scope.futureReleases.startDate;
-                $rootScope.receiptsDetails.endDate = $scope.futureReleases.endDate;
+                $rootScope.receiptsDetails.startDate = $scope.futureReleases.modelDate[0];
+                $rootScope.receiptsDetails.endDate = $scope.futureReleases.modelDate[1];
 				$rootScope.futureReleases = {};
 				$rootScope.futureReleases.dates = {
 					startDateDay: $scope.futureReleases.startDateDay,
@@ -1026,8 +1118,8 @@ angular.module('Conciliador.movementsModule',[])
 			shopIds: $scope.shopsModel,
 			acquirerIds: $scope.acquirersModel,
 			cardProductIds: $scope.cardProductsModel,
-			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.startDate),
-			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.endDate),
+			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
+			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			futureBankAccountIds: $scope.accountsFutureModel,
 			futureShopIds: $scope.shopsFutureModel,
 			futureAcquirerIds: $scope.acquirersFutureModel,
@@ -1036,22 +1128,25 @@ angular.module('Conciliador.movementsModule',[])
     }
 
     function GetCachedData() {
-		if(cacheService.LoadFilter('context') == 'receipts') {
+		if(cacheService.LoadFilter('context') === 'receipts') {
 			$scope.actualReleases.date = moment(cacheService.LoadFilter('startDate'), "YYYYMMDD").toDate();
 			$scope.accountsModel = cacheService.LoadFilter('bankAccountIds');
 			$scope.shopsModel = cacheService.LoadFilter('shopIds');
 			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
 			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
 
+            $scope.futureReleases.modelDate[0] = null;
+            $scope.futureReleases.modelDate[1] = null;
+
 			if($rootScope.futureSelected) {
-				$scope.futureReleases.startDate = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
-				$scope.futureReleases.endDate = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.modelDate[0] = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
+				$scope.futureReleases.modelDate[1] = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
 				$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
 				$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
 				$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
 				$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
-				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.startDate));
-				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.endDate));
+				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
+				$scope.futureReleases.endDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[1]));
 			}
 		}
     }

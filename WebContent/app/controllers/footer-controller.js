@@ -4,8 +4,9 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
+"use strict";
+
 (function() {
-	'use strict';
 
 	angular
 		.module('Conciliador.FooterController', [])
@@ -15,17 +16,12 @@
 
 	function Footer() {
 
-		var vm = this;
-		vm.dummy = dummy;
-		vm.year = (new Date()).getFullYear();
+		var objVm = this;
+		objVm.year = (new Date()).getFullYear();
 
 		init();
 
 		function init() {
 		}
-
-		function dummy() {
-		}
-
 	}
 })();

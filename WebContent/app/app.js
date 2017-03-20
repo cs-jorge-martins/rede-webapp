@@ -4,16 +4,16 @@
 	Copyright (C) 2016 Redecard S.A.
  */
 
-var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
+"use strict";
+
+var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload','ui.bootstrap', 'ngSanitize', 'ngAnimate', 'ngTouch',
                             'jmdobry.angular-cache', 'chart.js', 'angularjs-dropdown-multiselect',
                             'com.2fdevs.videogular',
                             'com.2fdevs.videogular.plugins.controls',
                             'com.2fdevs.videogular.plugins.overlayplay',
                             'com.2fdevs.videogular.plugins.poster',
-
                             'Conciliador.HeaderController',
                             'Conciliador.FooterController',
-
                             'Conciliador.dashboardController', 'Conciliador.dashboardService',
                             'Conciliador.loginController', 'Conciliador.loginService',
                             'Conciliador.filtersService',
@@ -27,6 +27,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 							'Conciliador.integrationService', 'Conciliador.advancedFilterService',
 							'Conciliador.calendarService', 'Kaplen.CalendarFactory',
 							'Conciliador.UtilsFactory',
+                            'Conciliador.PollingFactory',
 							'Conciliador.Request', 'Conciliador.receiptsService',
                             'Conciliador.salesController', 'Conciliador.salesDetailsController',
                             'Conciliador.salesToConciliateController', 'Conciliador.salesConciliatedController',
@@ -37,9 +38,11 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'Conciliador.TransactionSummaryService', 'Conciliador.TransactionConciliationService',
                             'Conciliador.AdjustService',
                             'Conciliador.RcMessageService',
+                            'Conciliador.RcDisclaimerService',
                             'Conciliador.helpController',
                             'Conciliador.integrationController',
                             'Conciliador.MovementService',
+                            'Conciliador.DownloadService',
                             'Conciliador.receiptsDetailsController',
 							'Conciliador.redirectController',
 							'Conciliador.receiptsExpectedDetailsController',
@@ -48,16 +51,21 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                             'Conciliador.appConfig',
                             'Conciliador.currencyFilter',
                             'Conciliador.slugfyFilter',
+                            'Conciliador.textFilter',
                             'Conciliador.receiptsOtherDetailsController',
-                            'Conciliador.receiptsFutureDetailsController'
+                            'Conciliador.receiptsFutureDetailsController',
+                            'Conciliador.salesToConciliateDetailsController',
+                            'Conciliador.unprocessedSalesDetailsController',
+                            'Conciliador.salesConciliatedDetailsController',
+                            'Conciliador.PVGroupingController'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;
 	}).config(function (uibDatepickerConfig) {
 		uibDatepickerConfig.showWeeks = false;
     })
-	.config(['$routeProvider', '$httpProvider','$angularCacheFactoryProvider',
-	         function ($routeProvider, $httpProvider, $angularCacheFactoryProvider) {
+	.config(['$routeProvider', '$httpProvider',
+	         function ($routeProvider, $httpProvider) {
 
    $httpProvider.defaults.headers.common = {};
    $httpProvider.defaults.headers.post = {};
@@ -65,7 +73,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
    $httpProvider.defaults.headers.patch = {};
 
 	$httpProvider.interceptors.push(function ($q, $rootScope, $location, $window) {
-		$rootScope.baseUrl = app.endpoint;
+		$rootScope.baseUrl = objApp.endpoint;
 
         return {
         	'request': function(config) {
@@ -84,7 +92,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                         }
 
         			}
-        			config.headers['Authorization'] = $window.sessionStorage.token;
+        			config.headers.Authorization = $window.sessionStorage.token;
         		} else {
 					if(!window.location.hash.match(/#\/redirect/g)) {
                     	$location.path("/login");
@@ -102,7 +110,10 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 						$location.path("/login");
 						break;
 					case 403 :
-                        $rootScope.showAlert('app/views/action-forbidden.html');
+						if (config.config.url.indexOf("/downloads") < 0) {
+                            $rootScope.showAlert('app/views/action-forbidden.html');
+                        }
+
 						break;
 					case 500 :
 					case 504 :
@@ -166,6 +177,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 
 	function SignIn(token, user) {
 		$rootScope.pvList = user.pvList;
+		$rootScope.hideHeaderAndFooter = false;
 
 		$window.sessionStorage.token = token;
 		$window.sessionStorage.pvList = JSON.stringify(user.pvList);
@@ -178,14 +190,14 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		if($window.sessionStorage.token && $window.sessionStorage.pvList) {
 			$location.path("/home");
 		}
-	};
+	}
 
 	function Logout() {
 		$rootScope.destroyVariablesSession();
 		$rootScope.login = 'login';
 		$rootScope.alerts =  [ { type: "success", msg: "Você efetuou o logout com sucesso. Até breve!"} ];
 		$location.path("/login");
-	};
+	}
 
 	function DestroyVariablesSession(){
 		delete $window.sessionStorage.user;
@@ -213,14 +225,14 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 
 		cacheService.ClearFilter();
 		$rootScope.login = 'login';
-	};
+	}
 
 	function RestartAlerts(){
 		$rootScope.alerts = [];
-	};
+	}
 
 	function ShowAlert(templateUrl) {
-		var objModal = $uibModal.open({
+		$uibModal.open({
 			templateUrl: templateUrl,
 			windowClass: "new-modal",
 			appendTo:  angular.element(document.querySelector('#modalWrapperV1')),
@@ -228,7 +240,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 			controller: function($scope, $uibModalInstance) {
                 $scope.cancel = function() {
                     $uibModalInstance.close();
-                }
+                };
 			}
 		}).closed.then(function() {
             $rootScope.modalOpen = false;
@@ -239,19 +251,19 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 	function CurrencySelected(currencyValue) {
 		$window.sessionStorage.currency = currencyValue;
 
-		angular.forEach($rootScope.currencies, function(currency, index){
-			if(currency.value == currencyValue){
+		angular.forEach($rootScope.currencies, function(currency){
+			if(currency.value === currencyValue){
 				//Seta símbolo padrão de acordo com a moeda do usuário
 				$rootScope.currencySymbol = $window.sessionStorage.currencySymbol = currency.symbol;
 			}
 		});
 
 		$location.path("/dashboardNew");
-	};
+	}
 
 	function CloseAlert(index) {
 		$rootScope.alerts.splice(index, 1);
-	};
+	}
 
 	function SortResults(objElem, strKind) {
 		var strOrder, strOrderString;
@@ -289,7 +301,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 		strOrderString = strKind + "," + strOrder;
 
 		return strOrderString;
-	};
+	}
 
     $rootScope.$on("cfpLoadingBar:loading",function(){
        $rootScope.loading = true;
@@ -302,7 +314,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 }).directive('upload', ['uploadManager', function factory(uploadManager) {
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
+        link: function (scope, element) {
             $(element).fileupload({
                 dataType: 'text',
                 add: function (e, data) {
@@ -312,7 +324,7 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
                     var intProgress = parseInt(data.loaded / data.total * 100, 10);
                     uploadManager.setProgress(intProgress);
                 },
-                done: function (e, data) {
+                done: function () {
                     uploadManager.setProgress(0);
                 }
             });
@@ -321,61 +333,61 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
 }])
 .factory('menuFactory', function($rootScope) {
 
-	function setActiveDashboard() {
+	function SetActiveDashboard() {
         this.deactivate();
 		$rootScope.activeDashboard = true;
 	}
 
-	function setActiveGestao() {
+	function SetActiveGestao() {
         this.deactivate();
 		$rootScope.activeGestao = true;
 	}
 
-	function setActiveMovements() {
+	function SetActiveMovements() {
         this.deactivate();
 		$rootScope.activeMovements = true;
 	}
 
-	function setActiveResumoConciliacao() {
+	function SetActiveResumoConciliacao() {
         this.deactivate();
 		$rootScope.activeResumoConciliacao = true;
 	}
 
-	function setActiveReports() {
+	function SetActiveReports() {
         this.deactivate();
 		$rootScope.activeReports = true;
 	}
 
-    function setActiveReportsFinancial() {
+    function SetActiveReportsFinancial() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsFinancial = true;
 	}
 
-    function setActiveReportsChargebacks() {
+    function SetActiveReportsChargebacks() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsChargebacks = true;
 	}
 
-    function setActiveReportsSales() {
+    function SetActiveReportsSales() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsSales = true;
 	}
 
-    function setActiveReportsAdjustments() {
+    function SetActiveReportsAdjustments() {
         this.deactivate();
 		$rootScope.activeReports = true;
         $rootScope.activeReportsAdjustments = true;
 	}
 
-    function setActiveIntegration() {
+    function SetActiveIntegration() {
         this.deactivate();
 		$rootScope.activeIntegration = true;
 	}
 
-    function deactivate() {
+    function Deactivate() {
         $rootScope.activeResumoConciliacao = false;
 		$rootScope.activeDashboard = false;
 		$rootScope.activeGestao = false;
@@ -389,40 +401,34 @@ var app = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpload
     }
 
 	return {
-		setActiveDashboard: setActiveDashboard,
-		setActiveGestao: setActiveGestao,
-		setActiveMovements: setActiveMovements,
-		setActiveResumoConciliacao: setActiveResumoConciliacao,
-		setActiveReports: setActiveReports,
-        setActiveReportsSales: setActiveReportsSales,
-        setActiveReportsFinancial: setActiveReportsFinancial,
-        setActiveReportsAdjustments: setActiveReportsAdjustments,
-        setActiveReportsChargebacks: setActiveReportsChargebacks,
-        setActiveIntegration: setActiveIntegration,
-        deactivate: deactivate
+		setActiveDashboard: SetActiveDashboard,
+		setActiveGestao: SetActiveGestao,
+		setActiveMovements: SetActiveMovements,
+		setActiveResumoConciliacao: SetActiveResumoConciliacao,
+		setActiveReports: SetActiveReports,
+        setActiveReportsSales: SetActiveReportsSales,
+        setActiveReportsFinancial: SetActiveReportsFinancial,
+        setActiveReportsAdjustments: SetActiveReportsAdjustments,
+        setActiveReportsChargebacks: SetActiveReportsChargebacks,
+        setActiveIntegration: SetActiveIntegration,
+        deactivate: Deactivate
 	};
-})
+});
 
-app.filter('utc', function(){
-  return function(val){
-    var date = new Date(val);
-     return new Date(date.getUTCFullYear(),
-                     date.getUTCMonth(),
-                     date.getUTCDate(),
-                     date.getUTCHours(),
-                     date.getUTCMinutes(),
-                     date.getUTCSeconds());
+objApp.filter('utc', function(){
+	return function(val){
+    var objDate = new Date(val);
+    return new Date(objDate.getUTCFullYear(),
+					objDate.getUTCMonth(),
+					objDate.getUTCDate(),
+					objDate.getUTCHours(),
+					objDate.getUTCMinutes(),
+					objDate.getUTCSeconds());
   };
 });
 
-app.filter('brst', function(){
-  return function(val){
-    return new Date(val);
-  };
+objApp.filter('brst', function(){
+    return function(val){
+        return new Date(val);
+    };
 });
-
-function getDominio(strExtension) {
-	var strUrl = location.href;
-	strUrl = strUrl.split("/#/");
-	return strUrl[0]+ '/' + strExtension+ '/';
-};
