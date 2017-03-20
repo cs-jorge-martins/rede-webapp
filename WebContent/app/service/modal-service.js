@@ -49,7 +49,7 @@
         };
 
         /**
-         * @method openDetails
+         * @method openFull
          * Abre um modal de detalhes (fullscreen)
          *
          * @param {String} strTitle Título do modal
@@ -60,10 +60,10 @@
          * Exemplo de uso:
          *
          *      @example
-         *      ModalService.openDetails('Título da modal', 'view/template.html', 'ModalController', $scope);
+         *      ModalService.openFull('Título da modal', 'view/template.html', 'ModalController', $scope);
          *
          */
-        this.openDetails = function(strTitle, strTemplateUrl, objController, objScope) {
+        this.openFull = function(strTitle, strTemplateUrl, objController, objScope) {
 
             objScope.pageTitle = strTitle;
             objScope.template = strTemplateUrl;
