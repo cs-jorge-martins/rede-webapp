@@ -41,8 +41,34 @@
 
 			&.header {
 				padding: 0.5em 0 1em;
+
 				span {
-					display: none;
+					&::before, &::after {
+						color: #ff7800;
+						border-radius: 4px;
+					}
+				}
+
+				.selectAll {
+
+					span {
+
+						&::before {
+							// background-color: #fff;
+							content: '\e927' !important;
+						}
+					}
+				}
+
+				.deselectAll {
+
+					span {
+
+						&::before {
+							// background-color: #fff;
+							content: '\e956' !important;
+						}
+					}
 				}
 			}
 
@@ -92,8 +118,10 @@
 					}
 
 					.glyphicon-ok::before {
-						color: #ff7800;
-						content: '\e927' !important;
+						background-color: $defaultOrange;
+				    color: $backgroundChecked;
+				    content: '\e927' !important;
+						border-radius: 4px;
 					}
 
 					&:hover {
