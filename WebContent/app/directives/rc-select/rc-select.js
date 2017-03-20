@@ -16,12 +16,13 @@
  * @param {String} place-holder-label nome principal do
  * @param {Array} model array com objetos selecionados que tenham os parâmetros: label e id
  * @param {Array} data array com todos os objetos possíveis para a seleção. Elas devem ter os parâmetros: label e id
+ * @param {Boolean} pvList para a opção customizada de pvList deve ser passado o atributo como true
  * @param {*} checkAndUncheckAll objeto ou booleano para aparecer as opções de selecionar todos e deselecionar todos
  *
  * Exemplo:
  *
  *     @example
- *     <rc-select label="número do estabelecimento" place-holder-label="estabelecimento" model="filter.pvsModel" data="filter.pvsData"></rc-select>
+ *     <rc-select label="número do estabelecimento" place-holder-label="estabelecimento" model="filter.pvsModel" data="filter.pvsData" pvList="true"></rc-select>
  */
 
 "use strict";
@@ -32,9 +33,9 @@
 		.module('Conciliador')
 		.directive('rcSelect', RcSelect);
 
-	RcSelect.$inject = [];
+	RcSelect.$inject = ['modalService'];
 
-	function RcSelect() {
+	function RcSelect(modalService) {
 
 		return {
 			restrict: 'E',
@@ -44,7 +45,8 @@
 				placeHolderLabel: '@',
 				model: '=',
 				data: '=',
-				checkAndUncheckAll: '='
+				checkAndUncheckAll: '=',
+				pvList: '=?'
 			},
 			controller: Controller,
 			controllerAs: 'vm'
@@ -58,6 +60,7 @@
 			vm.checkAll = CheckAll;
 			vm.uncheckAll = UncheckAll;
 			vm.checkOrUncheckItem = CheckOrUncheckItem;
+			vm.openPvModal = OpenPvModal;
 
 			Init();
 			OpenPlaceholder();
@@ -212,6 +215,20 @@
 
 					};
 				}
+
+			/**
+			 * @method OpenPvModal
+			 * Ao acionar este método é chamado o Modal com o PVGroupingController
+			 *
+			 */
+			function OpenPvModal() {
+				modalService.openFull(
+					'agrupamento de estabelecimentos',
+					'app/views/pv-grouping.html',
+					'PVGroupingController',
+					$scope
+				);
+			}
 		}
 
 	}

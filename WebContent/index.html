@@ -68,7 +68,8 @@
             <div class="v2">
                 <rc-breadcrumb></rc-breadcrumb>
                 <rc-message ng-repeat="message in rcMessages" type="message.type" text="message.text" href="message.href" action-text="message.actionText" on-click="message.onClick(message.scope)"></rc-message>
-                <h1 ng-if="pageTitle" class="page-title">{{pageTitle}}</h1>
+                <!--<h1 ng-if="pageTitle" class="page-title">{{pageTitle}}</h1>-->
+                <h1 class="page-title" data-ng-bind="pageTitle()"></h1>
             </div>
             <div ng-view class="{{migrationId}}"></div>
         </div>

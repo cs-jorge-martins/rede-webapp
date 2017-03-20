@@ -45,6 +45,7 @@
 	@import 'components/panel';
 	@import 'components/table';
 	@import 'components/card-product';
+	@import 'components/pv';
 	@import 'components/rc-breadcrumb';
 	@import 'components/rc-chips';
 	@import 'components/rc-multiselect';
@@ -53,8 +54,10 @@
 	@import 'components/rc-disclaimer';
 	@import 'components/rc-pagination';
 	@import 'components/rc-sort';
+
 	@import 'pages/login';
 	@import 'pages/sales';
+	@import 'pages/pv-grouping';
 }
 
 @import 'components/link';

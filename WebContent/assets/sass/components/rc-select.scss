@@ -38,6 +38,7 @@
 	}
 
 	.list-group-pvs {
+
 		position: absolute;
 		top: 5.82em;
 		background: #fff;
@@ -63,41 +64,68 @@
 				}
 			}
 
-			.selectAll {
-
-				span {
-
-					&::before {
-						content: '\e927' !important;
-					}
-				}
-			}
-
-			.deselectAll {
-
-				span {
-
-					&::before {
-						content: '\e956' !important;
-					}
-				}
-			}
-		}
+		z-index: 10;
+		border: 1px solid #dddddd;
+		top: 6em;
 
 		ul {
+
+			&.header {
+				padding: 0.5em 0 1em;
+
+				span {
+					&::before, &::after {
+						color: #ff7800;
+						border-radius: 4px;
+					}
+				}
+
+				.selectAll {
+
+					span {
+
+						&::before {
+							content: '\e927' !important;
+						}
+					}
+				}
+
+				.deselectAll {
+
+					span {
+						&::before {
+							content: '\e956' !important;
+						}
+					}
+				}
+			}
+
+			background: #fff;
+			border-bottom: 0;
+			border-radius: 0;
+			box-shadow: none;
+			box-sizing: border-box;
+			max-height: 150px;
+			overflow: auto !important;
+			height: auto;
+			min-height: 100px;
+			max-height: 361px;
+			z-index: 1;
+			width: 100%;
 			margin: 0;
     	padding: 0;
 
 			li {
+
 				list-style: none;
 
 				a {
 					cursor: pointer;
-			    color: #575758;
-			    display: block;
-			    font-size: 1.2em;
-			    position: relative;
-			    text-transform: none;
+					color: #575758;
+					display: block;
+					font-size: 1.2em;
+					position: relative;
+					text-transform: none;
 					line-height: 1.42857143;
 					padding: 0.5em 0 0.5em 2.9em;
 					text-decoration: none;
@@ -133,9 +161,30 @@
 
 			.divider {
 				background-color: #e5e5e5;
-		    height: 1px;
-		    padding: 0;
+				height: 1px;
+				padding: 0;
 				margin-top: 8px;
+			}
+		}
+	}
+
+	.rc-select-footer {
+		text-align: right;
+		box-shadow: 0em -0.3em 0.9em 0em rgba(0, 0, 0, 0.1);
+		padding: 10px 14px;
+		position: relative;
+		a {
+			color: $defaultOrange;
+			text-decoration: none;
+			padding-right: 2.5em;
+			font-size: 1.2em;
+			&:after {
+				font-family: $fontItau;
+				content: '\e997';
+				font-size: 1.8em;
+				position: absolute;
+				right: 0.7em;
+				top: 0.3em;
 			}
 		}
 	}

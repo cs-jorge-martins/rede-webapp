@@ -335,8 +335,8 @@
          */
         function Details(objTransaction) {
             objVm.transaction = objTransaction;
-            modalService.openDetails(
-                'Vendas conciliadas',
+            modalService.openFull(
+                'Vendas conciliadas | detalhes',
                 'app/views/sales-conciliated-details.html',
                 'salesConciliatedDetailsController',
                 $scope

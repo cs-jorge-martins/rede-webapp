@@ -246,4 +246,41 @@ describe('rc-select directive', function(){
 
 	});
 
+	describe('pvList custom layout', function () {
+
+
+		var $scope, element, html, controller, bolPvList;
+
+		beforeEach(function () {
+
+			html = angular.element([
+				"<rc-select label=\"número do estabelecimento\" place-holder-label=\"estabelecimento\" model=\"objModel\" data=\"objData\" pv-list=\"bolPvList\"></rc-select>",
+			].join(""));
+
+			inject(function($rootScope, $compile) {
+				$scope = $rootScope.$new();
+				element = $compile(html)($scope);
+				 bolPvList = false;
+				$scope.$digest();
+				controller = element.controller('rcSelect');
+			});
+
+		});
+
+		it("shouldn't have a footer", inject(function () {
+			expect(element[0].querySelectorAll('.rc-select-footer').length).toBe(0);
+		}));
+
+		it("shouldn't have a footer", inject(function () {
+
+			var isolatedScope = element.isolateScope();
+			isolatedScope.pvList = true;
+			$scope.$digest();
+
+			expect(element[0].querySelectorAll('.rc-select-footer').length).toBe(1);
+
+		}));
+
+	});
+
 });
