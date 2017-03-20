@@ -49,6 +49,7 @@
 			padding: 0.5em 0 1em;
 
 			span {
+				
 				&::before, &::after {
 					color: #ff7800;
 					border-radius: 4px;
@@ -60,8 +61,7 @@
 				span {
 
 					&::before {
-						// background-color: #fff;
-						content: '\e927' !important;						
+						content: '\e927' !important;
 					}
 				}
 			}
@@ -71,7 +71,6 @@
 				span {
 
 					&::before {
-						// background-color: #fff;
 						content: '\e956' !important;
 					}
 				}
