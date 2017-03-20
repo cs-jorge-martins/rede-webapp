@@ -16,12 +16,13 @@
  * @param {String} place-holder-label nome principal do
  * @param {Array} model array com objetos selecionados que tenham os parâmetros: label e id
  * @param {Array} data array com todos os objetos possíveis para a seleção. Elas devem ter os parâmetros: label e id
+ * @param {Boolean} pvList para a opção customizada de pvList deve ser passado o atributo como true
  * @param {*} checkAndUncheckAll objeto ou booleano para aparecer as opções de selecionar todos e deselecionar todos
  *
  * Exemplo:
  *
  *     @example
- *     <rc-select label="número do estabelecimento" place-holder-label="estabelecimento" model="filter.pvsModel" data="filter.pvsData"></rc-select>
+ *     <rc-select label="número do estabelecimento" place-holder-label="estabelecimento" model="filter.pvsModel" data="filter.pvsData" pvList="true"></rc-select>
  */
 
 "use strict";
@@ -48,23 +49,7 @@
 				pvList: '=?'
 			},
 			controller: Controller,
-			controllerAs: 'vm',
-			link: function (scope, element) {
-
-				// $document.on('click', function (objClickedElement) {
-				// 	if (element !== objClickedElement.target && !element[0].contains(objClickedElement.target) && scope.IsVisible === true) {
-				// 		scope.ShowHidePlaceholder();
-				// 	}
-				// });
-
-				// element.bind('click', function (objClickedElement) {
-				// 	console.log("clicado")
-				// 	if (element !== objClickedElement.target && !element[0].contains(objClickedElement.target) && scope.IsVisible === true) {
-				// 		scope.ShowHidePlaceholder();
-				// 	}
-				// });
-
-			}
+			controllerAs: 'vm'
 		};
 
 		function Controller($scope) {
@@ -226,6 +211,11 @@
 
 			}
 
+			/**
+			 * @method OpenPvModal
+			 * Ao acionar este método é chamado o Modal com o PVGroupingController
+			 *
+			 */
 			function OpenPvModal() {
 				modalService.openFull(
 					'agrupamento de estabelecimentos',
