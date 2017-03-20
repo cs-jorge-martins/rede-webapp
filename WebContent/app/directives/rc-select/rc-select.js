@@ -32,9 +32,9 @@
 		.module('Conciliador')
 		.directive('rcSelect', RcSelect);
 
-	RcSelect.$inject = ['$document'];
+	RcSelect.$inject = ['modalService'];
 
-	function RcSelect($document) {
+	function RcSelect(modalService) {
 
 		return {
 			restrict: 'E',
@@ -75,6 +75,7 @@
 			vm.checkAll = CheckAll;
 			vm.uncheckAll = UncheckAll;
 			vm.checkOrUncheckItem = CheckOrUncheckItem;
+			vm.openPvModal = OpenPvModal;
 
 			Init();
 			OpenPlaceholder();
@@ -223,6 +224,15 @@
 					$scope.IsVisible = $scope.IsVisible ? false : true;
 				};
 
+			}
+
+			function OpenPvModal() {
+				modalService.openFull(
+					'agrupamento de estabelecimentos',
+					'app/views/pv-grouping.html',
+					'PVGroupingController',
+					$scope
+				);
 			}
 
 		}
