@@ -84,8 +84,12 @@ $fontRegular: 'open_sansregular';
 $fontItau: 'itaufonts_master_24px_v1';
 $fontBootstrap: 'Glyphicons Halflings';
 
+// filter menu sales
+//$filterSalesLabelFontSize: 14px;
+//$filterSalesLabelColor: $platinum;
+
 // filter
-$filterLabelFontSize: 16px;
+$filterLabelFontSize: 14px;
 $filterLabelColor: $grafitteGray;
 
 // rc-multiselect
@@ -131,6 +135,9 @@ $rcDownloaderErrorColor: #ea4230;
 $rcDownloaderLoadingColor: $grafitteGray;
 $rcDownloaderBackgroundColor: #fff;
 
- // loader
+// checkbox checked
+$backgroundChecked: #ffffff;
+
+// loader
 // $spinnerColor: $menuActiveFontColor;
 // $loaderBackgroundColor: #fff;
