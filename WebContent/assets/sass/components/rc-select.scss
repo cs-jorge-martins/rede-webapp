@@ -4,7 +4,6 @@
 	width: 100%;
 
 	.dropdown-toggle {
-
 		border: 1px solid $rcMultiBorderColor;
 		color: $rcMultiLabelColor;
 		font-size: 1em;
@@ -38,11 +37,10 @@
 	}
 
 	.list-group-pvs {
-
 		position: absolute;
-		top: 5.82em;
+		top: 6em;
 		background: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     border-radius: 0;
     box-shadow: none;
     box-sizing: border-box;
@@ -51,24 +49,10 @@
     height: auto;
     min-height: 100px;
 		max-height: 150px;
-    z-index: 1;
-
-		.header {
-			padding: 0.5em 0 1em;
-
-			span {
-
-				&::before, &::after {
-					color: #ff7800;
-					border-radius: 4px;
-				}
-			}
-
 		z-index: 10;
-		border: 1px solid #dddddd;
-		top: 6em;
 
 		ul {
+			padding: 0;
 
 			&.header {
 				padding: 0.5em 0 1em;
@@ -81,9 +65,7 @@
 				}
 
 				.selectAll {
-
 					span {
-
 						&::before {
 							content: '\e927' !important;
 						}
@@ -91,7 +73,6 @@
 				}
 
 				.deselectAll {
-
 					span {
 						&::before {
 							content: '\e956' !important;
@@ -99,21 +80,6 @@
 					}
 				}
 			}
-
-			background: #fff;
-			border-bottom: 0;
-			border-radius: 0;
-			box-shadow: none;
-			box-sizing: border-box;
-			max-height: 150px;
-			overflow: auto !important;
-			height: auto;
-			min-height: 100px;
-			max-height: 361px;
-			z-index: 1;
-			width: 100%;
-			margin: 0;
-    	padding: 0;
 
 			li {
 
@@ -173,11 +139,13 @@
 		box-shadow: 0em -0.3em 0.9em 0em rgba(0, 0, 0, 0.1);
 		padding: 10px 14px;
 		position: relative;
+
 		a {
 			color: $defaultOrange;
 			text-decoration: none;
 			padding-right: 2.5em;
 			font-size: 1.2em;
+
 			&:after {
 				font-family: $fontItau;
 				content: '\e997';
@@ -188,5 +156,4 @@
 			}
 		}
 	}
-
 }
