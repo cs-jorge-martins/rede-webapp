@@ -163,6 +163,7 @@ module.exports = function(grunt) {
 					"WebContent/app/controllers/receipts-future-details-controller.js",
 					"WebContent/app/controllers/receipts-details-controller.js",
 					"WebContent/app/controllers/redirect-controller.js",
+					"WebContent/app/controllers/pv-grouping-controller.js",
 
 					"WebContent/app/service/dashboard-service.js",
 					"WebContent/app/service/login-service.js",
@@ -287,7 +288,33 @@ module.exports = function(grunt) {
 				'WebContent/app/**/*.js'
 				//'WebContent/assets/js/**/*.js'
 			]
+		},
+
+
+		notify: {
+			watch: {
+				options: {
+					message: 'SASS running', //required
+				}
+			},
+			sass: {
+				options: {
+					message: 'SASS running!'
+				}
+			},
+			server: {
+				options: {
+					message: 'Server is ready!'
+				}
+			},
+			jshint: {
+				options: {
+					message: 'tests!'
+				}
+			},
 		}
+
+
 
 	});
 
@@ -298,7 +325,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build:hml', ['ngconstant:homologation', 'sass', 'concat']);
 	grunt.registerTask('build:prod', ['ngconstant:production', 'sass', 'concat']);
 	grunt.registerTask('local', ['build:local', 'serve', 'watch']);
-	grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
+	grunt.registerTask('dev', ['notify', 'build:dev', 'serve', 'watch']);
 	grunt.registerTask('hml', ['build:hml', 'serve']);
 	grunt.registerTask('prod', ['build:prod', 'serve']);
 	grunt.registerTask('docs', ['jsduck:main']);
