@@ -30,6 +30,13 @@
 		}
 	}
 
+	.list-group-pvs.show-list {
+		display: block;
+	}
+	.list-group-pvs.hide-list {
+		display: none;
+	}
+
 	.list-group-pvs {
 		position: absolute;
 		top: 5.82em;
@@ -49,7 +56,7 @@
 			padding: 0.5em 0 1em;
 
 			span {
-				
+
 				&::before, &::after {
 					color: #ff7800;
 					border-radius: 4px;

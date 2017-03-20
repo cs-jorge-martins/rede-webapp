@@ -176,7 +176,6 @@
 				UncheckAll();
 				$scope.data.forEach(function (objItem) {
 					$scope.model.push(objItem);
-					objItem.checked = true;
 				});
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
@@ -186,9 +185,6 @@
 			 * deseleciona todos os itens de model
 			 */
 			function UncheckAll() {
-				$scope.data.forEach(function (objItem) {
-					objItem.checked = false;
-				});
 				$scope.model = [];
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
@@ -198,16 +194,24 @@
 			 * Após o click no input ele retorna a listagem de PVs.
 			 *
 			 */
-			function OpenPlaceholder() {
+			 function OpenPlaceholder() {
 
-				$scope.IsVisible = false;
+				 	$scope.class = "hide-list";
 
-				$scope.ShowHidePlaceholder = function () {
-					$scope.IsVisible = $scope.IsVisible ? false : true;
-				};
+					$scope.ShowHidePlaceholder = function(){
 
-			}
+						if ($scope.class === "hide-list") {
 
+							$scope.class = "show-list";
+
+						} else {
+
+							$scope.class = "hide-list";
+
+						}
+
+					};
+				}
 		}
 
 	}
