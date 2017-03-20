@@ -63,13 +63,15 @@ describe('PV grouping controller', function() {
 			vm.pvList = [{
 				id: 1,
 				code: 1,
-				acquirerId :1
+				acquirerId : 1,
+				selected: false
 			}];
 			vm.addPVToWorkspace(vm.pvList[0]);
 			expect(vm.workspace.pvs).toEqual([{
 				id: 1,
 				code: 1,
-				acquirerId : 1
+				acquirerId : 1,
+				selected: false
 			}]);
 		});
 
@@ -99,13 +101,15 @@ describe('PV grouping controller', function() {
 			vm.workspace.pvs = [{
 				id: 1,
 				code: 1,
-				acquirerId :1
+				acquirerId :1,
+				selected: false
 			}];
 			vm.removePVFromWorkspace(vm.workspace.pvs[0]);
 			expect(vm.pvList).toEqual([{
 				id: 1,
 				code: 1,
-				acquirerId: 1
+				acquirerId: 1,
+				selected: false
 			}]);
 		});
 	});

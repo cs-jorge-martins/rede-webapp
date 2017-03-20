@@ -40,6 +40,7 @@
 		objVm.updateScrollContainers = UpdateScrollContainers;
 		objVm.validateGroup = ValidateGroup;
 		objVm.selectPV = SelectPV;
+		objVm.saveGroup = SaveGroup;
 
 		Init();
 
@@ -63,6 +64,7 @@
 			var intIndex = objVm.pvList.length - 1;
 			for(intIndex; intIndex >= 0; intIndex--) {
 				if(objVm.pvList[intIndex].selected || (objVm.pvList[intIndex].code === objPV.code)) {
+					objVm.pvList[intIndex].selected = false;
 					objVm.workspace.pvs.unshift(objVm.pvList[intIndex]);
 					objVm.pvList.splice(intIndex, 1);
 				}
@@ -83,14 +85,12 @@
 		 * contém as informações do PV como: nome, id e adquirente.
 		 */
 		function RemovePVFromWorkspace(objPV) {
-			objPV.selected = false;
-			objVm.pvList.unshift(objPV);
-
-			for(var intIndex in objVm.workspace.pvs){
-				if(objVm.workspace.pvs.hasOwnProperty(intIndex)){
-					if(objVm.workspace.pvs[intIndex].code === objPV.code) {
-						objVm.workspace.pvs.splice(intIndex, 1);
-					}
+			var intIndex = objVm.workspace.pvs.length - 1;
+			for(intIndex; intIndex >= 0; intIndex--) {
+				if(objVm.workspace.pvs[intIndex].selected || (objVm.workspace.pvs[intIndex].code === objPV.code)) {
+					objVm.workspace.pvs[intIndex].selected = false;
+					objVm.pvList.unshift(objVm.workspace.pvs[intIndex]);
+					objVm.workspace.pvs.splice(intIndex, 1);
 				}
 			}
 
@@ -131,6 +131,10 @@
 				Ps.update(objPvListScrollContainer);
 				Ps.update(objWorkspaceScrollContainer);
 			}, 500);
+		}
+
+		function SaveGroup() {
+			console.log('a');
 		}
 
 		/**

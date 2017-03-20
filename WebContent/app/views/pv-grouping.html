@@ -4,8 +4,7 @@
 			<p class="page-title">criar novo agrupamento</p>
 			<p class="page-description">
 				Utilize os dois primeiros campos abaixo para criar um novo agrupamento.<br />
-				No primeiro campo você pode buscar estabelecimentos e arrastar ou selecionar + para adicionar ao segundo campo.<br />
-				Para habilitar o botão <strong>salvar</strong> é necessário nomear o agrupamento e selecionar pelo menos dois estabelecimentos.
+				No primeiro campo você pode buscar estabelecimentos e arrastar ou selecionar + para adicionar ao segundo campo. Para habilitar o botão <strong>salvar</strong> é necessário nomear o agrupamento e selecionar pelo menos dois estabelecimentos.
 			</p>
 		</div>
 		<div class="col-xs-4">
@@ -33,7 +32,7 @@
 				<div id="pvs-container" ng-class="{'has-scroll': filteredPVs.length > 4}" dnd-list>
 					<div class="pv" ng-repeat="pv in objVm.pvList | filter:pvFilter as filteredPVs" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'This text may be dragged')" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
 						<p>{{ pv.code }}</p>
-						<p>api null{{ pv.acquirer.name }}</p>
+						<p>{{ pv.acquirer.name }}</p>
 						<a ng-click="objVm.addPVToWorkspace(pv)" class="action icon_mais"></a>
 					</div>
 				</div>
@@ -57,16 +56,16 @@
 						<li>- Selecione pelo menos 2 PVs antes de salvar</li>
 					</ul>
 					<div id="edit-container" ng-class="{'has-scroll': objVm.validateGroup() ? objVm.workspace.pvs.length > 4 : objVm.workspace.pvs.length > 3 }">
-						<div class="pv" ng-repeat="pv in objVm.workspace.pvs">
+						<div class="pv" ng-repeat="pv in objVm.workspace.pvs" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
 							<p>{{ pv.code }}</p>
-							<p>api null{{ pv.acquirer.name }}</p>
+							<p>{{ pv.acquirer.name }}</p>
 						<a ng-click="objVm.removePVFromWorkspace(pv)" class="action icon_minimizar"></a>
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-6 col-xs-offset-6">
-						<input type="submit" value="salvar" class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" />
+						<a class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" ng-click="objVm.saveGroup()">salvar</a>
 					</div>
 				</div>
 			</div>
