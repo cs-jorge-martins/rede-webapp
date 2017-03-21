@@ -6,18 +6,28 @@
 
 describe('PV grouping controller', function() {
 
-    var $scope;
+    var $scope, filtersServiceMock, def, $q;
+
+	filtersServiceMock = {
+		GetShops: function() {}
+	};
 
 	beforeEach(function() {
 		module('Conciliador');
 
-		inject(function($rootScope, $controller) {
+		inject(function($rootScope, $controller, $q) {
+			def = $q.defer();
 			$scope = $rootScope.$new();
 
 			vm = $controller('PVGroupingController', {
 				$scope: $scope
+				//filtersService: filtersServiceMock
 			});
 		});
+
+		// spyOn(filtersServiceMock, 'GetShops').and.callFake(function() {
+		// 	return def.promise;
+		// });
 	});
 
 	describe('on initialize', function() {
@@ -25,9 +35,14 @@ describe('PV grouping controller', function() {
 			expect(vm).toBeDefined();
 		});
 
-		it('PV array must be defined', function() {
-			expect(vm.pvList).toBeDefined();
-			expect(vm.pvList).toEqual([]);
+		it('PV slave array must be defined', function() {
+			expect(vm.pvListSlave).toBeDefined();
+			expect(vm.pvListSlave).toEqual([]);
+		});
+
+		it('PV master array master must be defined', function() {
+			expect(vm.pvListMaster).toBeDefined();
+			expect(vm.pvListMaster).toEqual([]);
 		});
 
 		it('Grouping array must be defined', function() {
@@ -41,7 +56,7 @@ describe('PV grouping controller', function() {
 
 		it('Workspace object must have a structure', function() {
 			expect(vm.workspace).toEqual({
-				title: '',
+				name: '',
 				pvs: []
 			});
 		});
@@ -52,7 +67,7 @@ describe('PV grouping controller', function() {
 
 		it('Initial group data must have a structure', function() {
 			expect(vm.initialGroupData).toEqual({
-				title: '',
+				name: '',
 				pvs: []
 			});
 		});
@@ -60,13 +75,13 @@ describe('PV grouping controller', function() {
 
 	describe('on add to workspace', function() {
 		it('Should add a PV on workspace', function() {
-			vm.pvList = [{
+			vm.pvListSlave = [{
 				id: 1,
 				code: 1,
 				acquirerId : 1,
 				selected: false
 			}];
-			vm.addPVToWorkspace(vm.pvList[0]);
+			vm.addPVToWorkspace(vm.pvListSlave[0]);
 			expect(vm.workspace.pvs).toEqual([{
 				id: 1,
 				code: 1,
@@ -76,13 +91,13 @@ describe('PV grouping controller', function() {
 		});
 
 		it('Should remove PV from PV list', function() {
-			vm.pvList = [{
+			vm.pvListSlave = [{
 				id: 1,
 				code: 1,
 				acquirerId :1
 			}];
-			vm.addPVToWorkspace(vm.pvList[0]);
-			expect(vm.pvList).toEqual([]);
+			vm.addPVToWorkspace(vm.pvListSlave[0]);
+			expect(vm.pvListSlave).toEqual([]);
 		});
 	});
 
@@ -105,7 +120,7 @@ describe('PV grouping controller', function() {
 				selected: false
 			}];
 			vm.removePVFromWorkspace(vm.workspace.pvs[0]);
-			expect(vm.pvList).toEqual([{
+			expect(vm.pvListSlave).toEqual([{
 				id: 1,
 				code: 1,
 				acquirerId: 1,
@@ -114,10 +129,16 @@ describe('PV grouping controller', function() {
 		});
 	});
 
+	// describe('on get pvs', function() {
+	// 	it('should get PV list from API', function() {
+	// 		expect(filtersServiceMock.GetShops).toHaveBeenCalled();
+	// 	});
+	// });
+
 	describe('on validate group', function(){
 		it('should return false if group does not have a name', function(){
 			vm.workspace = {
-				title: "",
+				name: "",
 				pvs: []
 			};
 			expect(vm.validateGroup()).toBe(false);
@@ -125,15 +146,15 @@ describe('PV grouping controller', function() {
 
 		it('should return false if group does not have pvs', function(){
 			vm.workspace = {
-				title: "",
+				name: "",
 				pvs: []
 			};
 			expect(vm.validateGroup()).toBe(false);
 		});
 
-		it('should return false if group has pvs but does not have title', function(){
+		it('should return false if group has pvs but does not have name', function(){
 			vm.workspace = {
-				title: "",
+				name: "",
 				pvs: [{
 					id: 1,
 					code: 1,
@@ -143,17 +164,17 @@ describe('PV grouping controller', function() {
 			expect(vm.validateGroup()).toBe(false);
 		});
 
-		it('should return false if group has title but does not have pvs', function(){
+		it('should return false if group has name but does not have pvs', function(){
 			vm.workspace = {
-				title: "group title",
+				name: "group name",
 				pvs: []
 			};
 			expect(vm.validateGroup()).toBe(false);
 		});
 
-		it('should return false if group has title and only one pv', function(){
+		it('should return false if group has name and only one pv', function(){
 			vm.workspace = {
-				title: "group title",
+				name: "group name",
 				pvs: [{
 					id: 1,
 					code: 1,
@@ -163,9 +184,9 @@ describe('PV grouping controller', function() {
 			expect(vm.validateGroup()).toBe(false);
 		});
 
-		it('should return true if group has title and more than one pv', function(){
+		it('should return true if group has name and more than one pv', function(){
 			vm.workspace = {
-				title: "group title",
+				name: "group name",
 				pvs: [{
 					id: 1,
 					code: 1,

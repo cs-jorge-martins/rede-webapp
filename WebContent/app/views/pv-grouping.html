@@ -30,7 +30,7 @@
 					<p>Altere sua busca.</p>
 				</div>
 				<div id="pvs-container" ng-class="{'has-scroll': filteredPVs.length > 4}" dnd-list>
-					<div class="pv" ng-repeat="pv in objVm.pvList | filter:pvFilter as filteredPVs" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'This text may be dragged')" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
+					<div class="pv" ng-repeat="pv in objVm.pvListSlave | filter:pvFilter as filteredPVs" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'This text may be dragged')" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
 						<p>{{ pv.code }}</p>
 						<p>{{ pv.acquirer.name }}</p>
 						<a ng-click="objVm.addPVToWorkspace(pv)" class="action icon_mais"></a>
@@ -47,13 +47,13 @@
 				<div class="form-group icon-right">
 					<div class="input-group input-group-lg">
 						<span class="input-group-addon borderless icon_educacao_uso_consc"></span>
-						<input type="text" class="form-control borderless" required="" placeholder="nomear agrupamento" ng-model="objVm.workspace.title">
+						<input type="text" class="form-control borderless" required="" placeholder="nomear agrupamento" ng-model="objVm.workspace.name">
 					</div>
 				</div>
 				<div id="edit-wrapper">
 					<ul class="validate-list" ng-hide="objVm.validateGroup()">
-						<li>- O novo agrupamento precisa de um nome</li>
-						<li>- Selecione pelo menos 2 PVs antes de salvar</li>
+						<li ng-hide="objVm.workspace.name">- O novo agrupamento precisa de um nome</li>
+						<li ng-hide="objVm.workspace.pvs.length > 1">- Selecione pelo menos 2 PVs antes de salvar</li>
 					</ul>
 					<div id="edit-container" ng-class="{'has-scroll': objVm.validateGroup() ? objVm.workspace.pvs.length > 4 : objVm.workspace.pvs.length > 3 }">
 						<div class="pv" ng-repeat="pv in objVm.workspace.pvs" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
@@ -65,7 +65,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-6 col-xs-offset-6">
-						<a class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" ng-click="objVm.saveGroup()">salvar</a>
+						<input type="button" value="salvar" class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" ng-click="objVm.saveGroup()" />
 					</div>
 				</div>
 			</div>
@@ -77,8 +77,27 @@
 					<p class="title">Nenhum agrupamento disponível.</p>
 					<p>Utilize os campos ao lado para criar e salvar um novo agrupamento.</p>
 				</div>
-				<div id="groups-container">
-
+				<div id="groups-container" ng-class="{'has-scroll': filteredPVs.length > 4}">
+					<div class="pv-group"  ng-repeat="group in objVm.pvGroups">
+						<h4 class="icon_maq_rede_cartao">{{group.name}}</h4>
+						<div class="group-pvs-wrapper">
+							<div class="row" ng-repeat="pv in group.pvs | limitTo: 3">
+								<div class="col-xs-6"><p>{{pv.code}}</p></div>
+								<div class="col-xs-6"><p><strong>{{pv.acquirer.name}}</strong></p></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="" ng-show="group.pvs.length > 3">mostrar mais</a>
+							</div>
+							<div class="col-xs-3">
+								<a href=""><strong>editar</strong></a>
+							</div>
+							<div class="col-xs-3">
+								<a href=""><strong>deletar</strong></a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
