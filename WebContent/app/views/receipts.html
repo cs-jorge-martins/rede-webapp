@@ -153,7 +153,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <span class="alert" ng-show="!actualReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                        <div ng-show="!actualReleasesData.length" ng-include="'app/views/includes/empty-state.html'"></div>
                     </article>
                     <!-- LANCAMENTOS ATUAIS: END -->
                 </uib-tab>
@@ -257,7 +257,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <span class="alert" ng-show="!futureReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                        <div ng-show="!futureReleasesData.length" ng-include="'app/views/includes/empty-state.html'"></div>
                     </article>
 
                     <!-- LANCAMENTOS FUTUROS: END -->
