@@ -17,21 +17,21 @@
 		.module('Conciliador.PVGroupingController', [])
 		.controller('PVGroupingController', Header);
 
-	Header.$inject = ['$scope', 'filtersService', '$timeout'];
+	Header.$inject = ['$scope', 'filtersService', '$timeout', 'pvService'];
 
-	function Header($scope, filtersService, $timeout) {
+	function Header($scope, filtersService, $timeout, pvService) {
 
 		var objPvListScrollContainer,
 			objWorkspaceScrollContainer,
 			objGroupsScrollContainer;
 
 		var objVm = this;
-		objVm.pvList = [];
+		objVm.pvListSlave = [];
 		objVm.pvListMaster = [];
 		objVm.pvGroups = [];
 		objVm.workspace = {};
 		objVm.initialGroupData = {
-			title: '',
+			name: '',
 			pvs: []
 		};
 
@@ -47,6 +47,7 @@
 		function Init() {
 			objVm.workspace = objVm.initialGroupData;
 			GetPVs();
+			GetGroups();
 		}
 
 		/**
@@ -61,12 +62,12 @@
 		 * contém as informações do PV como: nome, id e adquirente.
 		 */
 		function AddPVToWorkspace(objPV) {
-			var intIndex = objVm.pvList.length - 1;
+			var intIndex = objVm.pvListSlave.length - 1;
 			for(intIndex; intIndex >= 0; intIndex--) {
-				if(objVm.pvList[intIndex].selected || (objVm.pvList[intIndex].code === objPV.code)) {
-					objVm.pvList[intIndex].selected = false;
-					objVm.workspace.pvs.unshift(objVm.pvList[intIndex]);
-					objVm.pvList.splice(intIndex, 1);
+				if(objVm.pvListSlave[intIndex].selected || (objVm.pvListSlave[intIndex].code === objPV.code)) {
+					objVm.pvListSlave[intIndex].selected = false;
+					objVm.workspace.pvs.unshift(objVm.pvListSlave[intIndex]);
+					objVm.pvListSlave.splice(intIndex, 1);
 				}
 			}
 
@@ -89,7 +90,7 @@
 			for(intIndex; intIndex >= 0; intIndex--) {
 				if(objVm.workspace.pvs[intIndex].selected || (objVm.workspace.pvs[intIndex].code === objPV.code)) {
 					objVm.workspace.pvs[intIndex].selected = false;
-					objVm.pvList.unshift(objVm.workspace.pvs[intIndex]);
+					objVm.pvListSlave.unshift(objVm.workspace.pvs[intIndex]);
 					objVm.workspace.pvs.splice(intIndex, 1);
 				}
 			}
@@ -106,17 +107,30 @@
 
 				objPvListScrollContainer = document.querySelector('#pvs-container');
 				objWorkspaceScrollContainer = document.querySelector('#edit-container');
+				objGroupsScrollContainer = document.querySelector('#groups-container');
 
 				Ps.initialize(objPvListScrollContainer);
 				Ps.initialize(objWorkspaceScrollContainer);
-				// TODO: colocar no callback de get groups
-				Ps.initialize(document.querySelector('#groups-container'));
+				Ps.initialize(objGroupsScrollContainer);
+
 				objVm.pvListMaster = objResponse.data;
-				objVm.pvList = objResponse.data;
+				objVm.pvListSlave = objResponse.data;
 
 				UpdateScrollContainers();
 			}).catch(function(){
 				console.log('error');
+			});
+		}
+
+		/**
+		 * @method GetGroups
+		 * Busca os grupos de PVs na API.
+		 */
+		function GetGroups() {
+			pvService.getGroups().then(function(objResponse){
+				objVm.pvGroups = objResponse.data;
+			}).catch(function(){
+				// TODO: implementar erro
 			});
 		}
 
@@ -130,11 +144,18 @@
 			$timeout(function(){
 				Ps.update(objPvListScrollContainer);
 				Ps.update(objWorkspaceScrollContainer);
+				Ps.update(objGroupsScrollContainer);
 			}, 500);
 		}
 
 		function SaveGroup() {
-			console.log('a');
+			pvService.saveGroup(objVm.workspace).then(function(){
+				objVm.pvListSlave = objVm.pvListMaster;
+				objVm.workspace = {};
+				GetGroups();
+			}).catch(function(){
+				// TODO: implementar erro
+			});
 		}
 
 		/**
@@ -145,7 +166,7 @@
 			if (objVm.workspace.pvs.length < 2) {
 				return false;
 			}
-			if (!objVm.workspace.title ) {
+			if (!objVm.workspace.name ) {
 				return false;
 			}
 
