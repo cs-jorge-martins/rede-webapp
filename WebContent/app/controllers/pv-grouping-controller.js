@@ -104,7 +104,8 @@
 
 		/**
 		 * @method GetPVs
-		 * Busca a lista de PVs na API.
+		 * Busca a lista de PVs na API e atualiza os elementos que tem scroll
+		 * customizado
 		 */
 		function GetPVs() {
 			filtersService.GetShops().then(function(objResponse){
@@ -139,7 +140,10 @@
 		}
 
 		/**
-		 * Sal
+		 * @method SaveOrUpdateGroup
+		 * Salva ou Edita um grupo de acordo com o contexto.
+		 * Contém a lógica para diferenciar a criação da atualização do grupo
+		 * de acordo com a flag status
 		 */
 		function SaveOrUpdateGroup() {
 			switch (objVm.workspace.status) {
@@ -179,7 +183,8 @@
 		/**
 		 * @method EditGroup
 		 * Edita um grupo na interface. Joga os pvs do grupo selecionado na área
-		 * de edição, e remove os pvs do grupo da lista de pvs da esquerda
+		 * de edição, e remove os pvs do grupo da lista de pvs da esquerda.
+		 * Também atualiza os elementos que contém scroll personalizado.
 		 */
 		function EditGroup(objGroup) {
 			objVm.pvListSlave = angular.copy(objVm.pvListMaster);
@@ -198,7 +203,12 @@
 		}
 
 		/**
-		 * Deleta um grupo de PVs
+		 * @method EditGroup
+		 * Deleta um grupo de PVs do usuário.
+		 * O métodos exibe um modal para o usuáraio confirmar a ou não a ação.
+		 *
+		 * @param {Object} objGroup Objeto contendo o grupo a ser editado. Este
+		 * objeto contém a mesma estrutra recebida pela API
 		 */
 		function DeleteGroup(objGroup) {
 			modalService.prompt(
@@ -226,6 +236,8 @@
 		}
 
 		/**
+		 * @method UpdateScrollContainers
+		 *
 		 * Atualizar o scroll customizado.
 		 * Este método é chamado quando algun dos containers que contem os scroll
 		 * customizados são alterados em altura.
@@ -240,6 +252,8 @@
 		}
 
 		/**
+		 * @method ValidateGroup
+		 *
 		 * Valida grupo de PVs antes de salvá-lo.
 		 * Verifica se o grupo tem nome e se existem pelo menos 2 pvs relacionados.
 		 */
@@ -254,6 +268,14 @@
 			return true;
 		}
 
+		/**
+		 * @method SelectPV
+		 *
+		 * Seleciona um PV, para adição de PVs em lote.
+		 *
+		 * @param {Object} objPV contendo o PV a ser selecionado. Este
+		 * objeto contém a mesma estrutra recebida pela API
+		 */
 		function SelectPV(objPV) {
 			if(!objPV.selected) {
 				objPV.selected = true;
