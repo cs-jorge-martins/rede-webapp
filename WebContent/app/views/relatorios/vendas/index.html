@@ -73,8 +73,7 @@
 								</tr>
 							</tbody>
 						</table>
-
-						<span class="alert" ng-show="synthetic.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+						<div ng-show="synthetic.noItensMsg" ng-include="'app/views/includes/empty-state.html'"></div>
 					</div>
 				</article>
 			</uib-tab>
@@ -153,8 +152,7 @@
 								</tr>
 							</tbody>
 						</table>
-
-						<span class="alert" ng-show="analytical.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+						<div ng-show="analytical.noItensMsg" ng-include="'app/views/includes/empty-state.html'"></div>
 
 						<div class="footer" ng-show="analytical.items.length">
 							<div class="optionsWrapper">
@@ -291,7 +289,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<span class="alert" ng-show="duplicate.noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+						<div ng-show="duplicate.noItensMsg" ng-include="'app/views/includes/empty-state.html'"></div>
 						<div class="footer" ng-show="duplicate.items.length">
 							<div class="optionsWrapper">
 								<div class="selectWrapper">
