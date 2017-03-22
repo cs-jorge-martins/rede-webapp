@@ -65,6 +65,18 @@
         // display: none;
       }
 
+      li:nth-child(1) a span {
+        &.glyphicon-ok {
+          &:before {
+            background-color: inherit;
+            color: #ff7800;
+            border-radius: 4px;
+            content: '\e927' !important;
+            top: 10px;
+          }
+        }
+      }
+
       a {
         cursor: pointer;
         color: $rcMultiLabelColor;
@@ -81,10 +93,11 @@
 
           &.glyphicon-ok {
             &:before {
-              color: #ff7800;
+              color: #fff;
               border-radius: 4px;
               content: '\e927' !important;
               top: 10px;
+              background-color: #ff7800;
             }
           }
 
