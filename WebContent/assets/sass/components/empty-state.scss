@@ -20,7 +20,7 @@
     }
 
     i {
-	    background-image: url(../img/emptyState.png);
+	    background-image: url(#{$imgPath}emptyState.png);
 	    background-size: cover;
 	    position: absolute;
 	    width: 28px;
