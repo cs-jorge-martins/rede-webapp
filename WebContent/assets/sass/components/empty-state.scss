@@ -1,9 +1,5 @@
 .empty-state {
-    font-family: 'Open Sans';
-    font-size: 14px;
-    color: #575758;
     line-height: 24px;
-    float: left;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,10 +8,11 @@
 
     &.block {
         vertical-align: middle;
-        width: 30%;
+        width: 25%;
     }
 
     p {
+        color: #575758;
 	    margin: 0 0 0 50px !important;
     }
 
@@ -25,6 +22,6 @@
 	    position: absolute;
 	    width: 28px;
 	    height: 25px;
-	    margin: 0 325px 10px 0;
+	    margin: 0 265px 10px 0;
     }
 }
