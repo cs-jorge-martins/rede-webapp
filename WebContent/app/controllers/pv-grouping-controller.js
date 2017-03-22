@@ -134,6 +134,7 @@
 		function GetGroups() {
 			pvService.getGroups().then(function(objResponse){
 				objVm.pvGroups = objResponse.data;
+				UpdateScrollContainers();
 			}).catch(function(){
 				// TODO: implementar erro
 			});
@@ -203,7 +204,7 @@
 		}
 
 		/**
-		 * @method EditGroup
+		 * @method DeleteGroup
 		 * Deleta um grupo de PVs do usuário.
 		 * O métodos exibe um modal para o usuáraio confirmar a ou não a ação.
 		 *

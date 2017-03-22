@@ -49,6 +49,8 @@
         };
 
         /**
+         * @method prompt
+         *
          * Abre um modal de prompt, exibindo um texto com uma ação positiva e
          * outra negativa ('sim ou não')
          *
