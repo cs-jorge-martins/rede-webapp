@@ -49,6 +49,43 @@
         };
 
         /**
+         * @method prompt
+         *
+         * Abre um modal de prompt, exibindo um texto com uma ação positiva e
+         * outra negativa ('sim ou não')
+         *
+         * @param  {String} strTitle Título do modal
+         * @param  {String} strBodyText Texto descritivo do prompt
+         * @param  {Object} objAffirmativeButton Objeto de configuração do botão
+         * de afirmação. Deve seguir a seguinte estrutura:
+         * {
+         *  text: 'texto do botão de afirmação',
+         *  callback: <função de callback que será executada ao clicar no botão>
+         * }
+         * @param  {Object} objNegativeButton Objeto de configuração do botão
+         * de negação. Deve seguir a seguinte estrutura:
+         * {
+         *  text: 'texto do botão de negação',
+         *  callback: <função de callback que será executada ao clicar no botão>
+         * }
+         */
+        this.prompt = function(strTitle, strBodyText, objAffirmativeButton, objNegativeButton) {
+			$uibModal.open({
+                templateUrl: 'app/views/includes/modal/prompt.html',
+                appendTo:  angular.element(document.querySelector('#modalWrapperV2')),
+				bindToController: true,
+				controllerAs: 'vm',
+				controller: function() {
+					var objVm = this;
+					objVm.title = strTitle;
+					objVm.bodyText = strBodyText;
+					objVm.affirmativeButton = objAffirmativeButton;
+					objVm.negativeButton = objNegativeButton;
+				}
+            });
+        };
+
+        /**
          * @method openFull
          * Abre um modal de detalhes (fullscreen)
          *
