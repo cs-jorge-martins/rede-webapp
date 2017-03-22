@@ -15,11 +15,11 @@
 
 	angular
 		.module('Conciliador.PVGroupingController', [])
-		.controller('PVGroupingController', Header);
+		.controller('PVGroupingController', PVGroupingController);
 
-	Header.$inject = ['$scope', 'filtersService', '$timeout', 'pvService'];
+	PVGroupingController.$inject = ['$scope', 'filtersService', '$timeout', 'pvService', 'modalService'];
 
-	function Header($scope, filtersService, $timeout, pvService) {
+	function PVGroupingController($scope, filtersService, $timeout, pvService, modalService) {
 
 		var objPvListScrollContainer,
 			objWorkspaceScrollContainer,
@@ -32,7 +32,8 @@
 		objVm.workspace = {};
 		objVm.initialGroupData = {
 			name: '',
-			pvs: []
+			pvs: [],
+			status: 'CREATE'
 		};
 
 		objVm.addPVToWorkspace = AddPVToWorkspace;
@@ -40,12 +41,14 @@
 		objVm.updateScrollContainers = UpdateScrollContainers;
 		objVm.validateGroup = ValidateGroup;
 		objVm.selectPV = SelectPV;
-		objVm.saveGroup = SaveGroup;
+		objVm.saveOrUpdateGroup = SaveOrUpdateGroup;
+		objVm.editGroup = EditGroup;
+		objVm.deleteGroup = DeleteGroup;
 
 		Init();
 
 		function Init() {
-			objVm.workspace = objVm.initialGroupData;
+			objVm.workspace = angular.copy(objVm.initialGroupData);
 			GetPVs();
 			GetGroups();
 		}
@@ -86,6 +89,7 @@
 		 * contém as informações do PV como: nome, id e adquirente.
 		 */
 		function RemovePVFromWorkspace(objPV) {
+			console.log(objPV);
 			var intIndex = objVm.workspace.pvs.length - 1;
 			for(intIndex; intIndex >= 0; intIndex--) {
 				if(objVm.workspace.pvs[intIndex].selected || (objVm.workspace.pvs[intIndex].code === objPV.code)) {
@@ -114,7 +118,7 @@
 				Ps.initialize(objGroupsScrollContainer);
 
 				objVm.pvListMaster = objResponse.data;
-				objVm.pvListSlave = objResponse.data;
+				objVm.pvListSlave = angular.copy(objVm.pvListMaster);
 
 				UpdateScrollContainers();
 			}).catch(function(){
@@ -135,6 +139,93 @@
 		}
 
 		/**
+		 * Sal
+		 */
+		function SaveOrUpdateGroup() {
+			switch (objVm.workspace.status) {
+				case "CREATE":
+					pvService.saveGroup(objVm.workspace).then(function(){
+						objVm.pvListSlave = angular.copy(objVm.pvListMaster);
+						objVm.workspace = angular.copy(objVm.initialGroupData);
+						GetGroups();
+					}).catch(function(objError){
+						if(objError.status === 422) {
+							modalService.prompt(
+								objVm.workspace.name + ' duplicado',
+								'Agrupamento com o nome <strong>' + objVm.workspace.name + '</strong> já existe.<br /> Escolha outro nome e clique novamente no botão <strong>salvar</strong>.'
+							);
+						}
+					});
+					break;
+				case "EDIT":
+					pvService.editGroup(objVm.workspace).then(function(){
+						objVm.pvListSlave = angular.copy(objVm.pvListMaster);
+						objVm.workspace = angular.copy(objVm.initialGroupData);
+						GetGroups();
+					}).catch(function(objError){
+						if(objError.status === 422) {
+							modalService.prompt(
+								objVm.workspace.name + ' duplicado',
+								'Agrupamento com o nome <strong>' + objVm.workspace.name + '</strong> já existe.<br /> Escolha outro nome e clique novamente no botão <strong>salvar</strong>.'
+							);
+						}
+					});
+					break;
+				default:
+					break;
+			}
+		}
+
+		/**
+		 * @method EditGroup
+		 * Edita um grupo na interface. Joga os pvs do grupo selecionado na área
+		 * de edição, e remove os pvs do grupo da lista de pvs da esquerda
+		 */
+		function EditGroup(objGroup) {
+			objVm.pvListSlave = angular.copy(objVm.pvListMaster);
+			objVm.workspace = angular.copy(objGroup);
+			objVm.workspace.status = "EDIT";
+
+			objVm.workspace.pvs.forEach(function(objPvWorkspace){
+				objVm.pvListSlave.forEach(function(objPvSlave, intIndex){
+					if(objPvWorkspace.code === objPvSlave.code) {
+						objVm.pvListSlave.splice(intIndex, 1);
+					}
+				});
+			});
+
+			UpdateScrollContainers();
+		}
+
+		/**
+		 * Deleta um grupo de PVs
+		 */
+		function DeleteGroup(objGroup) {
+			modalService.prompt(
+				'excluir agrupamento',
+				'Após excluir o agrupamento, não será possível recuperar a informação.',
+				{
+					text: 'sim, excluir agrupamento',
+					callback: function(objVmModal) {
+						pvService.deleteGroup(objGroup.id).then(function() {
+							objVm.pvListSlave = angular.copy(objVm.pvListMaster);
+							objVm.workspace = objVm.initialGroupData;
+							objVmModal.$close();
+							GetGroups();
+						}).catch(function(){
+						});
+					}
+				},
+				{
+					text: 'não, manter agrupamento',
+					callback: function(objVmModal) {
+						objVmModal.$close();
+					}
+				}
+			);
+		}
+
+		/**
 		 * Atualizar o scroll customizado.
 		 * Este método é chamado quando algun dos containers que contem os scroll
 		 * customizados são alterados em altura.
@@ -146,16 +237,6 @@
 				Ps.update(objWorkspaceScrollContainer);
 				Ps.update(objGroupsScrollContainer);
 			}, 500);
-		}
-
-		function SaveGroup() {
-			pvService.saveGroup(objVm.workspace).then(function(){
-				objVm.pvListSlave = objVm.pvListMaster;
-				objVm.workspace = {};
-				GetGroups();
-			}).catch(function(){
-				// TODO: implementar erro
-			});
 		}
 
 		/**
