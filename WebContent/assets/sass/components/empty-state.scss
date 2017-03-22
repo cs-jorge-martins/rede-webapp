@@ -10,20 +10,21 @@
     width: 100%;
     height: 100px;
 
+    &.block {
+        vertical-align: middle;
+        width: 30%;
+    }
+
     p {
-	    vertical-align: middle;
-	    display: table-cell;
-	    width: 331px;
-	    margin: 0 0 0 20px !important;
+	    margin: 0 0 0 50px !important;
     }
 
     i {
 	    background-image: url(../img/emptyState.png);
 	    background-size: cover;
-	    line-height: 20px;
 	    position: absolute;
 	    width: 28px;
 	    height: 25px;
-	    margin: 0 375px 10px 0;
+	    margin: 0 325px 10px 0;
     }
 }
