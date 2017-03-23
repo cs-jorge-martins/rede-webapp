@@ -1,10 +1,14 @@
-.rc-select {
+/*
+ Projeto: conciliation
+ Author/Empresa: Rede
+ Copyright (C) 2016 Redecard S.A.
+ */
 
+.rc-select {
 	position: relative;
 	width: 100%;
 
 	.dropdown-toggle {
-
 		border: 1px solid $rcMultiBorderColor;
 		color: $rcMultiLabelColor;
 		font-size: 1em;
@@ -31,46 +35,12 @@
 	}
 
 	.list-group-pvs {
-
 		position: absolute;
 		z-index: 10;
 		border: 1px solid #dddddd;
 		top: 6em;
 
 		ul {
-
-			&.header {
-				padding: 0.5em 0 1em;
-
-				.selectAll span, .deselectAll span {
-					&::before, &::after {
-						color: #ff7800 !important;
-						border-radius: 4px;
-					}
-				}
-
-				.selectAll {
-
-					span {
-
-						&::before {
-							// background-color: #fff;
-							content: '\e927' !important;
-						}
-					}
-				}
-
-				.deselectAll {
-
-					span {
-						&::before {
-							// background-color: #fff;
-							content: '\e956' !important;
-						}
-					}
-				}
-			}
-
 			background: #fff;
 			border-bottom: 0;
 			border-radius: 0;
@@ -84,10 +54,36 @@
 			z-index: 1;
 			width: 100%;
 			margin: 0;
-    		padding: 0;
+    	padding: 0;
+
+			&.header {
+				padding: 0.5em 0 1em;
+
+				.selectAll span, .deselectAll span {
+					&::before, &::after {
+						color: #ff7800 !important;
+						border-radius: 4px;
+					}
+				}
+
+				.selectAll {
+					span {
+						&::before {
+							content: '\e927' !important;
+						}
+					}
+				}
+
+				.deselectAll {
+					span {
+						&::before {
+							content: '\e956' !important;
+						}
+					}
+				}
+			}
 
 			li {
-
 				list-style: none;
 
 				a {
@@ -116,11 +112,14 @@
 						}
 					}
 
-					.glyphicon-ok::before {
-						background-color: $defaultOrange;
-				    color: $backgroundChecked;
-				    content: '\e927' !important;
-						border-radius: 4px;
+					.glyphicon-ok {
+						&::before {
+							background-color: $defaultOrange;
+					    color: $backgroundChecked;
+					    content: '\e927' !important;
+							border-radius: 4px;
+							padding: 2px;
+						}
 					}
 
 					&:hover {
@@ -144,11 +143,13 @@
 		box-shadow: 0em -0.3em 0.9em 0em rgba(0, 0, 0, 0.1);
 		padding: 10px 14px;
 		position: relative;
+
 		a {
 			color: $defaultOrange;
 			text-decoration: none;
 			padding-right: 2.5em;
 			font-size: 1.2em;
+
 			&:after {
 				font-family: $fontItau;
 				content: '\e997';
@@ -159,5 +160,4 @@
 			}
 		}
 	}
-
 }
