@@ -248,7 +248,7 @@
 		function CancelEditGroup() {
 			modalService.prompt(
 				'cancelar edição?',
-				'Deseja cancelar a edição do grupo "' + objVm.workspace.name + '"?',
+				'Deseja cancelar a edição do agrupamento "' + objVm.workspace.name + '"?',
 				{
 					text: 'sim, cancelar',
 					callback: function(objVmModal) {
@@ -259,7 +259,7 @@
 					}
 				},
 				{
-					text: 'não, voltar a edição',
+					text: 'não, continuar editando',
 					callback: function(objVmModal) {
 						objVmModal.$close();
 					}
