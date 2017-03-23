@@ -54,16 +54,25 @@
          * @method getGroups
          * Edita um grupo de PVs do usuário
          */
-        this.editGroup = function() {
-
+        this.editGroup = function(objGroup) {
+            return $http({
+                url: app.endpoint + '/groups',
+                method: "PUT",
+                data: objGroup,
+                headers: Request.setHeaders()
+            });
         };
 
         /**
          * @method getGroups
          * Deleta um grupo de PVs do usuário
          */
-        this.deleteGroup = function() {
-
+        this.deleteGroup = function(intID) {
+			return $http({
+                url: app.endpoint + '/groups/' + intID,
+                method: "DELETE",
+                headers: Request.setHeaders()
+            });
         };
     }
 })();

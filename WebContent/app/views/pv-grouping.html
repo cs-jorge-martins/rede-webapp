@@ -65,7 +65,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-6 col-xs-offset-6">
-						<input type="button" value="salvar" class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" ng-click="objVm.saveGroup()" />
+						<input type="button" value="salvar" class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" ng-click="objVm.saveOrUpdateGroup()" />
 					</div>
 				</div>
 			</div>
@@ -78,23 +78,28 @@
 					<p>Utilize os campos ao lado para criar e salvar um novo agrupamento.</p>
 				</div>
 				<div id="groups-container" ng-class="{'has-scroll': filteredPVs.length > 4}">
-					<div class="pv-group"  ng-repeat="group in objVm.pvGroups">
+					<div class="pv-group"
+						ng-repeat="group in objVm.pvGroups"
+						ng-init="expanded = false"
+						ng-class="{ expanded: expanded == true }">
 						<h4 class="icon_maq_rede_cartao">{{group.name}}</h4>
 						<div class="group-pvs-wrapper">
-							<div class="row" ng-repeat="pv in group.pvs | limitTo: 3">
+							<div class="row" ng-repeat="pv in group.pvs">
 								<div class="col-xs-6"><p>{{pv.code}}</p></div>
 								<div class="col-xs-6"><p><strong>{{pv.acquirer.name}}</strong></p></div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-6">
-								<a href="" ng-show="group.pvs.length > 3">mostrar mais</a>
+								<a ng-click="expanded = !expanded">
+									{{ expanded ? "mostrar menos" : "mostrar mais" }}
+								</a>
 							</div>
 							<div class="col-xs-3">
-								<a href=""><strong>editar</strong></a>
+								<a ng-click="objVm.editGroup(group)"><strong>editar</strong></a>
 							</div>
 							<div class="col-xs-3">
-								<a href=""><strong>deletar</strong></a>
+								<a ng-click="objVm.deleteGroup(group)"><strong>deletar</strong></a>
 							</div>
 						</div>
 					</div>
