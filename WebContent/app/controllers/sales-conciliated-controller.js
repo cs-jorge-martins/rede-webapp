@@ -324,7 +324,7 @@
          * @param {String} strModel primeiro nome da Model
          */
 		function ResetFilter(strModel) {
-			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
+			$scope.filter[strModel+ 'Model'] = [];
 			$scope.search();
 		}
 
