@@ -137,7 +137,6 @@
 			 */
 			function CheckOrUncheckGroup(objGroup) {
 
-
 				if(!GroupSelected(objGroup.name)) {
 					arrCheckedGroups.push(objGroup.name);
 				} else {
@@ -155,11 +154,7 @@
 
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 
-
 				console.log("$scope.model", $scope.model);
-
-
-
 
 			}
 
@@ -301,6 +296,18 @@
 				if(intIndex !== null && $scope.model.indexOf(intIndex)) {
 					$scope.model.splice(intIndex, 1);
 				}
+				if($scope.pvList) {
+
+					if(objItem.groups) {
+						objItem.groups.forEach(function (strGroupName) {
+							var intArrIndex = arrCheckedGroups.indexOf(strGroupName);
+							if(intArrIndex >= 0) {
+								arrCheckedGroups.splice(intArrIndex, 1);
+							}
+						});
+					}
+
+				}
 				objItem.checked = false;
 			}
 
@@ -347,6 +354,16 @@
 					$scope.model.push(objItem);
 					objItem.checked = true;
 				});
+
+				if($scope.pvList) {
+					// console.log("vm.pvGroups", vm.pvGroups)
+					vm.pvGroups.forEach(function (objPvGroup) {
+						if(arrCheckedGroups.indexOf(objPvGroup.name) < 0) {
+							arrCheckedGroups.push(objPvGroup.name);
+						}
+					});
+				}
+
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
 
@@ -358,6 +375,11 @@
 				$scope.data.forEach(function (objItem) {
 					objItem.checked = false;
 				});
+
+				if($scope.pvList) {
+					arrCheckedGroups = [];
+				}
+
 				$scope.model = [];
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
