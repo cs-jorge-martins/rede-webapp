@@ -28,17 +28,18 @@ describe('PV grouping controller', function() {
 
 			vm = $controller('PVGroupingController', {
 				$scope: $scope,
-				$timeout: $timeout,
-				filtersService: filtersServiceMock,
-				pvService: pvServiceMock
+				$timeout: $timeout
+				//,
+				//filtersService: filtersServiceMock,
+				//pvService: pvServiceMock
 			});
 		});
 
-		spyOn(filtersServiceMock, 'GetShops').andCallThrough();
-		spyOn(pvServiceMock, 'getGroups').andCallThrough();
-		spyOn(pvServiceMock, 'saveGroup').andCallThrough();
-		spyOn(pvServiceMock, 'editGroup').andCallThrough();
-		spyOn(pvServiceMock, 'deleteGroup').andCallThrough();
+		// spyOn(filtersServiceMock, 'GetShops').andCallThrough();
+		// spyOn(pvServiceMock, 'getGroups').andCallThrough();
+		// spyOn(pvServiceMock, 'saveGroup').andCallThrough();
+		// spyOn(pvServiceMock, 'editGroup').andCallThrough();
+		// spyOn(pvServiceMock, 'deleteGroup').andCallThrough();
 
 	});
 
