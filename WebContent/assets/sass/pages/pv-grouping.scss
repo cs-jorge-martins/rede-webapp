@@ -35,7 +35,8 @@
 				font-family: "open_sanslight";
 			    font-size: 2em;
 			    padding-left: 0;
-				color: $platinum;
+				color: #00b9b6;
+
 				::placeholder,
 				::-webkit-input-placeholder,
 				::-moz-placeholder, {
@@ -43,9 +44,16 @@
 				}
 			}
 
-			.input-group-addon:before {
-				font-size: 1.4em;
-				color: $platinum;
+			.input-group-addon {
+
+				&:before {
+					font-size: 1.4em;
+					color: $platinum;
+				}
+
+				&.has-error:before {
+					color: #00b9b6;
+				}
 			}
 		}
 
@@ -87,10 +95,6 @@
 		&.not-valid {
 			#edit-container {
 				height: 21.2em;
-			}
-
-			.input-group-addon:before {
-				color: $defaultOrange;
 			}
 		}
 
@@ -193,6 +197,13 @@
 		margin-bottom: 0.8em;
 		&:last-of-type {
 			margin-bottom: 0;
+		}
+	}
+
+	.btn {
+		&.disabled {
+			cursor: pointer;
+			pointer-events: initial;
 		}
 	}
 }
