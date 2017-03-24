@@ -174,8 +174,6 @@
 
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 
-				console.log("$scope.model", $scope.model);
-
 			}
 
 			function UncheckGroup(arrPvs, strGroupName) {
@@ -298,11 +296,42 @@
 			 * @param {Object} objItem objeto para ser adicionado no $scope.model
 			 */
 			function CheckItem(objItem) {
+
 				$scope.model.push({
 					label: objItem.label,
 					id: objItem.id
 				});
+
 				objItem.checked = true;
+
+				if($scope.pvList) {
+					if(objItem.groups) {
+						objItem.groups.forEach(function (strGroupName) {
+							vm.pvGroups.forEach(function (objPvGroup) {
+								if(objPvGroup.name === strGroupName) {
+
+									var intCountElementsGroupChecked = 0;
+
+									objPvGroup.pvs.forEach(function (objPv) {
+										$scope.data.forEach(function (objData) {
+											if(objData.label === objPv.code) {
+												if(objData.checked === true) {
+													intCountElementsGroupChecked++;
+												}
+											}
+										});
+									});
+
+									if(intCountElementsGroupChecked === objPvGroup.pvs.length) {
+										arrCheckedGroups.push(objPvGroup.name);
+									}
+
+								}
+							});
+						});
+					}
+				}
+
 			}
 
 			/**
