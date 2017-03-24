@@ -83,6 +83,26 @@
 					}
 				}
 
+				var clickAnywhere = angular.element(document.querySelector("body"));
+						clickAnywhere.bind('click', function() {
+
+							$scope.class = "";
+
+					});
+
+				var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
+						ListGroupPvs.bind('click', function($event) {
+							
+							$event.stopPropagation();
+
+							var boolListPvs = $scope.class = "hide-list";
+
+							if (boolListPvs !== 'false') {
+								$scope.class = "show-list";
+							}
+
+						});
+
 			}
 
 			function GetPvGroups() {
@@ -420,13 +440,26 @@
 			 */
 			function OpenPlaceholder() {
 
-				$scope.IsVisible = false;
+				// $scope.class = "hide-list";
 
-				$scope.ShowHidePlaceholder = function () {
-					$scope.IsVisible = $scope.IsVisible ? false : true;
-				};
+ 					$scope.ShowHidePlaceholder = function($event){
 
-			}
+ 						if ($scope.class === "show-list") {
+
+ 							$scope.class = "";
+							$event.stopPropagation();
+
+ 						} else {
+
+ 							$scope.class = "show-list";
+							$event.stopPropagation();
+
+ 						}
+
+						$event.stopPropagation();
+
+ 					};
+ 			}
 
 			/**
 			 * @method OpenPvModal

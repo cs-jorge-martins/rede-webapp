@@ -1,12 +1,12 @@
 <div class="rc-select">
 	<div class="form-group">
 		<label for="rcSelect_{{$id}}">{{ label }}</label>
-		<button class="dropdown-toggle btn btn-default btn-block" id="rcSelect_{{$id}}" ng-click="ShowHidePlaceholder()">
+		<button class="dropdown-toggle btn btn-default btn-block" id="rcSelect_{{$id}}" ng-click="ShowHidePlaceholder($event)">
 			{{ placeHolder }}
 		</button>
 	</div>
 
-	<div class="list-group-pvs btn-block" ng-show="IsVisible">
+	<div class="list-group-pvs btn-block {{class}}">
 		<ul>
 			<li>
 				<ul class="header" ng-if="checkAndUncheckAll">
