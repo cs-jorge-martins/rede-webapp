@@ -57,7 +57,8 @@ var objApp = angular.module('Conciliador',['ngRoute', 'ngLocale','angularFileUpl
                             'Conciliador.salesToConciliateDetailsController',
                             'Conciliador.unprocessedSalesDetailsController',
                             'Conciliador.salesConciliatedDetailsController',
-                            'Conciliador.PVGroupingController'
+                            'Conciliador.PVGroupingController',
+                            'Conciliador.PvService'
 							])
 	.config(function(cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = true;

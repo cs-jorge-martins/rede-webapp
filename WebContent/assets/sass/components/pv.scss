@@ -38,3 +38,56 @@
 		}
 	}
 }
+
+.pv-group {
+	background: #f8f8f8;
+	padding: 1em 1.6em;
+	margin-bottom: 0.8em;
+
+	h4 {
+		font-family: "open_sanslight";
+	    font-size: 2em;
+		color: #00b9b6;
+		padding-left: 1.6em;
+    	position: relative;
+		margin-bottom: 0.8em;
+
+		&:before {
+			color: #00b9b6;
+			position: absolute;
+			left: 0;
+			top: 0.1em;
+		}
+	}
+
+	p {
+		color: $grafitteGray;
+		font-size: 1.3em;
+
+		strong {
+			font-size: .9em;
+		}
+	}
+
+	a {
+		color: $defaultOrange;
+    	font-size: 1.2em;
+		margin-top: 1em;
+		display: block;
+
+		strong {
+			font-size: .9em;
+		}
+	}
+
+	.group-pvs-wrapper {
+		height: 7em;
+		overflow: hidden;
+	}
+
+	&.expanded {
+		.group-pvs-wrapper {
+			height: auto;
+		}
+	}
+}

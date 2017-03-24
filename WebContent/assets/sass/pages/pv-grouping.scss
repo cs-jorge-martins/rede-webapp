@@ -24,7 +24,7 @@
 
 		.empty-state {
 			&:before {
-				content: '\e956';
+				content: '\e94f';
 			}
 		}
 	}
@@ -75,14 +75,22 @@
 			li {
 				font-size: 1.2em;
 				color: #00b9b6;
-				transition: .3s linear all;
 				margin-bottom: 0.3em;
+				transition: .3s linear all;
+
+				&.ng-hide {
+					opacity: 0;
+				}
 			}
 		}
 
 		&.not-valid {
 			#edit-container {
 				height: 21.2em;
+			}
+
+			.input-group-addon:before {
+				color: $defaultOrange;
 			}
 		}
 
@@ -102,6 +110,10 @@
 			&:before {
 				content: '\e94f';
 			}
+		}
+
+		.icon_maq_rede_cartao:before {
+			color: #00b9b6;
 		}
 	}
 

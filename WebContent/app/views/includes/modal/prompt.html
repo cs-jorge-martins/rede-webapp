@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">
+        <span class="modal-header-text">{{ vm.title }}</span>
+        <button class="close" ng-click="close()">
+            <i class="icon_fechar"></i>
+        </button>
+    </h3>
+</div>
+<div>
+    <div class="modal-body">
+        <p ng-bind-html="vm.bodyText"></p>
+    </div>
+    <div class="modal-footer">
+        <div class="modal-button">
+            <button class="btn btn-cancel btn-block" ng-click="vm.negativeButton.callback(vm)" ng-show="vm.negativeButton">{{ vm.negativeButton.text }}</button>
+        </div>
+        <div class="modal-button">
+            <button class="btn btn-primary" ng-click="vm.affirmativeButton.callback(vm)" ng-show="vm.affirmativeButton">{{ vm.affirmativeButton.text }}</button>
+        </div>
+    </div>
+</div>
