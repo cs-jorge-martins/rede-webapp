@@ -60,17 +60,17 @@
       top: 3em;
       width: 100%;
 
-      li:nth-child(1) a span {
-        &.glyphicon-ok {
-          &:before {
-            background-color: inherit;
-            color: #ff7800;
-            border-radius: 4px;
-            content: '\e927' !important;
-            top: 10px;
-          }
-        }
-      }
+      // li:nth-child(1) a span {
+      //   &.glyphicon-ok {
+      //     &:before {
+      //       background-color: inherit;
+      //       color: #ff7800;
+      //       border-radius: 4px;
+      //       content: '\e927' !important;
+      //       top: 10px;
+      //     }
+      //   }
+      // }
 
       li:nth-child(1) a span {
         &.glyphicon-ok {
@@ -79,7 +79,17 @@
             color: #ff7800;
             border-radius: 4px;
             content: '\e927' !important;
-            top: 10px;
+          }
+        }
+      }
+
+      li:nth-child(1) a span,
+      li:nth-child(2) a span {
+        &.glyphicon-ok {
+          &:before {
+            font-size: 1em;
+            top: 6px;
+            left: 0;
           }
         }
       }
@@ -89,29 +99,38 @@
         color: $rcMultiLabelColor;
         display: block;
         font-size: 1em;
-        padding: 0.5em 0 0.5em 2.9em;
+        padding: 0.7em 0 0.7em 3.5em;
         position: relative;
         text-transform: none;
 
         span {
-          left: 0;
           position: absolute;
+          left: 10px;
           top: 0;
+          font-size: 1.7em;
 
           &.glyphicon-ok {
             &:before {
               color: #fff;
               border-radius: 4px;
               content: '\e927' !important;
-              top: 10px;
+              top: 9px;
+              left: 0;
               background-color: #ff7800;
-              padding: 2px;
+              padding: 3px;
+              font-size: 0.7em;
+              width: 20px;
+              height: 20px;
+              position: relative;
+              top: 9px;
+              line-height: 14px;
             }
           }
 
           &.glyphicon-remove {
             &:before {
               color: #ff7800;
+              background-color: initial;
               border-radius: 4px;
               content: '\e956' !important;
               top: 10px;
@@ -122,14 +141,20 @@
     }
 
     a span:before {
-      color: $rcMultiLabelColor;
+      color: #979797;
       content: '\e964';
       display: block;
       font-family: $fontItau;
       font-size: 1em;
-      left: 10px;
-      position: absolute;
-      top: 7px;
+      left: 0;
+      top: 9px;
+      background-color: #f0f0f0;
+      width: 21px;
+      height: 20px;
+      border-radius: 4px;
+      position: relative;
+      line-height: 20px;
+      text-indent: -1px;
     }
 
   }
