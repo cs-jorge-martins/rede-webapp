@@ -17,7 +17,7 @@
 		text-align: left;
 
 		&:hover, &:active, &:focus {
-			background: #fff;
+			background: $statesListPvs;
 			border-color: $rcMultiBorderColor;
 			box-shadow: none;
 		}
@@ -35,10 +35,18 @@
 	}
 
 	.list-group-pvs {
+		display: none;
+	}
+
+	.list-group-pvs.show-list {
+		display: block;
+	}
+
+	.list-group-pvs {
 		position: absolute;
 		z-index: 10;
-		border: 1px solid #dddddd;
-		top: 6em;
+		border: 1px solid $mediumGray;
+		top: 5.88em;
 
 		ul {
 			background: #fff;
@@ -61,7 +69,7 @@
 
 				span {
 					&::before, &::after {
-						color: #ff7800;
+						color: $defaultOrange;
 						border-radius: 4px;
 					}
 				}
@@ -88,7 +96,7 @@
 
 				a {
 					cursor: pointer;
-					color: #575758;
+					color: $grafitteGray;
 					display: block;
 					font-size: 1.2em;
 					position: relative;
@@ -107,7 +115,7 @@
 						left: 10px;
 
 						&::before {
-							color: #575758;
+							color: $grafitteGray;
 					    content: '\e964';
 						}
 					}
@@ -130,7 +138,7 @@
 			}
 
 			.divider {
-				background-color: #e5e5e5;
+				background-color: $dividerListPvs;
 				height: 1px;
 				padding: 0;
 				margin-top: 8px;
