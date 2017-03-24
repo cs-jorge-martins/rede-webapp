@@ -92,7 +92,7 @@
 
 				var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
 						ListGroupPvs.bind('click', function($event) {
-							
+
 							$event.stopPropagation();
 
 							var boolListPvs = $scope.class = "hide-list";
@@ -186,7 +186,7 @@
 
 					objData.groups.forEach(function (strGName) {
 
-						arrPvs.forEach(function (objPv) {
+						arrPvs.forEach(function () {
 
 							if(strGName !== strGroupName && arrCheckedGroups.indexOf(strGName) >= 0) {
 								bolCanExcludeItem = false;
@@ -196,7 +196,7 @@
 
 					});
 
-					if(bolCanExcludeItem && objData.checked) {
+					if(bolCanExcludeItem && objData.checked && objData.groups.length) {
 
 						var intIndex;
 						var intArrayIndex;
