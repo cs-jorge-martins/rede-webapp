@@ -76,6 +76,8 @@
 
 				.selectAll {
 					span {
+						background-color: inherit;
+
 						&::before {
 							content: '\e927' !important;
 						}
@@ -84,6 +86,8 @@
 
 				.deselectAll {
 					span {
+						background-color: inherit;
+
 						&::before {
 							content: '\e956' !important;
 						}
@@ -98,25 +102,33 @@
 					cursor: pointer;
 					color: $grafitteGray;
 					display: block;
-					font-size: 1.2em;
 					position: relative;
 					text-transform: none;
 					line-height: 1.42857143;
-					padding: 0.5em 0 0.5em 2.9em;
+					padding: 0.7em 0 0.7em 3.5em;
 					text-decoration: none;
 
 					span {
 						display: block;
+						width: 20px;
+						height: 20px;
+						background-color: rgba(240, 240, 240, 1);
+						border-radius: 4px;
 						font-family: "itaufonts_master_24px_v1";
-						font-size: 1.2em;
-						line-height: 22px !important;
+						font-size: 1.7em;
+						line-height: 18px !important;
 						position: absolute;
 						top: 7px;
 						left: 10px;
 
 						&::before {
-							color: $grafitteGray;
+							color: $backgroundNotChecked;
 					    content: '\e964';
+							font-size: 1.2em;
+					    top: 0px;
+					    position: relative;
+					    left: -6px;
+					    padding: 3px;
 						}
 					}
 
@@ -126,7 +138,11 @@
 					    color: $backgroundChecked;
 					    content: '\e927' !important;
 							border-radius: 4px;
-							padding: 2px;
+							font-size: 0.7em;
+					    top: -2px;
+					    position: relative;
+					    left: 0px;
+					    padding: 3px;
 						}
 					}
 
