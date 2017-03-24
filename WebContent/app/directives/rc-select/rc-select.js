@@ -92,8 +92,6 @@
 
 				var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
 						ListGroupPvs.bind('click', function($event) {
-							
-							$event.stopPropagation();
 
 							var boolListPvs = $scope.class = "hide-list";
 
@@ -101,7 +99,12 @@
 								$scope.class = "show-list";
 							}
 
+							$event.stopPropagation();
+
 						});
+
+				var ListGroupRcMultiSelect = angular.element(document.getElementsByClassName("dropdown-menu"));
+				console.log(">>>>>", ListGroupRcMultiSelect);
 
 			}
 
@@ -440,19 +443,15 @@
 			 */
 			function OpenPlaceholder() {
 
-				// $scope.class = "hide-list";
-
  					$scope.ShowHidePlaceholder = function($event){
 
  						if ($scope.class === "show-list") {
 
  							$scope.class = "";
-							$event.stopPropagation();
 
  						} else {
 
  							$scope.class = "show-list";
-							$event.stopPropagation();
 
  						}
 
