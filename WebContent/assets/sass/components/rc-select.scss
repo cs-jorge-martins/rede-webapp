@@ -107,6 +107,7 @@
 					line-height: 1.42857143;
 					padding: 0.7em 0 0.7em 3.5em;
 					text-decoration: none;
+					font-size: 1.164em;
 
 					span {
 						display: block;
@@ -115,10 +116,10 @@
 						background-color: rgba(240, 240, 240, 1);
 						border-radius: 4px;
 						font-family: "itaufonts_master_24px_v1";
-						font-size: 1.7em;
+						font-size: 1.4em;
 						line-height: 18px !important;
 						position: absolute;
-						top: 7px;
+						top: 11px;
 						left: 10px;
 
 						&::before {
@@ -139,9 +140,9 @@
 					    content: '\e927' !important;
 							border-radius: 4px;
 							font-size: 0.7em;
-					    top: -2px;
 					    position: relative;
-					    left: 0px;
+					    top: -3px;
+					    left: -1px;
 					    padding: 3px;
 						}
 					}
