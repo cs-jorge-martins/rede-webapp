@@ -37,6 +37,7 @@
 			hasErrors: false,
 			id: false
 		};
+		objVm.validationFlickClass = "";
 
 		objVm.addPVToWorkspace = AddPVToWorkspace;
 		objVm.removePVFromWorkspace = RemovePVFromWorkspace;
@@ -150,6 +151,9 @@
 		 * de acordo com a flag status
 		 */
 		function SaveOrUpdateGroup() {
+
+			delete objVm.workspace.id;
+
 			switch (objVm.workspace.status) {
 				case "CREATE":
 					pvService.saveGroup(objVm.workspace).then(function(){
@@ -326,6 +330,10 @@
 				SaveOrUpdateGroup();
 			} else {
 				objVm.workspace.hasErrors = true;
+				objVm.validationFlickClass = "flick";
+				$timeout(function(){
+					objVm.validationFlickClass = "";
+				}, 400);
 			}
 		}
 
@@ -336,16 +344,11 @@
 		 * Verifica se o grupo tem nome e se existem pelo menos 2 pvs relacionados.
 		 */
 		function IsGroupValid() {
-			var hasError = true;
-
-			if (objVm.workspace.pvs.length < 2) {
-				hasError = false;
-			}
-			if (!objVm.workspace.name ) {
-				hasError = false;
+			if (objVm.workspace.pvs.length < 2 || !objVm.workspace.name ) {
+				return false;
 			}
 
-			return hasError;
+			return true;
 		}
 
 		/**

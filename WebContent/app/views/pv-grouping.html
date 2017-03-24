@@ -51,7 +51,7 @@
 					</div>
 				</div>
 				<div id="edit-wrapper">
-					<ul class="validate-list" ng-class="{hide: objVm.isGroupValid()}" ng-hide="!objVm.workspace.hasErrors">
+					<ul class="validate-list {{objVm.validationFlickClass}}" ng-show="!objVm.isGroupValid()">
 						<li ng-hide="objVm.workspace.name">- O novo agrupamento precisa de um nome</li>
 						<li ng-hide="objVm.workspace.pvs.length > 1">- Selecione pelo menos 2 estabelecimentos antes de salvar</li>
 					</ul>
@@ -68,7 +68,7 @@
 						<a ng-click="objVm.cancelEditGroup()" class="btn btn-cancel btn-block btn-sm" ng-show="objVm.workspace.status === 'EDIT'">cancelar</a>
 					</div>
 					<div class="col-xs-6">
-						<a ng-click="objVm.validateGroup()" class="btn btn-primary btn-block btn-sm" ng-class="{disabled: (!objVm.workspace.name || objVm.workspace.pvs.length < 2 )}">salvar</a>
+						<input type="button" value="salvar" ng-click="objVm.validateGroup()" class="btn btn-primary btn-block btn-sm">
 					</div>
 				</div>
 			</div>
