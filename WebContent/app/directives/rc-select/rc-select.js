@@ -452,7 +452,10 @@
 					'agrupamento de estabelecimentos',
 					'app/views/pv-grouping.html',
 					'PVGroupingController',
-					$scope
+					$scope,
+					function() {
+						console.log('atualizar lista de pvs!');
+					}
 				);
 			}
 
