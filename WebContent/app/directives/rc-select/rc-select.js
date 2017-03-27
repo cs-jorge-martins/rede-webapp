@@ -52,7 +52,7 @@
 			controllerAs: 'vm'
 		};
 
-		function Controller($scope) {
+		function Controller($scope, $element) {
 
 			var arrCheckedGroups = [];
 
@@ -66,6 +66,8 @@
 			vm.openPvModal = OpenPvModal;
 			vm.groupSelected = GroupSelected;
 			vm.pvGroups = [];
+			vm.elementTrigger = $element[0].children[0];
+			console.log($element)
 
 			Init();
 			OpenPlaceholder();
@@ -84,27 +86,39 @@
 				}
 
 				var clickAnywhere = angular.element(document.querySelector("body"));
-						clickAnywhere.bind('click', function() {
+						clickAnywhere.bind('click', function($event) {
 
-							$scope.class = "";
+							var target = $event.target.parentElement;
+							var found = false;
+
+							while (angular.isDefined(target) && target !== null && !found) {
+								if (target.className.indexOf('rc-select') > -1 && !found) {
+									if (target === vm.elementTrigger) {
+										found = true;
+										break;
+									}
+								}
+
+								target = target.parentElement;
+
+							}
+
+							if (!found) {
+								$scope.class = "";
+							}
 
 					});
 
 				var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
-						ListGroupPvs.bind('click', function($event) {
+						ListGroupPvs.bind('click', function() {
 
-							var boolListPvs = $scope.class = "hide-list";
+							$scope.class = "hide-list";
 
-							if (boolListPvs !== 'false') {
+							if ( ($scope.class = "hide-list") !== 'false') {
 								$scope.class = "show-list";
 							}
 
-							$event.stopPropagation();
-
 						});
-
-				var ListGroupRcMultiSelect = angular.element(document.getElementsByClassName("dropdown-menu"));
-				console.log(">>>>>", ListGroupRcMultiSelect);
 
 			}
 
@@ -189,7 +203,7 @@
 
 					objData.groups.forEach(function (strGName) {
 
-						arrPvs.forEach(function (objPv) {
+						arrPvs.forEach(function () {
 
 							if(strGName !== strGroupName && arrCheckedGroups.indexOf(strGName) >= 0) {
 								bolCanExcludeItem = false;
@@ -199,7 +213,7 @@
 
 					});
 
-					if(bolCanExcludeItem && objData.checked) {
+					if(bolCanExcludeItem && objData.checked && objData.groups.length) {
 
 						var intIndex;
 						var intArrayIndex;
@@ -443,7 +457,7 @@
 			 */
 			function OpenPlaceholder() {
 
- 					$scope.ShowHidePlaceholder = function($event){
+ 					$scope.ShowHidePlaceholder = function(){
 
  						if ($scope.class === "show-list") {
 
@@ -454,8 +468,6 @@
  							$scope.class = "show-list";
 
  						}
-
-						$event.stopPropagation();
 
  					};
  			}

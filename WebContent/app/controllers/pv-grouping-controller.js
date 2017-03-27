@@ -33,17 +33,21 @@
 		objVm.initialGroupData = {
 			name: '',
 			pvs: [],
-			status: 'CREATE'
+			status: 'CREATE',
+			hasErrors: false,
+			id: false
 		};
 
 		objVm.addPVToWorkspace = AddPVToWorkspace;
 		objVm.removePVFromWorkspace = RemovePVFromWorkspace;
 		objVm.updateScrollContainers = UpdateScrollContainers;
 		objVm.validateGroup = ValidateGroup;
+		objVm.isGroupValid = IsGroupValid;
 		objVm.selectPV = SelectPV;
 		objVm.saveOrUpdateGroup = SaveOrUpdateGroup;
-		objVm.editGroup = EditGroup;
+		objVm.editGroupVerify = EditGroupVerify;
 		objVm.deleteGroup = DeleteGroup;
+		objVm.cancelEditGroup = CancelEditGroup;
 
 		Init();
 
@@ -89,7 +93,6 @@
 		 * contém as informações do PV como: nome, id e adquirente.
 		 */
 		function RemovePVFromWorkspace(objPV) {
-			console.log(objPV);
 			var intIndex = objVm.workspace.pvs.length - 1;
 			for(intIndex; intIndex >= 0; intIndex--) {
 				if(objVm.workspace.pvs[intIndex].selected || (objVm.workspace.pvs[intIndex].code === objPV.code)) {
@@ -156,7 +159,7 @@
 					}).catch(function(objError){
 						if(objError.status === 422) {
 							modalService.prompt(
-								objVm.workspace.name + ' duplicado',
+								'agrupamento "' + objVm.workspace.name + '" duplicado',
 								'Agrupamento com o nome <strong>' + objVm.workspace.name + '</strong> já existe.<br /> Escolha outro nome e clique novamente no botão <strong>salvar</strong>.'
 							);
 						}
@@ -170,7 +173,7 @@
 					}).catch(function(objError){
 						if(objError.status === 422) {
 							modalService.prompt(
-								objVm.workspace.name + ' duplicado',
+								'agrupamento "' + objVm.workspace.name + '" duplicado',
 								'Agrupamento com o nome <strong>' + objVm.workspace.name + '</strong> já existe.<br /> Escolha outro nome e clique novamente no botão <strong>salvar</strong>.'
 							);
 						}
@@ -188,6 +191,8 @@
 		 * Também atualiza os elementos que contém scroll personalizado.
 		 */
 		function EditGroup(objGroup) {
+			ClearSelectedGroups();
+			objGroup.selected = true;
 			objVm.pvListSlave = angular.copy(objVm.pvListMaster);
 			objVm.workspace = angular.copy(objGroup);
 			objVm.workspace.status = "EDIT";
@@ -201,6 +206,65 @@
 			});
 
 			UpdateScrollContainers();
+		}
+
+		function EditGroupVerify(objGroup) {
+			if(objVm.workspace.id){
+				modalService.prompt(
+					'cancelar edição?',
+					'você já está editando o grupo "' + objVm.workspace.name + '". Deseja cancelar a edição?',
+					{
+						text: 'sim, cancelar',
+						callback: function(objVmModal) {
+							EditGroup(objGroup);
+							objVmModal.$close();
+						}
+					},
+					{
+						text: 'não, voltar a edição',
+						callback: function(objVmModal) {
+							objVmModal.$close();
+						}
+					}
+				);
+			} else {
+				EditGroup(objGroup);
+			}
+		}
+
+		function ClearSelectedGroups() {
+			objVm.pvGroups.forEach(function(objGroup){
+				if(objGroup.selected) {
+					objGroup.selected = false;
+				}
+			});
+		}
+
+		/**
+		 * @method CancelEditGroup
+		 *
+		 * Cancela edição de um grupo e retorna ao status inicial
+		 */
+		function CancelEditGroup() {
+			modalService.prompt(
+				'cancelar edição?',
+				'Deseja cancelar a edição do agrupamento "' + objVm.workspace.name + '"?',
+				{
+					text: 'sim, cancelar',
+					callback: function(objVmModal) {
+						ClearSelectedGroups();
+						objVm.pvListSlave = angular.copy(objVm.pvListMaster);
+						objVm.workspace = angular.copy(objVm.initialGroupData);
+						objVmModal.$close();
+					}
+				},
+				{
+					text: 'não, continuar editando',
+					callback: function(objVmModal) {
+						objVmModal.$close();
+					}
+				}
+			);
 		}
 
 		/**
@@ -255,18 +319,33 @@
 		/**
 		 * @method ValidateGroup
 		 *
-		 * Valida grupo de PVs antes de salvá-lo.
-		 * Verifica se o grupo tem nome e se existem pelo menos 2 pvs relacionados.
+		 *
 		 */
 		function ValidateGroup() {
+			if(IsGroupValid()) {
+				SaveOrUpdateGroup();
+			} else {
+				objVm.workspace.hasErrors = true;
+			}
+		}
+
+		/**
+		 * @method IsGroupValid
+		 *
+		 * retorna se o grupo de PVs é válido ou não.
+		 * Verifica se o grupo tem nome e se existem pelo menos 2 pvs relacionados.
+		 */
+		function IsGroupValid() {
+			var hasError = true;
+
 			if (objVm.workspace.pvs.length < 2) {
-				return false;
+				hasError = false;
 			}
 			if (!objVm.workspace.name ) {
-				return false;
+				hasError = false;
 			}
 
-			return true;
+			return hasError;
 		}
 
 		/**

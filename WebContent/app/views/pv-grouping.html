@@ -4,7 +4,7 @@
 			<p class="page-title">criar novo agrupamento</p>
 			<p class="page-description">
 				Utilize os dois primeiros campos abaixo para criar um novo agrupamento.<br />
-				No primeiro campo você pode buscar estabelecimentos e arrastar ou selecionar + para adicionar ao segundo campo. Para habilitar o botão <strong>salvar</strong> é necessário nomear o agrupamento e selecionar pelo menos dois estabelecimentos.
+				No primeiro campo você pode buscar estabelecimentos e selecionar + para adicionar ao segundo campo. Para habilitar o botão <strong>salvar</strong> é necessário nomear o agrupamento e selecionar pelo menos dois estabelecimentos.
 			</p>
 		</div>
 		<div class="col-xs-4">
@@ -40,22 +40,22 @@
 		</div>
 
 		<div class="col-xs-4">
-			<div class="card card-padding" id="pv-group-edit" ng-class="{'not-valid': !objVm.validateGroup()}">
+			<div class="card card-padding" id="pv-group-edit" ng-class="{'not-valid': !objVm.isGroupValid()}">
 				<div class="empty-state" ng-hide="objVm.workspace.pvs.length">
-					<p>Arraste o estabelecimento escolhido até aqui ou clique em + para adicioná-lo.</p>
+					<p>Clique em + para adicionar um estabelecimento.</p>
 				</div>
 				<div class="form-group icon-right">
 					<div class="input-group input-group-lg">
-						<span class="input-group-addon borderless icon_educacao_uso_consc"></span>
+						<span class="input-group-addon borderless icon_educacao_uso_consc" ng-class="{'has-error': (objVm.workspace.hasErrors && !objVm.workspace.name)}"></span>
 						<input type="text" class="form-control borderless" required="" placeholder="nomear agrupamento" ng-model="objVm.workspace.name">
 					</div>
 				</div>
 				<div id="edit-wrapper">
-					<ul class="validate-list" ng-hide="objVm.validateGroup()">
+					<ul class="validate-list" ng-class="{hide: objVm.isGroupValid()}" ng-hide="!objVm.workspace.hasErrors">
 						<li ng-hide="objVm.workspace.name">- O novo agrupamento precisa de um nome</li>
-						<li ng-hide="objVm.workspace.pvs.length > 1">- Selecione pelo menos 2 PVs antes de salvar</li>
+						<li ng-hide="objVm.workspace.pvs.length > 1">- Selecione pelo menos 2 estabelecimentos antes de salvar</li>
 					</ul>
-					<div id="edit-container" ng-class="{'has-scroll': objVm.validateGroup() ? objVm.workspace.pvs.length > 4 : objVm.workspace.pvs.length > 3 }">
+					<div id="edit-container" ng-class="{'has-scroll': objVm.isGroupValid() ? objVm.workspace.pvs.length > 4 : objVm.workspace.pvs.length > 3 }">
 						<div class="pv" ng-repeat="pv in objVm.workspace.pvs" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
 							<p>{{ pv.code }}</p>
 							<p>{{ pv.acquirer.name }}</p>
@@ -64,8 +64,11 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xs-6 col-xs-offset-6">
-						<input type="button" value="salvar" class="btn btn-primary btn-block btn-sm" ng-disabled="!objVm.validateGroup()" ng-click="objVm.saveOrUpdateGroup()" />
+					<div class="col-xs-6">
+						<a ng-click="objVm.cancelEditGroup()" class="btn btn-cancel btn-block btn-sm" ng-show="objVm.workspace.status === 'EDIT'">cancelar</a>
+					</div>
+					<div class="col-xs-6">
+						<a ng-click="objVm.validateGroup()" class="btn btn-primary btn-block btn-sm" ng-class="{disabled: (!objVm.workspace.name || objVm.workspace.pvs.length < 2 )}">salvar</a>
 					</div>
 				</div>
 			</div>
@@ -81,7 +84,7 @@
 					<div class="pv-group"
 						ng-repeat="group in objVm.pvGroups"
 						ng-init="expanded = false"
-						ng-class="{ expanded: expanded == true }">
+						ng-class="{ expanded: expanded == true, selected: group.selected }">
 						<h4 class="icon_maq_rede_cartao">{{group.name}}</h4>
 						<div class="group-pvs-wrapper">
 							<div class="row" ng-repeat="pv in group.pvs">
@@ -91,12 +94,13 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-6">
-								<a ng-click="expanded = !expanded">
+								<a ng-click="expanded = !expanded" ng-show="group.pvs.length > 3">
 									{{ expanded ? "mostrar menos" : "mostrar mais" }}
 								</a>
 							</div>
-							<div class="col-xs-3">
-								<a ng-click="objVm.editGroup(group)"><strong>editar</strong></a>
+							<div class="col-xs-3" ng-switch on="objVm.workspace.id === group.id">
+								<a ng-click="objVm.editGroupVerify(group)" ng-switch-when="false"><strong>editar</strong></a>
+								<a ng-click="objVm.cancelEditGroup()" ng-switch-when="true"><strong>cancelar</strong></a>
 							</div>
 							<div class="col-xs-3">
 								<a ng-click="objVm.deleteGroup(group)"><strong>deletar</strong></a>

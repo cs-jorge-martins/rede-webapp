@@ -60,18 +60,6 @@
       top: 3em;
       width: 100%;
 
-      // li:nth-child(1) a span {
-      //   &.glyphicon-ok {
-      //     &:before {
-      //       background-color: inherit;
-      //       color: #ff7800;
-      //       border-radius: 4px;
-      //       content: '\e927' !important;
-      //       top: 10px;
-      //     }
-      //   }
-      // }
-
       li:nth-child(1) a span {
         &.glyphicon-ok {
           &:before {
@@ -145,11 +133,11 @@
       content: '\e964';
       display: block;
       font-family: $fontItau;
-      font-size: 1em;
+      font-size: 0.95em;
       left: 0;
       top: 9px;
       background-color: #f0f0f0;
-      width: 21px;
+      width: 20px;
       height: 20px;
       border-radius: 4px;
       position: relative;
