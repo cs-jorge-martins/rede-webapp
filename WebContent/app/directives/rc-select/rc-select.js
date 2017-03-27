@@ -16,13 +16,13 @@
  * @param {String} place-holder-label nome principal do
  * @param {Array} model array com objetos selecionados que tenham os parâmetros: label e id
  * @param {Array} data array com todos os objetos possíveis para a seleção. Elas devem ter os parâmetros: label e id
- * @param {Boolean} pvList para a opção customizada de pvList deve ser passado o atributo como true
+ * @param {Boolean} groupable para a opção customizada de groupable deve ser passado o atributo como true
  * @param {*} checkAndUncheckAll objeto ou booleano para aparecer as opções de selecionar todos e deselecionar todos
  *
  * Exemplo:
  *
  *     @example
- *     <rc-select label="número do estabelecimento" place-holder-label="estabelecimento" model="filter.pvsModel" data="filter.pvsData" pvList="true"></rc-select>
+ *     <rc-select label="número do estabelecimento" place-holder-label="estabelecimento" model="filter.pvsModel" data="filter.pvsData" groupable="true"></rc-select>
  */
 
 "use strict";
@@ -33,9 +33,9 @@
 		.module('Conciliador')
 		.directive('rcSelect', RcSelect);
 
-	RcSelect.$inject = ['modalService', 'pvService'];
+	RcSelect.$inject = ['modalService'];
 
-	function RcSelect(modalService, pvService) {
+	function RcSelect(modalService) {
 
 		return {
 			restrict: 'E',
@@ -46,7 +46,8 @@
 				model: '=',
 				data: '=',
 				checkAndUncheckAll: '=',
-				pvList: '=?'
+				groupable: '=?',
+				groupsModel: '=?'
 			},
 			controller: Controller,
 			controllerAs: 'vm'
@@ -65,7 +66,6 @@
 			vm.checkOrUncheckGroup = CheckOrUncheckGroup;
 			vm.openPvModal = OpenPvModal;
 			vm.groupSelected = GroupSelected;
-			vm.pvGroups = [];
 			vm.elementTrigger = $element[0].children[0];
 
 			Init();
@@ -123,10 +123,10 @@
 
 			function GetPvGroups() {
 
-				pvService.getGroups().then(function (objRes) {
+				// pvService.getGroups().then(function (objRes) {
 
-					vm.pvGroups = objRes.data;
-					vm.pvGroups.forEach(function (objGroup) {
+					$scope.groupsModel = objRes.data;
+					$scope.groupsModel.forEach(function (objGroup) {
 
 						// objGroup.checked = false;
 
@@ -145,7 +145,7 @@
 					});
 
 
-				});
+				// });
 
 			}
 
@@ -302,10 +302,10 @@
 
 				objItem.checked = true;
 
-				if($scope.pvList) {
+				if($scope.groupable) {
 					if(objItem.groups) {
 						objItem.groups.forEach(function (strGroupName) {
-							vm.pvGroups.forEach(function (objPvGroup) {
+							$scope.groupsModel.forEach(function (objPvGroup) {
 								if(objPvGroup.name === strGroupName) {
 
 									var intCountElementsGroupChecked = 0;
@@ -343,7 +343,7 @@
 				if(intIndex !== null && $scope.model.indexOf(intIndex)) {
 					$scope.model.splice(intIndex, 1);
 				}
-				if($scope.pvList) {
+				if($scope.groupable) {
 
 					if(objItem.groups) {
 						objItem.groups.forEach(function (strGroupName) {
@@ -400,9 +400,9 @@
 					objItem.checked = true;
 				});
 
-				if($scope.pvList) {
-					// console.log("vm.pvGroups", vm.pvGroups)
-					vm.pvGroups.forEach(function (objPvGroup) {
+				if($scope.groupable) {
+					// console.log("$scope.groupsModel", $scope.groupsModel)
+					$scope.groupsModel.forEach(function (objPvGroup) {
 						if(arrCheckedGroups.indexOf(objPvGroup.name) < 0) {
 							arrCheckedGroups.push(objPvGroup.name);
 						}
@@ -420,7 +420,7 @@
 					objItem.checked = false;
 				});
 
-				if($scope.pvList) {
+				if($scope.groupable) {
 					arrCheckedGroups = [];
 				}
 
@@ -429,7 +429,7 @@
 
 			/**
 			 * @method OpenPlaceholder
-			 * Após o click no input ele retorna a listagem de PVs adicionando a classe show-list.
+			 * Após o click no input ele retorna a listagem de PVs.
 			 *
 			 */
 			function OpenPlaceholder() {
@@ -458,13 +458,11 @@
 
 			$scope.$watch('data', function (objNewValue) {
 
-				if($scope.pvList && objNewValue) {
+				if($scope.groupable && objNewValue) {
 
 					$scope.data.forEach(function (objDataPv) {
 						objDataPv.groups = [];
 					});
-
-					GetPvGroups();
 
 				}
 
@@ -473,6 +471,34 @@
 			$scope.$watch('model.length', function () {
 				$scope.placeHolder = MakePlaceHolder($scope.model);
 			});
+
+			$scope.$watchGroup(['groupsModel.length', 'data.length'], function() {
+
+				if($scope.groupsModel.length > 0 && $scope.data.length > 0) {
+
+					$scope.groupsModel.forEach(function (objGroup) {
+
+						objGroup.pvs.forEach(function (objPv) {
+
+							$scope.data.forEach(function (objDataPv) {
+
+								if(!objDataPv.groups) {
+									objDataPv.groups = [];
+								}
+
+								if (objPv.id === objDataPv.id && objDataPv.groups.indexOf(objGroup.name) < 0) {
+									objDataPv.groups.push(objGroup.name);
+								}
+
+							});
+
+						});
+
+					});
+
+				}
+
+			}, true);
 
 		}
 

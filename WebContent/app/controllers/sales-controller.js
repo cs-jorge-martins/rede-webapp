@@ -12,9 +12,9 @@
 		.module('Conciliador.salesController', [])
 		.controller('salesController', Sales);
 
-	Sales.$inject = ['$scope', 'modalService', 'calendarFactory', 'filtersService', '$location'];
+	Sales.$inject = ['$scope', 'modalService', 'calendarFactory', 'filtersService', '$location', 'pvService'];
 
-	function Sales($scope, modalService, calendarFactory, filtersService, $location) {
+	function Sales($scope, modalService, calendarFactory, filtersService, $location, pvService) {
 
         $scope.filter = {};
         $scope.dateModel = {};
@@ -24,6 +24,7 @@
         $scope.filter.acquirersData = [];
         $scope.filter.pvsData = [];
         $scope.filter.pvsModel = [];
+        $scope.filter.pvsGroupsModel = [];
         $scope.filter.terminalsModel = [];
         $scope.filter.terminalsData = [];
         $scope.filter.cardProductsData = [];
@@ -74,11 +75,22 @@
             });
         }
 
+        function GetPvsGroups() {
+
+			pvService.getGroups().then(function (objRes) {
+
+				$scope.filter.pvsGroupsModel = objRes.data;
+
+			});
+
+		}
+
 		Init();
 
 		function Init() {
             GetFilters();
             ResolveDateFromDashboard();
+			GetPvsGroups();
         }
 
 	}
