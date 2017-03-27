@@ -67,7 +67,6 @@
 			vm.groupSelected = GroupSelected;
 			vm.pvGroups = [];
 			vm.elementTrigger = $element[0].children[0];
-			console.log($element)
 
 			Init();
 			OpenPlaceholder();
@@ -452,7 +451,7 @@
 
 			/**
 			 * @method OpenPlaceholder
-			 * Após o click no input ele retorna a listagem de PVs.
+			 * Após o click no input ele retorna a listagem de PVs adicionando a classe show-list.
 			 *
 			 */
 			function OpenPlaceholder() {
