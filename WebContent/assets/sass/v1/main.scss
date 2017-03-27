@@ -8935,8 +8935,22 @@ footer nav.fixed {
 #detailsHeader .brand_10{
 
 }
-.dropdown-menu-form li:nth-child(1) a span, .dropdown-menu-form li:nth-child(2) a span {
-    display: none;
+.v1 .dropdown-menu-form li:nth-child(1) a span::before {
+  background-color: inherit;
+  color: #ff7800;
+  border-radius: 4px;
+  content: '\e927' !important;
+  top: 7px;
+  left: 10px;
+  font-size: 1.2em;
+}
+.v1 .dropdown-menu-form li:nth-child(2) a span::before {
+  color: #ff7800;
+  background-color: initial;
+  border-radius: 4px;
+  content: '\e956' !important;
+  top: 7px;
+  left: 10px;
 }
 .box {
 	background: #fff;
@@ -11214,15 +11228,15 @@ tr.card-product-line {
     box-shadow: none;
     box-sizing: border-box;
     top: 43px;
-    max-height: 150px;
+    max-height: 361px;
 }
 
 .dropdown-multiselect .dropdown-menu a {
     cursor: pointer;
-    padding: 11px 0 8px 36px;
+    padding: 11px 0 8px 46px;
     color: #626262;
     display: block;
-	font-size: 14px;
+	font-size: 1em;
 	text-transform: none;
 }
 
@@ -11251,6 +11265,7 @@ tr.card-product-line {
     position: absolute;
     left: 0;
     top: 0;
+	font-size: 1.4em;
 }
 
 .dropdown-multiselect a span:before {
@@ -11265,9 +11280,43 @@ tr.card-product-line {
     line-height: 22px !important;
 }
 
-.dropdown-multiselect a span.glyphicon-ok:before {
+.dropdown-multiselect li:nth-child(1) a span.glyphicon-ok:before {
+	color: #ff7800;
+    border-radius: 4px;
     content: '\e927' !important;
-    color: #ff9d45;
+    top: 8px;
+    left: 12px;
+    background-color: #fff;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    line-height: 14px;
+	font-size: 1.2em;
+	text-indent: 1.5px;
+}
+
+.dropdown-multiselect a span.glyphicon-ok:before {
+	color: #fff;
+    border-radius: 4px;
+    content: '\e927' !important;
+    top: 7px;
+    left: 12px;
+    background-color: #ff7800;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    line-height: 14px;
+	font-size: 0.9em;
+	text-indent: 1.5px;
+}
+
+.dropdown-multiselect a span.glyphicon-remove:before {
+	color: #ff7800;
+	background-color: initial;
+	border-radius: 4px;
+	content: '\e956' !important;
+	top: 7px;
+	left: 10px;
 }
 
 .filter-depth input[type=submit] {
