@@ -100,7 +100,7 @@
          *      ModalService.openFull('Título da modal', 'view/template.html', 'ModalController', $scope);
          *
          */
-        this.openFull = function(strTitle, strTemplateUrl, objController, objScope) {
+        this.openFull = function(strTitle, strTemplateUrl, objController, objScope, closeCallback) {
 
             objScope.pageTitle = strTitle;
             objScope.template = strTemplateUrl;
@@ -125,6 +125,9 @@
             });
 
             objModal.closed.then(function() {
+				if (closeCallback) {
+					closeCallback();
+				}
                 UnblockContentScroll();
             });
 
