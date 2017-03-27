@@ -69,9 +69,10 @@
 			vm.elementTrigger = $element[0].children[0];
 
 			Init();
-			OpenPlaceholder();
 
 			function Init() {
+
+				OpenPlaceholder();
 
 				if($scope.checkAndUncheckAll && typeof($scope.checkAndUncheckAll) === "object") {
 					switch($scope.checkAndUncheckAll.defaultType) {
@@ -85,39 +86,39 @@
 				}
 
 				var clickAnywhere = angular.element(document.querySelector("body"));
-						clickAnywhere.bind('click', function($event) {
+					clickAnywhere.bind('click', function($event) {
 
-							var target = $event.target.parentElement;
-							var found = false;
+						var objRcSelect = $event.target.parentElement;
+						var boolPlaceholderVisibly = false;
 
-							while (angular.isDefined(target) && target !== null && !found) {
-								if (target.className.indexOf('rc-select') > -1 && !found) {
-									if (target === vm.elementTrigger) {
-										found = true;
-										break;
-									}
+						while (angular.isDefined(objRcSelect) && objRcSelect !== null && !boolPlaceholderVisibly) {
+							if (objRcSelect.className.indexOf('rc-select') > -1 && !boolPlaceholderVisibly) {
+								if (objRcSelect === vm.elementTrigger) {
+									boolPlaceholderVisibly = true;
+									break;
 								}
-
-								target = target.parentElement;
-
 							}
 
-							if (!found) {
-								$scope.class = "";
-							}
+							objRcSelect = objRcSelect.parentElement;
+
+						}
+
+						if (!boolPlaceholderVisibly) {
+							$scope.class = "";
+						}
 
 					});
 
-				var ListGroupPvs = angular.element(document.getElementsByClassName("list-group-pvs"));
-						ListGroupPvs.bind('click', function() {
+				var arrGrouping = angular.element(document.getElementsByClassName("list-group-pvs"));
+					arrGrouping.bind('click', function() {
 
-							$scope.class = "hide-list";
+						$scope.class = "hide-list";
 
-							if ( ($scope.class = "hide-list") !== 'false') {
-								$scope.class = "show-list";
-							}
+						if ( ($scope.class = "hide-list") !== 'false') {
+							$scope.class = "show-list";
+						}
 
-						});
+					});
 
 			}
 
@@ -452,7 +453,10 @@
 					'agrupamento de estabelecimentos',
 					'app/views/pv-grouping.html',
 					'PVGroupingController',
-					$scope
+					$scope,
+					function() {
+						console.log('atualizar lista de pvs!');
+					}
 				);
 			}
 

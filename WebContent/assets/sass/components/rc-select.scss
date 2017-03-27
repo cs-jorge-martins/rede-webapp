@@ -136,14 +136,14 @@
 					.glyphicon-ok {
 						&::before {
 							background-color: $defaultOrange;
-					    color: $backgroundChecked;
-					    content: '\e927' !important;
+						    color: $backgroundChecked;
+						    content: '\e927' !important;
 							border-radius: 4px;
-							font-size: 0.7em;
-					    position: relative;
-					    top: -3px;
-					    left: -1px;
-					    padding: 3px;
+							font-size: 0.82em;
+						    position: relative;
+						    top: -3px;
+						    left: -1px;
+						    padding: 2px;
 						}
 					}
 
