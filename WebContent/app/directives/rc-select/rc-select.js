@@ -150,22 +150,6 @@
 
 			}
 
-			$scope.$watch('data', function (objNewValue) {
-
-				if($scope.pvList && objNewValue) {
-
-					$scope.data.forEach(function (objDataPv) {
-						objDataPv.groups = [];
-					});
-
-					GetPvGroups();
-
-				}
-
-			});
-
-
-
 			/**
 			 * @method CheckOrUncheckGroup
 			 * verifica se deve adicionar ou remover o objeto do $scope.model
@@ -188,8 +172,6 @@
 				} else {
 					UncheckGroup(objGroup.pvs, objGroup.name);
 				}
-
-				$scope.placeHolder = MakePlaceHolder($scope.model);
 
 			}
 
@@ -406,8 +388,6 @@
 					CheckItem(objItem);
 				}
 
-				$scope.placeHolder = MakePlaceHolder($scope.model);
-
 			}
 
 			/**
@@ -430,7 +410,6 @@
 					});
 				}
 
-				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
 
 			/**
@@ -447,7 +426,6 @@
 				}
 
 				$scope.model = [];
-				$scope.placeHolder = MakePlaceHolder($scope.model);
 			}
 
 			/**
@@ -456,20 +434,13 @@
 			 *
 			 */
 			function OpenPlaceholder() {
-
- 					$scope.ShowHidePlaceholder = function(){
-
- 						if ($scope.class === "show-list") {
-
- 							$scope.class = "";
-
- 						} else {
-
- 							$scope.class = "show-list";
-
- 						}
-
- 					};
+				$scope.ShowHidePlaceholder = function(){
+					if ($scope.class === "show-list") {
+						$scope.class = "";
+					} else {
+						$scope.class = "show-list";
+					}
+				};
  			}
 
 			/**
@@ -485,6 +456,24 @@
 					$scope
 				);
 			}
+
+			$scope.$watch('data', function (objNewValue) {
+
+				if($scope.pvList && objNewValue) {
+
+					$scope.data.forEach(function (objDataPv) {
+						objDataPv.groups = [];
+					});
+
+					GetPvGroups();
+
+				}
+
+			});
+
+			$scope.$watch('model.length', function () {
+				$scope.placeHolder = MakePlaceHolder($scope.model);
+			});
 
 		}
 
