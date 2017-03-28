@@ -80,6 +80,30 @@ body {
     width: 339px;
 }
 
+.v1 .v2 .rc-select .dropdown-toggle {
+	font-family: 'open_sansregular', sans-serif;
+	&:hover {
+		font-family: 'open_sansregular', sans-serif;
+	}
+}
+
+.v1 .v2 .rc-select .list-group-pvs ul li {
+
+	a {
+		width: 100% !important;
+		padding-top: 10px !important;
+	}
+	&:hover {
+		font-weight: normal !important;
+
+		a {
+			color: #575758;
+		}
+
+	}
+	float: inherit !important;
+}
+
 .v1 .v2 .rcDatepicker {
 
         .btn {
