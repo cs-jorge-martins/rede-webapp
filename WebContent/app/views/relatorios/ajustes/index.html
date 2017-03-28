@@ -60,7 +60,7 @@
         				</tr>
         			</tbody>
         		</table>
-                <span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+                <div ng-show="noItensMsg" ng-include="'app/views/includes/empty-state.html'"></div>
         	    <div class="footer" ng-show="items.length">
 					<div class="optionsWrapper">
 						<div class="selectWrapper">

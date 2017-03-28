@@ -19,6 +19,7 @@
 	@import "v1/bootstrap.min";
 	@import 'v1/main';
 	@import "v1/login";
+	@import 'components/empty-state';
 }
 
 .v2 {
@@ -26,6 +27,7 @@
 	@import 'components/cards';
 	@import 'components/content-header';
 	@import 'components/checkbox';
+	@import 'components/empty-state';
 	@import 'components/font';
 	@import 'components/filter';
 	@import 'components/footer';
