@@ -1,27 +1,29 @@
 .empty-state {
-    line-height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 100px;
-
-    &.block {
-        vertical-align: middle;
-        width: 26%;
-    }
+	margin: 0.4em 1em 2em;
+	clear: both;
 
     p {
-        color: #575758;
-	    margin: 0 0 0 50px !important;
+		font-size: 1.2em;
+        color: $grafitteGray;
+		margin: 0.3em 0em;
     }
 
-    i {
-	    background-image: url(#{$imgPath}emptyState.png);
-	    background-size: cover;
-	    position: absolute;
-	    width: 28px;
-	    height: 25px;
-	    margin: 0 275px 10px 0;
-    }
+	.empty-state-wrapper {
+		width: 32em;
+		margin: 0 auto;
+		padding-left: 5em;
+		position: relative;
+
+		&:before {
+			content: '\e94f';
+			display: block;
+			font-family: $fontItau;
+			font-size: 2.8em;
+			color: $jade;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
 }
