@@ -17,6 +17,7 @@
  * @param {Array} model array com objetos selecionados que tenham os parâmetros: label e id
  * @param {Array} data array com todos os objetos possíveis para a seleção. Elas devem ter os parâmetros: label e id
  * @param {Boolean} groupable para a opção customizada de groupable deve ser passado o atributo como true
+ * @param {Boolean} sync opção para syncar todos os groupables da tela
  * @param {*} checkAndUncheckAll objeto ou booleano para aparecer as opções de selecionar todos e deselecionar todos
  *
  * Exemplo:
@@ -33,9 +34,9 @@
 		.module('Conciliador')
 		.directive('rcSelect', RcSelect);
 
-	RcSelect.$inject = ['modalService'];
+	RcSelect.$inject = ['modalService', '$rootScope'];
 
-	function RcSelect(modalService) {
+	function RcSelect(modalService, $rootScope) {
 
 		return {
 			restrict: 'E',
@@ -47,6 +48,7 @@
 				data: '=',
 				checkAndUncheckAll: '=',
 				groupable: '=?',
+				sync: '=?',
 				groupsModel: '=?'
 			},
 			controller: Controller,
@@ -122,34 +124,6 @@
 
 			}
 
-			function GetPvGroups() {
-
-				// pvService.getGroups().then(function (objRes) {
-
-					$scope.groupsModel = objRes.data;
-					$scope.groupsModel.forEach(function (objGroup) {
-
-						// objGroup.checked = false;
-
-						objGroup.pvs.forEach(function (objPv) {
-
-							$scope.data.forEach(function (objDataPv) {
-
-								if (objPv.id === objDataPv.id && objDataPv.groups.indexOf(objGroup.name) < 0) {
-									objDataPv.groups.push(objGroup.name);
-								}
-
-							});
-
-						});
-
-					});
-
-
-				// });
-
-			}
-
 			/**
 			 * @method CheckOrUncheckGroup
 			 * verifica se deve adicionar ou remover o objeto do $scope.model
@@ -175,6 +149,13 @@
 
 			}
 
+			/**
+			 * @method UncheckGroup
+			 * Remove todos os items do grupo do model
+			 *
+			 * @param {Array} arrPvs array com todos os pvs do grupo
+			 * @param {String} strGroupName nome do grupo
+			 */
 			function UncheckGroup(arrPvs, strGroupName) {
 
 				var bolCanExcludeItem;
@@ -205,7 +186,12 @@
 								$scope.model[intIndex].id === objData.id) {
 								intArrayIndex = intIndex;
 							}
+						}
 
+						if($scope.sync) {
+							$rootScope.$broadcast('rc-select-uncheck-item', objData);
+						} else {
+							VerifyGroupNotSelected(objData);
 						}
 
 						$scope.model.splice(intArrayIndex, 1);
@@ -217,6 +203,12 @@
 
 			}
 
+			/**
+			 * @method CheckGroup
+			 * Adiciona todos os items do grupo ao model
+			 *
+			 * @param {Array} arrPvs array com todos os pvs do grupo
+			 */
 			function CheckGroup(arrPvs) {
 
 				arrPvs.forEach(function (objPv) {
@@ -243,6 +235,16 @@
 						});
 						objData.checked = true;
 					}
+
+					$scope.data.forEach(function (objDataItem) {
+						if(objDataItem.id === objPv.id) {
+							if($scope.sync) {
+								$rootScope.$broadcast('rc-select-check-item', objDataItem);
+							} else {
+								VerifyGroupSelected(objDataItem);
+							}
+						}
+					});
 
 				});
 
@@ -303,6 +305,23 @@
 
 				objItem.checked = true;
 
+				if($scope.sync) {
+					$rootScope.$broadcast('rc-select-check-item', objItem);
+				} else {
+					VerifyGroupSelected(objItem);
+				}
+
+			}
+
+			/**
+			 * @method VerifyGroupSelected
+			 * verifica se todos os items do grupo estão selecionados.
+			 * Se estiverem, marca o grupo
+			 *
+			 * @param {Object} objItem objeto para verificar se todos os items dos grupos que ele faz parte, estão selecionados.
+			 */
+			function VerifyGroupSelected(objItem) {
+
 				if($scope.groupable) {
 					if(objItem.groups) {
 						objItem.groups.forEach(function (strGroupName) {
@@ -322,7 +341,9 @@
 									});
 
 									if(intCountElementsGroupChecked === objPvGroup.pvs.length) {
-										arrCheckedGroups.push(objPvGroup.name);
+										if(arrCheckedGroups.indexOf(objPvGroup.name) < 0) {
+											arrCheckedGroups.push(objPvGroup.name);
+										}
 									}
 
 								}
@@ -344,6 +365,25 @@
 				if(intIndex !== null && $scope.model.indexOf(intIndex)) {
 					$scope.model.splice(intIndex, 1);
 				}
+
+				objItem.checked = false;
+
+				if($scope.sync) {
+					$rootScope.$broadcast('rc-select-uncheck-item', objItem);
+				} else {
+					VerifyGroupNotSelected(objItem);
+				}
+
+			}
+
+			/**
+			 * @method VerifyGroupNotSelected
+			 * verifica se todos os items do grupo estão selecionados.
+			 * Se não estiverem ele desmarca o Grupo
+			 *
+			 * @param {Object} objItem objeto para verificar se todos os items dos grupos que ele faz parte, estão selecionados.
+			 */
+			function VerifyGroupNotSelected(objItem) {
 				if($scope.groupable) {
 
 					if(objItem.groups) {
@@ -356,7 +396,6 @@
 					}
 
 				}
-				objItem.checked = false;
 			}
 
 			/**
@@ -399,17 +438,14 @@
 				$scope.data.forEach(function (objItem) {
 					$scope.model.push(objItem);
 					objItem.checked = true;
+
+					if($scope.sync) {
+						$rootScope.$broadcast('rc-select-check-item', objItem);
+					} else {
+						VerifyGroupSelected(objItem);
+					}
+
 				});
-
-				if($scope.groupable) {
-					// console.log("$scope.groupsModel", $scope.groupsModel)
-					$scope.groupsModel.forEach(function (objPvGroup) {
-						if(arrCheckedGroups.indexOf(objPvGroup.name) < 0) {
-							arrCheckedGroups.push(objPvGroup.name);
-						}
-					});
-				}
-
 			}
 
 			/**
@@ -418,12 +454,16 @@
 			 */
 			function UncheckAll() {
 				$scope.data.forEach(function (objItem) {
-					objItem.checked = false;
-				});
 
-				if($scope.groupable) {
-					arrCheckedGroups = [];
-				}
+					objItem.checked = false;
+
+					if($scope.sync) {
+						$rootScope.$broadcast('rc-select-uncheck-item', objItem);
+					} else {
+						VerifyGroupNotSelected(objItem);
+					}
+
+				});
 
 				$scope.model = [];
 			}
@@ -503,6 +543,14 @@
 				}
 
 			}, true);
+
+			$rootScope.$on('rc-select-check-item', function (event, objItem) {
+				VerifyGroupSelected(objItem);
+			});
+
+			$rootScope.$on('rc-select-uncheck-item', function (event, objItem) {
+				VerifyGroupNotSelected(objItem);
+			});
 
 		}
 
