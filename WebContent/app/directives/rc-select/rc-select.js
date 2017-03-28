@@ -87,16 +87,20 @@
 					}
 				}
 
-				var clickAnywhere = angular.element(document.querySelector("body"));
-					clickAnywhere.bind('click', function($event) {
+				/**
+				 * @bind objClickedHideElement
+				 * Verifica quando é disparado um evento no body e configura o grouping com a classe para mostrar ou esconder.
+				 */
+				var objClickedHideElement = angular.element(document.querySelector("body"));
+					objClickedHideElement.bind('click', function($event) {
 
 						var objRcSelect = $event.target.parentElement;
-						var boolPlaceholderVisibly = false;
+						var bolPlaceholderVisibly = false;
 
-						while (angular.isDefined(objRcSelect) && objRcSelect !== null && !boolPlaceholderVisibly) {
-							if (objRcSelect.className.indexOf('rc-select') > -1 && !boolPlaceholderVisibly) {
+						while (angular.isDefined(objRcSelect) && objRcSelect !== null && !bolPlaceholderVisibly) {
+							if (objRcSelect.className.indexOf('rc-select') > -1 && !bolPlaceholderVisibly) {
 								if (objRcSelect === vm.elementTrigger) {
-									boolPlaceholderVisibly = true;
+									bolPlaceholderVisibly = true;
 									break;
 								}
 							}
@@ -105,12 +109,16 @@
 
 						}
 
-						if (!boolPlaceholderVisibly) {
+						if (!bolPlaceholderVisibly) {
 							$scope.class = "";
 						}
 
 					});
 
+				/**
+				 * @bind arrGrouping
+				 * Verifica quando é disparado um evento no grouping e configura ele com a classe para mostrar ou esconder.
+				 */
 				var arrGrouping = angular.element(document.getElementsByClassName("list-group-pvs"));
 					arrGrouping.bind('click', function() {
 
@@ -470,7 +478,7 @@
 
 			/**
 			 * @method OpenPlaceholder
-			 * Após o click no input ele retorna a listagem de PVs.
+			 * Após o click no input ele retorna a listagem.
 			 *
 			 */
 			function OpenPlaceholder() {
