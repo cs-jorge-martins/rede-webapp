@@ -153,6 +153,8 @@
 		function SaveOrUpdateGroup() {
 
 			delete objVm.workspace.id;
+			delete objVm.workspace.status;
+			delete objVm.workspace.hasErrors;
 
 			switch (objVm.workspace.status) {
 				case "CREATE":
