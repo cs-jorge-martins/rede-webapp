@@ -93,8 +93,12 @@ $filterLabelFontSize: 14px;
 $filterLabelColor: $grafitteGray;
 
 // rc-select
-$dividerListPvs: #e5e5e5;
-$statesListPvs: #ffffff;
+$rcSelectDividerGrouping: #e5e5e5;
+$rcSelectStatesGrouping: #ffffff;
+$rcSelectBorderColor: $mediumGray;
+$rcSelectLabelColor: $grafitteGray;
+$rcSelectIconColor: $defaultOrange;
+$rcSelectBackgroundChecked: #ffffff;
 
 // rc-multiselect
 $rcMultiBorderColor: $mediumGray;
@@ -143,7 +147,7 @@ $rcDownloaderBackgroundColor: #fff;
 $backgroundChecked: #ffffff;
 
 // checkbox not-checked
-$backgroundNotChecked: #979797;
+$rcSelectBackgroundNotChecked: #979797;
 
 // loader
 // $spinnerColor: $menuActiveFontColor;
