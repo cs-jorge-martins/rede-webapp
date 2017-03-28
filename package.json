@@ -23,6 +23,6 @@
     "karma-ng-html2js-preprocessor": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.2",
     "load-grunt-tasks": "^3.5.2",
-    "redis": "^2.6.2"
+    "time-grunt": "^1.4.0"
   }
 }

@@ -8,6 +8,8 @@ module.exports = function(grunt) {
 
 	"use strict";
 
+	require('time-grunt')(grunt);
+	require('grunt-notify')(grunt);
 	require('load-grunt-tasks')(grunt);
 
 	var API_URLS = {
@@ -316,8 +318,6 @@ module.exports = function(grunt) {
 			},
 		}
 
-
-
 	});
 
 	grunt.registerTask('test:unit', ['concat', 'karma:unit:start']);
@@ -327,7 +327,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build:hml', ['ngconstant:homologation', 'sass', 'concat']);
 	grunt.registerTask('build:prod', ['ngconstant:production', 'sass', 'concat']);
 	grunt.registerTask('local', ['build:local', 'serve', 'watch']);
-	grunt.registerTask('dev', ['notify', 'build:dev', 'serve', 'watch']);
+	grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
 	grunt.registerTask('hml', ['build:hml', 'serve']);
 	grunt.registerTask('prod', ['build:prod', 'serve']);
 	grunt.registerTask('docs', ['jsduck:main']);
