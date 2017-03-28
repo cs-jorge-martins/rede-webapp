@@ -85,6 +85,10 @@
 					}
 				}
 
+				/**
+				 * @bind objClickedHideElement
+				 * Verifica quando é disparado um evento no body e configura o grouping com a classe para mostrar ou esconder.
+				 */
 				var objClickedHideElement = angular.element(document.querySelector("body"));
 					objClickedHideElement.bind('click', function($event) {
 
@@ -109,6 +113,10 @@
 
 					});
 
+				/**
+				 * @bind arrGrouping
+				 * Verifica quando é disparado um evento no grouping e configura ele com a classe para mostrar ou esconder.
+				 */
 				var arrGrouping = angular.element(document.getElementsByClassName("list-group-pvs"));
 					arrGrouping.bind('click', function() {
 
@@ -402,7 +410,6 @@
 				});
 
 				if($scope.groupable) {
-					// console.log("$scope.groupsModel", $scope.groupsModel)
 					$scope.groupsModel.forEach(function (objPvGroup) {
 						if(arrCheckedGroups.indexOf(objPvGroup.name) < 0) {
 							arrCheckedGroups.push(objPvGroup.name);
@@ -430,7 +437,7 @@
 
 			/**
 			 * @method OpenPlaceholder
-			 * Após o click no input ele retorna a listagem de PVs.
+			 * Após o click no input ele retorna a listagem.
 			 *
 			 */
 			function OpenPlaceholder() {
