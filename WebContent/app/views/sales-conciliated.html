@@ -67,6 +67,7 @@
                     label-total-value="'Total de vendas'"
                     monetary-values="false" ></rc-timeline>
         </div>
+        <div ng-show="!vm.resultModel.length" ng-include="'app/views/includes/empty-state.html'"></div>        
     </div>
 
     <div ng-include="'app/views/includes/tables/sales-table.html'"></div>

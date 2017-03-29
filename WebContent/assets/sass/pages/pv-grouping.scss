@@ -79,6 +79,12 @@
 			list-style: none;
 			padding-left: 1.4em;
 			margin-bottom: 1.3em;
+			position: relative;
+
+			&.flick {
+	            -webkit-animation: .3s pv-group-validation-flick ease-out;
+	            animation: .3s pv-group-validation-flick ease-out;
+	        }
 
 			li {
 				font-size: 1.2em;
@@ -251,5 +257,20 @@
     to {
         opacity: 1;
 		height: 5.9em;
+    }
+}
+
+@keyframes pv-group-validation-flick {
+    0% {
+		transform: translateX(-.3em);
+    }
+    50% {
+		transform: translateX(.7em);
+    }
+    85% {
+		transform: translateX(-.7em);
+    }
+    100% {
+		transform: translateX(0);
     }
 }
