@@ -1,17 +1,23 @@
 <div class="rc-select">
 	<div class="form-group">
 		<label for="rcSelect_{{$id}}">{{ label }}</label>
-		<button class="dropdown-toggle btn btn-default btn-block" id="rcSelect_{{$id}}" ng-click="ShowHidePlaceholder()">
+		<button class="dropdown-toggle btn btn-default btn-block" id="rcSelect_{{$id}}" ng-click="ShowHidePlaceholder($event)">
 			{{ placeHolder }}
 		</button>
 	</div>
 
-	<div class="list-group-pvs btn-block" ng-show="IsVisible">
+	<div class="list-group-pvs btn-block {{class}}">
 		<ul>
 			<li>
 				<ul class="header" ng-if="checkAndUncheckAll">
 					<li><a href="" class="selectAll" ng-click="vm.checkAll()"><span></span>Marcar todos</a></li>
 					<li><a href="" class="deselectAll" ng-click="vm.uncheckAll()"><span></span>Desmarcar todos</a></li>
+					<li ng-repeat="group in groupsModel">
+						<a href="" ng-click="vm.checkOrUncheckGroup(group)">
+							<span data-ng-class="{'glyphicon glyphicon-ok': vm.groupSelected(group.name)}"></span>
+							{{group.name}}
+						</a>
+					</li>
 					<li class="divider"></li>
 				</ul>
 			</li>
@@ -22,7 +28,7 @@
 				</a>
 			</li>
 		</ul>
-		<div class="rc-select-footer" ng-if="pvList">
+		<div class="rc-select-footer" ng-if="groupable">
 			<a ng-click="vm.openPvModal()">novo agrupamento</a>
 		</div>
 	</div>

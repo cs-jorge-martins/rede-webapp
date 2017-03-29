@@ -92,6 +92,14 @@ $fontBootstrap: 'Glyphicons Halflings';
 $filterLabelFontSize: 14px;
 $filterLabelColor: $grafitteGray;
 
+// rc-select
+$rcSelectDividerGrouping: #e5e5e5;
+$rcSelectStatesGrouping: #ffffff;
+$rcSelectBorderColor: $mediumGray;
+$rcSelectLabelColor: $grafitteGray;
+$rcSelectIconColor: $defaultOrange;
+$rcSelectBackgroundChecked: #ffffff;
+
 // rc-multiselect
 $rcMultiBorderColor: $mediumGray;
 $rcMultiLabelColor: $grafitteGray;
@@ -137,6 +145,9 @@ $rcDownloaderBackgroundColor: #fff;
 
 // checkbox checked
 $backgroundChecked: #ffffff;
+
+// checkbox not-checked
+$rcSelectBackgroundNotChecked: #979797;
 
 // loader
 // $spinnerColor: $menuActiveFontColor;
