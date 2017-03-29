@@ -65,8 +65,6 @@ angular.module('Conciliador.movementsModule',[])
 	$scope.cardProductsModel = [];
 	$scope.cardProductsFutureModel = [];
 	$scope.cardProductsData = [];
-	$scope.shopsModel = [];
-	$scope.shopsFutureModel = [];
 	$scope.shopsData = [];
 	$scope.shopIds = [];
 	$scope.acquirersModel = [];
@@ -99,6 +97,9 @@ angular.module('Conciliador.movementsModule',[])
     var arrFutureReleasesData = [];
 	$scope.pvsGroupsModel = [];
     var intFilterStatus = 0;
+    $scope.filter = {};
+    $scope.filter.shopsModel = [];
+    $scope.filter.shopsFutureModel = [];
 
 	$scope.$watch('futureReleases.startDate', function(objResponse) {
 		if(moment($scope.futureReleases.modelDate[1]).isBefore(objResponse)) {
@@ -128,6 +129,7 @@ angular.module('Conciliador.movementsModule',[])
 	}
 
     function GetReceipt() {
+
 		arrActualReleasesData = [];
 		$scope.actualReleases.month = calendarFactory.getMonthNameOfDate(moment($scope.actualReleases.date));
     	$scope.actualReleases.day = calendarFactory.getDayOfDate($scope.actualReleases.date);
@@ -793,10 +795,10 @@ angular.module('Conciliador.movementsModule',[])
 
 	function ClearShopFilter (bolIsFuture) {
 		if(bolIsFuture) {
-			$scope.shopsFutureModel = [];
+			$scope.filter.shopsFutureModel = [];
 			MakeReceiptsOrFutureReceipts(true);
 		} else {
-			$scope.shopsModel = [];
+			$scope.filter.shopsModel = [];
 			MakeReceiptsOrFutureReceipts(false);
 		}
 	}
@@ -934,7 +936,7 @@ angular.module('Conciliador.movementsModule',[])
 	}
 
 	function GetShopsFilter(bolIsFuture) {
-		var arrModel = (bolIsFuture ? $scope.shopsFutureModel : $scope.shopsModel);
+		var arrModel = (bolIsFuture ? $scope.filter.shopsFutureModel : $scope.filter.shopsModel);
 		return arrModel.map(function(objItem){
 			return objItem.id;
 		}).join(",");
@@ -982,7 +984,7 @@ angular.module('Conciliador.movementsModule',[])
 
 	function GetShopsLabel(bolIsFuture) {
 
-		var arrModel = (bolIsFuture ? $scope.shopsFutureModel : $scope.shopsModel);
+		var arrModel = (bolIsFuture ? $scope.filter.shopsFutureModel : $scope.filter.shopsModel);
 		var strLabel = (bolIsFuture ? $scope.shopsFutureLabel : $scope.shopsLabel);
 
 		if( arrModel.length ) {
@@ -1003,14 +1005,14 @@ angular.module('Conciliador.movementsModule',[])
 		}
 
 		if(bolIsFuture) {
-			$scope.shopsFutureModel = arrModel;
+			$scope.filter.shopsFutureModel = arrModel;
 			$scope.shopsFutureLabel = strLabel;
 			$scope.shopsFutureFullLabel = arrModel.map(function(objItem){
 				return objItem.label;
 			}).join(", ");
 
 		} else {
-			$scope.shopsModel = arrModel;
+			$scope.filter.shopsModel = arrModel;
 			$scope.shopsLabel = strLabel;
 			$scope.shopsFullLabel = arrModel.map(function(objItem){
 				return objItem.label;
@@ -1068,9 +1070,9 @@ angular.module('Conciliador.movementsModule',[])
         $rootScope.receiptsDetails.currency = "BRL";
         $rootScope.receiptsDetails.startDate = dateSelected;
         $rootScope.receiptsDetails.endDate = dateSelected;
-        $rootScope.receiptsDetails.shopIds = $scope.shopsModel;
+        $rootScope.receiptsDetails.shopIds = $scope.filter.shopsModel;
         $rootScope.receiptsDetails.products = $scope.productsSearch;
-        $rootScope.receiptsDetails.shops = $scope.shopsModel;
+        $rootScope.receiptsDetails.shops = $scope.filter.shopsModel;
         $rootScope.receiptsDetails.cardProduct = intCardProduct;
         $rootScope.receiptsDetails.acquirer = intAcquirer;
         $rootScope.receiptsDetails.bankAccount = $scope.accountsModel;
@@ -1096,7 +1098,7 @@ angular.module('Conciliador.movementsModule',[])
 				strRedirectUrl = "receipts/forethought_details";
 				break;
 			case "future_details":
-                $rootScope.receiptsDetails.shopIds = $scope.shopsFutureModel;
+                $rootScope.receiptsDetails.shopIds = $scope.filter.shopsFutureModel;
                 $rootScope.receiptsDetails.bankAccount = $scope.accountsFutureModel;
                 $rootScope.receiptsDetails.startDate = $scope.futureReleases.modelDate[0];
                 $rootScope.receiptsDetails.endDate = $scope.futureReleases.modelDate[1];
@@ -1125,13 +1127,13 @@ angular.module('Conciliador.movementsModule',[])
 			startDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			endDate: calendarFactory.formatDateTimeForService($scope.actualReleases.date),
 			bankAccountIds: $scope.accountsModel,
-			shopIds: $scope.shopsModel,
+			shopIds: $scope.filter.shopsModel,
 			acquirerIds: $scope.acquirersModel,
 			cardProductIds: $scope.cardProductsModel,
 			futureStartDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[0]),
 			futureEndDate: calendarFactory.formatDateTimeForService($scope.futureReleases.modelDate[1]),
 			futureBankAccountIds: $scope.accountsFutureModel,
-			futureShopIds: $scope.shopsFutureModel,
+			futureShopIds: $scope.filter.shopsFutureModel,
 			futureAcquirerIds: $scope.acquirersFutureModel,
 			futureCardProductIds: $scope.cardProductsFutureModel,
 		}, 'receipts');
@@ -1141,7 +1143,8 @@ angular.module('Conciliador.movementsModule',[])
 		if(cacheService.LoadFilter('context') === 'receipts') {
 			$scope.actualReleases.date = moment(cacheService.LoadFilter('startDate'), "YYYYMMDD").toDate();
 			$scope.accountsModel = cacheService.LoadFilter('bankAccountIds');
-			$scope.shopsModel = cacheService.LoadFilter('shopIds');
+
+			$scope.filter.shopsModel = cacheService.LoadFilter('shopIds');
 			$scope.acquirersModel = cacheService.LoadFilter('acquirerIds');
 			$scope.cardProductsModel = cacheService.LoadFilter('cardProductIds');
 
@@ -1152,7 +1155,7 @@ angular.module('Conciliador.movementsModule',[])
 				$scope.futureReleases.modelDate[0] = moment(cacheService.LoadFilter('futureStartDate'), "YYYYMMDD").toDate();
 				$scope.futureReleases.modelDate[1] = moment(cacheService.LoadFilter('futureEndDate'), "YYYYMMDD").toDate();
 				$scope.accountsFutureModel = cacheService.LoadFilter('futureBankAccountIds');
-				$scope.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
+				$scope.filter.shopsFutureModel = cacheService.LoadFilter('futureShopIds');
 				$scope.acquirersFutureModel = cacheService.LoadFilter('futureAcquirerIds');
 				$scope.cardProductsFutureModel = cacheService.LoadFilter('futureCardProductIds');
 				$scope.futureReleases.startDateMonth = calendarFactory.getMonthNameAbreviation(moment($scope.futureReleases.modelDate[0]));
