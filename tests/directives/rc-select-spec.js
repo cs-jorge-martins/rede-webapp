@@ -283,11 +283,11 @@ describe('rc-select directive', function(){
 
 	});
 
-  describe('check hide or show class show-list pvList', function () {
+  	describe('check hide or show class show-list pvList', function () {
 
-    var $scope, element, html, controller, bolPvList;
+		var $scope, element, html, controller, bolPvList;
 
-    beforeEach(function () {
+		beforeEach(function () {
 
 			html = angular.element([
 				"<rc-select label=\"número do estabelecimento\" place-holder-label=\"estabelecimento\" model=\"objModel\" data=\"objData\" pv-list=\"bolPvList\"></rc-select>",
@@ -303,23 +303,23 @@ describe('rc-select directive', function(){
 
 		});
 
-    it("add class show-list when click input", inject(function () {
+		it("add class show-list when click input", inject(function () {
 
-      $scope.class = "show-list";
+		  	$scope.class = "show-list";
 			expect($scope.class).toBe('show-list');
 
 		}));
 
-    it("verific if show class show-list when not click input", inject(function () {
+		it("verific if show class show-list when not click input", inject(function () {
 
-      $scope.class = "";
+			$scope.class = "";
 			expect($scope.class).toBe('');
 
 		}));
 
-    it("verific if show class show-list when check single on model", inject(function () {
+		it("verific if show class show-list when check single on model", inject(function () {
 
-      $scope.class = "show-list";
+			$scope.class = "show-list";
 
 			var isolatedScope = element.isolateScope();
 			isolatedScope.model = [];
@@ -346,9 +346,9 @@ describe('rc-select directive', function(){
 
 		}));
 
-    it("verific if show class show-list when check two datas on model", inject(function () {
+		it("verific if show class show-list when check two datas on model", inject(function () {
 
-      $scope.class = "show-list";
+		  	$scope.class = "show-list";
 
 			var isolatedScope = element.isolateScope();
 			isolatedScope.model = [];
@@ -377,13 +377,13 @@ describe('rc-select directive', function(){
 			expect(isolatedScope.model[1].id).toBe(202);
 			expect(isolatedScope.model[1].label).toBe('333333');
 
-      expect($scope.class).toBe('show-list');
+		  	expect($scope.class).toBe('show-list');
 
 		}));
 
-    it("verific if show class show-list when check two datas and uncheck one of these on model", inject(function () {
+		it("verific if show class show-list when check two datas and uncheck one of these on model", inject(function () {
 
-      $scope.class = "show-list";
+		  	$scope.class = "show-list";
 
 			var isolatedScope = element.isolateScope();
 			isolatedScope.model = [];
@@ -415,7 +415,7 @@ describe('rc-select directive', function(){
 			controller.checkOrUncheckItem(isolatedScope.data[1]);
 			expect(isolatedScope.model.length).toBe(1);
 
-      expect($scope.class).toBe('show-list');
+		  	expect($scope.class).toBe('show-list');
 
 		}));
 
