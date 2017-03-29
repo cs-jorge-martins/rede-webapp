@@ -324,7 +324,7 @@
          * @param {String} strModel primeiro nome da Model
          */
 		function ResetFilter(strModel) {
-			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
+			$scope.filter[strModel+ 'Model'] = [];
 			$scope.search();
 		}
 
@@ -335,8 +335,8 @@
          */
         function Details(objTransaction) {
             objVm.transaction = objTransaction;
-            modalService.openDetails(
-                'Vendas conciliadas',
+            modalService.openFull(
+                'Vendas conciliadas | detalhes',
                 'app/views/sales-conciliated-details.html',
                 'salesConciliatedDetailsController',
                 $scope

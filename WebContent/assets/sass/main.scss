@@ -19,6 +19,7 @@
 	@import "v1/bootstrap.min";
 	@import 'v1/main';
 	@import "v1/login";
+	@import 'components/empty-state';
 }
 
 .v2 {
@@ -26,6 +27,7 @@
 	@import 'components/cards';
 	@import 'components/content-header';
 	@import 'components/checkbox';
+	@import 'components/empty-state';
 	@import 'components/font';
 	@import 'components/filter';
 	@import 'components/footer';
@@ -45,6 +47,7 @@
 	@import 'components/panel';
 	@import 'components/table';
 	@import 'components/card-product';
+	@import 'components/pv';
 	@import 'components/rc-breadcrumb';
 	@import 'components/rc-chips';
 	@import 'components/rc-multiselect';
@@ -53,8 +56,10 @@
 	@import 'components/rc-disclaimer';
 	@import 'components/rc-pagination';
 	@import 'components/rc-sort';
+
 	@import 'pages/login';
 	@import 'pages/sales';
+	@import 'pages/pv-grouping';
 }
 
 @import 'components/link';

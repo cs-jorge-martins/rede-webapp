@@ -1,10 +1,4 @@
 <section class="financas" id="financeiro">
-
-    <div class="date">
-        <h2>
-        <time datetime="nov/2013">{{monthSelected}} {{yearSelected}}</time>
-      </h2> </div>
-    <div class="page-title">recebimentos</div>
     <div id="receipts">
         <div id="headerTabs" class="filter-depth container">
             <uib-tabset active="activeReceipts">
@@ -159,7 +153,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <span class="alert" ng-show="!actualReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                        <div ng-show="!actualReleasesData.length" ng-include="'app/views/includes/empty-state.html'"></div>
                     </article>
                     <!-- LANCAMENTOS ATUAIS: END -->
                 </uib-tab>
@@ -263,7 +257,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <span class="alert" ng-show="!futureReleasesData.length">Não existem dados/registros para o filtro selecionado</span>
+                        <div ng-show="!futureReleasesData.length" ng-include="'app/views/includes/empty-state.html'"></div>
                     </article>
 
                     <!-- LANCAMENTOS FUTUROS: END -->

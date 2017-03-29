@@ -386,7 +386,7 @@
          * @param {String} strModel primeiro nome da Model
          */
 		function ResetFilter(strModel) {
-			$scope.filter[strModel+ 'Model'] = angular.copy($scope.filter[strModel + 'Data']);
+			$scope.filter[strModel+ 'Model'] = [];
 			$scope.search();
 		}
 
@@ -400,16 +400,16 @@
 
             switch (strType) {
                 case 'processed':
-                    modalService.openDetails(
-                        'Vendas a conciliar',
+                    modalService.openFull(
+                        'Vendas a conciliar | detalhes',
                         'app/views/sales-to-conciliate-details.html',
                         'salesToConciliateDetailsController',
                         $scope
                     );
                     break;
                 case 'unprocessed':
-                    modalService.openDetails(
-                        'Vendas não processadas',
+                    modalService.openFull(
+                        'Vendas não processadas | detalhes',
                         'app/views/unprocessed-sales-details.html',
                         'unprocessedSalesDetailsController',
                         $scope

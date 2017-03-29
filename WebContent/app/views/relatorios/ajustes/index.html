@@ -1,13 +1,5 @@
 <section class="relatorio ajustes">
-
-    <div class="date">
-        <h2>relatório ajustes</h2>
-    </div>
-
-	<br />
-
     <div uib-alert ng-repeat="alert in alerts" ng-class="{{alert.type}}">{{alert.msg}}</div>
-
     <div id="primaryContent">
         <div id="details" class="sales box">
             <div id="relatorio_financeiro">
@@ -68,7 +60,7 @@
         				</tr>
         			</tbody>
         		</table>
-                <span class="alert" ng-show="noItensMsg">Não existem dados/registros para o filtro selecionado</span>
+                <div ng-show="noItensMsg" ng-include="'app/views/includes/empty-state.html'"></div>
         	    <div class="footer" ng-show="items.length">
 					<div class="optionsWrapper">
 						<div class="selectWrapper">

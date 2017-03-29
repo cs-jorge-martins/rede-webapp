@@ -1,0 +1,29 @@
+.empty-state {
+    width: 100%;
+	margin: 0.4em 1em 2em;
+	clear: both;
+
+    p {
+		font-size: 1.2em;
+        color: $grafitteGray;
+		margin: 0.3em 0em;
+    }
+
+	.empty-state-wrapper {
+		width: 32em;
+		margin: 0 auto;
+		padding-left: 5em;
+		position: relative;
+
+		&:before {
+			content: '\e94f';
+			display: block;
+			font-family: $fontItau;
+			font-size: 2.8em;
+			color: $jade;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+}

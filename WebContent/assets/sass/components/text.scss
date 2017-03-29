@@ -6,13 +6,20 @@
 
 .page-title {
     color: $pageTitle;
-    margin: 1.2em 0;
-    font-size: 17px;
+    margin: 1.2em 0 0.5em;
+    font-size: 2em;
     font-family: $fontSemiBold;
     font-weight: bolder;
     width: 100%;
     display: inline-block;
 }
+
+.page-description {
+	color: $pageDescription;
+	font-size: 1.2em;
+	margin-bottom: 1.7em;
+}
+
 
 .date {
     color: $defaultOrange;

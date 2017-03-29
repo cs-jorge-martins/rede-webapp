@@ -1,0 +1,114 @@
+<section id="pv-grouping-page">
+	<div class="row">
+		<div class="col-xs-8">
+			<p class="page-title">criar novo agrupamento</p>
+			<p class="page-description">
+				Utilize os dois primeiros campos abaixo para criar um novo agrupamento.<br />
+				No primeiro campo você pode buscar estabelecimentos e selecionar + para adicionar ao segundo campo. Para habilitar o botão <strong>salvar</strong> é necessário nomear o agrupamento e selecionar pelo menos dois estabelecimentos.
+			</p>
+		</div>
+		<div class="col-xs-4">
+			<p class="page-title">meus agrupamentos</p>
+			<p class="page-description">
+				Abaixo estão os agrupamentos criados.<br />
+				Para cada agrupamento é possível editar ou deletar.
+			</p>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="col-xs-4">
+			<div class="card card-padding" id="pv-list">
+				<div class="form-group icon-right">
+					<div class="input-group">
+						<input type="text" class="form-control borderless-right" required="" ng-model="pvFilter.code" placeholder="buscar estabelecimento" ng-change="objVm.updateScrollContainers()">
+						<span class="input-group-addon icon_busca_consulta"></span>
+					</div>
+				</div>
+				<div class="empty-state" ng-hide="filteredPVs.length">
+					<p class="title">Estabelecimento não encontrado.</p>
+					<p>Altere sua busca.</p>
+				</div>
+				<div id="pvs-container" ng-class="{'has-scroll': filteredPVs.length > 4}" dnd-list>
+					<div class="pv" ng-repeat="pv in objVm.pvListSlave | filter:pvFilter as filteredPVs" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'This text may be dragged')" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
+						<p>{{ pv.code }}</p>
+						<p>{{ pv.acquirer.name }}</p>
+						<a ng-click="objVm.addPVToWorkspace(pv)" class="action icon_mais"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-4">
+			<div class="card card-padding" id="pv-group-edit" ng-class="{'not-valid': !objVm.isGroupValid()}">
+				<div class="empty-state" ng-hide="objVm.workspace.pvs.length">
+					<p>Clique em + para adicionar um estabelecimento.</p>
+				</div>
+				<div class="form-group icon-right">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon borderless icon_educacao_uso_consc" ng-class="{'has-error': (objVm.workspace.hasErrors && !objVm.workspace.name)}"></span>
+						<input type="text" class="form-control borderless" required="" placeholder="nomear agrupamento" ng-model="objVm.workspace.name">
+					</div>
+				</div>
+				<div id="edit-wrapper">
+					<ul class="validate-list {{objVm.validationFlickClass}}" ng-show="!objVm.isGroupValid()">
+						<li ng-hide="objVm.workspace.name">- O novo agrupamento precisa de um nome</li>
+						<li ng-hide="objVm.workspace.pvs.length > 1">- Selecione pelo menos 2 estabelecimentos antes de salvar</li>
+					</ul>
+					<div id="edit-container" ng-class="{'has-scroll': objVm.isGroupValid() ? objVm.workspace.pvs.length > 4 : objVm.workspace.pvs.length > 3 }">
+						<div class="pv" ng-repeat="pv in objVm.workspace.pvs" ng-click="objVm.selectPV(pv)" ng-class="{'selected': pv.selected}">
+							<p>{{ pv.code }}</p>
+							<p>{{ pv.acquirer.name }}</p>
+						<a ng-click="objVm.removePVFromWorkspace(pv)" class="action icon_minimizar"></a>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<a ng-click="objVm.cancelEditGroup()" class="btn btn-cancel btn-block btn-sm" ng-show="objVm.workspace.status === 'EDIT'">cancelar</a>
+					</div>
+					<div class="col-xs-6">
+						<input type="button" value="salvar" ng-click="objVm.validateGroup()" class="btn btn-primary btn-block btn-sm">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-4">
+			<div class="card card-padding" id="pv-groups">
+				<div class="empty-state" ng-hide="objVm.pvGroups.length">
+					<p class="title">Nenhum agrupamento disponível.</p>
+					<p>Utilize os campos ao lado para criar e salvar um novo agrupamento.</p>
+				</div>
+				<div id="groups-container" ng-class="{'has-scroll': filteredPVs.length > 4}">
+					<div class="pv-group"
+						ng-repeat="group in objVm.pvGroups"
+						ng-init="expanded = false"
+						ng-class="{ expanded: expanded == true, selected: group.selected }">
+						<h4 class="icon_maq_rede_cartao">{{group.name}}</h4>
+						<div class="group-pvs-wrapper">
+							<div class="row" ng-repeat="pv in group.pvs">
+								<div class="col-xs-6"><p>{{pv.code}}</p></div>
+								<div class="col-xs-6"><p><strong>{{pv.acquirer.name}}</strong></p></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6">
+								<a ng-click="expanded = !expanded" ng-show="group.pvs.length > 3">
+									{{ expanded ? "mostrar menos" : "mostrar mais" }}
+								</a>
+							</div>
+							<div class="col-xs-3" ng-switch on="objVm.workspace.id === group.id">
+								<a ng-click="objVm.editGroupVerify(group)" ng-switch-when="false"><strong>editar</strong></a>
+								<a ng-click="objVm.cancelEditGroup()" ng-switch-when="true"><strong>cancelar</strong></a>
+							</div>
+							<div class="col-xs-3">
+								<a ng-click="objVm.deleteGroup(group)"><strong>deletar</strong></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

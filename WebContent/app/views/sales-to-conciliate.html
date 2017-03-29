@@ -18,14 +18,16 @@
 				label="número do estabelecimento"
 				place-holder-label="estabelecimento"
 				model="filter.pvsModel"
-				data="filter.pvsData"></rc-select>
+				data="filter.pvsData"
+				check-and-uncheck-all="{defaultType: 'checkAll'}"
+				pv-list="true"	></rc-select>
         </div>
         <div class="col-xs-4">
             <rc-multiselect class="filter-acquirer" label="'adquirente'" model="filter.acquirersModel" data="filter.acquirersData" placeholder="'todos os adquirentes'" single-selection="2"> </rc-multiselect>
         </div>
-        <div class="col-xs-4">
-            <rc-multiselect class="filter-pv" label="'número do estabelecimento'" tooltip-text="'somente estabelecimentos que possuem ao menos uma transação processada aparecem na listagem'" model="filter.pvsModel" data="filter.pvsData" group-by="acquirerId" placeholder="'todos os estabelecimentos'" single-selection="2" search-filter="vm.acquirersFilterExpression"> </rc-multiselect>
-        </div>
+        <!--<div class="col-xs-4">-->
+            <!--<rc-multiselect class="filter-pv" label="'número do estabelecimento'" tooltip-text="'somente estabelecimentos que possuem ao menos uma transação processada aparecem na listagem'" model="filter.pvsModel" data="filter.pvsData" group-by="acquirerId" placeholder="'todos os estabelecimentos'" single-selection="2" search-filter="vm.acquirersFilterExpression"> </rc-multiselect>-->
+        <!--</div>-->
         <div class="col-xs-4">
             <rc-multiselect class="filter-terminal" label="'terminal'" model="filter.terminalsModel" data="filter.terminalsData" placeholder="'todos os terminais'" single-selection="2"> </rc-multiselect>
         </div>
@@ -65,6 +67,7 @@
                     label-total-value="'Total de vendas'"
                     monetary-values="false" ></rc-timeline>
         </div>
+        <div ng-show="!vm.resultModel.length" ng-include="'app/views/includes/empty-state.html'"></div>
     </div>
 
     <div ng-include="'app/views/includes/tables/sales-table.html'"></div>

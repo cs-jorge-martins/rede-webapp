@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 	var API_URLS = {
 		local: 'http://localhost:8080',
 		dev: 'https://va4f0tsgxh.execute-api.us-east-1.amazonaws.com/dev',
-		hml: 'https://z20ycs2v3e.execute-api.us-east-1.amazonaws.com/hml',
+		hml: 'https://kuavd29apk.execute-api.us-east-1.amazonaws.com/hml',
 		prod: 'https://9ht8utfgo1.execute-api.us-east-1.amazonaws.com/PRD'
 	};
 
@@ -105,8 +105,8 @@ module.exports = function(grunt) {
 			dist: {
 				src: [
 					"WebContent/app/libs/angular.min.js",
-					"WebContent/app/libs/angular-route.min.js",
 					"WebContent/app/libs/angular-mocks.js",
+					"WebContent/app/libs/angular-route.min.js",
 					"WebContent/app/libs/lodash.min.js",
 					"WebContent/app/libs/angular-locale_pt-br.js",
 					"WebContent/app/libs/loading-bar.min.js",
@@ -138,6 +138,31 @@ module.exports = function(grunt) {
 					"WebContent/app/app.js",
 					"WebContent/app/routes.js",
 
+					"WebContent/app/service/dashboard-service.js",
+					"WebContent/app/service/login-service.js",
+					"WebContent/app/service/transactions-service.js",
+					"WebContent/app/service/relatorio-service.js",
+					"WebContent/app/service/kaplen-admin-service.js",
+					"WebContent/app/service/cache-service.js",
+					"WebContent/app/service/integration-service.js",
+					"WebContent/app/service/advanced-filter-service.js",
+					"WebContent/app/service/calendar-service.js",
+					"WebContent/app/service/filters-service.js",
+					"WebContent/app/service/receipts-service.js",
+					"WebContent/app/service/financial-service.js",
+					"WebContent/app/service/movement-summary-service.js",
+					"WebContent/app/service/adjust-summary-service.js",
+					"WebContent/app/service/transaction-summary-service.js",
+					"WebContent/app/service/transaction-conciliation-service.js",
+					"WebContent/app/service/transaction-service.js",
+					"WebContent/app/service/movement-service.js",
+					"WebContent/app/service/adjust-service.js",
+					"WebContent/app/service/rc-message-service.js",
+					"WebContent/app/service/rc-disclaimer-service.js",
+					"WebContent/app/service/modal-service.js",
+					"WebContent/app/service/download-service.js",
+					"WebContent/app/service/pv-service.js",
+
 					"WebContent/app/controllers/header-controller.js",
 					"WebContent/app/controllers/footer-controller.js",
 
@@ -163,30 +188,7 @@ module.exports = function(grunt) {
 					"WebContent/app/controllers/receipts-future-details-controller.js",
 					"WebContent/app/controllers/receipts-details-controller.js",
 					"WebContent/app/controllers/redirect-controller.js",
-
-					"WebContent/app/service/dashboard-service.js",
-					"WebContent/app/service/login-service.js",
-					"WebContent/app/service/transactions-service.js",
-					"WebContent/app/service/relatorio-service.js",
-					"WebContent/app/service/kaplen-admin-service.js",
-					"WebContent/app/service/cache-service.js",
-					"WebContent/app/service/integration-service.js",
-					"WebContent/app/service/advanced-filter-service.js",
-					"WebContent/app/service/calendar-service.js",
-					"WebContent/app/service/filters-service.js",
-					"WebContent/app/service/receipts-service.js",
-					"WebContent/app/service/financial-service.js",
-					"WebContent/app/service/movement-summary-service.js",
-					"WebContent/app/service/adjust-summary-service.js",
-					"WebContent/app/service/transaction-summary-service.js",
-					"WebContent/app/service/transaction-conciliation-service.js",
-					"WebContent/app/service/transaction-service.js",
-					"WebContent/app/service/movement-service.js",
-					"WebContent/app/service/adjust-service.js",
-					"WebContent/app/service/rc-message-service.js",
-					"WebContent/app/service/rc-disclaimer-service.js",
-					"WebContent/app/service/modal-service.js",
-					"WebContent/app/service/download-service.js",
+					"WebContent/app/controllers/pv-grouping-controller.js",
 
 					"WebContent/app/directives/rc-disclaimer/rc-disclaimer.js",
 					"WebContent/app/directives/rc-multiselect/rc-multiselect.js",
@@ -288,7 +290,33 @@ module.exports = function(grunt) {
 				'WebContent/app/**/*.js'
 				//'WebContent/assets/js/**/*.js'
 			]
+		},
+
+
+		notify: {
+			watch: {
+				options: {
+					message: 'SASS running', //required
+				}
+			},
+			sass: {
+				options: {
+					message: 'SASS running!'
+				}
+			},
+			server: {
+				options: {
+					message: 'Server is ready!'
+				}
+			},
+			jshint: {
+				options: {
+					message: 'tests!'
+				}
+			},
 		}
+
+
 
 	});
 
@@ -299,7 +327,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build:hml', ['ngconstant:homologation', 'sass', 'concat']);
 	grunt.registerTask('build:prod', ['ngconstant:production', 'sass', 'concat']);
 	grunt.registerTask('local', ['build:local', 'serve', 'watch']);
-	grunt.registerTask('dev', ['build:dev', 'serve', 'watch']);
+	grunt.registerTask('dev', ['notify', 'build:dev', 'serve', 'watch']);
 	grunt.registerTask('hml', ['build:hml', 'serve']);
 	grunt.registerTask('prod', ['build:prod', 'serve']);
 	grunt.registerTask('docs', ['jsduck:main']);

@@ -62,7 +62,7 @@
       width: 100%;
 
       li:nth-child(1) a span, li:nth-child(2) a span {
-        display: none;
+        // display: none;
       }
 
       a {
@@ -78,16 +78,26 @@
           left: 0;
           position: absolute;
           top: 0;
-          &.glyphicon-ok{
+
+          &.glyphicon-ok {
             &:before {
-              color: $rcMultiIconColor;
+              color: #ff7800;
+              border-radius: 4px;
               content: '\e927' !important;
+              top: 10px;
+            }
+          }
+
+          &.glyphicon-remove {
+            &:before {
+              color: #ff7800;
+              border-radius: 4px;
+              content: '\e956' !important;
+              top: 10px;
             }
           }
         }
-
       }
-
     }
 
     a span:before {
@@ -97,7 +107,6 @@
       font-family: $fontItau;
       font-size: 1.2em;
       left: 10px;
-      line-height: 22px !important;
       position: absolute;
       top: 7px;
     }
