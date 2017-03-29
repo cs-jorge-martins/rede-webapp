@@ -246,4 +246,180 @@ describe('rc-select directive', function(){
 
 	});
 
+	describe('pvList custom layout', function () {
+
+
+		var $scope, element, html, controller, bolPvList;
+
+		beforeEach(function () {
+
+			html = angular.element([
+				"<rc-select label=\"número do estabelecimento\" place-holder-label=\"estabelecimento\" model=\"objModel\" data=\"objData\" pv-list=\"bolPvList\"></rc-select>",
+			].join(""));
+
+			inject(function($rootScope, $compile) {
+				$scope = $rootScope.$new();
+				element = $compile(html)($scope);
+				 bolPvList = false;
+				$scope.$digest();
+				controller = element.controller('rcSelect');
+			});
+
+		});
+
+		it("shouldn't have a footer", inject(function () {
+			expect(element[0].querySelectorAll('.rc-select-footer').length).toBe(0);
+		}));
+
+		it("shouldn't have a footer", inject(function () {
+
+			var isolatedScope = element.isolateScope();
+			isolatedScope.pvList = true;
+			$scope.$digest();
+
+			expect(element[0].querySelectorAll('.rc-select-footer').length).toBe(1);
+
+		}));
+
+	});
+
+  	describe('check hide or show class show-list pvList', function () {
+
+		var $scope, element, html, controller, bolPvList;
+
+		beforeEach(function () {
+
+			html = angular.element([
+				"<rc-select label=\"número do estabelecimento\" place-holder-label=\"estabelecimento\" model=\"objModel\" data=\"objData\" pv-list=\"bolPvList\"></rc-select>",
+			].join(""));
+
+			inject(function($rootScope, $compile) {
+				$scope = $rootScope.$new();
+				element = $compile(html)($scope);
+				 bolPvList = false;
+				$scope.$digest();
+				controller = element.controller('rcSelect');
+			});
+
+		});
+
+		it("add class show-list when click input", inject(function () {
+
+		  	$scope.class = "show-list";
+			expect($scope.class).toBe('show-list');
+
+		}));
+
+		it("verific if show class show-list when not click input", inject(function () {
+
+			$scope.class = "";
+			expect($scope.class).toBe('');
+
+		}));
+
+		it("verific if show class show-list when check single on model", inject(function () {
+
+			$scope.class = "show-list";
+
+			var isolatedScope = element.isolateScope();
+			isolatedScope.model = [];
+			isolatedScope.data = [
+				{
+					label: '111111',
+					id: 200
+				},
+				{
+					label: '222222',
+					id: 201
+				},
+				{
+					label: '333333',
+					id: 202
+				}
+			];
+			controller.checkOrUncheckItem(isolatedScope.data[1]);
+			expect(isolatedScope.model.length).toBe(1);
+			expect(isolatedScope.model[0].id).toBe(201);
+			expect(isolatedScope.model[0].label).toBe('222222');
+
+			expect($scope.class).toBe('show-list');
+
+		}));
+
+		it("verific if show class show-list when check two datas on model", inject(function () {
+
+		  	$scope.class = "show-list";
+
+			var isolatedScope = element.isolateScope();
+			isolatedScope.model = [];
+			isolatedScope.data = [
+				{
+					label: '111111',
+					id: 200
+				},
+				{
+					label: '222222',
+					id: 201
+				},
+				{
+					label: '333333',
+					id: 202
+				}
+			];
+			controller.checkOrUncheckItem(isolatedScope.data[1]);
+			controller.checkOrUncheckItem(isolatedScope.data[2]);
+
+			expect(isolatedScope.model.length).toBe(2);
+
+			expect(isolatedScope.model[0].id).toBe(201);
+			expect(isolatedScope.model[0].label).toBe('222222');
+
+			expect(isolatedScope.model[1].id).toBe(202);
+			expect(isolatedScope.model[1].label).toBe('333333');
+
+		  	expect($scope.class).toBe('show-list');
+
+		}));
+
+		it("verific if show class show-list when check two datas and uncheck one of these on model", inject(function () {
+
+		  	$scope.class = "show-list";
+
+			var isolatedScope = element.isolateScope();
+			isolatedScope.model = [];
+			isolatedScope.data = [
+				{
+					label: '111111',
+					id: 200
+				},
+				{
+					label: '222222',
+					id: 201
+				},
+				{
+					label: '333333',
+					id: 202
+				}
+			];
+			controller.checkOrUncheckItem(isolatedScope.data[1]);
+			controller.checkOrUncheckItem(isolatedScope.data[2]);
+
+			expect(isolatedScope.model.length).toBe(2);
+
+			expect(isolatedScope.model[0].id).toBe(201);
+			expect(isolatedScope.model[0].label).toBe('222222');
+
+			expect(isolatedScope.model[1].id).toBe(202);
+			expect(isolatedScope.model[1].label).toBe('333333');
+
+			controller.checkOrUncheckItem(isolatedScope.data[1]);
+			expect(isolatedScope.model.length).toBe(1);
+
+		  	expect($scope.class).toBe('show-list');
+
+		}));
+
+
+	});
+
 });

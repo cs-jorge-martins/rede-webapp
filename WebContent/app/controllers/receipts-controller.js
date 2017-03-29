@@ -17,7 +17,7 @@ angular.module('Conciliador.movementsModule',[])
 // removendo regra de jshint: este controller será refeito
 /* jshint -W071 */
 .controller('receiptsController', function(menuFactory, $rootScope, $scope, calendarFactory, $location, cacheService, $window, $timeout,
-		advancedFilterService, calendarService, filtersService, receiptsService, $filter, $sce){
+		advancedFilterService, calendarService, filtersService, receiptsService, $filter, $sce, pvService){
 
 	//Extensao do serviço para filtro avançado
 	angular.extend($scope, advancedFilterService);
@@ -97,6 +97,7 @@ angular.module('Conciliador.movementsModule',[])
     $scope.customTimelineExpectedAmount = [];
 	var arrActualReleasesData = [];
     var arrFutureReleasesData = [];
+	$scope.pvsGroupsModel = [];
     var intFilterStatus = 0;
 
 	$scope.$watch('futureReleases.startDate', function(objResponse) {
@@ -111,6 +112,15 @@ angular.module('Conciliador.movementsModule',[])
 		$scope.todayDate = calendarFactory.getToday();
 		$scope.actualReleases.date = $scope.actualReleases.date || calendarFactory.getToday();
         GetFilters();
+		GetPvsGroups();
+	}
+
+	function GetPvsGroups() {
+
+		pvService.getGroups().then(function (objRes) {
+			$scope.pvsGroupsModel = objRes.data;
+		});
+
 	}
 
 	function ToTrusted(htmlCode) {
