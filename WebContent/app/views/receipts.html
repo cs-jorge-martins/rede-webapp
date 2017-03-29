@@ -17,8 +17,16 @@
                             <div class="filter">
                                 <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersModel" data="acquirersData" placeholder="'todas as adquirentes'" button-max-items="3"></rc-multiselect>
                             </div>
-                            <div class="filter">
-                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsModel" data="shopsData" placeholder="'todos os estabelecimentos'"></rc-multiselect>
+                            <div class="filter v2">
+								<rc-select
+									label="número do estabelecimento"
+									place-holder-label="estabelecimento"
+									model="filter.shopsModel"
+									data="shopsData"
+									check-and-uncheck-all="{defaultType: 'checkAll'}"
+									groupable="true"
+									sync="false"
+									groups-model="pvsGroupsModel" ></rc-select>
                             </div>
                             <div class="filter">
                                 <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsModel" data="cardProductsData" placeholder="'todas as bandeiras'" button-max-items="2" ></rc-multiselect>
@@ -172,8 +180,16 @@
                             <div class="filter">
                                 <rc-multiselect class="filter-acquirer" label="'adquirente'" model="acquirersFutureModel" data="acquirersData" placeholder="'todas as adquirentes'" button-max-items="3"> </rc-multiselect>
                             </div>
-                            <div class="filter">
-                                <rc-multiselect class="filter-pv" label="'número do estabelecimento'" model="shopsFutureModel" data="shopsData" placeholder="'todos os estabelecimentos'"> </rc-multiselect>
+                            <div class="filter v2">
+								<rc-select
+									label="número do estabelecimento"
+									place-holder-label="estabelecimento"
+									model="filter.shopsFutureModel"
+									data="shopsData"
+									check-and-uncheck-all="{defaultType: 'checkAll'}"
+									groupable="true"
+									sync="false"
+									groups-model="pvsGroupsModel" ></rc-select>
                             </div>
                             <div class="filter">
                                 <rc-multiselect class="filter-card-product" label="'bandeira'" model="cardProductsFutureModel" data="cardProductsData" placeholder="'todas as bandeiras'" button-max-items="2"> </rc-multiselect>

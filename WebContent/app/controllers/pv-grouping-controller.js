@@ -151,13 +151,11 @@
 		 * de acordo com a flag status
 		 */
 		function SaveOrUpdateGroup() {
-
-			delete objVm.workspace.id;
-			delete objVm.workspace.status;
-			delete objVm.workspace.hasErrors;
-
 			switch (objVm.workspace.status) {
 				case "CREATE":
+					delete objVm.workspace.id;
+					delete objVm.workspace.status;
+					delete objVm.workspace.hasErrors;
 					pvService.saveGroup(objVm.workspace).then(function(){
 						objVm.pvListSlave = angular.copy(objVm.pvListMaster);
 						objVm.workspace = angular.copy(objVm.initialGroupData);
@@ -172,6 +170,8 @@
 					});
 					break;
 				case "EDIT":
+					delete objVm.workspace.status;
+					delete objVm.workspace.hasErrors;
 					pvService.editGroup(objVm.workspace).then(function(){
 						objVm.pvListSlave = angular.copy(objVm.pvListMaster);
 						objVm.workspace = angular.copy(objVm.initialGroupData);

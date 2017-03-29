@@ -1,0 +1,53 @@
+local:
+  - 'build-local'
+  - 'http-server:local'
+  - 'watch'
+
+dev:
+  - 'build-dev'
+  - 'http-server:local'
+  - 'watch'
+
+hml:
+  - 'build-hml'
+  - 'http-server:local'
+  - 'watch'
+
+prod:
+  - 'build-prod'
+  - 'http-server:local'
+  - 'watch'
+
+build-local:
+  - 'ngconstant:local'
+  - 'sass'
+  - 'concat'
+
+build-dev:
+  - 'ngconstant:development'
+  - 'sass'
+  - 'concat'
+
+build-hml:
+  - 'ngconstant:homologation'
+  - 'sass'
+  - 'concat'
+
+build-prod:
+  - 'ngconstant:production'
+  - 'sass'
+  - 'concat'
+
+test:
+  - 'concat'
+  - 'karma:unit:start'
+
+docs:
+  - 'jsduck:main'
+
+codestyle:
+  - 'jshint'
+  - 'jscs'
+
+default:
+  - 'dev'

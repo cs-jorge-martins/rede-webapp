@@ -14,12 +14,10 @@
   }
 
   .dropdown-multiselect {
-
     position: relative;
     width: 100%;
 
     .dropdown-toggle {
-
       border: 1px solid $rcMultiBorderColor;
       color: $rcMultiLabelColor;
       font-size: 12px;
@@ -27,6 +25,7 @@
       position: relative;
       text-align: left;
       width: 100%;
+
       &:hover, &:active, &:focus {
         background: #fff;
         border-color: $rcMultiBorderColor;
@@ -40,6 +39,7 @@
         right: 1.3em;
         top: 0.3em;
         vertical-align: middle;
+
         &:before {
           color: $rcMultiBorderColor;
           content: '\e9cc';
@@ -50,19 +50,36 @@
     }
 
     .dropdown-menu {
-
       background: #fff;
       border: 1px solid $rcMultiBorderColor;
       border-radius: 0;
       box-shadow: none;
       box-sizing: border-box;
-      max-height: 150px;
+      max-height: 361px;
       overflow: auto !important;
       top: 3em;
       width: 100%;
 
-      li:nth-child(1) a span, li:nth-child(2) a span {
-        // display: none;
+      li:nth-child(1) a span {
+        &.glyphicon-ok {
+          &:before {
+            background-color: inherit;
+            color: #ff7800;
+            border-radius: 4px;
+            content: '\e927' !important;
+          }
+        }
+      }
+
+      li:nth-child(1) a span,
+      li:nth-child(2) a span {
+        &.glyphicon-ok {
+          &:before {
+            font-size: 1em;
+            top: 6px;
+            left: 0;
+          }
+        }
       }
 
       a {
@@ -70,27 +87,38 @@
         color: $rcMultiLabelColor;
         display: block;
         font-size: 1em;
-        padding: 0.5em 0 0.5em 2.9em;
+        padding: 0.7em 0 0.7em 3.5em;
         position: relative;
         text-transform: none;
 
         span {
-          left: 0;
           position: absolute;
+          left: 10px;
           top: 0;
+          font-size: 1.7em;
 
           &.glyphicon-ok {
             &:before {
-              color: #ff7800;
+              color: #fff;
               border-radius: 4px;
               content: '\e927' !important;
-              top: 10px;
+              top: 9px;
+              left: 0;
+              background-color: #ff7800;
+              padding: 3px;
+              font-size: 0.7em;
+              width: 20px;
+              height: 20px;
+              position: relative;
+              top: 9px;
+              line-height: 14px;
             }
           }
 
           &.glyphicon-remove {
             &:before {
               color: #ff7800;
+              background-color: initial;
               border-radius: 4px;
               content: '\e956' !important;
               top: 10px;
@@ -101,14 +129,20 @@
     }
 
     a span:before {
-      color: $rcMultiLabelColor;
+      color: #979797;
       content: '\e964';
       display: block;
       font-family: $fontItau;
-      font-size: 1.2em;
-      left: 10px;
-      position: absolute;
-      top: 7px;
+      font-size: 0.95em;
+      left: 0;
+      top: 9px;
+      background-color: #f0f0f0;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      position: relative;
+      line-height: 20px;
+      text-indent: -1px;
     }
 
   }
